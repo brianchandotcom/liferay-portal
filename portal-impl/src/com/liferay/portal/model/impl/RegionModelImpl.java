@@ -79,6 +79,11 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Region"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Region"),
+			true);
+	public static long COUNTRYID_BIT_MASK = 1L;
+	public static long ACTIVE_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -112,6 +117,10 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -159,7 +168,19 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	}
 
 	public void setCountryId(long countryId) {
+		_bitMask |= COUNTRYID_BIT_MASK;
+
+		if (!_setOriginalCountryId) {
+			_setOriginalCountryId = true;
+
+			_originalCountryId = _countryId;
+		}
+
 		_countryId = countryId;
+	}
+
+	public long getOriginalCountryId() {
+		return _originalCountryId;
 	}
 
 	@JSON
@@ -200,7 +221,19 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	}
 
 	public void setActive(boolean active) {
+		_bitMask |= ACTIVE_BIT_MASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
 	}
 
 	@Override
@@ -293,6 +326,17 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public void resetOriginalValues() {
+		RegionModelImpl regionModelImpl = this;
+
+		regionModelImpl._originalCountryId = regionModelImpl._countryId;
+
+		regionModelImpl._setOriginalCountryId = false;
+
+		regionModelImpl._originalActive = regionModelImpl._active;
+
+		regionModelImpl._setOriginalActive = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -380,11 +424,16 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Region.class
 		};
+	private long _bitMask;
 	private long _regionId;
 	private long _countryId;
+	private long _originalCountryId;
+	private boolean _setOriginalCountryId;
 	private String _regionCode;
 	private String _name;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private transient ExpandoBridge _expandoBridge;
 	private Region _escapedModelProxy;
 }

@@ -71,6 +71,16 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalArticleResource"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.journal.model.JournalArticleResource"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long UUID_BIT_MASK = 2L;
+	public static long ARTICLEID_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return JournalArticleResource.class;
@@ -136,6 +146,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -159,6 +171,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	}
 
 	public void setArticleId(String articleId) {
+		_bitMask |= ARTICLEID_BIT_MASK;
+
 		if (_originalArticleId == null) {
 			_originalArticleId = _articleId;
 		}
@@ -270,6 +284,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		journalArticleResourceModelImpl._setOriginalGroupId = false;
 
 		journalArticleResourceModelImpl._originalArticleId = journalArticleResourceModelImpl._articleId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -349,6 +365,7 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			JournalArticleResource.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _resourcePrimKey;

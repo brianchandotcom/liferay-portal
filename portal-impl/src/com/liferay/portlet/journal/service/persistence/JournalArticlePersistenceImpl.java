@@ -91,9 +91,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final String FINDER_CLASS_NAME_ENTITY = JournalArticleImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByUuid",
+			JournalArticleModelImpl.UUID_BIT_MASK,
+			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_UUID_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByUuid", JournalArticleModelImpl.UUID_BIT_MASK,
 			new String[] {
 				String.class.getName(),
 				
@@ -103,20 +111,33 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUuid",
+			JournalArticleModelImpl.UUID_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
+			JournalArticleModelImpl.UUID_BIT_MASK |
+			JournalArticleModelImpl.GROUPID_BIT_MASK,
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUUID_G",
+			JournalArticleModelImpl.UUID_BIT_MASK |
+			JournalArticleModelImpl.GROUPID_BIT_MASK,
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_RESOURCEPRIMKEY = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST,
 			"findByResourcePrimKey",
+			JournalArticleModelImpl.RESOURCEPRIMKEY_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_RESOURCEPRIMKEY_PAGE_ORDER =
+		new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByResourcePrimKey",
+			JournalArticleModelImpl.RESOURCEPRIMKEY_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -126,10 +147,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_RESOURCEPRIMKEY = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByResourcePrimKey",
+			JournalArticleModelImpl.RESOURCEPRIMKEY_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByGroupId",
+			JournalArticleModelImpl.GROUPID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByGroupId", JournalArticleModelImpl.GROUPID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -139,11 +167,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			JournalArticleModelImpl.GROUPID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST,
-			"findByCompanyId",
+			"findByCompanyId", JournalArticleModelImpl.COMPANYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByCompanyId", JournalArticleModelImpl.COMPANYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -153,11 +187,19 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_SMALLIMAGEID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST,
 			"findBySmallImageId",
+			JournalArticleModelImpl.SMALLIMAGEID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_SMALLIMAGEID_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findBySmallImageId",
+			JournalArticleModelImpl.SMALLIMAGEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -167,10 +209,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_SMALLIMAGEID = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countBySmallImageId",
+			JournalArticleModelImpl.SMALLIMAGEID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_R_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByR_ST",
+			JournalArticleModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_R_ST_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByR_ST",
+			JournalArticleModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -180,10 +232,21 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_R_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByR_ST",
+			JournalArticleModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_A = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_A",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.ARTICLEID_BIT_MASK,
+			new String[] { Long.class.getName(), String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_G_A_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_A",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.ARTICLEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -193,10 +256,21 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_A",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.ARTICLEID_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_UT = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_UT",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.URLTITLE_BIT_MASK,
+			new String[] { Long.class.getName(), String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_G_UT_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_UT",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.URLTITLE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -206,10 +280,21 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_UT = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_UT",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.URLTITLE_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_S = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_S",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.STRUCTUREID_BIT_MASK,
+			new String[] { Long.class.getName(), String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_G_S_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_S",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.STRUCTUREID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -219,10 +304,21 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_S = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_S",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.STRUCTUREID_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_T = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_T",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.TEMPLATEID_BIT_MASK,
+			new String[] { Long.class.getName(), String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_G_T_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_T",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.TEMPLATEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -232,10 +328,21 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_T = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_T",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.TEMPLATEID_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_L = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_L",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.LAYOUTUUID_BIT_MASK,
+			new String[] { Long.class.getName(), String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_G_L_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_L",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.LAYOUTUUID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -245,10 +352,21 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_L = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_L",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.LAYOUTUUID_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_ST",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_G_ST_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_ST",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -258,10 +376,21 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_ST",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_V = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByC_V",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK |
+			JournalArticleModelImpl.VERSION_BIT_MASK,
+			new String[] { Long.class.getName(), Double.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_C_V_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByC_V",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK |
+			JournalArticleModelImpl.VERSION_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Double.class.getName(),
 				
@@ -271,10 +400,21 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_V = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_V",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK |
+			JournalArticleModelImpl.VERSION_BIT_MASK,
 			new String[] { Long.class.getName(), Double.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByC_ST",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_C_ST_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByC_ST",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -284,10 +424,25 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_ST",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_C_C = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_C_C",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.CLASSPK_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_G_C_C_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_C_C",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.CLASSPK_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				
@@ -297,12 +452,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_C",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.CLASSPK_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_S = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_C_S",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.STRUCTUREID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -310,6 +471,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_S = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_S",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.STRUCTUREID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -317,6 +481,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_FIND_BY_G_C_T = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_C_T",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.TEMPLATEID_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_G_C_T_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_C_T",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.TEMPLATEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(),
@@ -327,6 +505,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_T = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_T",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.TEMPLATEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -334,6 +515,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_FIND_BY_G_C_L = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_C_L",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.LAYOUTUUID_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_G_C_L_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_C_L",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.LAYOUTUUID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(),
@@ -344,6 +539,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_L = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_L",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.CLASSNAMEID_BIT_MASK |
+			JournalArticleModelImpl.LAYOUTUUID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -351,6 +549,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_A_V = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_A_V",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.ARTICLEID_BIT_MASK |
+			JournalArticleModelImpl.VERSION_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
@@ -358,6 +559,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A_V = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_A_V",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.ARTICLEID_BIT_MASK |
+			JournalArticleModelImpl.VERSION_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
@@ -365,6 +569,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_FIND_BY_G_A_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_A_ST",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.ARTICLEID_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_G_A_ST_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_A_ST",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.ARTICLEID_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(),
@@ -375,6 +593,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_A_ST",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.ARTICLEID_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
@@ -382,6 +603,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_FIND_BY_G_UT_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByG_UT_ST",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.URLTITLE_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_G_UT_ST_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_UT_ST",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.URLTITLE_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(),
@@ -392,6 +627,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_UT_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_UT_ST",
+			JournalArticleModelImpl.GROUPID_BIT_MASK |
+			JournalArticleModelImpl.URLTITLE_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
@@ -399,6 +637,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_FIND_BY_C_V_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findByC_V_ST",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK |
+			JournalArticleModelImpl.VERSION_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Double.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_C_V_ST_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByC_V_ST",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK |
+			JournalArticleModelImpl.VERSION_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Double.class.getName(),
 				Integer.class.getName(),
@@ -409,6 +661,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_V_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_V_ST",
+			JournalArticleModelImpl.COMPANYID_BIT_MASK |
+			JournalArticleModelImpl.VERSION_BIT_MASK |
+			JournalArticleModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Double.class.getName(),
 				Integer.class.getName()
@@ -417,6 +672,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
 			new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -694,54 +953,278 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !JournalArticleModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_UUID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						journalArticleModelImpl.getOriginalUuid()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_RESOURCEPRIMKEY.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalResourcePrimKey())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_RESOURCEPRIMKEY,
+					args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEPRIMKEY,
+					args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_GROUPID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COMPANYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_SMALLIMAGEID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalSmallImageId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_SMALLIMAGEID,
+					args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID,
+					args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_R_ST.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalResourcePrimKey()),
+						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_R_ST, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_ST, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_A.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						
+						journalArticleModelImpl.getOriginalArticleId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_A, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_UT.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						
+						journalArticleModelImpl.getOriginalUrlTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_UT, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_UT, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_S.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						
+						journalArticleModelImpl.getOriginalStructureId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_S, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_T.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						
+						journalArticleModelImpl.getOriginalTemplateId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_T, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_L.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						
+						journalArticleModelImpl.getOriginalLayoutUuid()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_L, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_L, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_ST.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_ST, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_ST, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_C_V.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalCompanyId()),
+						Double.valueOf(journalArticleModelImpl.getOriginalVersion())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_V, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_V, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_C_ST.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalCompanyId()),
+						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_ST, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_ST, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_C_C.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						Long.valueOf(journalArticleModelImpl.getOriginalClassNameId()),
+						Long.valueOf(journalArticleModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_C_C, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_C_T.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						Long.valueOf(journalArticleModelImpl.getOriginalClassNameId()),
+						
+						journalArticleModelImpl.getOriginalTemplateId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_C_T, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_C_L.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						Long.valueOf(journalArticleModelImpl.getOriginalClassNameId()),
+						
+						journalArticleModelImpl.getOriginalLayoutUuid()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_C_L, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_L, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_A_ST.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						
+						journalArticleModelImpl.getOriginalArticleId(),
+						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_A_ST, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_ST, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_UT_ST.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
+						
+						journalArticleModelImpl.getOriginalUrlTitle(),
+						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_UT_ST, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_UT_ST, args);
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_C_V_ST.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getOriginalCompanyId()),
+						Double.valueOf(journalArticleModelImpl.getOriginalVersion()),
+						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_V_ST, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_V_ST, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleImpl.class, journalArticle.getPrimaryKey(),
 			journalArticle);
 
-		if (!isNew &&
-				(!Validator.equals(journalArticle.getUuid(),
-					journalArticleModelImpl.getOriginalUuid()) ||
-				(journalArticle.getGroupId() != journalArticleModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					journalArticleModelImpl.getOriginalUuid(),
-					Long.valueOf(journalArticleModelImpl.getOriginalGroupId())
-				});
-		}
-
-		if (isNew ||
-				(!Validator.equals(journalArticle.getUuid(),
-					journalArticleModelImpl.getOriginalUuid()) ||
-				(journalArticle.getGroupId() != journalArticleModelImpl.getOriginalGroupId()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					journalArticle.getUuid(),
 					Long.valueOf(journalArticle.getGroupId())
 				}, journalArticle);
-		}
-
-		if (!isNew &&
-				((journalArticle.getGroupId() != journalArticleModelImpl.getOriginalGroupId()) ||
-				(journalArticle.getClassNameId() != journalArticleModelImpl.getOriginalClassNameId()) ||
-				!Validator.equals(journalArticle.getStructureId(),
-					journalArticleModelImpl.getOriginalStructureId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_S,
-				new Object[] {
-					Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
-					Long.valueOf(
-						journalArticleModelImpl.getOriginalClassNameId()),
-					
-				journalArticleModelImpl.getOriginalStructureId()
-				});
-		}
-
-		if (isNew ||
-				((journalArticle.getGroupId() != journalArticleModelImpl.getOriginalGroupId()) ||
-				(journalArticle.getClassNameId() != journalArticleModelImpl.getOriginalClassNameId()) ||
-				!Validator.equals(journalArticle.getStructureId(),
-					journalArticleModelImpl.getOriginalStructureId()))) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_S,
 				new Object[] {
 					Long.valueOf(journalArticle.getGroupId()),
@@ -749,27 +1232,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 					
 				journalArticle.getStructureId()
 				}, journalArticle);
-		}
-
-		if (!isNew &&
-				((journalArticle.getGroupId() != journalArticleModelImpl.getOriginalGroupId()) ||
-				!Validator.equals(journalArticle.getArticleId(),
-					journalArticleModelImpl.getOriginalArticleId()) ||
-				(journalArticle.getVersion() != journalArticleModelImpl.getOriginalVersion()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V,
-				new Object[] {
-					Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
-					
-				journalArticleModelImpl.getOriginalArticleId(),
-					Double.valueOf(journalArticleModelImpl.getOriginalVersion())
-				});
-		}
-
-		if (isNew ||
-				((journalArticle.getGroupId() != journalArticleModelImpl.getOriginalGroupId()) ||
-				!Validator.equals(journalArticle.getArticleId(),
-					journalArticleModelImpl.getOriginalArticleId()) ||
-				(journalArticle.getVersion() != journalArticleModelImpl.getOriginalVersion()))) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V,
 				new Object[] {
 					Long.valueOf(journalArticle.getGroupId()),
@@ -777,6 +1239,43 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				journalArticle.getArticleId(),
 					Double.valueOf(journalArticle.getVersion())
 				}, journalArticle);
+		}
+		else {
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_UUID_G.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
+					new Object[] {
+						journalArticleModelImpl.getOriginalUuid(),
+						Long.valueOf(
+							journalArticleModelImpl.getOriginalGroupId())
+					});
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_G_C_S.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_S,
+					new Object[] {
+						Long.valueOf(
+							journalArticleModelImpl.getOriginalGroupId()),
+						Long.valueOf(
+							journalArticleModelImpl.getOriginalClassNameId()),
+						
+					journalArticleModelImpl.getOriginalStructureId()
+					});
+			}
+
+			if ((journalArticleModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_G_A_V.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V,
+					new Object[] {
+						Long.valueOf(
+							journalArticleModelImpl.getOriginalGroupId()),
+						
+					journalArticleModelImpl.getOriginalArticleId(),
+						Double.valueOf(
+							journalArticleModelImpl.getOriginalVersion())
+					});
+			}
 		}
 
 		return journalArticle;
@@ -972,14 +1471,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public List<JournalArticle> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { uuid };
+
+			finderPath = FINDER_PATH_FIND_BY_UUID;
+		}
+		else {
+			finderArgs = new Object[] {
+					uuid,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_UUID_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1039,14 +1551,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1491,14 +2001,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByResourcePrimKey(long resourcePrimKey,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				resourcePrimKey,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_RESOURCEPRIMKEY,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { resourcePrimKey };
+
+			finderPath = FINDER_PATH_FIND_BY_RESOURCEPRIMKEY;
+		}
+		else {
+			finderArgs = new Object[] {
+					resourcePrimKey,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_RESOURCEPRIMKEY_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1546,14 +2069,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_RESOURCEPRIMKEY,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_RESOURCEPRIMKEY,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1831,14 +2352,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public List<JournalArticle> findByGroupId(long groupId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_GROUPID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId };
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1886,14 +2420,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2482,14 +3014,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public List<JournalArticle> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId };
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2537,14 +3082,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2824,14 +3367,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findBySmallImageId(long smallImageId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				smallImageId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_SMALLIMAGEID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { smallImageId };
+
+			finderPath = FINDER_PATH_FIND_BY_SMALLIMAGEID;
+		}
+		else {
+			finderArgs = new Object[] {
+					smallImageId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_SMALLIMAGEID_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2879,14 +3435,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_SMALLIMAGEID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_SMALLIMAGEID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3169,14 +3723,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByR_ST(long resourcePrimKey, int status,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				resourcePrimKey, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_R_ST,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { resourcePrimKey, status };
+
+			finderPath = FINDER_PATH_FIND_BY_R_ST;
+		}
+		else {
+			finderArgs = new Object[] {
+					resourcePrimKey, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_R_ST_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3228,14 +3795,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_R_ST,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_R_ST,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3531,14 +4096,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_A(long groupId, String articleId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, articleId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_A,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, articleId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_A;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, articleId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_A_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3602,14 +4180,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_A,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_A,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -4265,14 +4841,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_UT(long groupId, String urlTitle,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, urlTitle,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_UT,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, urlTitle };
+
+			finderPath = FINDER_PATH_FIND_BY_G_UT;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, urlTitle,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_UT_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -4336,14 +4925,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_UT,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_UT,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -4999,14 +5586,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_S(long groupId, String structureId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, structureId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_S,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, structureId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_S;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, structureId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_S_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -5070,14 +5670,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_S,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_S,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -5733,14 +6331,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_T(long groupId, String templateId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, templateId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_T,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, templateId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_T;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, templateId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_T_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -5804,14 +6415,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_T,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_T,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -6467,14 +7076,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_L(long groupId, String layoutUuid,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, layoutUuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_L,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, layoutUuid };
+
+			finderPath = FINDER_PATH_FIND_BY_G_L;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, layoutUuid,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_L_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -6538,14 +7160,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_L,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_L,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -7200,14 +7820,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public List<JournalArticle> findByG_ST(long groupId, int status, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_ST,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, status };
+
+			finderPath = FINDER_PATH_FIND_BY_G_ST;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_ST_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -7259,14 +7892,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_ST,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_ST,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -7885,14 +8516,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByC_V(long companyId, double version,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId, version,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_V,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId, version };
+
+			finderPath = FINDER_PATH_FIND_BY_C_V;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId, version,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_C_V_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -7944,14 +8588,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_V,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_V,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -8247,14 +8889,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByC_ST(long companyId, int status,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_ST,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId, status };
+
+			finderPath = FINDER_PATH_FIND_BY_C_ST;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_C_ST_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -8306,14 +8961,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_ST,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_ST,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -8612,14 +9265,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_C_C(long groupId, long classNameId,
 		long classPK, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, classNameId, classPK,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_C,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, classNameId, classPK };
+
+			finderPath = FINDER_PATH_FIND_BY_G_C_C;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, classNameId, classPK,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_C_C_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -8675,14 +9341,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_C_C,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_C_C,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -9500,14 +10164,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_C_T(long groupId, long classNameId,
 		String templateId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, classNameId, templateId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_T,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, classNameId, templateId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_C_T;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, classNameId, templateId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_C_T_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -9575,14 +10252,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_C_T,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_C_T,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -10270,14 +10945,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_C_L(long groupId, long classNameId,
 		String layoutUuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, classNameId, layoutUuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_L,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, classNameId, layoutUuid };
+
+			finderPath = FINDER_PATH_FIND_BY_G_C_L;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, classNameId, layoutUuid,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_C_L_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -10345,14 +11033,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_C_L,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_C_L,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -11205,14 +11891,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_A_ST(long groupId, String articleId,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, articleId, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_A_ST,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, articleId, status };
+
+			finderPath = FINDER_PATH_FIND_BY_G_A_ST;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, articleId, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_A_ST_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -11280,14 +11979,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_A_ST,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_A_ST,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -11974,14 +12671,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_UT_ST(long groupId, String urlTitle,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, urlTitle, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_UT_ST,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, urlTitle, status };
+
+			finderPath = FINDER_PATH_FIND_BY_G_UT_ST;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, urlTitle, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_UT_ST_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -12049,14 +12759,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_UT_ST,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_UT_ST,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -12743,14 +13451,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByC_V_ST(long companyId, double version,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId, version, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_V_ST,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId, version, status };
+
+			finderPath = FINDER_PATH_FIND_BY_C_V_ST;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId, version, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_C_V_ST_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -12806,14 +13527,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_V_ST,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_V_ST,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -13113,12 +13832,25 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public List<JournalArticle> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -13163,14 +13895,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

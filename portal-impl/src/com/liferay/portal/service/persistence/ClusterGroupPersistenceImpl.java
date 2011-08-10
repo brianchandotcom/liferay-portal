@@ -67,9 +67,14 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	public static final String FINDER_CLASS_NAME_ENTITY = ClusterGroupImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
 			ClusterGroupModelImpl.FINDER_CACHE_ENABLED, ClusterGroupImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
+			ClusterGroupModelImpl.FINDER_CACHE_ENABLED, ClusterGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
 			ClusterGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -265,6 +270,8 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			closeSession(session);
 		}
 
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
 		EntityCacheUtil.putResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
@@ -433,12 +440,25 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 */
 	public List<ClusterGroup> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<ClusterGroup> list = (List<ClusterGroup>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<ClusterGroup> list = (List<ClusterGroup>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -483,14 +503,12 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

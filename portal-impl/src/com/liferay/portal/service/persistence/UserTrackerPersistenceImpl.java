@@ -69,9 +69,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public static final String FINDER_CLASS_NAME_ENTITY = UserTrackerImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			UserTrackerModelImpl.COMPANYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByCompanyId",
+			UserTrackerModelImpl.COMPANYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -81,10 +89,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			UserTrackerModelImpl.COMPANYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByUserId",
+			UserTrackerModelImpl.USERID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_USERID_PAGE_ORDER = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByUserId",
+			UserTrackerModelImpl.USERID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -94,10 +109,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId",
+			UserTrackerModelImpl.USERID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_SESSIONID = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
 			FINDER_CLASS_NAME_LIST, "findBySessionId",
+			UserTrackerModelImpl.SESSIONID_BIT_MASK,
+			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_SESSIONID_PAGE_ORDER = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findBySessionId",
+			UserTrackerModelImpl.SESSIONID_BIT_MASK,
 			new String[] {
 				String.class.getName(),
 				
@@ -107,10 +129,14 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public static final FinderPath FINDER_PATH_COUNT_BY_SESSIONID = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countBySessionId",
+			UserTrackerModelImpl.SESSIONID_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -304,7 +330,51 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		boolean isNew = userTracker.isNew();
+
+		UserTrackerModelImpl userTrackerModelImpl = (UserTrackerModelImpl)userTracker;
+
+		if (isNew || !UserTrackerModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((userTrackerModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COMPANYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(userTrackerModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+			}
+
+			if ((userTrackerModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_USERID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(userTrackerModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+			}
+
+			if ((userTrackerModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_SESSIONID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						userTrackerModelImpl.getOriginalSessionId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_SESSIONID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SESSIONID,
+					args);
+			}
+		}
 
 		EntityCacheUtil.putResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerImpl.class, userTracker.getPrimaryKey(), userTracker);
@@ -480,14 +550,27 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public List<UserTracker> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId };
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER;
+		}
+
+		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -531,14 +614,12 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -812,14 +893,27 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public List<UserTracker> findByUserId(long userId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_USERID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { userId };
+
+			finderPath = FINDER_PATH_FIND_BY_USERID;
+		}
+		else {
+			finderArgs = new Object[] {
+					userId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_USERID_PAGE_ORDER;
+		}
+
+		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -863,14 +957,12 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_USERID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1144,14 +1236,27 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public List<UserTracker> findBySessionId(String sessionId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				sessionId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_SESSIONID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { sessionId };
+
+			finderPath = FINDER_PATH_FIND_BY_SESSIONID;
+		}
+		else {
+			finderArgs = new Object[] {
+					sessionId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_SESSIONID_PAGE_ORDER;
+		}
+
+		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1207,14 +1312,12 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_SESSIONID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_SESSIONID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1496,12 +1599,25 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public List<UserTracker> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1546,14 +1662,12 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

@@ -78,6 +78,14 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingItemPrice"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.shopping.model.ShoppingItemPrice"),
+			true);
+	public static long ITEMID_BIT_MASK = 1L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ShoppingItemPrice.class;
@@ -122,7 +130,19 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	}
 
 	public void setItemId(long itemId) {
+		_bitMask |= ITEMID_BIT_MASK;
+
+		if (!_setOriginalItemId) {
+			_setOriginalItemId = true;
+
+			_originalItemId = _itemId;
+		}
+
 		_itemId = itemId;
+	}
+
+	public long getOriginalItemId() {
+		return _originalItemId;
 	}
 
 	public int getMinQuantity() {
@@ -314,6 +334,13 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	@Override
 	public void resetOriginalValues() {
+		ShoppingItemPriceModelImpl shoppingItemPriceModelImpl = this;
+
+		shoppingItemPriceModelImpl._originalItemId = shoppingItemPriceModelImpl._itemId;
+
+		shoppingItemPriceModelImpl._setOriginalItemId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -429,8 +456,11 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ShoppingItemPrice.class
 		};
+	private long _bitMask;
 	private long _itemPriceId;
 	private long _itemId;
+	private long _originalItemId;
+	private boolean _setOriginalItemId;
 	private int _minQuantity;
 	private int _maxQuantity;
 	private double _price;

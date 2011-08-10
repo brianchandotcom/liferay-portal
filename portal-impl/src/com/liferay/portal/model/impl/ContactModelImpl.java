@@ -105,6 +105,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Contact"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Contact"),
+			true);
+	public static long COMPANYID_BIT_MASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -165,6 +169,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		return models;
 	}
 
+	public long getBitMask() {
+		return _bitMask;
+	}
+
 	public Class<?> getModelClass() {
 		return Contact.class;
 	}
@@ -210,7 +218,19 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -689,6 +709,13 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public void resetOriginalValues() {
+		ContactModelImpl contactModelImpl = this;
+
+		contactModelImpl._originalCompanyId = contactModelImpl._companyId;
+
+		contactModelImpl._setOriginalCompanyId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -1099,8 +1126,11 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Contact.class
 		};
+	private long _bitMask;
 	private long _contactId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

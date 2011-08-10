@@ -69,18 +69,26 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	public static final String FINDER_CLASS_NAME_ENTITY = BrowserTrackerImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FETCH_BY_USERID = new FinderPath(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			BrowserTrackerModelImpl.FINDER_CACHE_ENABLED,
 			BrowserTrackerImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByUserId", new String[] { Long.class.getName() });
+			"fetchByUserId", BrowserTrackerModelImpl.USERID_BIT_MASK,
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			BrowserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId",
+			BrowserTrackerModelImpl.USERID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			BrowserTrackerModelImpl.FINDER_CACHE_ENABLED,
 			BrowserTrackerImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
 			new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			BrowserTrackerModelImpl.FINDER_CACHE_ENABLED,
+			BrowserTrackerImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			BrowserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -293,25 +301,30 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !BrowserTrackerModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
 
 		EntityCacheUtil.putResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			BrowserTrackerImpl.class, browserTracker.getPrimaryKey(),
 			browserTracker);
 
-		if (!isNew &&
-				(browserTracker.getUserId() != browserTrackerModelImpl.getOriginalUserId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID,
-				new Object[] {
-					Long.valueOf(browserTrackerModelImpl.getOriginalUserId())
-				});
-		}
-
-		if (isNew ||
-				(browserTracker.getUserId() != browserTrackerModelImpl.getOriginalUserId())) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
 				new Object[] { Long.valueOf(browserTracker.getUserId()) },
 				browserTracker);
+		}
+		else {
+			if ((browserTrackerModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_USERID.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID,
+					new Object[] {
+						Long.valueOf(
+							browserTrackerModelImpl.getOriginalUserId())
+					});
+			}
 		}
 
 		return browserTracker;
@@ -603,12 +616,25 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 */
 	public List<BrowserTracker> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<BrowserTracker> list = (List<BrowserTracker>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<BrowserTracker> list = (List<BrowserTracker>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -653,14 +679,12 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -74,9 +73,17 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	public static final String FINDER_CLASS_NAME_ENTITY = ShoppingCouponImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
 			ShoppingCouponImpl.class, FINDER_CLASS_NAME_LIST, "findByGroupId",
+			ShoppingCouponModelImpl.GROUPID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
+			ShoppingCouponImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByGroupId", ShoppingCouponModelImpl.GROUPID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -86,19 +93,26 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			ShoppingCouponModelImpl.GROUPID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_CODE = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
 			ShoppingCouponImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByCode",
+			ShoppingCouponModelImpl.CODE_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_CODE = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCode",
+			ShoppingCouponModelImpl.CODE_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
 			ShoppingCouponImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
 			new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED,
+			ShoppingCouponImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -309,24 +323,38 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !ShoppingCouponModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((shoppingCouponModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_GROUPID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(shoppingCouponModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponImpl.class, shoppingCoupon.getPrimaryKey(),
 			shoppingCoupon);
 
-		if (!isNew &&
-				(!Validator.equals(shoppingCoupon.getCode(),
-					shoppingCouponModelImpl.getOriginalCode()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE,
-				new Object[] { shoppingCouponModelImpl.getOriginalCode() });
-		}
-
-		if (isNew ||
-				(!Validator.equals(shoppingCoupon.getCode(),
-					shoppingCouponModelImpl.getOriginalCode()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CODE,
 				new Object[] { shoppingCoupon.getCode() }, shoppingCoupon);
+		}
+		else {
+			if ((shoppingCouponModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_CODE.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE,
+					new Object[] { shoppingCouponModelImpl.getOriginalCode() });
+			}
 		}
 
 		return shoppingCoupon;
@@ -509,14 +537,27 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	public List<ShoppingCoupon> findByGroupId(long groupId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<ShoppingCoupon> list = (List<ShoppingCoupon>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_GROUPID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId };
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER;
+		}
+
+		List<ShoppingCoupon> list = (List<ShoppingCoupon>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -564,14 +605,12 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -987,12 +1026,25 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	public List<ShoppingCoupon> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<ShoppingCoupon> list = (List<ShoppingCoupon>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<ShoppingCoupon> list = (List<ShoppingCoupon>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1037,14 +1089,12 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

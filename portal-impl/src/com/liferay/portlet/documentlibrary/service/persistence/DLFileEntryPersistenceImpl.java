@@ -87,9 +87,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final String FINDER_CLASS_NAME_ENTITY = DLFileEntryImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByUuid",
+			DLFileEntryModelImpl.UUID_BIT_MASK,
+			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_UUID_PAGE_ORDER = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByUuid",
+			DLFileEntryModelImpl.UUID_BIT_MASK,
 			new String[] {
 				String.class.getName(),
 				
@@ -99,18 +107,29 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUuid",
+			DLFileEntryModelImpl.UUID_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			DLFileEntryModelImpl.UUID_BIT_MASK |
+			DLFileEntryModelImpl.GROUPID_BIT_MASK,
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUUID_G",
+			DLFileEntryModelImpl.UUID_BIT_MASK |
+			DLFileEntryModelImpl.GROUPID_BIT_MASK,
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByGroupId",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -120,10 +139,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			DLFileEntryModelImpl.COMPANYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByCompanyId",
+			DLFileEntryModelImpl.COMPANYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -133,10 +159,19 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			DLFileEntryModelImpl.COMPANYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_U = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByG_U",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.USERID_BIT_MASK,
+			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_G_U_PAGE_ORDER = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByG_U",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.USERID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -146,10 +181,20 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_U = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_U",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.USERID_BIT_MASK,
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_F = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByG_F",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK,
+			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_G_F_PAGE_ORDER = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByG_F",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -159,10 +204,24 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_F = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_F",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK,
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_U_F = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByG_U_F",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.USERID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_G_U_F_PAGE_ORDER = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByG_U_F",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.USERID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				
@@ -172,12 +231,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_U_F = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_U_F",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.USERID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_F_N = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F_N",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK |
+			DLFileEntryModelImpl.NAME_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -185,6 +250,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_F_N = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_F_N",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK |
+			DLFileEntryModelImpl.NAME_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -192,6 +260,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_F_T = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F_T",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK |
+			DLFileEntryModelImpl.TITLE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -199,6 +270,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_F_T = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_F_T",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK |
+			DLFileEntryModelImpl.TITLE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -206,6 +280,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_FIND_BY_G_F_F = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByG_F_F",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK |
+			DLFileEntryModelImpl.FILEENTRYTYPEID_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_G_F_F_PAGE_ORDER = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByG_F_F",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK |
+			DLFileEntryModelImpl.FILEENTRYTYPEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				
@@ -215,12 +301,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_F_F = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_F_F",
+			DLFileEntryModelImpl.GROUPID_BIT_MASK |
+			DLFileEntryModelImpl.FOLDERID_BIT_MASK |
+			DLFileEntryModelImpl.FILEENTRYTYPEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -494,52 +586,106 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !DLFileEntryModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_UUID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						dlFileEntryModelImpl.getOriginalUuid()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+			}
+
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_GROUPID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+			}
+
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COMPANYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlFileEntryModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+			}
+
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_U.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),
+						Long.valueOf(dlFileEntryModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_U, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+			}
+
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_F.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),
+						Long.valueOf(dlFileEntryModelImpl.getOriginalFolderId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_F, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
+			}
+
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_U_F.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),
+						Long.valueOf(dlFileEntryModelImpl.getOriginalUserId()),
+						Long.valueOf(dlFileEntryModelImpl.getOriginalFolderId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_U_F, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_F, args);
+			}
+
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_F_F.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),
+						Long.valueOf(dlFileEntryModelImpl.getOriginalFolderId()),
+						Long.valueOf(dlFileEntryModelImpl.getOriginalFileEntryTypeId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_F_F, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_F, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryImpl.class, dlFileEntry.getPrimaryKey(), dlFileEntry);
 
-		if (!isNew &&
-				(!Validator.equals(dlFileEntry.getUuid(),
-					dlFileEntryModelImpl.getOriginalUuid()) ||
-				(dlFileEntry.getGroupId() != dlFileEntryModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					dlFileEntryModelImpl.getOriginalUuid(),
-					Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId())
-				});
-		}
-
-		if (isNew ||
-				(!Validator.equals(dlFileEntry.getUuid(),
-					dlFileEntryModelImpl.getOriginalUuid()) ||
-				(dlFileEntry.getGroupId() != dlFileEntryModelImpl.getOriginalGroupId()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					dlFileEntry.getUuid(),
 					Long.valueOf(dlFileEntry.getGroupId())
 				}, dlFileEntry);
-		}
-
-		if (!isNew &&
-				((dlFileEntry.getGroupId() != dlFileEntryModelImpl.getOriginalGroupId()) ||
-				(dlFileEntry.getFolderId() != dlFileEntryModelImpl.getOriginalFolderId()) ||
-				!Validator.equals(dlFileEntry.getName(),
-					dlFileEntryModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_N,
-				new Object[] {
-					Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),
-					Long.valueOf(dlFileEntryModelImpl.getOriginalFolderId()),
-					
-				dlFileEntryModelImpl.getOriginalName()
-				});
-		}
-
-		if (isNew ||
-				((dlFileEntry.getGroupId() != dlFileEntryModelImpl.getOriginalGroupId()) ||
-				(dlFileEntry.getFolderId() != dlFileEntryModelImpl.getOriginalFolderId()) ||
-				!Validator.equals(dlFileEntry.getName(),
-					dlFileEntryModelImpl.getOriginalName()))) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_N,
 				new Object[] {
 					Long.valueOf(dlFileEntry.getGroupId()),
@@ -547,27 +693,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					
 				dlFileEntry.getName()
 				}, dlFileEntry);
-		}
-
-		if (!isNew &&
-				((dlFileEntry.getGroupId() != dlFileEntryModelImpl.getOriginalGroupId()) ||
-				(dlFileEntry.getFolderId() != dlFileEntryModelImpl.getOriginalFolderId()) ||
-				!Validator.equals(dlFileEntry.getTitle(),
-					dlFileEntryModelImpl.getOriginalTitle()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_T,
-				new Object[] {
-					Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),
-					Long.valueOf(dlFileEntryModelImpl.getOriginalFolderId()),
-					
-				dlFileEntryModelImpl.getOriginalTitle()
-				});
-		}
-
-		if (isNew ||
-				((dlFileEntry.getGroupId() != dlFileEntryModelImpl.getOriginalGroupId()) ||
-				(dlFileEntry.getFolderId() != dlFileEntryModelImpl.getOriginalFolderId()) ||
-				!Validator.equals(dlFileEntry.getTitle(),
-					dlFileEntryModelImpl.getOriginalTitle()))) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_T,
 				new Object[] {
 					Long.valueOf(dlFileEntry.getGroupId()),
@@ -575,6 +700,38 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					
 				dlFileEntry.getTitle()
 				}, dlFileEntry);
+		}
+		else {
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_UUID_G.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
+					new Object[] {
+						dlFileEntryModelImpl.getOriginalUuid(),
+						Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId())
+					});
+			}
+
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_G_F_N.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_N,
+					new Object[] {
+						Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),
+						Long.valueOf(dlFileEntryModelImpl.getOriginalFolderId()),
+						
+					dlFileEntryModelImpl.getOriginalName()
+					});
+			}
+
+			if ((dlFileEntryModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_G_F_T.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_T,
+					new Object[] {
+						Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),
+						Long.valueOf(dlFileEntryModelImpl.getOriginalFolderId()),
+						
+					dlFileEntryModelImpl.getOriginalTitle()
+					});
+			}
 		}
 
 		return dlFileEntry;
@@ -764,14 +921,27 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public List<DLFileEntry> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { uuid };
+
+			finderPath = FINDER_PATH_FIND_BY_UUID;
+		}
+		else {
+			finderArgs = new Object[] {
+					uuid,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_UUID_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -831,14 +1001,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1281,14 +1449,27 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public List<DLFileEntry> findByGroupId(long groupId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_GROUPID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId };
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1336,14 +1517,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1931,14 +2110,27 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public List<DLFileEntry> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId };
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1986,14 +2178,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2275,14 +2465,27 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public List<DLFileEntry> findByG_U(long groupId, long userId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, userId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_U,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, userId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_U;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, userId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_U_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2334,14 +2537,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_U,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_U,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2959,14 +3160,27 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public List<DLFileEntry> findByG_F(long groupId, long folderId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, folderId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_F,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, folderId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_F;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, folderId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_F_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3018,14 +3232,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_F,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_F,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3325,14 +3537,27 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public List<DLFileEntry> findByG_F(long groupId, long[] folderIds,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, StringUtil.merge(folderIds),
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_F,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, StringUtil.merge(folderIds) };
+
+			finderPath = FINDER_PATH_FIND_BY_G_F;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, StringUtil.merge(folderIds),
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_F_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3404,14 +3629,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_F,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_F,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3952,14 +4175,27 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
 		long folderId, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, userId, folderId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_U_F,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, userId, folderId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_U_F;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, userId, folderId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_U_F_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -4015,14 +4251,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_U_F,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_U_F,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -4339,14 +4573,29 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
 		long[] folderIds, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, userId, StringUtil.merge(folderIds),
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_U_F,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] {
+					groupId, userId, StringUtil.merge(folderIds)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_U_F;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, userId, StringUtil.merge(folderIds),
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_U_F_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -4428,14 +4677,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_U_F,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_U_F,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -5334,14 +5581,27 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public List<DLFileEntry> findByG_F_F(long groupId, long folderId,
 		long fileEntryTypeId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, folderId, fileEntryTypeId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_F_F,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, folderId, fileEntryTypeId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_F_F;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, folderId, fileEntryTypeId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_F_F_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -5397,14 +5657,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_F_F,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_F_F,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -5722,14 +5980,29 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public List<DLFileEntry> findByG_F_F(long groupId, long[] folderIds,
 		long fileEntryTypeId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, StringUtil.merge(folderIds), fileEntryTypeId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_F_F,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] {
+					groupId, StringUtil.merge(folderIds), fileEntryTypeId
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_F_F;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, StringUtil.merge(folderIds), fileEntryTypeId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_F_F_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -5811,14 +6084,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_F_F,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_F_F,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -6378,12 +6649,25 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public List<DLFileEntry> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<DLFileEntry> list = (List<DLFileEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -6428,14 +6712,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Portlet;
@@ -70,9 +69,17 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	public static final String FINDER_CLASS_NAME_ENTITY = PortletImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			PortletModelImpl.COMPANYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER = new FinderPath(PortletModelImpl.ENTITY_CACHE_ENABLED,
+			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByCompanyId",
+			PortletModelImpl.COMPANYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -82,18 +89,26 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			PortletModelImpl.COMPANYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_P = new FinderPath(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
+			PortletModelImpl.COMPANYID_BIT_MASK |
+			PortletModelImpl.PORTLETID_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_P = new FinderPath(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_P",
+			PortletModelImpl.COMPANYID_BIT_MASK |
+			PortletModelImpl.PORTLETID_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(PortletModelImpl.ENTITY_CACHE_ENABLED,
+			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -311,33 +326,46 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !PortletModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((portletModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COMPANYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(portletModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+			}
+		}
 
 		EntityCacheUtil.putResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletImpl.class, portlet.getPrimaryKey(), portlet);
 
-		if (!isNew &&
-				((portlet.getCompanyId() != portletModelImpl.getOriginalCompanyId()) ||
-				!Validator.equals(portlet.getPortletId(),
-					portletModelImpl.getOriginalPortletId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
-				new Object[] {
-					Long.valueOf(portletModelImpl.getOriginalCompanyId()),
-					
-				portletModelImpl.getOriginalPortletId()
-				});
-		}
-
-		if (isNew ||
-				((portlet.getCompanyId() != portletModelImpl.getOriginalCompanyId()) ||
-				!Validator.equals(portlet.getPortletId(),
-					portletModelImpl.getOriginalPortletId()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
 				new Object[] {
 					Long.valueOf(portlet.getCompanyId()),
 					
 				portlet.getPortletId()
 				}, portlet);
+		}
+		else {
+			if ((portletModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_C_P.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
+					new Object[] {
+						Long.valueOf(portletModelImpl.getOriginalCompanyId()),
+						
+					portletModelImpl.getOriginalPortletId()
+					});
+			}
 		}
 
 		return portlet;
@@ -507,14 +535,27 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	public List<Portlet> findByCompanyId(long companyId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Portlet> list = (List<Portlet>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId };
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER;
+		}
+
+		List<Portlet> list = (List<Portlet>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -557,14 +598,12 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -984,12 +1023,25 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	public List<Portlet> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Portlet> list = (List<Portlet>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<Portlet> list = (List<Portlet>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1034,14 +1086,12 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

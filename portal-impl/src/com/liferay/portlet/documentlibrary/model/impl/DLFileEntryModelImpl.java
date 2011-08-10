@@ -104,6 +104,17 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFileEntry"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.documentlibrary.model.DLFileEntry"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long TITLE_BIT_MASK = 2L;
+	public static long FILEENTRYTYPEID_BIT_MASK = 4L;
+	public static long NAME_BIT_MASK = 8L;
+	public static long USERID_BIT_MASK = 16L;
+	public static long COMPANYID_BIT_MASK = 32L;
+	public static long UUID_BIT_MASK = 64L;
+	public static long FOLDERID_BIT_MASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -158,6 +169,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -227,6 +242,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -246,7 +263,19 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -255,6 +284,14 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -264,6 +301,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -345,6 +386,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	public void setFolderId(long folderId) {
+		_bitMask |= FOLDERID_BIT_MASK;
+
 		if (!_setOriginalFolderId) {
 			_setOriginalFolderId = true;
 
@@ -369,6 +412,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -419,6 +464,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	public void setTitle(String title) {
+		_bitMask |= TITLE_BIT_MASK;
+
 		if (_originalTitle == null) {
 			_originalTitle = _title;
 		}
@@ -464,7 +511,19 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	public void setFileEntryTypeId(long fileEntryTypeId) {
+		_bitMask |= FILEENTRYTYPEID_BIT_MASK;
+
+		if (!_setOriginalFileEntryTypeId) {
+			_setOriginalFileEntryTypeId = true;
+
+			_originalFileEntryTypeId = _fileEntryTypeId;
+		}
+
 		_fileEntryTypeId = fileEntryTypeId;
+	}
+
+	public long getOriginalFileEntryTypeId() {
+		return _originalFileEntryTypeId;
 	}
 
 	@JSON
@@ -668,6 +727,14 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryModelImpl._setOriginalGroupId = false;
 
+		dlFileEntryModelImpl._originalCompanyId = dlFileEntryModelImpl._companyId;
+
+		dlFileEntryModelImpl._setOriginalCompanyId = false;
+
+		dlFileEntryModelImpl._originalUserId = dlFileEntryModelImpl._userId;
+
+		dlFileEntryModelImpl._setOriginalUserId = false;
+
 		dlFileEntryModelImpl._originalFolderId = dlFileEntryModelImpl._folderId;
 
 		dlFileEntryModelImpl._setOriginalFolderId = false;
@@ -675,6 +742,12 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryModelImpl._originalName = dlFileEntryModelImpl._name;
 
 		dlFileEntryModelImpl._originalTitle = dlFileEntryModelImpl._title;
+
+		dlFileEntryModelImpl._originalFileEntryTypeId = dlFileEntryModelImpl._fileEntryTypeId;
+
+		dlFileEntryModelImpl._setOriginalFileEntryTypeId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -992,6 +1065,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLFileEntry.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _fileEntryId;
@@ -999,8 +1073,12 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private long _versionUserId;
 	private String _versionUserUuid;
@@ -1020,6 +1098,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private String _description;
 	private String _extraSettings;
 	private long _fileEntryTypeId;
+	private long _originalFileEntryTypeId;
+	private boolean _setOriginalFileEntryTypeId;
 	private String _version;
 	private long _size;
 	private int _readCount;

@@ -69,9 +69,17 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	public static final String FINDER_CLASS_NAME_ENTITY = ContactImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
 			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			ContactModelImpl.COMPANYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByCompanyId",
+			ContactModelImpl.COMPANYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -81,10 +89,14 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
 			ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			ContactModelImpl.COMPANYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
 			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
+			ContactModelImpl.FINDER_CACHE_ENABLED, ContactImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ContactModelImpl.ENTITY_CACHE_ENABLED,
 			ContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -275,7 +287,28 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		boolean isNew = contact.isNew();
+
+		ContactModelImpl contactModelImpl = (ContactModelImpl)contact;
+
+		if (isNew || !ContactModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((contactModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COMPANYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(contactModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+			}
+		}
 
 		EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 			ContactImpl.class, contact.getPrimaryKey(), contact);
@@ -472,14 +505,27 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	public List<Contact> findByCompanyId(long companyId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Contact> list = (List<Contact>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId };
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER;
+		}
+
+		List<Contact> list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -522,14 +568,12 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -797,12 +841,25 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	public List<Contact> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Contact> list = (List<Contact>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<Contact> list = (List<Contact>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -847,14 +904,12 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

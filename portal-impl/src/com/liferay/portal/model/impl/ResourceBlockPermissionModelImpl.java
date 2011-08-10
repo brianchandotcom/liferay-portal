@@ -69,6 +69,15 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourceBlockPermission"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.ResourceBlockPermission"),
+			true);
+	public static long RESOURCEBLOCKID_BIT_MASK = 1L;
+	public static long ROLEID_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ResourceBlockPermission.class;
@@ -113,6 +122,8 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public void setResourceBlockId(long resourceBlockId) {
+		_bitMask |= RESOURCEBLOCKID_BIT_MASK;
+
 		if (!_setOriginalResourceBlockId) {
 			_setOriginalResourceBlockId = true;
 
@@ -131,6 +142,8 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public void setRoleId(long roleId) {
+		_bitMask |= ROLEID_BIT_MASK;
+
 		if (!_setOriginalRoleId) {
 			_setOriginalRoleId = true;
 
@@ -252,6 +265,8 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		resourceBlockPermissionModelImpl._originalRoleId = resourceBlockPermissionModelImpl._roleId;
 
 		resourceBlockPermissionModelImpl._setOriginalRoleId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -319,6 +334,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ResourceBlockPermission.class
 		};
+	private long _bitMask;
 	private long _resourceBlockPermissionId;
 	private long _resourceBlockId;
 	private long _originalResourceBlockId;

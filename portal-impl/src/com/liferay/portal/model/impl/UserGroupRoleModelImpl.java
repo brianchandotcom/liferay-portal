@@ -73,6 +73,12 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.UserGroupRole"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.UserGroupRole"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long ROLEID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -104,6 +110,10 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -144,6 +154,14 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -155,13 +173,29 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		_userUuid = userUuid;
 	}
 
+	public long getOriginalUserId() {
+		return _originalUserId;
+	}
+
 	@JSON
 	public long getGroupId() {
 		return _groupId;
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -170,7 +204,19 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 	}
 
 	public void setRoleId(long roleId) {
+		_bitMask |= ROLEID_BIT_MASK;
+
+		if (!_setOriginalRoleId) {
+			_setOriginalRoleId = true;
+
+			_originalRoleId = _roleId;
+		}
+
 		_roleId = roleId;
+	}
+
+	public long getOriginalRoleId() {
+		return _originalRoleId;
 	}
 
 	@Override
@@ -240,6 +286,21 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 
 	@Override
 	public void resetOriginalValues() {
+		UserGroupRoleModelImpl userGroupRoleModelImpl = this;
+
+		userGroupRoleModelImpl._originalUserId = userGroupRoleModelImpl._userId;
+
+		userGroupRoleModelImpl._setOriginalUserId = false;
+
+		userGroupRoleModelImpl._originalGroupId = userGroupRoleModelImpl._groupId;
+
+		userGroupRoleModelImpl._setOriginalGroupId = false;
+
+		userGroupRoleModelImpl._originalRoleId = userGroupRoleModelImpl._roleId;
+
+		userGroupRoleModelImpl._setOriginalRoleId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -299,9 +360,16 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			UserGroupRole.class
 		};
+	private long _bitMask;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _roleId;
+	private long _originalRoleId;
+	private boolean _setOriginalRoleId;
 	private UserGroupRole _escapedModelProxy;
 }

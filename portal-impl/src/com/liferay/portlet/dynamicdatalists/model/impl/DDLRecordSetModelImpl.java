@@ -97,6 +97,12 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.dynamicdatalists.model.DDLRecordSet"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.dynamicdatalists.model.DDLRecordSet"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long RECORDSETKEY_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -139,6 +145,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -208,6 +218,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -299,6 +311,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	}
 
 	public void setRecordSetKey(String recordSetKey) {
+		_bitMask |= RECORDSETKEY_BIT_MASK;
+
 		if (_originalRecordSetKey == null) {
 			_originalRecordSetKey = _recordSetKey;
 		}
@@ -620,6 +634,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		ddlRecordSetModelImpl._setOriginalGroupId = false;
 
 		ddlRecordSetModelImpl._originalRecordSetKey = ddlRecordSetModelImpl._recordSetKey;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -811,6 +827,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DDLRecordSet.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _recordSetId;

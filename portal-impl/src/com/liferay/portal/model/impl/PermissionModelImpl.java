@@ -76,6 +76,11 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Permission"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Permission"),
+			true);
+	public static long RESOURCEID_BIT_MASK = 1L;
+	public static long ACTIONID_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -108,6 +113,10 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -175,6 +184,8 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 	}
 
 	public void setActionId(String actionId) {
+		_bitMask |= ACTIONID_BIT_MASK;
+
 		if (_originalActionId == null) {
 			_originalActionId = _actionId;
 		}
@@ -192,6 +203,8 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 	}
 
 	public void setResourceId(long resourceId) {
+		_bitMask |= RESOURCEID_BIT_MASK;
+
 		if (!_setOriginalResourceId) {
 			_setOriginalResourceId = true;
 
@@ -303,6 +316,8 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 		permissionModelImpl._originalResourceId = permissionModelImpl._resourceId;
 
 		permissionModelImpl._setOriginalResourceId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -376,6 +391,7 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Permission.class
 		};
+	private long _bitMask;
 	private long _permissionId;
 	private long _companyId;
 	private String _actionId;

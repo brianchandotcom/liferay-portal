@@ -90,6 +90,10 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.OrgLabor"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.OrgLabor"),
+			true);
+	public static long ORGANIZATIONID_BIT_MASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -137,6 +141,10 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		return models;
 	}
 
+	public long getBitMask() {
+		return _bitMask;
+	}
+
 	public Class<?> getModelClass() {
 		return OrgLabor.class;
 	}
@@ -182,7 +190,19 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	}
 
 	public void setOrganizationId(long organizationId) {
+		_bitMask |= ORGANIZATIONID_BIT_MASK;
+
+		if (!_setOriginalOrganizationId) {
+			_setOriginalOrganizationId = true;
+
+			_originalOrganizationId = _organizationId;
+		}
+
 		_organizationId = organizationId;
+	}
+
+	public long getOriginalOrganizationId() {
+		return _originalOrganizationId;
 	}
 
 	@JSON
@@ -444,6 +464,13 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	@Override
 	public void resetOriginalValues() {
+		OrgLaborModelImpl orgLaborModelImpl = this;
+
+		orgLaborModelImpl._originalOrganizationId = orgLaborModelImpl._organizationId;
+
+		orgLaborModelImpl._setOriginalOrganizationId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -615,8 +642,11 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			OrgLabor.class
 		};
+	private long _bitMask;
 	private long _orgLaborId;
 	private long _organizationId;
+	private long _originalOrganizationId;
+	private boolean _setOriginalOrganizationId;
 	private int _typeId;
 	private int _sunOpen;
 	private int _sunClose;

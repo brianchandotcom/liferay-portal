@@ -78,6 +78,12 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PluginSetting"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.PluginSetting"),
+			true);
+	public static long PLUGINID_BIT_MASK = 1L;
+	public static long COMPANYID_BIT_MASK = 2L;
+	public static long PLUGINTYPE_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -112,6 +118,10 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -159,6 +169,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -183,6 +195,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	}
 
 	public void setPluginId(String pluginId) {
+		_bitMask |= PLUGINID_BIT_MASK;
+
 		if (_originalPluginId == null) {
 			_originalPluginId = _pluginId;
 		}
@@ -205,6 +219,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	}
 
 	public void setPluginType(String pluginType) {
+		_bitMask |= PLUGINTYPE_BIT_MASK;
+
 		if (_originalPluginType == null) {
 			_originalPluginType = _pluginType;
 		}
@@ -345,6 +361,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		pluginSettingModelImpl._originalPluginId = pluginSettingModelImpl._pluginId;
 
 		pluginSettingModelImpl._originalPluginType = pluginSettingModelImpl._pluginType;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -446,6 +464,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			PluginSetting.class
 		};
+	private long _bitMask;
 	private long _pluginSettingId;
 	private long _companyId;
 	private long _originalCompanyId;

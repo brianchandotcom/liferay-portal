@@ -77,6 +77,16 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialEquityUser"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.social.model.SocialEquityUser"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long RANK_BIT_MASK = 2L;
+	public static long USERID_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return SocialEquityUser.class;
@@ -130,6 +140,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -156,6 +168,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -214,7 +228,19 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	}
 
 	public void setRank(int rank) {
+		_bitMask |= RANK_BIT_MASK;
+
+		if (!_setOriginalRank) {
+			_setOriginalRank = true;
+
+			_originalRank = _rank;
+		}
+
 		_rank = rank;
+	}
+
+	public int getOriginalRank() {
+		return _originalRank;
 	}
 
 	@Override
@@ -322,6 +348,12 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 		socialEquityUserModelImpl._originalUserId = socialEquityUserModelImpl._userId;
 
 		socialEquityUserModelImpl._setOriginalUserId = false;
+
+		socialEquityUserModelImpl._originalRank = socialEquityUserModelImpl._rank;
+
+		socialEquityUserModelImpl._setOriginalRank = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -429,6 +461,7 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SocialEquityUser.class
 		};
+	private long _bitMask;
 	private long _equityUserId;
 	private String _equityUserUuid;
 	private long _groupId;
@@ -444,6 +477,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	private double _participationK;
 	private double _participationB;
 	private int _rank;
+	private int _originalRank;
+	private boolean _setOriginalRank;
 	private transient ExpandoBridge _expandoBridge;
 	private SocialEquityUser _escapedModelProxy;
 }

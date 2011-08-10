@@ -91,6 +91,11 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.softwarecatalog.model.SCProductVersion"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.softwarecatalog.model.SCProductVersion"),
+			true);
+	public static long PRODUCTENTRYID_BIT_MASK = 1L;
+	public static long DIRECTDOWNLOADURL_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -132,6 +137,10 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -241,7 +250,19 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	}
 
 	public void setProductEntryId(long productEntryId) {
+		_bitMask |= PRODUCTENTRYID_BIT_MASK;
+
+		if (!_setOriginalProductEntryId) {
+			_setOriginalProductEntryId = true;
+
+			_originalProductEntryId = _productEntryId;
+		}
+
 		_productEntryId = productEntryId;
+	}
+
+	public long getOriginalProductEntryId() {
+		return _originalProductEntryId;
 	}
 
 	@JSON
@@ -297,6 +318,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	}
 
 	public void setDirectDownloadURL(String directDownloadURL) {
+		_bitMask |= DIRECTDOWNLOADURL_BIT_MASK;
+
 		if (_originalDirectDownloadURL == null) {
 			_originalDirectDownloadURL = _directDownloadURL;
 		}
@@ -423,7 +446,13 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	public void resetOriginalValues() {
 		SCProductVersionModelImpl scProductVersionModelImpl = this;
 
+		scProductVersionModelImpl._originalProductEntryId = scProductVersionModelImpl._productEntryId;
+
+		scProductVersionModelImpl._setOriginalProductEntryId = false;
+
 		scProductVersionModelImpl._originalDirectDownloadURL = scProductVersionModelImpl._directDownloadURL;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -599,6 +628,7 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SCProductVersion.class
 		};
+	private long _bitMask;
 	private long _productVersionId;
 	private long _companyId;
 	private long _userId;
@@ -607,6 +637,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _productEntryId;
+	private long _originalProductEntryId;
+	private boolean _setOriginalProductEntryId;
 	private String _version;
 	private String _changeLog;
 	private String _downloadPageURL;

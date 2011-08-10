@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Shard;
@@ -70,25 +69,36 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	public static final String FINDER_CLASS_NAME_ENTITY = ShardImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FETCH_BY_NAME = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, ShardImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
+			ShardModelImpl.NAME_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByName",
+			ShardModelImpl.NAME_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, ShardImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+			ShardModelImpl.CLASSNAMEID_BIT_MASK |
+			ShardModelImpl.CLASSPK_BIT_MASK,
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_C",
+			ShardModelImpl.CLASSNAMEID_BIT_MASK |
+			ShardModelImpl.CLASSPK_BIT_MASK,
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, ShardImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
+			ShardModelImpl.FINDER_CACHE_ENABLED, ShardImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -311,43 +321,39 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !ShardModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
 
 		EntityCacheUtil.putResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardImpl.class, shard.getPrimaryKey(), shard);
 
-		if (!isNew &&
-				(!Validator.equals(shard.getName(),
-					shardModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME,
-				new Object[] { shardModelImpl.getOriginalName() });
-		}
-
-		if (isNew ||
-				(!Validator.equals(shard.getName(),
-					shardModelImpl.getOriginalName()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
 				new Object[] { shard.getName() }, shard);
-		}
-
-		if (!isNew &&
-				((shard.getClassNameId() != shardModelImpl.getOriginalClassNameId()) ||
-				(shard.getClassPK() != shardModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
-				new Object[] {
-					Long.valueOf(shardModelImpl.getOriginalClassNameId()),
-					Long.valueOf(shardModelImpl.getOriginalClassPK())
-				});
-		}
-
-		if (isNew ||
-				((shard.getClassNameId() != shardModelImpl.getOriginalClassNameId()) ||
-				(shard.getClassPK() != shardModelImpl.getOriginalClassPK()))) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
 				new Object[] {
 					Long.valueOf(shard.getClassNameId()),
 					Long.valueOf(shard.getClassPK())
 				}, shard);
+		}
+		else {
+			if ((shardModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_NAME.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME,
+					new Object[] { shardModelImpl.getOriginalName() });
+			}
+
+			if ((shardModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_C_C.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
+					new Object[] {
+						Long.valueOf(shardModelImpl.getOriginalClassNameId()),
+						Long.valueOf(shardModelImpl.getOriginalClassPK())
+					});
+			}
 		}
 
 		return shard;
@@ -789,12 +795,25 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 */
 	public List<Shard> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Shard> list = (List<Shard>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<Shard> list = (List<Shard>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -839,14 +858,12 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

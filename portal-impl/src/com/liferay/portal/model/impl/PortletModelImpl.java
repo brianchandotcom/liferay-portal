@@ -77,6 +77,11 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Portlet"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Portlet"),
+			true);
+	public static long COMPANYID_BIT_MASK = 1L;
+	public static long PORTLETID_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -110,6 +115,10 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -157,6 +166,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -181,6 +192,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	}
 
 	public void setPortletId(String portletId) {
+		_bitMask |= PORTLETID_BIT_MASK;
+
 		if (_originalPortletId == null) {
 			_originalPortletId = _portletId;
 		}
@@ -318,6 +331,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		portletModelImpl._setOriginalCompanyId = false;
 
 		portletModelImpl._originalPortletId = portletModelImpl._portletId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -405,6 +420,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Portlet.class
 		};
+	private long _bitMask;
 	private long _id;
 	private long _companyId;
 	private long _originalCompanyId;

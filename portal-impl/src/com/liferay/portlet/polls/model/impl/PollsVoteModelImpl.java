@@ -85,6 +85,12 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.polls.model.PollsVote"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.polls.model.PollsVote"),
+			true);
+	public static long QUESTIONID_BIT_MASK = 1L;
+	public static long CHOICEID_BIT_MASK = 2L;
+	public static long USERID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -122,6 +128,10 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -178,6 +188,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -237,6 +249,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	public void setQuestionId(long questionId) {
+		_bitMask |= QUESTIONID_BIT_MASK;
+
 		if (!_setOriginalQuestionId) {
 			_setOriginalQuestionId = true;
 
@@ -256,7 +270,19 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	public void setChoiceId(long choiceId) {
+		_bitMask |= CHOICEID_BIT_MASK;
+
+		if (!_setOriginalChoiceId) {
+			_setOriginalChoiceId = true;
+
+			_originalChoiceId = _choiceId;
+		}
+
 		_choiceId = choiceId;
+	}
+
+	public long getOriginalChoiceId() {
+		return _originalChoiceId;
 	}
 
 	@JSON
@@ -373,6 +399,12 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		pollsVoteModelImpl._originalQuestionId = pollsVoteModelImpl._questionId;
 
 		pollsVoteModelImpl._setOriginalQuestionId = false;
+
+		pollsVoteModelImpl._originalChoiceId = pollsVoteModelImpl._choiceId;
+
+		pollsVoteModelImpl._setOriginalChoiceId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -507,6 +539,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			PollsVote.class
 		};
+	private long _bitMask;
 	private long _voteId;
 	private long _companyId;
 	private long _userId;
@@ -520,6 +553,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	private long _originalQuestionId;
 	private boolean _setOriginalQuestionId;
 	private long _choiceId;
+	private long _originalChoiceId;
+	private boolean _setOriginalChoiceId;
 	private Date _voteDate;
 	private transient ExpandoBridge _expandoBridge;
 	private PollsVote _escapedModelProxy;

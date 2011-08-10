@@ -69,9 +69,17 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public static final String FINDER_CLASS_NAME_ENTITY = WebsiteImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			WebsiteModelImpl.COMPANYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
+			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByCompanyId",
+			WebsiteModelImpl.COMPANYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -81,10 +89,17 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			WebsiteModelImpl.COMPANYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByUserId",
+			WebsiteModelImpl.USERID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_USERID_PAGE_ORDER = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
+			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByUserId",
+			WebsiteModelImpl.USERID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -94,10 +109,19 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId",
+			WebsiteModelImpl.USERID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByC_C",
+			WebsiteModelImpl.COMPANYID_BIT_MASK |
+			WebsiteModelImpl.CLASSNAMEID_BIT_MASK,
+			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_C_C_PAGE_ORDER = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
+			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByC_C",
+			WebsiteModelImpl.COMPANYID_BIT_MASK |
+			WebsiteModelImpl.CLASSNAMEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -107,10 +131,24 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_C",
+			WebsiteModelImpl.COMPANYID_BIT_MASK |
+			WebsiteModelImpl.CLASSNAMEID_BIT_MASK,
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C_C = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByC_C_C",
+			WebsiteModelImpl.COMPANYID_BIT_MASK |
+			WebsiteModelImpl.CLASSNAMEID_BIT_MASK |
+			WebsiteModelImpl.CLASSPK_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_C_C_C_PAGE_ORDER = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
+			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByC_C_C",
+			WebsiteModelImpl.COMPANYID_BIT_MASK |
+			WebsiteModelImpl.CLASSNAMEID_BIT_MASK |
+			WebsiteModelImpl.CLASSPK_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				
@@ -120,12 +158,30 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_C_C",
+			WebsiteModelImpl.COMPANYID_BIT_MASK |
+			WebsiteModelImpl.CLASSNAMEID_BIT_MASK |
+			WebsiteModelImpl.CLASSPK_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C_C_P = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByC_C_C_P",
+			WebsiteModelImpl.COMPANYID_BIT_MASK |
+			WebsiteModelImpl.CLASSNAMEID_BIT_MASK |
+			WebsiteModelImpl.CLASSPK_BIT_MASK |
+			WebsiteModelImpl.PRIMARY_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_C_C_C_P_PAGE_ORDER = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
+			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByC_C_C_P",
+			WebsiteModelImpl.COMPANYID_BIT_MASK |
+			WebsiteModelImpl.CLASSNAMEID_BIT_MASK |
+			WebsiteModelImpl.CLASSPK_BIT_MASK |
+			WebsiteModelImpl.PRIMARY_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName(),
@@ -136,6 +192,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C_P = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_C_C_P",
+			WebsiteModelImpl.COMPANYID_BIT_MASK |
+			WebsiteModelImpl.CLASSNAMEID_BIT_MASK |
+			WebsiteModelImpl.CLASSPK_BIT_MASK |
+			WebsiteModelImpl.PRIMARY_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
@@ -143,6 +203,9 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
+			WebsiteModelImpl.FINDER_CACHE_ENABLED, WebsiteImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -333,7 +396,78 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		boolean isNew = website.isNew();
+
+		WebsiteModelImpl websiteModelImpl = (WebsiteModelImpl)website;
+
+		if (isNew || !WebsiteModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((websiteModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COMPANYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(websiteModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+			}
+
+			if ((websiteModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_USERID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(websiteModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+			}
+
+			if ((websiteModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_C_C.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(websiteModelImpl.getOriginalCompanyId()),
+						Long.valueOf(websiteModelImpl.getOriginalClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_C, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+			}
+
+			if ((websiteModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_C_C_C.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(websiteModelImpl.getOriginalCompanyId()),
+						Long.valueOf(websiteModelImpl.getOriginalClassNameId()),
+						Long.valueOf(websiteModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_C_C, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+			}
+
+			if ((websiteModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_C_C_C_P.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(websiteModelImpl.getOriginalCompanyId()),
+						Long.valueOf(websiteModelImpl.getOriginalClassNameId()),
+						Long.valueOf(websiteModelImpl.getOriginalClassPK()),
+						Boolean.valueOf(websiteModelImpl.getOriginalPrimary())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_C_C_P, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteImpl.class, website.getPrimaryKey(), website);
@@ -511,14 +645,27 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	public List<Website> findByCompanyId(long companyId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Website> list = (List<Website>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId };
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER;
+		}
+
+		List<Website> list = (List<Website>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -565,14 +712,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -848,14 +993,27 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	public List<Website> findByUserId(long userId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Website> list = (List<Website>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_USERID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { userId };
+
+			finderPath = FINDER_PATH_FIND_BY_USERID;
+		}
+		else {
+			finderArgs = new Object[] {
+					userId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_USERID_PAGE_ORDER;
+		}
+
+		List<Website> list = (List<Website>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -902,14 +1060,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_USERID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1189,14 +1345,27 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	public List<Website> findByC_C(long companyId, long classNameId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId, classNameId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Website> list = (List<Website>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_C,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId, classNameId };
+
+			finderPath = FINDER_PATH_FIND_BY_C_C;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId, classNameId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_C_C_PAGE_ORDER;
+		}
+
+		List<Website> list = (List<Website>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1247,14 +1416,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_C,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_C,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1553,14 +1720,27 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public List<Website> findByC_C_C(long companyId, long classNameId,
 		long classPK, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId, classNameId, classPK,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Website> list = (List<Website>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_C_C,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId, classNameId, classPK };
+
+			finderPath = FINDER_PATH_FIND_BY_C_C_C;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId, classNameId, classPK,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_C_C_C_PAGE_ORDER;
+		}
+
+		List<Website> list = (List<Website>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1615,14 +1795,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_C_C,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_C_C,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1939,14 +2117,27 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public List<Website> findByC_C_C_P(long companyId, long classNameId,
 		long classPK, boolean primary, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId, classNameId, classPK, primary,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Website> list = (List<Website>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_C_C_P,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId, classNameId, classPK, primary };
+
+			finderPath = FINDER_PATH_FIND_BY_C_C_C_P;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId, classNameId, classPK, primary,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_C_C_C_P_PAGE_ORDER;
+		}
+
+		List<Website> list = (List<Website>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2005,14 +2196,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_C_C_P,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_C_C_P,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2325,12 +2514,25 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	public List<Website> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Website> list = (List<Website>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<Website> list = (List<Website>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2375,14 +2577,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

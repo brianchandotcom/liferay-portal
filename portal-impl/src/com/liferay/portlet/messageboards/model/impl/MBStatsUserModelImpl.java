@@ -77,6 +77,16 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBStatsUser"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.messageboards.model.MBStatsUser"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long MESSAGECOUNT_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return MBStatsUser.class;
@@ -129,6 +139,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -147,6 +159,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -173,7 +187,19 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	public void setMessageCount(int messageCount) {
+		_bitMask |= MESSAGECOUNT_BIT_MASK;
+
+		if (!_setOriginalMessageCount) {
+			_setOriginalMessageCount = true;
+
+			_originalMessageCount = _messageCount;
+		}
+
 		_messageCount = messageCount;
+	}
+
+	public int getOriginalMessageCount() {
+		return _originalMessageCount;
 	}
 
 	public Date getLastPostDate() {
@@ -293,6 +319,12 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		mbStatsUserModelImpl._originalUserId = mbStatsUserModelImpl._userId;
 
 		mbStatsUserModelImpl._setOriginalUserId = false;
+
+		mbStatsUserModelImpl._originalMessageCount = mbStatsUserModelImpl._messageCount;
+
+		mbStatsUserModelImpl._setOriginalMessageCount = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -375,6 +407,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			MBStatsUser.class
 		};
+	private long _bitMask;
 	private long _statsUserId;
 	private String _statsUserUuid;
 	private long _groupId;
@@ -385,6 +418,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private int _messageCount;
+	private int _originalMessageCount;
+	private boolean _setOriginalMessageCount;
 	private Date _lastPostDate;
 	private transient ExpandoBridge _expandoBridge;
 	private MBStatsUser _escapedModelProxy;

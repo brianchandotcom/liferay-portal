@@ -110,6 +110,18 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Layout"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Layout"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long PARENTLAYOUTID_BIT_MASK = 2L;
+	public static long FRIENDLYURL_BIT_MASK = 4L;
+	public static long LAYOUTID_BIT_MASK = 8L;
+	public static long ICONIMAGEID_BIT_MASK = 16L;
+	public static long COMPANYID_BIT_MASK = 32L;
+	public static long UUID_BIT_MASK = 64L;
+	public static long TYPE_BIT_MASK = 128L;
+	public static long PRIVATELAYOUT_BIT_MASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -166,6 +178,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -235,6 +251,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -254,7 +272,19 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -285,6 +315,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setPrivateLayout(boolean privateLayout) {
+		_bitMask |= PRIVATELAYOUT_BIT_MASK;
+
 		if (!_setOriginalPrivateLayout) {
 			_setOriginalPrivateLayout = true;
 
@@ -304,6 +336,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setLayoutId(long layoutId) {
+		_bitMask |= LAYOUTID_BIT_MASK;
+
 		if (!_setOriginalLayoutId) {
 			_setOriginalLayoutId = true;
 
@@ -323,7 +357,19 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setParentLayoutId(long parentLayoutId) {
+		_bitMask |= PARENTLAYOUTID_BIT_MASK;
+
+		if (!_setOriginalParentLayoutId) {
+			_setOriginalParentLayoutId = true;
+
+			_originalParentLayoutId = _parentLayoutId;
+		}
+
 		_parentLayoutId = parentLayoutId;
+	}
+
+	public long getOriginalParentLayoutId() {
+		return _originalParentLayoutId;
 	}
 
 	@JSON
@@ -788,7 +834,17 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setType(String type) {
+		_bitMask |= TYPE_BIT_MASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	@JSON
@@ -829,6 +885,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setFriendlyURL(String friendlyURL) {
+		_bitMask |= FRIENDLYURL_BIT_MASK;
+
 		if (_originalFriendlyURL == null) {
 			_originalFriendlyURL = _friendlyURL;
 		}
@@ -859,6 +917,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setIconImageId(long iconImageId) {
+		_bitMask |= ICONIMAGEID_BIT_MASK;
+
 		if (!_setOriginalIconImageId) {
 			_setOriginalIconImageId = true;
 
@@ -1122,6 +1182,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._setOriginalGroupId = false;
 
+		layoutModelImpl._originalCompanyId = layoutModelImpl._companyId;
+
+		layoutModelImpl._setOriginalCompanyId = false;
+
 		layoutModelImpl._originalPrivateLayout = layoutModelImpl._privateLayout;
 
 		layoutModelImpl._setOriginalPrivateLayout = false;
@@ -1130,11 +1194,19 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._setOriginalLayoutId = false;
 
+		layoutModelImpl._originalParentLayoutId = layoutModelImpl._parentLayoutId;
+
+		layoutModelImpl._setOriginalParentLayoutId = false;
+
+		layoutModelImpl._originalType = layoutModelImpl._type;
+
 		layoutModelImpl._originalFriendlyURL = layoutModelImpl._friendlyURL;
 
 		layoutModelImpl._originalIconImageId = layoutModelImpl._iconImageId;
 
 		layoutModelImpl._setOriginalIconImageId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -1499,6 +1571,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Layout.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _plid;
@@ -1506,6 +1579,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _privateLayout;
@@ -1515,12 +1590,15 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private long _originalLayoutId;
 	private boolean _setOriginalLayoutId;
 	private long _parentLayoutId;
+	private long _originalParentLayoutId;
+	private boolean _setOriginalParentLayoutId;
 	private String _name;
 	private String _title;
 	private String _description;
 	private String _keywords;
 	private String _robots;
 	private String _type;
+	private String _originalType;
 	private String _typeSettings;
 	private boolean _hidden;
 	private String _friendlyURL;

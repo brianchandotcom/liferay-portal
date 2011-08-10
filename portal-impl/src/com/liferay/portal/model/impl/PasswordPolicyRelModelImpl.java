@@ -71,6 +71,16 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PasswordPolicyRel"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.PasswordPolicyRel"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long PASSWORDPOLICYID_BIT_MASK = 2L;
+	public static long CLASSPK_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return PasswordPolicyRel.class;
@@ -115,6 +125,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	}
 
 	public void setPasswordPolicyId(long passwordPolicyId) {
+		_bitMask |= PASSWORDPOLICYID_BIT_MASK;
+
 		if (!_setOriginalPasswordPolicyId) {
 			_setOriginalPasswordPolicyId = true;
 
@@ -141,6 +153,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -159,6 +173,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -276,6 +292,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		passwordPolicyRelModelImpl._originalClassPK = passwordPolicyRelModelImpl._classPK;
 
 		passwordPolicyRelModelImpl._setOriginalClassPK = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -343,6 +361,7 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			PasswordPolicyRel.class
 		};
+	private long _bitMask;
 	private long _passwordPolicyRelId;
 	private long _passwordPolicyId;
 	private long _originalPasswordPolicyId;

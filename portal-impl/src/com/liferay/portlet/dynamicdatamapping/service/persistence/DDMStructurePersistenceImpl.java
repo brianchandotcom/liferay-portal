@@ -78,9 +78,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public static final String FINDER_CLASS_NAME_ENTITY = DDMStructureImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByUuid",
+			DDMStructureModelImpl.UUID_BIT_MASK,
+			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_UUID_PAGE_ORDER = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByUuid",
+			DDMStructureModelImpl.UUID_BIT_MASK,
 			new String[] {
 				String.class.getName(),
 				
@@ -90,18 +98,29 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUuid",
+			DDMStructureModelImpl.UUID_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			DDMStructureModelImpl.UUID_BIT_MASK |
+			DDMStructureModelImpl.GROUPID_BIT_MASK,
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUUID_G",
+			DDMStructureModelImpl.UUID_BIT_MASK |
+			DDMStructureModelImpl.GROUPID_BIT_MASK,
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByGroupId",
+			DDMStructureModelImpl.GROUPID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByGroupId",
+			DDMStructureModelImpl.GROUPID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -111,10 +130,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			DDMStructureModelImpl.GROUPID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_CLASSNAMEID = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByClassNameId",
+			DDMStructureModelImpl.CLASSNAMEID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_CLASSNAMEID_PAGE_ORDER = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByClassNameId",
+			DDMStructureModelImpl.CLASSNAMEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -124,18 +150,36 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public static final FinderPath FINDER_PATH_COUNT_BY_CLASSNAMEID = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByClassNameId",
+			DDMStructureModelImpl.CLASSNAMEID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_S = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
+			DDMStructureModelImpl.GROUPID_BIT_MASK |
+			DDMStructureModelImpl.STRUCTUREKEY_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_S = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_S",
+			DDMStructureModelImpl.GROUPID_BIT_MASK |
+			DDMStructureModelImpl.STRUCTUREKEY_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_N_D = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByG_N_D",
+			DDMStructureModelImpl.GROUPID_BIT_MASK |
+			DDMStructureModelImpl.NAME_BIT_MASK |
+			DDMStructureModelImpl.DESCRIPTION_BIT_MASK,
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_G_N_D_PAGE_ORDER = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByG_N_D",
+			DDMStructureModelImpl.GROUPID_BIT_MASK |
+			DDMStructureModelImpl.NAME_BIT_MASK |
+			DDMStructureModelImpl.DESCRIPTION_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(),
@@ -146,6 +190,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_N_D = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_N_D",
+			DDMStructureModelImpl.GROUPID_BIT_MASK |
+			DDMStructureModelImpl.NAME_BIT_MASK |
+			DDMStructureModelImpl.DESCRIPTION_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
@@ -153,6 +200,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -400,55 +450,98 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !DDMStructureModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((ddmStructureModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_UUID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						ddmStructureModelImpl.getOriginalUuid()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+			}
+
+			if ((ddmStructureModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_GROUPID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(ddmStructureModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+			}
+
+			if ((ddmStructureModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_CLASSNAMEID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(ddmStructureModelImpl.getOriginalClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_CLASSNAMEID,
+					args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
+					args);
+			}
+
+			if ((ddmStructureModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_N_D.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(ddmStructureModelImpl.getOriginalGroupId()),
+						
+						ddmStructureModelImpl.getOriginalName(),
+						
+						ddmStructureModelImpl.getOriginalDescription()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_N_D, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_D, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureImpl.class, ddmStructure.getPrimaryKey(), ddmStructure);
 
-		if (!isNew &&
-				(!Validator.equals(ddmStructure.getUuid(),
-					ddmStructureModelImpl.getOriginalUuid()) ||
-				(ddmStructure.getGroupId() != ddmStructureModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					ddmStructureModelImpl.getOriginalUuid(),
-					Long.valueOf(ddmStructureModelImpl.getOriginalGroupId())
-				});
-		}
-
-		if (isNew ||
-				(!Validator.equals(ddmStructure.getUuid(),
-					ddmStructureModelImpl.getOriginalUuid()) ||
-				(ddmStructure.getGroupId() != ddmStructureModelImpl.getOriginalGroupId()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					ddmStructure.getUuid(),
 					Long.valueOf(ddmStructure.getGroupId())
 				}, ddmStructure);
-		}
-
-		if (!isNew &&
-				((ddmStructure.getGroupId() != ddmStructureModelImpl.getOriginalGroupId()) ||
-				!Validator.equals(ddmStructure.getStructureKey(),
-					ddmStructureModelImpl.getOriginalStructureKey()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_S,
-				new Object[] {
-					Long.valueOf(ddmStructureModelImpl.getOriginalGroupId()),
-					
-				ddmStructureModelImpl.getOriginalStructureKey()
-				});
-		}
-
-		if (isNew ||
-				((ddmStructure.getGroupId() != ddmStructureModelImpl.getOriginalGroupId()) ||
-				!Validator.equals(ddmStructure.getStructureKey(),
-					ddmStructureModelImpl.getOriginalStructureKey()))) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_S,
 				new Object[] {
 					Long.valueOf(ddmStructure.getGroupId()),
 					
 				ddmStructure.getStructureKey()
 				}, ddmStructure);
+		}
+		else {
+			if ((ddmStructureModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_UUID_G.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
+					new Object[] {
+						ddmStructureModelImpl.getOriginalUuid(),
+						Long.valueOf(ddmStructureModelImpl.getOriginalGroupId())
+					});
+			}
+
+			if ((ddmStructureModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_G_S.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_S,
+					new Object[] {
+						Long.valueOf(ddmStructureModelImpl.getOriginalGroupId()),
+						
+					ddmStructureModelImpl.getOriginalStructureKey()
+					});
+			}
 		}
 
 		return ddmStructure;
@@ -626,14 +719,27 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	public List<DDMStructure> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { uuid };
+
+			finderPath = FINDER_PATH_FIND_BY_UUID;
+		}
+		else {
+			finderArgs = new Object[] {
+					uuid,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_UUID_PAGE_ORDER;
+		}
+
+		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -689,14 +795,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1133,14 +1237,27 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	public List<DDMStructure> findByGroupId(long groupId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_GROUPID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId };
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER;
+		}
+
+		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1184,14 +1301,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1758,14 +1873,27 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	public List<DDMStructure> findByClassNameId(long classNameId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				classNameId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_CLASSNAMEID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { classNameId };
+
+			finderPath = FINDER_PATH_FIND_BY_CLASSNAMEID;
+		}
+		else {
+			finderArgs = new Object[] {
+					classNameId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_CLASSNAMEID_PAGE_ORDER;
+		}
+
+		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1809,14 +1937,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_CLASSNAMEID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_CLASSNAMEID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2250,14 +2376,27 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public List<DDMStructure> findByG_N_D(long groupId, String name,
 		String description, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, name, description,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_N_D,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, name, description };
+
+			finderPath = FINDER_PATH_FIND_BY_G_N_D;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, name, description,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_N_D_PAGE_ORDER;
+		}
+
+		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2333,14 +2472,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_N_D,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_N_D,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3031,12 +3168,25 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	public List<DDMStructure> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<DDMStructure> list = (List<DDMStructure>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3081,14 +3231,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

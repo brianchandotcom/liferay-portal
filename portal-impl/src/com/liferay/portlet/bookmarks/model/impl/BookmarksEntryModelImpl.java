@@ -93,6 +93,14 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.bookmarks.model.BookmarksEntry"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.bookmarks.model.BookmarksEntry"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
+	public static long RESOURCEBLOCKID_BIT_MASK = 8L;
+	public static long FOLDERID_BIT_MASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -136,6 +144,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -205,6 +217,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -233,6 +247,14 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -242,6 +264,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -282,7 +308,19 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	}
 
 	public void setResourceBlockId(long resourceBlockId) {
+		_bitMask |= RESOURCEBLOCKID_BIT_MASK;
+
+		if (!_setOriginalResourceBlockId) {
+			_setOriginalResourceBlockId = true;
+
+			_originalResourceBlockId = _resourceBlockId;
+		}
+
 		_resourceBlockId = resourceBlockId;
+	}
+
+	public long getOriginalResourceBlockId() {
+		return _originalResourceBlockId;
 	}
 
 	@JSON
@@ -291,7 +329,19 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	}
 
 	public void setFolderId(long folderId) {
+		_bitMask |= FOLDERID_BIT_MASK;
+
+		if (!_setOriginalFolderId) {
+			_setOriginalFolderId = true;
+
+			_originalFolderId = _folderId;
+		}
+
 		_folderId = folderId;
+	}
+
+	public long getOriginalFolderId() {
+		return _originalFolderId;
 	}
 
 	@JSON
@@ -476,6 +526,20 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		bookmarksEntryModelImpl._originalGroupId = bookmarksEntryModelImpl._groupId;
 
 		bookmarksEntryModelImpl._setOriginalGroupId = false;
+
+		bookmarksEntryModelImpl._originalUserId = bookmarksEntryModelImpl._userId;
+
+		bookmarksEntryModelImpl._setOriginalUserId = false;
+
+		bookmarksEntryModelImpl._originalResourceBlockId = bookmarksEntryModelImpl._resourceBlockId;
+
+		bookmarksEntryModelImpl._setOriginalResourceBlockId = false;
+
+		bookmarksEntryModelImpl._originalFolderId = bookmarksEntryModelImpl._folderId;
+
+		bookmarksEntryModelImpl._setOriginalFolderId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -675,6 +739,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			BookmarksEntry.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;
@@ -684,11 +749,17 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _resourceBlockId;
+	private long _originalResourceBlockId;
+	private boolean _setOriginalResourceBlockId;
 	private long _folderId;
+	private long _originalFolderId;
+	private boolean _setOriginalFolderId;
 	private String _name;
 	private String _url;
 	private String _description;

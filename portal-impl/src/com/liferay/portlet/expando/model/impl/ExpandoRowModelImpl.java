@@ -67,6 +67,15 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.expando.model.ExpandoRow"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.expando.model.ExpandoRow"),
+			true);
+	public static long TABLEID_BIT_MASK = 1L;
+	public static long CLASSPK_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ExpandoRow.class;
@@ -119,6 +128,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	}
 
 	public void setTableId(long tableId) {
+		_bitMask |= TABLEID_BIT_MASK;
+
 		if (!_setOriginalTableId) {
 			_setOriginalTableId = true;
 
@@ -137,6 +148,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -235,6 +248,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		expandoRowModelImpl._originalClassPK = expandoRowModelImpl._classPK;
 
 		expandoRowModelImpl._setOriginalClassPK = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -302,6 +317,7 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ExpandoRow.class
 		};
+	private long _bitMask;
 	private long _rowId;
 	private long _companyId;
 	private long _tableId;

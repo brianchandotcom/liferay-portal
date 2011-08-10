@@ -82,6 +82,22 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialActivity"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.social.model.SocialActivity"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long CLASSNAMEID_BIT_MASK = 2L;
+	public static long USERID_BIT_MASK = 4L;
+	public static long MIRRORACTIVITYID_BIT_MASK = 8L;
+	public static long CLASSPK_BIT_MASK = 16L;
+	public static long COMPANYID_BIT_MASK = 32L;
+	public static long TYPE_BIT_MASK = 64L;
+	public static long CREATEDATE_BIT_MASK = 128L;
+	public static long RECEIVERUSERID_BIT_MASK = 256L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return SocialActivity.class;
@@ -126,6 +142,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -144,7 +162,19 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -152,6 +182,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -178,6 +210,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setCreateDate(long createDate) {
+		_bitMask |= CREATEDATE_BIT_MASK;
+
 		if (!_setOriginalCreateDate) {
 			_setOriginalCreateDate = true;
 
@@ -196,6 +230,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setMirrorActivityId(long mirrorActivityId) {
+		_bitMask |= MIRRORACTIVITYID_BIT_MASK;
+
 		if (!_setOriginalMirrorActivityId) {
 			_setOriginalMirrorActivityId = true;
 
@@ -222,6 +258,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -240,6 +278,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -258,6 +298,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setType(int type) {
+		_bitMask |= TYPE_BIT_MASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -289,6 +331,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setReceiverUserId(long receiverUserId) {
+		_bitMask |= RECEIVERUSERID_BIT_MASK;
+
 		if (!_setOriginalReceiverUserId) {
 			_setOriginalReceiverUserId = true;
 
@@ -423,6 +467,10 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 		socialActivityModelImpl._setOriginalGroupId = false;
 
+		socialActivityModelImpl._originalCompanyId = socialActivityModelImpl._companyId;
+
+		socialActivityModelImpl._setOriginalCompanyId = false;
+
 		socialActivityModelImpl._originalUserId = socialActivityModelImpl._userId;
 
 		socialActivityModelImpl._setOriginalUserId = false;
@@ -450,6 +498,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		socialActivityModelImpl._originalReceiverUserId = socialActivityModelImpl._receiverUserId;
 
 		socialActivityModelImpl._setOriginalReceiverUserId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -579,11 +629,14 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SocialActivity.class
 		};
+	private long _bitMask;
 	private long _activityId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

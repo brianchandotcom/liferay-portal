@@ -82,6 +82,13 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Company"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Company"),
+			true);
+	public static long SYSTEM_BIT_MASK = 1L;
+	public static long MX_BIT_MASK = 2L;
+	public static long WEBID_BIT_MASK = 4L;
+	public static long LOGOID_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -120,6 +127,10 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -181,6 +192,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	public void setWebId(String webId) {
+		_bitMask |= WEBID_BIT_MASK;
+
 		if (_originalWebId == null) {
 			_originalWebId = _webId;
 		}
@@ -217,6 +230,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	public void setMx(String mx) {
+		_bitMask |= MX_BIT_MASK;
+
 		if (_originalMx == null) {
 			_originalMx = _mx;
 		}
@@ -248,6 +263,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	public void setLogoId(long logoId) {
+		_bitMask |= LOGOID_BIT_MASK;
+
 		if (!_setOriginalLogoId) {
 			_setOriginalLogoId = true;
 
@@ -271,7 +288,19 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	public void setSystem(boolean system) {
+		_bitMask |= SYSTEM_BIT_MASK;
+
+		if (!_setOriginalSystem) {
+			_setOriginalSystem = true;
+
+			_originalSystem = _system;
+		}
+
 		_system = system;
+	}
+
+	public boolean getOriginalSystem() {
+		return _originalSystem;
 	}
 
 	@JSON
@@ -402,6 +431,12 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		companyModelImpl._originalLogoId = companyModelImpl._logoId;
 
 		companyModelImpl._setOriginalLogoId = false;
+
+		companyModelImpl._originalSystem = companyModelImpl._system;
+
+		companyModelImpl._setOriginalSystem = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -541,6 +576,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Company.class
 		};
+	private long _bitMask;
 	private long _companyId;
 	private long _accountId;
 	private String _webId;
@@ -553,6 +589,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	private long _originalLogoId;
 	private boolean _setOriginalLogoId;
 	private boolean _system;
+	private boolean _originalSystem;
+	private boolean _setOriginalSystem;
 	private int _maxUsers;
 	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;

@@ -102,6 +102,15 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.calendar.model.CalEvent"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.calendar.model.CalEvent"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long REMINDBY_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
+	public static long UUID_BIT_MASK = 8L;
+	public static long TYPE_BIT_MASK = 16L;
+	public static long REPEATING_BIT_MASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -153,6 +162,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -222,6 +235,8 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -241,7 +256,19 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -408,7 +435,17 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	public void setType(String type) {
+		_bitMask |= TYPE_BIT_MASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	@JSON
@@ -421,7 +458,19 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	public void setRepeating(boolean repeating) {
+		_bitMask |= REPEATING_BIT_MASK;
+
+		if (!_setOriginalRepeating) {
+			_setOriginalRepeating = true;
+
+			_originalRepeating = _repeating;
+		}
+
 		_repeating = repeating;
+	}
+
+	public boolean getOriginalRepeating() {
+		return _originalRepeating;
 	}
 
 	@JSON
@@ -444,7 +493,19 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	public void setRemindBy(int remindBy) {
+		_bitMask |= REMINDBY_BIT_MASK;
+
+		if (!_setOriginalRemindBy) {
+			_setOriginalRemindBy = true;
+
+			_originalRemindBy = _remindBy;
+		}
+
 		_remindBy = remindBy;
+	}
+
+	public int getOriginalRemindBy() {
+		return _originalRemindBy;
 	}
 
 	@JSON
@@ -587,6 +648,22 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		calEventModelImpl._originalGroupId = calEventModelImpl._groupId;
 
 		calEventModelImpl._setOriginalGroupId = false;
+
+		calEventModelImpl._originalCompanyId = calEventModelImpl._companyId;
+
+		calEventModelImpl._setOriginalCompanyId = false;
+
+		calEventModelImpl._originalType = calEventModelImpl._type;
+
+		calEventModelImpl._originalRepeating = calEventModelImpl._repeating;
+
+		calEventModelImpl._setOriginalRepeating = false;
+
+		calEventModelImpl._originalRemindBy = calEventModelImpl._remindBy;
+
+		calEventModelImpl._setOriginalRemindBy = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -876,6 +953,7 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			CalEvent.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _eventId;
@@ -883,6 +961,8 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
@@ -898,9 +978,14 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	private boolean _allDay;
 	private boolean _timeZoneSensitive;
 	private String _type;
+	private String _originalType;
 	private boolean _repeating;
+	private boolean _originalRepeating;
+	private boolean _setOriginalRepeating;
 	private String _recurrence;
 	private int _remindBy;
+	private int _originalRemindBy;
+	private boolean _setOriginalRemindBy;
 	private int _firstReminder;
 	private int _secondReminder;
 	private transient ExpandoBridge _expandoBridge;

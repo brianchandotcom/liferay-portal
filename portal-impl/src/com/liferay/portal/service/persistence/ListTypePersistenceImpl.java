@@ -69,9 +69,17 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	public static final String FINDER_CLASS_NAME_ENTITY = ListTypeImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_TYPE = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByType",
+			ListTypeModelImpl.TYPE_BIT_MASK,
+			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_TYPE_PAGE_ORDER = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByType",
+			ListTypeModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				String.class.getName(),
 				
@@ -81,10 +89,14 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	public static final FinderPath FINDER_PATH_COUNT_BY_TYPE = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByType",
+			ListTypeModelImpl.TYPE_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -275,7 +287,25 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		boolean isNew = listType.isNew();
+
+		ListTypeModelImpl listTypeModelImpl = (ListTypeModelImpl)listType;
+
+		if (isNew || !ListTypeModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((listTypeModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_TYPE.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] { listTypeModelImpl.getOriginalType() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_TYPE, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeImpl.class, listType.getPrimaryKey(), listType);
@@ -443,14 +473,27 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	public List<ListType> findByType(String type, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				type,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<ListType> list = (List<ListType>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_TYPE,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { type };
+
+			finderPath = FINDER_PATH_FIND_BY_TYPE;
+		}
+		else {
+			finderArgs = new Object[] {
+					type,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_TYPE_PAGE_ORDER;
+		}
+
+		List<ListType> list = (List<ListType>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -510,14 +553,12 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_TYPE,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_TYPE,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -801,12 +842,25 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	public List<ListType> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<ListType> list = (List<ListType>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<ListType> list = (List<ListType>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -851,14 +905,12 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

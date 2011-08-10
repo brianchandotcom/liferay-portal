@@ -72,6 +72,15 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourceAction"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.ResourceAction"),
+			true);
+	public static long NAME_BIT_MASK = 1L;
+	public static long ACTIONID_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ResourceAction.class;
@@ -121,6 +130,8 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -142,6 +153,8 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 	}
 
 	public void setActionId(String actionId) {
+		_bitMask |= ACTIONID_BIT_MASK;
+
 		if (_originalActionId == null) {
 			_originalActionId = _actionId;
 		}
@@ -269,6 +282,8 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 		resourceActionModelImpl._originalName = resourceActionModelImpl._name;
 
 		resourceActionModelImpl._originalActionId = resourceActionModelImpl._actionId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -348,6 +363,7 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ResourceAction.class
 		};
+	private long _bitMask;
 	private long _resourceActionId;
 	private String _name;
 	private String _originalName;

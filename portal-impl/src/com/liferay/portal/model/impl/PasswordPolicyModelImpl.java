@@ -107,6 +107,12 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PasswordPolicy"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.PasswordPolicy"),
+			true);
+	public static long NAME_BIT_MASK = 1L;
+	public static long DEFAULTPOLICY_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -169,6 +175,10 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return models;
 	}
 
+	public long getBitMask() {
+		return _bitMask;
+	}
+
 	public Class<?> getModelClass() {
 		return PasswordPolicy.class;
 	}
@@ -214,6 +224,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -286,6 +298,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	public void setDefaultPolicy(boolean defaultPolicy) {
+		_bitMask |= DEFAULTPOLICY_BIT_MASK;
+
 		if (!_setOriginalDefaultPolicy) {
 			_setOriginalDefaultPolicy = true;
 
@@ -310,6 +324,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -704,6 +720,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		passwordPolicyModelImpl._setOriginalDefaultPolicy = false;
 
 		passwordPolicyModelImpl._originalName = passwordPolicyModelImpl._name;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -1027,6 +1045,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			PasswordPolicy.class
 		};
+	private long _bitMask;
 	private long _passwordPolicyId;
 	private long _companyId;
 	private long _originalCompanyId;

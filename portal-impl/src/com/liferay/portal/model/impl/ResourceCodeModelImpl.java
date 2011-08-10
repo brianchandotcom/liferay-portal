@@ -70,6 +70,16 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourceCode"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.ResourceCode"),
+			true);
+	public static long SCOPE_BIT_MASK = 1L;
+	public static long NAME_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ResourceCode.class;
@@ -114,6 +124,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -137,6 +149,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -153,6 +167,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	}
 
 	public void setScope(int scope) {
+		_bitMask |= SCOPE_BIT_MASK;
+
 		if (!_setOriginalScope) {
 			_setOriginalScope = true;
 
@@ -268,6 +284,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 		resourceCodeModelImpl._originalScope = resourceCodeModelImpl._scope;
 
 		resourceCodeModelImpl._setOriginalScope = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -341,6 +359,7 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ResourceCode.class
 		};
+	private long _bitMask;
 	private long _codeId;
 	private long _companyId;
 	private long _originalCompanyId;

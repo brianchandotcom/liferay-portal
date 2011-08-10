@@ -70,6 +70,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ClusterGroup"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = false;
 
 	public Class<?> getModelClass() {
 		return ClusterGroup.class;

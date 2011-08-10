@@ -75,6 +75,11 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Resource"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Resource"),
+			true);
+	public static long CODEID_BIT_MASK = 1L;
+	public static long PRIMKEY_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -106,6 +111,10 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -153,6 +162,8 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 	}
 
 	public void setCodeId(long codeId) {
+		_bitMask |= CODEID_BIT_MASK;
+
 		if (!_setOriginalCodeId) {
 			_setOriginalCodeId = true;
 
@@ -177,6 +188,8 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 	}
 
 	public void setPrimKey(String primKey) {
+		_bitMask |= PRIMKEY_BIT_MASK;
+
 		if (_originalPrimKey == null) {
 			_originalPrimKey = _primKey;
 		}
@@ -285,6 +298,8 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 		resourceModelImpl._setOriginalCodeId = false;
 
 		resourceModelImpl._originalPrimKey = resourceModelImpl._primKey;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -350,6 +365,7 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Resource.class
 		};
+	private long _bitMask;
 	private long _resourceId;
 	private long _codeId;
 	private long _originalCodeId;

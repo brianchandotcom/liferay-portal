@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PluginSetting;
@@ -70,9 +69,17 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	public static final String FINDER_CLASS_NAME_ENTITY = PluginSettingImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 			PluginSettingModelImpl.FINDER_CACHE_ENABLED,
 			PluginSettingImpl.class, FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			PluginSettingModelImpl.COMPANYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER = new FinderPath(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
+			PluginSettingModelImpl.FINDER_CACHE_ENABLED,
+			PluginSettingImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByCompanyId", PluginSettingModelImpl.COMPANYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -82,10 +89,14 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 			PluginSettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			PluginSettingModelImpl.COMPANYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_I_T = new FinderPath(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 			PluginSettingModelImpl.FINDER_CACHE_ENABLED,
 			PluginSettingImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_I_T",
+			PluginSettingModelImpl.COMPANYID_BIT_MASK |
+			PluginSettingModelImpl.PLUGINID_BIT_MASK |
+			PluginSettingModelImpl.PLUGINTYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
@@ -93,6 +104,9 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_I_T = new FinderPath(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 			PluginSettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_I_T",
+			PluginSettingModelImpl.COMPANYID_BIT_MASK |
+			PluginSettingModelImpl.PLUGINID_BIT_MASK |
+			PluginSettingModelImpl.PLUGINTYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
@@ -101,6 +115,10 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			PluginSettingModelImpl.FINDER_CACHE_ENABLED,
 			PluginSettingImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
 			new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
+			PluginSettingModelImpl.FINDER_CACHE_ENABLED,
+			PluginSettingImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 			PluginSettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -330,34 +348,30 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !PluginSettingModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((pluginSettingModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COMPANYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(pluginSettingModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+			}
+		}
 
 		EntityCacheUtil.putResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 			PluginSettingImpl.class, pluginSetting.getPrimaryKey(),
 			pluginSetting);
 
-		if (!isNew &&
-				((pluginSetting.getCompanyId() != pluginSettingModelImpl.getOriginalCompanyId()) ||
-				!Validator.equals(pluginSetting.getPluginId(),
-					pluginSettingModelImpl.getOriginalPluginId()) ||
-				!Validator.equals(pluginSetting.getPluginType(),
-					pluginSettingModelImpl.getOriginalPluginType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_I_T,
-				new Object[] {
-					Long.valueOf(pluginSettingModelImpl.getOriginalCompanyId()),
-					
-				pluginSettingModelImpl.getOriginalPluginId(),
-					
-				pluginSettingModelImpl.getOriginalPluginType()
-				});
-		}
-
-		if (isNew ||
-				((pluginSetting.getCompanyId() != pluginSettingModelImpl.getOriginalCompanyId()) ||
-				!Validator.equals(pluginSetting.getPluginId(),
-					pluginSettingModelImpl.getOriginalPluginId()) ||
-				!Validator.equals(pluginSetting.getPluginType(),
-					pluginSettingModelImpl.getOriginalPluginType()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_I_T,
 				new Object[] {
 					Long.valueOf(pluginSetting.getCompanyId()),
@@ -366,6 +380,20 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 					
 				pluginSetting.getPluginType()
 				}, pluginSetting);
+		}
+		else {
+			if ((pluginSettingModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_C_I_T.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_I_T,
+					new Object[] {
+						Long.valueOf(
+							pluginSettingModelImpl.getOriginalCompanyId()),
+						
+					pluginSettingModelImpl.getOriginalPluginId(),
+						
+					pluginSettingModelImpl.getOriginalPluginType()
+					});
+			}
 		}
 
 		return pluginSetting;
@@ -538,14 +566,27 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	public List<PluginSetting> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<PluginSetting> list = (List<PluginSetting>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId };
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER;
+		}
+
+		List<PluginSetting> list = (List<PluginSetting>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -589,14 +630,12 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1043,12 +1082,25 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	public List<PluginSetting> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<PluginSetting> list = (List<PluginSetting>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<PluginSetting> list = (List<PluginSetting>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1093,14 +1145,12 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

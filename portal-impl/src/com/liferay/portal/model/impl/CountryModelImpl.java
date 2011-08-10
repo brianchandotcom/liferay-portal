@@ -81,6 +81,13 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Country"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Country"),
+			true);
+	public static long NAME_BIT_MASK = 1L;
+	public static long ACTIVE_BIT_MASK = 2L;
+	public static long A2_BIT_MASK = 4L;
+	public static long A3_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -116,6 +123,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -168,6 +179,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -190,6 +203,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public void setA2(String a2) {
+		_bitMask |= A2_BIT_MASK;
+
 		if (_originalA2 == null) {
 			_originalA2 = _a2;
 		}
@@ -212,6 +227,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public void setA3(String a3) {
+		_bitMask |= A3_BIT_MASK;
+
 		if (_originalA3 == null) {
 			_originalA3 = _a3;
 		}
@@ -261,7 +278,19 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public void setActive(boolean active) {
+		_bitMask |= ACTIVE_BIT_MASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
 	}
 
 	@Override
@@ -363,6 +392,12 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		countryModelImpl._originalA2 = countryModelImpl._a2;
 
 		countryModelImpl._originalA3 = countryModelImpl._a3;
+
+		countryModelImpl._originalActive = countryModelImpl._active;
+
+		countryModelImpl._setOriginalActive = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -484,6 +519,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Country.class
 		};
+	private long _bitMask;
 	private long _countryId;
 	private String _name;
 	private String _originalName;
@@ -494,6 +530,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	private String _number;
 	private String _idd;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private transient ExpandoBridge _expandoBridge;
 	private Country _escapedModelProxy;
 }

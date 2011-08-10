@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceCode;
@@ -70,9 +69,17 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	public static final String FINDER_CLASS_NAME_ENTITY = ResourceCodeImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, ResourceCodeImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByCompanyId",
+			ResourceCodeModelImpl.COMPANYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, ResourceCodeImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByCompanyId",
+			ResourceCodeModelImpl.COMPANYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -82,10 +89,17 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			ResourceCodeModelImpl.COMPANYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_NAME = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, ResourceCodeImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByName",
+			ResourceCodeModelImpl.NAME_BIT_MASK,
+			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_NAME_PAGE_ORDER = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, ResourceCodeImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByName",
+			ResourceCodeModelImpl.NAME_BIT_MASK,
 			new String[] {
 				String.class.getName(),
 				
@@ -95,10 +109,14 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByName",
+			ResourceCodeModelImpl.NAME_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_N_S = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, ResourceCodeImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N_S",
+			ResourceCodeModelImpl.COMPANYID_BIT_MASK |
+			ResourceCodeModelImpl.NAME_BIT_MASK |
+			ResourceCodeModelImpl.SCOPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
@@ -106,6 +124,9 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_S = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_N_S",
+			ResourceCodeModelImpl.COMPANYID_BIT_MASK |
+			ResourceCodeModelImpl.NAME_BIT_MASK |
+			ResourceCodeModelImpl.SCOPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
@@ -113,6 +134,9 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, ResourceCodeImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, ResourceCodeImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -335,36 +359,60 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !ResourceCodeModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((resourceCodeModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COMPANYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(resourceCodeModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+			}
+
+			if ((resourceCodeModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_NAME.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						resourceCodeModelImpl.getOriginalName()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_NAME, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeImpl.class, resourceCode.getPrimaryKey(), resourceCode);
 
-		if (!isNew &&
-				((resourceCode.getCompanyId() != resourceCodeModelImpl.getOriginalCompanyId()) ||
-				!Validator.equals(resourceCode.getName(),
-					resourceCodeModelImpl.getOriginalName()) ||
-				(resourceCode.getScope() != resourceCodeModelImpl.getOriginalScope()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S,
-				new Object[] {
-					Long.valueOf(resourceCodeModelImpl.getOriginalCompanyId()),
-					
-				resourceCodeModelImpl.getOriginalName(),
-					Integer.valueOf(resourceCodeModelImpl.getOriginalScope())
-				});
-		}
-
-		if (isNew ||
-				((resourceCode.getCompanyId() != resourceCodeModelImpl.getOriginalCompanyId()) ||
-				!Validator.equals(resourceCode.getName(),
-					resourceCodeModelImpl.getOriginalName()) ||
-				(resourceCode.getScope() != resourceCodeModelImpl.getOriginalScope()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_S,
 				new Object[] {
 					Long.valueOf(resourceCode.getCompanyId()),
 					
 				resourceCode.getName(), Integer.valueOf(resourceCode.getScope())
 				}, resourceCode);
+		}
+		else {
+			if ((resourceCodeModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_C_N_S.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S,
+					new Object[] {
+						Long.valueOf(
+							resourceCodeModelImpl.getOriginalCompanyId()),
+						
+					resourceCodeModelImpl.getOriginalName(),
+						Integer.valueOf(
+							resourceCodeModelImpl.getOriginalScope())
+					});
+			}
 		}
 
 		return resourceCode;
@@ -534,14 +582,27 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 */
 	public List<ResourceCode> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<ResourceCode> list = (List<ResourceCode>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId };
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER;
+		}
+
+		List<ResourceCode> list = (List<ResourceCode>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -585,14 +646,12 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -865,14 +924,27 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 */
 	public List<ResourceCode> findByName(String name, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				name,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<ResourceCode> list = (List<ResourceCode>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_NAME,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { name };
+
+			finderPath = FINDER_PATH_FIND_BY_NAME;
+		}
+		else {
+			finderArgs = new Object[] {
+					name,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_NAME_PAGE_ORDER;
+		}
+
+		List<ResourceCode> list = (List<ResourceCode>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -928,14 +1000,12 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_NAME,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_NAME,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1379,12 +1449,25 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 */
 	public List<ResourceCode> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<ResourceCode> list = (List<ResourceCode>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<ResourceCode> list = (List<ResourceCode>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1429,14 +1512,12 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

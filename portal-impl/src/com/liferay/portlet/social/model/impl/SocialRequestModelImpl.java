@@ -84,6 +84,22 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialRequest"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.social.model.SocialRequest"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long CLASSNAMEID_BIT_MASK = 2L;
+	public static long STATUS_BIT_MASK = 4L;
+	public static long USERID_BIT_MASK = 8L;
+	public static long CLASSPK_BIT_MASK = 16L;
+	public static long COMPANYID_BIT_MASK = 32L;
+	public static long UUID_BIT_MASK = 64L;
+	public static long TYPE_BIT_MASK = 128L;
+	public static long RECEIVERUSERID_BIT_MASK = 256L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return SocialRequest.class;
@@ -149,6 +165,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -167,7 +185,19 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -175,6 +205,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -225,6 +257,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -243,6 +277,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -261,6 +297,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public void setType(int type) {
+		_bitMask |= TYPE_BIT_MASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -292,6 +330,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public void setReceiverUserId(long receiverUserId) {
+		_bitMask |= RECEIVERUSERID_BIT_MASK;
+
 		if (!_setOriginalReceiverUserId) {
 			_setOriginalReceiverUserId = true;
 
@@ -319,7 +359,19 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public void setStatus(int status) {
+		_bitMask |= STATUS_BIT_MASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@Override
@@ -438,6 +490,10 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 		socialRequestModelImpl._setOriginalGroupId = false;
 
+		socialRequestModelImpl._originalCompanyId = socialRequestModelImpl._companyId;
+
+		socialRequestModelImpl._setOriginalCompanyId = false;
+
 		socialRequestModelImpl._originalUserId = socialRequestModelImpl._userId;
 
 		socialRequestModelImpl._setOriginalUserId = false;
@@ -457,6 +513,12 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		socialRequestModelImpl._originalReceiverUserId = socialRequestModelImpl._receiverUserId;
 
 		socialRequestModelImpl._setOriginalReceiverUserId = false;
+
+		socialRequestModelImpl._originalStatus = socialRequestModelImpl._status;
+
+		socialRequestModelImpl._setOriginalStatus = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -608,6 +670,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SocialRequest.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _requestId;
@@ -615,6 +678,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;
@@ -636,6 +701,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	private long _originalReceiverUserId;
 	private boolean _setOriginalReceiverUserId;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private transient ExpandoBridge _expandoBridge;
 	private SocialRequest _escapedModelProxy;
 }

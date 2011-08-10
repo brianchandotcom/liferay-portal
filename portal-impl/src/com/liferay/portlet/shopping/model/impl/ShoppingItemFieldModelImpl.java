@@ -74,6 +74,14 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingItemField"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.shopping.model.ShoppingItemField"),
+			true);
+	public static long ITEMID_BIT_MASK = 1L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ShoppingItemField.class;
@@ -118,7 +126,19 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	}
 
 	public void setItemId(long itemId) {
+		_bitMask |= ITEMID_BIT_MASK;
+
+		if (!_setOriginalItemId) {
+			_setOriginalItemId = true;
+
+			_originalItemId = _itemId;
+		}
+
 		_itemId = itemId;
+	}
+
+	public long getOriginalItemId() {
+		return _originalItemId;
 	}
 
 	public String getName() {
@@ -265,6 +285,13 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	@Override
 	public void resetOriginalValues() {
+		ShoppingItemFieldModelImpl shoppingItemFieldModelImpl = this;
+
+		shoppingItemFieldModelImpl._originalItemId = shoppingItemFieldModelImpl._itemId;
+
+		shoppingItemFieldModelImpl._setOriginalItemId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -358,8 +385,11 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ShoppingItemField.class
 		};
+	private long _bitMask;
 	private long _itemFieldId;
 	private long _itemId;
+	private long _originalItemId;
+	private boolean _setOriginalItemId;
 	private String _name;
 	private String _values;
 	private String _description;

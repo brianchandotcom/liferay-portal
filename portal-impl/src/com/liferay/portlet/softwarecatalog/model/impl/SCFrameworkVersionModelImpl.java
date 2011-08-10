@@ -89,6 +89,12 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long ACTIVE_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -129,6 +135,10 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -189,7 +199,19 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -198,7 +220,19 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -288,7 +322,19 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	}
 
 	public void setActive(boolean active) {
+		_bitMask |= ACTIVE_BIT_MASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
 	}
 
 	@JSON
@@ -398,6 +444,21 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	@Override
 	public void resetOriginalValues() {
+		SCFrameworkVersionModelImpl scFrameworkVersionModelImpl = this;
+
+		scFrameworkVersionModelImpl._originalGroupId = scFrameworkVersionModelImpl._groupId;
+
+		scFrameworkVersionModelImpl._setOriginalGroupId = false;
+
+		scFrameworkVersionModelImpl._originalCompanyId = scFrameworkVersionModelImpl._companyId;
+
+		scFrameworkVersionModelImpl._setOriginalCompanyId = false;
+
+		scFrameworkVersionModelImpl._originalActive = scFrameworkVersionModelImpl._active;
+
+		scFrameworkVersionModelImpl._setOriginalActive = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -554,9 +615,14 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SCFrameworkVersion.class
 		};
+	private long _bitMask;
 	private long _frameworkVersionId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
@@ -565,6 +631,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	private String _name;
 	private String _url;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private int _priority;
 	private transient ExpandoBridge _expandoBridge;
 	private SCFrameworkVersion _escapedModelProxy;

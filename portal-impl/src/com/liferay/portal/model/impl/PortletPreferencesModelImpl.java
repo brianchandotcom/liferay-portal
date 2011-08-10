@@ -78,6 +78,13 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PortletPreferences"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.PortletPreferences"),
+			true);
+	public static long OWNERID_BIT_MASK = 1L;
+	public static long OWNERTYPE_BIT_MASK = 2L;
+	public static long PLID_BIT_MASK = 4L;
+	public static long PORTLETID_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -113,6 +120,10 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -160,6 +171,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	}
 
 	public void setOwnerId(long ownerId) {
+		_bitMask |= OWNERID_BIT_MASK;
+
 		if (!_setOriginalOwnerId) {
 			_setOriginalOwnerId = true;
 
@@ -179,6 +192,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	}
 
 	public void setOwnerType(int ownerType) {
+		_bitMask |= OWNERTYPE_BIT_MASK;
+
 		if (!_setOriginalOwnerType) {
 			_setOriginalOwnerType = true;
 
@@ -198,6 +213,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	}
 
 	public void setPlid(long plid) {
+		_bitMask |= PLID_BIT_MASK;
+
 		if (!_setOriginalPlid) {
 			_setOriginalPlid = true;
 
@@ -222,6 +239,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	}
 
 	public void setPortletId(String portletId) {
+		_bitMask |= PORTLETID_BIT_MASK;
+
 		if (_originalPortletId == null) {
 			_originalPortletId = _portletId;
 		}
@@ -355,6 +374,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		portletPreferencesModelImpl._setOriginalPlid = false;
 
 		portletPreferencesModelImpl._originalPortletId = portletPreferencesModelImpl._portletId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -450,6 +471,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			PortletPreferences.class
 		};
+	private long _bitMask;
 	private long _portletPreferencesId;
 	private long _ownerId;
 	private long _originalOwnerId;

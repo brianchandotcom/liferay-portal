@@ -78,6 +78,16 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.UserTracker"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.UserTracker"),
+			true);
+	public static long SESSIONID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return UserTracker.class;
@@ -122,7 +132,19 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -130,6 +152,14 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -139,6 +169,10 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	public Date getModifiedDate() {
@@ -159,7 +193,17 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	public void setSessionId(String sessionId) {
+		_bitMask |= SESSIONID_BIT_MASK;
+
+		if (_originalSessionId == null) {
+			_originalSessionId = _sessionId;
+		}
+
 		_sessionId = sessionId;
+	}
+
+	public String getOriginalSessionId() {
+		return GetterUtil.getString(_originalSessionId);
 	}
 
 	public String getRemoteAddr() {
@@ -296,6 +340,19 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public void resetOriginalValues() {
+		UserTrackerModelImpl userTrackerModelImpl = this;
+
+		userTrackerModelImpl._originalCompanyId = userTrackerModelImpl._companyId;
+
+		userTrackerModelImpl._setOriginalCompanyId = false;
+
+		userTrackerModelImpl._originalUserId = userTrackerModelImpl._userId;
+
+		userTrackerModelImpl._setOriginalUserId = false;
+
+		userTrackerModelImpl._originalSessionId = userTrackerModelImpl._sessionId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -426,12 +483,18 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			UserTracker.class
 		};
+	private long _bitMask;
 	private long _userTrackerId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private Date _modifiedDate;
 	private String _sessionId;
+	private String _originalSessionId;
 	private String _remoteAddr;
 	private String _remoteHost;
 	private String _userAgent;

@@ -79,6 +79,11 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.expando.model.ExpandoColumn"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.expando.model.ExpandoColumn"),
+			true);
+	public static long TABLEID_BIT_MASK = 1L;
+	public static long NAME_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -114,6 +119,10 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -170,6 +179,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	}
 
 	public void setTableId(long tableId) {
+		_bitMask |= TABLEID_BIT_MASK;
+
 		if (!_setOriginalTableId) {
 			_setOriginalTableId = true;
 
@@ -194,6 +205,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -326,6 +339,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		expandoColumnModelImpl._setOriginalTableId = false;
 
 		expandoColumnModelImpl._originalName = expandoColumnModelImpl._name;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -435,6 +450,7 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ExpandoColumn.class
 		};
+	private long _bitMask;
 	private long _columnId;
 	private long _companyId;
 	private long _tableId;

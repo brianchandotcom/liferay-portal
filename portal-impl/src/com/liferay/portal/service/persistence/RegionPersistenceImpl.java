@@ -69,9 +69,17 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	public static final String FINDER_CLASS_NAME_ENTITY = RegionImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_COUNTRYID = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByCountryId",
+			RegionModelImpl.COUNTRYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COUNTRYID_PAGE_ORDER = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByCountryId",
+			RegionModelImpl.COUNTRYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -81,10 +89,17 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	public static final FinderPath FINDER_PATH_COUNT_BY_COUNTRYID = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCountryId",
+			RegionModelImpl.COUNTRYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_ACTIVE = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByActive",
+			RegionModelImpl.ACTIVE_BIT_MASK,
+			new String[] { Boolean.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_ACTIVE_PAGE_ORDER = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByActive",
+			RegionModelImpl.ACTIVE_BIT_MASK,
 			new String[] {
 				Boolean.class.getName(),
 				
@@ -94,10 +109,19 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	public static final FinderPath FINDER_PATH_COUNT_BY_ACTIVE = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByActive",
+			RegionModelImpl.ACTIVE_BIT_MASK,
 			new String[] { Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByC_A",
+			RegionModelImpl.COUNTRYID_BIT_MASK |
+			RegionModelImpl.ACTIVE_BIT_MASK,
+			new String[] { Long.class.getName(), Boolean.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_C_A_PAGE_ORDER = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByC_A",
+			RegionModelImpl.COUNTRYID_BIT_MASK |
+			RegionModelImpl.ACTIVE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				
@@ -107,10 +131,15 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_A",
+			RegionModelImpl.COUNTRYID_BIT_MASK |
+			RegionModelImpl.ACTIVE_BIT_MASK,
 			new String[] { Long.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
+			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -301,7 +330,51 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		boolean isNew = region.isNew();
+
+		RegionModelImpl regionModelImpl = (RegionModelImpl)region;
+
+		if (isNew || !RegionModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((regionModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COUNTRYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(regionModelImpl.getOriginalCountryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COUNTRYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COUNTRYID,
+					args);
+			}
+
+			if ((regionModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_ACTIVE.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Boolean.valueOf(regionModelImpl.getOriginalActive())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_ACTIVE, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
+			}
+
+			if ((regionModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_C_A.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(regionModelImpl.getOriginalCountryId()),
+						Boolean.valueOf(regionModelImpl.getOriginalActive())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_A, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey(), region);
@@ -473,14 +546,27 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public List<Region> findByCountryId(long countryId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				countryId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Region> list = (List<Region>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COUNTRYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { countryId };
+
+			finderPath = FINDER_PATH_FIND_BY_COUNTRYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					countryId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COUNTRYID_PAGE_ORDER;
+		}
+
+		List<Region> list = (List<Region>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -527,14 +613,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COUNTRYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COUNTRYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -809,14 +893,27 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public List<Region> findByActive(boolean active, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				active,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Region> list = (List<Region>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_ACTIVE,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { active };
+
+			finderPath = FINDER_PATH_FIND_BY_ACTIVE;
+		}
+		else {
+			finderArgs = new Object[] {
+					active,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_ACTIVE_PAGE_ORDER;
+		}
+
+		List<Region> list = (List<Region>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -863,14 +960,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_ACTIVE,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_ACTIVE,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1150,14 +1245,27 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public List<Region> findByC_A(long countryId, boolean active, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				countryId, active,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Region> list = (List<Region>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_A,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { countryId, active };
+
+			finderPath = FINDER_PATH_FIND_BY_C_A;
+		}
+		else {
+			finderArgs = new Object[] {
+					countryId, active,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_C_A_PAGE_ORDER;
+		}
+
+		List<Region> list = (List<Region>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1208,14 +1316,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_A,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_A,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1500,12 +1606,25 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public List<Region> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<Region> list = (List<Region>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<Region> list = (List<Region>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1550,14 +1669,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

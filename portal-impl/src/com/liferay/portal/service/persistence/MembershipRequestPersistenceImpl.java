@@ -69,10 +69,17 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public static final String FINDER_CLASS_NAME_ENTITY = MembershipRequestImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
 			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST,
-			"findByGroupId",
+			"findByGroupId", MembershipRequestModelImpl.GROUPID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
+			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByGroupId", MembershipRequestModelImpl.GROUPID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -82,11 +89,17 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByGroupId",
+			MembershipRequestModelImpl.GROUPID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
 			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST,
-			"findByUserId",
+			"findByUserId", MembershipRequestModelImpl.USERID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_USERID_PAGE_ORDER = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
+			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByUserId", MembershipRequestModelImpl.USERID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -96,10 +109,20 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId",
+			MembershipRequestModelImpl.USERID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_S = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
 			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST, "findByG_S",
+			MembershipRequestModelImpl.GROUPID_BIT_MASK |
+			MembershipRequestModelImpl.STATUSID_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_G_S_PAGE_ORDER = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
+			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_S",
+			MembershipRequestModelImpl.GROUPID_BIT_MASK |
+			MembershipRequestModelImpl.STATUSID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -109,10 +132,26 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_S = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_S",
+			MembershipRequestModelImpl.GROUPID_BIT_MASK |
+			MembershipRequestModelImpl.STATUSID_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_G_U_S = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
 			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST, "findByG_U_S",
+			MembershipRequestModelImpl.GROUPID_BIT_MASK |
+			MembershipRequestModelImpl.USERID_BIT_MASK |
+			MembershipRequestModelImpl.STATUSID_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_G_U_S_PAGE_ORDER = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
+			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByG_U_S",
+			MembershipRequestModelImpl.GROUPID_BIT_MASK |
+			MembershipRequestModelImpl.USERID_BIT_MASK |
+			MembershipRequestModelImpl.STATUSID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(),
@@ -123,6 +162,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_U_S = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_U_S",
+			MembershipRequestModelImpl.GROUPID_BIT_MASK |
+			MembershipRequestModelImpl.USERID_BIT_MASK |
+			MembershipRequestModelImpl.STATUSID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -131,6 +173,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
 			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
 			new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+			MembershipRequestModelImpl.FINDER_CACHE_ENABLED,
+			MembershipRequestImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -327,7 +373,63 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		boolean isNew = membershipRequest.isNew();
+
+		MembershipRequestModelImpl membershipRequestModelImpl = (MembershipRequestModelImpl)membershipRequest;
+
+		if (isNew || !MembershipRequestModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((membershipRequestModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_GROUPID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(membershipRequestModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+			}
+
+			if ((membershipRequestModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_USERID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(membershipRequestModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+			}
+
+			if ((membershipRequestModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_S.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(membershipRequestModelImpl.getOriginalGroupId()),
+						Integer.valueOf(membershipRequestModelImpl.getOriginalStatusId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_S, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+			}
+
+			if ((membershipRequestModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_G_U_S.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(membershipRequestModelImpl.getOriginalGroupId()),
+						Long.valueOf(membershipRequestModelImpl.getOriginalUserId()),
+						Integer.valueOf(membershipRequestModelImpl.getOriginalStatusId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_U_S, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MembershipRequestImpl.class, membershipRequest.getPrimaryKey(),
@@ -508,14 +610,27 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	public List<MembershipRequest> findByGroupId(long groupId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_GROUPID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId };
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_GROUPID_PAGE_ORDER;
+		}
+
+		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -563,14 +678,12 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_GROUPID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -849,14 +962,27 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	public List<MembershipRequest> findByUserId(long userId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_USERID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { userId };
+
+			finderPath = FINDER_PATH_FIND_BY_USERID;
+		}
+		else {
+			finderArgs = new Object[] {
+					userId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_USERID_PAGE_ORDER;
+		}
+
+		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -904,14 +1030,12 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_USERID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1195,14 +1319,27 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public List<MembershipRequest> findByG_S(long groupId, int statusId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, statusId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_S,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, statusId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_S;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, statusId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_S_PAGE_ORDER;
+		}
+
+		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1254,14 +1391,12 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_S,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_S,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1560,14 +1695,27 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public List<MembershipRequest> findByG_U_S(long groupId, long userId,
 		int statusId, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, userId, statusId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_U_S,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { groupId, userId, statusId };
+
+			finderPath = FINDER_PATH_FIND_BY_G_U_S;
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, userId, statusId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_G_U_S_PAGE_ORDER;
+		}
+
+		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1623,14 +1771,12 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_G_U_S,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_G_U_S,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1931,12 +2077,25 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	public List<MembershipRequest> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<MembershipRequest> list = (List<MembershipRequest>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1981,14 +2140,12 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

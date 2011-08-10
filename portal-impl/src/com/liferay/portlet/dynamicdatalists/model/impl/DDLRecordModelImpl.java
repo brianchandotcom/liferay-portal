@@ -90,6 +90,13 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.dynamicdatalists.model.DDLRecord"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.dynamicdatalists.model.DDLRecord"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long RECORDSETID_BIT_MASK = 2L;
+	public static long USERID_BIT_MASK = 4L;
+	public static long UUID_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -132,6 +139,10 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -201,6 +212,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -229,6 +242,14 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -238,6 +259,10 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -319,7 +344,19 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	}
 
 	public void setRecordSetId(long recordSetId) {
+		_bitMask |= RECORDSETID_BIT_MASK;
+
+		if (!_setOriginalRecordSetId) {
+			_setOriginalRecordSetId = true;
+
+			_originalRecordSetId = _recordSetId;
+		}
+
 		_recordSetId = recordSetId;
+	}
+
+	public long getOriginalRecordSetId() {
+		return _originalRecordSetId;
 	}
 
 	@JSON
@@ -453,6 +490,16 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 		ddlRecordModelImpl._originalGroupId = ddlRecordModelImpl._groupId;
 
 		ddlRecordModelImpl._setOriginalGroupId = false;
+
+		ddlRecordModelImpl._originalUserId = ddlRecordModelImpl._userId;
+
+		ddlRecordModelImpl._setOriginalUserId = false;
+
+		ddlRecordModelImpl._originalRecordSetId = ddlRecordModelImpl._recordSetId;
+
+		ddlRecordModelImpl._setOriginalRecordSetId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -638,6 +685,7 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DDLRecord.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _recordId;
@@ -647,6 +695,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private long _versionUserId;
 	private String _versionUserUuid;
@@ -655,6 +705,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	private Date _modifiedDate;
 	private long _DDMStorageId;
 	private long _recordSetId;
+	private long _originalRecordSetId;
+	private boolean _setOriginalRecordSetId;
 	private String _version;
 	private int _displayIndex;
 	private transient ExpandoBridge _expandoBridge;

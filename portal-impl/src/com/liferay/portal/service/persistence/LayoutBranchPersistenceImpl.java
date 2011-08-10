@@ -69,9 +69,19 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	public static final String FINDER_CLASS_NAME_ENTITY = LayoutBranchImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_L_P = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutBranchModelImpl.FINDER_CACHE_ENABLED, LayoutBranchImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByL_P",
+			LayoutBranchModelImpl.LAYOUTSETBRANCHID_BIT_MASK |
+			LayoutBranchModelImpl.PLID_BIT_MASK,
+			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_L_P_PAGE_ORDER = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutBranchModelImpl.FINDER_CACHE_ENABLED, LayoutBranchImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByL_P",
+			LayoutBranchModelImpl.LAYOUTSETBRANCHID_BIT_MASK |
+			LayoutBranchModelImpl.PLID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -81,10 +91,15 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	public static final FinderPath FINDER_PATH_COUNT_BY_L_P = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByL_P",
+			LayoutBranchModelImpl.LAYOUTSETBRANCHID_BIT_MASK |
+			LayoutBranchModelImpl.PLID_BIT_MASK,
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_L_P_M = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutBranchModelImpl.FINDER_CACHE_ENABLED, LayoutBranchImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByL_P_M",
+			LayoutBranchModelImpl.LAYOUTSETBRANCHID_BIT_MASK |
+			LayoutBranchModelImpl.PLID_BIT_MASK |
+			LayoutBranchModelImpl.MASTER_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
@@ -92,6 +107,9 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	public static final FinderPath FINDER_PATH_COUNT_BY_L_P_M = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByL_P_M",
+			LayoutBranchModelImpl.LAYOUTSETBRANCHID_BIT_MASK |
+			LayoutBranchModelImpl.PLID_BIT_MASK |
+			LayoutBranchModelImpl.MASTER_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
@@ -99,6 +117,9 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutBranchModelImpl.FINDER_CACHE_ENABLED, LayoutBranchImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutBranchModelImpl.FINDER_CACHE_ENABLED, LayoutBranchImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -321,34 +342,48 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !LayoutBranchModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((layoutBranchModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_L_P.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(layoutBranchModelImpl.getOriginalLayoutSetBranchId()),
+						Long.valueOf(layoutBranchModelImpl.getOriginalPlid())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_L_P, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutBranchImpl.class, layoutBranch.getPrimaryKey(), layoutBranch);
 
-		if (!isNew &&
-				((layoutBranch.getLayoutSetBranchId() != layoutBranchModelImpl.getOriginalLayoutSetBranchId()) ||
-				(layoutBranch.getPlid() != layoutBranchModelImpl.getOriginalPlid()) ||
-				(layoutBranch.getMaster() != layoutBranchModelImpl.getOriginalMaster()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_M,
-				new Object[] {
-					Long.valueOf(
-						layoutBranchModelImpl.getOriginalLayoutSetBranchId()),
-					Long.valueOf(layoutBranchModelImpl.getOriginalPlid()),
-					Boolean.valueOf(layoutBranchModelImpl.getOriginalMaster())
-				});
-		}
-
-		if (isNew ||
-				((layoutBranch.getLayoutSetBranchId() != layoutBranchModelImpl.getOriginalLayoutSetBranchId()) ||
-				(layoutBranch.getPlid() != layoutBranchModelImpl.getOriginalPlid()) ||
-				(layoutBranch.getMaster() != layoutBranchModelImpl.getOriginalMaster()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_L_P_M,
 				new Object[] {
 					Long.valueOf(layoutBranch.getLayoutSetBranchId()),
 					Long.valueOf(layoutBranch.getPlid()),
 					Boolean.valueOf(layoutBranch.getMaster())
 				}, layoutBranch);
+		}
+		else {
+			if ((layoutBranchModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_L_P_M.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_M,
+					new Object[] {
+						Long.valueOf(
+							layoutBranchModelImpl.getOriginalLayoutSetBranchId()),
+						Long.valueOf(layoutBranchModelImpl.getOriginalPlid()),
+						Boolean.valueOf(
+							layoutBranchModelImpl.getOriginalMaster())
+					});
+			}
 		}
 
 		return layoutBranch;
@@ -529,14 +564,27 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	public List<LayoutBranch> findByL_P(long layoutSetBranchId, long plid,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				layoutSetBranchId, plid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<LayoutBranch> list = (List<LayoutBranch>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_L_P,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { layoutSetBranchId, plid };
+
+			finderPath = FINDER_PATH_FIND_BY_L_P;
+		}
+		else {
+			finderArgs = new Object[] {
+					layoutSetBranchId, plid,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_L_P_PAGE_ORDER;
+		}
+
+		List<LayoutBranch> list = (List<LayoutBranch>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -584,14 +632,12 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_L_P,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_L_P,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1024,12 +1070,25 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	public List<LayoutBranch> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<LayoutBranch> list = (List<LayoutBranch>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<LayoutBranch> list = (List<LayoutBranch>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1074,14 +1133,12 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

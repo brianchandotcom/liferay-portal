@@ -95,6 +95,15 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBThread"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.messageboards.model.MBThread"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long ROOTMESSAGEID_BIT_MASK = 2L;
+	public static long STATUS_BIT_MASK = 4L;
+	public static long PRIORITY_BIT_MASK = 8L;
+	public static long CATEGORYID_BIT_MASK = 16L;
+	public static long LASTPOSTDATE_BIT_MASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -138,6 +147,10 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -185,7 +198,19 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -203,7 +228,19 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setCategoryId(long categoryId) {
+		_bitMask |= CATEGORYID_BIT_MASK;
+
+		if (!_setOriginalCategoryId) {
+			_setOriginalCategoryId = true;
+
+			_originalCategoryId = _categoryId;
+		}
+
 		_categoryId = categoryId;
+	}
+
+	public long getOriginalCategoryId() {
+		return _originalCategoryId;
 	}
 
 	@JSON
@@ -212,6 +249,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setRootMessageId(long rootMessageId) {
+		_bitMask |= ROOTMESSAGEID_BIT_MASK;
+
 		if (!_setOriginalRootMessageId) {
 			_setOriginalRootMessageId = true;
 
@@ -285,7 +324,17 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setLastPostDate(Date lastPostDate) {
+		_bitMask |= LASTPOSTDATE_BIT_MASK;
+
+		if (_originalLastPostDate == null) {
+			_originalLastPostDate = _lastPostDate;
+		}
+
 		_lastPostDate = lastPostDate;
+	}
+
+	public Date getOriginalLastPostDate() {
+		return _originalLastPostDate;
 	}
 
 	@JSON
@@ -294,7 +343,19 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setPriority(double priority) {
+		_bitMask |= PRIORITY_BIT_MASK;
+
+		if (!_setOriginalPriority) {
+			_setOriginalPriority = true;
+
+			_originalPriority = _priority;
+		}
+
 		_priority = priority;
+	}
+
+	public double getOriginalPriority() {
+		return _originalPriority;
 	}
 
 	@JSON
@@ -303,7 +364,19 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setStatus(int status) {
+		_bitMask |= STATUS_BIT_MASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -510,9 +583,29 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	public void resetOriginalValues() {
 		MBThreadModelImpl mbThreadModelImpl = this;
 
+		mbThreadModelImpl._originalGroupId = mbThreadModelImpl._groupId;
+
+		mbThreadModelImpl._setOriginalGroupId = false;
+
+		mbThreadModelImpl._originalCategoryId = mbThreadModelImpl._categoryId;
+
+		mbThreadModelImpl._setOriginalCategoryId = false;
+
 		mbThreadModelImpl._originalRootMessageId = mbThreadModelImpl._rootMessageId;
 
 		mbThreadModelImpl._setOriginalRootMessageId = false;
+
+		mbThreadModelImpl._originalLastPostDate = mbThreadModelImpl._lastPostDate;
+
+		mbThreadModelImpl._originalPriority = mbThreadModelImpl._priority;
+
+		mbThreadModelImpl._setOriginalPriority = false;
+
+		mbThreadModelImpl._originalStatus = mbThreadModelImpl._status;
+
+		mbThreadModelImpl._setOriginalStatus = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -688,10 +781,15 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			MBThread.class
 		};
+	private long _bitMask;
 	private long _threadId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _categoryId;
+	private long _originalCategoryId;
+	private boolean _setOriginalCategoryId;
 	private long _rootMessageId;
 	private long _originalRootMessageId;
 	private boolean _setOriginalRootMessageId;
@@ -702,8 +800,13 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	private long _lastPostByUserId;
 	private String _lastPostByUserUuid;
 	private Date _lastPostDate;
+	private Date _originalLastPostDate;
 	private double _priority;
+	private double _originalPriority;
+	private boolean _setOriginalPriority;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserUuid;
 	private String _statusByUserName;

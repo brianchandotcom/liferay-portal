@@ -73,9 +73,17 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public static final String FINDER_CLASS_NAME_ENTITY = AssetLinkImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_E1 = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByE1",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_E1_PAGE_ORDER = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByE1",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -85,10 +93,17 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public static final FinderPath FINDER_PATH_COUNT_BY_E1 = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByE1",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_E2 = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByE2",
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_E2_PAGE_ORDER = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByE2",
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -98,10 +113,19 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public static final FinderPath FINDER_PATH_COUNT_BY_E2 = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByE2",
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_E_E = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByE_E",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK |
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK,
+			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_E_E_PAGE_ORDER = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByE_E",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK |
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -111,10 +135,20 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public static final FinderPath FINDER_PATH_COUNT_BY_E_E = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByE_E",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK |
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK,
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_E1_T = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByE1_T",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK |
+			AssetLinkModelImpl.TYPE_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_E1_T_PAGE_ORDER = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByE1_T",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK |
+			AssetLinkModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -124,10 +158,20 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public static final FinderPath FINDER_PATH_COUNT_BY_E1_T = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByE1_T",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK |
+			AssetLinkModelImpl.TYPE_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_E2_T = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByE2_T",
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK |
+			AssetLinkModelImpl.TYPE_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_E2_T_PAGE_ORDER = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByE2_T",
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK |
+			AssetLinkModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -137,10 +181,15 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public static final FinderPath FINDER_PATH_COUNT_BY_E2_T = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByE2_T",
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK |
+			AssetLinkModelImpl.TYPE_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_E_E_T = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByE_E_T",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK |
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK |
+			AssetLinkModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -148,6 +197,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public static final FinderPath FINDER_PATH_COUNT_BY_E_E_T = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByE_E_T",
+			AssetLinkModelImpl.ENTRYID1_BIT_MASK |
+			AssetLinkModelImpl.ENTRYID2_BIT_MASK |
+			AssetLinkModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -155,6 +207,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -374,33 +429,92 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !AssetLinkModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((assetLinkModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_E1.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(assetLinkModelImpl.getOriginalEntryId1())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E1, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E1, args);
+			}
+
+			if ((assetLinkModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_E2.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(assetLinkModelImpl.getOriginalEntryId2())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E2, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E2, args);
+			}
+
+			if ((assetLinkModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_E_E.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(assetLinkModelImpl.getOriginalEntryId1()),
+						Long.valueOf(assetLinkModelImpl.getOriginalEntryId2())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E_E, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E_E, args);
+			}
+
+			if ((assetLinkModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_E1_T.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(assetLinkModelImpl.getOriginalEntryId1()),
+						Integer.valueOf(assetLinkModelImpl.getOriginalType())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E1_T, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E1_T, args);
+			}
+
+			if ((assetLinkModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_E2_T.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(assetLinkModelImpl.getOriginalEntryId2()),
+						Integer.valueOf(assetLinkModelImpl.getOriginalType())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E2_T, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E2_T, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkImpl.class, assetLink.getPrimaryKey(), assetLink);
 
-		if (!isNew &&
-				((assetLink.getEntryId1() != assetLinkModelImpl.getOriginalEntryId1()) ||
-				(assetLink.getEntryId2() != assetLinkModelImpl.getOriginalEntryId2()) ||
-				(assetLink.getType() != assetLinkModelImpl.getOriginalType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_E_E_T,
-				new Object[] {
-					Long.valueOf(assetLinkModelImpl.getOriginalEntryId1()),
-					Long.valueOf(assetLinkModelImpl.getOriginalEntryId2()),
-					Integer.valueOf(assetLinkModelImpl.getOriginalType())
-				});
-		}
-
-		if (isNew ||
-				((assetLink.getEntryId1() != assetLinkModelImpl.getOriginalEntryId1()) ||
-				(assetLink.getEntryId2() != assetLinkModelImpl.getOriginalEntryId2()) ||
-				(assetLink.getType() != assetLinkModelImpl.getOriginalType()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_E_E_T,
 				new Object[] {
 					Long.valueOf(assetLink.getEntryId1()),
 					Long.valueOf(assetLink.getEntryId2()),
 					Integer.valueOf(assetLink.getType())
 				}, assetLink);
+		}
+		else {
+			if ((assetLinkModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_E_E_T.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_E_E_T,
+					new Object[] {
+						Long.valueOf(assetLinkModelImpl.getOriginalEntryId1()),
+						Long.valueOf(assetLinkModelImpl.getOriginalEntryId2()),
+						Integer.valueOf(assetLinkModelImpl.getOriginalType())
+					});
+			}
 		}
 
 		return assetLink;
@@ -572,14 +686,27 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public List<AssetLink> findByE1(long entryId1, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				entryId1,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E1,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { entryId1 };
+
+			finderPath = FINDER_PATH_FIND_BY_E1;
+		}
+		else {
+			finderArgs = new Object[] {
+					entryId1,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_E1_PAGE_ORDER;
+		}
+
+		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -627,14 +754,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E1,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_E1,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -910,14 +1035,27 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public List<AssetLink> findByE2(long entryId2, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				entryId2,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E2,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { entryId2 };
+
+			finderPath = FINDER_PATH_FIND_BY_E2;
+		}
+		else {
+			finderArgs = new Object[] {
+					entryId2,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_E2_PAGE_ORDER;
+		}
+
+		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -965,14 +1103,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E2,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_E2,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1253,14 +1389,27 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public List<AssetLink> findByE_E(long entryId1, long entryId2, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				entryId1, entryId2,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E_E,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { entryId1, entryId2 };
+
+			finderPath = FINDER_PATH_FIND_BY_E_E;
+		}
+		else {
+			finderArgs = new Object[] {
+					entryId1, entryId2,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_E_E_PAGE_ORDER;
+		}
+
+		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1312,14 +1461,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E_E,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_E_E,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1614,14 +1761,27 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public List<AssetLink> findByE1_T(long entryId1, int type, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				entryId1, type,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E1_T,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { entryId1, type };
+
+			finderPath = FINDER_PATH_FIND_BY_E1_T;
+		}
+		else {
+			finderArgs = new Object[] {
+					entryId1, type,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_E1_T_PAGE_ORDER;
+		}
+
+		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1673,14 +1833,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E1_T,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_E1_T,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1975,14 +2133,27 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public List<AssetLink> findByE2_T(long entryId2, int type, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				entryId2, type,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E2_T,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { entryId2, type };
+
+			finderPath = FINDER_PATH_FIND_BY_E2_T;
+		}
+		else {
+			finderArgs = new Object[] {
+					entryId2, type,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_E2_T_PAGE_ORDER;
+		}
+
+		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2034,14 +2205,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_E2_T,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_E2_T,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2480,12 +2649,25 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public List<AssetLink> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2530,14 +2712,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

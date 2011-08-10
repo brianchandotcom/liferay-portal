@@ -78,6 +78,15 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.UserNotificationEvent"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.UserNotificationEvent"),
+			true);
+	public static long USERID_BIT_MASK = 1L;
+	public static long UUID_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return UserNotificationEvent.class;
@@ -119,7 +128,15 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	public long getUserNotificationEventId() {
@@ -143,6 +160,14 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -152,6 +177,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	public String getType() {
@@ -297,6 +326,15 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public void resetOriginalValues() {
+		UserNotificationEventModelImpl userNotificationEventModelImpl = this;
+
+		userNotificationEventModelImpl._originalUuid = userNotificationEventModelImpl._uuid;
+
+		userNotificationEventModelImpl._originalUserId = userNotificationEventModelImpl._userId;
+
+		userNotificationEventModelImpl._setOriginalUserId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -414,11 +452,15 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			UserNotificationEvent.class
 		};
+	private long _bitMask;
 	private String _uuid;
+	private String _originalUuid;
 	private long _userNotificationEventId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _type;
 	private long _timestamp;
 	private long _deliverBy;

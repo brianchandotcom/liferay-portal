@@ -76,6 +76,15 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.WebDAVProps"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.WebDAVProps"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long CLASSPK_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return WebDAVProps.class;
@@ -152,6 +161,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -170,6 +181,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -299,6 +312,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		webDAVPropsModelImpl._originalClassPK = webDAVPropsModelImpl._classPK;
 
 		webDAVPropsModelImpl._setOriginalClassPK = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -410,6 +425,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			WebDAVProps.class
 		};
+	private long _bitMask;
 	private long _webDavPropsId;
 	private long _companyId;
 	private Date _createDate;

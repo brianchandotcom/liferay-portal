@@ -87,6 +87,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetTag"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.asset.model.AssetTag"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -124,6 +128,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -173,7 +181,19 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -351,6 +371,13 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public void resetOriginalValues() {
+		AssetTagModelImpl assetTagModelImpl = this;
+
+		assetTagModelImpl._originalGroupId = assetTagModelImpl._groupId;
+
+		assetTagModelImpl._setOriginalGroupId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -484,8 +511,11 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			AssetTag.class
 		};
+	private long _bitMask;
 	private long _tagId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;

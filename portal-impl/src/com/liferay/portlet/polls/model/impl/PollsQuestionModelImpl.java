@@ -98,6 +98,11 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.polls.model.PollsQuestion"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.polls.model.PollsQuestion"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long UUID_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -138,6 +143,10 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -207,6 +216,8 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -585,6 +596,8 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		pollsQuestionModelImpl._originalGroupId = pollsQuestionModelImpl._groupId;
 
 		pollsQuestionModelImpl._setOriginalGroupId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -768,6 +781,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			PollsQuestion.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _questionId;

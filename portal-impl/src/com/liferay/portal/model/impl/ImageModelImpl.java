@@ -81,6 +81,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Image"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Image"),
+			true);
+	public static long SIZE_BIT_MASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -116,6 +120,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -218,7 +226,19 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	public void setSize(int size) {
+		_bitMask |= SIZE_BIT_MASK;
+
+		if (!_setOriginalSize) {
+			_setOriginalSize = true;
+
+			_originalSize = _size;
+		}
+
 		_size = size;
+	}
+
+	public int getOriginalSize() {
+		return _originalSize;
 	}
 
 	@Override
@@ -321,6 +341,13 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public void resetOriginalValues() {
+		ImageModelImpl imageModelImpl = this;
+
+		imageModelImpl._originalSize = imageModelImpl._size;
+
+		imageModelImpl._setOriginalSize = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -431,6 +458,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Image.class
 		};
+	private long _bitMask;
 	private long _imageId;
 	private Date _modifiedDate;
 	private String _text;
@@ -438,6 +466,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private int _height;
 	private int _width;
 	private int _size;
+	private int _originalSize;
+	private boolean _setOriginalSize;
 	private transient ExpandoBridge _expandoBridge;
 	private Image _escapedModelProxy;
 }

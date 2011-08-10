@@ -75,6 +75,14 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialEquityAssetEntry"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.social.model.SocialEquityAssetEntry"),
+			true);
+	public static long ASSETENTRYID_BIT_MASK = 1L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return SocialEquityAssetEntry.class;
@@ -151,6 +159,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 	}
 
 	public void setAssetEntryId(long assetEntryId) {
+		_bitMask |= ASSETENTRYID_BIT_MASK;
+
 		if (!_setOriginalAssetEntryId) {
 			_setOriginalAssetEntryId = true;
 
@@ -279,6 +289,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 		socialEquityAssetEntryModelImpl._originalAssetEntryId = socialEquityAssetEntryModelImpl._assetEntryId;
 
 		socialEquityAssetEntryModelImpl._setOriginalAssetEntryId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -370,6 +382,7 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SocialEquityAssetEntry.class
 		};
+	private long _bitMask;
 	private long _equityAssetEntryId;
 	private long _groupId;
 	private long _companyId;

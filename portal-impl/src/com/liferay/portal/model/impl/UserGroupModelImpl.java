@@ -82,6 +82,12 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.UserGroup"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.UserGroup"),
+			true);
+	public static long NAME_BIT_MASK = 1L;
+	public static long PARENTUSERGROUPID_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -118,6 +124,10 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -177,6 +187,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -196,7 +208,19 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	}
 
 	public void setParentUserGroupId(long parentUserGroupId) {
+		_bitMask |= PARENTUSERGROUPID_BIT_MASK;
+
+		if (!_setOriginalParentUserGroupId) {
+			_setOriginalParentUserGroupId = true;
+
+			_originalParentUserGroupId = _parentUserGroupId;
+		}
+
 		_parentUserGroupId = parentUserGroupId;
+	}
+
+	public long getOriginalParentUserGroupId() {
+		return _originalParentUserGroupId;
 	}
 
 	@JSON
@@ -210,6 +234,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -365,7 +391,13 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 		userGroupModelImpl._setOriginalCompanyId = false;
 
+		userGroupModelImpl._originalParentUserGroupId = userGroupModelImpl._parentUserGroupId;
+
+		userGroupModelImpl._setOriginalParentUserGroupId = false;
+
 		userGroupModelImpl._originalName = userGroupModelImpl._name;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -477,11 +509,14 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			UserGroup.class
 		};
+	private long _bitMask;
 	private long _userGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _parentUserGroupId;
+	private long _originalParentUserGroupId;
+	private boolean _setOriginalParentUserGroupId;
 	private String _name;
 	private String _originalName;
 	private String _description;

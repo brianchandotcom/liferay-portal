@@ -100,6 +100,14 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetCategory"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.asset.model.AssetCategory"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long VOCABULARYID_BIT_MASK = 2L;
+	public static long NAME_BIT_MASK = 4L;
+	public static long PARENTCATEGORYID_BIT_MASK = 8L;
+	public static long UUID_BIT_MASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -143,6 +151,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -215,6 +227,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -292,6 +306,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	public void setParentCategoryId(long parentCategoryId) {
+		_bitMask |= PARENTCATEGORYID_BIT_MASK;
+
 		if (!_setOriginalParentCategoryId) {
 			_setOriginalParentCategoryId = true;
 
@@ -334,6 +350,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -533,6 +551,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	public void setVocabularyId(long vocabularyId) {
+		_bitMask |= VOCABULARYID_BIT_MASK;
+
 		if (!_setOriginalVocabularyId) {
 			_setOriginalVocabularyId = true;
 
@@ -663,6 +683,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		assetCategoryModelImpl._originalVocabularyId = assetCategoryModelImpl._vocabularyId;
 
 		assetCategoryModelImpl._setOriginalVocabularyId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -862,6 +884,7 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			AssetCategory.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _categoryId;

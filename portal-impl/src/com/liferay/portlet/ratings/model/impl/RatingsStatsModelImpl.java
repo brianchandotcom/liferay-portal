@@ -74,6 +74,15 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.ratings.model.RatingsStats"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.ratings.model.RatingsStats"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long CLASSPK_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return RatingsStats.class;
@@ -126,6 +135,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -144,6 +155,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -283,6 +296,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		ratingsStatsModelImpl._originalClassPK = ratingsStatsModelImpl._classPK;
 
 		ratingsStatsModelImpl._setOriginalClassPK = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -366,6 +381,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			RatingsStats.class
 		};
+	private long _bitMask;
 	private long _statsId;
 	private long _classNameId;
 	private long _originalClassNameId;

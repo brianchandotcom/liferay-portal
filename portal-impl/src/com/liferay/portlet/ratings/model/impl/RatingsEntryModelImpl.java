@@ -85,6 +85,13 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.ratings.model.RatingsEntry"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.ratings.model.RatingsEntry"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long SCORE_BIT_MASK = 4L;
+	public static long CLASSPK_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -122,6 +129,10 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -178,6 +189,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -245,6 +258,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -264,6 +279,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -283,7 +300,19 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	public void setScore(double score) {
+		_bitMask |= SCORE_BIT_MASK;
+
+		if (!_setOriginalScore) {
+			_setOriginalScore = true;
+
+			_originalScore = _score;
+		}
+
 		_score = score;
+	}
+
+	public double getOriginalScore() {
+		return _originalScore;
 	}
 
 	@Override
@@ -395,6 +424,12 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		ratingsEntryModelImpl._originalClassPK = ratingsEntryModelImpl._classPK;
 
 		ratingsEntryModelImpl._setOriginalClassPK = false;
+
+		ratingsEntryModelImpl._originalScore = ratingsEntryModelImpl._score;
+
+		ratingsEntryModelImpl._setOriginalScore = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -522,6 +557,7 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			RatingsEntry.class
 		};
+	private long _bitMask;
 	private long _entryId;
 	private long _companyId;
 	private long _userId;
@@ -538,6 +574,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private double _score;
+	private double _originalScore;
+	private boolean _setOriginalScore;
 	private transient ExpandoBridge _expandoBridge;
 	private RatingsEntry _escapedModelProxy;
 }

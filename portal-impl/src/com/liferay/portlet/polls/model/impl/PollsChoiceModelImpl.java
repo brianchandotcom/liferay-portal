@@ -82,6 +82,16 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.polls.model.PollsChoice"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.polls.model.PollsChoice"),
+			true);
+	public static long QUESTIONID_BIT_MASK = 1L;
+	public static long NAME_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return PollsChoice.class;
@@ -123,7 +133,15 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	public long getChoiceId() {
@@ -139,6 +157,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	}
 
 	public void setQuestionId(long questionId) {
+		_bitMask |= QUESTIONID_BIT_MASK;
+
 		if (!_setOriginalQuestionId) {
 			_setOriginalQuestionId = true;
 
@@ -162,6 +182,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -371,11 +393,15 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public void resetOriginalValues() {
 		PollsChoiceModelImpl pollsChoiceModelImpl = this;
 
+		pollsChoiceModelImpl._originalUuid = pollsChoiceModelImpl._uuid;
+
 		pollsChoiceModelImpl._originalQuestionId = pollsChoiceModelImpl._questionId;
 
 		pollsChoiceModelImpl._setOriginalQuestionId = false;
 
 		pollsChoiceModelImpl._originalName = pollsChoiceModelImpl._name;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -469,7 +495,9 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			PollsChoice.class
 		};
+	private long _bitMask;
 	private String _uuid;
+	private String _originalUuid;
 	private long _choiceId;
 	private long _questionId;
 	private long _originalQuestionId;

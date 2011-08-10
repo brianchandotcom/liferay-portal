@@ -92,6 +92,14 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFileShortcut"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.documentlibrary.model.DLFileShortcut"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long STATUS_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
+	public static long TOFILEENTRYID_BIT_MASK = 8L;
+	public static long FOLDERID_BIT_MASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -135,6 +143,10 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -204,6 +216,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -290,7 +304,19 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	}
 
 	public void setFolderId(long folderId) {
+		_bitMask |= FOLDERID_BIT_MASK;
+
+		if (!_setOriginalFolderId) {
+			_setOriginalFolderId = true;
+
+			_originalFolderId = _folderId;
+		}
+
 		_folderId = folderId;
+	}
+
+	public long getOriginalFolderId() {
+		return _originalFolderId;
 	}
 
 	@JSON
@@ -299,7 +325,19 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	}
 
 	public void setToFileEntryId(long toFileEntryId) {
+		_bitMask |= TOFILEENTRYID_BIT_MASK;
+
+		if (!_setOriginalToFileEntryId) {
+			_setOriginalToFileEntryId = true;
+
+			_originalToFileEntryId = _toFileEntryId;
+		}
+
 		_toFileEntryId = toFileEntryId;
+	}
+
+	public long getOriginalToFileEntryId() {
+		return _originalToFileEntryId;
 	}
 
 	@JSON
@@ -308,7 +346,19 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	}
 
 	public void setStatus(int status) {
+		_bitMask |= STATUS_BIT_MASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -504,6 +554,20 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		dlFileShortcutModelImpl._originalGroupId = dlFileShortcutModelImpl._groupId;
 
 		dlFileShortcutModelImpl._setOriginalGroupId = false;
+
+		dlFileShortcutModelImpl._originalFolderId = dlFileShortcutModelImpl._folderId;
+
+		dlFileShortcutModelImpl._setOriginalFolderId = false;
+
+		dlFileShortcutModelImpl._originalToFileEntryId = dlFileShortcutModelImpl._toFileEntryId;
+
+		dlFileShortcutModelImpl._setOriginalToFileEntryId = false;
+
+		dlFileShortcutModelImpl._originalStatus = dlFileShortcutModelImpl._status;
+
+		dlFileShortcutModelImpl._setOriginalStatus = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -698,6 +762,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLFileShortcut.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _fileShortcutId;
@@ -712,8 +777,14 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private Date _modifiedDate;
 	private long _repositoryId;
 	private long _folderId;
+	private long _originalFolderId;
+	private boolean _setOriginalFolderId;
 	private long _toFileEntryId;
+	private long _originalToFileEntryId;
+	private boolean _setOriginalToFileEntryId;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserUuid;
 	private String _statusByUserName;

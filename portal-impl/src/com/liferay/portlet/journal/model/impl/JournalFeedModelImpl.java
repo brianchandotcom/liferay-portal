@@ -101,6 +101,12 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalFeed"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.journal.model.JournalFeed"),
+			true);
+	public static long FEEDID_BIT_MASK = 1L;
+	public static long GROUPID_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -152,6 +158,10 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -221,6 +231,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -303,6 +315,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	}
 
 	public void setFeedId(String feedId) {
+		_bitMask |= FEEDID_BIT_MASK;
+
 		if (_originalFeedId == null) {
 			_originalFeedId = _feedId;
 		}
@@ -617,6 +631,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		journalFeedModelImpl._setOriginalGroupId = false;
 
 		journalFeedModelImpl._originalFeedId = journalFeedModelImpl._feedId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -941,6 +957,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			JournalFeed.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _id;

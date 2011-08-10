@@ -70,6 +70,14 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.BrowserTracker"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.BrowserTracker"),
+			true);
+	public static long USERID_BIT_MASK = 1L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return BrowserTracker.class;
@@ -114,6 +122,8 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -238,6 +248,8 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		browserTrackerModelImpl._originalUserId = browserTrackerModelImpl._userId;
 
 		browserTrackerModelImpl._setOriginalUserId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -297,6 +309,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			BrowserTracker.class
 		};
+	private long _bitMask;
 	private long _browserTrackerId;
 	private long _userId;
 	private String _userUuid;

@@ -75,9 +75,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final String FINDER_CLASS_NAME_ENTITY = SocialRelationImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST, "findByUuid",
+			SocialRelationModelImpl.UUID_BIT_MASK,
+			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_UUID_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByUuid", SocialRelationModelImpl.UUID_BIT_MASK,
 			new String[] {
 				String.class.getName(),
 				
@@ -87,11 +95,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUuid",
+			SocialRelationModelImpl.UUID_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST,
-			"findByCompanyId",
+			"findByCompanyId", SocialRelationModelImpl.COMPANYID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByCompanyId", SocialRelationModelImpl.COMPANYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -101,10 +115,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByCompanyId",
+			SocialRelationModelImpl.COMPANYID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID1 = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST, "findByUserId1",
+			SocialRelationModelImpl.USERID1_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_USERID1_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByUserId1", SocialRelationModelImpl.USERID1_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -114,10 +135,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID1 = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId1",
+			SocialRelationModelImpl.USERID1_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_USERID2 = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST, "findByUserId2",
+			SocialRelationModelImpl.USERID2_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_USERID2_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByUserId2", SocialRelationModelImpl.USERID2_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -127,10 +155,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID2 = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUserId2",
+			SocialRelationModelImpl.USERID2_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_TYPE = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST, "findByType",
+			SocialRelationModelImpl.TYPE_BIT_MASK,
+			new String[] { Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_TYPE_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByType", SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Integer.class.getName(),
 				
@@ -140,10 +175,20 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_TYPE = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByType",
+			SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] { Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST, "findByC_T",
+			SocialRelationModelImpl.COMPANYID_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_C_T_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByC_T",
+			SocialRelationModelImpl.COMPANYID_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -153,10 +198,21 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_T",
+			SocialRelationModelImpl.COMPANYID_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_U1_U2 = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST, "findByU1_U2",
+			SocialRelationModelImpl.USERID1_BIT_MASK |
+			SocialRelationModelImpl.USERID2_BIT_MASK,
+			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_U1_U2_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByU1_U2",
+			SocialRelationModelImpl.USERID1_BIT_MASK |
+			SocialRelationModelImpl.USERID2_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -166,10 +222,21 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_U1_U2 = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU1_U2",
+			SocialRelationModelImpl.USERID1_BIT_MASK |
+			SocialRelationModelImpl.USERID2_BIT_MASK,
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_U1_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST, "findByU1_T",
+			SocialRelationModelImpl.USERID1_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_U1_T_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByU1_T",
+			SocialRelationModelImpl.USERID1_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -179,10 +246,21 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_U1_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU1_T",
+			SocialRelationModelImpl.USERID1_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_U2_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST, "findByU2_T",
+			SocialRelationModelImpl.USERID2_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_U2_T_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findByU2_T",
+			SocialRelationModelImpl.USERID2_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -192,11 +270,16 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_U2_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU2_T",
+			SocialRelationModelImpl.USERID2_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_U1_U2_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByU1_U2_T",
+			SocialRelationModelImpl.USERID1_BIT_MASK |
+			SocialRelationModelImpl.USERID2_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -204,6 +287,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public static final FinderPath FINDER_PATH_COUNT_BY_U1_U2_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU1_U2_T",
+			SocialRelationModelImpl.USERID1_BIT_MASK |
+			SocialRelationModelImpl.USERID2_BIT_MASK |
+			SocialRelationModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -212,6 +298,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
 			new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
+			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_PAGE_ORDER,
+			"findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -444,34 +534,142 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !SocialRelationModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_UUID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						socialRelationModelImpl.getOriginalUuid()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+			}
+
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_COMPANYID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialRelationModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+			}
+
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_USERID1.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialRelationModelImpl.getOriginalUserId1())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID1, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID1, args);
+			}
+
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_USERID2.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialRelationModelImpl.getOriginalUserId2())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID2, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID2, args);
+			}
+
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_TYPE.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Integer.valueOf(socialRelationModelImpl.getOriginalType())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_TYPE, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
+			}
+
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_C_T.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialRelationModelImpl.getOriginalCompanyId()),
+						Integer.valueOf(socialRelationModelImpl.getOriginalType())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_T, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_T, args);
+			}
+
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_U1_U2.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialRelationModelImpl.getOriginalUserId1()),
+						Long.valueOf(socialRelationModelImpl.getOriginalUserId2())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U1_U2, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U1_U2, args);
+			}
+
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_U1_T.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialRelationModelImpl.getOriginalUserId1()),
+						Integer.valueOf(socialRelationModelImpl.getOriginalType())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U1_T, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U1_T, args);
+			}
+
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_U2_T.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialRelationModelImpl.getOriginalUserId2()),
+						Integer.valueOf(socialRelationModelImpl.getOriginalType())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U2_T, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U2_T, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationImpl.class, socialRelation.getPrimaryKey(),
 			socialRelation);
 
-		if (!isNew &&
-				((socialRelation.getUserId1() != socialRelationModelImpl.getOriginalUserId1()) ||
-				(socialRelation.getUserId2() != socialRelationModelImpl.getOriginalUserId2()) ||
-				(socialRelation.getType() != socialRelationModelImpl.getOriginalType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U1_U2_T,
-				new Object[] {
-					Long.valueOf(socialRelationModelImpl.getOriginalUserId1()),
-					Long.valueOf(socialRelationModelImpl.getOriginalUserId2()),
-					Integer.valueOf(socialRelationModelImpl.getOriginalType())
-				});
-		}
-
-		if (isNew ||
-				((socialRelation.getUserId1() != socialRelationModelImpl.getOriginalUserId1()) ||
-				(socialRelation.getUserId2() != socialRelationModelImpl.getOriginalUserId2()) ||
-				(socialRelation.getType() != socialRelationModelImpl.getOriginalType()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U1_U2_T,
 				new Object[] {
 					Long.valueOf(socialRelation.getUserId1()),
 					Long.valueOf(socialRelation.getUserId2()),
 					Integer.valueOf(socialRelation.getType())
 				}, socialRelation);
+		}
+		else {
+			if ((socialRelationModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_U1_U2_T.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U1_U2_T,
+					new Object[] {
+						Long.valueOf(
+							socialRelationModelImpl.getOriginalUserId1()),
+						Long.valueOf(
+							socialRelationModelImpl.getOriginalUserId2()),
+						Integer.valueOf(
+							socialRelationModelImpl.getOriginalType())
+					});
+			}
 		}
 
 		return socialRelation;
@@ -644,14 +842,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public List<SocialRelation> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { uuid };
+
+			finderPath = FINDER_PATH_FIND_BY_UUID;
+		}
+		else {
+			finderArgs = new Object[] {
+					uuid,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_UUID_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -707,14 +918,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1000,14 +1209,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public List<SocialRelation> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId };
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_COMPANYID_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1051,14 +1273,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_COMPANYID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1332,14 +1552,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public List<SocialRelation> findByUserId1(long userId1, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId1,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_USERID1,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { userId1 };
+
+			finderPath = FINDER_PATH_FIND_BY_USERID1;
+		}
+		else {
+			finderArgs = new Object[] {
+					userId1,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_USERID1_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1383,14 +1616,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID1,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_USERID1,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1664,14 +1895,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public List<SocialRelation> findByUserId2(long userId2, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId2,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_USERID2,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { userId2 };
+
+			finderPath = FINDER_PATH_FIND_BY_USERID2;
+		}
+		else {
+			finderArgs = new Object[] {
+					userId2,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_USERID2_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1715,14 +1959,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_USERID2,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_USERID2,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1995,14 +2237,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public List<SocialRelation> findByType(int type, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				type,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_TYPE,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { type };
+
+			finderPath = FINDER_PATH_FIND_BY_TYPE;
+		}
+		else {
+			finderArgs = new Object[] {
+					type,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_TYPE_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2046,14 +2301,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_TYPE,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_TYPE,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2330,14 +2583,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public List<SocialRelation> findByC_T(long companyId, int type, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId, type,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_T,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId, type };
+
+			finderPath = FINDER_PATH_FIND_BY_C_T;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId, type,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_C_T_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2385,14 +2651,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_T,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_T,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2684,14 +2948,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public List<SocialRelation> findByU1_U2(long userId1, long userId2,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId1, userId2,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U1_U2,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { userId1, userId2 };
+
+			finderPath = FINDER_PATH_FIND_BY_U1_U2;
+		}
+		else {
+			finderArgs = new Object[] {
+					userId1, userId2,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_U1_U2_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2739,14 +3016,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U1_U2,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U1_U2,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3037,14 +3312,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public List<SocialRelation> findByU1_T(long userId1, int type, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId1, type,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U1_T,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { userId1, type };
+
+			finderPath = FINDER_PATH_FIND_BY_U1_T;
+		}
+		else {
+			finderArgs = new Object[] {
+					userId1, type,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_U1_T_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3092,14 +3380,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U1_T,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U1_T,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3390,14 +3676,27 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public List<SocialRelation> findByU2_T(long userId2, int type, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId2, type,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U2_T,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { userId2, type };
+
+			finderPath = FINDER_PATH_FIND_BY_U2_T;
+		}
+		else {
+			finderArgs = new Object[] {
+					userId2, type,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_U2_T_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3445,14 +3744,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U2_T,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U2_T,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3885,12 +4182,25 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public List<SocialRelation> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<SocialRelation> list = (List<SocialRelation>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3935,14 +4245,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

@@ -79,6 +79,17 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Subscription"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Subscription"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long CLASSPK_BIT_MASK = 4L;
+	public static long COMPANYID_BIT_MASK = 8L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return Subscription.class;
@@ -123,6 +134,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -141,6 +154,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -204,6 +219,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -222,6 +239,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -361,6 +380,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		subscriptionModelImpl._originalClassPK = subscriptionModelImpl._classPK;
 
 		subscriptionModelImpl._setOriginalClassPK = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -494,6 +515,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Subscription.class
 		};
+	private long _bitMask;
 	private long _subscriptionId;
 	private long _companyId;
 	private long _originalCompanyId;

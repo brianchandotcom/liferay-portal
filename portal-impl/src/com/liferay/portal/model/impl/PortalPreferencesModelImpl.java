@@ -70,6 +70,15 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PortalPreferences"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.PortalPreferences"),
+			true);
+	public static long OWNERID_BIT_MASK = 1L;
+	public static long OWNERTYPE_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return PortalPreferences.class;
@@ -114,6 +123,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	}
 
 	public void setOwnerId(long ownerId) {
+		_bitMask |= OWNERID_BIT_MASK;
+
 		if (!_setOriginalOwnerId) {
 			_setOriginalOwnerId = true;
 
@@ -132,6 +143,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	}
 
 	public void setOwnerType(int ownerType) {
+		_bitMask |= OWNERTYPE_BIT_MASK;
+
 		if (!_setOriginalOwnerType) {
 			_setOriginalOwnerType = true;
 
@@ -258,6 +271,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 		portalPreferencesModelImpl._originalOwnerType = portalPreferencesModelImpl._ownerType;
 
 		portalPreferencesModelImpl._setOriginalOwnerType = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -331,6 +346,7 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			PortalPreferences.class
 		};
+	private long _bitMask;
 	private long _portalPreferencesId;
 	private long _ownerId;
 	private long _originalOwnerId;

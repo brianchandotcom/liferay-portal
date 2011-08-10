@@ -86,6 +86,12 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Organization"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Organization"),
+			true);
+	public static long NAME_BIT_MASK = 1L;
+	public static long COMPANYID_BIT_MASK = 2L;
+	public static long PARENTORGANIZATIONID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -126,6 +132,10 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -177,6 +187,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -196,6 +208,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	}
 
 	public void setParentOrganizationId(long parentOrganizationId) {
+		_bitMask |= PARENTORGANIZATIONID_BIT_MASK;
+
 		if (!_setOriginalParentOrganizationId) {
 			_setOriginalParentOrganizationId = true;
 
@@ -238,6 +252,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -425,6 +441,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		organizationModelImpl._setOriginalParentOrganizationId = false;
 
 		organizationModelImpl._originalName = organizationModelImpl._name;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -574,6 +592,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Organization.class
 		};
+	private long _bitMask;
 	private long _organizationId;
 	private long _companyId;
 	private long _originalCompanyId;

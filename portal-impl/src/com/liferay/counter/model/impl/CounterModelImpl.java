@@ -66,6 +66,7 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.counter.model.Counter"),
 			false);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = false;
 
 	public Class<?> getModelClass() {
 		return Counter.class;

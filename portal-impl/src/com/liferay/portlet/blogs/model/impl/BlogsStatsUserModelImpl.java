@@ -81,6 +81,18 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.blogs.model.BlogsStatsUser"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.blogs.model.BlogsStatsUser"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long LASTPOSTDATE_BIT_MASK = 4L;
+	public static long COMPANYID_BIT_MASK = 8L;
+	public static long ENTRYCOUNT_BIT_MASK = 16L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return BlogsStatsUser.class;
@@ -133,6 +145,8 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -151,7 +165,19 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -159,6 +185,8 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -185,7 +213,19 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	}
 
 	public void setEntryCount(int entryCount) {
+		_bitMask |= ENTRYCOUNT_BIT_MASK;
+
+		if (!_setOriginalEntryCount) {
+			_setOriginalEntryCount = true;
+
+			_originalEntryCount = _entryCount;
+		}
+
 		_entryCount = entryCount;
+	}
+
+	public int getOriginalEntryCount() {
+		return _originalEntryCount;
 	}
 
 	public Date getLastPostDate() {
@@ -193,7 +233,17 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	}
 
 	public void setLastPostDate(Date lastPostDate) {
+		_bitMask |= LASTPOSTDATE_BIT_MASK;
+
+		if (_originalLastPostDate == null) {
+			_originalLastPostDate = _lastPostDate;
+		}
+
 		_lastPostDate = lastPostDate;
+	}
+
+	public Date getOriginalLastPostDate() {
+		return _originalLastPostDate;
 	}
 
 	public int getRatingsTotalEntries() {
@@ -330,9 +380,21 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 		blogsStatsUserModelImpl._setOriginalGroupId = false;
 
+		blogsStatsUserModelImpl._originalCompanyId = blogsStatsUserModelImpl._companyId;
+
+		blogsStatsUserModelImpl._setOriginalCompanyId = false;
+
 		blogsStatsUserModelImpl._originalUserId = blogsStatsUserModelImpl._userId;
 
 		blogsStatsUserModelImpl._setOriginalUserId = false;
+
+		blogsStatsUserModelImpl._originalEntryCount = blogsStatsUserModelImpl._entryCount;
+
+		blogsStatsUserModelImpl._setOriginalEntryCount = false;
+
+		blogsStatsUserModelImpl._originalLastPostDate = blogsStatsUserModelImpl._lastPostDate;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -447,18 +509,24 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			BlogsStatsUser.class
 		};
+	private long _bitMask;
 	private long _statsUserId;
 	private String _statsUserUuid;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private int _entryCount;
+	private int _originalEntryCount;
+	private boolean _setOriginalEntryCount;
 	private Date _lastPostDate;
+	private Date _originalLastPostDate;
 	private int _ratingsTotalEntries;
 	private double _ratingsTotalScore;
 	private double _ratingsAverageScore;

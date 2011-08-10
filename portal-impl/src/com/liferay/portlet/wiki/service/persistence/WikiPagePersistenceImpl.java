@@ -93,9 +93,17 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final String FINDER_CLASS_NAME_ENTITY = WikiPageImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FIND_BY_UUID = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByUuid",
+			WikiPageModelImpl.UUID_BIT_MASK,
+			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_UUID_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByUuid",
+			WikiPageModelImpl.UUID_BIT_MASK,
 			new String[] {
 				String.class.getName(),
 				
@@ -105,18 +113,29 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUuid",
+			WikiPageModelImpl.UUID_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			WikiPageModelImpl.UUID_BIT_MASK |
+			WikiPageModelImpl.GROUPID_BIT_MASK,
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByUUID_G",
+			WikiPageModelImpl.UUID_BIT_MASK |
+			WikiPageModelImpl.GROUPID_BIT_MASK,
 			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_NODEID = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByNodeId",
+			WikiPageModelImpl.NODEID_BIT_MASK,
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_NODEID_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByNodeId",
+			WikiPageModelImpl.NODEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(),
 				
@@ -126,10 +145,17 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_NODEID = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByNodeId",
+			WikiPageModelImpl.NODEID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_FORMAT = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByFormat",
+			WikiPageModelImpl.FORMAT_BIT_MASK,
+			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_FORMAT_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByFormat",
+			WikiPageModelImpl.FORMAT_BIT_MASK,
 			new String[] {
 				String.class.getName(),
 				
@@ -139,10 +165,19 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_FORMAT = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByFormat",
+			WikiPageModelImpl.FORMAT_BIT_MASK,
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_R_N = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByR_N",
+			WikiPageModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK,
+			new String[] { Long.class.getName(), Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_R_N_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByR_N",
+			WikiPageModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
@@ -152,10 +187,20 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_R_N = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByR_N",
+			WikiPageModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK,
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_N_T = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_T",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK,
+			new String[] { Long.class.getName(), String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_N_T_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_T",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -165,10 +210,20 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_T = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_T",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_N_H = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_H",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK,
+			new String[] { Long.class.getName(), Boolean.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_N_H_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_H",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				
@@ -178,10 +233,20 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_H = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_H",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK,
 			new String[] { Long.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_N_P = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_P",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.PARENTTITLE_BIT_MASK,
+			new String[] { Long.class.getName(), String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_N_P_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_P",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.PARENTTITLE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -191,10 +256,20 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_P = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_P",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.PARENTTITLE_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_N_R = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_R",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.REDIRECTTITLE_BIT_MASK,
+			new String[] { Long.class.getName(), String.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_N_R_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_R",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.REDIRECTTITLE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
@@ -204,10 +279,20 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_R = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_R",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.REDIRECTTITLE_BIT_MASK,
 			new String[] { Long.class.getName(), String.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_N_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
+			new String[] { Long.class.getName(), Integer.class.getName() });
+	public static final FinderPath FINDER_PATH_FIND_BY_N_S_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
@@ -217,10 +302,15 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_R_N_V = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_N_V",
+			WikiPageModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.VERSION_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Double.class.getName()
@@ -228,6 +318,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_R_N_V = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByR_N_V",
+			WikiPageModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.VERSION_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Double.class.getName()
@@ -235,6 +328,19 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_FIND_BY_R_N_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByR_N_S",
+			WikiPageModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_R_N_S_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByR_N_S",
+			WikiPageModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(),
@@ -245,6 +351,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_R_N_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByR_N_S",
+			WikiPageModelImpl.RESOURCEPRIMKEY_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -252,6 +361,19 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_FIND_BY_U_N_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByU_N_S",
+			WikiPageModelImpl.USERID_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_U_N_S_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByU_N_S",
+			WikiPageModelImpl.USERID_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(),
@@ -262,6 +384,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_N_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByU_N_S",
+			WikiPageModelImpl.USERID_BIT_MASK |
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -269,6 +394,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_FETCH_BY_N_T_V = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_T_V",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK |
+			WikiPageModelImpl.VERSION_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
@@ -276,6 +404,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_T_V = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_T_V",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK |
+			WikiPageModelImpl.VERSION_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
@@ -283,6 +414,17 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_FIND_BY_N_T_H = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_T_H",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK | WikiPageModelImpl.HEAD_BIT_MASK,
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_N_T_H_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_T_H",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK | WikiPageModelImpl.HEAD_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName(),
@@ -293,6 +435,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_T_H = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_T_H",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK | WikiPageModelImpl.HEAD_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
@@ -300,6 +444,19 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_FIND_BY_N_T_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_T_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_N_T_S_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_T_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(),
@@ -310,6 +467,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_T_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_T_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.TITLE_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
@@ -317,6 +477,19 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_FIND_BY_N_H_P = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_H_P",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK |
+			WikiPageModelImpl.PARENTTITLE_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_N_H_P_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_H_P",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK |
+			WikiPageModelImpl.PARENTTITLE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(),
@@ -327,6 +500,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_H_P = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_H_P",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK |
+			WikiPageModelImpl.PARENTTITLE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
@@ -334,6 +510,19 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_FIND_BY_N_H_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_H_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_N_H_S_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_H_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(),
@@ -344,6 +533,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_H_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_H_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Integer.class.getName()
@@ -351,6 +543,21 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_FIND_BY_N_H_P_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByN_H_P_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK |
+			WikiPageModelImpl.PARENTTITLE_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_N_H_P_S_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByN_H_P_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK |
+			WikiPageModelImpl.PARENTTITLE_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), Integer.class.getName(),
@@ -361,6 +568,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_COUNT_BY_N_H_P_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByN_H_P_S",
+			WikiPageModelImpl.NODEID_BIT_MASK |
+			WikiPageModelImpl.HEAD_BIT_MASK |
+			WikiPageModelImpl.PARENTTITLE_BIT_MASK |
+			WikiPageModelImpl.STATUS_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), Integer.class.getName()
@@ -368,6 +579,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -657,81 +871,267 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !WikiPageModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_UUID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] { wikiPageModelImpl.getOriginalUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_NODEID.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_NODEID, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NODEID, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_FORMAT.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						wikiPageModelImpl.getOriginalFormat()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_FORMAT, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FORMAT, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_R_N.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalResourcePrimKey()),
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_R_N, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_T.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						
+						wikiPageModelImpl.getOriginalTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_T, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_H.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						Boolean.valueOf(wikiPageModelImpl.getOriginalHead())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_H, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_P.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						
+						wikiPageModelImpl.getOriginalParentTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_P, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_P, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_R.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						
+						wikiPageModelImpl.getOriginalRedirectTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_R, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_R, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_S.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_S, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_S, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_R_N_S.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalResourcePrimKey()),
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_R_N_S, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_S, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_U_N_S.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalUserId()),
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U_N_S, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_N_S, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_T_H.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						
+						wikiPageModelImpl.getOriginalTitle(),
+						Boolean.valueOf(wikiPageModelImpl.getOriginalHead())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_T_H, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_H, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_T_S.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						
+						wikiPageModelImpl.getOriginalTitle(),
+						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_T_S, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_S, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_H_P.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						Boolean.valueOf(wikiPageModelImpl.getOriginalHead()),
+						
+						wikiPageModelImpl.getOriginalParentTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_H_P, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_H_S.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						Boolean.valueOf(wikiPageModelImpl.getOriginalHead()),
+						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_H_S, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_S, args);
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_N_H_P_S.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						Boolean.valueOf(wikiPageModelImpl.getOriginalHead()),
+						
+						wikiPageModelImpl.getOriginalParentTitle(),
+						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_H_P_S, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P_S, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageImpl.class, wikiPage.getPrimaryKey(), wikiPage);
 
-		if (!isNew &&
-				(!Validator.equals(wikiPage.getUuid(),
-					wikiPageModelImpl.getOriginalUuid()) ||
-				(wikiPage.getGroupId() != wikiPageModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					wikiPageModelImpl.getOriginalUuid(),
-					Long.valueOf(wikiPageModelImpl.getOriginalGroupId())
-				});
-		}
-
-		if (isNew ||
-				(!Validator.equals(wikiPage.getUuid(),
-					wikiPageModelImpl.getOriginalUuid()) ||
-				(wikiPage.getGroupId() != wikiPageModelImpl.getOriginalGroupId()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					wikiPage.getUuid(), Long.valueOf(wikiPage.getGroupId())
 				}, wikiPage);
-		}
-
-		if (!isNew &&
-				((wikiPage.getResourcePrimKey() != wikiPageModelImpl.getOriginalResourcePrimKey()) ||
-				(wikiPage.getNodeId() != wikiPageModelImpl.getOriginalNodeId()) ||
-				(wikiPage.getVersion() != wikiPageModelImpl.getOriginalVersion()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V,
-				new Object[] {
-					Long.valueOf(wikiPageModelImpl.getOriginalResourcePrimKey()),
-					Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
-					Double.valueOf(wikiPageModelImpl.getOriginalVersion())
-				});
-		}
-
-		if (isNew ||
-				((wikiPage.getResourcePrimKey() != wikiPageModelImpl.getOriginalResourcePrimKey()) ||
-				(wikiPage.getNodeId() != wikiPageModelImpl.getOriginalNodeId()) ||
-				(wikiPage.getVersion() != wikiPageModelImpl.getOriginalVersion()))) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V,
 				new Object[] {
 					Long.valueOf(wikiPage.getResourcePrimKey()),
 					Long.valueOf(wikiPage.getNodeId()),
 					Double.valueOf(wikiPage.getVersion())
 				}, wikiPage);
-		}
-
-		if (!isNew &&
-				((wikiPage.getNodeId() != wikiPageModelImpl.getOriginalNodeId()) ||
-				!Validator.equals(wikiPage.getTitle(),
-					wikiPageModelImpl.getOriginalTitle()) ||
-				(wikiPage.getVersion() != wikiPageModelImpl.getOriginalVersion()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V,
-				new Object[] {
-					Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
-					
-				wikiPageModelImpl.getOriginalTitle(),
-					Double.valueOf(wikiPageModelImpl.getOriginalVersion())
-				});
-		}
-
-		if (isNew ||
-				((wikiPage.getNodeId() != wikiPageModelImpl.getOriginalNodeId()) ||
-				!Validator.equals(wikiPage.getTitle(),
-					wikiPageModelImpl.getOriginalTitle()) ||
-				(wikiPage.getVersion() != wikiPageModelImpl.getOriginalVersion()))) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V,
 				new Object[] {
 					Long.valueOf(wikiPage.getNodeId()),
 					
 				wikiPage.getTitle(), Double.valueOf(wikiPage.getVersion())
 				}, wikiPage);
+		}
+		else {
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_UUID_G.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
+					new Object[] {
+						wikiPageModelImpl.getOriginalUuid(),
+						Long.valueOf(wikiPageModelImpl.getOriginalGroupId())
+					});
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_R_N_V.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V,
+					new Object[] {
+						Long.valueOf(
+							wikiPageModelImpl.getOriginalResourcePrimKey()),
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						Double.valueOf(wikiPageModelImpl.getOriginalVersion())
+					});
+			}
+
+			if ((wikiPageModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_N_T_V.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V,
+					new Object[] {
+						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+						
+					wikiPageModelImpl.getOriginalTitle(),
+						Double.valueOf(wikiPageModelImpl.getOriginalVersion())
+					});
+			}
 		}
 
 		return wikiPage;
@@ -917,14 +1317,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { uuid };
+
+			finderPath = FINDER_PATH_FIND_BY_UUID;
+		}
+		else {
+			finderArgs = new Object[] {
+					uuid,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_UUID_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -984,14 +1397,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_UUID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1433,14 +1844,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByNodeId(long nodeId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_NODEID,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId };
+
+			finderPath = FINDER_PATH_FIND_BY_NODEID;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_NODEID_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1488,14 +1912,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_NODEID,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_NODEID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1771,14 +2193,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByFormat(String format, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				format,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_FORMAT,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { format };
+
+			finderPath = FINDER_PATH_FIND_BY_FORMAT;
+		}
+		else {
+			finderArgs = new Object[] {
+					format,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_FORMAT_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1838,14 +2273,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_FORMAT,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_FORMAT,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2139,14 +2572,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> findByR_N(long resourcePrimKey, long nodeId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				resourcePrimKey, nodeId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_R_N,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { resourcePrimKey, nodeId };
+
+			finderPath = FINDER_PATH_FIND_BY_R_N;
+		}
+		else {
+			finderArgs = new Object[] {
+					resourcePrimKey, nodeId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_R_N_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2198,14 +2644,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_R_N,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_R_N,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2500,14 +2944,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByN_T(long nodeId, String title, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, title,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_T,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, title };
+
+			finderPath = FINDER_PATH_FIND_BY_N_T;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, title,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_T_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2571,14 +3028,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_T,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_T,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -2884,14 +3339,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByN_H(long nodeId, boolean head, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, head,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_H,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, head };
+
+			finderPath = FINDER_PATH_FIND_BY_N_H;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, head,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_H_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2943,14 +3411,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_H,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_H,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3244,14 +3710,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByN_P(long nodeId, String parentTitle, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, parentTitle,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_P,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, parentTitle };
+
+			finderPath = FINDER_PATH_FIND_BY_N_P;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, parentTitle,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_P_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3315,14 +3794,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_P,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_P,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -3630,14 +4107,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> findByN_R(long nodeId, String redirectTitle,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, redirectTitle,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_R,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, redirectTitle };
+
+			finderPath = FINDER_PATH_FIND_BY_N_R;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, redirectTitle,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_R_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3701,14 +4191,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_R,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_R,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -4015,14 +4503,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByN_S(long nodeId, int status, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_S,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, status };
+
+			finderPath = FINDER_PATH_FIND_BY_N_S;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_S_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -4074,14 +4575,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_S,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_S,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -4531,14 +5030,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> findByR_N_S(long resourcePrimKey, long nodeId,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				resourcePrimKey, nodeId, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_R_N_S,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { resourcePrimKey, nodeId, status };
+
+			finderPath = FINDER_PATH_FIND_BY_R_N_S;
+		}
+		else {
+			finderArgs = new Object[] {
+					resourcePrimKey, nodeId, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_R_N_S_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -4594,14 +5106,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_R_N_S,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_R_N_S,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -4914,14 +5424,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> findByU_N_S(long userId, long nodeId, int status,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId, nodeId, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_N_S,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { userId, nodeId, status };
+
+			finderPath = FINDER_PATH_FIND_BY_U_N_S;
+		}
+		else {
+			finderArgs = new Object[] {
+					userId, nodeId, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_U_N_S_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -4977,14 +5500,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_U_N_S,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_U_N_S,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -5461,14 +5982,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> findByN_T_H(long nodeId, String title, boolean head,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, title, head,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_T_H,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, title, head };
+
+			finderPath = FINDER_PATH_FIND_BY_N_T_H;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, title, head,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_T_H_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -5536,14 +6070,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_T_H,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_T_H,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -5867,14 +6399,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> findByN_T_S(long nodeId, String title, int status,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, title, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_T_S,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, title, status };
+
+			finderPath = FINDER_PATH_FIND_BY_N_T_S;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, title, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_T_S_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -5942,14 +6487,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_T_S,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_T_S,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -6273,14 +6816,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> findByN_H_P(long nodeId, boolean head,
 		String parentTitle, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, head, parentTitle,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_H_P,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, head, parentTitle };
+
+			finderPath = FINDER_PATH_FIND_BY_N_H_P;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, head, parentTitle,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_H_P_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -6348,14 +6904,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_H_P,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_H_P,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -6679,14 +7233,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> findByN_H_S(long nodeId, boolean head, int status,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, head, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_H_S,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, head, status };
+
+			finderPath = FINDER_PATH_FIND_BY_N_H_S;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, head, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_H_S_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -6742,14 +7309,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_H_S,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_H_S,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -7065,14 +7630,27 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> findByN_H_P_S(long nodeId, boolean head,
 		String parentTitle, int status, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId, head, parentTitle, status,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_H_P_S,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { nodeId, head, parentTitle, status };
+
+			finderPath = FINDER_PATH_FIND_BY_N_H_P_S;
+		}
+		else {
+			finderArgs = new Object[] {
+					nodeId, head, parentTitle, status,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_N_H_P_S_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -7144,14 +7722,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_N_H_P_S,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_N_H_P_S,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -7476,12 +8052,25 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -7526,14 +8115,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

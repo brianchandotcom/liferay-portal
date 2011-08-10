@@ -82,6 +82,15 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingCart"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.shopping.model.ShoppingCart"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ShoppingCart.class;
@@ -126,6 +135,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -152,6 +163,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -355,6 +368,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		shoppingCartModelImpl._originalUserId = shoppingCartModelImpl._userId;
 
 		shoppingCartModelImpl._setOriginalUserId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -510,6 +525,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ShoppingCart.class
 		};
+	private long _bitMask;
 	private long _cartId;
 	private long _groupId;
 	private long _originalGroupId;

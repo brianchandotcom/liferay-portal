@@ -87,6 +87,12 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetCategoryProperty"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.asset.model.AssetCategoryProperty"),
+			true);
+	public static long CATEGORYID_BIT_MASK = 1L;
+	public static long COMPANYID_BIT_MASK = 2L;
+	public static long KEY_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -126,6 +132,10 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -173,7 +183,19 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -231,6 +253,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	}
 
 	public void setCategoryId(long categoryId) {
+		_bitMask |= CATEGORYID_BIT_MASK;
+
 		if (!_setOriginalCategoryId) {
 			_setOriginalCategoryId = true;
 
@@ -255,6 +279,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	}
 
 	public void setKey(String key) {
+		_bitMask |= KEY_BIT_MASK;
+
 		if (_originalKey == null) {
 			_originalKey = _key;
 		}
@@ -376,11 +402,17 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public void resetOriginalValues() {
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = this;
 
+		assetCategoryPropertyModelImpl._originalCompanyId = assetCategoryPropertyModelImpl._companyId;
+
+		assetCategoryPropertyModelImpl._setOriginalCompanyId = false;
+
 		assetCategoryPropertyModelImpl._originalCategoryId = assetCategoryPropertyModelImpl._categoryId;
 
 		assetCategoryPropertyModelImpl._setOriginalCategoryId = false;
 
 		assetCategoryPropertyModelImpl._originalKey = assetCategoryPropertyModelImpl._key;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -520,8 +552,11 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			AssetCategoryProperty.class
 		};
+	private long _bitMask;
 	private long _categoryPropertyId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

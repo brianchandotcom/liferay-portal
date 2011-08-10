@@ -71,6 +71,16 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.wiki.model.WikiPageResource"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.wiki.model.WikiPageResource"),
+			true);
+	public static long TITLE_BIT_MASK = 1L;
+	public static long NODEID_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return WikiPageResource.class;
@@ -112,7 +122,15 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	public long getResourcePrimKey() {
@@ -128,6 +146,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	}
 
 	public void setNodeId(long nodeId) {
+		_bitMask |= NODEID_BIT_MASK;
+
 		if (!_setOriginalNodeId) {
 			_setOriginalNodeId = true;
 
@@ -151,6 +171,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	}
 
 	public void setTitle(String title) {
+		_bitMask |= TITLE_BIT_MASK;
+
 		if (_originalTitle == null) {
 			_originalTitle = _title;
 		}
@@ -255,11 +277,15 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public void resetOriginalValues() {
 		WikiPageResourceModelImpl wikiPageResourceModelImpl = this;
 
+		wikiPageResourceModelImpl._originalUuid = wikiPageResourceModelImpl._uuid;
+
 		wikiPageResourceModelImpl._originalNodeId = wikiPageResourceModelImpl._nodeId;
 
 		wikiPageResourceModelImpl._setOriginalNodeId = false;
 
 		wikiPageResourceModelImpl._originalTitle = wikiPageResourceModelImpl._title;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -339,7 +365,9 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			WikiPageResource.class
 		};
+	private long _bitMask;
 	private String _uuid;
+	private String _originalUuid;
 	private long _resourcePrimKey;
 	private long _nodeId;
 	private long _originalNodeId;

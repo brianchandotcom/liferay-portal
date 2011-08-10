@@ -96,6 +96,14 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.announcements.model.AnnouncementsEntry"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.announcements.model.AnnouncementsEntry"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long ALERT_BIT_MASK = 2L;
+	public static long USERID_BIT_MASK = 4L;
+	public static long CLASSPK_BIT_MASK = 8L;
+	public static long UUID_BIT_MASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -144,6 +152,10 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		return models;
 	}
 
+	public long getBitMask() {
+		return _bitMask;
+	}
+
 	public Class<?> getModelClass() {
 		return AnnouncementsEntry.class;
 	}
@@ -185,7 +197,15 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -212,6 +232,14 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -221,6 +249,10 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -269,7 +301,19 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -278,7 +322,19 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -374,7 +430,19 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setAlert(boolean alert) {
+		_bitMask |= ALERT_BIT_MASK;
+
+		if (!_setOriginalAlert) {
+			_setOriginalAlert = true;
+
+			_originalAlert = _alert;
+		}
+
 		_alert = alert;
+	}
+
+	public boolean getOriginalAlert() {
+		return _originalAlert;
 	}
 
 	@Override
@@ -494,6 +562,27 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	@Override
 	public void resetOriginalValues() {
+		AnnouncementsEntryModelImpl announcementsEntryModelImpl = this;
+
+		announcementsEntryModelImpl._originalUuid = announcementsEntryModelImpl._uuid;
+
+		announcementsEntryModelImpl._originalUserId = announcementsEntryModelImpl._userId;
+
+		announcementsEntryModelImpl._setOriginalUserId = false;
+
+		announcementsEntryModelImpl._originalClassNameId = announcementsEntryModelImpl._classNameId;
+
+		announcementsEntryModelImpl._setOriginalClassNameId = false;
+
+		announcementsEntryModelImpl._originalClassPK = announcementsEntryModelImpl._classPK;
+
+		announcementsEntryModelImpl._setOriginalClassPK = false;
+
+		announcementsEntryModelImpl._originalAlert = announcementsEntryModelImpl._alert;
+
+		announcementsEntryModelImpl._setOriginalAlert = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -729,16 +818,24 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			AnnouncementsEntry.class
 		};
+	private long _bitMask;
 	private String _uuid;
+	private String _originalUuid;
 	private long _entryId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _title;
 	private String _content;
 	private String _url;
@@ -747,6 +844,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	private Date _expirationDate;
 	private int _priority;
 	private boolean _alert;
+	private boolean _originalAlert;
+	private boolean _setOriginalAlert;
 	private transient ExpandoBridge _expandoBridge;
 	private AnnouncementsEntry _escapedModelProxy;
 }

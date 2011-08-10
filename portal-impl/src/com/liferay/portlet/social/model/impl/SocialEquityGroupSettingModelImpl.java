@@ -74,6 +74,16 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialEquityGroupSetting"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.social.model.SocialEquityGroupSetting"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long CLASSNAMEID_BIT_MASK = 2L;
+	public static long TYPE_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return SocialEquityGroupSetting.class;
@@ -118,6 +128,8 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -152,6 +164,8 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -170,6 +184,8 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	}
 
 	public void setType(int type) {
+		_bitMask |= TYPE_BIT_MASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -301,6 +317,8 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 		socialEquityGroupSettingModelImpl._originalType = socialEquityGroupSettingModelImpl._type;
 
 		socialEquityGroupSettingModelImpl._setOriginalType = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -384,6 +402,7 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SocialEquityGroupSetting.class
 		};
+	private long _bitMask;
 	private long _equityGroupSettingId;
 	private long _groupId;
 	private long _originalGroupId;

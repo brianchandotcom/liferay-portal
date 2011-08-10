@@ -65,6 +65,15 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.OrgGroupPermission"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.OrgGroupPermission"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long PERMISSIONID_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return OrgGroupPermission.class;
@@ -111,7 +120,19 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	public long getPermissionId() {
@@ -119,7 +140,19 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 	}
 
 	public void setPermissionId(long permissionId) {
+		_bitMask |= PERMISSIONID_BIT_MASK;
+
+		if (!_setOriginalPermissionId) {
+			_setOriginalPermissionId = true;
+
+			_originalPermissionId = _permissionId;
+		}
+
 		_permissionId = permissionId;
+	}
+
+	public long getOriginalPermissionId() {
+		return _originalPermissionId;
 	}
 
 	@Override
@@ -189,6 +222,17 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 
 	@Override
 	public void resetOriginalValues() {
+		OrgGroupPermissionModelImpl orgGroupPermissionModelImpl = this;
+
+		orgGroupPermissionModelImpl._originalGroupId = orgGroupPermissionModelImpl._groupId;
+
+		orgGroupPermissionModelImpl._setOriginalGroupId = false;
+
+		orgGroupPermissionModelImpl._originalPermissionId = orgGroupPermissionModelImpl._permissionId;
+
+		orgGroupPermissionModelImpl._setOriginalPermissionId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -248,8 +292,13 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			OrgGroupPermission.class
 		};
+	private long _bitMask;
 	private long _organizationId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _permissionId;
+	private long _originalPermissionId;
+	private boolean _setOriginalPermissionId;
 	private OrgGroupPermission _escapedModelProxy;
 }

@@ -29,4 +29,19 @@
 			srcdir="src"
 		/>
 	</target>
+
+	<target name="jar" depends="compile">
+		<antcall target="manifest" />
+
+		<manifest file="classes/META-INF/MANIFEST.MF" mode="update">
+			<attribute name="Bundle-Name" value="Liferay Portal Service" />
+			<attribute name="Bundle-SymbolicName" value="com.liferay.portal.service;singleton:=true" />
+		</manifest>
+
+		<jar
+			basedir="classes"
+			jarfile="${jar.file}.jar"
+			manifest="classes/META-INF/MANIFEST.MF"
+		/>
+	</target>
 </project>

@@ -25,6 +25,8 @@ public class ReleaseInfo {
 
 	static String name = "Liferay Portal Community Edition";
 
+	static String vendor = "Liferay, Inc.";
+
 	static String version = "6.1.0";
 
 	static String versionDisplayName = "6.1.0 CE";
@@ -85,6 +87,10 @@ public class ReleaseInfo {
 
 	public static final String getName() {
 		return name;
+	}
+
+	public static String getVendor() {
+		return vendor;
 	}
 
 	public static final String getVersion() {

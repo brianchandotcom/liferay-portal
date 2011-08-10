@@ -106,19 +106,37 @@
 			</not>
 			<then>
 				<script classpathref="project.classpath" language="beanshell">
+					import com.liferay.portal.kernel.util.PackagingUtil;
 					import com.liferay.portal.kernel.util.ReleaseInfo;
+					import com.liferay.portal.kernel.util.StringUtil;
+
+					version = ReleaseInfo.getVersion();
 
 					project.setProperty("release.info.code.name", ReleaseInfo.getCodeName());
 					project.setProperty("release.info.build.date", String.valueOf(ReleaseInfo.getBuildDate()));
 					project.setProperty("release.info.build.number", String.valueOf(ReleaseInfo.getBuildNumber()));
 					project.setProperty("release.info.release.info", ReleaseInfo.getReleaseInfo());
 					project.setProperty("release.info.server.info", ReleaseInfo.getServerInfo());
-					project.setProperty("release.info.version", ReleaseInfo.getVersion());
+					project.setProperty("release.info.vendor", ReleaseInfo.getVendor());
+					project.setProperty("release.info.version", version);
+
+					classesFolder = new File(project.getBaseDir(), "classes");
+
+					packages = PackagingUtil.getPackagesFromPath(classesFolder);
+
+					packages = StringUtil.merge(packages, ";version=\"" + version +  "\",") + ";version=\"" + version +  "\"";
+
+					project.setProperty("export.packages", packages);
 				</script>
 
 				<mkdir dir="classes/META-INF" />
 
 				<manifest file="classes/META-INF/MANIFEST.MF">
+					<attribute name="Bundle-ManifestVersion" value="2" />
+					<attribute name="Bundle-RequiredExecutionEnvironment" value="J2SE-1.5" />
+					<attribute name="Bundle-Vendor" value="${release.info.vendor}" />
+					<attribute name="Bundle-Version" value="${release.info.version}" />
+					<attribute name="Export-Package" value="${export.packages}" />
 					<attribute name="Liferay-Portal-Code-Name" value="${release.info.code.name}" />
 					<attribute name="Liferay-Portal-Build-Date" value="${release.info.build.date}" />
 					<attribute name="Liferay-Portal-Build-Number" value="${release.info.build.number}" />

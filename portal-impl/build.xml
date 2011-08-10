@@ -1109,6 +1109,11 @@ public class Creole10Parser]]></replacevalue>
 			<then>
 				<antcall target="manifest" />
 
+				<manifest file="classes/META-INF/MANIFEST.MF" mode="update">
+					<attribute name="Bundle-Name" value="Liferay Portal Impl" />
+					<attribute name="Bundle-SymbolicName" value="com.liferay.portal.impl;singleton:=true" />
+				</manifest>
+
 				<jar
 					basedir="classes"
 					excludes="log4j.properties,logging.properties,portal-*.properties,system-*.properties,**/samplesqlbuilder/dependencies/*.txt"

@@ -27,6 +27,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PermissionServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
@@ -195,6 +196,26 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		return actionIds;
 	}
 
+	protected void propagateRolePermissions(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletResource);
+
+		PermissionPropagator permissionPropagator =
+			portlet.getPermissionPropagatorInstance();
+
+		if (permissionPropagator != null) {
+			permissionPropagator.propagateRolePermissions();
+		}
+	}
+
 	protected void updateGroupPermissions(ActionRequest actionRequest)
 		throws Exception {
 
@@ -272,6 +293,8 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		else {
 			updateRolePermissions_1to4(actionRequest);
 		}
+
+		propagateRolePermissions(actionRequest);
 	}
 
 	protected void updateRolePermissions_1to4(ActionRequest actionRequest)

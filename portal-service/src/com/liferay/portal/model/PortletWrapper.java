@@ -1115,6 +1115,19 @@ public class PortletWrapper implements Portlet {
 		return _portlet.getCustomAttributesDisplayInstances();
 	}
 
+	public java.lang.String getPermissionPropagatorClass() {
+		return _portlet.getPermissionPropagatorClass();
+	}
+
+	public void setPermissionPropagatorClass(
+		java.lang.String permissionPropagatorClass) {
+		_portlet.setPermissionPropagatorClass(permissionPropagatorClass);
+	}
+
+	public com.liferay.portal.security.permission.PermissionPropagator getPermissionPropagatorInstance() {
+		return _portlet.getPermissionPropagatorInstance();
+	}
+
 	/**
 	* Returns the names of the classes that represent workflow handlers
 	* associated with the portlet.

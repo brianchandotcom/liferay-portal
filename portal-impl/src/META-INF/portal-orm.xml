@@ -3533,6 +3533,7 @@
 			<transient name="maximizeHelp" />
 			<transient name="openSearchClass" />
 			<transient name="parentStrutsPath" />
+			<transient name="permissionPropagatorClass" />
 			<transient name="pluginPackage" />
 			<transient name="pollerProcessorClass" />
 			<transient name="popMessageListenerClass" />

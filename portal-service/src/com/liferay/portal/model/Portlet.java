@@ -740,6 +740,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances();
 
+	public java.lang.String getPermissionPropagatorClass();
+
+	public void setPermissionPropagatorClass(
+		java.lang.String permissionPropagatorClass);
+
+	public com.liferay.portal.security.permission.PermissionPropagator getPermissionPropagatorInstance();
+
 	/**
 	* Returns the names of the classes that represent workflow handlers
 	* associated with the portlet.

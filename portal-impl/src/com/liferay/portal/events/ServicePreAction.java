@@ -1263,6 +1263,10 @@ public class ServicePreAction extends Action {
 						!LayoutPermissionUtil.contains(
 							permissionChecker, layout, ActionKeys.VIEW)) {
 
+					layouts = LayoutLocalServiceUtil.getLayouts(
+						layout.getGroupId(), layout.isPrivateLayout(),
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
 					layout = null;
 				}
 				else if (group.isLayoutPrototype()) {

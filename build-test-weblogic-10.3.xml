@@ -111,6 +111,77 @@
 			value="${vm.host}:7001"
 		/>
 
+		<if>
+			<isset property="hook.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-weblogic-10.3-plugins">
+					<property name="plugin.types" value="hooks" />
+					<property name="plugins.deployed" value="${plugins.deployed}" />
+					<property name="plugins.includes" value="${hook.plugins.includes}" />
+				</ant>
+
+				<property name="plugins.deployed" value="true" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="plugins.version.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-versioned-weblogic-10.3-plugins">
+					<property name="plugins.includes" value="${plugins.version.includes}" />
+				</ant>
+			</then>
+		</if>
+
+		<if>
+			<isset property="portlet.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-weblogic-10.3-plugins">
+					<property name="plugin.types" value="portlets" />
+					<property name="plugins.deployed" value="${plugins.deployed}" />
+					<property name="plugins.includes" value="${portlet.plugins.includes}" />
+				</ant>
+
+				<property name="plugins.deployed" value="true" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="portlet.plugins.upgrade.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-upgrade-weblogic-10.3-plugins">
+					<property name="plugin.types" value="portlets" />
+					<property name="plugins.includes" value="${portlet.plugins.upgrade.includes}" />
+				</ant>
+			</then>
+		</if>
+
+		<if>
+			<isset property="theme.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-weblogic-10.3-plugins">
+					<property name="plugin.types" value="themes" />
+					<property name="plugins.deployed" value="${plugins.deployed}" />
+					<property name="plugins.includes" value="${theme.plugins.includes}" />
+				</ant>
+
+				<property name="plugins.deployed" value="true" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="web.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-weblogic-10.3-plugins">
+					<property name="plugin.types" value="webs" />
+					<property name="plugins.deployed" value="${plugins.deployed}" />
+					<property name="plugins.includes" value="${web.plugins.includes}" />
+				</ant>
+
+				<property name="plugins.deployed" value="true" />
+			</then>
+		</if>
+
 		<antcall target="start-selenium" />
 
 		<antcall target="run-weblogic-10.3">

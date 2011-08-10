@@ -63,6 +63,8 @@ public class JSONFactoryImpl implements JSONFactory {
 
 	public String convertXMLtoJSONML(String xml) {
 		try {
+			org.json.JSONArray jsonArray = JSONML.toJSONArray(xml);
+
 			return JSONML.toJSONArray(xml).toString();
 		}
 		catch (Exception e) {

@@ -137,12 +137,12 @@
 									</or>
 								</and>
 									<then>
-										<var name="test.ant.script.file.plugin.portlets" value="&lt;param name=&quot;portlet.plugins.upgrade.includes&quot; value=&quot;${test.ant.script.plugin.portlets}&quot; /&gt;" />
+										<var name="test.ant.script.file.plugin.portlets" value="&lt;param name=&quot;portlet.plugins.includes&quot; value=&quot;${test.ant.script.plugin.portlets}&quot; /&gt;" />
 										<var name="test.ant.script.file.plugin.portlets.ee" value="&lt;param name=&quot;plugins.version.includes&quot; value=&quot;wol-portlet**.war&quot; /&gt;" />
 									</then>
 							</elseif>
 							<else>
-								<var name="test.ant.script.file.plugin.portlets" value="&lt;param name=&quot;portlet.plugins.upgrade.includes&quot; value=&quot;${test.ant.script.plugin.portlets}&quot; /&gt;" />
+								<var name="test.ant.script.file.plugin.portlets" value="&lt;param name=&quot;portlet.plugins.includes&quot; value=&quot;${test.ant.script.plugin.portlets}&quot; /&gt;" />
 								<var name="test.ant.script.file.plugin.portlets.ee" value="&lt;param name=&quot;plugins.version.includes&quot; value=&quot;${test.ant.script.plugin.portlets}**.war&quot; /&gt;" />
 							</else>
 						</if>
@@ -649,6 +649,13 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="lar-community-wiki" />
+			<param name="test.ant.script.suite.1" value="LARCommunityWikiTestSuite" />
+			<param name="test.ant.script.suite.2" value="LARCommunityWikiViewTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-lar.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="lar-cp-blogs" />
 			<param name="test.ant.script.suite.1" value="LARCPBlogsTestSuite" />
 			<param name="test.ant.script.suite.2" value="LARCPBlogsViewTestSuite" />
@@ -656,9 +663,23 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="lar-cp-wiki" />
+			<param name="test.ant.script.suite.1" value="LARCPWikiTestSuite" />
+			<param name="test.ant.script.suite.2" value="LARCPWikiViewTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-lar.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="lar-portlet-blogs" />
 			<param name="test.ant.script.suite.1" value="LARPortletBlogsTestSuite" />
 			<param name="test.ant.script.suite.2" value="LARPortletBlogsViewTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-lar.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="lar-portlet-wiki" />
+			<param name="test.ant.script.suite.1" value="LARPortletWikiTestSuite" />
+			<param name="test.ant.script.suite.2" value="LARPortletWikiViewTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-lar.xml" />
 		</antcall>
 
@@ -1848,7 +1869,9 @@ mail.session.jndi.name=
 
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=</echo>
+tunnel.servlet.hosts.allowed=
+
+resource.repositories.root=$${user.home}/liferay</echo>
 
 		<if>
 			<equals arg1="${db.type}" arg2="db2" />
@@ -1896,8 +1919,6 @@ ${custom.properties}</echo>
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-resource.repositories.root=$${user.home}/liferay
-
 theme.portlet.sharing.default=true
 
 organizations.country.required[regular]=true
@@ -1936,7 +1957,15 @@ breadcrumb.show.guest.group=false
 breadcrumb.show.parent.groups=false
 
 wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
-wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
+wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
+
+users.last.name.required=true
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+discussion.subscribe.by.default=false
+
+message.boards.subscribe.by.default=false</echo>
 			</then>
 			<elseif>
 				<or>
@@ -1948,8 +1977,6 @@ wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
 				</or>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-resource.repositories.root=$${user.home}/liferay
 
 users.image.max.height=0
 users.image.max.width=0
@@ -1972,15 +1999,32 @@ breadcrumb.show.guest.group=false
 breadcrumb.show.parent.groups=false
 
 wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
-wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
+wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
+
+users.last.name.required=true
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+discussion.subscribe.by.default=false
+
+message.boards.subscribe.by.default=false</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${sql.version}" arg2="6.0.5" />
+				<or>
+					<equals arg1="${sql.version}" arg2="6.0.5" />
+					<equals arg1="${sql.version}" arg2="6.0.6" />
+				</or>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-resource.repositories.root=$${user.home}/liferay</echo>
+users.last.name.required=true
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+discussion.subscribe.by.default=false
+
+message.boards.subscribe.by.default=false</echo>
 				</then>
 			</elseif>
 		</if>
@@ -2211,6 +2255,8 @@ file.
 						<isset property="skip.rebuild-database" />
 					</not>
 					<then>
+						<delete dir="${user.home}/liferay" />
+
 						<if>
 							<equals arg1="${db.type}" arg2="db2" />
 							<then>
@@ -2750,16 +2796,6 @@ executable ZIP file.
 				</ant>
 
 				<property name="plugins.deployed" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<isset property="portlet.plugins.upgrade.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-upgrade-simple-server-plugins">
-					<property name="plugin.types" value="portlets" />
-					<property name="plugins.includes" value="${portlet.plugins.upgrade.includes}" />
-				</ant>
 			</then>
 		</if>
 

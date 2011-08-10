@@ -1919,6 +1919,10 @@ ${custom.properties}</echo>
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
+##
+## From portal-legacy-5.1.properties
+##
+
 theme.portlet.sharing.default=true
 
 organizations.country.required[regular]=true
@@ -1935,6 +1939,10 @@ discussion.thread.view=combination
 dl.hook.impl=com.liferay.documentlibrary.util.JCRHook
 
 dl.hook.file.system.root.dir=$${resource.repositories.root}/document_library
+
+##
+## From portal-legacy-5.2.properties
+##
 
 users.image.max.height=0
 users.image.max.width=0
@@ -1958,6 +1966,10 @@ breadcrumb.show.parent.groups=false
 
 wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
 wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
+
+##
+## From portal-legacy-6.0.properties
+##
 
 users.last.name.required=true
 
@@ -1978,6 +1990,10 @@ message.boards.subscribe.by.default=false</echo>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 
+##
+## From portal-legacy-5.2.properties
+##
+
 users.image.max.height=0
 users.image.max.width=0
 
@@ -2001,6 +2017,10 @@ breadcrumb.show.parent.groups=false
 wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
 wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
 
+##
+## From portal-legacy-6.0.properties
+##
+
 users.last.name.required=true
 
 editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
@@ -2017,6 +2037,10 @@ message.boards.subscribe.by.default=false</echo>
 				</or>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+##
+## From portal-legacy-6.0.properties
+##
 
 users.last.name.required=true
 

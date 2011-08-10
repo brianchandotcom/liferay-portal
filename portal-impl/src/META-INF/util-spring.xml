@@ -211,9 +211,9 @@
 			<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.servlet.ImageServletTokenUtil" class="com.liferay.portal.kernel.servlet.ImageServletTokenUtil">
-		<property name="imageServletToken">
-			<bean class="com.liferay.portal.servlet.ImageServletTokenImpl">
+	<bean id="com.liferay.portal.webserver.WebServerServletTokenUtil" class="com.liferay.portal.webserver.WebServerServletTokenUtil">
+		<property name="webServerServletToken">
+			<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl">
 				<property name="multiVMPool" ref="com.liferay.portal.kernel.cache.MultiVMPool" />
 			</bean>
 		</property>

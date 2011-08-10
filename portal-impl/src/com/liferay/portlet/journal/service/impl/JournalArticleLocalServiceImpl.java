@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.servlet.ImageServletTokenUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -70,6 +69,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -2628,7 +2628,7 @@ public class JournalArticleLocalServiceImpl
 
 				String elContent =
 					"/image/journal/article?img_id=" + imageId + "&t=" +
-						ImageServletTokenUtil.getToken(imageId);
+						WebServerServletTokenUtil.getToken(imageId);
 
 				dynamicContentEl.setText(elContent);
 				dynamicContentEl.addAttribute("id", String.valueOf(imageId));
@@ -2746,7 +2746,7 @@ public class JournalArticleLocalServiceImpl
 
 			String elContent =
 				"/image/journal/article?img_id=" + imageId + "&t=" +
-					ImageServletTokenUtil.getToken(imageId);
+					WebServerServletTokenUtil.getToken(imageId);
 
 			if (dynamicContent.getText().equals("delete")) {
 				dynamicContent.setText(StringPool.BLANK);

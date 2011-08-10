@@ -72,7 +72,7 @@ int defaultSpeed = 3000;
 			FileVersion fileVersion = fileEntry.getFileVersion();
 		%>
 
-			<img border="0" name="<portlet:namespace />slideShow" src="<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= fileVersion.getLargeImageId() %>&t=<%= ImageServletTokenUtil.getToken(fileVersion.getLargeImageId()) %>" />
+			<img border="0" name="<portlet:namespace />slideShow" src="<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= fileVersion.getLargeImageId() %>&t=<%= WebServerServletTokenUtil.getToken(fileVersion.getLargeImageId()) %>" />
 
 		<%
 		}
@@ -92,7 +92,7 @@ int defaultSpeed = 3000;
 		FileVersion fileVersion = fileEntry.getFileVersion();
 	%>
 
-		<portlet:namespace />imgArray[<%= i %>] = "<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= fileVersion.getLargeImageId() %>&t=<%= ImageServletTokenUtil.getToken(fileVersion.getLargeImageId()) %>";
+		<portlet:namespace />imgArray[<%= i %>] = "<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= fileVersion.getLargeImageId() %>&t=<%= WebServerServletTokenUtil.getToken(fileVersion.getLargeImageId()) %>";
 
 	<%
 	}

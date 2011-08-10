@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.servlet;
+package com.liferay.portal.webserver;
 
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.servlet.ImageServletToken;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ImageServletTokenImpl implements ImageServletToken {
+public class WebServerServletTokenImpl implements WebServerServletToken {
 
-	public static final String CACHE_NAME = ImageServletToken.class.getName();
+	public static final String CACHE_NAME =
+		WebServerServletToken.class.getName();
 
 	public void afterPropertiesSet() {
 		_portalCache = _multiVMPool.getCache(CACHE_NAME);

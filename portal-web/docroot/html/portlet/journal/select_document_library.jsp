@@ -188,7 +188,7 @@ if (folder != null) {
 			sb.append("&groupId=");
 			sb.append(fileEntry.getGroupId());
 			sb.append("&t=");
-			sb.append(ImageServletTokenUtil.getToken(fileEntry.getLargeImageId()));
+			sb.append(WebServerServletTokenUtil.getToken(fileEntry.getLargeImageId()));
 		}
 		else {
 			sb.append(themeDisplay.getPathContext());

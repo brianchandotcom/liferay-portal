@@ -12,29 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet;
+package com.liferay.portal.webserver;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ImageServletTokenUtil {
+public class WebServerServletTokenUtil {
 
-	public static ImageServletToken getImageServletToken() {
-		return _imageServletToken;
+	public static WebServerServletToken getWebServerServletToken() {
+		return _webServerServletToken;
 	}
 
 	public static String getToken(long imageId) {
-		return getImageServletToken().getToken(imageId);
+		return getWebServerServletToken().getToken(imageId);
 	}
 
 	public static void resetToken(long imageId) {
-		getImageServletToken().resetToken(imageId);
+		getWebServerServletToken().resetToken(imageId);
 	}
 
-	public void setImageServletToken(ImageServletToken imageServletToken) {
-		_imageServletToken = imageServletToken;
+	public void setWebServerServletToken(
+		WebServerServletToken webServerServletToken) {
+
+		_webServerServletToken = webServerServletToken;
 	}
 
-	private static ImageServletToken _imageServletToken;
+	private static WebServerServletToken _webServerServletToken;
 
 }

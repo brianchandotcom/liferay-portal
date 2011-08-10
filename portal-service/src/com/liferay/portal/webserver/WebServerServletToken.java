@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet;
+package com.liferay.portal.webserver;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public interface ImageServletToken {
+public interface WebServerServletToken {
 
 	public String getToken(long imageId);
 

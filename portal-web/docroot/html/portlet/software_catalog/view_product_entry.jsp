@@ -212,7 +212,7 @@ List productScreenshots = SCProductScreenshotLocalServiceUtil.getProductScreensh
 			SCProductScreenshot productScreenshot = (SCProductScreenshot)productScreenshots.get(i);
 		%>
 
-			<aui:a href='<%= themeDisplay.getPathImage() + "/software_catalog?img_id=" + productScreenshot.getFullImageId() + "&t=" + ImageServletTokenUtil.getToken(productScreenshot.getFullImageId()) %>' target="_blank"><img alt="<liferay-ui:message key="screenshot" />" src="<%= themeDisplay.getPathImage() %>/software_catalog?img_id=<%= productScreenshot.getThumbnailId() %>&t=<%= ImageServletTokenUtil.getToken(productScreenshot.getThumbnailId()) %>" /></aui:a>
+			<aui:a href='<%= themeDisplay.getPathImage() + "/software_catalog?img_id=" + productScreenshot.getFullImageId() + "&t=" + WebServerServletTokenUtil.getToken(productScreenshot.getFullImageId()) %>' target="_blank"><img alt="<liferay-ui:message key="screenshot" />" src="<%= themeDisplay.getPathImage() %>/software_catalog?img_id=<%= productScreenshot.getThumbnailId() %>&t=<%= WebServerServletTokenUtil.getToken(productScreenshot.getThumbnailId()) %>" /></aui:a>
 
 		<%
 		}

@@ -50,6 +50,7 @@ import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.service.MBMessageFlagLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
@@ -96,6 +97,13 @@ public class EditMessageAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.LOCK)) {
 				lockThreads(actionRequest);
+			}
+			else if (cmd.equals(Constants.PREVIEW)) {
+				long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+				if (messageId > 0) {
+					message = MBMessageLocalServiceUtil.getMBMessage(messageId);
+				}
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeMessage(actionRequest);
@@ -181,18 +189,19 @@ public class EditMessageAction extends PortletAction {
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		MBMessage message) {
 
-		if (message == null) {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			return redirect;
-		}
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
 
-		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+		if (((message == null) && (cmd.equals(Constants.PREVIEW))) ||
+			(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
 			return getSaveAndContinueRedirect(
 				actionRequest, actionResponse, message);
+		}
+		else if (message == null) {
+			return ParamUtil.getString(actionRequest, "redirect");
 		}
 
 		ActionResponseImpl actionResponseImpl =
@@ -212,7 +221,9 @@ public class EditMessageAction extends PortletAction {
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		MBMessage message) {
 
+		String body = ParamUtil.getString(actionRequest, "body");
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		String subject = ParamUtil.getString(actionRequest, "subject");
 
 		boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
 
@@ -222,9 +233,16 @@ public class EditMessageAction extends PortletAction {
 		portletURL.setParameter(
 			"struts_action", "/message_boards/edit_message");
 		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"messageId", String.valueOf(message.getMessageId()));
 		portletURL.setParameter("preview", String.valueOf(preview));
+
+		if (message != null) {
+			portletURL.setParameter(
+				"messageId", String.valueOf(message.getMessageId()));
+		}
+		else {
+			portletURL.setParameter("body", body);
+			portletURL.setParameter("subject", subject);
+		}
 
 		return portletURL.toString();
 	}

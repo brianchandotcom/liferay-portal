@@ -270,9 +270,8 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 	}
 
 	function <portlet:namespace />previewEntry() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.PREVIEW %>";
 		document.<portlet:namespace />fm.<portlet:namespace />preview.value = "true";
-		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = "<%= WorkflowConstants.ACTION_SAVE_DRAFT %>";
 
 		if (window.<portlet:namespace />editor) {
 			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
@@ -420,6 +419,7 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 
 <aui:script use="aui-base">
 	var cancelButton = A.one('#<portlet:namespace />cancelButton');
+	var preview = document.<portlet:namespace />fm.<portlet:namespace />preview.value;
 
 	if (cancelButton) {
 		cancelButton.on(
@@ -432,7 +432,7 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 		);
 	}
 
-	<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
+	<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) || preview %>">
 		<portlet:namespace />saveDraftIntervalId = setInterval('<portlet:namespace />saveEntry(true, true)', 30000);
 		<portlet:namespace />oldTitle = document.<portlet:namespace />fm.<portlet:namespace />title.value;
 		<portlet:namespace />oldContent = <portlet:namespace />initEditor();

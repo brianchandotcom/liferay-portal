@@ -14,19 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%@ page import="com.liferay.portal.NoSuchWorkflowInstanceLinkException" %>
-
-<%
-Object bean = request.getAttribute("aui:workflow-status:bean");
-String helpMessage = GetterUtil.getString((String)request.getAttribute("aui:workflow-status:help-message"), "a-new-version-will-be-created-automatically-if-this-content-is-modified");
-String id = GetterUtil.getString((String)request.getAttribute("aui:workflow-status:id"));
-Class<?> model = (Class<?>)request.getAttribute("aui:workflow-status:model");
-int status = GetterUtil.getInteger((String)request.getAttribute("aui:workflow-status:status"));
-String statusMessage = ((String)request.getAttribute("aui:workflow-status:status-message"));
-String version = GetterUtil.getString((String)request.getAttribute("aui:workflow-status:version"));
-%>
+<%@ include file="/html/taglib/aui/workflow_status/init.jsp" %>
 
 <div class="taglib-workflow-status">
 	<c:if test="<%= Validator.isNotNull(id) %>">

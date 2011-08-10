@@ -31,6 +31,13 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
 			<name>inputCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -88,7 +95,7 @@
 			<name>columnWidth</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Integer</type>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
@@ -102,14 +109,41 @@
 			<name>first</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Boolean</type>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
 			<name>last</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Boolean</type>
+			<type>boolean</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>fieldset</name>
+		<tag-class>com.liferay.taglib.aui.FieldsetTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>column</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
@@ -183,43 +217,9 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<name>fieldset</name>
-		<tag-class>com.liferay.taglib.aui.FieldsetTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description><![CDATA[]]></description>
-			<name>column</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[]]></description>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[]]></description>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<dynamic-attributes>true</dynamic-attributes>
-	</tag>
-	<tag>
 		<name>form</name>
 		<tag-class>com.liferay.taglib.aui.FormTag</tag-class>
 		<body-content>JSP</body-content>
-		<attribute>
-			<description><![CDATA[]]></description>
-			<name>action</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>javax.portlet.PortletURL</type>
-		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
 			<name>action</name>
@@ -239,14 +239,14 @@
 			<name>escapeXml</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Boolean</type>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
 			<name>inlineLabels</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Boolean</type>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
@@ -267,7 +267,7 @@
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Boolean</type>
+			<type>boolean</type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
@@ -340,10 +340,17 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
-			<name>field</name>
+			<name>first</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>formName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
@@ -361,6 +368,13 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
+			<name>ignoreRequestValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
 			<name>inlineField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -368,7 +382,28 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
+			<name>inlineLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>inputCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
 			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>languageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -389,8 +424,15 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
-			<name>name</name>
+			<name>multiple</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>name</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
@@ -435,6 +477,13 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>useNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
@@ -622,6 +671,13 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[]]></description>
+			<name>ignoreRequestValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
 			<name>inlineField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -721,6 +777,68 @@
 		<attribute>
 			<description><![CDATA[]]></description>
 			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>useNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>workflow-status</name>
+		<tag-class>com.liferay.taglib.aui.WorkflowStatusTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>bean</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>helpMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>model</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Class</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>status</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>statusMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>version</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>

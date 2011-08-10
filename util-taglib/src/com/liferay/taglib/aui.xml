@@ -477,6 +477,7 @@
 				<outputType>java.lang.String</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
+				<required>true</required>
 			</attribute>
 			<attribute>
 				<name>onChange</name>
@@ -882,6 +883,13 @@
 				<description></description>
 			</attribute>
 			<attribute>
+				<name>helpMessage</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue>a-new-version-will-be-created-automatically-if-this-content-is-modified</defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -889,7 +897,7 @@
 				<description></description>
 			</attribute>
 		</attributes>
-	</component>
+	</component>-->
 	<component name="WorkflowStatus">
 		<attributes>
 			<attribute>
@@ -908,8 +916,8 @@
 			</attribute>
 			<attribute>
 				<name>model</name>
-				<inputType>java.lang.Class</inputType>
-				<outputType>java.lang.Class</outputType>
+				<inputType><![CDATA[java.lang.Class<?>]]></inputType>
+				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -921,12 +929,19 @@
 				<description></description>
 			</attribute>
 			<attribute>
+				<name>statusMessage</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
 				<name>version</name>
-				<inputType>java.lang.Double</inputType>
-				<outputType>java.lang.Double</outputType>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
 		</attributes>
-	</component>-->
+	</component>
 </taglibs>

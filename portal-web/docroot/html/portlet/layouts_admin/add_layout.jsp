@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
+Group group = (Group)request.getAttribute("edit_pages.jsp-group");
 long groupId = ((Long)request.getAttribute("edit_pages.jsp-groupId")).longValue();
 long liveGroupId = ((Long)request.getAttribute("edit_pages.jsp-liveGroupId")).longValue();
 long stagingGroupId = ((Long)request.getAttribute("edit_pages.jsp-stagingGroupId")).longValue();
@@ -29,6 +30,11 @@ long layoutId = ((Long)request.getAttribute("edit_pages.jsp-layoutId")).longValu
 PortletURL redirectURL = ((PortletURL)request.getAttribute("edit_pages.jsp-redirectURL"));
 
 List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+
+long layoutSetPrototypeId = PortalUtil.getClassNameId("com.liferay.portal.model.LayoutSetPrototype");
+long layoutPrototypeId = PortalUtil.getClassNameId("com.liferay.portal.model.LayoutPrototype");
+
+boolean prototype = (group.getClassNameId() == layoutSetPrototypeId) || (group.getClassNameId() == layoutPrototypeId);
 %>
 
 <div class="aui-helper-hidden" id="<portlet:namespace />addLayout">
@@ -72,6 +78,9 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 
 					<%
 					for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+						if (PropsValues.LAYOUT_TYPES[i].equals("article") && prototype) {
+							continue;
+						}
 					%>
 
 						<aui:option label='<%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %>' value="<%= PropsValues.LAYOUT_TYPES[i] %>" />

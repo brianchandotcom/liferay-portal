@@ -25,6 +25,11 @@ boolean locked = GetterUtil.getBoolean(selLayout.getTypeSettingsProperty("locked
 
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+long layoutSetPrototypeId = PortalUtil.getClassNameId("com.liferay.portal.model.LayoutSetPrototype");
+long layoutPrototypeId = PortalUtil.getClassNameId("com.liferay.portal.model.LayoutPrototype");
+
+boolean prototype = (group.getClassNameId() == layoutSetPrototypeId) || (group.getClassNameId() == layoutPrototypeId);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="details" />
@@ -125,6 +130,9 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 		<%
 		for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+			if (PropsValues.LAYOUT_TYPES[i].equals("article") && prototype) {
+				continue;
+			}
 		%>
 
 			<aui:option label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' selected="<%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) %>" value="<%= PropsValues.LAYOUT_TYPES[i] %>" />
@@ -138,6 +146,10 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	<%
 	for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
 		String curLayoutType = PropsValues.LAYOUT_TYPES[i];
+
+		if (PropsValues.LAYOUT_TYPES[i].equals("article") && prototype) {
+			continue;
+		}
 	%>
 
 		<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "aui-helper-hidden" %>">

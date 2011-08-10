@@ -48,8 +48,8 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.IOException;
-
 import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;

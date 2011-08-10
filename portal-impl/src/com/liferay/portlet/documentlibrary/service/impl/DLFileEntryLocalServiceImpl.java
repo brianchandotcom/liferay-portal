@@ -597,6 +597,12 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	public DLFileEntry fetchFileEntryByAnyImageId(long imageId)
+		throws SystemException {
+
+		return dlFileEntryFinder.fetchByAnyImageId(imageId);
+	}
+
 	public List<DLFileEntry> getExtraSettingsFileEntries(int start, int end)
 		throws SystemException {
 

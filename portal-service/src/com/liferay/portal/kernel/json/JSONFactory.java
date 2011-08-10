@@ -19,6 +19,10 @@ package com.liferay.portal.kernel.json;
  */
 public interface JSONFactory {
 
+	public String convertJSONMLtoXML(String xml);
+
+	public String convertXMLtoJSONML(String xml);
+
 	public JSONArray createJSONArray();
 
 	public JSONArray createJSONArray(String json) throws JSONException;

@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.ImageServletTokenUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -30,6 +29,7 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
@@ -212,7 +212,7 @@ public class ViewArticleContentAction extends Action {
 							groupId, previewArticleId, version, elInstanceId,
 							elName, elLanguage, true);
 
-					String token = ImageServletTokenUtil.getToken(imageId);
+					String token = WebServerServletTokenUtil.getToken(imageId);
 
 					dynamicContent.setText(
 						"/image/journal/article?img_id=" + imageId + "&t=" +
@@ -227,7 +227,8 @@ public class ViewArticleContentAction extends Action {
 								groupId, articleId, version, elInstanceId,
 								elName, elLanguage);
 
-						String token = ImageServletTokenUtil.getToken(imageId);
+						String token = WebServerServletTokenUtil.getToken(
+							imageId);
 
 						dynamicContent.setText(
 							"/image/journal/article?img_id=" + imageId +

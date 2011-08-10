@@ -213,7 +213,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								smallImageId = smallImage.getImageId();
 							}
 
-							thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + ImageServletTokenUtil.getToken(smallImageId);
+							thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
 						}
 						else if (hasPDFImages) {
 							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&documentThumbnail=1";
@@ -284,7 +284,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry, fileVersion.getVersion());
 
 						if (hasImages) {
-							previewFileURL = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + ImageServletTokenUtil.getToken(largeImage.getImageId());
+							previewFileURL = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
 
 							previewFileCount = 1;
 						}
@@ -358,7 +358,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									<c:when test="<%= hasImages %>">
 										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
-												<img src="<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= largeImage.getImageId() %>&t=<%= ImageServletTokenUtil.getToken(largeImage.getImageId()) %>" style="max-height: 480px; max-width: 700px;" />
+												<img src="<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= largeImage.getImageId() %>&t=<%= WebServerServletTokenUtil.getToken(largeImage.getImageId()) %>" style="max-height: 480px; max-width: 700px;" />
 											</div>
 										</div>
 									</c:when>

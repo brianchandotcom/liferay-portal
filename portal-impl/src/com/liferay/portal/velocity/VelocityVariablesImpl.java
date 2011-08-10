@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.servlet.ImageServletTokenUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.DateUtil_IW;
@@ -62,6 +61,7 @@ import com.liferay.portal.util.PrefsPropsUtil_IW;
 import com.liferay.portal.util.PropsUtil_IW;
 import com.liferay.portal.util.SessionClicks_IW;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
@@ -182,7 +182,7 @@ public class VelocityVariablesImpl implements VelocityVariables {
 		// Image servlet token
 
 		velocityContext.put(
-			"imageToken", ImageServletTokenUtil.getImageServletToken());
+			"imageToken", WebServerServletTokenUtil.getWebServerServletToken());
 
 		// Iterator tool
 
@@ -218,6 +218,12 @@ public class VelocityVariablesImpl implements VelocityVariables {
 		// Param util
 
 		velocityContext.put("paramUtil", ParamUtil_IW.getInstance());
+
+		// Web Server servlet token
+
+		velocityContext.put(
+			"webServerToken",
+			WebServerServletTokenUtil.getWebServerServletToken());
 
 		// Portal util
 

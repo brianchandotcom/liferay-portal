@@ -789,7 +789,7 @@ private String _getTemplateImage(ThemeDisplay themeDisplay, JournalTemplate temp
 			imageURL = template.getSmallImageURL();
 		}
 		else {
-			imageURL = themeDisplay.getPathImage() + "/journal/template?img_id=" + template.getSmallImageId() + "&t=" + ImageServletTokenUtil.getToken(template.getSmallImageId());
+			imageURL = themeDisplay.getPathImage() + "/journal/template?img_id=" + template.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(template.getSmallImageId());
 		}
 	}
 

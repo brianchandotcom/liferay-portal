@@ -398,7 +398,7 @@ private String _getArticleImage(ThemeDisplay themeDisplay, JournalArticle articl
 			imageURL = article.getSmallImageURL();
 		}
 		else {
-			imageURL = themeDisplay.getPathImage() + "/journal/article?img_id=" + article.getSmallImageId() + "&t=" + ImageServletTokenUtil.getToken(article.getSmallImageId());
+			imageURL = themeDisplay.getPathImage() + "/journal/article?img_id=" + article.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(article.getSmallImageId());
 		}
 	}
 

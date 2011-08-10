@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.freemarker.FreeMarkerVariables;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.servlet.ImageServletTokenUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.DateUtil_IW;
@@ -64,6 +63,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.velocity.ServiceLocator;
 import com.liferay.portal.velocity.UtilLocator;
 import com.liferay.portal.velocity.VelocityPortletPreferences;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
@@ -167,7 +167,7 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 		// Image servlet token
 
 		freeMarkerContext.put(
-			"imageToken", ImageServletTokenUtil.getImageServletToken());
+			"imageToken", WebServerServletTokenUtil.getWebServerServletToken());
 
 		// Journal content util
 
@@ -267,6 +267,12 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 		// Time zone util
 
 		freeMarkerContext.put("timeZoneUtil", TimeZoneUtil_IW.getInstance());
+
+		// Web Server servlet token
+
+		freeMarkerContext.put(
+			"webServerToken",
+			WebServerServletTokenUtil.getWebServerServletToken());
 
 		// Util locator
 

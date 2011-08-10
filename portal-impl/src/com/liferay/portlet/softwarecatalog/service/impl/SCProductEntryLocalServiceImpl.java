@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.servlet.ImageServletTokenUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,6 +33,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.plugin.ModuleId;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.softwarecatalog.DuplicateProductEntryModuleIdException;
 import com.liferay.portlet.softwarecatalog.ProductEntryAuthorException;
 import com.liferay.portlet.softwarecatalog.ProductEntryLicenseException;
@@ -532,11 +532,11 @@ public class SCProductEntryLocalServiceImpl
 			DocUtil.add(
 				screenshotEl, "thumbnail-url",
 				baseImageURL + "?img_id=" + thumbnailId + "&t=" +
-					ImageServletTokenUtil.getToken(thumbnailId));
+					WebServerServletTokenUtil.getToken(thumbnailId));
 			DocUtil.add(
 				screenshotEl, "large-image-url",
 				baseImageURL + "?img_id=" + fullImageId + "&t=" +
-					ImageServletTokenUtil.getToken(fullImageId));
+					WebServerServletTokenUtil.getToken(fullImageId));
 		}
 
 		Element licensesEl = el.addElement("licenses");

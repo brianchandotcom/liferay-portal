@@ -22,26 +22,6 @@
 app.server.lib.global.dir=${simple.server.lib.global.dir}
 app.server.portal.dir=${simple.server.portal.dir}
 
-plugins.includes=${plugins.includes}</echo>
-
-		<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false">
-			<target name="clean" />
-			<target name="deploy" />
-		</ant>
-
-		<delete dir="${lp.plugins.dir}/dist" />
-		<mkdir dir="${lp.plugins.dir}/dist" />
-	</target>
-
-	<target name="deploy-upgrade-simple-server-plugins">
-		<exec dir="${lp.plugins.dir}" executable="cmd.exe">
-			<arg line="/c svn --username ${svn.username} --password ${svn.password} update" />
-		</exec>
-
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${simple.server.dir}
-app.server.lib.global.dir=${simple.server.lib.global.dir}
-app.server.portal.dir=${simple.server.portal.dir}
-
 auto.deploy.dir=$${user.home}/liferay/deploy
 
 plugins.includes=${plugins.includes}</echo>

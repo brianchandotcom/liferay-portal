@@ -243,6 +243,10 @@ alter table Group_ add site BOOLEAN;
 update Group_ set name = 'User Personal Site' where name = 'User Personal Community';
 update Group_ set type_ = 3 where classNameId = (select classNameId from ClassName_ where value = 'com.liferay.portal.model.Organization');
 
+alter table IGFolder add userName VARCHAR(75) null;
+
+alter table IGImage add userName VARCHAR(75) null;
+
 alter table JournalArticle add classNameId LONG null;
 alter table JournalArticle add classPK LONG null;
 alter table JournalArticle add layoutUuid VARCHAR(75) null;
@@ -437,30 +441,30 @@ create table RepositoryEntry (
 );
 
 create table ResourceBlock (
-	resourceBlockId LONG not null primary key,
-	companyId LONG,
-	groupId LONG,
-	name VARCHAR(75) null,
-	permissionsHash VARCHAR(75) null,
-	referenceCount LONG
+    resourceBlockId LONG not null primary key,
+    companyId LONG,
+    groupId LONG,
+    name VARCHAR(75) null,
+    permissionsHash VARCHAR(75) null,
+    referenceCount LONG
 );
 
 create table ResourceBlockPermission (
-	resourceBlockPermissionId LONG not null primary key,
-	resourceBlockId LONG,
-	roleId LONG,
-	actionIds LONG
+    resourceBlockPermissionId LONG not null primary key,
+    resourceBlockId LONG,
+    roleId LONG,
+    actionIds LONG
 );
 
 alter table ResourcePermission add ownerId LONG;
 
 create table ResourceTypePermission (
-	resourceTypePermissionId LONG not null primary key,
-	companyId LONG,
-	groupId LONG,
-	name VARCHAR(75) null,
-	roleId LONG,
-	actionIds LONG
+    resourceTypePermissionId LONG not null primary key,
+    companyId LONG,
+    groupId LONG,
+    name VARCHAR(75) null,
+    roleId LONG,
+    actionIds LONG
 );
 
 alter table SocialEquityLog add extraData VARCHAR(255) null;

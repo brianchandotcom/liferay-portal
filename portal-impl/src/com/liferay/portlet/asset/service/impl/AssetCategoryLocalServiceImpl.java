@@ -207,6 +207,11 @@ public class AssetCategoryLocalServiceImpl
 		}
 	}
 
+	public AssetCategory fetchCategory(long categoryId) throws SystemException {
+
+		return assetCategoryPersistence.fetchByPrimaryKey(categoryId);
+	}
+
 	public String[] getCategoryNames() throws SystemException {
 		return getCategoryNames(getCategories());
 	}

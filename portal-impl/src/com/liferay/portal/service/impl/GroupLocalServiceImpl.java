@@ -73,6 +73,7 @@ import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.FriendlyURLNormalizer;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.GroupNameComparator;
@@ -1385,6 +1386,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Role role = roleLocalService.getRole(
 			group.getCompanyId(), RoleConstants.USER);
 
+		setCompanyPermissions(
+			role, PortletKeys.PORTAL,
+			new String[] {ActionKeys.VIEW_CONTROL_PANEL});
+
 		List<Portlet> portlets = portletLocalService.getPortlets(
 			group.getCompanyId(), false, false);
 
@@ -1464,6 +1469,31 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		setRolePermissions(
 			group, role, name, actions.toArray(new String[actions.size()]));
+	}
+
+	protected void setCompanyPermissions(
+			Role role, String name, String[] actionIds)
+		throws PortalException, SystemException {
+
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			if (resourceBlockLocalService.isSupported(name)) {
+				resourceBlockLocalService.setCompanyScopePermissions(
+					role.getCompanyId(), name, role.getRoleId(),
+					Arrays.asList(actionIds));
+			}
+			else {
+				resourcePermissionLocalService.setResourcePermissions(
+					role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(role.getCompanyId()), role.getRoleId(),
+					actionIds);
+			}
+		}
+		else {
+			permissionLocalService.setRolePermissions(
+				role.getRoleId(), role.getCompanyId(), name,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(role.getCompanyId()), actionIds);
+		}
 	}
 
 	protected void setRolePermissions(

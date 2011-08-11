@@ -68,13 +68,13 @@ public class CacheRegistryImpl implements CacheRegistry {
 			_log.debug("Registering " + name);
 		}
 
-		if (_cacheRegistryItems.containsKey(name)) {
+		CacheRegistryItem oldCacheRegistryItem =
+			_cacheRegistryItems.put(name, cacheRegistryItem);
+
+		if (oldCacheRegistryItem != null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Not registering duplicate " + name);
 			}
-		}
-		else {
-			_cacheRegistryItems.put(name, cacheRegistryItem);
 		}
 	}
 

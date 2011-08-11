@@ -168,11 +168,13 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 				Map<String, String> prpIdentifers =
 					FriendlyURLMapperThreadLocal.getPRPIdentifiers();
 
-				if (prpIdentifers.containsKey(name)) {
-					name = prpIdentifers.get(name);
+				String identiferValue = prpIdentifers.get(name);
+
+				if (identiferValue != null) {
+					name = identiferValue;
 				}
 				else {
-					name = namespace + name;
+					name = namespace.concat(name);
 				}
 			}
 

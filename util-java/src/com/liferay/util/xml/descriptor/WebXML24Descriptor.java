@@ -52,11 +52,13 @@ public class WebXML24Descriptor extends SimpleXMLDescriptor {
 	public String[] getChildrenOrder(Element parentElement) {
 		String parentName = parentElement.getQName().getName();
 
-		if (_orderedChildren.containsKey(parentName)) {
-			return _orderedChildren.get(parentName);
+		String[] childrenOrder = _orderedChildren.get(parentName);
+
+		if (childrenOrder == null) {
+			childrenOrder = new String[0];
 		}
 
-		return new String[0];
+		return childrenOrder;
 	}
 
 	@Override

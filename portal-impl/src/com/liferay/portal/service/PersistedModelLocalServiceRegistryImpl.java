@@ -60,12 +60,13 @@ public class PersistedModelLocalServiceRegistryImpl
 		String className,
 		PersistedModelLocalService persistedModelLocalService) {
 
-		if (_persistedModelLocalServices.containsKey(className)) {
+		PersistedModelLocalService oldPersistedModelLocalService =
+			_persistedModelLocalServices.put(
+				className, persistedModelLocalService);
+
+		if (oldPersistedModelLocalService != null) {
 			_log.warn("Duplicate class name " + className);
 		}
-
-		_persistedModelLocalServices.put(
-			className, persistedModelLocalService);
 	}
 
 	public void unregister(String className) {

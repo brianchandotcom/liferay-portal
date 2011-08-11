@@ -316,10 +316,12 @@ public class BBCodeUtil {
 				sb.append(preTag);
 			}
 
-			if (tag.hasParameter() &&
-				listStyles.containsKey(tag.getParameter())) {
+			String tagParameterValue = null;
 
-				sb.append(listStyles.get(tag.getParameter()));
+			if (tag.hasParameter() &&
+				(tagParameterValue =
+					listStyles.get(tag.getParameter())) != null) {
+				sb.append(tagParameterValue);
 
 				for (int i = 0; i < items.length; i++) {
 					if (items[i].trim().length() > 0) {
@@ -394,8 +396,9 @@ public class BBCodeUtil {
 					size = new Integer(7);
 				}
 
-				if (fontSizes.containsKey(size)) {
-					sb.append(fontSizes.get(size));
+				String fontSize = fontSizes.get(size);
+				if (fontSize != null) {
+					sb.append(fontSize);
 					sb.append(tag.getElement() + "</span>");
 				}
 				else {

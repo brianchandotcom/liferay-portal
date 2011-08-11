@@ -19,16 +19,25 @@
 .portlet-asset-category-admin {
 	.categories-admin-actions {
 		clear: none;
-		float: left;
 		margin: 0;
+
+		.permissions-button {
+			margin-left: 1em;
+		}
 	}
 
-	.categories-admin-container .results-header {
-		background: #F0F5F7;
-		font-weight: bold;
-		margin: 2px 0;
-		padding: 5px 10px;
-		position: relative;
+	.categories-admin-container {
+		.categories-actions-toolbar {
+			margin-left: 1em;
+		}
+
+		.results-header {
+			background: #F0F5F7;
+			font-weight: bold;
+			margin: 2px 0;
+			padding: 5px 10px;
+			position: relative;
+		}
 	}
 
 	.categories-admin-content {
@@ -56,7 +65,11 @@
 		width: 250px;
 	}
 
-	.select-vocabularies {
+	.categories-treeview-container {
+		padding: 5px;
+	}
+
+	.select-vocabularies, .select-categories {
 		border-color: #5F5F5F;
 		float: left;
 		line-height: 0;
@@ -119,10 +132,6 @@
 
 	.vocabulary-item.alt {
 		background: #F0F2F4;
-	}
-
-	.vocabulary-treeview-container {
-		padding: 5px;
 	}
 
 	.vocabulary-item {
@@ -201,7 +210,7 @@
 		margin: 10px;
 	}
 
-	.vocabulary-treeview-container {
+	.categories-treeview-container {
 		.aui-tree-label {
 			cursor: pointer;
 
@@ -313,12 +322,6 @@
 }
 
 .ie6 {
-	.portlet-asset-category-admin {
-		.vocabulary-treeview-container .vocabulary-item.selected {
-			background: none;
-		}
-	}
-
 	.portlet-asset-categories-admin-dialog {
 		.yui3-widget-bd {
 			.asset-category-layer {

@@ -21,55 +21,85 @@
 <div class="categories-admin-container">
 	<div class="lfr-header-row">
 		<div class="lfr-header-row-content">
-			<div class="toolbar">
-				<aui:button-row cssClass="categories-admin-actions">
-					<aui:input cssClass="select-vocabularies aui-state-default" inline="<%= true %>" label="" name="checkAllVocabularies" type="checkbox" title='<%= LanguageUtil.get(pageContext, "check-all-vocabularies") %>' />
+			<aui:layout cssClass="categories-admin-content">
+				<aui:column columnWidth="25" cssClass="">
+					<div>
+						<aui:button-row cssClass="categories-admin-actions">
+							<aui:input cssClass="select-vocabularies aui-state-default" inline="<%= true %>" label="" name="checkAllVocabularies" type="checkbox" title='<%= LanguageUtil.get(pageContext, "check-all-vocabularies") %>' />
 
-					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_VOCABULARY) %>">
-						<aui:button cssClass="add-vocabulary-button" name="addVocabularyButton" value="add-vocabulary" />
-					</c:if>
+							<liferay-ui:icon-menu
+								align="left"
+								direction="down"
+								icon=""
+								message="actions"
+								showExpanded="<%= false %>"
+								showWhenSingleIcon="true"
+							>
+								<liferay-ui:icon
+									id="deleteSelectedVocabularies"
+									image="delete"
+									url="javascript:;"
+								/>
+							</liferay-ui:icon-menu>
 
-					<liferay-ui:icon-menu
-						align="left"
-						direction="down"
-						icon=""
-						message="actions"
-						showExpanded="<%= false %>"
-						showWhenSingleIcon="true"
-					>
-						<liferay-ui:icon
-							id="deleteSelectedVocabularies"
-							image="delete"
-							url="javascript:;"
-						/>
-					</liferay-ui:icon-menu>
+							<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_VOCABULARY) %>">
+								<aui:button cssClass="add-vocabulary-button" name="addVocabularyButton" value="add-vocabulary" />
 
-					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_CATEGORY) %>">
-						<aui:button cssClass="add-category-button" name="addCategoryButton" value="add-category" />
-					</c:if>
+								<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.PERMISSIONS) %>">
+									<liferay-security:permissionsURL
+										modelResource="com.liferay.portlet.asset"
+										modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
+										resourcePrimKey="<%= String.valueOf(themeDisplay.getParentGroupId()) %>"
+										var="permissionsURL"
+										windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+									/>
 
-					<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.PERMISSIONS) %>">
-						<liferay-security:permissionsURL
-							modelResource="com.liferay.portlet.asset"
-							modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
-							resourcePrimKey="<%= String.valueOf(themeDisplay.getParentGroupId()) %>"
-							var="permissionsURL"
-							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-						/>
+									<aui:button cssClass="permissions-button" data-url="<%= permissionsURL %>" name="categoryPermissionsButton" value="permissions" />
 
-						<aui:button data-url="<%= permissionsURL %>" name="categoryPermissionsButton" value="permissions" />
-					</c:if>
-				</aui:button-row>
-			</div>
+								</c:if>
+							</c:if>
+						</aui:button-row>
+					</div>
+				</aui:column>
 
-			<div class="lfr-search-combobox search-button-container categories-search-combobox">
-				<aui:input cssClass="first keywords lfr-search-combobox-item categories-admin-search" label="" name="categoriesAdminSearchInput" type="text" />
+				<aui:column columnWidth="40" cssClass="">
+					<div class="categories-actions-toolbar">
+						<aui:input cssClass="select-categories aui-state-default" inline="<%= true %>" label="" name="checkAllCategories" type="checkbox" title='<%= LanguageUtil.get(pageContext, "check-all-categories") %>' />
 
-				<aui:select cssClass="categories-admin-select-search" label="" name="categoriesAdminSelectSearch">
-					<aui:option label="categories" />
-					<aui:option label="vocabularies" selected="<%= true %>" />
-				</aui:select>
-			</div>
+						<liferay-ui:icon-menu
+							align="left"
+							direction="down"
+							icon=""
+							message="actions"
+							showExpanded="<%= false %>"
+							showWhenSingleIcon="true"
+						>
+							<liferay-ui:icon
+								id="deleteSelectedCategories"
+								image="delete"
+								url="javascript:;"
+							/>
+						</liferay-ui:icon-menu>
+
+						<aui:button-row cssClass="categories-admin-actions">
+							<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_CATEGORY) %>">
+								<aui:button name="addCategoryButton" value="add-category" />
+							</c:if>
+						</aui:button-row>
+					</div>
+				</aui:column>
+
+				<aui:column columnWidth="35" cssClass="">
+					<div class="lfr-search-combobox search-button-container categories-search-combobox">
+						<aui:input cssClass="first keywords lfr-search-combobox-item categories-admin-search" label="" name="categoriesAdminSearchInput" type="text" />
+
+						<aui:select cssClass="categories-admin-select-search" label="" name="categoriesAdminSelectSearch">
+							<aui:option label="categories" />
+							<aui:option label="vocabularies" selected="<%= true %>" />
+						</aui:select>
+					</div>
+				</aui:column>
+			</aui:layout>
 		</div>
 	</div>
 

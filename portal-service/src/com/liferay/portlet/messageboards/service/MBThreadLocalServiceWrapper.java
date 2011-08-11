@@ -361,6 +361,12 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 		return _mbThreadLocalService.getThreadsCount(groupId, categoryId, status);
 	}
 
+	public void incrementViewCounter(long threadId, int increment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbThreadLocalService.incrementViewCounter(threadId, increment);
+	}
+
 	public com.liferay.portlet.messageboards.model.MBThread moveThread(
 		long groupId, long categoryId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -377,6 +383,9 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 			serviceContext);
 	}
 
+	/**
+	* @deprecated {@link #incrementViewCounter(long, int)}
+	*/
 	public com.liferay.portlet.messageboards.model.MBThread updateThread(
 		long threadId, int viewCount)
 		throws com.liferay.portal.kernel.exception.PortalException,

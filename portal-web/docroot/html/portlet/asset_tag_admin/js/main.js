@@ -1045,12 +1045,19 @@ AUI().add(
 						}
 					},
 
-					_mergeMultipleTags: function(fromIds, toId, overrideProperties, callback) {
-						Liferay.Service.Asset.AssetTag.mergeMultipleTags(
+					_mergeTags: function(fromIds, toId, overrideProperties, callback) {
+						var serviceParameterTypes = [
+							'[J',
+							'long',
+							'boolean'
+						];
+
+						Liferay.Service.Asset.AssetTag.mergeTags(
 							{
 								fromTagIds: fromIds,
 								toTagId: toId,
-								overrideProperties: overrideProperties
+								overrideProperties: overrideProperties,
+								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
 							},
 							callback
 						);
@@ -1207,7 +1214,7 @@ AUI().add(
 
 								var overrideProperties = A.one('#' + namespace + 'overrideProperties').attr('checked');
 
-								instance._mergeMultipleTags(
+								instance._mergeTags(
 									tagsIds,
 									targetTagId,
 									overrideProperties,

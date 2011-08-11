@@ -659,7 +659,7 @@
 	</library>
 	<library>
 		<file-name>development/postgresql.jar</file-name>
-		<version>8.4-701 JDBC 3</version>
+		<version>9.0-801 JDBC 3</version>
 		<project-name>PostgreSQL JDBC Driver</project-name>
 		<project-url>http://jdbc.postgresql.org</project-url>
 		<licenses>
@@ -1820,6 +1820,9 @@
 				<license-name>Apache License 2.0</license-name>
 			</license>
 		</licenses>
+		<comments>
+			Removed org.json.* because it json-java.jar.
+		</comments>
 	</library>
 	<library>
 		<file-name>portal/jackrabbit-api.jar</file-name>
@@ -1843,7 +1846,7 @@
 			</license>
 		</licenses>
 		<comments>
-			This includes a public patch from LPS-13343.
+			This includes public patches from LPS-13343 and LPS-19623.
 		</comments>
 	</library>
 	<library>
@@ -2178,6 +2181,20 @@
 		</licenses>
 		<comments>
 			This includes a public patch from JRUBY-4774.
+		</comments>
+	</library>
+	<library>
+		<file-name>portal/json-java.jar</file-name>
+		<version>ce2f5ed80a2cfe665779</version>
+		<project-name>JSON in Java</project-name>
+		<project-url>https://github.com/douglascrockford/JSON-java</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+		<comments>
+			See the Ant target "build-json-java" in portal-impl/build.xml.
 		</comments>
 	</library>
 	<library>

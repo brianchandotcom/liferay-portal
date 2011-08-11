@@ -40,6 +40,10 @@ public class InputEditorTag extends IncludeTag {
 		_editorImpl = editorImpl;
 	}
 
+	public void setFileBrowserParams(Map<String, String> fileBrowserParams) {
+		_fileBrowserParams = fileBrowserParams;
+	}
+
 	public void setHeight(String height) {
 		_height = height;
 	}
@@ -73,6 +77,7 @@ public class InputEditorTag extends IncludeTag {
 		_configParams = null;
 		_cssClass = null;
 		_editorImpl = null;
+		_fileBrowserParams = null;
 		_height = null;
 		_initMethod = "initEditor";
 		_name = "editor";
@@ -107,6 +112,8 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:input-editor:cssClasses", cssClasses);
 		request.setAttribute("liferay-ui:input-editor:editorImpl", editorImpl);
+		request.setAttribute(
+			"liferay-ui:input-editor:fileBrowserParams", _fileBrowserParams);
 		request.setAttribute("liferay-ui:input-editor:height", _height);
 		request.setAttribute("liferay-ui:input-editor:initMethod", _initMethod);
 		request.setAttribute("liferay-ui:input-editor:name", _name);
@@ -122,6 +129,7 @@ public class InputEditorTag extends IncludeTag {
 	private Map<String, String> _configParams;
 	private String _cssClass;
 	private String _editorImpl;
+	private Map<String, String> _fileBrowserParams;
 	private String _height;
 	private String _initMethod = "initEditor";
 	private String _name = "editor";

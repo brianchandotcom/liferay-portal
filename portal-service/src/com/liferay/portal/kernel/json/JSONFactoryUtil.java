@@ -19,6 +19,14 @@ package com.liferay.portal.kernel.json;
  */
 public class JSONFactoryUtil {
 
+	public static String convertJSONMLtoXML(String xml) {
+		return getJSONFactory().convertJSONMLtoXML(xml);
+	}
+
+	public static String convertXMLtoJSONML(String xml) {
+		return getJSONFactory().convertXMLtoJSONML(xml);
+	}
+
 	public static JSONArray createJSONArray() {
 		return getJSONFactory().createJSONArray();
 	}

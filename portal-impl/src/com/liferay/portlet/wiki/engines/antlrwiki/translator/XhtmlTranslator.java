@@ -225,7 +225,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			_log.error(e, e);
 		}
 
-		String pageTitle = HtmlUtil.escape(linkNode.getLink());
+		String pageTitle = linkNode.getLink();
 
 		if ((page != null) && (_viewPageURL != null)) {
 			_viewPageURL.setParameter("title", pageTitle);

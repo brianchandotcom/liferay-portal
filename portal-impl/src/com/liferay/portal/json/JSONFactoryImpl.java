@@ -28,6 +28,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.jabsorb.serializer.MarshallException;
 
+import org.json.JSONML;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -44,6 +46,32 @@ public class JSONFactoryImpl implements JSONFactory {
 		 catch (Exception e) {
 			 _log.error(e, e);
 		 }
+	}
+
+	public String convertJSONMLtoXML(String jsonml) {
+		try {
+			org.json.JSONArray jsonArray = new org.json.JSONArray(jsonml);
+
+			return JSONML.toString(jsonArray);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new IllegalStateException("Unable to convert to XML", e);
+		}
+	}
+
+	public String convertXMLtoJSONML(String xml) {
+		try {
+			org.json.JSONArray jsonArray = JSONML.toJSONArray(xml);
+
+			return jsonArray.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new IllegalStateException("Unable to convert to JSONML", e);
+		}
 	}
 
 	public JSONArray createJSONArray() {

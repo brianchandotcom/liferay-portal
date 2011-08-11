@@ -71,11 +71,14 @@
 <%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %>
 <%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %>
 <%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %>
+<%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLPermission" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.AudioProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %>
+<%@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %>
+<%@ page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureException" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearch" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearchTerms" %>
@@ -93,15 +96,17 @@ PortletPreferences preferences = liferayPortletRequest.getPreferences();
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-long rootFolderId = PrefsParamUtil.getLong(preferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+if (Validator.isNotNull(portletResource)) {
+	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
+}
 
-Folder rootFolder = null;
+long rootFolderId = PrefsParamUtil.getLong(preferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	try {
-		rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+		Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
 		rootFolderName = rootFolder.getName();
 	}

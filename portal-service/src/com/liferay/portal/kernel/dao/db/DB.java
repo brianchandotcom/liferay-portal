@@ -92,6 +92,8 @@ public interface DB {
 
 	public long increment() throws SystemException;
 
+	public long increment(String name) throws SystemException;
+
 	public boolean isSupportsAlterColumnName();
 
 	public boolean isSupportsAlterColumnType();

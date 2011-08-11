@@ -24,6 +24,16 @@
 	<td>Blogs Test Page1</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Blogs</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='portlet-title-text']</td>
 	<td>Blogs</td>
@@ -79,6 +89,11 @@
 	<td>Blogs Test Page2</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Blogs (Blogs Test Page2)</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='portlet-title-text']</td>
 	<td>Blogs (Blogs Test Page2)</td>
@@ -92,6 +107,11 @@
 	<td>clickAndWait</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//td[2]/a</td>
+	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -136,31 +156,31 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-rating-label-element']</td>
-	<td>Average (1 Vote) The average rating is 4 stars out of 5.</td>
+	<td>Average (1 Vote)</td>
 </tr>
 <tr>
 	<td>mouseOver</td>
 	<td>//div[@class='aui-rating-label-element']</td>
-	<td>Average (1 Vote) The average rating is 4 stars out of 5.</td>
+	<td>Average (1 Vote)</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='aui-widget-bd']</td>
+	<td>//div[@class='yui3-widget-bd']</td>
 	<td>4 Stars</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-widget-bd']</td>
+	<td>//div[@class='yui3-widget-bd']</td>
 	<td>4 Stars</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[1]/div/div[3]/div/div[1]</td>
+	<td>//form/div/div/div[1]/div[3]/div/div[1]</td>
 	<td>Blogs Entry2 Comment1 Body</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[3]/div/div[3]/div/div[1]</td>
+	<td>//form/div/div/div[2]/div[3]/div/div[1]</td>
 	<td>Blogs Entry2 Comment2 Body</td>
 </tr>
 <tr>
@@ -194,6 +214,11 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//td[2]/a</td>
+	<td>Blogs Entry2 Title</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
 	<td>Blogs Entry2 Title</td>
@@ -236,31 +261,31 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-rating-label-element']</td>
-	<td>Average (1 Vote) The average rating is 4 stars out of 5.</td>
+	<td>Average (1 Vote)</td>
 </tr>
 <tr>
 	<td>mouseOver</td>
 	<td>//div[@class='aui-rating-label-element']</td>
-	<td>Average (1 Vote) The average rating is 4 stars out of 5.</td>
+	<td>Average (1 Vote)</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='aui-widget-bd']</td>
+	<td>//div[@class='yui3-widget-bd']</td>
 	<td>4 Stars</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-widget-bd']</td>
+	<td>//div[@class='yui3-widget-bd']</td>
 	<td>4 Stars</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[1]/div/div[3]/div/div[1]</td>
+	<td>//form/div/div/div[1]/div[3]/div/div[1]</td>
 	<td>Blogs Entry2 Comment1 Body</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[3]/div/div[3]/div/div[1]</td>
+	<td>//form/div/div/div[2]/div[3]/div/div[1]</td>
 	<td>Blogs Entry2 Comment2 Body</td>
 </tr>
 

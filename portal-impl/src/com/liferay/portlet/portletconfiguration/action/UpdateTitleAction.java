@@ -72,8 +72,8 @@ public class UpdateTitleAction extends JSONAction {
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				layout, portletId);
 
-		portletSetup.setValue("portlet-setup-title-" + languageId, title);
-		portletSetup.setValue("portlet-setup-use-custom-title", "true");
+		portletSetup.setValue("portletSetupTitle_" + languageId, title);
+		portletSetup.setValue("portletSetupUseCustomTitle", "true");
 
 		portletSetup.store();
 

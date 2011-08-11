@@ -125,6 +125,9 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 		<%
 		for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+			if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+				continue;
+			}
 		%>
 
 			<aui:option label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' selected="<%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) %>" value="<%= PropsValues.LAYOUT_TYPES[i] %>" />
@@ -138,6 +141,10 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	<%
 	for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
 		String curLayoutType = PropsValues.LAYOUT_TYPES[i];
+
+		if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+			continue;
+		}
 	%>
 
 		<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "aui-helper-hidden" %>">

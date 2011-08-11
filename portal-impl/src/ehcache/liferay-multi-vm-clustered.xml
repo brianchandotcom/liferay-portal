@@ -104,10 +104,10 @@
 	</cache>
 	<cache
 		eternal="false"
-		maxElementsInMemory="1000"
+		maxElementsInMemory="10000"
 		name="com.liferay.portal.servlet.filters.cache.CacheUtil"
 		overflowToDisk="false"
-		timeToLiveSeconds="3600"
+		timeToLiveSeconds="600"
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
@@ -121,7 +121,21 @@
 		maxElementsInMemory="10000"
 		name="com.liferay.portal.velocity.LiferayResourceCacheUtil"
 		overflowToDisk="false"
-		timeToIdleSeconds="3600"
+		timeToIdleSeconds="600"
+	>
+		<cacheEventListenerFactory
+			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			propertySeparator=","
+		/>
+		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
+	</cache>
+	<cache
+		eternal="false"
+		maxElementsInMemory="10000"
+		name="com.liferay.portal.webserver.WebServerServletToken"
+		overflowToDisk="false"
+		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
@@ -146,10 +160,10 @@
 	</cache>
 	<cache
 		eternal="false"
-		maxElementsInMemory="1000"
+		maxElementsInMemory="10000"
 		name="com.liferay.portlet.journalcontent.util.JournalContent"
 		overflowToDisk="false"
-		timeToLiveSeconds="3600"
+		timeToLiveSeconds="600"
 	>
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"

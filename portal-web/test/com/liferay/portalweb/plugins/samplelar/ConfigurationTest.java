@@ -42,16 +42,12 @@ public class ConfigurationTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Sample LAR Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Sample LAR Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(
 				"This is the Sample LAR Portlet. This was made to demonstrate the portlet LAR plugin feature."));
-		selenium.clickAt("link=Configuration", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.click("close");
-		selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -73,12 +69,14 @@ public class ConfigurationTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Export / Import"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("_86_exportFileName"));
+		assertTrue(selenium.isElementPresent(
+				"//input[@id='_86_exportFileName']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Export']"));
 		selenium.click(RuntimeVariables.replace("link=Import"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("_86_importFileName"));
+		assertTrue(selenium.isElementPresent(
+				"//input[@id='_86_importFileName']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Import']"));
 	}
 }

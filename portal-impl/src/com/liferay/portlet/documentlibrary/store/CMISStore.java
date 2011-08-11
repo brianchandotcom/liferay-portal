@@ -95,7 +95,7 @@ public class CMISStore extends BaseStore {
 		throws PortalException {
 
 		updateFile(
-			companyId, repositoryId, fileName, DEFAULT_VERSION, null, is);
+			companyId, repositoryId, fileName, VERSION_DEFAULT, is);
 	}
 
 	@Override
@@ -105,8 +105,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
@@ -117,7 +116,7 @@ public class CMISStore extends BaseStore {
 
 		Map<String, Object> documentProperties = new HashMap<String, Object>();
 
-		String title = String.valueOf(toVersionNumber);
+		String title = String.valueOf(toVersionLabel);
 
 		documentProperties.put(PropertyIds.NAME, title);
 
@@ -125,7 +124,7 @@ public class CMISStore extends BaseStore {
 			PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_DOCUMENT.value());
 
 		Document document = getVersionedDocument(
-			companyId, repositoryId, fileName, fromVersionNumber);
+			companyId, repositoryId, fileName, fromVersionLabel);
 
 		document.copy(
 			versioningFolderObjectId, documentProperties, null,
@@ -162,11 +161,11 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException {
 
 		Document document = getVersionedDocument(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
 
 		document.delete(true);
 	}
@@ -174,16 +173,16 @@ public class CMISStore extends BaseStore {
 	@Override
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException {
 
-		if (Validator.isNull(versionNumber)) {
-			versionNumber = getHeadVersionNumber(
+		if (Validator.isNull(versionLabel)) {
+			versionLabel = getHeadVersionLabel(
 				companyId, repositoryId, fileName);
 		}
 
 		Document document = getVersionedDocument(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
 
 		return document.getContentStream().getStream();
 	}
@@ -241,16 +240,16 @@ public class CMISStore extends BaseStore {
 	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
-		String versionNumber = getHeadVersionNumber(
+		String versionLabel = getHeadVersionLabel(
 			companyId, repositoryId, fileName);
 
 		Document document = getVersionedDocument(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
 
 		return document.getContentStreamLength();
 	}
 
-	public String getHeadVersionNumber(
+	public String getHeadVersionLabel(
 			long companyId, long repositoryId, String dirName)
 		throws NoSuchFileException {
 
@@ -263,28 +262,28 @@ public class CMISStore extends BaseStore {
 
 		List<Folder> folders = getFolders(versioningFolder);
 
-		String headVersionNumber = DEFAULT_VERSION;
+		String headVersionLabel = VERSION_DEFAULT;
 
 		for (Folder folder : folders) {
-			String versionNumber = folder.getName();
+			String versionLabel = folder.getName();
 
-			if (DLUtil.compareVersions(versionNumber, headVersionNumber) > 0) {
-				headVersionNumber = versionNumber;
+			if (DLUtil.compareVersions(versionLabel, headVersionLabel) > 0) {
+				headVersionLabel = versionLabel;
 			}
 		}
 
-		return headVersionNumber;
+		return headVersionLabel;
 	}
 
 	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,
-		String versionNumber) {
+		String versionLabel) {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, true);
 
-		Document document = getDocument(versioningFolder, versionNumber);
+		Document document = getDocument(versioningFolder, versionLabel);
 
 		if (document == null) {
 			return false;
@@ -352,13 +351,13 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, InputStream is)
+			String versionLabel, InputStream is)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, true);
 
-		String title = String.valueOf(versionNumber);
+		String title = String.valueOf(versionLabel);
 
 		Document document = getDocument(versioningFolder, title);
 
@@ -372,14 +371,13 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
 
-		String title = String.valueOf(toVersionNumber);
+		String title = String.valueOf(toVersionLabel);
 
 		Document document = getDocument(versioningFolder, title);
 
@@ -388,7 +386,7 @@ public class CMISStore extends BaseStore {
 		}
 
 		document = getVersionedDocument(
-			companyId, repositoryId, fileName, fromVersionNumber);
+			companyId, repositoryId, fileName, fromVersionLabel);
 
 		Map<String, Object> documentProperties = new HashMap<String, Object>();
 
@@ -507,7 +505,7 @@ public class CMISStore extends BaseStore {
 
 	protected Document getVersionedDocument(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws NoSuchFileException {
 
 		Folder versioningFolder = getVersioningFolder(
@@ -517,7 +515,7 @@ public class CMISStore extends BaseStore {
 			throw new NoSuchFileException();
 		}
 
-		Document document = getDocument(versioningFolder, versionNumber);
+		Document document = getDocument(versioningFolder, versionLabel);
 
 		if (document == null) {
 			throw new NoSuchFileException();

@@ -38,7 +38,6 @@ public class VerifyProcessSuite extends VerifyProcess {
 		verify(new VerifyCalendar());
 		verify(new VerifyDocumentLibrary());
 		verify(new VerifyGroup());
-		verify(new VerifyImageGallery());
 		verify(new VerifyJournal());
 		verify(new VerifyLayout());
 		verify(new VerifyMessageBoards());
@@ -52,12 +51,6 @@ public class VerifyProcessSuite extends VerifyProcess {
 		// trackback and verifies that the source URL is a valid URL.
 
 		//verify(new VerifyBlogsTrackbacks());
-
-		// VerifyImage is very powerful because it removes all images that it
-		// believes is stale. Do not run this unless you are also not managing
-		// images in Liferay's Image service for your custom models.
-
-		//verify(new VerifyImage());
 	}
 
 }

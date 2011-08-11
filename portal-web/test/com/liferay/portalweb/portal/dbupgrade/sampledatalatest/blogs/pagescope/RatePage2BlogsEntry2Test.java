@@ -45,10 +45,30 @@ public class RatePage2BlogsEntry2Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
+										.equals(selenium.getText(
+								"//span[@class='portlet-title-text']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertTrue(selenium.isPartialText(
@@ -88,7 +108,7 @@ public class RatePage2BlogsEntry2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='aui-widget-bd']")) {
+				if (selenium.isVisible("//div[@class='yui3-widget-bd']")) {
 					break;
 				}
 			}
@@ -100,6 +120,6 @@ public class RatePage2BlogsEntry2Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
-			selenium.getText("//div[@class='aui-widget-bd']"));
+			selenium.getText("//div[@class='yui3-widget-bd']"));
 	}
 }

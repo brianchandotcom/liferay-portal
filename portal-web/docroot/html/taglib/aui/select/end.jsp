@@ -14,16 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%
-boolean changesContext = GetterUtil.getBoolean((String)request.getAttribute("aui:select:changesContext"));
-String helpMessage = GetterUtil.getString((String)request.getAttribute("aui:select:helpMessage"));
-String id = namespace + GetterUtil.getString((String)request.getAttribute("aui:select:id"));
-String inlineLabel = GetterUtil.getString((String)request.getAttribute("aui:select:inlineLabel"));
-String label = GetterUtil.getString((String)request.getAttribute("aui:select:label"));
-String suffix = GetterUtil.getString((String)request.getAttribute("aui:select:suffix"));
-%>
+<%@ include file="/html/taglib/aui/select/init.jsp" %>
 
 			</select>
 		</span>

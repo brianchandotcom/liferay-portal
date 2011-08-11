@@ -214,7 +214,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String summary, boolean minorEdit, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		double version = WikiPageConstants.DEFAULT_VERSION;
+		double version = WikiPageConstants.VERSION_DEFAULT;
 		String format = WikiPageConstants.DEFAULT_FORMAT;
 		boolean head = false;
 		String parentTitle = null;
@@ -249,7 +249,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	public void addPageAttachment(
 			long userId, long nodeId, String title, String fileName,
-			byte[] bytes)
+			File file)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(fileName)) {
@@ -277,12 +277,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ActionKeys.ADD_ATTACHMENT, dirName + "/" + fileName);
 
 		DLStoreUtil.addFile(
-			companyId, repositoryId, dirName + "/" + fileName, bytes);
+			companyId, repositoryId, dirName + "/" + fileName, file);
 	}
 
 	public void addPageAttachments(
 			long userId, long nodeId, String title,
-			List<ObjectValuePair<String, byte[]>> files)
+			List<ObjectValuePair<String, File>> files)
 		throws PortalException, SystemException {
 
 		if (files.size() == 0) {
@@ -290,12 +290,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		for (int i = 0; i < files.size(); i++) {
-			ObjectValuePair<String, byte[]> ovp = files.get(i);
+			ObjectValuePair<String, File> ovp = files.get(i);
 
 			String fileName = ovp.getKey();
-			byte[] bytes = ovp.getValue();
+			File file = ovp.getValue();
 
-			addPageAttachment(userId, nodeId, title, fileName, bytes);
+			addPageAttachment(userId, nodeId, title, fileName, file);
 		}
 	}
 
@@ -976,7 +976,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Support moving back to a previously moved title
 
-			if (((page.getVersion() == WikiPageConstants.DEFAULT_VERSION) &&
+			if (((page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
 				 (page.getContent().length() < 200)) ||
 				!strict) {
 
@@ -1027,7 +1027,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Create stub page at the old location
 
-		double version = WikiPageConstants.DEFAULT_VERSION;
+		double version = WikiPageConstants.VERSION_DEFAULT;
 		String summary = WikiPageConstants.MOVED + " to " + title;
 		String format = page.getFormat();
 		boolean head = true;
@@ -1129,7 +1129,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		boolean addDraftAssetEntry = false;
 
 		if (!page.isApproved() &&
-			(page.getVersion() != WikiPageConstants.DEFAULT_VERSION)) {
+			(page.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
 
 			int approvedPagesCount = wikiPagePersistence.countByN_T_S(
 				page.getNodeId(), page.getTitle(),
@@ -1183,7 +1183,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 		catch (NoSuchPageException nspe) {
 			return addPage(
-				userId, nodeId, title, WikiPageConstants.DEFAULT_VERSION,
+				userId, nodeId, title, WikiPageConstants.VERSION_DEFAULT,
 				content, summary, minorEdit, format, true, parentTitle,
 				redirectTitle, serviceContext);
 		}
@@ -1336,7 +1336,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			// Asset
 
 			if ((oldStatus != WorkflowConstants.STATUS_APPROVED) &&
-				(page.getVersion() != WikiPageConstants.DEFAULT_VERSION)) {
+				(page.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
 
 				try {
 					AssetEntry draftAssetEntry =
@@ -1672,12 +1672,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"[$PAGE_URL$]", pageURL);
 		subscriptionSender.setContextUserPrefix("PAGE");
 		subscriptionSender.setFrom(fromAddress, fromName);
-		subscriptionSender.setGroupId(node.getGroupId());
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId(
 			"wiki_page", page.getNodeId(), page.getPageId());
 		subscriptionSender.setPortletId(PortletKeys.WIKI);
 		subscriptionSender.setReplyToAddress(fromAddress);
+		subscriptionSender.setScopeGroupId(node.getGroupId());
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(page.getUserId());
 

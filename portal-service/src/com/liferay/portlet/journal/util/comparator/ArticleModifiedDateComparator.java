@@ -23,9 +23,9 @@ import com.liferay.portlet.journal.model.JournalArticle;
  */
 public class ArticleModifiedDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "modifiedDate ASC";
+	public static String ORDER_BY_ASC = "JournalArticle.modifiedDate ASC";
 
-	public static String ORDER_BY_DESC = "modifiedDate DESC";
+	public static String ORDER_BY_DESC = "JournalArticle.modifiedDate DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"modifiedDate"};
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
@@ -412,8 +413,10 @@ public class LayoutLocalServiceStagingAdvice
 				if (userId > 0) {
 					User user = UserLocalServiceUtil.getUser(userId);
 
+					LayoutSet layoutSet = firstLayout.getLayoutSet();
+
 					layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(
-						user);
+						user, layoutSet.getLayoutSetId());
 				}
 			}
 			catch (Exception e) {

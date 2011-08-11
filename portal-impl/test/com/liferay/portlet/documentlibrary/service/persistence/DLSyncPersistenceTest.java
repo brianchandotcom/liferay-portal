@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
 import com.liferay.portal.util.PropsValues;
 
@@ -76,9 +75,11 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		newDLSync.setModifiedDate(nextDate());
 
-		newDLSync.setFileId(randomString());
+		newDLSync.setFileId(nextLong());
 
 		newDLSync.setRepositoryId(nextLong());
+
+		newDLSync.setParentFolderId(nextLong());
 
 		newDLSync.setEvent(randomString());
 
@@ -97,6 +98,8 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingDLSync.getFileId(), newDLSync.getFileId());
 		assertEquals(existingDLSync.getRepositoryId(),
 			newDLSync.getRepositoryId());
+		assertEquals(existingDLSync.getParentFolderId(),
+			newDLSync.getParentFolderId());
 		assertEquals(existingDLSync.getEvent(), newDLSync.getEvent());
 		assertEquals(existingDLSync.getType(), newDLSync.getType());
 	}
@@ -215,8 +218,8 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		DLSyncModelImpl existingDLSyncModelImpl = (DLSyncModelImpl)_persistence.findByPrimaryKey(newDLSync.getPrimaryKey());
 
-		assertTrue(Validator.equals(existingDLSyncModelImpl.getFileId(),
-				existingDLSyncModelImpl.getOriginalFileId()));
+		assertEquals(existingDLSyncModelImpl.getFileId(),
+			existingDLSyncModelImpl.getOriginalFileId());
 	}
 
 	protected DLSync addDLSync() throws Exception {
@@ -230,9 +233,11 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		dlSync.setModifiedDate(nextDate());
 
-		dlSync.setFileId(randomString());
+		dlSync.setFileId(nextLong());
 
 		dlSync.setRepositoryId(nextLong());
+
+		dlSync.setParentFolderId(nextLong());
 
 		dlSync.setEvent(randomString());
 

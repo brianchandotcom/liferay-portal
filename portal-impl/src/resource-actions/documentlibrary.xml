@@ -35,6 +35,7 @@
 				<action-key>ADD_FOLDER</action-key>
 				<action-key>ADD_SHORTCUT</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
@@ -49,6 +50,7 @@
 				<action-key>ADD_FOLDER</action-key>
 				<action-key>ADD_SHORTCUT</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

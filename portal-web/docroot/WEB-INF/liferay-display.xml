@@ -40,9 +40,7 @@
 		<portlet id="108" />
 		<portlet id="143" />
 	</category>
-	<category name="category.entertainment">
-		<portlet id="37" />
-	</category>
+	<category name="category.entertainment" />
 	<category name="category.finance">
 		<portlet id="16" />
 		<portlet id="61" />

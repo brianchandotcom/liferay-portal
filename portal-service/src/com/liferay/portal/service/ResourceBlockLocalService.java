@@ -253,10 +253,23 @@ public interface ResourceBlockLocalService extends PermissionedModelLocalService
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void addIndividualScopePermission(long companyId, long groupId,
+		java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void addIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId, long actionIdsLong)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public void addIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Adds a resource block if necessary and associates the resource block
@@ -273,11 +286,6 @@ public interface ResourceBlockLocalService extends PermissionedModelLocalService
 		java.lang.String permissionsHash,
 		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.portal.model.ResourceBlock convertResourcePermissions(
-		long companyId, java.lang.String name, long primKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getActionId(java.lang.String name, java.lang.String actionId)
@@ -360,6 +368,11 @@ public interface ResourceBlockLocalService extends PermissionedModelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSupported(java.lang.String name);
 
+	public void releasePermissionedModelResourceBlock(
+		com.liferay.portal.model.PermissionedModel permissionedModel)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void releasePermissionedModelResourceBlock(java.lang.String name,
 		long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -422,10 +435,23 @@ public interface ResourceBlockLocalService extends PermissionedModelLocalService
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void removeIndividualScopePermission(long companyId, long groupId,
+		java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void removeIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId, long actionIdsLong)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public void removeIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Increments the reference count of the resource block and updates it in
@@ -479,6 +505,40 @@ public interface ResourceBlockLocalService extends PermissionedModelLocalService
 		java.lang.String name, long primKey, long roleId, long actionIdsLong)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateCompanyScopePermissions(long companyId,
+		java.lang.String name, long roleId, long actionIdsLong, int operator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateGroupScopePermissions(long companyId, long groupId,
+		java.lang.String name, long roleId, long actionIdsLong, int operator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong, int operator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.ResourceBlock updateResourceBlockId(
+		long companyId, long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		java.lang.String permissionsHash,
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void verifyResourceBlockId(long companyId, java.lang.String name,
 		long primKey)

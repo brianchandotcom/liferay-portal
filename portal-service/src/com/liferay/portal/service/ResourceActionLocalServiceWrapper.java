@@ -265,6 +265,11 @@ public class ResourceActionLocalServiceWrapper
 			addDefaultActions);
 	}
 
+	public com.liferay.portal.model.ResourceAction fetchResourceAction(
+		java.lang.String name, java.lang.String actionId) {
+		return _resourceActionLocalService.fetchResourceAction(name, actionId);
+	}
+
 	public com.liferay.portal.model.ResourceAction getResourceAction(
 		java.lang.String name, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

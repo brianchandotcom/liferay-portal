@@ -118,7 +118,7 @@ rssURL.setCacheability(ResourceURL.FULL);
 
 rssURL.setParameter("struts_action", "/message_boards/rss");
 
-if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.DEFAULT_TYPE) || (rssFormatVersion != RSSUtil.DEFAULT_VERSION) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
+if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.DEFAULT_TYPE) || (rssFormatVersion != RSSUtil.VERSION_DEFAULT) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
 	if (rssDelta != SearchContainer.DEFAULT_DELTA) {
 		rssURL.setParameter("max", String.valueOf(rssDelta));
 	}
@@ -127,7 +127,7 @@ if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil
 		rssURL.setParameter("type", rssFormatType);
 	}
 
-	if (rssFormatVersion != RSSUtil.DEFAULT_VERSION) {
+	if (rssFormatVersion != RSSUtil.VERSION_DEFAULT) {
 		rssURL.setParameter("version", String.valueOf(rssFormatVersion));
 	}
 

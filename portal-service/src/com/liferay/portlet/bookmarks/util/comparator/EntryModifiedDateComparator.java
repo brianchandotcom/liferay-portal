@@ -23,9 +23,9 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
  */
 public class EntryModifiedDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "modifiedDate ASC";
+	public static String ORDER_BY_ASC = "BookmarksEntry.modifiedDate ASC";
 
-	public static String ORDER_BY_DESC = "modifiedDate DESC";
+	public static String ORDER_BY_DESC = "BookmarksEntry.modifiedDate DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"modifiedDate"};
 

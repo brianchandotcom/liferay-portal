@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.ImageServletTokenUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -100,6 +99,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
@@ -1013,7 +1013,7 @@ public class ServicePreAction extends Action {
 		sb.append("/company_logo?img_id=");
 		sb.append(company.getLogoId());
 		sb.append("&t=");
-		sb.append(ImageServletTokenUtil.getToken(company.getLogoId()));
+		sb.append(WebServerServletTokenUtil.getToken(company.getLogoId()));
 
 		String companyLogo = sb.toString();
 
@@ -1263,6 +1263,10 @@ public class ServicePreAction extends Action {
 						!LayoutPermissionUtil.contains(
 							permissionChecker, layout, ActionKeys.VIEW)) {
 
+					layouts = LayoutLocalServiceUtil.getLayouts(
+						layout.getGroupId(), layout.isPrivateLayout(),
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
 					layout = null;
 				}
 				else if (group.isLayoutPrototype()) {
@@ -1347,7 +1351,7 @@ public class ServicePreAction extends Action {
 					sb.append("/layout_set_logo?img_id=");
 					sb.append(logoId);
 					sb.append("&t=");
-					sb.append(ImageServletTokenUtil.getToken(logoId));
+					sb.append(WebServerServletTokenUtil.getToken(logoId));
 
 					layoutSetLogo = sb.toString();
 

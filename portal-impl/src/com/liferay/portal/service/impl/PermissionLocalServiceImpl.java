@@ -269,6 +269,12 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		return permissionFinder.findByR_R(roleId, resourceId);
 	}
 
+	public List<Permission> getUserPermissions(long userId)
+		throws SystemException {
+
+		return userPersistence.getPermissions(userId);
+	}
+
 	public List<Permission> getUserPermissions(long userId, long resourceId)
 		throws SystemException {
 

@@ -323,6 +323,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		Set<Long> ownerResourceBlockIds = getOwnerResourceBlockIds(
 			companyId, groupIds, className);
 
+		// If a user has regular access to a resource block, it isn't necessary
+		// to check owner permissions on it as well.
+
 		ownerResourceBlockIds.removeAll(userResourceBlockIds);
 
 		// A SQL syntax error occurs if there is not at least one resource block
@@ -367,10 +370,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		if (pos != -1) {
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(sql.substring(0, pos + 1));
+			sb.append(sql.substring(0, pos));
 			sb.append(permissionWhere);
 			sb.append(" AND ");
-			sb.append(sql.substring(pos + 6));
+			sb.append(sql.substring(pos + 7));
 
 			return sb.toString();
 		}
@@ -423,27 +426,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		permissionJoin += CustomSQLUtil.get(JOIN_RESOURCE_PERMISSION);
 
-		StringBundler ownerSQL = new StringBundler(5);
-
-		long userId = getUserId();
-
-		if (permissionChecker.isSignedIn()) {
-			ownerSQL.append(" OR ");
-
-			if (Validator.isNotNull(userIdField)) {
-				ownerSQL.append("(");
-				ownerSQL.append(userIdField);
-				ownerSQL.append(" = ");
-				ownerSQL.append(userId);
-				ownerSQL.append(")");
-			}
-			else {
-				ownerSQL.append("(ResourcePermission.ownerId = ");
-				ownerSQL.append(userId);
-				ownerSQL.append(")");
-			}
-		}
-
 		StringBundler sb = new StringBundler();
 
 		sb.append("(InlineSQLResourcePermission.scope = ");
@@ -452,6 +434,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		sb.append("InlineSQLResourcePermission.primKey = CAST_TEXT(");
 		sb.append(classPKField);
 		sb.append(") AND (");
+
+		long userId = getUserId();
 
 		for (int j = 0; j < groupIds.length; j++) {
 			long groupId = groupIds[j];
@@ -480,6 +464,23 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					sb.append(roleIds[i]);
 				}
 
+				if (permissionChecker.isSignedIn()) {
+					sb.append(" OR ");
+
+					if (Validator.isNotNull(userIdField)) {
+						sb.append("(");
+						sb.append(userIdField);
+						sb.append(" = ");
+						sb.append(userId);
+						sb.append(")");
+					}
+					else {
+						sb.append("(InlineSQLResourcePermission.ownerId = ");
+						sb.append(userId);
+						sb.append(")");
+					}
+				}
+
 				sb.append(") AND ");
 			}
 
@@ -497,13 +498,11 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			new String[] {
 				"[$CLASS_NAME$]",
 				"[$COMPANY_ID$]",
-				"OR [$OWNER_CHECK$]",
 				"[$PRIM_KEYS$]"
 			},
 			new String[] {
 				className,
 				String.valueOf(permissionChecker.getCompanyId()),
-				ownerSQL.toString(),
 				sb.toString()
 			});
 

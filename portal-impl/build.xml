@@ -7,6 +7,8 @@
 
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
+	<property name="manifest.bundle.name" value="Liferay Portal Impl" />
+	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
 	<target name="build-alloy-taglib">
@@ -80,16 +82,16 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg path="src/com/liferay/portal/parsers/creole/parser" />
 			<arg path="src/com/liferay/portal/parsers/creole/grammar/Creole10.g" />
 		</java>
-        
-        <replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Lexer.java">		  
-			<replacetoken>public class Creole10Lexer</replacetoken>									   
+
+        <replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Lexer.java">
+			<replacetoken>public class Creole10Lexer</replacetoken>
 			<replacevalue><![CDATA[@SuppressWarnings("all")
 public class Creole10Lexer]]></replacevalue>
-        </replace>        
+        </replace>
 
-		<replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Parser.java">		  
+		<replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Parser.java">
 			<replacetoken>public class Creole10Parser</replacetoken>
-			<replacevalue><![CDATA[@SuppressWarnings("all") 
+			<replacevalue><![CDATA[@SuppressWarnings("all")
 public class Creole10Parser]]></replacevalue>
         </replace>
 
@@ -155,6 +157,43 @@ public class Creole10Parser]]></replacevalue>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="src/com/liferay/portal/tools/instance_wrappers.xml" />
 		</java>
+	</target>
+
+	<target name="build-json-java">
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<get
+			dest="json-java.zip"
+			src="https://github.com/douglascrockford/JSON-java/zipball/master"
+		/>
+
+		<unzip
+			dest="${tstamp.value}/org/json"
+			src="json-java.zip"
+		>
+			<patternset
+				includes="**/*.java"
+			/>
+			<flattenmapper />
+		</unzip>
+
+		<delete file="json-java.zip" />
+
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="project.classpath" />
+			<param name="javac.destdir" value="${tstamp.value}" />
+			<param name="javac.srcdir" value="${tstamp.value}" />
+		</antcall>
+
+		<zip destfile="${project.dir}/lib/portal/json-java.jar">
+			<zipfileset
+				dir="${tstamp.value}"
+			/>
+		</zip>
+
+		<delete dir="${tstamp.value}" />
 	</target>
 
 	<target name="build-lang">
@@ -327,7 +366,14 @@ public class Creole10Parser]]></replacevalue>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>
 
-		<unzip src="${project.dir}/lib/development/selenium-server.jar" dest="${tstamp.value}" />
+		<unzip
+			dest="${tstamp.value}"
+			src="${project.dir}/lib/development/selenium-server.jar"
+		>
+			<patternset
+				excludes="org/json/**"
+			/>
+		</unzip>
 
 		<copy file="${project.dir}/tools/selenium/user-extensions.js" todir="${tstamp.value}/core/scripts" overwrite="true" />
 
@@ -439,12 +485,6 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
-	<target name="build-service-portlet-imagegallery">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/imagegallery/service.xml" />
-		</antcall>
-	</target>
-
 	<target name="build-service-portlet-journal">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/journal/service.xml" />
@@ -454,6 +494,12 @@ public class Creole10Parser]]></replacevalue>
 	<target name="build-service-portlet-messageboards">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/messageboards/service.xml" />
+		</antcall>
+	</target>
+
+	<target name="build-service-portlet-mobiledevicerules">
+		<antcall target="build-service">
+			<param name="service.file" value="${basedir}/src/com/liferay/portlet/mobiledevicerules/service.xml" />
 		</antcall>
 	</target>
 
@@ -510,9 +556,9 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-service-portlet-dynamicdatamapping" />
 		<antcall target="build-service-portlet-expando" />
 		<antcall target="build-service-portlet-flags" />
-		<antcall target="build-service-portlet-imagegallery" />
 		<antcall target="build-service-portlet-journal" />
 		<antcall target="build-service-portlet-messageboards" />
+		<antcall target="build-service-portlet-mobiledevicerules" />
 		<antcall target="build-service-portlet-polls" />
 		<antcall target="build-service-portlet-ratings" />
 		<antcall target="build-service-portlet-shopping" />
@@ -709,12 +755,6 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
-	<target name="build-wsdd-portlet-imagegallery">
-		<antcall target="build-wsdd">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/imagegallery/service.xml" />
-		</antcall>
-	</target>
-
 	<target name="build-wsdd-portlet-journal">
 		<antcall target="build-wsdd">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/journal/service.xml" />
@@ -724,6 +764,12 @@ public class Creole10Parser]]></replacevalue>
 	<target name="build-wsdd-portlet-messageboards">
 		<antcall target="build-wsdd">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/messageboards/service.xml" />
+		</antcall>
+	</target>
+
+	<target name="build-wsdd-portlet-mobiledevicerules">
+		<antcall target="build-wsdd">
+			<param name="service.file" value="${basedir}/src/com/liferay/portlet/mobiledevicerules/service.xml" />
 		</antcall>
 	</target>
 
@@ -774,9 +820,9 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-wsdd-portlet-dynamicdatamapping" />
 		<antcall target="build-wsdd-portlet-expando" />
 		<antcall target="build-wsdd-portlet-flags" />
-		<antcall target="build-wsdd-portlet-imagegallery" />
 		<antcall target="build-wsdd-portlet-journal" />
 		<antcall target="build-wsdd-portlet-messageboards" />
+		<antcall target="build-wsdd-portlet-mobiledevicerules" />
 		<antcall target="build-wsdd-portlet-polls" />
 		<antcall target="build-wsdd-portlet-ratings" />
 		<antcall target="build-wsdd-portlet-shopping" />

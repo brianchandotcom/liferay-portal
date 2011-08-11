@@ -293,6 +293,12 @@ public class CompanyLocalServiceUtil {
 		return getService().fetchCompany(companyId);
 	}
 
+	public static com.liferay.portal.model.Company fetchCompanyByVirtualHost(
+		java.lang.String virtualHostname)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchCompanyByVirtualHost(virtualHostname);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Company> getCompanies()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCompanies();

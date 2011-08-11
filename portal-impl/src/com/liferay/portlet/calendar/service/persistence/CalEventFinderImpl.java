@@ -137,7 +137,7 @@ public class CalEventFinderImpl
 			qPos.add(calendar_TS);
 			qPos.add(calendar_TS);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -159,7 +159,7 @@ public class CalEventFinderImpl
 
 			q.addEntity("CalEvent", CalEventImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

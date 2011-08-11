@@ -63,6 +63,8 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 
 	public java.lang.String getIcon();
 
+	public java.lang.String getImageType();
+
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -70,6 +72,8 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 	public com.liferay.portal.model.Lock getLock();
 
 	public java.lang.String getLuceneProperties();
+
+	public java.lang.String getNameWithExtension();
 
 	public boolean hasLock();
 

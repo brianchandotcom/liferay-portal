@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.model.impl.JournalTemplateImpl;
@@ -68,9 +69,9 @@ public class JournalTemplateFinderImpl
 			andOperator = true;
 		}
 
-		return countByC_G_T_S_N_D(
+		return doCountByC_G_T_S_N_D(
 			companyId, groupIds, templateIds, structureId,
-			structureIdComparator, names, descriptions, andOperator);
+			structureIdComparator, names, descriptions, andOperator, false);
 	}
 
 	public int countByC_G_T_S_N_D(
@@ -83,15 +84,140 @@ public class JournalTemplateFinderImpl
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return countByC_G_T_S_N_D(
+		return doCountByC_G_T_S_N_D(
 			companyId, groupIds, templateIds, structureId,
-			structureIdComparator, names, descriptions, andOperator);
+			structureIdComparator, names, descriptions, andOperator, false);
 	}
 
-	public int countByC_G_T_S_N_D(
+	public int filterCountByKeywords(
+			long companyId, long[] groupIds, String keywords,
+			String structureId, String structureIdComparator)
+		throws SystemException {
+
+		String[] templateIds = null;
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			templateIds = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doCountByC_G_T_S_N_D(
+			companyId, groupIds, templateIds, structureId,
+			structureIdComparator, names, descriptions, andOperator, true);
+	}
+
+	public int filterCountByC_G_T_S_N_D(
+			long companyId, long[] groupIds, String templateId,
+			String structureId, String structureIdComparator, String name,
+			String description, boolean andOperator)
+		throws SystemException {
+
+		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description);
+
+		return doCountByC_G_T_S_N_D(
+			companyId, groupIds, templateIds, structureId,
+			structureIdComparator, names, descriptions, andOperator, true);
+	}
+
+	public List<JournalTemplate> filterFindByKeywords(
+			long companyId, long[] groupIds, String keywords,
+			String structureId, String structureIdComparator, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		String[] templateIds = null;
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			templateIds = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doFindByC_G_T_S_N_D(
+			companyId, groupIds, templateIds, structureId,
+			structureIdComparator, names, descriptions, andOperator, start, end,
+			obc, true);
+	}
+
+	public List<JournalTemplate> filterFindByC_G_T_S_N_D(
+			long companyId, long[] groupIds, String templateId,
+			String structureId, String structureIdComparator, String name,
+			String description, boolean andOperator, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description);
+
+		return doFindByC_G_T_S_N_D(
+			companyId, groupIds, templateIds, structureId,
+			structureIdComparator, names, descriptions, andOperator, start, end,
+			obc, true);
+	}
+
+	public List<JournalTemplate> findByKeywords(
+			long companyId, long[] groupIds, String keywords,
+			String structureId, String structureIdComparator, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		String[] templateIds = null;
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			templateIds = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doFindByC_G_T_S_N_D(
+			companyId, groupIds, templateIds, structureId,
+			structureIdComparator, names, descriptions, andOperator, start, end,
+			obc, false);
+	}
+
+	public List<JournalTemplate> findByC_G_T_S_N_D(
+			long companyId, long[] groupIds, String templateId,
+			String structureId, String structureIdComparator, String name,
+			String description, boolean andOperator, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description);
+
+		return doFindByC_G_T_S_N_D(
+			companyId, groupIds, templateIds, structureId,
+			structureIdComparator, names, descriptions, andOperator, start, end,
+			obc, false);
+	}
+
+	protected int doCountByC_G_T_S_N_D(
 			long companyId, long[] groupIds, String[] templateIds,
 			String structureId, String structureIdComparator, String[] names,
-			String[] descriptions, boolean andOperator)
+			String[] descriptions, boolean andOperator, boolean inlineSQLHelper)
 		throws SystemException {
 
 		templateIds = CustomSQLUtil.keywords(templateIds, false);
@@ -120,6 +246,18 @@ public class JournalTemplateFinderImpl
 				sql, "lower(description)", StringPool.LIKE, true, descriptions);
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalTemplate.class.getName(), "JournalTemplate.id_",
+					groupIds);
+
+				sql = StringUtil.replace(
+					sql, "(companyId", "(JournalTemplate.companyId");
+
+				sql = StringUtil.replace(
+					sql, "(name", "(JournalTemplate.name");
+			}
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -167,54 +305,11 @@ public class JournalTemplateFinderImpl
 		}
 	}
 
-	public List<JournalTemplate> findByKeywords(
-			long companyId, long[] groupIds, String keywords,
-			String structureId, String structureIdComparator, int start,
-			int end, OrderByComparator obc)
-		throws SystemException {
-
-		String[] templateIds = null;
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			templateIds = CustomSQLUtil.keywords(keywords, false);
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return findByC_G_T_S_N_D(
-			companyId, groupIds, templateIds, structureId,
-			structureIdComparator, names, descriptions, andOperator, start, end,
-			obc);
-	}
-
-	public List<JournalTemplate> findByC_G_T_S_N_D(
-			long companyId, long[] groupIds, String templateId,
-			String structureId, String structureIdComparator, String name,
-			String description, boolean andOperator, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
-
-		String[] templateIds = CustomSQLUtil.keywords(templateId, false);
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description);
-
-		return findByC_G_T_S_N_D(
-			companyId, groupIds, templateIds, structureId,
-			structureIdComparator, names, descriptions, andOperator, start, end,
-			obc);
-	}
-
-	public List<JournalTemplate> findByC_G_T_S_N_D(
+	protected List<JournalTemplate> doFindByC_G_T_S_N_D(
 			long companyId, long[] groupIds, String[] templateIds,
 			String structureId, String structureIdComparator, String[] names,
 			String[] descriptions, boolean andOperator, int start, int end,
-			OrderByComparator obc)
+			OrderByComparator obc, boolean inlineSQLHelper)
 		throws SystemException {
 
 		templateIds = CustomSQLUtil.keywords(templateIds, false);
@@ -244,6 +339,18 @@ public class JournalTemplateFinderImpl
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+						sql, JournalTemplate.class.getName(),
+						"JournalTemplate.id_", groupIds);
+
+				sql = StringUtil.replace(
+					sql, "(companyId", "(JournalTemplate.companyId");
+
+				sql = StringUtil.replace(
+					sql, "(name", "(JournalTemplate.name");
+			}
 
 			SQLQuery q = session.createSQLQuery(sql);
 

@@ -25,6 +25,8 @@ public class ReleaseInfo {
 
 	static String name = "Liferay Portal Community Edition";
 
+	static String vendor = "Liferay, Inc.";
+
 	static String version = "6.1.0";
 
 	static String versionDisplayName = "6.1.0 CE";
@@ -48,28 +50,6 @@ public class ReleaseInfo {
 			" / Build " + build + " / " + date + ")" + releaseInfoSuffix;
 
 	static String serverInfo = name + " / " + version;
-
-	public static int RELEASE_4_2_0_BUILD_NUMBER = 3500;
-
-	public static int RELEASE_4_2_1_BUILD_NUMBER = 3501;
-
-	public static int RELEASE_4_2_2_BUILD_NUMBER = 3502;
-
-	public static int RELEASE_4_3_0_BUILD_NUMBER = 4300;
-
-	public static int RELEASE_4_3_1_BUILD_NUMBER = 4301;
-
-	public static int RELEASE_4_3_2_BUILD_NUMBER = 4302;
-
-	public static int RELEASE_4_3_3_BUILD_NUMBER = 4303;
-
-	public static int RELEASE_4_3_4_BUILD_NUMBER = 4304;
-
-	public static int RELEASE_4_3_5_BUILD_NUMBER = 4305;
-
-	public static int RELEASE_4_3_6_BUILD_NUMBER = 4306;
-
-	public static int RELEASE_4_4_0_BUILD_NUMBER = 4400;
 
 	public static int RELEASE_5_0_0_BUILD_NUMBER = 5000;
 
@@ -107,6 +87,10 @@ public class ReleaseInfo {
 
 	public static final String getName() {
 		return name;
+	}
+
+	public static String getVendor() {
+		return vendor;
 	}
 
 	public static final String getVersion() {

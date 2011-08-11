@@ -30,7 +30,7 @@ public class AddUserAnnouncementTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,7 +41,22 @@ public class AddUserAnnouncementTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_125_keywords']",
+			RuntimeVariables.replace("selen01"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -51,7 +66,7 @@ public class AddUserAnnouncementTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Users")) {
+				if (selenium.isVisible("//a[@id='_125_announcementsLink']")) {
 					break;
 				}
 			}
@@ -62,49 +77,63 @@ public class AddUserAnnouncementTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_125_keywords", RuntimeVariables.replace("selen01"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_announcementsLink']",
+				"Announcements"));
 		selenium.clickAt("//a[@id='_125_announcementsLink']",
-			RuntimeVariables.replace(""));
-		selenium.clickAt("_125_announcementsTypegeneralEmailCheckbox",
-			RuntimeVariables.replace(""));
-		selenium.uncheck("_125_announcementsTypegeneralSmsCheckbox");
-		selenium.uncheck("_125_announcementsTypenewsEmailCheckbox");
-		selenium.clickAt("_125_announcementsTypenewsSmsCheckbox",
-			RuntimeVariables.replace(""));
-		selenium.clickAt("_125_announcementsTypetestEmailCheckbox",
-			RuntimeVariables.replace(""));
-		selenium.uncheck("_125_announcementsTypetestSmsCheckbox");
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Announcements"));
+		selenium.clickAt("//input[@id='_125_announcementsTypegeneralEmailCheckbox']",
+			RuntimeVariables.replace("General Email Checkbox"));
+		selenium.uncheck(
+			"//input[@id='_125_announcementsTypegeneralSmsCheckbox']");
+		selenium.uncheck(
+			"//input[@id='_125_announcementsTypenewsEmailCheckbox']");
+		selenium.clickAt("//input[@id='_125_announcementsTypenewsSmsCheckbox']",
+			RuntimeVariables.replace("News SMS Checkbox"));
+		selenium.clickAt("//input[@id='_125_announcementsTypetestEmailCheckbox']",
+			RuntimeVariables.replace("Test Email Checkbox"));
+		selenium.uncheck("//input[@id='_125_announcementsTypetestSmsCheckbox']");
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isChecked(
-				"_125_announcementsTypegeneralEmailCheckbox"));
+				"//input[@id='_125_announcementsTypegeneralEmailCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
-				"_125_announcementsTypegeneralSmsCheckbox"));
+				"//input[@id='_125_announcementsTypegeneralSmsCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
-				"_125_announcementsTypenewsEmailCheckbox"));
+				"//input[@id='_125_announcementsTypenewsEmailCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isChecked("_125_announcementsTypenewsSmsCheckbox"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_125_announcementsTypenewsSmsCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isChecked("_125_announcementsTypetestEmailCheckbox"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_125_announcementsTypetestEmailCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isChecked("_125_announcementsTypetestSmsCheckbox"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_125_announcementsTypetestSmsCheckbox']"));
 		selenium.saveScreenShotAndSource();
 	}
 }

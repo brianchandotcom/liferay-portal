@@ -22,6 +22,21 @@ long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionCreateDateComparator(true));
 
 long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSetBranchId, plid);
+
+LayoutRevision currentLayoutRevision = null;
+
+if (layoutRevisionId <= 0) {
+	LayoutBranch layoutBranch =	LayoutBranchLocalServiceUtil.getMasterLayoutBranch(layoutSetBranchId, plid);
+
+	currentLayoutRevision =	LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutSetBranchId, layoutBranch.getLayoutBranchId(), plid);
+
+	layoutRevisionId = currentLayoutRevision.getLayoutRevisionId();
+}
+else {
+	currentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
+}
+
+request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.valueOf(currentLayoutRevision.getLayoutBranchId()));
 %>
 
 <div class="portlet-msg-info">
@@ -37,7 +52,7 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 	</liferay-util:html-top>
 
 	<%
-	String taglibOnClick = "javascript:Liferay.Staging.Branching.addBranch('" + LanguageUtil.get(pageContext, "add-page-variation") + "');";
+	String taglibOnClick = "javascript:Liferay.StagingBar.addBranch('" + LanguageUtil.get(pageContext, "add-page-variation") + "');";
 	%>
 
 	<aui:button-row>
@@ -71,14 +86,18 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 				<%
 				String layoutBranchName = layoutBranch.getName();
 
-				if (layoutRevision.isHead()) {
+				if (layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId()) {
 					buffer.append("<strong>");
 				}
 
 				buffer.append(LanguageUtil.get(pageContext, layoutBranchName));
 
-				if (layoutRevision.isHead()) {
-					buffer.append(" (*)</strong>");
+				if (layoutBranch.isMaster()) {
+					buffer.append(" (*)");
+				}
+
+				if (layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId()) {
+					buffer.append("</strong>");
 				}
 				%>
 
@@ -98,10 +117,22 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 	</liferay-ui:search-container>
 </div>
 
-<aui:script position="inline" use="liferay-staging">
-	Liferay.Staging.Branching.init(
+<aui:script position="inline" use="liferay-staging-branch">
+	Liferay.StagingBar.init(
 		{
 			namespace: '<portlet:namespace />'
 		}
 	);
+
+	<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequest, portletName + ".doConfigure") %>'>
+		var data = null;
+
+		<c:if test='<%= SessionMessages.contains(renderRequest, portletName + ".notAjaxable") %>'>
+			data = {
+				portletAjaxable: false
+			};
+		</c:if>
+
+		Liferay.Util.getOpener().Liferay.Portlet.refresh(stagingBarPortletBoundaryId, data);
+	</c:if>
 </aui:script>

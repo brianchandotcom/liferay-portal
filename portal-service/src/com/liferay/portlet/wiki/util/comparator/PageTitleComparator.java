@@ -22,9 +22,9 @@ import com.liferay.portlet.wiki.model.WikiPage;
  */
 public class PageTitleComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "title ASC";
+	public static String ORDER_BY_ASC = "WikiPage.title ASC";
 
-	public static String ORDER_BY_DESC = "title DESC";
+	public static String ORDER_BY_DESC = "WikiPage.title DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"title"};
 

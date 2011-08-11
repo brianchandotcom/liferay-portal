@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 
 import java.sql.Connection;
@@ -189,10 +190,21 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
-				"select portletPreferencesId, ownerId, ownerType, plid, " +
-					"portletId, preferences from PortletPreferences where " +
-						getUpdatePortletPreferencesWhereClause());
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("select portletPreferencesId, ownerId, ownerType, ");
+			sb.append("plid, portletId, preferences from PortletPreferences");
+
+			String whereClause = getUpdatePortletPreferencesWhereClause();
+
+			if (Validator.isNotNull(whereClause)) {
+				sb.append(" where ");
+				sb.append(whereClause);
+			}
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 

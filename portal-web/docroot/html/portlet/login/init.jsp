@@ -51,7 +51,6 @@
 <%@ page import="com.liferay.portal.kernel.facebook.FacebookConnectUtil" %>
 <%@ page import="com.liferay.portal.security.auth.AuthException" %>
 <%@ page import="com.liferay.portal.util.OpenIdUtil" %>
-<%@ page import="com.liferay.portlet.login.action.ForgotPasswordAction" %>
 <%@ page import="com.liferay.portlet.login.util.LoginUtil" %>
 
 <%@ page import="org.openid4java.association.AssociationException" %>

@@ -209,7 +209,7 @@ public class AnnouncementsEntryFinderImpl
 			qPos.add(displayDateGT_TS);
 			qPos.add(displayDateLT_TS);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

@@ -4,6 +4,8 @@
 	<import file="../build-common-java.xml" />
 
 	<property name="jar.file" value="${ant.project.name}" />
+	<property name="manifest.bundle.name" value="Liferay Util Taglib" />
+	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.taglib;singleton:=true" />
 
 	<target name="build-taglibs">
 		<java

@@ -28,7 +28,7 @@ import java.io.File;
 public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 
 	public LayoutTemplateAutoDeployListener() {
-		_deployer = new LayoutTemplateAutoDeployer();
+		_autoDeployer = new LayoutTemplateAutoDeployer();
 	}
 
 	public void deploy(File file) throws AutoDeployException {
@@ -44,7 +44,7 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 			_log.info("Copying layout templates for " + file.getPath());
 		}
 
-		_deployer.autoDeploy(file.getName());
+		_autoDeployer.autoDeploy(file.getName());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -57,6 +57,6 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutTemplateAutoDeployListener.class);
 
-	private AutoDeployer _deployer;
+	private AutoDeployer _autoDeployer;
 
 }

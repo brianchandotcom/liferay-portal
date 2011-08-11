@@ -282,41 +282,6 @@ public class BookmarksFolderLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void addFolderResources(
-		com.liferay.portlet.bookmarks.model.BookmarksFolder folder,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.addFolderResources(folder, addGroupPermissions, addGuestPermissions);
-	}
-
-	public static void addFolderResources(
-		com.liferay.portlet.bookmarks.model.BookmarksFolder folder,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.addFolderResources(folder, groupPermissions, guestPermissions);
-	}
-
-	public static void addFolderResources(long folderId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.addFolderResources(folderId, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addFolderResources(long folderId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.addFolderResources(folderId, groupPermissions, guestPermissions);
-	}
-
 	public static void deleteFolder(
 		com.liferay.portlet.bookmarks.model.BookmarksFolder folder)
 		throws com.liferay.portal.kernel.exception.PortalException,

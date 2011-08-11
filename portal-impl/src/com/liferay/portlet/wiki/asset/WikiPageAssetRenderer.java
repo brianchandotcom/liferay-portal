@@ -49,7 +49,7 @@ public class WikiPageAssetRenderer extends BaseAssetRenderer {
 
 	public long getClassPK() {
 		if (!_page.isApproved() &&
-			(_page.getVersion() != WikiPageConstants.DEFAULT_VERSION)) {
+			(_page.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
 
 			return _page.getPageId();
 		}

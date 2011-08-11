@@ -82,8 +82,8 @@ public class DBUpgrader {
 
 		int buildNumber = ReleaseLocalServiceUtil.getBuildNumberOrCreate();
 
-		if (buildNumber < ReleaseInfo.RELEASE_4_2_1_BUILD_NUMBER) {
-			String msg = "You must first upgrade to Liferay Portal 4.2.1";
+		if (buildNumber < ReleaseInfo.RELEASE_5_0_0_BUILD_NUMBER) {
+			String msg = "You must first upgrade to Liferay Portal 5.0.0";
 
 			System.out.println(msg);
 

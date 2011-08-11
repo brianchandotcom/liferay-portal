@@ -99,12 +99,12 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		}
 	);
 
-	var recordSet = Liferay.SpreadSheet.buildEmptyRecords(<%= totalEmptyRecords %>, keys);
+	var recordset = Liferay.SpreadSheet.buildEmptyRecords(<%= totalEmptyRecords %>, keys);
 
 	A.Array.each(
 		records,
 		function(item, index, collection) {
-			recordSet.splice(item.displayIndex, 0, item);
+			recordset.splice(item.displayIndex, 0, item);
 		}
 	);
 
@@ -114,8 +114,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 			columnset: columnset,
 			contentBox: '#<portlet:namespace />dataTableCC',
 			editEvent: 'dblclick',
-			recordSet: recordSet,
-			recordSetId: <%= recordSet.getRecordSetId() %>,
+			recordset: recordset,
+			recordsetId: <%= recordSet.getRecordSetId() %>,
 			structure: structure
 		}
 	).plug(
@@ -142,11 +142,11 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		function(event) {
 			var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
 
-			var recordSet = spreadSheet.get('recordSet');
+			var recordset = spreadSheet.get('recordset');
 
 			spreadSheet.addEmptyRows(numberOfRecords);
 
-			spreadSheet.updateMinDisplayRows(recordSet.getLength());
+			spreadSheet.updateMinDisplayRows(recordset.getLength());
 		}
 	);
 

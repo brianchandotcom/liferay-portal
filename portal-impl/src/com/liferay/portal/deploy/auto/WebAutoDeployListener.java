@@ -27,7 +27,7 @@ import java.io.File;
 public class WebAutoDeployListener extends BaseAutoDeployListener {
 
 	public WebAutoDeployListener() {
-		_deployer = new WebAutoDeployer();
+		_autoDeployer = new WebAutoDeployer();
 	}
 
 	public void deploy(File file) throws AutoDeployException {
@@ -43,7 +43,7 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 			_log.info("Copying web plugin for " + file.getPath());
 		}
 
-		_deployer.autoDeploy(file.getName());
+		_autoDeployer.autoDeploy(file.getName());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -55,6 +55,6 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 	private static Log _log = LogFactoryUtil.getLog(
 		WebAutoDeployListener.class);
 
-	private AutoDeployer _deployer;
+	private AutoDeployer _autoDeployer;
 
 }

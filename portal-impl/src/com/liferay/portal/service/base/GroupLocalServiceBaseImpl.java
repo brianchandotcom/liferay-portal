@@ -238,9 +238,6 @@ import com.liferay.portlet.calendar.service.persistence.CalEventFinder;
 import com.liferay.portlet.calendar.service.persistence.CalEventPersistence;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
-import com.liferay.portlet.imagegallery.service.IGFolderLocalService;
-import com.liferay.portlet.imagegallery.service.IGFolderService;
-import com.liferay.portlet.imagegallery.service.persistence.IGFolderPersistence;
 import com.liferay.portlet.journal.service.JournalArticleLocalService;
 import com.liferay.portlet.journal.service.JournalArticleService;
 import com.liferay.portlet.journal.service.JournalStructureLocalService;
@@ -4375,61 +4372,6 @@ public abstract class GroupLocalServiceBaseImpl implements GroupLocalService,
 	}
 
 	/**
-	 * Returns the i g folder local service.
-	 *
-	 * @return the i g folder local service
-	 */
-	public IGFolderLocalService getIGFolderLocalService() {
-		return igFolderLocalService;
-	}
-
-	/**
-	 * Sets the i g folder local service.
-	 *
-	 * @param igFolderLocalService the i g folder local service
-	 */
-	public void setIGFolderLocalService(
-		IGFolderLocalService igFolderLocalService) {
-		this.igFolderLocalService = igFolderLocalService;
-	}
-
-	/**
-	 * Returns the i g folder remote service.
-	 *
-	 * @return the i g folder remote service
-	 */
-	public IGFolderService getIGFolderService() {
-		return igFolderService;
-	}
-
-	/**
-	 * Sets the i g folder remote service.
-	 *
-	 * @param igFolderService the i g folder remote service
-	 */
-	public void setIGFolderService(IGFolderService igFolderService) {
-		this.igFolderService = igFolderService;
-	}
-
-	/**
-	 * Returns the i g folder persistence.
-	 *
-	 * @return the i g folder persistence
-	 */
-	public IGFolderPersistence getIGFolderPersistence() {
-		return igFolderPersistence;
-	}
-
-	/**
-	 * Sets the i g folder persistence.
-	 *
-	 * @param igFolderPersistence the i g folder persistence
-	 */
-	public void setIGFolderPersistence(IGFolderPersistence igFolderPersistence) {
-		this.igFolderPersistence = igFolderPersistence;
-	}
-
-	/**
 	 * Returns the journal article local service.
 	 *
 	 * @return the journal article local service
@@ -5762,12 +5704,6 @@ public abstract class GroupLocalServiceBaseImpl implements GroupLocalService,
 	protected DLAppLocalService dlAppLocalService;
 	@BeanReference(type = DLAppService.class)
 	protected DLAppService dlAppService;
-	@BeanReference(type = IGFolderLocalService.class)
-	protected IGFolderLocalService igFolderLocalService;
-	@BeanReference(type = IGFolderService.class)
-	protected IGFolderService igFolderService;
-	@BeanReference(type = IGFolderPersistence.class)
-	protected IGFolderPersistence igFolderPersistence;
 	@BeanReference(type = JournalArticleLocalService.class)
 	protected JournalArticleLocalService journalArticleLocalService;
 	@BeanReference(type = JournalArticleService.class)

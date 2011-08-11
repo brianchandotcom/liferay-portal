@@ -11,7 +11,7 @@
 	visibility: hidden;
 }
 
-.dockbar-ready .dockbar, .staging-ready .staging-bar, .live-view .staging-bar {
+.dockbar-ready .dockbar, .staging .staging-bar, .live-view .staging-bar {
 	visibility: visible;
 }
 

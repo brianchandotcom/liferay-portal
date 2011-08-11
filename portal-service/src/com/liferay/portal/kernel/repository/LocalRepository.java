@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -30,6 +31,12 @@ import java.util.List;
  * @author Alexander Chow
  */
 public interface LocalRepository {
+
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	public FileEntry addFileEntry(
 			long userId, long folderId, String sourceFileName, String mimeType,
@@ -119,6 +126,12 @@ public interface LocalRepository {
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			long[] assetCategoryIds, String[] assetTagNames,
 			long[] assetLinkEntryIds)
+		throws PortalException, SystemException;
+
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public FileEntry updateFileEntry(

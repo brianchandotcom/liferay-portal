@@ -24,13 +24,18 @@
 	<td>Blogs Test Page1</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Blogs</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='portlet-title-text']</td>
 	<td>Blogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
@@ -50,12 +55,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
@@ -99,14 +104,19 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='search-results']</td>
-	<td>Showing 1 result.</td>
+	<td>waitForText</td>
+	<td>//td[2]/a</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
 	<td>Blogs Entry1 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -142,6 +152,11 @@
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Test Page2</td>
 	<td>Blogs Test Page2</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Blogs (Blogs Test Page2)</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -199,6 +214,11 @@
 	<td>Blogs Test Page3</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Blogs (Blogs Test Page2)</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='portlet-title-text']</td>
 	<td>Blogs (Blogs Test Page2)</td>
@@ -260,37 +280,37 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/span/a</td>
-	<td>Default</td>
+	<td>//div/span/ul/li/strong/a/span</td>
+	<td>Scope: Default</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//td[2]/a</td>
 	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-body']/p</td>
-	<td>Blogs Entry1 Content</td>
+	<td>//td[3]/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//td[4]/a</td>
+	<td>Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-author']</td>
-	<td>By Joe Bloggs</td>
+	<td>//td[5]/a</td>
+	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='search-results']</td>
-	<td>Showing 1 result.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//td[2]/a</td>
 	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//td[2]/a</td>
 	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
@@ -330,20 +350,25 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/span/a</td>
-	<td>Default</td>
+	<td>//div/span/ul/li/strong/a/span</td>
+	<td>Scope: Default</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_33_keywords']</td>
+	<td>//input[@name='_161_keywords']</td>
 	<td>Entry1</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//td[2]/a</td>
+	<td>Blogs Entry1 Title</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
 	<td>Blogs Entry1 Title</td>
@@ -400,33 +425,38 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/span/a</td>
-	<td>Default</td>
+	<td>//div/span/ul/li/strong/a/span</td>
+	<td>Scope: Default</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/span/a</td>
-	<td>Default</td>
+	<td>//div/span/ul/li/strong/a/span</td>
+	<td>Scope: Default</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Blogs Test Page2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Blogs Test Page2</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//li[2]/a</td>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Blogs Test Page2</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div/span/ul/li/strong/a/span</td>
+	<td>Scope: Blogs Test Page2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/span/a</td>
-	<td>Blogs Test Page2</td>
+	<td>//div/span/ul/li/strong/a/span</td>
+	<td>Scope: Blogs Test Page2</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
@@ -440,7 +470,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_33_keywords']</td>
+	<td>//input[@name='_161_keywords']</td>
 	<td>Entry1</td>
 </tr>
 <tr>

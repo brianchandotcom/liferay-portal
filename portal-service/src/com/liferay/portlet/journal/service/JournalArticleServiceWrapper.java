@@ -202,6 +202,14 @@ public class JournalArticleServiceWrapper implements JournalArticleService {
 			status);
 	}
 
+	public com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
+		long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getLatestArticle(groupId, className,
+			classPK);
+	}
+
 	public void removeArticleLocale(long companyId, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

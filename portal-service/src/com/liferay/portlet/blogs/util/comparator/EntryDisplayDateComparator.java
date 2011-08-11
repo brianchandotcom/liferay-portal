@@ -23,9 +23,11 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
  */
 public class EntryDisplayDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "displayDate ASC, entryId ASC";
+	public static String ORDER_BY_ASC =
+		"BlogsEntry.displayDate ASC, BlogsEntry.entryId ASC";
 
-	public static String ORDER_BY_DESC = "displayDate DESC, entryId DESC";
+	public static String ORDER_BY_DESC =
+		"BlogsEntry.displayDate DESC, BlogsEntry.entryId DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"displayDate", "entryId"};
 

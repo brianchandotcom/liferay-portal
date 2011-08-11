@@ -51,8 +51,6 @@
 <%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %>
 <%@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %>
-<%@ page import="com.liferay.portlet.imagegallery.model.IGImage" %>
-<%@ page import="com.liferay.portlet.imagegallery.service.IGImageLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
 <%@ page import="com.liferay.portlet.journal.model.JournalStructure" %>
 <%@ page import="com.liferay.portlet.journal.service.JournalStructureServiceUtil" %>
@@ -80,9 +78,17 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(preferences, scopeGroupId, layo
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds();
 
+long layoutRevisionClassNameId = PortalUtil.getClassNameId(LayoutRevision.class);
+
+if (ArrayUtil.contains(availableClassNameIds, layoutRevisionClassNameId)) {
+	availableClassNameIds = ArrayUtil.remove(availableClassNameIds, layoutRevisionClassNameId);
+}
+
 boolean anyAssetType = GetterUtil.getBoolean(preferences.getValue("anyAssetType", Boolean.TRUE.toString()));
 
 long[] classNameIds = AssetPublisherUtil.getClassNameIds(preferences, availableClassNameIds);
+
+String customUserAttributes = GetterUtil.getString(preferences.getValue("customUserAttributes", StringPool.BLANK));
 
 AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -97,6 +103,8 @@ if (selectionStyle.equals("dynamic")) {
 	}
 
 	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(preferences, scopeGroupId);
+
+	AssetPublisherUtil.addUserAttributes(user, StringUtil.split(customUserAttributes), assetEntryQuery);
 }
 
 long assetVocabularyId = GetterUtil.getLong(preferences.getValue("assetVocabularyId", StringPool.BLANK));

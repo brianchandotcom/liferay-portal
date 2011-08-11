@@ -84,6 +84,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Organization;
@@ -130,7 +131,6 @@ import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
-import com.liferay.portal.servlet.ImageServlet;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.servlet.filters.secure.NonceUtil;
 import com.liferay.portal.struts.StrutsUtil;
@@ -138,6 +138,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.comparator.PortletControlPanelWeightComparator;
+import com.liferay.portal.webserver.WebServerServlet;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.DefaultControlPanelEntryFactory;
@@ -164,7 +165,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
-import com.liferay.portlet.imagegallery.model.IGImage;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
@@ -701,21 +701,32 @@ public class PortalImpl implements Portal {
 			return url;
 		}
 
-		String domain = StringUtil.split(
-			HttpUtil.getDomain(url), CharPool.COLON)[0];
+		String domain = HttpUtil.getDomain(url);
+
+		int pos = -1;
+
+		if ((pos = domain.indexOf(CharPool.COLON)) != -1) {
+			domain = domain.substring(0, pos);
+		}
 
 		try {
-			CompanyLocalServiceUtil.getCompanyByVirtualHost(domain);
+			Company company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
+				domain);
 
-			return url;
+			if (company != null) {
+				return url;
+			}
 		}
 		catch (Exception e) {
 		}
 
 		try {
-			LayoutSetLocalServiceUtil.getLayoutSet(domain);
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+				domain);
 
-			return url;
+			if (layoutSet != null) {
+				return url;
+			}
 		}
 		catch (Exception e) {
 		}
@@ -1064,7 +1075,7 @@ public class PortalImpl implements Portal {
 			portletId = PortletKeys.DOCUMENT_LIBRARY;
 		}
 		else if (className.startsWith("com.liferay.portlet.imagegallery")) {
-			portletId = PortletKeys.IMAGE_GALLERY;
+			portletId = PortletKeys.IMAGE_GALLERY_DISPLAY;
 		}
 		else if (className.startsWith("com.liferay.portlet.journal")) {
 			portletId = PortletKeys.JOURNAL;
@@ -1916,8 +1927,10 @@ public class PortalImpl implements Portal {
 		variables.put("liferay:mainPath", mainPath);
 		variables.put("liferay:plid", String.valueOf(layout.getPlid()));
 
+		LayoutType layoutType = layout.getLayoutType();
+
 		UnicodeProperties typeSettingsProperties =
-			layout.getLayoutType().getTypeSettingsProperties();
+			layoutType.getTypeSettingsProperties();
 
 		variables.putAll(typeSettingsProperties);
 
@@ -1969,11 +1982,13 @@ public class PortalImpl implements Portal {
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 
 		if (Validator.isNotNull(queryString)) {
-			layoutActualURL = layoutActualURL + queryString;
+			layoutActualURL = layoutActualURL.concat(queryString);
 		}
 		else if (params.isEmpty()) {
+			LayoutType layoutType = layout.getLayoutType();
+
 			UnicodeProperties typeSettingsProperties =
-				layout.getLayoutType().getTypeSettingsProperties();
+				layoutType.getTypeSettingsProperties();
 
 			queryString = typeSettingsProperties.getProperty("query-string");
 
@@ -1981,7 +1996,8 @@ public class PortalImpl implements Portal {
 				layoutActualURL.contains(StringPool.QUESTION)) {
 
 				layoutActualURL =
-					layoutActualURL + StringPool.AMPERSAND + queryString;
+					layoutActualURL.concat(StringPool.AMPERSAND).concat(
+						queryString);
 			}
 		}
 
@@ -3697,7 +3713,7 @@ public class PortalImpl implements Portal {
 
 		if (path.equals("/portal/session_click") ||
 			strutsAction.equals("/document_library/edit_file_entry") ||
-			strutsAction.equals("/image_gallery/edit_image") ||
+			strutsAction.equals("/image_gallery_display/edit_image") ||
 			strutsAction.equals("/wiki/edit_page_attachment") ||
 			strutsAction.equals("/wiki_admin/edit_page_attachment") ||
 			actionName.equals("addFile")) {
@@ -4557,8 +4573,8 @@ public class PortalImpl implements Portal {
 		}
 
 		if (e instanceof NoSuchImageException) {
-			if (_logImageServlet.isWarnEnabled()) {
-				_logImageServlet.warn(e, e);
+			if (_logWebServerServlet.isWarnEnabled()) {
+				_logWebServerServlet.warn(e, e);
 			}
 		}
 		else if ((e instanceof PortalException) && _log.isInfoEnabled()) {
@@ -5389,7 +5405,6 @@ public class PortalImpl implements Portal {
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.CALENDAR.MODEL.CALEVENT$]",
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL." +
 				"DLFILEENTRY$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.IMAGEGALLERY.MODEL.IGIMAGE$]",
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
 				"MBMESSAGE$]",
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.WIKI.MODEL.WIKIPAGE$]",
@@ -5425,7 +5440,6 @@ public class PortalImpl implements Portal {
 			PortalUtil.getClassNameId(BookmarksEntry.class),
 			PortalUtil.getClassNameId(CalEvent.class),
 			PortalUtil.getClassNameId(DLFileEntry.class),
-			PortalUtil.getClassNameId(IGImage.class),
 			PortalUtil.getClassNameId(MBMessage.class),
 			PortalUtil.getClassNameId(WikiPage.class),
 			ResourceConstants.SCOPE_COMPANY,
@@ -5469,8 +5483,8 @@ public class PortalImpl implements Portal {
 
 	private static Log _log = LogFactoryUtil.getLog(PortalImpl.class);
 
-	private static Log _logImageServlet = LogFactoryUtil.getLog(
-		ImageServlet.class);
+	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
+		WebServerServlet.class);
 
 	private String[] _allSystemGroups;
 	private String[] _allSystemOrganizationRoles;

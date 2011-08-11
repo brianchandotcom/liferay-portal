@@ -89,7 +89,7 @@ public class DDLRecordLocalServiceImpl
 		record.setDDMStorageId(ddmStorageId);
 
 		record.setRecordSetId(recordSetId);
-		record.setVersion(DDLRecordConstants.DEFAULT_VERSION);
+		record.setVersion(DDLRecordConstants.VERSION_DEFAULT);
 		record.setDisplayIndex(displayIndex);
 
 		ddlRecordPersistence.update(record, false);
@@ -97,7 +97,7 @@ public class DDLRecordLocalServiceImpl
 		// Record version
 
 		DDLRecordVersion recordVersion = addRecordVersion(
-			user, record, ddmStorageId, DDLRecordConstants.DEFAULT_VERSION,
+			user, record, ddmStorageId, DDLRecordConstants.VERSION_DEFAULT,
 			displayIndex, WorkflowConstants.STATUS_DRAFT);
 
 		// Asset
@@ -285,7 +285,7 @@ public class DDLRecordLocalServiceImpl
 		if ((recordVersion != null) && !recordVersion.isApproved()) {
 			String version = recordVersion.getVersion();
 
-			if (!version.equals(DDLRecordConstants.DEFAULT_VERSION)) {
+			if (!version.equals(DDLRecordConstants.VERSION_DEFAULT)) {
 				int approvedRecordVersionsCount =
 					ddlRecordVersionPersistence.countByR_S(
 						record.getRecordId(),
@@ -436,7 +436,7 @@ public class DDLRecordLocalServiceImpl
 		}
 		else {
 			if (record.getVersion().equals(recordVersion.getVersion())) {
-				String newVersion = DDLRecordConstants.DEFAULT_VERSION;
+				String newVersion = DDLRecordConstants.VERSION_DEFAULT;
 
 				List<DDLRecordVersion> approvedRecordVersions =
 					ddlRecordVersionPersistence.findByR_S(

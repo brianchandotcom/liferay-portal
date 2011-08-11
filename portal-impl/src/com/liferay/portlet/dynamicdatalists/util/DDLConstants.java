@@ -20,10 +20,6 @@ package com.liferay.portlet.dynamicdatalists.util;
  */
 public class DDLConstants {
 
-	public static final int DISPLAY_INDEX_DEFAULT = 0;
-
-	public static final int MIN_DISPLAY_ROWS_DEFAULT = 20;
-
 	public static final String RESERVED_DDM_STRUCTURE_ID =
 		"reserved_ddm_structure_id";
 

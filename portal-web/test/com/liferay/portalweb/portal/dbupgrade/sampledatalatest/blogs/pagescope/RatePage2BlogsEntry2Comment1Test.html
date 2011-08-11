@@ -24,13 +24,18 @@
 	<td>Blogs Test Page2</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Blogs (Blogs Test Page2)</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='portlet-title-text']</td>
 	<td>Blogs (Blogs Test Page2)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
@@ -50,7 +55,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div[1]/div/div[3]/div/div[1]</td>
+	<td>//form/div/div/div[1]/div[3]/div/div[1]</td>
 	<td>Blogs Entry2 Comment1 Body</td>
 </tr>
 <tr>
@@ -60,17 +65,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
+	<td>//a[contains(@class,'aui-rating-thumb-up')]</td>
 	<td>Rate this as good.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']</td>
+	<td>//a[contains(@class,'aui-rating-thumb-down')]</td>
 	<td>Rate this as bad.</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
+	<td>clickAt</td>
+	<td>//a[contains(@class,'aui-rating-thumb-up')]</td>
 	<td>Rate this as good.</td>
 </tr>
 <tr>

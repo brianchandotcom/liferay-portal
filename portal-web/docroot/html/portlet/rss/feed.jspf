@@ -161,7 +161,7 @@ catch (Exception e) {
 										});
 							%>
 
-									<%= value %>
+									<%= SanitizerUtil.sanitize(company.getCompanyId(), scopeGroupId, user.getUserId(), null, 0, ContentTypes.TEXT_HTML, Sanitizer.MODE_XSS, value, null) %>
 
 							<%
 								}

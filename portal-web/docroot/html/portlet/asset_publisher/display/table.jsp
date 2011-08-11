@@ -25,6 +25,12 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 
+Group stageableGroup = themeDisplay.getScopeGroup();
+
+if (stageableGroup.isLayout()) {
+	stageableGroup = layout.getGroup();
+}
+
 String title = (String)request.getAttribute("view.jsp-title");
 
 if (Validator.isNull(title)) {
@@ -32,6 +38,8 @@ if (Validator.isNull(title)) {
 }
 
 boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
+
+PortletURL editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse);
 
 PortletURL viewFullContentURL = renderResponse.createRenderURL();
 
@@ -54,6 +62,8 @@ viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redi
 String viewURL = viewInContext ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString) : viewFullContentURL.toString();
 
 viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
+
+request.setAttribute("view.jsp-showIconLabel", false);
 %>
 
 <c:if test="<%= assetEntryIndex == 0 %>">
@@ -73,7 +83,9 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 		}
 		%>
 
-		<th></th>
+		<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && (editPortletURL != null) && !stageableGroup.hasStagingGroup() %>">
+			<th></th>
+		</c:if>
 	</tr>
 </c:if>
 
@@ -175,7 +187,11 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 		}
 		%>
 
-		<td></td>
+		<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && (editPortletURL != null) && !stageableGroup.hasStagingGroup() %>">
+			<td>
+				<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
+			</td>
+		</c:if>
 	</tr>
 </c:if>
 

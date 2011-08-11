@@ -197,10 +197,7 @@ request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutList);
 
 <%
 if ((renderResponse != null) && !portletName.equals(PortletKeys.GROUP_PAGES) && !portletName.equals(PortletKeys.MY_PAGES)) {
-	if (organization != null) {
-		UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
-	}
-	else if (group.isLayoutPrototype()) {
+	if (group.isLayoutPrototype()) {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "page-template"), null);
 
 		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), redirectURL.toString());

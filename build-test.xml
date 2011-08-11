@@ -137,12 +137,12 @@
 									</or>
 								</and>
 									<then>
-										<var name="test.ant.script.file.plugin.portlets" value="&lt;param name=&quot;portlet.plugins.upgrade.includes&quot; value=&quot;${test.ant.script.plugin.portlets}&quot; /&gt;" />
+										<var name="test.ant.script.file.plugin.portlets" value="&lt;param name=&quot;portlet.plugins.includes&quot; value=&quot;${test.ant.script.plugin.portlets}&quot; /&gt;" />
 										<var name="test.ant.script.file.plugin.portlets.ee" value="&lt;param name=&quot;plugins.version.includes&quot; value=&quot;wol-portlet**.war&quot; /&gt;" />
 									</then>
 							</elseif>
 							<else>
-								<var name="test.ant.script.file.plugin.portlets" value="&lt;param name=&quot;portlet.plugins.upgrade.includes&quot; value=&quot;${test.ant.script.plugin.portlets}&quot; /&gt;" />
+								<var name="test.ant.script.file.plugin.portlets" value="&lt;param name=&quot;portlet.plugins.includes&quot; value=&quot;${test.ant.script.plugin.portlets}&quot; /&gt;" />
 								<var name="test.ant.script.file.plugin.portlets.ee" value="&lt;param name=&quot;plugins.version.includes&quot; value=&quot;${test.ant.script.plugin.portlets}**.war&quot; /&gt;" />
 							</else>
 						</if>
@@ -206,7 +206,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="6" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -487,116 +487,116 @@
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-address" />
 			<param name="test.ant.script.suite" value="Address" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-announcements" />
 			<param name="test.ant.script.suite" value="Announcements" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-announcements-delivery" />
 			<param name="test.ant.script.suite" value="AnnouncementsDelivery" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-bookmarks" />
 			<param name="test.ant.script.suite" value="Bookmarks" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-community" />
 			<param name="test.ant.script.suite" value="Community" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-document-library" />
 			<param name="test.ant.script.suite" value="DocumentLibrary" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-expando" />
 			<param name="test.ant.script.plugin.portlets" value="web-form-portlet" />
 			<param name="test.ant.script.suite" value="Expando" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-groups" />
 			<param name="test.ant.script.suite" value="Groups" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-message-boards" />
 			<param name="test.ant.script.suite" value="MessageBoards" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-organizations" />
 			<param name="test.ant.script.suite" value="Organizations" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-portlet-permissions" />
 			<param name="test.ant.script.suite" value="PortletPermissions" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-shopping" />
 			<param name="test.ant.script.suite" value="Shopping" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-social" />
 			<param name="test.ant.script.plugin.portlets" value="social-networking-portlet" />
 			<param name="test.ant.script.suite" value="Social" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-staging-community" />
 			<param name="test.ant.script.suite" value="StagingCommunity" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-staging-organization" />
 			<param name="test.ant.script.suite" value="StagingOrganization" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-tags" />
 			<param name="test.ant.script.suite" value="Tags" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-web-content" />
 			<param name="test.ant.script.suite" value="WebContent" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-wiki" />
 			<param name="test.ant.script.suite" value="Wiki" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade-smoke">
 			<param name="test.ant.script.command" value="db-upgrade-smoke" />
-			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,latest" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,latest" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -649,6 +649,13 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="lar-community-wiki" />
+			<param name="test.ant.script.suite.1" value="LARCommunityWikiTestSuite" />
+			<param name="test.ant.script.suite.2" value="LARCommunityWikiViewTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-lar.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="lar-cp-blogs" />
 			<param name="test.ant.script.suite.1" value="LARCPBlogsTestSuite" />
 			<param name="test.ant.script.suite.2" value="LARCPBlogsViewTestSuite" />
@@ -656,9 +663,23 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="lar-cp-wiki" />
+			<param name="test.ant.script.suite.1" value="LARCPWikiTestSuite" />
+			<param name="test.ant.script.suite.2" value="LARCPWikiViewTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-lar.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="lar-portlet-blogs" />
 			<param name="test.ant.script.suite.1" value="LARPortletBlogsTestSuite" />
 			<param name="test.ant.script.suite.2" value="LARPortletBlogsViewTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-lar.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="lar-portlet-wiki" />
+			<param name="test.ant.script.suite.1" value="LARPortletWikiTestSuite" />
+			<param name="test.ant.script.suite.2" value="LARPortletWikiViewTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-lar.xml" />
 		</antcall>
 
@@ -1118,7 +1139,6 @@
 			<param name="test.ant.script.plugin.portlets" value="vimeo-portlet" />
 			<param name="test.ant.script.suite" value="PluginsVimeoTestSuite" />
 		</antcall>
-
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-weather" />
@@ -1848,7 +1868,9 @@ mail.session.jndi.name=
 
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=</echo>
+tunnel.servlet.hosts.allowed=
+
+resource.repositories.root=$${user.home}/liferay</echo>
 
 		<if>
 			<equals arg1="${db.type}" arg2="db2" />
@@ -1896,7 +1918,9 @@ ${custom.properties}</echo>
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-resource.repositories.root=$${user.home}/liferay
+##
+## From portal-legacy-5.1.properties
+##
 
 theme.portlet.sharing.default=true
 
@@ -1915,6 +1939,10 @@ dl.hook.impl=com.liferay.documentlibrary.util.JCRHook
 
 dl.hook.file.system.root.dir=$${resource.repositories.root}/document_library
 
+##
+## From portal-legacy-5.2.properties
+##
+
 users.image.max.height=0
 users.image.max.width=0
 
@@ -1936,7 +1964,19 @@ breadcrumb.show.guest.group=false
 breadcrumb.show.parent.groups=false
 
 wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
-wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
+wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
+
+##
+## From portal-legacy-6.0.properties
+##
+
+users.last.name.required=true
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+discussion.subscribe.by.default=false
+
+message.boards.subscribe.by.default=false</echo>
 			</then>
 			<elseif>
 				<or>
@@ -1949,7 +1989,9 @@ wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-resource.repositories.root=$${user.home}/liferay
+##
+## From portal-legacy-5.2.properties
+##
 
 users.image.max.height=0
 users.image.max.width=0
@@ -1972,15 +2014,40 @@ breadcrumb.show.guest.group=false
 breadcrumb.show.parent.groups=false
 
 wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
-wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
+wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
+
+##
+## From portal-legacy-6.0.properties
+##
+
+users.last.name.required=true
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+discussion.subscribe.by.default=false
+
+message.boards.subscribe.by.default=false</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${sql.version}" arg2="6.0.5" />
+				<or>
+					<equals arg1="${sql.version}" arg2="6.0.5" />
+					<equals arg1="${sql.version}" arg2="6.0.6" />
+				</or>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-resource.repositories.root=$${user.home}/liferay</echo>
+##
+## From portal-legacy-6.0.properties
+##
+
+users.last.name.required=true
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+discussion.subscribe.by.default=false
+
+message.boards.subscribe.by.default=false</echo>
 				</then>
 			</elseif>
 		</if>
@@ -2211,6 +2278,15 @@ file.
 						<isset property="skip.rebuild-database" />
 					</not>
 					<then>
+						<if>
+							<not>
+								<isset property="skip.delete-liferay-home" />
+							</not>
+							<then>
+								<delete dir="${user.home}/liferay"/>
+							</then>
+						</if>
+
 						<if>
 							<equals arg1="${db.type}" arg2="db2" />
 							<then>
@@ -2750,16 +2826,6 @@ executable ZIP file.
 				</ant>
 
 				<property name="plugins.deployed" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<isset property="portlet.plugins.upgrade.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-upgrade-simple-server-plugins">
-					<property name="plugin.types" value="portlets" />
-					<property name="plugins.includes" value="${portlet.plugins.upgrade.includes}" />
-				</ant>
 			</then>
 		</if>
 

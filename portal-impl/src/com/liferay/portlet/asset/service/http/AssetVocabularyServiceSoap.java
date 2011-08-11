@@ -65,6 +65,18 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class AssetVocabularyServiceSoap {
+	public static void deleteVocabularies(long[] vocabularyIds)
+		throws RemoteException {
+		try {
+			AssetVocabularyServiceUtil.deleteVocabularies(vocabularyIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteVocabulary(long vocabularyId)
 		throws RemoteException {
 		try {
@@ -130,6 +142,88 @@ public class AssetVocabularyServiceSoap {
 				AssetVocabularyServiceUtil.getGroupVocabularies(groupId);
 
 			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetVocabularySoap[] getGroupVocabularies(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> returnValue =
+				AssetVocabularyServiceUtil.getGroupVocabularies(groupId, start,
+					end, obc);
+
+			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetVocabularySoap[] getGroupVocabularies(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> returnValue =
+				AssetVocabularyServiceUtil.getGroupVocabularies(groupId, name,
+					start, end, obc);
+
+			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getGroupVocabulariesCount(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = AssetVocabularyServiceUtil.getGroupVocabulariesCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getGroupVocabulariesCount(long groupId,
+		java.lang.String name) throws RemoteException {
+		try {
+			int returnValue = AssetVocabularyServiceUtil.getGroupVocabulariesCount(groupId,
+					name);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getJSONGroupVocabularies(long groupId,
+		java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONObject returnValue = AssetVocabularyServiceUtil.getJSONGroupVocabularies(groupId,
+					name, start, end, obc);
+
+			return returnValue.toString();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

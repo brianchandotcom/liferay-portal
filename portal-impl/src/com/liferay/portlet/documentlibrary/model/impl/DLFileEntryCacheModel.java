@@ -32,7 +32,7 @@ import java.util.Date;
 public class DLFileEntryCacheModel implements CacheModel<DLFileEntry> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -78,6 +78,14 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry> {
 		sb.append(size);
 		sb.append(", readCount=");
 		sb.append(readCount);
+		sb.append(", smallImageId=");
+		sb.append(smallImageId);
+		sb.append(", largeImageId=");
+		sb.append(largeImageId);
+		sb.append(", custom1ImageId=");
+		sb.append(custom1ImageId);
+		sb.append(", custom2ImageId=");
+		sb.append(custom2ImageId);
 		sb.append("}");
 
 		return sb.toString();
@@ -184,6 +192,10 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry> {
 
 		dlFileEntryImpl.setSize(size);
 		dlFileEntryImpl.setReadCount(readCount);
+		dlFileEntryImpl.setSmallImageId(smallImageId);
+		dlFileEntryImpl.setLargeImageId(largeImageId);
+		dlFileEntryImpl.setCustom1ImageId(custom1ImageId);
+		dlFileEntryImpl.setCustom2ImageId(custom2ImageId);
 
 		dlFileEntryImpl.resetOriginalValues();
 
@@ -212,4 +224,8 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry> {
 	public String version;
 	public long size;
 	public int readCount;
+	public long smallImageId;
+	public long largeImageId;
+	public long custom1ImageId;
+	public long custom2ImageId;
 }

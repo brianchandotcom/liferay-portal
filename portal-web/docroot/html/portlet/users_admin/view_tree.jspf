@@ -321,7 +321,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 	<c:if test="<%= organization != null %>">
 		<aui:column columnWidth="<%= 25 %>" cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>">
 			<div class="lfr-asset-summary">
-				<img alt="<%= HtmlUtil.escape(organization.getName()) %>" class="avatar" src='<%= (organization != null) ? themeDisplay.getPathImage() + "/organization_logo?img_id=" + organization.getLogoId() + "&t=" + ImageServletTokenUtil.getToken(organization.getLogoId()) : "" %>' />
+				<img alt="<%= HtmlUtil.escape(organization.getName()) %>" class="avatar" src='<%= (organization != null) ? themeDisplay.getPathImage() + "/organization_logo?img_id=" + organization.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(organization.getLogoId()) : "" %>' />
 
 				<div class="lfr-asset-name">
 					<h4><%= organization.getName() %></h4>

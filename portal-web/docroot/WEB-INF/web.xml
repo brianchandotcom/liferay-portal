@@ -158,15 +158,6 @@
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>Image Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.ImageServlet</servlet-class>
-		<init-param>
-			<param-name>last_modified</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-	<servlet>
 		<servlet-name>Language Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.LanguageServlet</servlet-class>
 		<load-on-startup>2</load-on-startup>
@@ -249,6 +240,10 @@
 	<servlet>
 		<servlet-name>Web Server Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.webserver.WebServerServlet</servlet-class>
+		<init-param>
+			<param-name>last_modified</param-name>
+			<param-value>true</param-value>
+		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 	<servlet>
@@ -611,10 +606,6 @@
 		<url-pattern>/zh_TW/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>Image Servlet</servlet-name>
-		<url-pattern>/image/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>Language Servlet</servlet-name>
 		<url-pattern>/language/*</url-pattern>
 	</servlet-mapping>
@@ -677,6 +668,10 @@
 	<servlet-mapping>
 		<servlet-name>Web Server Servlet</servlet-name>
 		<url-pattern>/documents/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Web Server Servlet</servlet-name>
+		<url-pattern>/image/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Widget Servlet</servlet-name>

@@ -19,8 +19,8 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 
-String typeSelection = request.getParameter("typeSelection");
-
+long refererAssetEntryId = ParamUtil.getLong(request, "refererAssetEntryId");
+String typeSelection = ParamUtil.getString(request, "typeSelection");
 String callback = ParamUtil.getString(request, "callback");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -79,6 +79,10 @@ portletURL.setParameter("typeSelection", typeSelection);
 			}
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(typeSelection, assetEntryId);
+
+			if (assetEntry.getEntryId() == refererAssetEntryId) {
+				continue;
+			}
 
 			assetEntry = assetEntry.toEscapedModel();
 

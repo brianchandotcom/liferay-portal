@@ -23,6 +23,7 @@ import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateServiceBas
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -54,6 +55,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			getPermissionChecker(), templateId, ActionKeys.DELETE);
 
 		ddmTemplateLocalService.deleteTemplate(templateId);
+	}
+
+	public List<DDMTemplate> getTemplates(long structureId, String type)
+		throws SystemException {
+
+		return ddmTemplatePersistence.findByS_T(structureId, type);
 	}
 
 	public DDMTemplate updateTemplate(

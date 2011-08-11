@@ -28,7 +28,11 @@ public class SampleSpringTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(AddPortletDescriptionUploadTest.class);
+		testSuite.addTestSuite(AddPortletPetSitesTest.class);
+		testSuite.addTestSuite(AddPortletPetsTest.class);
+		testSuite.addTestSuite(AddPortletPortletModesTest.class);
+		testSuite.addTestSuite(AddPortletWelcomeTest.class);
 		testSuite.addTestSuite(DeletePageTest.class);
 
 		return testSuite;

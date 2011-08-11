@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageStatus;
+import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -598,19 +599,24 @@ public class StagingImpl implements Staging {
 			portalPreferences, layoutSetBranchId, plid);
 	}
 
-	public long getRecentLayoutSetBranchId(HttpServletRequest request) {
+	public long getRecentLayoutSetBranchId(
+		HttpServletRequest request, long layoutSetId) {
+
 		return GetterUtil.getLong(
 			SessionClicks.get(
 				request, Staging.class.getName(),
-				getRecentLayoutSetBranchIdKey()));
+				getRecentLayoutSetBranchIdKey(layoutSetId)));
 	}
 
-	public long getRecentLayoutSetBranchId(User user) throws SystemException {
+	public long getRecentLayoutSetBranchId(User user, long layoutSetId)
+		throws SystemException {
+
 		PortalPreferences portalPreferences = getPortalPreferences(user);
 
 		return GetterUtil.getLong(
 			portalPreferences.getValue(
-				Staging.class.getName(), getRecentLayoutSetBranchIdKey()));
+				Staging.class.getName(),
+				getRecentLayoutSetBranchIdKey(layoutSetId)));
 	}
 
 	public String getSchedulerGroupName(
@@ -766,15 +772,19 @@ public class StagingImpl implements Staging {
 	}
 
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId) {
-		LayoutRevision layoutRevision = null;
+		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
+			layout);
 
-		try {
-			layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(
-				layoutSetBranchId, layout.getPlid(), true);
+		if (layoutRevision == null) {
+			try {
+				layoutRevision =
+					LayoutRevisionLocalServiceUtil.getLayoutRevision(
+						layoutSetBranchId, layout.getPlid(), true);
 
-			return false;
-		}
-		catch (Exception e) {
+				return false;
+			}
+			catch (Exception e) {
+			}
 		}
 
 		try {
@@ -1075,20 +1085,22 @@ public class StagingImpl implements Staging {
 	}
 
 	public void setRecentLayoutSetBranchId(
-		HttpServletRequest request, long layoutSetBranchId) {
+		HttpServletRequest request, long layoutSetId, long layoutSetBranchId) {
 
 		SessionClicks.put(
-			request, Staging.class.getName(), getRecentLayoutSetBranchIdKey(),
+			request, Staging.class.getName(),
+			getRecentLayoutSetBranchIdKey(layoutSetId),
 			String.valueOf(layoutSetBranchId));
 	}
 
-	public void setRecentLayoutSetBranchId(User user, long layoutSetBranchId)
+	public void setRecentLayoutSetBranchId(
+			User user, long layoutSetId, long layoutSetBranchId)
 		throws SystemException {
 
 		PortalPreferences portalPreferences = getPortalPreferences(user);
 
 		portalPreferences.setValue(
-			Staging.class.getName(), getRecentLayoutSetBranchIdKey(),
+			Staging.class.getName(), getRecentLayoutSetBranchIdKey(layoutSetId),
 			String.valueOf(layoutSetBranchId));
 	}
 
@@ -1568,15 +1580,16 @@ public class StagingImpl implements Staging {
 		long layoutBranchId = getRecentLayoutBranchId(
 			portalPreferences, layoutSetBranchId, plid);
 
-		if (layoutBranchId <= 0) {
+		if (layoutBranchId > 0) {
 			try {
+				LayoutBranchLocalServiceUtil.getLayoutBranch(layoutBranchId);
+			}
+			catch (NoSuchLayoutBranchException nlbe) {
 				LayoutBranch layoutBranch =
 					LayoutBranchLocalServiceUtil.getMasterLayoutBranch(
 						layoutSetBranchId, plid);
 
 				layoutBranchId = layoutBranch.getLayoutBranchId();
-			}
-			catch (NoSuchLayoutBranchException nlbe) {
 			}
 		}
 
@@ -1610,8 +1623,8 @@ public class StagingImpl implements Staging {
 		return sb.toString();
 	}
 
-	protected String getRecentLayoutSetBranchIdKey() {
-		return "layoutSetBranchId";
+	protected String getRecentLayoutSetBranchIdKey(long layoutSetId) {
+		return "layoutSetBranchId_" + layoutSetId;
 	}
 
 	protected void publishLayouts(

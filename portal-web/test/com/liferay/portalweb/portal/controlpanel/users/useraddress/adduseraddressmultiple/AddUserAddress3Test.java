@@ -30,7 +30,7 @@ public class AddUserAddress3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,22 +41,46 @@ public class AddUserAddress3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_keywords", RuntimeVariables.replace("selen01"));
+		selenium.type("//input[@id='_125_keywords']",
+			RuntimeVariables.replace("selen01"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_125_addressesLink", RuntimeVariables.replace(""));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_125_addressesLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_addressesLink']",
+				"Addresses"));
+		selenium.clickAt("//a[@id='_125_addressesLink']",
+			RuntimeVariables.replace("Addresses"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -76,7 +100,7 @@ public class AddUserAddress3Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/span/span/button[1]",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Row"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -84,7 +108,7 @@ public class AddUserAddress3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_125_addressStreet1_3")) {
+				if (selenium.isVisible("//input[@id='_125_addressStreet1_3']")) {
 					break;
 				}
 			}
@@ -95,23 +119,24 @@ public class AddUserAddress3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_addressStreet1_3",
+		selenium.type("//input[@id='_125_addressStreet1_3']",
 			RuntimeVariables.replace("1220 Brea Canyon Rd"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_125_addressTypeId3",
+		selenium.select("//select[@id='_125_addressTypeId3']",
 			RuntimeVariables.replace("label=Business"));
-		selenium.type("_125_addressStreet2_3",
+		selenium.type("//input[@id='_125_addressStreet2_3']",
 			RuntimeVariables.replace("Ste 12"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_addressZip3", RuntimeVariables.replace("91789"));
+		selenium.type("//input[@id='_125_addressZip3']",
+			RuntimeVariables.replace("91789"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_addressStreet3_3",
+		selenium.type("//input[@id='_125_addressStreet3_3']",
 			RuntimeVariables.replace("Walnut"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_addressCity3",
+		selenium.type("//input[@id='_125_addressCity3']",
 			RuntimeVariables.replace("Los Angeles"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_125_addressCountryId3",
+		selenium.select("//select[@id='_125_addressCountryId3']",
 			RuntimeVariables.replace("label=United States"));
 
 		for (int second = 0;; second++) {
@@ -120,10 +145,9 @@ public class AddUserAddress3Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"AlabamaAlaskaArizonaArkansasCaliforniaColoradoConnecticutDelawareDistrict of ColumbiaFloridaGeorgiaHawaiiIdahoIllinoisIndianaIowaKansasKentucky Louisiana MaineMarylandMassachusettsMichiganMinnesotaMississippiMissouriMontanaNebraskaNevadaNew HampshireNew JerseyNew MexicoNew YorkNorth CarolinaNorth DakotaOhioOklahoma OregonPennsylvaniaPuerto RicoRhode IslandSouth CarolinaSouth DakotaTennesseeTexasUtahVermontVirginiaWashingtonWest VirginiaWisconsinWyoming")
-										.equals(selenium.getText(
-								"_125_addressRegionId3"))) {
+				if (selenium.isPartialText(
+							"//select[@id='_125_addressRegionId3']",
+							"California")) {
 					break;
 				}
 			}
@@ -134,10 +158,10 @@ public class AddUserAddress3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_125_addressRegionId3",
+		selenium.select("//select[@id='_125_addressRegionId3']",
 			RuntimeVariables.replace("label=California"));
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -148,7 +172,7 @@ public class AddUserAddress3Test extends BaseTestCase {
 
 			try {
 				if ("United States".equals(selenium.getSelectedLabel(
-								"_125_addressCountryId2"))) {
+								"//select[@id='_125_addressCountryId2']"))) {
 					break;
 				}
 			}
@@ -167,7 +191,25 @@ public class AddUserAddress3Test extends BaseTestCase {
 
 			try {
 				if ("California".equals(selenium.getSelectedLabel(
-								"_125_addressRegionId2"))) {
+								"//select[@id='_125_addressRegionId2']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -180,18 +222,22 @@ public class AddUserAddress3Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("1220 Brea Canyon Rd",
-			selenium.getValue("_125_addressStreet1_2"));
+			selenium.getValue("//input[@id='_125_addressStreet1_2']"));
 		assertEquals("Business",
-			selenium.getSelectedLabel("_125_addressTypeId2"));
-		assertEquals("Ste 12", selenium.getValue("_125_addressStreet2_2"));
-		assertEquals("91789", selenium.getValue("_125_addressZip2"));
-		assertEquals("Walnut", selenium.getValue("_125_addressStreet3_2"));
-		assertEquals("Los Angeles", selenium.getValue("_125_addressCity2"));
+			selenium.getSelectedLabel("//select[@id='_125_addressTypeId2']"));
+		assertEquals("Ste 12",
+			selenium.getValue("//input[@id='_125_addressStreet2_2']"));
+		assertEquals("91789",
+			selenium.getValue("//input[@id='_125_addressZip2']"));
+		assertEquals("Walnut",
+			selenium.getValue("//input[@id='_125_addressStreet3_2']"));
+		assertEquals("Los Angeles",
+			selenium.getValue("//input[@id='_125_addressCity2']"));
 		assertEquals("United States",
-			selenium.getSelectedLabel("_125_addressCountryId2"));
+			selenium.getSelectedLabel("//select[@id='_125_addressCountryId2']"));
 		assertEquals("California",
-			selenium.getSelectedLabel("_125_addressRegionId2"));
+			selenium.getSelectedLabel("//select[@id='_125_addressRegionId2']"));
 	}
 }

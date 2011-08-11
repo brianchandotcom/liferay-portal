@@ -850,7 +850,15 @@ AUI().add(
 			getParentStructureId: function() {
 				var instance = this;
 
-				return instance.getById('parentStructureId').val();
+				var parentStructureEl = instance.getById('parentStructureId');
+
+				var parentStructureId;
+
+				if (parentStructureEl) {
+					parentStructureId = parentStructureEl.val();
+				}
+
+				return parentStructureId;
 			},
 
 			getRepeatableButtons: function() {
@@ -2131,7 +2139,6 @@ AUI().add(
 				};
 
 				_attachButtonInputSelector('documentlibrary', 'DocumentLibrary', 'selectDocumentLibrary');
-				_attachButtonInputSelector('imagegallery', 'ImageGallery', 'selectImageGallery');
 
 				container.delegate(
 					'mouseover',
@@ -2465,7 +2472,6 @@ AUI().add(
 					'boolean': Journal.FieldModel.Boolean,
 					'document_library': Journal.FieldModel.DocumentLibrary,
 					'image': Journal.FieldModel.Image,
-					'image_gallery': Journal.FieldModel.ImageGallery,
 					'link_to_layout': Journal.FieldModel.LinkToPage,
 					'list': Journal.FieldModel.List,
 					'multi-list': Journal.FieldModel.MultiList,
@@ -3473,7 +3479,6 @@ AUI().add(
 		registerFieldModel('TextArea', 'text_area', 'TextAreaField', true);
 		registerFieldModel('TextBox', 'text_box', 'TextBoxField', true);
 		registerFieldModel('Image', 'image', 'ImageField', true);
-		registerFieldModel('ImageGallery', 'image_gallery', 'ImageGalleryField', true);
 		registerFieldModel('DocumentLibrary', 'document_library', 'DocumentLibraryField', true);
 		registerFieldModel('Boolean', 'boolean', 'BooleanField', true);
 		registerFieldModel('List', 'list', 'ListField', true);

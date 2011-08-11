@@ -28,6 +28,10 @@ public class MimeTypesUtil {
 		return getMimeTypes().getContentType(file);
 	}
 
+	public static String getContentType(File file, String title) {
+		return getMimeTypes().getContentType(file, title);
+	}
+
 	/**
 	 * Determine the content type from an input stream and file name.
 	 *

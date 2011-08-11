@@ -63,7 +63,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	if (article != null) {
 		classPK = article.getResourcePrimKey();
 
-		if (!article.isApproved() && (article.getVersion() != JournalArticleConstants.DEFAULT_VERSION)) {
+		if (!article.isApproved() && (article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
 			try {
 				AssetEntryLocalServiceUtil.getEntry(JournalArticle.class.getName(), article.getPrimaryKey());
 

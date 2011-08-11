@@ -85,7 +85,11 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 		row.addText(template.getTemplateId(), rowHREF);
 
-		// Name, description, and image
+		// Name
+
+		row.addText(template.getName(locale), rowHREF);
+
+		// Description and image
 
 		row.addJSP("/html/portlet/journal/template_description.jsp");
 

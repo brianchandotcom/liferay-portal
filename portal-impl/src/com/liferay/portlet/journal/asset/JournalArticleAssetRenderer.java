@@ -61,7 +61,7 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 	public long getClassPK() {
 		if ((_article.isDraft() || _article.isPending()) &&
 			(_article.getVersion() !=
-				JournalArticleConstants.DEFAULT_VERSION)) {
+				JournalArticleConstants.VERSION_DEFAULT)) {
 
 			return _article.getPrimaryKey();
 		}

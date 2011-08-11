@@ -224,6 +224,7 @@
 	<bean id="com.liferay.portlet.asset.service.AssetVocabularyLocalService" class="com.liferay.portlet.asset.service.impl.AssetVocabularyLocalServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.AssetVocabularyService" class="com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistence" class="com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder" class="com.liferay.portlet.asset.service.persistence.AssetVocabularyFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.blogs.service.BlogsEntryLocalService" class="com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.blogs.service.BlogsEntryService" class="com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl" />
 	<bean id="com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence" class="com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistenceImpl" parent="basePersistence" />
@@ -309,13 +310,6 @@
 	<bean id="com.liferay.portlet.expando.service.ExpandoValueService" class="com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl" />
 	<bean id="com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence" class="com.liferay.portlet.expando.service.persistence.ExpandoValuePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.flags.service.FlagsEntryService" class="com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl" />
-	<bean id="com.liferay.portlet.imagegallery.service.IGFolderLocalService" class="com.liferay.portlet.imagegallery.service.impl.IGFolderLocalServiceImpl" />
-	<bean id="com.liferay.portlet.imagegallery.service.IGFolderService" class="com.liferay.portlet.imagegallery.service.impl.IGFolderServiceImpl" />
-	<bean id="com.liferay.portlet.imagegallery.service.persistence.IGFolderPersistence" class="com.liferay.portlet.imagegallery.service.persistence.IGFolderPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.imagegallery.service.IGImageLocalService" class="com.liferay.portlet.imagegallery.service.impl.IGImageLocalServiceImpl" />
-	<bean id="com.liferay.portlet.imagegallery.service.IGImageService" class="com.liferay.portlet.imagegallery.service.impl.IGImageServiceImpl" />
-	<bean id="com.liferay.portlet.imagegallery.service.persistence.IGImagePersistence" class="com.liferay.portlet.imagegallery.service.persistence.IGImagePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.imagegallery.service.persistence.IGImageFinder" class="com.liferay.portlet.imagegallery.service.persistence.IGImageFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.journal.service.JournalArticleLocalService" class="com.liferay.portlet.journal.service.impl.JournalArticleLocalServiceImpl" />
 	<bean id="com.liferay.portlet.journal.service.JournalArticleService" class="com.liferay.portlet.journal.service.impl.JournalArticleServiceImpl" />
 	<bean id="com.liferay.portlet.journal.service.persistence.JournalArticlePersistence" class="com.liferay.portlet.journal.service.persistence.JournalArticlePersistenceImpl" parent="basePersistence" />
@@ -362,6 +356,15 @@
 	<bean id="com.liferay.portlet.messageboards.service.MBThreadService" class="com.liferay.portlet.messageboards.service.impl.MBThreadServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence" class="com.liferay.portlet.messageboards.service.persistence.MBThreadPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder" class="com.liferay.portlet.messageboards.service.persistence.MBThreadFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRActionLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRActionLocalServiceImpl" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRActionService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRActionServiceImpl" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleLocalServiceImpl" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleServiceImpl" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRulePersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRulePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupLocalServiceImpl" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupServiceImpl" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.polls.service.PollsChoiceLocalService" class="com.liferay.portlet.polls.service.impl.PollsChoiceLocalServiceImpl" />
 	<bean id="com.liferay.portlet.polls.service.persistence.PollsChoicePersistence" class="com.liferay.portlet.polls.service.persistence.PollsChoicePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.polls.service.persistence.PollsChoiceFinder" class="com.liferay.portlet.polls.service.persistence.PollsChoiceFinderImpl" parent="basePersistence" />

@@ -31,7 +31,7 @@
 				DDLRecord.recordId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder.countByC_G_N_D">
+	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder.countByC_G_N_D_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT recordSetId) AS COUNT_VALUE
@@ -40,13 +40,14 @@
 			WHERE
 				(companyId = ?) AND
 				(groupId = ?) AND
+				(scope = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder.findByC_G_N_D">
+	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder.findByC_G_N_D_S">
 		<![CDATA[
 			SELECT
 				{DDLRecordSet.*}
@@ -55,6 +56,7 @@
 			WHERE
 				(companyId = ?) AND
 				(groupId = ?) AND
+				(scope = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])

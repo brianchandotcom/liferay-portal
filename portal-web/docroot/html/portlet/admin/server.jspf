@@ -769,6 +769,14 @@ numberFormat.setMinimumIntegerDigits(2);
 								<input type="button" value="<liferay-ui:message key="execute" />" onClick="<portlet:namespace />saveServer('verifyPluginTables');" />
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<liferay-ui:message key="clean-up-permissions" /> <liferay-ui:icon-help message="clean-up-permissions-help" />
+							</td>
+							<td>
+								<input type="button" value="<liferay-ui:message key="execute" />" onClick="<portlet:namespace />saveServer('cleanUpPermissions');" />
+							</td>
+						</tr>
 						</table>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>

@@ -146,7 +146,7 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 				fileElement.setAttribute(
 					"url",
 					PortalUtil.getLayoutURL(
-						layout,commandArgument.getThemeDisplay(), false));
+						layout, commandArgument.getThemeDisplay(), false));
 			}
 		}
 		else {

@@ -58,14 +58,12 @@ else if (layout.isTypeControlPanel()) {
 	preferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.BOOKMARKS, null);
 }
 
-BookmarksFolder rootFolder = null;
-
 long rootFolderId = PrefsParamUtil.getLong(preferences, request, "rootFolderId", BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	try {
-		rootFolder = BookmarksFolderServiceUtil.getFolder(rootFolderId);
+		BookmarksFolder rootFolder = BookmarksFolderServiceUtil.getFolder(rootFolderId);
 
 		rootFolderName = rootFolder.getName();
 	}

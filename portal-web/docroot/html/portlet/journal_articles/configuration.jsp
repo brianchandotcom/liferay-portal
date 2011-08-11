@@ -102,8 +102,8 @@ if (Validator.isNotNull(structureId)) {
 					String structureDescription = StringPool.BLANK;
 
 					if (structure != null) {
-						structureName = structure.getName();
-						structureDescription = structure.getDescription();
+						structureName = structure.getName(locale);
+						structureDescription = structure.getDescription(locale);
 					}
 					else {
 						structureName = LanguageUtil.get(pageContext, "any");

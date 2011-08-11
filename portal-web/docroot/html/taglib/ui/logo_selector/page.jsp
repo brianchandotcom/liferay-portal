@@ -33,7 +33,7 @@ if (deleteLogo || (imageId == 0)) {
 	imageSrc = defaultLogoURL;
 }
 else {
-	imageSrc = themeDisplay.getPathImage() + "/logo?img_id=" + imageId + "&t" + ImageServletTokenUtil.getToken(imageId);
+	imageSrc = themeDisplay.getPathImage() + "/logo?img_id=" + imageId + "&t" + WebServerServletTokenUtil.getToken(imageId);
 }
 %>
 

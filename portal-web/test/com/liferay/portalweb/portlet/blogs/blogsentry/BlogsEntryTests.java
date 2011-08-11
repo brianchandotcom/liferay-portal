@@ -32,6 +32,7 @@ import com.liferay.portalweb.portlet.blogs.blogsentry.editblogsentrycontent.Edit
 import com.liferay.portalweb.portlet.blogs.blogsentry.editblogsentrycontentdetails.EditBlogsEntryContentDetailsTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.editblogsentrytitle.EditBlogsEntryTitleTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.editblogsentrytitledetails.EditBlogsEntryTitleDetailsTests;
+import com.liferay.portalweb.portlet.blogs.blogsentry.previewblogsentrydetails.PreviewBlogsEntryDetailsTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.publishsaveasdraftblogsentrydetails.PublishSaveAsDraftBlogsEntryDetailsTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.rateblogsentry.RateBlogsEntryTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.rateblogsentrydetails.RateBlogsEntryDetailsTests;
@@ -74,6 +75,7 @@ public class BlogsEntryTests extends BaseTests {
 		testSuite.addTest(EditBlogsEntryContentDetailsTests.suite());
 		testSuite.addTest(EditBlogsEntryTitleTests.suite());
 		testSuite.addTest(EditBlogsEntryTitleDetailsTests.suite());
+		testSuite.addTest(PreviewBlogsEntryDetailsTests.suite());
 		testSuite.addTest(PublishSaveAsDraftBlogsEntryDetailsTests.suite());
 		testSuite.addTest(RateBlogsEntryTests.suite());
 		testSuite.addTest(RateBlogsEntryDetailsTests.suite());

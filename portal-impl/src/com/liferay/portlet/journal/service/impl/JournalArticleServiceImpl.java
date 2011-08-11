@@ -60,7 +60,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, classNameId, classPK, articleId,
-			autoArticleId, JournalArticleConstants.DEFAULT_VERSION, titleMap,
+			autoArticleId, JournalArticleConstants.VERSION_DEFAULT, titleMap,
 			descriptionMap, content, type, structureId, templateId, layoutUuid,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -91,7 +91,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, classNameId, classPK, articleId,
-			autoArticleId, JournalArticleConstants.DEFAULT_VERSION, titleMap,
+			autoArticleId, JournalArticleConstants.VERSION_DEFAULT, titleMap,
 			descriptionMap, content, type, structureId, templateId, layoutUuid,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -267,6 +267,20 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleLocalService.getLatestArticle(
 			groupId, articleId, status);
+	}
+
+	public JournalArticle getLatestArticle(
+			long groupId, String className, long classPK)
+		throws PortalException, SystemException {
+
+		JournalArticle article = journalArticleLocalService.getLatestArticle(
+			groupId, className, classPK);
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, article.getArticleId(),
+			article.getVersion(), ActionKeys.VIEW);
+
+		return article;
 	}
 
 	public void removeArticleLocale(long companyId, String languageId)

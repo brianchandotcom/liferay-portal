@@ -287,6 +287,12 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 		return _baseCmisRepository.getSubfolderIds(folderId, recurse);
 	}
 
+	public void getSubfolderIds(List<Long> folderIds, long folderId)
+		throws SystemException {
+
+		_baseCmisRepository.getSubfolderIds(folderIds, folderId);
+	}
+
 	@Override
 	public void initRepository() throws PortalException, SystemException {
 		_baseCmisRepository.initRepository();

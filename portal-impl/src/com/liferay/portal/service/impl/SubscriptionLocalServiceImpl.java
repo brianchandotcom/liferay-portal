@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.SubscriptionConstants;
@@ -190,12 +191,25 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	public List<Subscription> getUserSubscriptions(
+			long userId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return subscriptionPersistence.findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	public List<Subscription> getUserSubscriptions(
 			long userId, String className)
 		throws SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return subscriptionPersistence.findByU_C(userId, classNameId);
+	}
+
+	public int getUserSubscriptionsCount(long userId) throws SystemException {
+		return subscriptionPersistence.countByUserId(userId);
 	}
 
 	public boolean isSubscribed(

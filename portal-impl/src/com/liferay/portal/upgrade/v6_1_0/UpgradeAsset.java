@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.AssetEntryTable;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
  * @author Juan Fernández
+ * @author Sergio González
  */
 public class UpgradeAsset extends UpgradeProcess {
 
@@ -38,6 +41,19 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			upgradeTable.updateTable();
 		}
+
+		upgradeIGImageClassName();
+	}
+
+	protected void upgradeIGImageClassName() throws Exception {
+		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
+			DLFileEntry.class.getName());
+		long igImageClassNameId = PortalUtil.getClassNameId(
+			"com.liferay.portlet.imagegallery.model.IGImage");
+
+		runSQL(
+			"update AssetEntry set classNameId = " + igImageClassNameId +
+				" where classNameId = " + dlFileEntryClassNameId);
 	}
 
 }

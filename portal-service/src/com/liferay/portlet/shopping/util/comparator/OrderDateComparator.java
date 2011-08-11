@@ -23,9 +23,9 @@ import com.liferay.portlet.shopping.model.ShoppingOrder;
  */
 public class OrderDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "createDate ASC";
+	public static String ORDER_BY_ASC = "ShoppingOrder.createDate ASC";
 
-	public static String ORDER_BY_DESC = "createDate DESC";
+	public static String ORDER_BY_DESC = "ShoppingOrder.createDate DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"createDate"};
 

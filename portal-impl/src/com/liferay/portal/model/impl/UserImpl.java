@@ -323,8 +323,13 @@ public class UserImpl extends UserBaseImpl {
 	public PasswordPolicy getPasswordPolicy()
 		throws PortalException, SystemException {
 
-		return PasswordPolicyLocalServiceUtil.getPasswordPolicyByUserId(
-			getUserId());
+		if (_passwordPolicy == null) {
+			_passwordPolicy =
+				PasswordPolicyLocalServiceUtil.getPasswordPolicyByUserId(
+					getUserId());
+		}
+
+		return _passwordPolicy;
 	}
 
 	public String getPasswordUnencrypted() {
@@ -689,6 +694,7 @@ public class UserImpl extends UserBaseImpl {
 
 	private Locale _locale;
 	private boolean _passwordModified;
+	private PasswordPolicy _passwordPolicy;
 	private String _passwordUnencrypted;
 	private Map<Long, AtomicReference<Double>> _socialContributionEquities =
 		new HashMap<Long, AtomicReference<Double>>();

@@ -5,6 +5,8 @@
 
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
+	<property name="manifest.bundle.name" value="Liferay Util Bridges" />
+	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.bridges;singleton:=true" />
 
 	<target name="compile">
 		<mkdir dir="classes" />

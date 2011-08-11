@@ -194,7 +194,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 								>
 							</c:when>
 							<c:otherwise>
-								<em class="aui-tab-label">
+								<span class="aui-tab-label">
 							</c:otherwise>
 						</c:choose>
 
@@ -205,7 +205,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 								</a>
 							</c:when>
 							<c:otherwise>
-								</em>
+								</span>
 							</c:otherwise>
 						</c:choose>
 					</span>

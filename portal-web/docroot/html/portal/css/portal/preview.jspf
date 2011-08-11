@@ -25,7 +25,11 @@
 	position: relative;
 }
 
-.lfr-preview-video-content {
+.lfr-preview-image-content {
+	text-align: center;
+}
+
+.lfr-preview-image-content, .lfr-preview-video-content {
 	padding-left: 0;
 }
 

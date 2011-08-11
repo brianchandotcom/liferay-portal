@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.sharepoint;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -35,6 +34,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -256,35 +256,42 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		ServiceContext serviceContext = new ServiceContext();
 
 		if (fileEntry != null) {
-			long fileEntryId = fileEntry.getFileEntryId();
+			File file = null;
 
-			long folderId = fileEntry.getFolderId();
-			String mimeType = fileEntry.getMimeType();
-			String description = fileEntry.getDescription();
-			String changeLog = StringPool.BLANK;
+			try {
+				long fileEntryId = fileEntry.getFileEntryId();
 
-			InputStream is = fileEntry.getContentStream();
+				long folderId = fileEntry.getFolderId();
+				String mimeType = fileEntry.getMimeType();
+				String description = fileEntry.getDescription();
+				String changeLog = StringPool.BLANK;
 
-			byte[] bytes = FileUtil.getBytes(is);
+				InputStream is = fileEntry.getContentStream();
 
-			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-				FileEntry.class.getName(), fileEntry.getFileEntryId());
+				file = FileUtil.createTempFile(is);
 
-			serviceContext.setAssetTagNames(assetTagNames);
+				String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+					FileEntry.class.getName(), fileEntry.getFileEntryId());
 
-			fileEntry = DLAppServiceUtil.updateFileEntry(
-				fileEntryId, newName, mimeType, newName, description, changeLog,
-				false, bytes, serviceContext);
+				serviceContext.setAssetTagNames(assetTagNames);
 
-			if (folderId != newParentFolderId) {
-				fileEntry = DLAppServiceUtil.moveFileEntry(
-					fileEntryId, newParentFolderId, serviceContext);
+				fileEntry = DLAppServiceUtil.updateFileEntry(
+					fileEntryId, newName, mimeType, newName, description,
+					changeLog, false, file, serviceContext);
+
+				if (folderId != newParentFolderId) {
+					fileEntry = DLAppServiceUtil.moveFileEntry(
+						fileEntryId, newParentFolderId, serviceContext);
+				}
+
+				Tree documentTree = getFileEntryTree(
+					fileEntry, newParentFolderPath);
+
+				movedDocsTree.addChild(documentTree);
 			}
-
-			Tree documentTree = getFileEntryTree(
-				fileEntry, newParentFolderPath);
-
-			movedDocsTree.addChild(documentTree);
+			finally {
+				FileUtil.delete(file);
+			}
 		}
 		else if (folder != null) {
 			long folderId = folder.getFolderId();
@@ -316,9 +323,6 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		String title = getResourceName(documentPath);
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
-		InputStream is = new UnsyncByteArrayInputStream(
-			sharepointRequest.getBytes());
-		long contentLength = sharepointRequest.getBytes().length;
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -329,30 +333,43 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 			request.getHeader(HttpHeaders.CONTENT_TYPE),
 			ContentTypes.APPLICATION_OCTET_STREAM);
 
-		if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
-			contentType = MimeTypesUtil.getContentType(is, title);
-		}
+		String extension = FileUtil.getExtension(title);
+
+		File file = null;
 
 		try {
-			FileEntry fileEntry = getFileEntry(sharepointRequest);
+			file = FileUtil.createTempFile(extension);
 
-			long fileEntryId = fileEntry.getFileEntryId();
+			FileUtil.write(file, request.getInputStream());
 
-			description = fileEntry.getDescription();
+			if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+				contentType = MimeTypesUtil.getContentType(file, title);
+			}
 
-			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-				FileEntry.class.getName(), fileEntry.getFileEntryId());
+			try {
+				FileEntry fileEntry = getFileEntry(sharepointRequest);
 
-			serviceContext.setAssetTagNames(assetTagNames);
+				long fileEntryId = fileEntry.getFileEntryId();
 
-			DLAppServiceUtil.updateFileEntry(
-				fileEntryId, title, contentType, title, description, changeLog,
-				false, is, contentLength, serviceContext);
+				description = fileEntry.getDescription();
+
+				String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+					FileEntry.class.getName(), fileEntry.getFileEntryId());
+
+				serviceContext.setAssetTagNames(assetTagNames);
+
+				DLAppServiceUtil.updateFileEntry(
+					fileEntryId, title, contentType, title, description,
+					changeLog, false, file, serviceContext);
+			}
+			catch (NoSuchFileEntryException nsfee) {
+				DLAppServiceUtil.addFileEntry(
+					groupId, parentFolderId, title, contentType, title,
+					description, changeLog, file, serviceContext);
+			}
 		}
-		catch (NoSuchFileEntryException nsfee) {
-			DLAppServiceUtil.addFileEntry(
-				groupId, parentFolderId, title, contentType, title, description,
-				changeLog, is, contentLength, serviceContext);
+		finally {
+			FileUtil.delete(file);
 		}
 	}
 

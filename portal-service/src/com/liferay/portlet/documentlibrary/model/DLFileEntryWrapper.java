@@ -490,6 +490,78 @@ public class DLFileEntryWrapper implements DLFileEntry {
 		_dlFileEntry.setReadCount(readCount);
 	}
 
+	/**
+	* Returns the small image ID of this document library file entry.
+	*
+	* @return the small image ID of this document library file entry
+	*/
+	public long getSmallImageId() {
+		return _dlFileEntry.getSmallImageId();
+	}
+
+	/**
+	* Sets the small image ID of this document library file entry.
+	*
+	* @param smallImageId the small image ID of this document library file entry
+	*/
+	public void setSmallImageId(long smallImageId) {
+		_dlFileEntry.setSmallImageId(smallImageId);
+	}
+
+	/**
+	* Returns the large image ID of this document library file entry.
+	*
+	* @return the large image ID of this document library file entry
+	*/
+	public long getLargeImageId() {
+		return _dlFileEntry.getLargeImageId();
+	}
+
+	/**
+	* Sets the large image ID of this document library file entry.
+	*
+	* @param largeImageId the large image ID of this document library file entry
+	*/
+	public void setLargeImageId(long largeImageId) {
+		_dlFileEntry.setLargeImageId(largeImageId);
+	}
+
+	/**
+	* Returns the custom1 image ID of this document library file entry.
+	*
+	* @return the custom1 image ID of this document library file entry
+	*/
+	public long getCustom1ImageId() {
+		return _dlFileEntry.getCustom1ImageId();
+	}
+
+	/**
+	* Sets the custom1 image ID of this document library file entry.
+	*
+	* @param custom1ImageId the custom1 image ID of this document library file entry
+	*/
+	public void setCustom1ImageId(long custom1ImageId) {
+		_dlFileEntry.setCustom1ImageId(custom1ImageId);
+	}
+
+	/**
+	* Returns the custom2 image ID of this document library file entry.
+	*
+	* @return the custom2 image ID of this document library file entry
+	*/
+	public long getCustom2ImageId() {
+		return _dlFileEntry.getCustom2ImageId();
+	}
+
+	/**
+	* Sets the custom2 image ID of this document library file entry.
+	*
+	* @param custom2ImageId the custom2 image ID of this document library file entry
+	*/
+	public void setCustom2ImageId(long custom2ImageId) {
+		_dlFileEntry.setCustom2ImageId(custom2ImageId);
+	}
+
 	public boolean isNew() {
 		return _dlFileEntry.isNew();
 	}
@@ -614,6 +686,10 @@ public class DLFileEntryWrapper implements DLFileEntry {
 		return _dlFileEntry.getIcon();
 	}
 
+	public java.lang.String getImageType() {
+		return _dlFileEntry.getImageType();
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -626,6 +702,10 @@ public class DLFileEntryWrapper implements DLFileEntry {
 
 	public java.lang.String getLuceneProperties() {
 		return _dlFileEntry.getLuceneProperties();
+	}
+
+	public java.lang.String getNameWithExtension() {
+		return _dlFileEntry.getNameWithExtension();
 	}
 
 	public boolean hasLock() {

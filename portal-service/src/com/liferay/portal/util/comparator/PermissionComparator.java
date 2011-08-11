@@ -22,7 +22,7 @@ import com.liferay.portal.model.Permission;
  */
 public class PermissionComparator extends OrderByComparator {
 
-	public static String ORDER_BY_DESC = "permissionId DESC";
+	public static String ORDER_BY_DESC = "Permission_.permissionId DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"permissionId"};
 

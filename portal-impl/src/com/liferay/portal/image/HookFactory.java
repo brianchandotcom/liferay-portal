@@ -17,7 +17,6 @@ package com.liferay.portal.image;
 import com.liferay.portal.kernel.image.Hook;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -31,15 +30,7 @@ public class HookFactory {
 				_log.debug("Instantiate " + PropsValues.IMAGE_HOOK_IMPL);
 			}
 
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-			try {
-				_hook = (Hook)classLoader.loadClass(
-					PropsValues.IMAGE_HOOK_IMPL).newInstance();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			_hook = new DLHook();
 		}
 
 		if (_log.isDebugEnabled()) {

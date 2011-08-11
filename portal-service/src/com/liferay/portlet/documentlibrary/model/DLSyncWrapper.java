@@ -131,7 +131,7 @@ public class DLSyncWrapper implements DLSync {
 	*
 	* @return the file ID of this d l sync
 	*/
-	public java.lang.String getFileId() {
+	public long getFileId() {
 		return _dlSync.getFileId();
 	}
 
@@ -140,7 +140,7 @@ public class DLSyncWrapper implements DLSync {
 	*
 	* @param fileId the file ID of this d l sync
 	*/
-	public void setFileId(java.lang.String fileId) {
+	public void setFileId(long fileId) {
 		_dlSync.setFileId(fileId);
 	}
 
@@ -160,6 +160,24 @@ public class DLSyncWrapper implements DLSync {
 	*/
 	public void setRepositoryId(long repositoryId) {
 		_dlSync.setRepositoryId(repositoryId);
+	}
+
+	/**
+	* Returns the parent folder ID of this d l sync.
+	*
+	* @return the parent folder ID of this d l sync
+	*/
+	public long getParentFolderId() {
+		return _dlSync.getParentFolderId();
+	}
+
+	/**
+	* Sets the parent folder ID of this d l sync.
+	*
+	* @param parentFolderId the parent folder ID of this d l sync
+	*/
+	public void setParentFolderId(long parentFolderId) {
+		_dlSync.setParentFolderId(parentFolderId);
 	}
 
 	/**

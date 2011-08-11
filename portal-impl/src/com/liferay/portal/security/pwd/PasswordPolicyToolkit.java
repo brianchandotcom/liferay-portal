@@ -25,7 +25,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.words.util.WordsUtil;
+import com.liferay.portal.words.WordsUtil;
 import com.liferay.util.PwdGenerator;
 
 import java.util.Arrays;
@@ -85,7 +85,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 
 		if (passwordPolicy.isCheckSyntax()) {
 			if (!passwordPolicy.isAllowDictionaryWords() &&
-					WordsUtil.isDictionaryWord(password1)) {
+				WordsUtil.isDictionaryWord(password1)) {
 
 				throw new UserPasswordException(
 					UserPasswordException.PASSWORD_CONTAINS_TRIVIAL_WORDS);

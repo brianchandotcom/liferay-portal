@@ -30,7 +30,7 @@ import java.io.File;
 public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
 	public PortletAutoDeployListener() {
-		_deployer = new PortletAutoDeployer();
+		_autoDeployer = new PortletAutoDeployer();
 	}
 
 	public void deploy(File file) throws AutoDeployException {
@@ -41,7 +41,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		AutoDeployer deployer = null;
 
 		if (DeployManagerUtil.isPortletPlugin(file)) {
-			deployer = _deployer;
+			deployer = _autoDeployer;
 		}
 		else if (DeployManagerUtil.isMvcPortletPlugin(file)) {
 			deployer = getMvcDeployer();
@@ -78,35 +78,35 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 	}
 
 	protected AutoDeployer getMvcDeployer() {
-		if (_mvcDeployer == null) {
-			_mvcDeployer = new MVCPortletAutoDeployer();
+		if (_mvcPortletAutoDeployer == null) {
+			_mvcPortletAutoDeployer = new MVCPortletAutoDeployer();
 		}
 
-		return _mvcDeployer;
+		return _mvcPortletAutoDeployer;
 	}
 
 	protected AutoDeployer getPhpDeployer() throws AutoDeployException {
-		if (_phpDeployer == null) {
-			_phpDeployer = new PHPPortletAutoDeployer();
+		if (_phpPortletAutoDeployer == null) {
+			_phpPortletAutoDeployer = new PHPPortletAutoDeployer();
 		}
 
-		return _phpDeployer;
+		return _phpPortletAutoDeployer;
 	}
 
 	protected AutoDeployer getWaiDeployer() throws AutoDeployException {
-		if (_waiDeployer == null) {
-			_waiDeployer = new WAIAutoDeployer();
+		if (_waiAutoDeployer == null) {
+			_waiAutoDeployer = new WAIAutoDeployer();
 		}
 
-		return _waiDeployer;
+		return _waiAutoDeployer;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletAutoDeployListener.class);
 
-	private AutoDeployer _deployer;
-	private MVCPortletAutoDeployer _mvcDeployer;
-	private PHPPortletAutoDeployer _phpDeployer;
-	private WAIAutoDeployer _waiDeployer;
+	private AutoDeployer _autoDeployer;
+	private MVCPortletAutoDeployer _mvcPortletAutoDeployer;
+	private PHPPortletAutoDeployer _phpPortletAutoDeployer;
+	private WAIAutoDeployer _waiAutoDeployer;
 
 }

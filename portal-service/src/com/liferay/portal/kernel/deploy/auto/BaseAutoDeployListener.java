@@ -23,6 +23,7 @@ import java.io.File;
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
+ * @author Ryan Park
  */
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
@@ -36,6 +37,16 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 	public boolean isLayoutTemplatePlugin(File file) throws AutoDeployException {
 		return DeployManagerUtil.isLayoutTemplatePlugin(file);
+	}
+
+	public boolean isLiferayPackage(File file) {
+		String fileName = file.getName();
+
+		if (fileName.endsWith(".lpkg")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isMatchingFile(File file, String checkXmlFile)

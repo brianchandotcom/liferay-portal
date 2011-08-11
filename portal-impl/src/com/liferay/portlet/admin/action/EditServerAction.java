@@ -73,6 +73,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
@@ -138,6 +139,9 @@ public class EditServerAction extends PortletAction {
 		}
 		else if (cmd.equals("cacheSingle")) {
 			cacheSingle();
+		}
+		else if (cmd.equals("cleanUpPermissions")) {
+			CleanUpPermissionsUtil.cleanUpAddToPagePermissions(actionRequest);
 		}
 		else if (cmd.startsWith("convertProcess.")) {
 			redirect = convertProcess(actionRequest, actionResponse, cmd);

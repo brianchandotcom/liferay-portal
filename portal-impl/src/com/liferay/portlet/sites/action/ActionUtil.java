@@ -15,7 +15,9 @@
 package com.liferay.portlet.sites.action;
 
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
@@ -29,6 +31,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
@@ -217,10 +220,11 @@ public class ActionUtil
 
 			// Copy portlet setup
 
-			PortletPreferencesLocalServiceUtil.getPreferences(
-				companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, targetLayout.getPlid(),
-				sourcePortletId);
+			PortletPreferences targetPreferences =
+				PortletPreferencesLocalServiceUtil.getPreferences(
+					companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, targetLayout.getPlid(),
+					sourcePortletId);
 
 			sourcePreferences =
 				PortletPreferencesLocalServiceUtil.getPreferences(
@@ -232,6 +236,47 @@ public class ActionUtil
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, targetLayout.getPlid(),
 				sourcePortletId, sourcePreferences);
+
+			String scopeType = GetterUtil.getString(
+				sourcePreferences.getValue("lfrScopeType", null));
+
+			if (Validator.isNotNull(scopeType) && scopeType.equals("layout")) {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				Layout targetScopeLayout =
+					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+						targetLayout.getUuid(), targetLayout.getGroupId());
+
+				String languageId = themeDisplay.getLanguageId();
+
+				if (!targetScopeLayout.hasScopeGroup()) {
+					GroupLocalServiceUtil.addGroup(
+						themeDisplay.getUserId(), Layout.class.getName(),
+						targetLayout.getPlid(),
+						targetLayout.getName(languageId), null, 0, null, false,
+						true, null);
+				}
+
+				String portletTitle = PortalUtil.getPortletTitle(
+					sourcePortletId, languageId);
+
+				String newPortletTitle = PortalUtil.getNewPortletTitle(
+					portletTitle, String.valueOf(sourceLayout.getLayoutId()),
+					targetLayout.getName(languageId));
+
+				targetPreferences.setValue(
+					"groupId", String.valueOf(targetLayout.getGroupId()));
+				targetPreferences.setValue("lfrScopeType", "layout");
+				targetPreferences.setValue(
+					"lfrScopeLayoutUuid", targetLayout.getUuid());
+				targetPreferences.setValue(
+					"portletSetupTitle_" + languageId, newPortletTitle);
+				targetPreferences.setValue(
+					"portletSetupUseCustomTitle", Boolean.TRUE.toString());
+
+				targetPreferences.store();
+			}
 		}
 	}
 

@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+
+<service-builder package-path="com.liferay.portlet.mobiledevicerules">
+    <author>Edward C. Han</author>
+	<namespace>MDR</namespace>
+	<entity name="MDRAction" local-service="true" remote-service="true" uuid="true">
+
+        <!-- PK fields -->
+
+        <column name="actionId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+        <column name="ruleGroupId" type="long" />
+        <column name="ruleId" type="long" />
+        <column name="name" type="String"  localized="true" />
+        <column name="description" type="String" localized="true"/>
+        <column name="type" type="String" />
+        <column name="typeSettings" type="String" />
+
+		<!-- Finder methods -->
+
+        <finder name="RuleId" return-type="Collection">
+            <finder-column name="ruleId" />
+        </finder>
+    </entity>
+	<entity name="MDRRule" local-service="true" remote-service="true" uuid="true">
+
+        <!-- PK fields -->
+
+        <column name="ruleId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+        <!-- Other fields -->
+
+        <column name="ruleGroupId" type="long" />
+        <column name="name" type="String" localized="true" />
+        <column name="description" type="String" localized="true" />
+        <column name="type" type="String" />
+        <column name="typeSettings" type="String" />
+
+		<!-- Finder methods -->
+
+        <finder name="RuleGroupId" return-type="Collection">
+            <finder-column name="ruleGroupId" />
+        </finder>
+    </entity>
+    <entity name="MDRRuleGroup" local-service="true" remote-service="true" uuid="true">
+
+        <!-- PK fields -->
+
+        <column name="ruleGroupId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+        <!-- Other fields -->
+
+        <column name="name" type="String" localized="true" />
+        <column name="description" type="String" localized="true" />
+
+        <!-- Finder methods -->
+
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId" />
+        </finder>
+	</entity>
+</service-builder>

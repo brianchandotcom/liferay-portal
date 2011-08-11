@@ -173,7 +173,7 @@ public class ResourcePermissionFinderImpl
 			qPos.add(name);
 			qPos.add(scope);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

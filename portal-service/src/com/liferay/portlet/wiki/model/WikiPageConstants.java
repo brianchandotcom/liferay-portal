@@ -25,8 +25,6 @@ public class WikiPageConstants {
 	public static final String DEFAULT_FORMAT =
 		PropsUtil.get(PropsKeys.WIKI_FORMATS_DEFAULT);
 
-	public static final double DEFAULT_VERSION = 1.0;
-
 	public static final String[] FORMATS =
 		PropsUtil.getArray(PropsKeys.WIKI_FORMATS);
 
@@ -38,5 +36,7 @@ public class WikiPageConstants {
 	public static final String NEW = "New";
 
 	public static final String REVERTED = "Reverted";
+
+	public static final double VERSION_DEFAULT = 1.0;
 
 }

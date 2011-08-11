@@ -32,7 +32,7 @@ import java.util.Date;
 public class DLSyncCacheModel implements CacheModel<DLSync> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{syncId=");
 		sb.append(syncId);
@@ -46,6 +46,8 @@ public class DLSyncCacheModel implements CacheModel<DLSync> {
 		sb.append(fileId);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
+		sb.append(", parentFolderId=");
+		sb.append(parentFolderId);
 		sb.append(", event=");
 		sb.append(event);
 		sb.append(", type=");
@@ -75,14 +77,9 @@ public class DLSyncCacheModel implements CacheModel<DLSync> {
 			dlSyncImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (fileId == null) {
-			dlSyncImpl.setFileId(StringPool.BLANK);
-		}
-		else {
-			dlSyncImpl.setFileId(fileId);
-		}
-
+		dlSyncImpl.setFileId(fileId);
 		dlSyncImpl.setRepositoryId(repositoryId);
+		dlSyncImpl.setParentFolderId(parentFolderId);
 
 		if (event == null) {
 			dlSyncImpl.setEvent(StringPool.BLANK);
@@ -107,8 +104,9 @@ public class DLSyncCacheModel implements CacheModel<DLSync> {
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;
-	public String fileId;
+	public long fileId;
 	public long repositoryId;
+	public long parentFolderId;
 	public String event;
 	public String type;
 }

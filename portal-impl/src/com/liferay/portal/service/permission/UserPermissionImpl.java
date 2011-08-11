@@ -22,6 +22,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -81,6 +82,12 @@ public class UserPermissionImpl implements UserPermission {
 	public boolean contains(
 		PermissionChecker permissionChecker, long userId,
 		long[] organizationIds, String actionId) {
+
+		if (actionId.equals(ActionKeys.IMPERSONATE) &&
+			PortalUtil.isOmniadmin(userId)) {
+
+			return false;
+		}
 
 		if (((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5 ||
 			  PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) &&

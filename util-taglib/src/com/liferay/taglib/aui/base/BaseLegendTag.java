@@ -37,6 +37,10 @@ public class BaseLegendTag extends com.liferay.taglib.util.IncludeTag {
 		return _cssClass;
 	}
 
+	public java.lang.String getHelpMessage() {
+		return _helpMessage;
+	}
+
 	public java.lang.String getLabel() {
 		return _label;
 	}
@@ -45,6 +49,12 @@ public class BaseLegendTag extends com.liferay.taglib.util.IncludeTag {
 		_cssClass = cssClass;
 
 		setScopedAttribute("cssClass", cssClass);
+	}
+
+	public void setHelpMessage(java.lang.String helpMessage) {
+		_helpMessage = helpMessage;
+
+		setScopedAttribute("helpMessage", helpMessage);
 	}
 
 	public void setLabel(java.lang.String label) {
@@ -56,6 +66,7 @@ public class BaseLegendTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_cssClass = null;
+		_helpMessage = null;
 		_label = null;
 	}
 
@@ -67,6 +78,7 @@ public class BaseLegendTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "label", _label);
 	}
 
@@ -76,6 +88,7 @@ public class BaseLegendTag extends com.liferay.taglib.util.IncludeTag {
 		"/html/taglib/aui/legend/page.jsp";
 
 	private java.lang.String _cssClass = null;
+	private java.lang.String _helpMessage = null;
 	private java.lang.String _label = null;
 
 }

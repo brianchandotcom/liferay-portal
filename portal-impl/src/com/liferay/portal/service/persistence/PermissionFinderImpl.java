@@ -683,7 +683,7 @@ public class PermissionFinderImpl
 			qPos.add(actionId);
 			qPos.add(codeId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -723,7 +723,7 @@ public class PermissionFinderImpl
 				qPos.add(actionId);
 				setResourceIds(qPos, resourceIds);
 
-				list = q.list();
+				list = q.list(true);
 			}
 			catch (Exception e) {
 				throw new SystemException(e);
@@ -762,7 +762,7 @@ public class PermissionFinderImpl
 			qPos.add(groupId);
 			qPos.add(resourceId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -790,7 +790,7 @@ public class PermissionFinderImpl
 			qPos.add(roleId);
 			qPos.add(resourceId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -819,7 +819,7 @@ public class PermissionFinderImpl
 			qPos.add(userId);
 			qPos.add(resourceId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -850,7 +850,7 @@ public class PermissionFinderImpl
 			qPos.add(groupId);
 			qPos.add(resourceId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -883,7 +883,7 @@ public class PermissionFinderImpl
 			qPos.add(userId);
 			qPos.add(resourceId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -917,7 +917,7 @@ public class PermissionFinderImpl
 			qPos.add(scope);
 			qPos.add(primKey);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -950,7 +950,7 @@ public class PermissionFinderImpl
 			qPos.add(scope);
 			qPos.add(primKey);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

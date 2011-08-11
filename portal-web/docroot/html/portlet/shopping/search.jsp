@@ -119,7 +119,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				sb.append("/shopping/item?img_id=");
 				sb.append(item.getSmallImageId());
 				sb.append("&t=");
-				sb.append(ImageServletTokenUtil.getToken(item.getSmallImageId()));
+				sb.append(WebServerServletTokenUtil.getToken(item.getSmallImageId()));
 			}
 
 			sb.append("\">");

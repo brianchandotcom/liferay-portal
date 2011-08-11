@@ -29,8 +29,8 @@ import com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
 import com.liferay.portlet.dynamicdatalists.RecordSetDDMStructureIdException;
 import com.liferay.portlet.dynamicdatalists.RecordSetNameException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
-import com.liferay.portlet.dynamicdatalists.util.DDLConstants;
 
 import java.util.Locale;
 import java.util.Map;
@@ -147,6 +147,7 @@ public class EditRecordSetAction extends PortletAction {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		int scope = ParamUtil.getInteger(actionRequest, "scope");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
@@ -156,12 +157,13 @@ public class EditRecordSetAction extends PortletAction {
 		if (cmd.equals(Constants.ADD)) {
 			recordSet = DDLRecordSetServiceUtil.addRecordSet(
 				groupId, ddmStructureId, null, nameMap, descriptionMap,
-				DDLConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
+				DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, scope,
+				serviceContext);
 		}
 		else {
 			recordSet = DDLRecordSetServiceUtil.updateRecordSet(
 				recordSetId, ddmStructureId, nameMap, descriptionMap,
-				DDLConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
+				DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
 		}
 
 		String workflowDefinition = ParamUtil.getString(

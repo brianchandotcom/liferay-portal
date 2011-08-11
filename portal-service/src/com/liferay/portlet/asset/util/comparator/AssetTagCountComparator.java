@@ -22,9 +22,9 @@ import com.liferay.portlet.asset.model.AssetTag;
  */
 public class AssetTagCountComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "assetCount ASC";
+	public static String ORDER_BY_ASC = "AssetTag.assetCount ASC";
 
-	public static String ORDER_BY_DESC = "assetCount DESC";
+	public static String ORDER_BY_DESC = "AssetTag.assetCount DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"assetCount"};
 

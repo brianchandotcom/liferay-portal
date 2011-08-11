@@ -46,7 +46,7 @@ else {
 		src = articleDisplay.getSmallImageURL();
 	}
 	else {
-		src = themeDisplay.getPathImage() + "/journal/article?img_id=" + articleDisplay.getSmallImageId() + "&t=" + ImageServletTokenUtil.getToken(articleDisplay.getSmallImageId()) ;
+		src = themeDisplay.getPathImage() + "/journal/article?img_id=" + articleDisplay.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(articleDisplay.getSmallImageId()) ;
 	}
 	%>
 

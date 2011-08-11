@@ -28,6 +28,8 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,8 +146,8 @@ public class MBMessageServiceTest extends BaseServiceTestCase {
 		@Override
 		protected void doRun() throws Exception {
 			String body = "This is a test message.";
-			List<ObjectValuePair<String, byte[]>> files =
-				new ArrayList<ObjectValuePair<String, byte[]>>();
+			List<ObjectValuePair<String, File>> files =
+				new ArrayList<ObjectValuePair<String, File>>();
 			boolean anonymous = false;
 			double priority = 0.0;
 			boolean allowPingbacks = false;

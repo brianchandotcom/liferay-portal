@@ -143,22 +143,18 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 
 		int numOfFiles = ParamUtil.getInteger(actionRequest, "numOfFiles");
 
-		List<ObjectValuePair<String, byte[]>> files =
-			new ArrayList<ObjectValuePair<String, byte[]>>();
+		List<ObjectValuePair<String, File>> files =
+			new ArrayList<ObjectValuePair<String, File>>();
 
 		if (numOfFiles == 0) {
 			File file = uploadRequest.getFile("file");
 			String fileName = uploadRequest.getFileName("file");
 
-			if (file != null) {
-				byte[] bytes = FileUtil.getBytes(file);
+			if ((file != null) && file.exists()) {
+				ObjectValuePair<String, File> ovp =
+					new ObjectValuePair<String, File>(fileName, file);
 
-				if ((bytes != null) && (bytes.length > 0)) {
-					ObjectValuePair<String, byte[]> ovp =
-						new ObjectValuePair<String, byte[]>(fileName, bytes);
-
-					files.add(ovp);
-				}
+				files.add(ovp);
 			}
 		}
 		else {
@@ -167,16 +163,11 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 
 				String fileName = uploadRequest.getFileName("file" + i);
 
-				if (file != null) {
-					byte[] bytes = FileUtil.getBytes(file);
+				if ((file != null) && file.exists()) {
+					ObjectValuePair<String, File> ovp =
+						new ObjectValuePair<String, File>(fileName, file);
 
-					if ((bytes != null) && (bytes.length > 0)) {
-						ObjectValuePair<String, byte[]> ovp =
-							new ObjectValuePair<String, byte[]>(
-								fileName, bytes);
-
-						files.add(ovp);
-					}
+					files.add(ovp);
 				}
 			}
 		}
@@ -202,20 +193,12 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 			file = TempFileUtil.getTempFile(
 				themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
 
-			if (file == null) {
-				return;
+			if ((file != null) && file.exists()) {
+				WikiPageServiceUtil.addPageAttachment(
+					nodeId, title, selectedFileName, file);
+
+				validFileNames.add(selectedFileName);
 			}
-
-			byte[] bytes = FileUtil.getBytes(file);
-
-			if ((bytes == null) || (bytes.length == 0)) {
-				return;
-			}
-
-			WikiPageServiceUtil.addPageAttachment(
-				nodeId, title, selectedFileName, bytes);
-
-			validFileNames.add(selectedFileName);
 		}
 		catch (Exception e) {
 			String errorMessage = getAddMultipleFileEntriesErrorMessage(

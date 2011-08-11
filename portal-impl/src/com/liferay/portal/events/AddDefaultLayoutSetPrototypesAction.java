@@ -166,17 +166,15 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		Map<String, String> preferences = new HashMap<String, String>();
 
-		preferences.put("any-asset-type", Boolean.FALSE.toString());
+		preferences.put("anyAssetType", Boolean.FALSE.toString());
 
 		long classNameId = PortalUtil.getClassNameId(CalEvent.class);
 
-		preferences.put("class-name-ids", String.valueOf(classNameId));
+		preferences.put("classNameIds", String.valueOf(classNameId));
 
 		preferences.put(
-			"portlet-setup-title-" + LocaleUtil.getDefault(),
-			"Upcoming Events");
-		preferences.put(
-			"portlet-setup-use-custom-title", Boolean.TRUE.toString());
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Upcoming Events");
+		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
 
 		updatePortletSetup(layout, portletId, preferences);
 
@@ -192,7 +190,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		layout = addLayout(layoutSet, "Images", "/images", "1_column");
 
-		addPortletId(layout, PortletKeys.IMAGE_GALLERY, "column-1");
+		addPortletId(layout, PortletKeys.IMAGE_GALLERY_DISPLAY, "column-1");
 	}
 
 	protected void addPublicSite(

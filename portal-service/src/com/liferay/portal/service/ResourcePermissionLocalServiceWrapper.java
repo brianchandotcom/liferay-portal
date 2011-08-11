@@ -449,6 +449,12 @@ public class ResourcePermissionLocalServiceWrapper
 			scopes, start, end);
 	}
 
+	public java.util.List<com.liferay.portal.model.ResourcePermission> getScopeResourcePermissions(
+		int[] scopes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourcePermissionLocalService.getScopeResourcePermissions(scopes);
+	}
+
 	/**
 	* Returns <code>true</code> if the resource permission grants permission to
 	* perform the resource action. Note that this method does not ensure that

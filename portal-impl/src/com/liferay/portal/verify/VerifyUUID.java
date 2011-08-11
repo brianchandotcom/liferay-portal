@@ -77,14 +77,6 @@ public class VerifyUUID extends VerifyProcess {
 
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {
-			"IGFolder",
-			"folderId"
-		},
-		new String[] {
-			"IGImage",
-			"imageId"
-		},
-		new String[] {
 			"JournalArticle",
 			"id_"
 		},

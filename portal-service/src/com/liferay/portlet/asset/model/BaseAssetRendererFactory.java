@@ -91,11 +91,15 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return true;
+		return _PERMISSION;
+	}
+
+	public boolean isLinkable() {
+		return _LINKABLE;
 	}
 
 	public boolean isSelectable() {
-		return true;
+		return _SELECTABLE;
 	}
 
 	public void setClassNameId(long classNameId) {
@@ -119,6 +123,12 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
+
+	private static final boolean _LINKABLE = false;
+
+	private static final boolean _PERMISSION = true;
+
+	private static final boolean _SELECTABLE = true;
 
 	private long _classNameId;
 	private String _portletId;

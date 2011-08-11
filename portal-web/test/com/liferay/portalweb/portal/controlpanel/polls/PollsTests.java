@@ -29,7 +29,7 @@ public class PollsTests extends BaseTests {
 
 		testSuite.addTestSuite(AddQuestionTest.class);
 		testSuite.addTestSuite(AddVoteTest.class);
-		//testSuite.addTestSuite(ViewQuestionGraphsTest.class);
+		testSuite.addTestSuite(ViewQuestionGraphsTest.class);
 		testSuite.addTestSuite(AddQuestion2Test.class);
 		testSuite.addTestSuite(EditQuestionTest.class);
 		testSuite.addTestSuite(ExpireQuestionTest.class);

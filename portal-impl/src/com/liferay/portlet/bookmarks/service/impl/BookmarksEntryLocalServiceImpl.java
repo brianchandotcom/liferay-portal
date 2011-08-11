@@ -83,18 +83,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Resources
 
-		if (serviceContext.getAddGroupPermissions() ||
-			serviceContext.getAddGuestPermissions()) {
-
-			addEntryResources(
-				entry, serviceContext.getAddGroupPermissions(),
-				serviceContext.getAddGuestPermissions());
-		}
-		else {
-			addEntryResources(
-				entry, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
-		}
+		resourceLocalService.addModelResources(entry, serviceContext);
 
 		// Asset
 
@@ -111,49 +100,6 @@ public class BookmarksEntryLocalServiceImpl
 		indexer.reindex(entry);
 
 		return entry;
-	}
-
-	public void addEntryResources(
-			BookmarksEntry entry, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException, SystemException {
-
-		resourceLocalService.addResources(
-			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
-			BookmarksEntry.class.getName(), entry.getEntryId(), false,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	public void addEntryResources(
-			BookmarksEntry entry, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException, SystemException {
-
-		resourceLocalService.addModelResources(
-			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
-			BookmarksEntry.class.getName(), entry.getEntryId(),
-			groupPermissions, guestPermissions);
-	}
-
-	public void addEntryResources(
-			long entryId, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException, SystemException {
-
-		BookmarksEntry entry =
-			bookmarksEntryPersistence.findByPrimaryKey(entryId);
-
-		addEntryResources(entry, addGroupPermissions, addGuestPermissions);
-	}
-
-	public void addEntryResources(
-			long entryId, String[] groupPermissions, String[] guestPermissions)
-		throws PortalException, SystemException {
-
-		BookmarksEntry entry =
-			bookmarksEntryPersistence.findByPrimaryKey(entryId);
-
-		addEntryResources(entry, groupPermissions, guestPermissions);
 	}
 
 	public void deleteEntries(long groupId, long folderId)
@@ -179,8 +125,7 @@ public class BookmarksEntryLocalServiceImpl
 		// Resources
 
 		resourceLocalService.deleteResource(
-			entry.getCompanyId(), BookmarksEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, entry.getEntryId());
+			entry, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Asset
 
@@ -300,7 +245,7 @@ public class BookmarksEntryLocalServiceImpl
 		bookmarksEntryPersistence.update(entry, false);
 
 		assetEntryLocalService.incrementViewCounter(
-			userId, BookmarksEntry.class.getName(), entryId);
+			userId, BookmarksEntry.class.getName(), entryId, 1);
 
 		return entry;
 	}

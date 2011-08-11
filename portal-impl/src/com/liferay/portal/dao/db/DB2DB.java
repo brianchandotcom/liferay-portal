@@ -116,7 +116,7 @@ public class DB2DB extends BaseDB {
 		sb.append(";\n");
 		sb.append("create database ");
 		sb.append(databaseName);
-		sb.append(";\n");
+		sb.append(" pagesize 8192;\n");
 		sb.append("connect to ");
 		sb.append(databaseName);
 		sb.append(";\n");

@@ -510,6 +510,58 @@
 					flags="s"
 				/>
 
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/browser.html">
+					<replacetoken><![CDATA[<title>FCKeditor - Resources Browser</title>]]></replacetoken>
+					<replacevalue><![CDATA[<title>Resources Browser</title>]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/browser.html">
+					<replacetoken><![CDATA[oConnector.CurrentFolder	= '/' ;]]></replacetoken>
+					<replacevalue><![CDATA[oConnector.CurrentFolder	= '/' ;
+
+var currentFolderParam = GetUrlParam( 'currentFolder' ) ;
+
+if (currentFolderParam) {
+	oConnector.CurrentFolder = currentFolderParam ;
+}
+]]>
+					</replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/browser.html">
+					<replacetoken><![CDATA[sUrl += '&CurrentFolder=' + encodeURIComponent( this.CurrentFolder ) ;]]></replacetoken>
+					<replacevalue><![CDATA[sUrl += '&CurrentFolder=' + encodeURIComponent( oConnector.CurrentFolder ) ;]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/browser.html">
+					<replacetoken><![CDATA[function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )]]></replacetoken>
+					<replacevalue><![CDATA[if (oConnector.ResourceType === 'Attachment') {
+	var frmCreateFolderLoadedInterval = window.setInterval(
+		function() {
+			var frmCreateFolder = document.getElementsByName('frmCreateFolder');
+
+			if (frmCreateFolder.length > 0) {
+				window.clearInterval(frmCreateFolderLoadedInterval);
+
+				frmCreateFolder = frmCreateFolder[0];
+
+				frmCreateFolder.setAttribute('height', '0');
+				frmCreateFolder.setAttribute('style', 'display:none');
+				frmCreateFolder.setAttribute('tabindex', '-1');
+				frmCreateFolder.setAttribute('width', '0');
+
+				var parentNode = frmCreateFolder.parentNode;
+
+				parentNode.setAttribute('cols', '0,*,0');
+			}
+		},
+		50
+	);
+}
+
+function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )]]></replacevalue>
+				</replace>
+
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
 					<replacetoken><![CDATA[default :]]></replacetoken>
 					<replacevalue><![CDATA[
@@ -552,7 +604,7 @@
 
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html"
 					match="var aTypes = \[\r?(\n)(\t*)(.)+\] ;"
-					replace="var aTypes = [\1\2['Document','Document'],\1\2['Image','Image'],\1\2['Page','Page']\1] ;"
+					replace="var aTypes = [\1\2['Document','Document'],\1\2['Page','Page']\1] ;"
 					flags="s"
 				/>
 
@@ -561,6 +613,34 @@
 					replace="\1\2\3"
 					flags="s"
 				/>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html">
+					<replacetoken><![CDATA[var aTypes = []]></replacetoken>
+					<replacevalue><![CDATA[var customTypes = [
+	['Attachment', 'Attachment']
+];
+
+var defaultTypes = []]>
+					</replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html">
+					<replacetoken><![CDATA[aTypes]]></replacetoken>
+					<replacevalue><![CDATA[defaultTypes]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html">
+					<replacetoken><![CDATA[AddSelectOption( oCombo, defaultTypes[i][1], defaultTypes[i][0] ) ;]]></replacetoken>
+					<replacevalue><![CDATA[AddSelectOption( oCombo, defaultTypes[i][1], defaultTypes[i][0] ) ;
+	}
+
+	var len = customTypes.length;
+
+	for ( i = 0; i < len; i++ ) {
+		if ( customTypes[i][0] == oConnector.ResourceType )
+			AddSelectOption( oCombo, customTypes[i][1], customTypes[i][0] ) ;]]>
+					</replacevalue>
+				</replace>
 
 				<replace dir="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay">
 					<include name="**/*.html"/>
@@ -679,6 +759,58 @@
 	<target name="build-tinymce">
 		<if>
 			<not>
+				<available file="docroot/html/js/editor/tiny_mce_diffs/langs/en.js" />
+			</not>
+			<then>
+
+				<!--
+				Delete docroot/html/js/editor/tiny_mce_diffs/langs/en.js and rerun this task to
+				download the latest language files from TinyMCE's website.
+
+				This task will also delete the directory docroot/html/js/editor/tiny_mce to
+				ensure that ${tinymce.file} is properly unzipped.
+				-->
+
+				<delete dir="docroot/html/js/editor/tiny_mce" />
+
+				<script classpathref="project.classpath" language="beanshell">
+					<![CDATA[
+						import com.liferay.portal.kernel.util.GetterUtil;
+
+						import java.io.File;
+
+						import java.net.URL;
+
+						import java.util.StringTokenizer;
+
+						import org.apache.tools.ant.taskdefs.Get;
+
+						StringTokenizer st = new StringTokenizer("languages=[ar,ar,133];[nb,nb,207];[bg,bg,136];[es_CA,ca,140];[hr,hr,158];[cs,cs,142];[nl,nl,176];[en_GB,en,132];[et,et,149];[fi,fi,152];[fr,fr,153];[es_GL,gl,154];[de,de,145];[el,el,147];[iw,he,156];[hi_IN,hi,157];[hu,hu,159];[in,id,162];[it,it,164];[ja,ja,165];[ko,ko,205];[fa,fa,151];[pt,pl,179];[pt_PT,pt,181];[ro,ro,182];[ru,ru,183];[sr,sr,190];[sk,sk,187];[sl,sl,188];[es_ES,es,148];[sv,sv,191];[tr,tr,196];[uk,uk,199];[vi,vi,201];[zh_TW,zh-tw,221];[zh_CN,zh-cn,216]",";");
+
+						while (st.hasMoreElements()) { 
+							String lang = st.nextToken(); 
+
+							int x = lang.indexOf(","); 
+							int y = lang.lastIndexOf(",");
+
+							//String liferayLanguageCode = lang.substring(1, x); 
+							String tinyMceLanguageCode = lang.substring(x + 1, y); 
+							int tinyMceLanguageId = GetterUtil.getInteger(lang.substring(y + 1)); 
+
+							Get get = new Get();
+
+							get.setDest(new File("docroot/html/js/editor/tiny_mce_diffs/langs/" + tinyMceLanguageCode + ".js"));
+							get.setSrc(new URL("http://www.tinymce.com/i18n/index.php?ctrl=export&act=js&pr_id=7&la_id=" + tinyMceLanguageId));
+
+							get.execute();
+						}
+					]]>
+				</script>
+			</then>
+		</if>
+
+		<if>
+			<not>
 				<uptodate
 					srcfile="third-party/${tinymce.file}"
 					targetfile="docroot/html/js/editor/tiny_mce"
@@ -691,6 +823,10 @@
 				<unzip src="third-party/${tinymce.file}" dest="docroot/html/js/editor" />
 
 				<move file="docroot/html/js/editor/tinymce/jscripts/tiny_mce" todir="docroot/html/js/editor" />
+
+				<copy todir="docroot/html/js/editor/tiny_mce" overwrite="true">
+					<fileset dir="docroot/html/js/editor/tiny_mce_diffs" />
+				</copy>
 
 				<delete dir="docroot/html/js/editor/tinymce" />
 			</then>

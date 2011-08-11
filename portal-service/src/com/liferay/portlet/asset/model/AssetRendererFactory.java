@@ -70,6 +70,8 @@ public interface AssetRendererFactory {
 			String actionId)
 		throws Exception;
 
+	public boolean isLinkable();
+
 	public boolean isSelectable();
 
 	public void setClassNameId(long classNameId);

@@ -22,6 +22,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 LayoutRevision rootLayoutRevision = (LayoutRevision)row.getObject();
 
 LayoutBranch layoutBranch = rootLayoutRevision.getLayoutBranch();
+
+long currentLayoutBranchId = GetterUtil.getLong((String)request.getAttribute("view_layout_branches.jsp-currentLayoutBranchId"));
 %>
 
 <liferay-ui:icon-menu>
@@ -35,7 +37,7 @@ LayoutBranch layoutBranch = rootLayoutRevision.getLayoutBranch();
 		</portlet:renderURL>
 
 		<%
-		String taglibURL = "javascript:Liferay.Staging.Branching.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) +  "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, "update-page-variation") + "'});";
+		String taglibURL = "javascript:Liferay.StagingBar.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) +  "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, "update-page-variation") + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -50,6 +52,7 @@ LayoutBranch layoutBranch = rootLayoutRevision.getLayoutBranch();
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutBranch.getGroupId()) %>" />
 				<portlet:param name="layoutBranchId" value="<%= String.valueOf(layoutBranch.getLayoutBranchId()) %>" />
+				<portlet:param name="currentLayoutBranchId" value="<%= String.valueOf(currentLayoutBranchId) %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon-delete

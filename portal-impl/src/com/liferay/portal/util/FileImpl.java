@@ -73,11 +73,9 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		return _instance;
 	}
 
-	public void copyDirectory(String sourceDirName, String destinationDirName) {
-		copyDirectory(new File(sourceDirName), new File(destinationDirName));
-	}
+	public void copyDirectory(File source, File destination)
+		throws IOException {
 
-	public void copyDirectory(File source, File destination) {
 		if (source.exists() && source.isDirectory()) {
 			if (!destination.exists()) {
 				destination.mkdirs();
@@ -102,19 +100,19 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 	}
 
-	public void copyFile(String source, String destination) {
+	public void copyDirectory(String sourceDirName, String destinationDirName)
+		throws IOException {
+
+		copyDirectory(new File(sourceDirName), new File(destinationDirName));
+	}
+
+	public void copyFile(File source, File destination) throws IOException {
 		copyFile(source, destination, false);
 	}
 
-	public void copyFile(String source, String destination, boolean lazy) {
-		copyFile(new File(source), new File(destination), lazy);
-	}
+	public void copyFile(File source, File destination, boolean lazy)
+		throws IOException {
 
-	public void copyFile(File source, File destination) {
-		copyFile(source, destination, false);
-	}
-
-	public void copyFile(File source, File destination, boolean lazy) {
 		if (!source.exists()) {
 			return;
 		}
@@ -148,19 +146,39 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				destination.getParentFile().mkdirs();
 			}
 
-			try {
-				StreamUtil.transfer(
-					new FileInputStream(source),
-					new FileOutputStream(destination));
-			}
-			catch (IOException ioe) {
-				_log.error(ioe.getMessage());
-			}
+			StreamUtil.transfer(
+				new FileInputStream(source), new FileOutputStream(destination));
 		}
 	}
 
+	public void copyFile(String source, String destination) throws IOException {
+		copyFile(source, destination, false);
+	}
+
+	public void copyFile(String source, String destination, boolean lazy)
+		throws IOException {
+
+		copyFile(new File(source), new File(destination), lazy);
+	}
+
 	public File createTempFile() {
-		return createTempFile(null);
+		return createTempFile(StringPool.BLANK);
+	}
+
+	public File createTempFile(byte[] bytes) throws IOException {
+		File file = createTempFile(StringPool.BLANK);
+
+		write(file, bytes);
+
+		return file;
+	}
+
+	public File createTempFile(InputStream is) throws IOException {
+		File file = createTempFile(StringPool.BLANK);
+
+		write(file, is);
+
+		return file;
 	}
 
 	public File createTempFile(String extension) {
@@ -192,10 +210,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			fileName, _SAFE_FILE_NAME_2, _SAFE_FILE_NAME_1);
 	}
 
-	public boolean delete(String file) {
-		return delete(new File(file));
-	}
-
 	public boolean delete(File file) {
 		if ((file != null) && file.exists()) {
 			return file.delete();
@@ -205,8 +219,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 	}
 
-	public void deltree(String directory) {
-		deltree(new File(directory));
+	public boolean delete(String file) {
+		return delete(new File(file));
 	}
 
 	public void deltree(File directory) {
@@ -226,6 +240,10 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 	}
 
+	public void deltree(String directory) {
+		deltree(new File(directory));
+	}
+
 	public String encodeSafeFileName(String fileName) {
 		if (fileName == null) {
 			return StringPool.BLANK;
@@ -235,12 +253,12 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			fileName, _SAFE_FILE_NAME_1, _SAFE_FILE_NAME_2);
 	}
 
-	public boolean exists(String fileName) {
-		return exists(new File(fileName));
-	}
-
 	public boolean exists(File file) {
 		return file.exists();
+	}
+
+	public boolean exists(String fileName) {
+		return exists(new File(fileName));
 	}
 
 	public String extractText(InputStream is, String fileName) {
@@ -490,10 +508,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		return isSameContent(file, byteBuffer.array(), byteBuffer.limit());
 	}
 
-	public String[] listDirs(String fileName) {
-		return listDirs(new File(fileName));
-	}
-
 	public String[] listDirs(File file) {
 		List<String> dirs = new ArrayList<String>();
 
@@ -508,12 +522,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		return dirs.toArray(new String[dirs.size()]);
 	}
 
-	public String[] listFiles(String fileName) {
-		if (Validator.isNull(fileName)) {
-			return new String[0];
-		}
-
-		return listFiles(new File(fileName));
+	public String[] listDirs(String fileName) {
+		return listDirs(new File(fileName));
 	}
 
 	public String[] listFiles(File file) {
@@ -530,14 +540,18 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		return files.toArray(new String[files.size()]);
 	}
 
+	public String[] listFiles(String fileName) {
+		if (Validator.isNull(fileName)) {
+			return new String[0];
+		}
+
+		return listFiles(new File(fileName));
+	}
+
 	public void mkdirs(String pathName) {
 		File file = new File(pathName);
 
 		file.mkdirs();
-	}
-
-	public boolean move(String sourceFileName, String destinationFileName) {
-		return move(new File(sourceFileName), new File(destinationFileName));
 	}
 
 	public boolean move(File source, File destination) {
@@ -550,8 +564,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		return source.renameTo(destination);
 	}
 
-	public String read(String fileName) throws IOException {
-		return read(new File(fileName));
+	public boolean move(String sourceFileName, String destinationFileName) {
+		return move(new File(sourceFileName), new File(destinationFileName));
 	}
 
 	public String read(File file) throws IOException {
@@ -574,6 +588,10 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			return StringUtil.replace(
 				s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 		}
+	}
+
+	public String read(String fileName) throws IOException {
+		return read(new File(fileName));
 	}
 
 	public String replaceSeparator(String fileName) {
@@ -683,40 +701,30 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		ExpandTask.expand(source, destination);
 	}
 
-	public void write(String fileName, String s) throws IOException {
-		write(new File(fileName), s);
+	public void write(File file, byte[] bytes) throws IOException {
+		write(file, bytes, 0, bytes.length);
 	}
 
-	public void write(String fileName, String s, boolean lazy)
+	public void write(File file, byte[] bytes, int offset, int length)
 		throws IOException {
 
-		write(new File(fileName), s, lazy);
+		if (file.getParent() != null) {
+			mkdirs(file.getParent());
+		}
+
+		FileOutputStream fos = new FileOutputStream(file);
+
+		fos.write(bytes, offset, length);
+
+		fos.close();
 	}
 
-	public void write(String fileName, String s, boolean lazy, boolean append)
-		throws IOException {
+	public void write(File file, InputStream is) throws IOException {
+		if (file.getParent() != null) {
+			mkdirs(file.getParent());
+		}
 
-		write(new File(fileName), s, lazy, append);
-	}
-
-	public void write(String pathName, String fileName, String s)
-		throws IOException {
-
-		write(new File(pathName, fileName), s);
-	}
-
-	public void write(String pathName, String fileName, String s, boolean lazy)
-		throws IOException {
-
-		write(new File(pathName, fileName), s, lazy);
-	}
-
-	public void write(
-			String pathName, String fileName, String s, boolean lazy,
-			boolean append)
-		throws IOException {
-
-		write(new File(pathName, fileName), s, lazy, append);
+		StreamUtil.transfer(is, new FileOutputStream(file));
 	}
 
 	public void write(File file, String s) throws IOException {
@@ -756,34 +764,44 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		write(new File(fileName), bytes);
 	}
 
-	public void write(File file, byte[] bytes) throws IOException {
-		write(file, bytes, 0, bytes.length);
-	}
-
-	public void write(File file, byte[] bytes, int offset, int length)
-		throws IOException {
-
-		if (file.getParent() != null) {
-			mkdirs(file.getParent());
-		}
-
-		FileOutputStream fos = new FileOutputStream(file);
-
-		fos.write(bytes, offset, length);
-
-		fos.close();
-	}
-
 	public void write(String fileName, InputStream is) throws IOException {
 		write(new File(fileName), is);
 	}
 
-	public void write(File file, InputStream is) throws IOException {
-		if (file.getParent() != null) {
-			mkdirs(file.getParent());
-		}
+	public void write(String fileName, String s) throws IOException {
+		write(new File(fileName), s);
+	}
 
-		StreamUtil.transfer(is, new FileOutputStream(file));
+	public void write(String fileName, String s, boolean lazy)
+		throws IOException {
+
+		write(new File(fileName), s, lazy);
+	}
+
+	public void write(String fileName, String s, boolean lazy, boolean append)
+		throws IOException {
+
+		write(new File(fileName), s, lazy, append);
+	}
+
+	public void write(String pathName, String fileName, String s)
+		throws IOException {
+
+		write(new File(pathName, fileName), s);
+	}
+
+	public void write(String pathName, String fileName, String s, boolean lazy)
+		throws IOException {
+
+		write(new File(pathName, fileName), s, lazy);
+	}
+
+	public void write(
+			String pathName, String fileName, String s, boolean lazy,
+			boolean append)
+		throws IOException {
+
+		write(new File(pathName, fileName), s, lazy, append);
 	}
 
 	private static final String[] _SAFE_FILE_NAME_1 = {

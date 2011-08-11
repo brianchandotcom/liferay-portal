@@ -108,6 +108,10 @@
 		<column name="version" type="String" />
 		<column name="size" type="long" />
 		<column name="readCount" type="int" />
+		<column name="smallImageId" type="long" />
+		<column name="largeImageId" type="long" />
+		<column name="custom1ImageId" type="long" />
+		<column name="custom2ImageId" type="long" />
 
 		<!-- Order -->
 
@@ -155,6 +159,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="Image" />
 		<reference package-path="com.liferay.portal" entity="Lock" />
 		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
@@ -378,6 +383,10 @@
 		<column name="fileEntryTypeId" type="long" />
 		<column name="version" type="String" />
 		<column name="size" type="long" />
+		<column name="smallImageId" type="long" />
+		<column name="largeImageId" type="long" />
+		<column name="custom1ImageId" type="long" />
+		<column name="custom2ImageId" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -497,18 +506,18 @@
 
 		<!-- Other fields -->
 
-		<column name="fileId" type="String" />
+		<column name="fileId" type="long" />
 		<column name="repositoryId" type="long" />
+		<column name="parentFolderId" type="long" />
 		<column name="event" type="String" />
 		<column name="type" type="String" />
 
 		<!-- Order -->
 
-		<order by="desc">
+		<order by="asc">
 			<order-column name="companyId" />
 			<order-column name="repositoryId" />
 			<order-column name="modifiedDate" />
-			<order-column name="type" case-sensitive="false" />
 		</order>
 
 		<!-- Finder methods -->
@@ -534,6 +543,7 @@
 		<exception>FileShortcutPermission</exception>
 		<exception>FileSize</exception>
 		<exception>FolderName</exception>
+		<exception>ImageSize</exception>
 		<exception>InvalidFileEntryType</exception>
 		<exception>NoSuchDirectory</exception>
 		<exception>NoSuchFile</exception>

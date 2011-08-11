@@ -270,7 +270,7 @@ public class JournalIndexer extends BaseIndexer {
 		if (!article.isIndexable() ||
 			(!article.isApproved() &&
 			 (article.getVersion() !=
-			  	JournalArticleConstants.DEFAULT_VERSION))) {
+			  	JournalArticleConstants.VERSION_DEFAULT))) {
 
 			SearchEngineUtil.deleteDocument(
 				article.getCompanyId(), document.get(Field.UID));
@@ -489,7 +489,7 @@ public class JournalIndexer extends BaseIndexer {
 
 		List<JournalArticle> draftArticles =
 			JournalArticleLocalServiceUtil.getCompanyArticles(
-				companyId, JournalArticleConstants.DEFAULT_VERSION,
+				companyId, JournalArticleConstants.VERSION_DEFAULT,
 				WorkflowConstants.STATUS_DRAFT, start, end);
 
 		articles.addAll(draftArticles);

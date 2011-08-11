@@ -39,7 +39,7 @@ public class SystemProperties {
 	public static final String TMP_DIR = "java.io.tmpdir";
 
 	public static String get(String key) {
-		String value = _instance._props.get(key);
+		String value = _instance._properties.get(key);
 
 		if (value == null) {
 			value = System.getProperty(key);
@@ -51,7 +51,7 @@ public class SystemProperties {
 	public static void set(String key, String value) {
 		System.setProperty(key, value);
 
-		_instance._props.put(key, value);
+		_instance._properties.put(key, value);
 	}
 
 	public static String[] getArray(String key) {
@@ -66,13 +66,15 @@ public class SystemProperties {
 	}
 
 	public static Properties getProperties() {
-		return PropertiesUtil.fromMap(_instance._props);
+		return PropertiesUtil.fromMap(_instance._properties);
 	}
 
 	private SystemProperties() {
-		Properties p = new Properties();
+		Properties properties = new Properties();
 
-		ClassLoader classLoader = getClass().getClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		// system.properties
 
@@ -80,11 +82,11 @@ public class SystemProperties {
 			URL url = classLoader.getResource("system.properties");
 
 			if (url != null) {
-				InputStream is = url.openStream();
+				InputStream inputStream = url.openStream();
 
-				p.load(is);
+				properties.load(inputStream);
 
-				is.close();
+				inputStream.close();
 
 				System.out.println("Loading " + url);
 			}
@@ -99,11 +101,11 @@ public class SystemProperties {
 			URL url = classLoader.getResource("system-ext.properties");
 
 			if (url != null) {
-				InputStream is = url.openStream();
+				InputStream inputStream = url.openStream();
 
-				p.load(is);
+				properties.load(inputStream);
 
-				is.close();
+				inputStream.close();
 
 				System.out.println("Loading " + url);
 			}
@@ -114,7 +116,7 @@ public class SystemProperties {
 
 		// Set environment properties
 
-		SystemEnv.setProperties(p);
+		SystemEnv.setProperties(properties);
 
 		// Set system properties
 
@@ -125,7 +127,8 @@ public class SystemProperties {
 			System.getProperty(SYSTEM_PROPERTIES_FINAL), true);
 
 		if (systemPropertiesLoad) {
-			Enumeration<String> enu = (Enumeration<String>)p.propertyNames();
+			Enumeration<String> enu =
+				(Enumeration<String>)properties.propertyNames();
 
 			while (enu.hasMoreElements()) {
 				String key = enu.nextElement();
@@ -133,21 +136,21 @@ public class SystemProperties {
 				if (systemPropertiesFinal ||
 					Validator.isNull(System.getProperty(key))) {
 
-					System.setProperty(key, p.getProperty(key));
+					System.setProperty(key, properties.getProperty(key));
 				}
 			}
 		}
 
-		_props = new ConcurrentHashMap<String, String>();
+		_properties = new ConcurrentHashMap<String, String>();
 
 		// Use a fast concurrent hash map implementation instead of the slower
 		// java.util.Properties
 
-		PropertiesUtil.fromProperties(p, _props);
+		PropertiesUtil.fromProperties(properties, _properties);
 	}
 
 	private static SystemProperties _instance = new SystemProperties();
 
-	private Map<String, String> _props;
+	private Map<String, String> _properties;
 
 }

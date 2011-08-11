@@ -263,7 +263,7 @@ if (portlet.hasPortletMode(responseContentType, PortletMode.HELP)) {
 boolean supportsMimeType = portlet.hasPortletMode(responseContentType, portletMode);
 
 if (responseContentType.equals(ContentTypes.XHTML_MP) && portlet.hasMultipleMimeTypes()) {
-	supportsMimeType = GetterUtil.getBoolean(portletSetup.getValue("portlet-setup-supported-clients-mobile-devices-" + portletMode, String.valueOf(supportsMimeType)));
+	supportsMimeType = GetterUtil.getBoolean(portletSetup.getValue("portletSetupSupportedClientsMobileDevices_" + portletMode, String.valueOf(supportsMimeType)));
 }
 
 // Only authenticated with the correct permissions can update a layout. If
@@ -822,6 +822,8 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 	<div id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" class="<%= cssClasses %>" <%= freeformStyles %>>
 		<a id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></a>
+
+		<div class="portlet-body">
 </c:if>
 
 <c:choose>
@@ -970,26 +972,27 @@ else {
 
 <c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isWapTheme() %>">
 
-		<%
-		String modules = StringPool.BLANK;
+			<%
+			String modules = StringPool.BLANK;
 
-		if (showConfigurationIcon) {
-			modules += "aui-editable";
-		}
-		%>
+			if (showConfigurationIcon) {
+				modules += "aui-editable";
+			}
+			%>
 
-		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>' use="<%= modules %>">
-			Liferay.Portlet.onLoad(
-				{
-					canEditTitle: <%= showConfigurationIcon %>,
-					columnPos: <%= columnPos %>,
-					isStatic: '<%= staticVar %>',
-					namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
-					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
-					refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
-				}
-			);
-		</aui:script>
+			<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>' use="<%= modules %>">
+				Liferay.Portlet.onLoad(
+					{
+						canEditTitle: <%= showConfigurationIcon %>,
+						columnPos: <%= columnPos %>,
+						isStatic: '<%= staticVar %>',
+						namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
+						portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
+						refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
+					}
+				);
+			</aui:script>
+		</div>
 	</div>
 </c:if>
 

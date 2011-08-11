@@ -37,18 +37,35 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 	<td class="lfr-top" width="70%">
 
 		<%
+		long resourcePrimKey = 0;
+
 		String attachmentURLPrefix = StringPool.BLANK;
 
 		if (wikiPage != null) {
+			resourcePrimKey = wikiPage.getResourcePrimKey();
+
 			attachmentURLPrefix = themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/wiki/get_page_attachment?p_l_id=" + themeDisplay.getPlid() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + HttpUtil.encodeURL(wikiPage.getTitle()) + "&fileName=";
 		}
 
 		Map<String,String> configParams = new HashMap();
 
 		configParams.put("attachmentURLPrefix", attachmentURLPrefix);
+		configParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
+
+		Map<String,String> fileBrowserParams = new HashMap();
+
+		fileBrowserParams.put("attachmentURLPrefix", attachmentURLPrefix);
+		fileBrowserParams.put("Type", "Attachment");
+		fileBrowserParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
 		%>
 
-		<liferay-ui:input-editor configParams="<%= configParams %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" toolbarSet="creole" width="100%" />
+		<liferay-ui:input-editor
+			configParams="<%= configParams %>"
+			editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
+			fileBrowserParams="<%= fileBrowserParams %>"
+			toolbarSet="creole"
+			width="100%"
+		/>
 
 		<aui:input name="content" type="hidden" />
 	</td>

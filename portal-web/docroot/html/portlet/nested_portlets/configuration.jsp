@@ -76,7 +76,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<%
 	boolean portletDecorateDefault = GetterUtil.getBoolean(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), true);
 
-	boolean portletSetupShowBorders = GetterUtil.getBoolean(preferences.getValue("portlet-setup-show-borders", String.valueOf(portletDecorateDefault)));
+	boolean portletSetupShowBorders = GetterUtil.getBoolean(preferences.getValue("portletSetupShowBorders", String.valueOf(portletDecorateDefault)));
 	%>
 
 	<aui:fieldset label="display-settings">

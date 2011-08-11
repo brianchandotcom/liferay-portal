@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AddUser3Test</title>
 </head>
 <body>
@@ -17,113 +14,133 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
-	<td></td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_prefixId</td>
+	<td>//select[@id='_125_prefixId']</td>
 	<td>label=Mr.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_screenName</td>
+	<td>//input[@id='_125_screenName']</td>
 	<td>selenium03</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_emailAddress</td>
+	<td>//input[@id='_125_emailAddress']</td>
 	<td>test03@selenium.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_firstName</td>
+	<td>//input[@id='_125_firstName']</td>
 	<td>selen03</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_middleName</td>
+	<td>//input[@id='_125_middleName']</td>
 	<td>lenn</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_lastName</td>
+	<td>//input[@id='_125_lastName']</td>
 	<td>nium03</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_prefixId</td>
+	<td>//select[@id='_125_prefixId']</td>
 	<td>label=Ms.</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayMonth</td>
+	<td>//select[@id='_125_birthdayMonth']</td>
 	<td>label=August</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayDay</td>
+	<td>//select[@id='_125_birthdayDay']</td>
 	<td>label=5</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_birthdayYear</td>
+	<td>//select[@id='_125_birthdayYear']</td>
 	<td>label=1991</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_male</td>
+	<td>//select[@id='_125_male']</td>
 	<td>label=Female</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_screenName</td>
+	<td>//input[@id='_125_screenName']</td>
 	<td>selenium03</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_emailAddress</td>
+	<td>//input[@id='_125_emailAddress']</td>
 	<td>test03@selenium.com</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_firstName</td>
+	<td>//input[@id='_125_firstName']</td>
 	<td>selen03</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_middleName</td>
+	<td>//input[@id='_125_middleName']</td>
 	<td>lenn</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_lastName</td>
+	<td>//input[@id='_125_lastName']</td>
 	<td>nium03</td>
 </tr>
 

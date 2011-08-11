@@ -980,7 +980,6 @@ public class JavadocFormatter {
 
 		if (fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
-
 			_isGenerated(originalContent)) {
 
 			return;

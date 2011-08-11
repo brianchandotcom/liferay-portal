@@ -170,7 +170,7 @@
 	padding-left: 25px;
 }
 
-.lfr-upload-container .upload-error .error-message {
+.lfr-upload-container .upload-complete .error-message, .lfr-upload-container .upload-complete .success-message {
 	font-weight: bold;
 	margin-left: 1em;
 }

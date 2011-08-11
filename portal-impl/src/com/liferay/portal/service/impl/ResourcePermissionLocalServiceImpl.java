@@ -348,6 +348,12 @@ public class ResourcePermissionLocalServiceImpl
 		return resourcePermissionFinder.findByR_S(roleId, scopes, start, end);
 	}
 
+	public List<ResourcePermission> getScopeResourcePermissions(int[] scopes)
+		throws SystemException {
+
+		return resourcePermissionPersistence.findByScope(scopes);
+	}
+
 	/**
 	 * Returns <code>true</code> if the resource permission grants permission to
 	 * perform the resource action. Note that this method does not ensure that

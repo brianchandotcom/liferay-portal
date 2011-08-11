@@ -129,20 +129,32 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		String i18nPath = StringPool.SLASH + i18nLanguageId;
+		String i18nPathLanguageId = i18nLanguageId;
 
 		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
 
 		if (!LanguageUtil.isDuplicateLanguageCode(locale.getLanguage())) {
-			i18nPath = StringPool.SLASH + locale.getLanguage();
+			i18nPathLanguageId = locale.getLanguage();
 		}
 		else {
 			Locale priorityLocale = LanguageUtil.getLocale(
 				locale.getLanguage());
 
 			if (locale.equals(priorityLocale)) {
-				i18nPath = StringPool.SLASH + locale.getLanguage();
+				i18nPathLanguageId = locale.getLanguage();
 			}
+		}
+
+		Locale i18nPathLocale = LocaleUtil.fromLanguageId(i18nPathLanguageId);
+
+		if (!LanguageUtil.isAvailableLocale(i18nPathLocale)) {
+			return null;
+		}
+
+		String i18nPath = StringPool.SLASH.concat(i18nPathLanguageId);
+
+		if (requestURI.contains(i18nPath.concat(StringPool.SLASH))) {
+			return null;
 		}
 
 		String redirect = contextPath + i18nPath + requestURI;

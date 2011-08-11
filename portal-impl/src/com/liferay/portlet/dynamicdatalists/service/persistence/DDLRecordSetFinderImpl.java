@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -39,13 +40,14 @@ import java.util.List;
 public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	implements DDLRecordSetFinder {
 
-	public static String COUNT_BY_C_G_N_D =
-		DDLRecordSetFinder.class.getName() + ".countByC_G_N_D";
+	public static String COUNT_BY_C_G_N_D_S =
+		DDLRecordSetFinder.class.getName() + ".countByC_G_N_D_S";
 
-	public static String FIND_BY_C_G_N_D =
-		DDLRecordSetFinder.class.getName() + ".findByC_G_N_D";
+	public static String FIND_BY_C_G_N_D_S =
+		DDLRecordSetFinder.class.getName() + ".findByC_G_N_D_S";
 
-	public int countByKeywords(long companyId, long groupId, String keywords)
+	public int countByKeywords(
+			long companyId, long groupId, String keywords, int scope)
 		throws SystemException{
 
 		String[] names = null;
@@ -60,25 +62,25 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			andOperator = true;
 		}
 
-		return doCountByC_G_N_D(
-			companyId, groupId, names, descriptions, andOperator);
+		return doCountByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator);
 	}
 
-	public int countByC_G_N_D(
+	public int countByC_G_N_D_S(
 			long companyId, long groupId, String name, String description,
-			boolean andOperator)
+			int scope, boolean andOperator)
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
 
-		return doCountByC_G_N_D(
-			companyId, groupId, names, descriptions, andOperator);
+		return doCountByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator);
 	}
 
 	public List<DDLRecordSet> findByKeywords(
-			long companyId, long groupId, String keywords, int start, int end,
-			OrderByComparator orderByComparator)
+			long companyId, long groupId, String keywords, int scope, int start,
+			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		String[] names = null;
@@ -93,39 +95,39 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			andOperator = true;
 		}
 
-		return findByC_G_N_D(
-			companyId, groupId, names, descriptions, andOperator,
+		return findByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator,
 			start, end, orderByComparator);
 	}
 
-	public List<DDLRecordSet> findByC_G_N_D(
+	public List<DDLRecordSet> findByC_G_N_D_S(
 			long companyId, long groupId, String name, String description,
-			boolean andOperator, int start, int end,
+			int scope, boolean andOperator, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
 
-		return findByC_G_N_D(
-			companyId, groupId, names, descriptions, andOperator, start, end,
-			orderByComparator);
+		return findByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator, start,
+			end, orderByComparator);
 	}
 
-	public List<DDLRecordSet> findByC_G_N_D(
+	public List<DDLRecordSet> findByC_G_N_D_S(
 			long companyId, long groupId, String[] names, String[] descriptions,
-			boolean andOperator,int start, int end,
+			int scope, boolean andOperator,int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return doFindByC_G_N_D(
-			companyId, groupId, names, descriptions, andOperator, start, end,
-			orderByComparator);
+		return doFindByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator, start,
+			end, orderByComparator);
 	}
 
-	protected int doCountByC_G_N_D(
+	protected int doCountByC_G_N_D_S(
 			long companyId, long groupId, String[] names, String[] descriptions,
-			boolean andOperator)
+			int scope, boolean andOperator)
 		throws SystemException {
 
 		names = CustomSQLUtil.keywords(names);
@@ -136,10 +138,14 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_C_G_N_D);
+			String sql = CustomSQLUtil.get(COUNT_BY_C_G_N_D_S);
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(sql, "(groupId = ?) AND", "");
+			}
+
+			if (scope == DDLRecordSetConstants.SCOPE_ANY) {
+				sql = StringUtil.replace(sql, "(scope = ?) AND", "");
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
@@ -158,6 +164,10 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 			if (groupId > 0) {
 				qPos.add(groupId);
+			}
+
+			if (scope != DDLRecordSetConstants.SCOPE_ANY) {
+				qPos.add(scope);
 			}
 
 			qPos.add(names, 2);
@@ -183,9 +193,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 		}
 	}
 
-	protected List<DDLRecordSet> doFindByC_G_N_D(
+	protected List<DDLRecordSet> doFindByC_G_N_D_S(
 			long companyId, long groupId, String[] names, String[] descriptions,
-			boolean andOperator, int start, int end,
+			int scope, boolean andOperator, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
@@ -197,10 +207,14 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_G_N_D);
+			String sql = CustomSQLUtil.get(FIND_BY_C_G_N_D_S);
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(sql, "(groupId = ?) AND", "");
+			}
+
+			if (scope == DDLRecordSetConstants.SCOPE_ANY) {
+				sql = StringUtil.replace(sql, "(scope = ?) AND", "");
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
@@ -220,6 +234,10 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 			if (groupId > 0) {
 				qPos.add(groupId);
+			}
+
+			if (scope != DDLRecordSetConstants.SCOPE_ANY) {
+				qPos.add(scope);
 			}
 
 			qPos.add(names, 2);

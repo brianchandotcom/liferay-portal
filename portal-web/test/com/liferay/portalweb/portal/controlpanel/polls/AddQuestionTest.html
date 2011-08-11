@@ -16,72 +16,82 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Polls</td>
-	<td></td>
+	<td>Polls</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Question']</td>
-	<td></td>
+	<td>Add Question</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_title_en_US</td>
+	<td>//input[@id='_25_title_en_US']</td>
 	<td>Test Poll Question</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_description_en_US</td>
+	<td>//textarea[@id='_25_description_en_US']</td>
 	<td>This is a test poll description.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_choiceDescriptiona_en_US</td>
+	<td>//input[@id='_25_choiceDescriptiona_en_US']</td>
 	<td>Test Choice A</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_choiceDescriptionb_en_US</td>
+	<td>//input[@id='_25_choiceDescriptionb_en_US']</td>
 	<td>Test Choice B</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Choice']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>_25_choiceDescriptionc_en_US</td>
-	<td></td>
+	<td>Add Choice</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_choiceDescriptionc_en_US</td>
+	<td>//input[@id='_25_choiceDescriptionc_en_US']</td>
 	<td>Test Choice C</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[1]/a</td>
 	<td>Test Poll Question</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Never</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Never</td>
 </tr>
 
 </tbody></table>

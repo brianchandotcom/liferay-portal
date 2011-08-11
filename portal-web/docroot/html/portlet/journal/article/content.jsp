@@ -43,15 +43,15 @@ JournalStructure structure = (JournalStructure)request.getAttribute("edit_articl
 if (structure != null) {
 	structureGroupId = structure.getGroupId();
 	parentStructureId = structure.getParentStructureId();
-	structureName = structure.getName();
-	structureDescription = structure.getDescription();
+	structureName = structure.getName(locale);
+	structureDescription = structure.getDescription(locale);
 	structureXSD = structure.getMergedXsd();
 }
 
 List<JournalTemplate> templates = new ArrayList();
 
 if (structure != null) {
-	templates = JournalTemplateLocalServiceUtil.getStructureTemplates(structureGroupId, structureId);
+	templates = JournalTemplateServiceUtil.getStructureTemplates(structureGroupId, structureId);
 }
 
 String templateId = BeanParamUtil.getString(article, request, "templateId");
@@ -79,7 +79,7 @@ if ((structure == null) && Validator.isNotNull(templateId)) {
 
 		structure = JournalStructureLocalServiceUtil.getStructure(structureGroupId, structureId);
 
-		structureName = structure.getName();
+		structureName = structure.getName(locale);
 
 		templates = JournalTemplateLocalServiceUtil.getStructureTemplates(structureGroupId, structureId);
 	}
@@ -281,7 +281,7 @@ if (Validator.isNotNull(content)) {
 											<aui:input name="templateId" type="hidden" value="<%= template.getTemplateId() %>" />
 
 											<span class="template-name-label">
-												<%= HtmlUtil.escape(template.getName()) %>
+												<%= HtmlUtil.escape(template.getName(locale)) %>
 											</span>
 
 											<c:if test="<%= template.isSmallImage() %>">
@@ -315,7 +315,7 @@ if (Validator.isNotNull(content)) {
 													<aui:option
 														data-img="<%= imageURL != null ? imageURL : StringPool.BLANK %>"
 														data-url="<%= templateURL %>"
-														label="<%= HtmlUtil.escape(template.getName()) %>"
+														label="<%= HtmlUtil.escape(template.getName(locale)) %>"
 														selected="<%= templateId.equals(template.getTemplateId()) %>"
 														value="<%= template.getTemplateId() %>"
 													/>
@@ -789,7 +789,7 @@ private String _getTemplateImage(ThemeDisplay themeDisplay, JournalTemplate temp
 			imageURL = template.getSmallImageURL();
 		}
 		else {
-			imageURL = themeDisplay.getPathImage() + "/journal/template?img_id=" + template.getSmallImageId() + "&t=" + ImageServletTokenUtil.getToken(template.getSmallImageId());
+			imageURL = themeDisplay.getPathImage() + "/journal/template?img_id=" + template.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(template.getSmallImageId());
 		}
 	}
 

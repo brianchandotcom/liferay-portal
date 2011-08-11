@@ -101,7 +101,7 @@ public class JournalFeedLocalServiceImpl
 
 		if (Validator.isNull(feedType)) {
 			feed.setFeedType(RSSUtil.DEFAULT_TYPE);
-			feed.setFeedVersion(RSSUtil.DEFAULT_VERSION);
+			feed.setFeedVersion(RSSUtil.VERSION_DEFAULT);
 		}
 		else {
 			feed.setFeedType(feedType);
@@ -309,7 +309,7 @@ public class JournalFeedLocalServiceImpl
 
 		if (Validator.isNull(feedType)) {
 			feed.setFeedType(RSSUtil.DEFAULT_TYPE);
-			feed.setFeedVersion(RSSUtil.DEFAULT_VERSION);
+			feed.setFeedVersion(RSSUtil.VERSION_DEFAULT);
 		}
 		else {
 			feed.setFeedType(feedType);

@@ -255,17 +255,19 @@ public class DLSyncLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLSync addSync(
-		java.lang.String fileId, long companyId, long repositoryId,
+		long fileId, long companyId, long repositoryId, long parentFolderId,
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().addSync(fileId, companyId, repositoryId, type);
+		return getService()
+				   .addSync(fileId, companyId, repositoryId, parentFolderId,
+			type);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLSync updateSync(
-		java.lang.String fileId, java.lang.String event)
+		long fileId, long parentFolderId, java.lang.String event)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateSync(fileId, event);
+		return getService().updateSync(fileId, parentFolderId, event);
 	}
 
 	public static DLSyncLocalService getService() {

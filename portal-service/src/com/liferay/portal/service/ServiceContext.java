@@ -202,6 +202,15 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _portalURL;
 	}
 
+	public String getPortletId() {
+		if (_portletPreferencesIds != null) {
+			return _portletPreferencesIds.getPortletId();
+		}
+		else {
+			return null;
+		}
+	}
+
 	public PortletPreferencesIds getPortletPreferencesIds() {
 		return _portletPreferencesIds;
 	}

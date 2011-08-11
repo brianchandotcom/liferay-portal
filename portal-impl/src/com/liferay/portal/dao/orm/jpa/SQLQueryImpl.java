@@ -119,7 +119,9 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 	}
 
 	@Override
-	public List<?> list(boolean unmodifiable) throws ORMException {
+	public List<?> list(boolean copy, boolean unmodifiable)
+		throws ORMException {
+
 		try {
 			List<?> list = sessionImpl.list(
 				queryString, positionalParameterMap, namedParameterMap,
@@ -131,11 +133,13 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 			}
 
 			if (unmodifiable) {
-				return new UnmodifiableList<Object>(list);
+				list = new UnmodifiableList<Object>(list);
 			}
-			else {
-				return ListUtil.copy(list);
+			else if (copy) {
+				list = ListUtil.copy(list);
 			}
+
+			return list;
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);

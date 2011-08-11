@@ -23,9 +23,9 @@ import com.liferay.portlet.messageboards.model.MBMessage;
  */
 public class MessageCreateDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "createDate ASC";
+	public static String ORDER_BY_ASC = "MBMessage.createDate ASC";
 
-	public static String ORDER_BY_DESC = "createDate DESC";
+	public static String ORDER_BY_DESC = "MBMessage.createDate DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"createDate"};
 

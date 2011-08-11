@@ -308,9 +308,22 @@ public class SubscriptionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserSubscriptions(userId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
 		long userId, java.lang.String className)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserSubscriptions(userId, className);
+	}
+
+	public static int getUserSubscriptionsCount(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSubscriptionsCount(userId);
 	}
 
 	public static boolean isSubscribed(long companyId, long userId,

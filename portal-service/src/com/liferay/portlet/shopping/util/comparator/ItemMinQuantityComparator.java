@@ -23,10 +23,12 @@ import com.liferay.portlet.shopping.model.ShoppingItem;
 public class ItemMinQuantityComparator extends OrderByComparator {
 
 	public static String ORDER_BY_ASC =
-		"categoryId ASC, minQuantity ASC, name ASC";
+		"ShoppingItem.categoryId ASC, ShoppingItem.minQuantity ASC, " +
+			"ShoppingItem.name ASC";
 
 	public static String ORDER_BY_DESC =
-		"categoryId DESC, minQuantity DESC, name DESC";
+		"ShoppingItem.categoryId DESC, ShoppingItem.minQuantity DESC, " +
+			"ShoppingItem.name DESC";
 
 	public static String[] ORDER_BY_FIELDS = {
 		"categoryId", "minQuantity", "name"

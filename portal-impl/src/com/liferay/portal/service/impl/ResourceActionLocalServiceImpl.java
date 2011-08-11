@@ -81,6 +81,12 @@ public class ResourceActionLocalServiceImpl
 			name, actionIds, resourceActions, addDefaultActions);
 	}
 
+	public ResourceAction fetchResourceAction(String name, String actionId) {
+		String key = encodeKey(name, actionId);
+
+		return _resourceActions.get(key);
+	}
+
 	public ResourceAction getResourceAction(String name, String actionId)
 		throws PortalException {
 

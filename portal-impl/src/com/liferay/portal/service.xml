@@ -396,7 +396,6 @@
 		<reference package-path="com.liferay.portlet.bookmarks" entity="BookmarksFolder" />
 		<reference package-path="com.liferay.portlet.calendar" entity="CalEvent" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLApp" />
-		<reference package-path="com.liferay.portlet.imagegallery" entity="IGFolder" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticle" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalStructure" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalTemplate" />
@@ -444,7 +443,7 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.imagegallery" entity="IGImage" />
+		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntry" />
 	</entity>
 	<entity name="Layout" uuid="true" local-service="true" remote-service="true">
 
@@ -1609,9 +1608,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ResourceBlockId" return-type="Collection">
-			<finder-column name="resourceBlockId" />
-		</finder>
 		<finder name="R_R" return-type="ResourceBlockPermission" unique="true">
 			<finder-column name="resourceBlockId" />
 			<finder-column name="roleId" />
@@ -1667,6 +1663,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="Scope" return-type="Collection">
+			<finder-column name="scope" arrayable-operator="OR" />
+		</finder>
 		<finder name="RoleId" return-type="Collection">
 			<finder-column name="roleId" />
 		</finder>
@@ -1761,7 +1760,7 @@
 		<column name="classPK" type="long" />
 		<column name="name" type="String" accessor="true" />
 		<column name="title" type="String" localized="true" />
-		<column name="description" type="String" />
+		<column name="description" type="String" localized="true" />
 		<column name="type" type="int" />
 		<column name="subtype" type="String" />
 

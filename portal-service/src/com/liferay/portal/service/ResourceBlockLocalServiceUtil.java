@@ -294,6 +294,17 @@ public class ResourceBlockLocalServiceUtil {
 			roleId, actionId);
 	}
 
+	public static void addIndividualScopePermission(long companyId,
+		long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addIndividualScopePermission(companyId, groupId, name,
+			permissionedModel, roleId, actionId);
+	}
+
 	public static void addIndividualScopePermissions(long companyId,
 		long groupId, java.lang.String name, long primKey, long roleId,
 		long actionIdsLong)
@@ -302,6 +313,16 @@ public class ResourceBlockLocalServiceUtil {
 		getService()
 			.addIndividualScopePermissions(companyId, groupId, name, primKey,
 			roleId, actionIdsLong);
+	}
+
+	public static void addIndividualScopePermissions(long companyId,
+		long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addIndividualScopePermissions(companyId, groupId, name,
+			permissionedModel, roleId, actionIdsLong);
 	}
 
 	/**
@@ -322,13 +343,6 @@ public class ResourceBlockLocalServiceUtil {
 		return getService()
 				   .addResourceBlock(companyId, groupId, name, permissionsHash,
 			resourceBlockPermissionsContainer);
-	}
-
-	public static com.liferay.portal.model.ResourceBlock convertResourcePermissions(
-		long companyId, java.lang.String name, long primKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().convertResourcePermissions(companyId, name, primKey);
 	}
 
 	public static long getActionId(java.lang.String name,
@@ -433,6 +447,13 @@ public class ResourceBlockLocalServiceUtil {
 	}
 
 	public static void releasePermissionedModelResourceBlock(
+		com.liferay.portal.model.PermissionedModel permissionedModel)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().releasePermissionedModelResourceBlock(permissionedModel);
+	}
+
+	public static void releasePermissionedModelResourceBlock(
 		java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -526,6 +547,17 @@ public class ResourceBlockLocalServiceUtil {
 			roleId, actionId);
 	}
 
+	public static void removeIndividualScopePermission(long companyId,
+		long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.removeIndividualScopePermission(companyId, groupId, name,
+			permissionedModel, roleId, actionId);
+	}
+
 	public static void removeIndividualScopePermissions(long companyId,
 		long groupId, java.lang.String name, long primKey, long roleId,
 		long actionIdsLong)
@@ -534,6 +566,16 @@ public class ResourceBlockLocalServiceUtil {
 		getService()
 			.removeIndividualScopePermissions(companyId, groupId, name,
 			primKey, roleId, actionIdsLong);
+	}
+
+	public static void removeIndividualScopePermissions(long companyId,
+		long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.removeIndividualScopePermissions(companyId, groupId, name,
+			permissionedModel, roleId, actionIdsLong);
 	}
 
 	/**
@@ -614,6 +656,66 @@ public class ResourceBlockLocalServiceUtil {
 		getService()
 			.setIndividualScopePermissions(companyId, groupId, name, primKey,
 			roleId, actionIdsLong);
+	}
+
+	public static void setIndividualScopePermissions(long companyId,
+		long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setIndividualScopePermissions(companyId, groupId, name,
+			permissionedModel, roleId, actionIds);
+	}
+
+	public static void setIndividualScopePermissions(long companyId,
+		long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setIndividualScopePermissions(companyId, groupId, name,
+			permissionedModel, roleId, actionIdsLong);
+	}
+
+	public static void updateCompanyScopePermissions(long companyId,
+		java.lang.String name, long roleId, long actionIdsLong, int operator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateCompanyScopePermissions(companyId, name, roleId,
+			actionIdsLong, operator);
+	}
+
+	public static void updateGroupScopePermissions(long companyId,
+		long groupId, java.lang.String name, long roleId, long actionIdsLong,
+		int operator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateGroupScopePermissions(companyId, groupId, name, roleId,
+			actionIdsLong, operator);
+	}
+
+	public static void updateIndividualScopePermissions(long companyId,
+		long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong, int operator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateIndividualScopePermissions(companyId, groupId, name,
+			permissionedModel, roleId, actionIdsLong, operator);
+	}
+
+	public static com.liferay.portal.model.ResourceBlock updateResourceBlockId(
+		long companyId, long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		java.lang.String permissionsHash,
+		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateResourceBlockId(companyId, groupId, name,
+			permissionedModel, permissionsHash,
+			resourceBlockPermissionsContainer);
 	}
 
 	public static void verifyResourceBlockId(long companyId,

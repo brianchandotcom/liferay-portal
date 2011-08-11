@@ -22,7 +22,7 @@ import com.liferay.portal.model.Resource;
  */
 public class ResourceComparator extends OrderByComparator {
 
-	public static String ORDER_BY_DESC = "resourceId DESC";
+	public static String ORDER_BY_DESC = "Resource_.resourceId DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"resourceId"};
 

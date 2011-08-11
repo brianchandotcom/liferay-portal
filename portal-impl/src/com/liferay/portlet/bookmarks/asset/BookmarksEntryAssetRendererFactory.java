@@ -109,8 +109,15 @@ public class BookmarksEntryAssetRendererFactory
 	}
 
 	@Override
+	public boolean isLinkable() {
+		return _LINKABLE;
+	}
+
+	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/ratings/star_hover.png";
 	}
+
+	private static final boolean _LINKABLE = true;
 
 }

@@ -482,10 +482,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.servlet.ImageServlet">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.servlet.LanguageServlet">
 		<priority value="WARN" />
 	</category>
@@ -712,6 +708,10 @@
 
 	<category name="com.liferay.portal.verify.VerifyUser">
 		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.webserver.WebServerServlet">
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.webdav">

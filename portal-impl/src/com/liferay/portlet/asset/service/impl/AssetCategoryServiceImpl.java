@@ -56,6 +56,19 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			vocabularyId, categoryProperties, serviceContext);
 	}
 
+	public void deleteCategories(long[] categoryIds)
+		throws PortalException, SystemException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		for (long categoryId : categoryIds) {
+			AssetCategoryPermission.check(
+				permissionChecker, categoryId, ActionKeys.DELETE);
+
+			assetCategoryLocalService.deleteCategory(categoryId);
+		}
+	}
+
 	public void deleteCategory(long categoryId)
 		throws PortalException, SystemException {
 

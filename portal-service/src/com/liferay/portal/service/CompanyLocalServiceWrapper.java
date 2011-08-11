@@ -280,6 +280,12 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService {
 		return _companyLocalService.fetchCompany(companyId);
 	}
 
+	public com.liferay.portal.model.Company fetchCompanyByVirtualHost(
+		java.lang.String virtualHostname)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _companyLocalService.fetchCompanyByVirtualHost(virtualHostname);
+	}
+
 	public java.util.List<com.liferay.portal.model.Company> getCompanies()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _companyLocalService.getCompanies();

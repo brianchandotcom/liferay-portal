@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -80,22 +79,6 @@ public class LocaleUtil {
 
 	private LocaleUtil() {
 		_locale = new Locale("en", "US");
-
-		_isoCountries = Locale.getISOCountries().clone();
-
-		for (int i = 0; i < _isoCountries.length; i++) {
-			_isoCountries[i] = _isoCountries[i].toUpperCase();
-		}
-
-		Arrays.sort(_isoCountries);
-
-		_isoLanguages = Locale.getISOLanguages().clone();
-
-		for (int i = 0; i < _isoLanguages.length; i++) {
-			_isoLanguages[i] = _isoLanguages[i].toLowerCase();
-		}
-
-		Arrays.sort(_isoLanguages);
 	}
 
 	private Locale _fromLanguageId(String languageId) {
@@ -103,51 +86,40 @@ public class LocaleUtil {
 			return _locale;
 		}
 
-		Locale locale = null;
+		Locale locale = _locales.get(languageId);
+
+		if (locale != null) {
+			return locale;
+		}
 
 		try {
-			locale = _locales.get(languageId);
+			int pos = languageId.indexOf(CharPool.UNDERLINE);
 
-			if (locale == null) {
-				int pos = languageId.indexOf(CharPool.UNDERLINE);
+			if (pos == -1) {
+				locale = new Locale(languageId);
+			}
+			else {
+				String[] languageIdParts = StringUtil.split(
+					languageId, CharPool.UNDERLINE);
 
-				if (pos == -1) {
-					if (Arrays.binarySearch(_isoLanguages, languageId) < 0) {
-						return _getDefault();
-					}
+				String languageCode = languageIdParts[0];
+				String countryCode = languageIdParts[1];
 
-					locale = new Locale(languageId);
+				String variant = null;
+
+				if (languageIdParts.length > 2) {
+					variant = languageIdParts[2];
+				}
+
+				if (Validator.isNotNull(variant)) {
+					locale = new Locale(languageCode, countryCode, variant);
 				}
 				else {
-					String[] languageIdParts = StringUtil.split(
-						languageId, CharPool.UNDERLINE);
-
-					String languageCode = languageIdParts[0];
-					String countryCode = languageIdParts[1];
-
-					if ((Arrays.binarySearch(
-							_isoLanguages, languageCode) < 0) ||
-						(Arrays.binarySearch(_isoCountries, countryCode) < 0)) {
-
-						return _getDefault();
-					}
-
-					String variant = null;
-
-					if (languageIdParts.length > 2) {
-						variant = languageIdParts[2];
-					}
-
-					if (Validator.isNotNull(variant)) {
-						locale = new Locale(languageCode, countryCode, variant);
-					}
-					else {
-						locale = new Locale(languageCode, countryCode);
-					}
+					locale = new Locale(languageCode, countryCode);
 				}
-
-				_locales.put(languageId, locale);
 			}
+
+			_locales.put(languageId, locale);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -236,7 +208,7 @@ public class LocaleUtil {
 		boolean hasVariant = false;
 
 		if (variant.length() != 0) {
-			hasCountry = true;
+			hasVariant = true;
 		}
 
 		if (!hasCountry && !hasVariant) {
@@ -299,12 +271,10 @@ public class LocaleUtil {
 		return w3cLanguageIds;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
-
 	private static LocaleUtil _instance = new LocaleUtil();
 
-	private String[] _isoCountries;
-	private String[] _isoLanguages;
+	private static Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
+
 	private Locale _locale;
 	private Map<String, Locale> _locales = new HashMap<String, Locale>();
 

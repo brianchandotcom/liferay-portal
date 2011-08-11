@@ -143,6 +143,12 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
 	box-shadow: inset 0 3em 1em rgba(0, 0, 0, 0.8);
 }
 
+.staging-tabview-list .aui-tab-active .aui-tab-content {
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
 .staging-tabview-list {
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;

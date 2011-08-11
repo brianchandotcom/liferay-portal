@@ -517,6 +517,7 @@ Liferay.Service.registerClass(
 	Liferay.Service.Asset, "AssetCategory",
 	{
 		addCategory: true,
+		deleteCategories: true,
 		deleteCategory: true,
 		getCategories: true,
 		getCategory: true,
@@ -590,10 +591,13 @@ Liferay.Service.registerClass(
 	Liferay.Service.Asset, "AssetVocabulary",
 	{
 		addVocabulary: true,
+		deleteVocabularies: true,
 		deleteVocabulary: true,
 		getCompanyVocabularies: true,
 		getGroupsVocabularies: true,
 		getGroupVocabularies: true,
+		getGroupVocabulariesCount: true,
+		getJSONGroupVocabularies: true,
 		getVocabularies: true,
 		getVocabulary: true,
 		updateVocabulary: true
@@ -845,6 +849,7 @@ Liferay.Service.registerClass(
 	{
 		addTemplate: true,
 		deleteTemplate: true,
+		getTemplates: true,
 		updateTemplate: true
 	}
 );
@@ -880,37 +885,6 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.register("Liferay.Service.IG", "com.liferay.portlet.imagegallery.service");
-
-Liferay.Service.registerClass(
-	Liferay.Service.IG, "IGFolder",
-	{
-		addFolder: true,
-		copyFolder: true,
-		deleteFolder: true,
-		getFolder: true,
-		getFolders: true,
-		getFoldersCount: true,
-		getSubfolderIds: true,
-		updateFolder: true
-	}
-);
-
-Liferay.Service.registerClass(
-	Liferay.Service.IG, "IGImage",
-	{
-		deleteImage: true,
-		deleteImageByFolderIdAndNameWithExtension: true,
-		getFoldersImagesCount: true,
-		getGroupImages: true,
-		getGroupImagesCount: true,
-		getImage: true,
-		getImageByFolderIdAndNameWithExtension: true,
-		getImageByLargeImageId: true,
-		getImageBySmallImageId: true,
-		getImages: true,
-		getImagesCount: true
-	}
-);
 
 Liferay.Service.register("Liferay.Service.Journal", "com.liferay.portlet.journal.service");
 
@@ -967,6 +941,8 @@ Liferay.Service.registerClass(
 		deleteTemplate: true,
 		getStructureTemplates: true,
 		getTemplate: true,
+		search: true,
+		searchCount: true,
 		updateTemplate: true
 	}
 );
@@ -1042,6 +1018,8 @@ Liferay.Service.registerClass(
 		unlockThread: true
 	}
 );
+
+Liferay.Service.register("Liferay.Service.MDR", "com.liferay.portlet.mobiledevicerules.service");
 
 Liferay.Service.register("Liferay.Service.Polls", "com.liferay.portlet.polls.service");
 

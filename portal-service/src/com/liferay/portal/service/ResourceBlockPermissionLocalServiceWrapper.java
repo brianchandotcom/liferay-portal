@@ -268,13 +268,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(resourceBlockId);
 	}
 
-	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long companyId, long groupId, java.lang.String name, long primKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(companyId,
-			groupId, name, primKey);
-	}
-
 	public void updateResourceBlockPermission(long resourceBlockId,
 		long roleId, long actionIdsLong, int operator)
 		throws com.liferay.portal.kernel.exception.SystemException {

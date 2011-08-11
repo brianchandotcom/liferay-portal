@@ -450,10 +450,11 @@ if (Validator.isNull(redirect)) {
 	}
 
 	function <portlet:namespace />previewMessage() {
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = " <%= Constants.PREVIEW %>";
 		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
 		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
 
-		<portlet:namespace />saveMessage(true);
+		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />saveMessage(draft) {

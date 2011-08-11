@@ -204,7 +204,7 @@ public class DLSyncUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSync findByFileId(
-		java.lang.String fileId)
+		long fileId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchSyncException {
 		return getPersistence().findByFileId(fileId);
@@ -218,8 +218,7 @@ public class DLSyncUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSync fetchByFileId(
-		java.lang.String fileId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long fileId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByFileId(fileId);
 	}
 
@@ -232,7 +231,7 @@ public class DLSyncUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSync fetchByFileId(
-		java.lang.String fileId, boolean retrieveFromCache)
+		long fileId, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByFileId(fileId, retrieveFromCache);
 	}
@@ -435,7 +434,7 @@ public class DLSyncUtil {
 	* @param fileId the file ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByFileId(java.lang.String fileId)
+	public static void removeByFileId(long fileId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchSyncException {
 		getPersistence().removeByFileId(fileId);
@@ -472,7 +471,7 @@ public class DLSyncUtil {
 	* @return the number of matching d l syncs
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByFileId(java.lang.String fileId)
+	public static int countByFileId(long fileId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByFileId(fileId);
 	}

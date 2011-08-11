@@ -115,13 +115,13 @@ public class DLAppHelperLocalServiceUtil {
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds, java.lang.String mimeType,
-		boolean addDraftAssetEntry, boolean visible)
+		boolean addDraftAssetEntry, boolean visible, int height, int width)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateAsset(userId, fileEntry, fileVersion,
 			assetCategoryIds, assetTagNames, assetLinkEntryIds, mimeType,
-			addDraftAssetEntry, visible);
+			addDraftAssetEntry, visible, height, width);
 	}
 
 	public static void updateFileEntry(
@@ -144,10 +144,13 @@ public class DLAppHelperLocalServiceUtil {
 	public static void updateStatus(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion latestFileVersion,
-		int status)
+		int status,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateStatus(userId, fileEntry, latestFileVersion, status);
+		getService()
+			.updateStatus(userId, fileEntry, latestFileVersion, status,
+			workflowContext);
 	}
 
 	public static DLAppHelperLocalService getService() {

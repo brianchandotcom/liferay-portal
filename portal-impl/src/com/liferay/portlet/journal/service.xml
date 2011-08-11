@@ -108,7 +108,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_C_C" return-type="JournalArticle">
+		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
@@ -375,8 +375,8 @@
 
 		<column name="structureId" type="String" />
 		<column name="parentStructureId" type="String" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
 		<column name="xsd" type="String" />
 
 		<!-- Order -->
@@ -429,8 +429,8 @@
 
 		<column name="templateId" type="String" />
 		<column name="structureId" type="String" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
 		<column name="xsl" type="String" />
 		<column name="langType" type="String" />
 		<column name="cacheable" type="boolean" />

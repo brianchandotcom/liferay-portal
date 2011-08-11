@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= showTabs && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
+	<c:when test="<%= showTabs && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) %>">
 
 		<%
 		String topLink = ParamUtil.getString(request, "topLink", "documents-home");
@@ -26,9 +26,21 @@
 
 		long defaultFolderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-defaultFolderId"));
 
+		long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+
 		boolean viewFolder = GetterUtil.getBoolean((String)request.getAttribute("view.jsp-viewFolder"));
 
 		boolean useAssetEntryQuery = GetterUtil.getBoolean((String)request.getAttribute("view.jsp-useAssetEntryQuery"));
+
+		String documentsHomeMessage = "documents-home";
+		String recentDocumentsMessage = "recent-documents";
+		String myDocumentsMessage = "my-documents";
+
+		if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
+			documentsHomeMessage = "images-home";
+			recentDocumentsMessage = "recent-images";
+			myDocumentsMessage = "my-images";
+		}
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -41,41 +53,41 @@
 				<div class="top-links-navigation">
 
 					<%
-					portletURL.setParameter("topLink", "documents-home");
+					portletURL.setParameter("topLink", documentsHomeMessage);
 					%>
 
 					<liferay-ui:icon
 						cssClass="top-link"
 						image="../aui/home"
 						label="<%= true %>"
-						message="documents-home"
-						url='<%= (topLink.equals("documents-home") && (folderId == defaultFolderId) && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+						message="<%= documentsHomeMessage %>"
+						url='<%= (topLink.equals(documentsHomeMessage) && (folderId == defaultFolderId) && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
 					/>
 
 					<%
-					portletURL.setParameter("topLink", "recent-documents");
+					portletURL.setParameter("topLink", recentDocumentsMessage);
 					%>
 
 					<liferay-ui:icon
 						cssClass='<%= "top-link" + (themeDisplay.isSignedIn() ? StringPool.BLANK : " last") %>'
 						image="../aui/clock"
 						label="<%= true %>"
-						message="recent-documents"
-						url='<%= (topLink.equals("recent-documents") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+						message="<%= recentDocumentsMessage %>"
+						url='<%= (topLink.equals(recentDocumentsMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
 					/>
 
 					<c:if test="<%= themeDisplay.isSignedIn() %>">
 
 						<%
-						portletURL.setParameter("topLink", "my-documents");
+						portletURL.setParameter("topLink", myDocumentsMessage);
 						%>
 
 						<liferay-ui:icon
 							cssClass="top-link last"
 							image="../aui/person"
 							label="<%= true %>"
-							message="my-documents"
-							url='<%= (topLink.equals("my-documents") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+							message="<%= myDocumentsMessage %>"
+							url='<%= (topLink.equals(myDocumentsMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
 						/>
 					</c:if>
 				</div>
@@ -89,6 +101,7 @@
 						<aui:form action="<%= searchURL %>" method="get" name="searchFm">
 							<liferay-portlet:renderURLParams varImpl="searchURL" />
 							<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+							<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 							<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
 							<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
 
@@ -109,7 +122,7 @@
 			</div>
 		</div>
 	</c:when>
-	<c:when test="<%= showTabs && showSubfolders && !portletName.equals(PortletKeys.DOCUMENT_LIBRARY) %>">
+	<c:when test="<%= showTabs && showSubfolders && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
 		<liferay-ui:header
 			title="documents-home"
 		/>

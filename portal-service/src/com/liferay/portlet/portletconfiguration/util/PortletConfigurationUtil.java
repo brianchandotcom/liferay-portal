@@ -36,8 +36,7 @@ public class PortletConfigurationUtil {
 
 		String customCSSClassName = StringPool.BLANK;
 
-		String css = portletSetup.getValue(
-			"portlet-setup-css", StringPool.BLANK);
+		String css = portletSetup.getValue("portletSetupCss", StringPool.BLANK);
 
 		if (Validator.isNotNull(css)) {
 			JSONObject cssJSON = PortletSetupUtil.cssToJSON(portletSetup, css);
@@ -58,7 +57,7 @@ public class PortletConfigurationUtil {
 
 		String useCustomTitle = GetterUtil.getString(
 			portletSetup.getValue(
-				"portlet-setup-use-custom-title", StringPool.BLANK));
+				"portletSetupUseCustomTitle", StringPool.BLANK));
 
 		if (!useCustomTitle.equals("true")) {
 			return null;
@@ -68,17 +67,17 @@ public class PortletConfigurationUtil {
 			LocaleUtil.getDefault());
 
 		String defaultPortletTitle = portletSetup.getValue(
-			"portlet-setup-title-" + defaultLanguageId, StringPool.BLANK);
+			"portletSetupTitle_" + defaultLanguageId, StringPool.BLANK);
 
 		String portletTitle = portletSetup.getValue(
-			"portlet-setup-title-" + languageId, defaultPortletTitle);
+			"portletSetupTitle_" + languageId, defaultPortletTitle);
 
 		if (Validator.isNull(portletTitle)) {
 
 			// For backwards compatibility
 
 			String oldPortletTitle = portletSetup.getValue(
-				"portlet-setup-title", null);
+				"portletSetupTitle", null);
 
 			if (Validator.isNull(useCustomTitle) &&
 				Validator.isNotNull(oldPortletTitle)) {
@@ -87,10 +86,10 @@ public class PortletConfigurationUtil {
 
 				try {
 					portletSetup.setValue(
-						"portlet-setup-title-" + defaultLanguageId,
+						"portletSetupTitle_" + defaultLanguageId,
 						portletTitle);
 					portletSetup.setValue(
-						"portlet-setup-use-custom-title", "true");
+						"portletSetupUseCustomTitle", Boolean.TRUE.toString());
 
 					portletSetup.store();
 				}

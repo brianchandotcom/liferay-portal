@@ -135,8 +135,7 @@ public class EditSharingAction extends EditConfigurationAction {
 			actionRequest, "widgetShowAddAppLink");
 
 		preferences.setValue(
-			"lfr-widget-show-add-app-link",
-			String.valueOf(widgetShowAddAppLink));
+			"lfrWidgetShowAddAppLink", String.valueOf(widgetShowAddAppLink));
 	}
 
 	protected void updateFacebook(
@@ -150,11 +149,10 @@ public class EditSharingAction extends EditConfigurationAction {
 		boolean facebookShowAddAppLink = ParamUtil.getBoolean(
 			actionRequest, "facebookShowAddAppLink");
 
-		preferences.setValue("lfr-facebook-api-key", facebookAPIKey);
+		preferences.setValue("lfrFacebookApiKey", facebookAPIKey);
+		preferences.setValue("lfrFacebookCanvasPageUrl", facebookCanvasPageURL);
 		preferences.setValue(
-			"lfr-facebook-canvas-page-url", facebookCanvasPageURL);
-		preferences.setValue(
-			"lfr-facebook-show-add-app-link",
+			"lfrFacebookShowAddAppLink",
 			String.valueOf(facebookShowAddAppLink));
 	}
 
@@ -166,7 +164,7 @@ public class EditSharingAction extends EditConfigurationAction {
 			actionRequest, "appShowShareWithFriendsLink");
 
 		preferences.setValue(
-			"lfr-app-show-share-with-friends-link",
+			"lfrAppShowShareWithFriendsLink",
 			String.valueOf(appShowShareWithFriendsLink));
 	}
 
@@ -178,8 +176,7 @@ public class EditSharingAction extends EditConfigurationAction {
 			actionRequest, "iGoogleShowAddAppLink");
 
 		preferences.setValue(
-			"lfr-igoogle-show-add-app-link",
-			String.valueOf(iGoogleShowAddAppLink));
+			"lfrIgoogleShowAddAppLink", String.valueOf(iGoogleShowAddAppLink));
 	}
 
 	protected void updateNetvibes(
@@ -190,7 +187,7 @@ public class EditSharingAction extends EditConfigurationAction {
 			actionRequest, "netvibesShowAddAppLink");
 
 		preferences.setValue(
-			"lfr-netvibes-show-add-app-link",
+			"lfrNetvibesShowAddAppLink",
 			String.valueOf(netvibesShowAddAppLink));
 	}
 

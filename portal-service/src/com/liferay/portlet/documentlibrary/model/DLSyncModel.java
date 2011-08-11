@@ -120,15 +120,14 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	 *
 	 * @return the file ID of this d l sync
 	 */
-	@AutoEscape
-	public String getFileId();
+	public long getFileId();
 
 	/**
 	 * Sets the file ID of this d l sync.
 	 *
 	 * @param fileId the file ID of this d l sync
 	 */
-	public void setFileId(String fileId);
+	public void setFileId(long fileId);
 
 	/**
 	 * Returns the repository ID of this d l sync.
@@ -143,6 +142,20 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	 * @param repositoryId the repository ID of this d l sync
 	 */
 	public void setRepositoryId(long repositoryId);
+
+	/**
+	 * Returns the parent folder ID of this d l sync.
+	 *
+	 * @return the parent folder ID of this d l sync
+	 */
+	public long getParentFolderId();
+
+	/**
+	 * Sets the parent folder ID of this d l sync.
+	 *
+	 * @param parentFolderId the parent folder ID of this d l sync
+	 */
+	public void setParentFolderId(long parentFolderId);
 
 	/**
 	 * Returns the event of this d l sync.

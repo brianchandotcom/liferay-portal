@@ -54,9 +54,9 @@ if (layoutSetBranchId > 0) {
 				%>
 
 				<c:if test="<%= layoutSetBranches.size() > 1 %>">
-					<aui:select label='<%= privateLayout ? "copy-pages-from-private-pages-variation" : "copy-pages-from-public-pages-variation" %>' name="copyLayoutSetBranchId">
-						<aui:option label='<%= privateLayout ? "all-private-pages-variations" : "all-public-pages-variations" %>' selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
-						<aui:option label='<%= privateLayout ? "none-empty-private-pages-variation" : "none-empty-public-pages-variation" %>' value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
+					<aui:select label="copy-pages-from-site-pages-variation" name="copyLayoutSetBranchId">
+						<aui:option label="all-site-pages-variations" selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
+						<aui:option label="none-empty-site-pages-variation" value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
 
 						<%
 						for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {

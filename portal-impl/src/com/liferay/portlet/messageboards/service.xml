@@ -328,6 +328,7 @@
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialEquityLog" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portlet.wiki" entity="WikiPage" />
 	</entity>
 	<entity name="MBMessageFlag" human-name="message boards message flag" local-service="true" remote-service="true">
 

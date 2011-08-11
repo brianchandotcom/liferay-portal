@@ -7,11 +7,9 @@ AUI().add(
 
 		var CONTENT_BOX = 'contentBox';
 
-		var EVENT_ITEM_CHOSEN = 'itemChosen';
+		var NAME = 'listview';
 
-		var NAME = 'liferaylistview';
-
-		var CSS_DATA_CONTAINER = getClassName(NAME, 'data', 'container');
+		var CSS_DATA_CONTAINER = 'lfr-list-view-data-container';
 
 		var STR_BOTTOM = 'bottom';
 
@@ -25,9 +23,14 @@ AUI().add(
 
 		var TPL_DATA_CONTAINER = '<div class="' + CSS_DATA_CONTAINER + ' aui-helper-hidden"></div>';
 
+		var UI_SRC = A.Widget.UI_SRC;
+
 		var ListView = A.Component.create(
 			{
 				ATTRS: {
+					cssClass: {
+						value: 'lfr-list-view'
+					},
 					data: {
 						setter: '_setData',
 						validator: '_validateData',
@@ -39,7 +42,12 @@ AUI().add(
 						value: STR_LEFT
 					},
 
-					itemChosen: {
+					item: {
+						validator: Lang.isObject,
+						value: null
+					},
+
+					itemChosenEvent: {
 						validator: isString,
 						value: 'click'
 					},
@@ -47,12 +55,6 @@ AUI().add(
 					itemSelector: {
 						validator: isString,
 						value: null
-					},
-
-					itemAttributes: {
-						setter: A.Array,
-						validator: '_validateItemAttributes',
-						value: 'href'
 					},
 
 					transitionConfig: {
@@ -97,7 +99,7 @@ AUI().add(
 
 						var contentBox = instance.get(CONTENT_BOX);
 
-						var itemChosenEvent = instance.get(EVENT_ITEM_CHOSEN);
+						var itemChosenEvent = instance.get('itemChosenEvent');
 						var itemSelector = instance.get('itemSelector');
 
 						instance._itemChosenHandle = contentBox.delegate(itemChosenEvent, instance._onItemChosen, itemSelector, instance);
@@ -155,32 +157,15 @@ AUI().add(
 					_onItemChosen: function(event) {
 						var instance = this;
 
-						var itemAttributes = instance.get('itemAttributes');
+						event.preventDefault();
 
-						if (itemAttributes) {
-							event.preventDefault();
-
-							var attributesData = {};
-
-							var target = event.currentTarget;
-
-							A.Array.each(
-								itemAttributes,
-								function(item, index, collection) {
-									var attributeData = target.getAttribute(item);
-
-									attributesData[item] = attributeData;
-								}
-							);
-
-							instance.fire(
-								EVENT_ITEM_CHOSEN,
-								{
-									item: target,
-									attributes: attributesData
-								}
-							);
-						}
+						instance.set(
+							'item',
+							event.currentTarget,
+							{
+								src: UI_SRC
+							}
+						);
 					},
 
 					_onTransitionCompleted: function() {
@@ -244,10 +229,6 @@ AUI().add(
 					_validateDirection: function(value) {
 						return value === STR_BOTTOM || value === STR_LEFT ||
 							value === STR_RIGHT || value === STR_TOP;
-					},
-
-					_validateItemAttributes: function(value) {
-						return isString(value) || Lang.isArray(value);
 					}
 				}
 			}

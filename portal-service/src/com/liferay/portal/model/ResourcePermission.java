@@ -30,4 +30,5 @@ public interface ResourcePermission extends ResourcePermissionModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ResourcePermissionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public boolean hasActionId(java.lang.String actionId);
 }

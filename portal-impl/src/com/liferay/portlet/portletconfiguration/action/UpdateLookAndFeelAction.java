@@ -112,37 +112,36 @@ public class UpdateLookAndFeelAction extends JSONAction {
 			}
 
 			if (Validator.isNotNull(title)) {
-				portletSetup.setValue(
-					"portlet-setup-title-" + languageId, title);
+				portletSetup.setValue("portletSetupTitle_" + languageId, title);
 			}
 			else {
-				portletSetup.reset("portlet-setup-title-" + languageId);
+				portletSetup.reset("portletSetupTitle_" + languageId);
 			}
 		}
 
 		portletSetup.setValue(
-			"portlet-setup-use-custom-title", String.valueOf(useCustomTitle));
+			"portletSetupUseCustomTitle", String.valueOf(useCustomTitle));
 		portletSetup.setValue(
-			"portlet-setup-show-borders", String.valueOf(showBorders));
+			"portletSetupShowBorders", String.valueOf(showBorders));
 
 		if (Validator.isNotNull(linkToLayoutUuid)) {
 			portletSetup.setValue(
-				"portlet-setup-link-to-layout-uuid",linkToLayoutUuid);
+				"portletSetupLinkToLayoutUuid", linkToLayoutUuid);
 		}
 		else {
-			portletSetup.reset("portlet-setup-link-to-layout-uuid");
+			portletSetup.reset("portletSetupLinkToLayoutUuid");
 		}
 
-		portletSetup.setValue("portlet-setup-css", css);
+		portletSetup.setValue("portletSetupCss", css);
 
 		JSONObject wapData = jsonObj.getJSONObject("wapData");
 
 		String wapTitle = wapData.getString("title");
 		String wapInitialWindowState = wapData.getString("initialWindowState");
 
-		portletSetup.setValue("lfr-wap-title", wapTitle);
+		portletSetup.setValue("lfrWapTitle", wapTitle);
 		portletSetup.setValue(
-			"lfr-wap-initial-window-state", wapInitialWindowState);
+			"lfrWapInitialWindowState", wapInitialWindowState);
 
 		portletSetup.store();
 

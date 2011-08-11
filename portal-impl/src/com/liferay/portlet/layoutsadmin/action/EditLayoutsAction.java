@@ -49,10 +49,12 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -62,6 +64,7 @@ import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
@@ -534,6 +537,13 @@ public class EditLayoutsAction extends PortletAction {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
 		long layoutSetBranchId = ParamUtil.getLong(
 			actionRequest, "layoutSetBranchId");
 
@@ -544,7 +554,8 @@ public class EditLayoutsAction extends PortletAction {
 				layoutSetBranchId);
 
 		StagingUtil.setRecentLayoutSetBranchId(
-			request, layoutSetBranch.getLayoutSetBranchId());
+			request, layoutSet.getLayoutSetId(),
+			layoutSetBranch.getLayoutSetBranchId());
 	}
 
 	protected void selectLayoutBranch(ActionRequest actionRequest)
@@ -839,7 +850,7 @@ public class EditLayoutsAction extends PortletAction {
 				actionRequest, device + "InheritLookAndFeel");
 
 			if (inheritLookAndFeel) {
-				themeId = StringPool.BLANK;
+				themeId = ThemeImpl.getDefaultRegularThemeId(companyId);
 				colorSchemeId = StringPool.BLANK;
 
 				deleteThemeSettings(typeSettingsProperties, device);

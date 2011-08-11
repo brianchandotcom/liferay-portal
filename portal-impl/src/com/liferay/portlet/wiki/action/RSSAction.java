@@ -108,7 +108,7 @@ public class RSSAction extends PortletAction {
 		String type = ParamUtil.getString(
 			request, "type", RSSUtil.DEFAULT_TYPE);
 		double version = ParamUtil.getDouble(
-			request, "version", RSSUtil.DEFAULT_VERSION);
+			request, "version", RSSUtil.VERSION_DEFAULT);
 		String displayStyle = ParamUtil.getString(
 			request, "displayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
 

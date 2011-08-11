@@ -45,12 +45,12 @@ public class RSSUtil {
 
 	public static final String DEFAULT_TYPE = ATOM;
 
-	public static final double DEFAULT_VERSION = 1.0;
+	public static final double VERSION_DEFAULT = 1.0;
 
 	public static final String DEFAULT_ENTRY_TYPE = "html";
 
 	public static final String DEFAULT_FEED_TYPE = getFeedType(
-		DEFAULT_TYPE, DEFAULT_VERSION);
+		DEFAULT_TYPE, VERSION_DEFAULT);
 
 	public static final String DISPLAY_STYLE_ABSTRACT = "abstract";
 
@@ -96,7 +96,7 @@ public class RSSUtil {
 	}
 
 	public static double getFormatVersion(String format) {
-		double formatVersion = DEFAULT_VERSION;
+		double formatVersion = VERSION_DEFAULT;
 
 		if (StringUtil.contains(format, "10")) {
 			formatVersion = 1.0;

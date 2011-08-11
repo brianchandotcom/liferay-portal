@@ -16,8 +16,13 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,6 +44,10 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,7 +153,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			category.setThreadCount(category.getThreadCount() - 1);
 			category.setMessageCount(
-				category.getMessageCount() - messages.size());
+				category.getMessageCount() - thread.getMessageCount());
 
 			mbCategoryPersistence.update(category, false);
 		}
@@ -382,6 +391,17 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	public void incrementViewCounter(long threadId, int increment)
+		throws PortalException, SystemException {
+
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+		thread.setViewCount(thread.getViewCount() + increment);
+
+		mbThreadPersistence.update(thread, false);
+	}
+
 	public MBThread moveThread(long groupId, long categoryId, long threadId)
 		throws PortalException, SystemException {
 
@@ -435,7 +455,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if ((oldCategory != null) && (categoryId != oldCategoryId)) {
 			oldCategory.setThreadCount(oldCategory.getThreadCount() - 1);
 			oldCategory.setMessageCount(
-				oldCategory.getMessageCount() - messages.size());
+				oldCategory.getMessageCount() - thread.getMessageCount());
 
 			mbCategoryPersistence.update(oldCategory, false);
 		}
@@ -443,7 +463,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if ((category != null) && (categoryId != oldCategoryId)) {
 			category.setThreadCount(category.getThreadCount() + 1);
 			category.setMessageCount(
-				category.getMessageCount() + messages.size());
+				category.getMessageCount() + thread.getMessageCount());
 
 			mbCategoryPersistence.update(category, false);
 		}
@@ -579,6 +599,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	/**
+	 * @deprecated {@link #incrementViewCounter(long, int)}
+	 */
 	public MBThread updateThread(long threadId, int viewCount)
 		throws PortalException, SystemException {
 
@@ -628,6 +651,48 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	protected void moveAttachmentFromOldThread(
+			long companyId, String fileName, String newAttachmentsDir)
+		throws PortalException, SystemException {
+
+		long repositoryId = CompanyConstants.SYSTEM;
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(newAttachmentsDir);
+		sb.append(StringPool.SLASH);
+		sb.append(StringUtil.extractLast(fileName, StringPool.SLASH));
+
+		String newFileName = sb.toString();
+
+		try {
+			File file = DLStoreUtil.getFile(
+				companyId, repositoryId, fileName);
+
+			DLStoreUtil.addFile(
+				companyId, repositoryId, newFileName, false, file);
+		}
+		catch (UnsupportedOperationException uoe) {
+			InputStream is = DLStoreUtil.getFileAsStream(
+				companyId, repositoryId, fileName);
+
+			try {
+				DLStoreUtil.addFile(
+					companyId, repositoryId, newFileName, false, is);
+			}
+			finally {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+					_log.error(ioe);
+				}
+			}
+		}
+
+		DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
+	}
+
 	protected void moveAttachmentsFromOldThread(
 			MBMessage message, String oldAttachmentsDir)
 		throws PortalException, SystemException {
@@ -651,15 +716,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			companyId, repositoryId, oldAttachmentsDir);
 
 		for (String fileName : fileNames) {
-			String name = StringUtil.extractLast(fileName, StringPool.SLASH);
-			byte[] fileBytes = DLStoreUtil.getFile(
-				companyId, repositoryId, fileName);
-
-			DLStoreUtil.addFile(
-				companyId, repositoryId, newAttachmentsDir + "/" + name,
-				fileBytes);
-
-			DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
+			moveAttachmentFromOldThread(companyId, fileName, newAttachmentsDir);
 		}
 
 		try {
@@ -706,5 +763,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		return messagesMoved;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		MBThreadLocalServiceImpl.class);
 
 }

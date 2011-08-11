@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AddUserAddressTest</title>
 </head>
 <body>
@@ -17,49 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>BasicNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>BasicNotVisible</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_keywords</td>
+	<td>//input[@id='_125_keywords']</td>
 	<td>selen01</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -67,109 +44,119 @@
 	<td>User Name</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_125_addressesLink']</td>
+	<td>Addresses</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_addressesLink']</td>
+	<td>Addresses</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>_125_addressesLink</td>
+	<td>//a[@id='_125_addressesLink']</td>
 	<td>Addresses</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_addressStreet1_0</td>
+	<td>//input[@id='_125_addressStreet1_0']</td>
 	<td>123 Liferay Ln.</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_addressCountryId0</td>
+	<td>//select[@id='_125_addressCountryId0']</td>
 	<td>label=United States</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>_125_addressRegionId0</td>
-	<td>AlabamaAlaskaArizonaArkansasCaliforniaColoradoConnecticutDelawareDistrict of ColumbiaFloridaGeorgiaHawaiiIdahoIllinoisIndianaIowaKansasKentucky Louisiana MaineMarylandMassachusettsMichiganMinnesotaMississippiMissouriMontanaNebraskaNevadaNew HampshireNew JerseyNew MexicoNew YorkNorth CarolinaNorth DakotaOhioOklahoma OregonPennsylvaniaPuerto RicoRhode IslandSouth CarolinaSouth DakotaTennesseeTexasUtahVermontVirginiaWashingtonWest VirginiaWisconsinWyoming</td>
+	<td>waitForPartialText</td>
+	<td>//select[@id='_125_addressRegionId0']</td>
+	<td>California</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_addressRegionId0</td>
+	<td>//select[@id='_125_addressRegionId0']</td>
 	<td>label=California</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_addressZip0</td>
+	<td>//input[@id='_125_addressZip0']</td>
 	<td>91234</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_addressCity0</td>
+	<td>//input[@id='_125_addressCity0']</td>
 	<td>Ray of Light</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_addressTypeId0</td>
+	<td>//select[@id='_125_addressTypeId0']</td>
 	<td>label=Personal</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_125_addressMailing0Checkbox</td>
-	<td></td>
+	<td>//input[@id='_125_addressMailing0Checkbox']</td>
+	<td>Mailing Checkbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_125_addressPrimary0</td>
-	<td></td>
+	<td>//input[@id='_125_addressPrimary0']</td>
+	<td>Primary Button</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>_125_addressRegionId0</td>
-	<td>AlabamaAlaskaArizonaArkansasCaliforniaColoradoConnecticutDelawareDistrict of ColumbiaFloridaGeorgiaHawaiiIdahoIllinoisIndianaIowaKansasKentucky Louisiana MaineMarylandMassachusettsMichiganMinnesotaMississippiMissouriMontanaNebraskaNevadaNew HampshireNew JerseyNew MexicoNew YorkNorth CarolinaNorth DakotaOhioOklahoma OregonPennsylvaniaPuerto RicoRhode IslandSouth CarolinaSouth DakotaTennesseeTexasUtahVermontVirginiaWashingtonWest VirginiaWisconsinWyoming</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_addressStreet1_0</td>
+	<td>//input[@id='_125_addressStreet1_0']</td>
 	<td>123 Liferay Ln.</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_125_addressTypeId0</td>
+	<td>//select[@id='_125_addressTypeId0']</td>
 	<td>Personal</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_addressZip0</td>
+	<td>//input[@id='_125_addressZip0']</td>
 	<td>91234</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_125_addressCity0</td>
+	<td>//input[@id='_125_addressCity0']</td>
 	<td>Ray of Light</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_125_addressCountryId0</td>
+	<td>//select[@id='_125_addressCountryId0']</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_125_addressRegionId0</td>
+	<td>//select[@id='_125_addressRegionId0']</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>_125_addressPrimary0</td>
-	<td></td>
+	<td>//input[@id='_125_addressPrimary0']</td>
+	<td>Primary Button</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>_125_addressMailing0Checkbox</td>
-	<td></td>
+	<td>//input[@id='_125_addressMailing0Checkbox']</td>
+	<td>Mailing Checkbox</td>
 </tr>
 
 </tbody></table>

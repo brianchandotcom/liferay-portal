@@ -51,7 +51,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 	<liferay-util:buffer var="htmlTop">
 		<div class="company-info">
 			<p class="float-container">
-				<img alt="<liferay-ui:message key="logo" />" class="company-logo" src="<%= themeDisplay.getPathImage() %>/company_logo?img_id=<%= company.getLogoId() %>&t=<%= ImageServletTokenUtil.getToken(company.getLogoId()) %>" /><br />
+				<img alt="<liferay-ui:message key="logo" />" class="company-logo" src="<%= themeDisplay.getPathImage() %>/company_logo?img_id=<%= company.getLogoId() %>&t=<%= WebServerServletTokenUtil.getToken(company.getLogoId()) %>" /><br />
 
 				<span class="company-name"><%= company.getName() %></span>
 			</p>

@@ -276,6 +276,10 @@ public class ResourcePermissionWrapper implements ResourcePermission {
 		_resourcePermission.persist();
 	}
 
+	public boolean hasActionId(java.lang.String actionId) {
+		return _resourcePermission.hasActionId(actionId);
+	}
+
 	public ResourcePermission getWrappedResourcePermission() {
 		return _resourcePermission;
 	}

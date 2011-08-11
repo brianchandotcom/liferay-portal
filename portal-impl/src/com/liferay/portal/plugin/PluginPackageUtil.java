@@ -56,8 +56,11 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
 import java.net.MalformedURLException;
+
 import java.text.DateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -554,7 +557,10 @@ public class PluginPackageUtil {
 	}
 
 	private boolean _isInstalled(String context) {
-		if (_installedPluginPackages.getPluginPackage(context) != null) {
+		PluginPackage pluginPackage = _installedPluginPackages.getPluginPackage(
+			context);
+
+		if (pluginPackage != null) {
 			return true;
 		}
 		else {

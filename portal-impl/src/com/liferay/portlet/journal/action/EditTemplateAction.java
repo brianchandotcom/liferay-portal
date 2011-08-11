@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +45,9 @@ import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.util.JS;
 
 import java.io.File;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -223,8 +227,10 @@ public class EditTemplateAction extends PortletAction {
 			uploadRequest, "autoTemplateId");
 
 		String structureId = ParamUtil.getString(uploadRequest, "structureId");
-		String name = ParamUtil.getString(uploadRequest, "name");
-		String description = ParamUtil.getString(uploadRequest, "description");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		String xsl = ParamUtil.getString(uploadRequest, "xsl");
 		String xslContent = JS.decodeURIComponent(
@@ -255,8 +261,8 @@ public class EditTemplateAction extends PortletAction {
 			// Add template
 
 			template = JournalTemplateServiceUtil.addTemplate(
-				groupId, templateId, autoTemplateId, structureId, name,
-				description, xsl, formatXsl, langType, cacheable, smallImage,
+				groupId, templateId, autoTemplateId, structureId, nameMap,
+				descriptionMap, xsl, formatXsl, langType, cacheable, smallImage,
 				smallImageURL, smallFile, serviceContext);
 		}
 		else {
@@ -264,7 +270,7 @@ public class EditTemplateAction extends PortletAction {
 			// Update template
 
 			template = JournalTemplateServiceUtil.updateTemplate(
-				groupId, templateId, structureId, name, description, xsl,
+				groupId, templateId, structureId, nameMap, descriptionMap, xsl,
 				formatXsl, langType, cacheable, smallImage, smallImageURL,
 				smallFile, serviceContext);
 		}

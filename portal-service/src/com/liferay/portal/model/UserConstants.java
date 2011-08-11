@@ -14,15 +14,17 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.servlet.ImageServletTokenUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 /**
  * @author Amos Fong
  */
 public class UserConstants {
+
+	public static final int FULL_NAME_MAX_LENGTH = 75;
 
 	public static final String LIST_VIEW_FLAT_ORGANIZATIONS =
 		"flat-organizations";
@@ -54,7 +56,7 @@ public class UserConstants {
 		sb.append("_portrait?img_id=");
 		sb.append(portraitId);
 		sb.append("&t=");
-		sb.append(ImageServletTokenUtil.getToken(portraitId));
+		sb.append(WebServerServletTokenUtil.getToken(portraitId));
 
 		return sb.toString();
 	}

@@ -410,6 +410,20 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>, GroupedModel
 	 */
 	public void setMinDisplayRows(int minDisplayRows);
 
+	/**
+	 * Returns the scope of this d d l record set.
+	 *
+	 * @return the scope of this d d l record set
+	 */
+	public int getScope();
+
+	/**
+	 * Sets the scope of this d d l record set.
+	 *
+	 * @param scope the scope of this d d l record set
+	 */
+	public void setScope(int scope);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

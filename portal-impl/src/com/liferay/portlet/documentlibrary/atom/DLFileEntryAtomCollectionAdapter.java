@@ -206,7 +206,7 @@ public class DLFileEntryAtomCollectionAdapter
 
 		DLFileEntry dlFileEntry = DLFileEntryServiceUtil.addFileEntry(
 			groupId, repositoryId, folderId, title, mimeType, title, summary,
-			null, 0, null, contentInputStream, contentDecoded.length,
+			null, 0, null, null, contentInputStream, contentDecoded.length,
 			serviceContext);
 
 		return dlFileEntry;
@@ -251,8 +251,8 @@ public class DLFileEntryAtomCollectionAdapter
 
 		DLFileEntry dlFileEntry = DLFileEntryServiceUtil.addFileEntry(
 			groupId, repositoryId, folderId, title, mimeType, title,
-			description, null, 0, null, contentInputStream, content.length,
-			serviceContext);
+			description, null, 0, null, null, contentInputStream,
+			content.length, serviceContext);
 
 		return dlFileEntry;
 	}
@@ -277,7 +277,7 @@ public class DLFileEntryAtomCollectionAdapter
 		ServiceContext serviceContext = new ServiceContext();
 
 		DLFileEntryServiceUtil.updateFileEntry(dlFileEntry.getFileEntryId(),
-			title, mimeType, title, summary, null, true, 0, null,
+			title, mimeType, title, summary, null, true, 0, null, null,
 			contentInputStream, contentDecoded.length, serviceContext);
 	}
 
@@ -303,7 +303,7 @@ public class DLFileEntryAtomCollectionAdapter
 		ServiceContext serviceContext = new ServiceContext();
 
 		DLFileEntryServiceUtil.updateFileEntry(dlFileEntry.getFileEntryId(),
-			slug, mimeType, title, description, null, true, 0, null,
+			slug, mimeType, title, description, null, true, 0, null, null,
 			contentInputStream, content.length, serviceContext);
 	}
 

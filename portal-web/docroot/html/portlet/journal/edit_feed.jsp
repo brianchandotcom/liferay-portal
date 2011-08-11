@@ -36,14 +36,14 @@ if (Validator.isNotNull(structureId)) {
 	try {
 		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
 
-		structureName = structure.getName();
+		structureName = structure.getName(locale);
 	}
 	catch (NoSuchStructureException nsse1) {
 		if (groupId != themeDisplay.getCompanyGroupId()) {
 			try {
 				structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
 
-				structureName = structure.getName();
+				structureName = structure.getName(locale);
 			}
 			catch (NoSuchStructureException nsse2) {
 			}
@@ -82,7 +82,7 @@ if ((structure == null) && Validator.isNotNull(templateId)) {
 		try {
 			structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
 
-			structureName = structure.getName();
+			structureName = structure.getName(locale);
 
 			templates = JournalTemplateLocalServiceUtil.getStructureTemplates(groupId, structureId);
 		}
@@ -91,7 +91,7 @@ if ((structure == null) && Validator.isNotNull(templateId)) {
 				try {
 					structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
 
-					structureName = structure.getName();
+					structureName = structure.getName(locale);
 
 					templates = JournalTemplateLocalServiceUtil.getStructureTemplates(themeDisplay.getCompanyGroupId(), structureId);
 				}
@@ -111,7 +111,7 @@ if (Validator.isNull(contentField) || ((structure == null) && !contentField.equa
 }
 
 String feedType = BeanParamUtil.getString(feed, request, "feedType", RSSUtil.DEFAULT_TYPE);
-double feedVersion = BeanParamUtil.getDouble(feed, request, "feedVersion", RSSUtil.DEFAULT_VERSION);
+double feedVersion = BeanParamUtil.getDouble(feed, request, "feedVersion", RSSUtil.VERSION_DEFAULT);
 
 ResourceURL feedURL = null;
 
@@ -269,7 +269,7 @@ if (feed != null) {
 								<c:if test="<%= tableIteratorObj.isSmallImage() %>">
 									<br />
 
-									<img border="0" hspace="0" src="<%= Validator.isNotNull(tableIteratorObj.getSmallImageURL()) ? tableIteratorObj.getSmallImageURL() : themeDisplay.getPathImage() + "/journal/template?img_id=" + tableIteratorObj.getSmallImageId() + "&t=" + ImageServletTokenUtil.getToken(tableIteratorObj.getSmallImageId()) %>" vspace="0" />
+									<img border="0" hspace="0" src="<%= Validator.isNotNull(tableIteratorObj.getSmallImageURL()) ? tableIteratorObj.getSmallImageURL() : themeDisplay.getPathImage() + "/journal/template?img_id=" + tableIteratorObj.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(tableIteratorObj.getSmallImageId()) %>" vspace="0" />
 								</c:if>
 							</liferay-ui:table-iterator>
 						</c:otherwise>
@@ -297,7 +297,7 @@ if (feed != null) {
 								taglibSelectRendererTemplateOption = renderResponse.getNamespace() + "selectRendererTemplate('" + currTemplate.getTemplateId() + "');";
 							%>
 
-								<aui:option label='<%= LanguageUtil.format(pageContext, "use-template-x", currTemplate.getName()) %>' onClick="<%= taglibSelectRendererTemplateOption %>" selected="<%= rendererTemplateId.equals(currTemplate.getTemplateId()) %>" value="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />
+								<aui:option label='<%= LanguageUtil.format(pageContext, "use-template-x", currTemplate.getName(locale)) %>' onClick="<%= taglibSelectRendererTemplateOption %>" selected="<%= rendererTemplateId.equals(currTemplate.getTemplateId()) %>" value="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />
 
 							<%
 							}

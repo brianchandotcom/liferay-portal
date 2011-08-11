@@ -60,7 +60,7 @@ long classPK = BeanParamUtil.getLong(article, request, "classPK");
 
 String articleId = BeanParamUtil.getString(article, request, "articleId");
 
-double version = BeanParamUtil.getDouble(article, request, "version", JournalArticleConstants.DEFAULT_VERSION);
+double version = BeanParamUtil.getDouble(article, request, "version", JournalArticleConstants.VERSION_DEFAULT);
 
 String structureId = BeanParamUtil.getString(article, request, "structureId");
 
@@ -398,7 +398,7 @@ private String _getArticleImage(ThemeDisplay themeDisplay, JournalArticle articl
 			imageURL = article.getSmallImageURL();
 		}
 		else {
-			imageURL = themeDisplay.getPathImage() + "/journal/article?img_id=" + article.getSmallImageId() + "&t=" + ImageServletTokenUtil.getToken(article.getSmallImageId());
+			imageURL = themeDisplay.getPathImage() + "/journal/article?img_id=" + article.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(article.getSmallImageId());
 		}
 	}
 

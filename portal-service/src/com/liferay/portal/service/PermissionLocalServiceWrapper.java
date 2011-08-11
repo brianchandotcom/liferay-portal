@@ -330,6 +330,11 @@ public class PermissionLocalServiceWrapper implements PermissionLocalService {
 	}
 
 	public java.util.List<com.liferay.portal.model.Permission> getUserPermissions(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _permissionLocalService.getUserPermissions(userId);
+	}
+
+	public java.util.List<com.liferay.portal.model.Permission> getUserPermissions(
 		long userId, long resourceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _permissionLocalService.getUserPermissions(userId, resourceId);

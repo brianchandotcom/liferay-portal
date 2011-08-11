@@ -272,7 +272,7 @@ public class GroupFinderImpl
 
 			q.addEntity("Group_", GroupImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -302,7 +302,7 @@ public class GroupFinderImpl
 			qPos.add(classNameId);
 			qPos.add(privateLayout);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -324,7 +324,7 @@ public class GroupFinderImpl
 
 			q.addEntity("Group_", GroupImpl.class);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -350,7 +350,7 @@ public class GroupFinderImpl
 
 			qPos.add(companyId);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -646,7 +646,7 @@ public class GroupFinderImpl
 		qPos.add(description);
 		qPos.add(description);
 
-		return q.list();
+		return q.list(true);
 	}
 
 	protected String getJoin(LinkedHashMap<String, Object> params) {
@@ -944,6 +944,7 @@ public class GroupFinderImpl
 
 		Map<String, String> joinMap = new HashMap<String, String>();
 
+		joinMap.put("active", _removeWhere(CustomSQLUtil.get(JOIN_BY_ACTIVE)));
 		joinMap.put(
 			"groupOrg", _removeWhere(CustomSQLUtil.get(JOIN_BY_GROUP_ORG)));
 		joinMap.put(

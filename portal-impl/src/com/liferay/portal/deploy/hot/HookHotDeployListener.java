@@ -120,6 +120,9 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.DefaultControlPanelEntryFactory;
+import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
+import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
+import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerWrapper;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
@@ -188,6 +191,7 @@ public class HookHotDeployListener
 		"dl.file.entry.drafts.enabled",
 		"dl.file.entry.processors",
 		"dl.repository.impl",
+		"dl.store.antivirus.impl",
 		"dl.store.impl",
 		"dl.webdav.hold.lock",
 		"dl.webdav.save.to.single.version",
@@ -196,7 +200,6 @@ public class HookHotDeployListener
 		"field.enable.com.liferay.portal.model.Contact.male",
 		"field.enable.com.liferay.portal.model.Organization.status",
 		"hot.deploy.listeners",
-		"image.hook.impl",
 		"javascript.fast.load",
 		"layout.static.portlets.all",
 		"layout.template.cache.enabled",
@@ -299,7 +302,8 @@ public class HookHotDeployListener
 	}
 
 	protected void destroyCustomJspBag(
-		String servletContextName, CustomJspBag customJspBag) {
+			String servletContextName, CustomJspBag customJspBag)
+		throws Exception {
 
 		String customJspDir = customJspBag.getCustomJspDir();
 		boolean customJspGlobal = customJspBag.isCustomJspGlobal();
@@ -394,12 +398,16 @@ public class HookHotDeployListener
 			dlRepositoryContainer.unregisterRepositoryFactories();
 		}
 
-		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
-			StoreFactory.setInstance(null);
+		if (portalProperties.containsKey(PropsKeys.DL_STORE_ANTIVIRUS_IMPL)) {
+			AntivirusScannerWrapper antivirusScannerWrapper =
+				(AntivirusScannerWrapper)
+					AntivirusScannerUtil.getAntivirusScanner();
+
+			antivirusScannerWrapper.setAntivirusScanner(null);
 		}
 
-		if (portalProperties.containsKey(PropsKeys.IMAGE_HOOK_IMPL)) {
-			com.liferay.portal.image.HookFactory.setInstance(null);
+		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
+			StoreFactory.setInstance(null);
 		}
 
 		if (portalProperties.containsKey(
@@ -1603,6 +1611,21 @@ public class HookHotDeployListener
 			}
 		}
 
+		if (portalProperties.containsKey(PropsKeys.DL_STORE_ANTIVIRUS_IMPL)) {
+			String antivirusScannerClassName = portalProperties.getProperty(
+				PropsKeys.DL_STORE_ANTIVIRUS_IMPL);
+
+			AntivirusScanner antivirusScanner = (AntivirusScanner)newInstance(
+				portletClassLoader, AntivirusScanner.class,
+				antivirusScannerClassName);
+
+			AntivirusScannerWrapper antivirusScannerWrapper =
+				(AntivirusScannerWrapper)
+					AntivirusScannerUtil.getAntivirusScanner();
+
+			antivirusScannerWrapper.setAntivirusScanner(antivirusScanner);
+		}
+
 		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
 			String storeClassName = portalProperties.getProperty(
 				PropsKeys.DL_STORE_IMPL);
@@ -1611,19 +1634,6 @@ public class HookHotDeployListener
 				portletClassLoader, Store.class, storeClassName);
 
 			StoreFactory.setInstance(store);
-		}
-
-		if (portalProperties.containsKey(PropsKeys.IMAGE_HOOK_IMPL)) {
-			String imageHookClassName = portalProperties.getProperty(
-				PropsKeys.IMAGE_HOOK_IMPL);
-
-			com.liferay.portal.kernel.image.Hook imageHook =
-				(com.liferay.portal.kernel.image.Hook)newInstance(
-					portletClassLoader,
-					com.liferay.portal.kernel.image.Hook.class,
-					imageHookClassName);
-
-			com.liferay.portal.image.HookFactory.setInstance(imageHook);
 		}
 
 		if (portalProperties.containsKey(

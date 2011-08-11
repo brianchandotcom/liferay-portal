@@ -141,7 +141,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			WorkflowConstants.STATUS_ANY);
 
 		if (dlFileVersions.isEmpty()) {
-			String versionNumber = Store.DEFAULT_VERSION;
+			String versionNumber = Store.VERSION_DEFAULT;
 
 			migrateFile(companyId, repositoryId, fileName, versionNumber);
 
@@ -163,13 +163,12 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			InputStream is = _sourceStore.getFileAsStream(
 				companyId, repositoryId, fileName, versionNumber);
 
-			if (versionNumber.equals(Store.DEFAULT_VERSION)) {
+			if (versionNumber.equals(Store.VERSION_DEFAULT)) {
 				_targetStore.addFile(companyId, repositoryId, fileName, is);
 			}
 			else {
 				_targetStore.updateFile(
-					companyId, repositoryId, fileName, versionNumber, fileName,
-					is);
+					companyId, repositoryId, fileName, versionNumber, is);
 			}
 		}
 		catch (Exception e) {
@@ -182,7 +181,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		throws Exception {
 
 		long repositoryId = CompanyConstants.SYSTEM;
-		String versionNumber = Store.DEFAULT_VERSION;
+		String versionNumber = Store.VERSION_DEFAULT;
 
 		try {
 			_targetStore.addDirectory(companyId, repositoryId, dirName);

@@ -45,7 +45,7 @@ public class DDLRecordSetLocalServiceImpl
 	public DDLRecordSet addRecordSet(
 			long userId, long groupId, long ddmStructureId, String recordSetKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			int minDisplayRows, ServiceContext serviceContext)
+			int minDisplayRows, int scope, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Record set
@@ -76,6 +76,7 @@ public class DDLRecordSetLocalServiceImpl
 		recordSet.setNameMap(nameMap);
 		recordSet.setDescriptionMap(descriptionMap);
 		recordSet.setMinDisplayRows(minDisplayRows);
+		recordSet.setScope(scope);
 
 		ddlRecordSetPersistence.update(recordSet, false);
 
@@ -208,43 +209,44 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	public List<DDLRecordSet> search(
-			long companyId, long groupId, String keywords, int start, int end,
-			OrderByComparator orderByComparator)
+			long companyId, long groupId, String keywords, int scope, int start,
+			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddlRecordSetFinder.findByKeywords(
-			companyId, groupId, keywords, start, end, orderByComparator);
+			companyId, groupId, keywords, scope, start, end, orderByComparator);
 	}
 
 	public List<DDLRecordSet> search(
 			long companyId, long groupId, String name, String description,
-			boolean andOperator, int start, int end,
+			int scope, boolean andOperator, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return ddlRecordSetFinder.findByC_G_N_D(
-			companyId, groupId, name, description, andOperator, start, end,
-			orderByComparator);
+		return ddlRecordSetFinder.findByC_G_N_D_S(
+			companyId, groupId, name, description, scope, andOperator, start,
+			end, orderByComparator);
 	}
 
-	public int searchCount(long companyId, long groupId, String keywords)
+	public int searchCount(
+			long companyId, long groupId, String keywords, int scope)
 		throws SystemException {
 
-		return ddlRecordSetFinder.countByKeywords(companyId, groupId, keywords);
+		return ddlRecordSetFinder.countByKeywords(
+			companyId, groupId, keywords, scope);
 	}
 
 	public int searchCount(
 			long companyId, long groupId, String name, String description,
-			boolean andOperator)
+			int scope, boolean andOperator)
 		throws SystemException {
 
-		return ddlRecordSetFinder.countByC_G_N_D(
-			companyId, groupId, name, description, andOperator);
+		return ddlRecordSetFinder.countByC_G_N_D_S(
+			companyId, groupId, name, description, scope, andOperator);
 	}
 
 	public DDLRecordSet updateMinDisplayRows(
-			long recordSetId, int minDisplayRows,
-			ServiceContext serviceContext)
+			long recordSetId, int minDisplayRows, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(

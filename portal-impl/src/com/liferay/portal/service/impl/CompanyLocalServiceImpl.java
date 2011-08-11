@@ -421,6 +421,22 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return companyPersistence.fetchByPrimaryKey(companyId);
 	}
 
+	public Company fetchCompanyByVirtualHost(String virtualHostname)
+		throws SystemException {
+
+		virtualHostname = virtualHostname.trim().toLowerCase();
+
+		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
+			virtualHostname);
+
+		if ((virtualHost == null) || (virtualHost.getLayoutSetId() != 0)) {
+			return null;
+		}
+
+		return companyPersistence.fetchByPrimaryKey(
+			virtualHost.getCompanyId());
+	}
+
 	public List<Company> getCompanies() throws SystemException {
 		return companyPersistence.findAll();
 	}

@@ -135,6 +135,11 @@ public class LayoutTypePortletImpl
 	public LayoutTypePortletImpl(Layout layout) {
 		super(layout);
 
+		if (_nestedPortletsNamespace == null) {
+			_nestedPortletsNamespace = PortalUtil.getPortletNamespace(
+				PortletKeys.NESTED_PORTLETS);
+		}
+
 		_templateLayout = getTemplateLayout(layout);
 	}
 
@@ -276,7 +281,7 @@ public class LayoutTypePortletImpl
 			}
 
 			if ((columnValue == null) &&
-				(columnId.startsWith(_NESTED_PORTLETS_NAMESPACE))) {
+				(columnId.startsWith(_nestedPortletsNamespace))) {
 
 				addNestedColumn(columnId);
 			}
@@ -1689,13 +1694,12 @@ public class LayoutTypePortletImpl
 
 	private static final String _MODIFIED_DATE = "modifiedDate";
 
-	private static final String _NESTED_PORTLETS_NAMESPACE =
-		PortalUtil.getPortletNamespace(PortletKeys.NESTED_PORTLETS);
-
 	private static final String _NULL_DATE = "00000000000000";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutTypePortletImpl.class);
+
+	private static String _nestedPortletsNamespace;
 
 	private boolean _customizedView;
 	private Format _dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(

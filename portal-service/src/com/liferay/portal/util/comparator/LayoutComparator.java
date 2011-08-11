@@ -22,9 +22,11 @@ import com.liferay.portal.model.Layout;
  */
 public class LayoutComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "groupId ASC, layoutId ASC";
+	public static String ORDER_BY_ASC =
+		"Layout.groupId ASC, Layout.layoutId ASC";
 
-	public static String ORDER_BY_DESC = "groupId DESC, layoutId DESC";
+	public static String ORDER_BY_DESC =
+		"Layout.groupId DESC, Layout.layoutId DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"groupId", "layoutId"};
 

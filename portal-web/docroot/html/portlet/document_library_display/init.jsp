@@ -73,7 +73,9 @@
 <%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %>
+<%@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %>
+<%@ page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.storage.Fields" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %>
@@ -93,14 +95,12 @@ else if (layout.isTypeControlPanel()) {
 	preferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
 }
 
-Folder rootFolder = null;
-
 long rootFolderId = PrefsParamUtil.getLong(preferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	try {
-		rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+		Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
 		rootFolderName = rootFolder.getName();
 	}

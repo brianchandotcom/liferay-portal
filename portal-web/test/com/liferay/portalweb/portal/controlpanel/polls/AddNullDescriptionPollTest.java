@@ -41,31 +41,51 @@ public class AddNullDescriptionPollTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Polls", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Question']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Question"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_title_en_US",
+		selenium.type("//input[@id='_25_title_en_US']",
 			RuntimeVariables.replace("Null Description Poll Test Title"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_description_en_US", RuntimeVariables.replace(""));
+		selenium.type("//textarea[@id='_25_description_en_US']",
+			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_choiceDescriptiona_en_US",
+		selenium.type("//input[@id='_25_choiceDescriptiona_en_US']",
 			RuntimeVariables.replace("Null Description Poll Test Choice A"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_choiceDescriptionb_en_US",
+		selenium.type("//input[@id='_25_choiceDescriptionb_en_US']",
 			RuntimeVariables.replace("Null Description Poll Test Choice B"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("This field is required.")
+										.equals(selenium.getText("//label/div"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid description."));
+		assertEquals(RuntimeVariables.replace("This field is required."),
+			selenium.getText("//label/div"));
 	}
 }

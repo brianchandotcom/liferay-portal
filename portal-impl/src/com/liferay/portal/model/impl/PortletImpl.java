@@ -50,6 +50,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
@@ -148,14 +149,15 @@ public class PortletImpl extends PortletBaseImpl {
 		String controlPanelClass, List<String> assetRendererFactoryClasses,
 		List<String> atomCollectionAdapterClasses,
 		List<String> customAttributesDisplayClasses,
-		List<String> workflowHandlerClasses, String defaultPreferences,
-		String preferencesValidator, boolean preferencesCompanyWide,
-		boolean preferencesUniquePerLayout, boolean preferencesOwnedByGroup,
-		boolean useDefaultTemplate, boolean showPortletAccessDenied,
-		boolean showPortletInactive, boolean actionURLRedirect,
-		boolean restoreCurrentView, boolean maximizeEdit, boolean maximizeHelp,
-		boolean popUpPrint, boolean layoutCacheable, boolean instanceable,
-		boolean remoteable, boolean scopeable, String userPrincipalStrategy,
+		String permissionPropagatorClass, List<String> workflowHandlerClasses,
+		String defaultPreferences, String preferencesValidator,
+		boolean preferencesCompanyWide, boolean preferencesUniquePerLayout,
+		boolean preferencesOwnedByGroup, boolean useDefaultTemplate,
+		boolean showPortletAccessDenied, boolean showPortletInactive,
+		boolean actionURLRedirect, boolean restoreCurrentView,
+		boolean maximizeEdit, boolean maximizeHelp, boolean popUpPrint,
+		boolean layoutCacheable, boolean instanceable, boolean remoteable,
+		boolean scopeable, String userPrincipalStrategy,
 		boolean privateRequestAttributes, boolean privateSessionAttributes,
 		Set<String> autopropagatedParameters, int actionTimeout,
 		int renderTimeout, int renderWeight, boolean ajaxable,
@@ -213,6 +215,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_assetRendererFactoryClasses = assetRendererFactoryClasses;
 		_atomCollectionAdapterClasses = atomCollectionAdapterClasses;
 		_customAttributesDisplayClasses = customAttributesDisplayClasses;
+		_permissionPropagatorClass = permissionPropagatorClass;
 		_workflowHandlerClasses = workflowHandlerClasses;
 		_defaultPreferences = defaultPreferences;
 		_preferencesValidator = preferencesValidator;
@@ -1261,6 +1264,40 @@ public class PortletImpl extends PortletBaseImpl {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
 		return portletBag.getCustomAttributesDisplayInstances();
+	}
+
+	/**
+	 * Returns the name of the permission propagator class of the portlet.
+	 *
+	 * @return the name of the permission propagator class of the portlet
+	 */
+	public String getPermissionPropagatorClass() {
+		return _permissionPropagatorClass;
+	}
+
+	/**
+	 * Sets the name of the permission propagator class of the portlet.
+	 *
+	 * @param pollerProcessorClass the name of the permission propagator class
+	 *        of the portlet
+	 */
+	public void setPermissionPropagatorClass(String permissionPropagatorClass) {
+		_permissionPropagatorClass = permissionPropagatorClass;
+	}
+
+	/**
+	 * Returns the permission propagator instance of the portlet.
+	 *
+	 * @return the permission propagator instance of the portlet
+	 */
+	public PermissionPropagator getPermissionPropagatorInstance() {
+		if (Validator.isNull(getPermissionPropagatorClass())) {
+			return null;
+		}
+
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		return portletBag.getPermissionPropagatorInstance();
 	}
 
 	/**
@@ -3188,18 +3225,19 @@ public class PortletImpl extends PortletBaseImpl {
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
 			getControlPanelEntryClass(), getAssetRendererFactoryClasses(),
 			getAtomCollectionAdapterClasses(),
-			getCustomAttributesDisplayClasses(), getWorkflowHandlerClasses(),
-			getDefaultPreferences(), getPreferencesValidator(),
-			isPreferencesCompanyWide(),	isPreferencesUniquePerLayout(),
-			isPreferencesOwnedByGroup(), isUseDefaultTemplate(),
-			isShowPortletAccessDenied(), isShowPortletInactive(),
-			isActionURLRedirect(), isRestoreCurrentView(), isMaximizeEdit(),
-			isMaximizeHelp(), isPopUpPrint(), isLayoutCacheable(),
-			isInstanceable(), isRemoteable(), isScopeable(),
-			getUserPrincipalStrategy(), isPrivateRequestAttributes(),
-			isPrivateSessionAttributes(), getAutopropagatedParameters(),
-			getActionTimeout(), getRenderTimeout(), getRenderWeight(),
-			isAjaxable(), getHeaderPortalCss(), getHeaderPortletCss(),
+			getCustomAttributesDisplayClasses(), getPermissionPropagatorClass(),
+			getWorkflowHandlerClasses(), getDefaultPreferences(),
+			getPreferencesValidator(), isPreferencesCompanyWide(),
+			isPreferencesUniquePerLayout(), isPreferencesOwnedByGroup(),
+			isUseDefaultTemplate(), isShowPortletAccessDenied(),
+			isShowPortletInactive(), isActionURLRedirect(),
+			isRestoreCurrentView(), isMaximizeEdit(), isMaximizeHelp(),
+			isPopUpPrint(), isLayoutCacheable(), isInstanceable(),
+			isRemoteable(), isScopeable(), getUserPrincipalStrategy(),
+			isPrivateRequestAttributes(), isPrivateSessionAttributes(),
+			getAutopropagatedParameters(), getActionTimeout(),
+			getRenderTimeout(), getRenderWeight(), isAjaxable(),
+			getHeaderPortalCss(), getHeaderPortletCss(),
 			getHeaderPortalJavaScript(), getHeaderPortletJavaScript(),
 			getFooterPortalCss(), getFooterPortletCss(),
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
@@ -3465,6 +3503,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 * associated with the portlet.
 	 */
 	private List<String> _customAttributesDisplayClasses;
+
+	/**
+	 * The name of the permission propagator class of the portlet.
+	 */
+	private String _permissionPropagatorClass;
 
 	/**
 	 * The names of the classes that represents workflow handlers associated

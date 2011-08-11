@@ -37,6 +37,7 @@ import java.util.Arrays;
 /**
  * @author Brian Wing Shun Chan
  * @author Sten Martinez
+ * @author Alexander Chow
  */
 public class FileSystemStore extends BaseStore {
 
@@ -68,7 +69,7 @@ public class FileSystemStore extends BaseStore {
 
 		try {
 			File fileNameVersionFile = getFileNameVersionFile(
-				companyId, repositoryId, fileName, DEFAULT_VERSION);
+				companyId, repositoryId, fileName, VERSION_DEFAULT);
 
 			if (fileNameVersionFile.exists()) {
 				throw new DuplicateFileException(fileNameVersionFile.getPath());
@@ -88,21 +89,27 @@ public class FileSystemStore extends BaseStore {
 	@Override
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber,
-			String sourceFileName)
-		throws PortalException {
+			String fromVersionLabel, String toVersionLabel)
+		throws PortalException, SystemException {
 
 		File fromFileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, fromVersionNumber);
+			companyId, repositoryId, fileName, fromVersionLabel);
 
 		File toFileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, toVersionNumber);
+			companyId, repositoryId, fileName, toVersionLabel);
 
 		if (toFileNameVersionFile.exists()) {
 			throw new DuplicateFileException(toFileNameVersionFile.getPath());
 		}
 
-		FileUtil.copyFile(fromFileNameVersionFile, toFileNameVersionFile);
+		try {
+			toFileNameVersionFile.createNewFile();
+
+			FileUtil.copyFile(fromFileNameVersionFile, toFileNameVersionFile);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	@Override
@@ -135,11 +142,11 @@ public class FileSystemStore extends BaseStore {
 	@Override
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException {
 
 		File fileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
 
 		if (!fileNameVersionFile.exists()) {
 			throw new NoSuchFileException(fileNameVersionFile.getPath());
@@ -149,19 +156,40 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
+	public File getFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException {
+
+		if (Validator.isNull(versionLabel)) {
+			versionLabel = getHeadVersionLabel(
+				companyId, repositoryId, fileName);
+		}
+
+		File fileNameVersionFile = getFileNameVersionFile(
+			companyId, repositoryId, fileName, versionLabel);
+
+		if (!fileNameVersionFile.exists()) {
+			throw new NoSuchFileException(fileNameVersionFile.getPath());
+		}
+
+		return fileNameVersionFile;
+	}
+
+	@Override
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber)
+			String versionLabel)
 		throws PortalException, SystemException {
 
 		try {
-			if (Validator.isNull(versionNumber)) {
-				versionNumber = getHeadVersionNumber(
+			if (Validator.isNull(versionLabel)) {
+				versionLabel = getHeadVersionLabel(
 					companyId, repositoryId, fileName);
 			}
 
 			File fileNameVersionFile = getFileNameVersionFile(
-				companyId, repositoryId, fileName, versionNumber);
+				companyId, repositoryId, fileName, versionLabel);
 
 			if (!fileNameVersionFile.exists()) {
 				throw new NoSuchFileException(fileNameVersionFile.getPath());
@@ -209,11 +237,11 @@ public class FileSystemStore extends BaseStore {
 	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
-		String versionNumber = getHeadVersionNumber(
+		String versionLabel = getHeadVersionLabel(
 			companyId, repositoryId, fileName);
 
 		File fileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
 
 		if (!fileNameVersionFile.exists()) {
 			throw new NoSuchFileException(fileNameVersionFile.getPath());
@@ -225,10 +253,10 @@ public class FileSystemStore extends BaseStore {
 	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,
-		String versionNumber) {
+		String versionLabel) {
 
 		File fileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, versionNumber);
+			companyId, repositoryId, fileName, versionLabel);
 
 		if (fileNameVersionFile.exists()) {
 			return true;
@@ -244,40 +272,54 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, long newRepositoryId,
-		String fileName) {
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws SystemException {
 
-		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
-		File newFileNameDir = getFileNameDir(
-			companyId, newRepositoryId, fileName);
+		try {
+			File fileNameDir = getFileNameDir(
+				companyId, repositoryId, fileName);
+			File newFileNameDir = getFileNameDir(
+				companyId, newRepositoryId, fileName);
 
-		FileUtil.copyDirectory(fileNameDir, newFileNameDir);
+			FileUtil.copyDirectory(fileNameDir, newFileNameDir);
 
-		FileUtil.deltree(fileNameDir);
+			FileUtil.deltree(fileNameDir);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String newFileName) {
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws SystemException {
 
-		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
-		File newFileNameDir = getFileNameDir(
-			companyId, repositoryId, newFileName);
+		try {
+			File fileNameDir = getFileNameDir(
+				companyId, repositoryId, fileName);
+			File newFileNameDir = getFileNameDir(
+				companyId, repositoryId, newFileName);
 
-		FileUtil.copyDirectory(fileNameDir, newFileNameDir);
+			FileUtil.copyDirectory(fileNameDir, newFileNameDir);
 
-		FileUtil.deltree(fileNameDir);
+			FileUtil.deltree(fileNameDir);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionNumber, String sourceFileName, InputStream is)
+			String versionLabel, InputStream is)
 		throws PortalException, SystemException {
 
 		try {
 			File fileNameVersionFile = getFileNameVersionFile(
-				companyId, repositoryId, fileName, versionNumber);
+				companyId, repositoryId, fileName, versionLabel);
 
 			if (fileNameVersionFile.exists()) {
 				throw new DuplicateFileException(fileNameVersionFile.getPath());
@@ -292,14 +334,14 @@ public class FileSystemStore extends BaseStore {
 
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
-			String fromVersionNumber, String toVersionNumber)
+			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
 		File fromFileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, fromVersionNumber);
+			companyId, repositoryId, fileName, fromVersionLabel);
 
 		File toFileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, toVersionNumber);
+			companyId, repositoryId, fileName, toVersionLabel);
 
 		if (toFileNameVersionFile.exists()) {
 			throw new DuplicateFileException(toFileNameVersionFile.getPath());
@@ -346,26 +388,26 @@ public class FileSystemStore extends BaseStore {
 		return fileNameVersionFile;
 	}
 
-	protected String getHeadVersionNumber(
+	protected String getHeadVersionLabel(
 		long companyId, long repositoryId, String fileName) {
 
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 
 		if (!fileNameDir.exists()) {
-			return DEFAULT_VERSION;
+			return VERSION_DEFAULT;
 		}
 
-		String[] versionNumbers = FileUtil.listFiles(fileNameDir);
+		String[] versionLabels = FileUtil.listFiles(fileNameDir);
 
-		String headVersionNumber = DEFAULT_VERSION;
+		String headVersionLabel = VERSION_DEFAULT;
 
-		for (String versionNumber : versionNumbers) {
-			if (DLUtil.compareVersions(versionNumber, headVersionNumber) > 0) {
-				headVersionNumber = versionNumber;
+		for (String versionLabel : versionLabels) {
+			if (DLUtil.compareVersions(versionLabel, headVersionLabel) > 0) {
+				headVersionLabel = versionLabel;
 			}
 		}
 
-		return headVersionNumber;
+		return headVersionLabel;
 	}
 
 	protected File getRepositoryDir(long companyId, long repositoryId) {

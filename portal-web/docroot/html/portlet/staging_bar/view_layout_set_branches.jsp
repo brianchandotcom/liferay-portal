@@ -19,10 +19,12 @@
 <%
 List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 
-LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(themeDisplay.getUserId(), stagingGroup.getGroupId(), privateLayout, 0);
+LayoutSetBranch currentLayoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(themeDisplay.getUserId(), stagingGroup.getGroupId(), privateLayout, 0);
+
+request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", String.valueOf(currentLayoutSetBranch.getLayoutSetBranchId()));
 %>
 
-<liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.DUPLICATE %>" message="a-branch-with-that-name-already-exists" />
+<liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.DUPLICATE %>" message="a-site-pages-variation-with-that-name-already-exists" />
 <liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.TOO_LONG %>" message='<%= LanguageUtil.format(pageContext, "please-enter-a-value-between-x-and-x-characters-long", new Object[] {4, 100}) %>' />
 <liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.TOO_SHORT %>" message='<%= LanguageUtil.format(pageContext, "please-enter-a-value-between-x-and-x-characters-long", new Object[] {4, 100}) %>' />
 
@@ -38,11 +40,11 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 	</liferay-util:html-top>
 
 	<%
-	String taglibOnClick = "javascript:Liferay.Staging.Branching.addBranch('" + LanguageUtil.get(pageContext, (privateLayout ? "add-private-pages-variation" : "add-public-pages-variation")) + "');";
+	String taglibOnClick = "javascript:Liferay.StagingBar.addBranch('" + LanguageUtil.get(pageContext, "add-site-pages-variation") + "');";
 	%>
 
 	<aui:button-row>
-		<aui:button name="addBranchButton" onClick="<%= taglibOnClick %>" value='<%= privateLayout ? "add-private-pages-variation" : "add-public-pages-variation" %>' />
+		<aui:button name="addBranchButton" onClick="<%= taglibOnClick %>" value="add-site-pages-variation" />
 	</aui:button-row>
 </c:if>
 
@@ -66,14 +68,18 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 			>
 
 				<%
-				if (layoutSetBranch.equals(curLayoutSetBranch)) {
+				if (currentLayoutSetBranch.equals(curLayoutSetBranch)) {
 					buffer.append("<strong>");
 				}
 
 				buffer.append(LanguageUtil.get(pageContext, curLayoutSetBranch.getName()));
 
-				if (layoutSetBranch.equals(curLayoutSetBranch)) {
-					buffer.append(" (*)</strong>");
+				if (curLayoutSetBranch.isMaster()) {
+					buffer.append(" (*)");
+				}
+
+				if (currentLayoutSetBranch.equals(curLayoutSetBranch)) {
+					buffer.append("</strong>");
 				}
 				%>
 
@@ -92,10 +98,28 @@ LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getUserLayoutS
 	</liferay-ui:search-container>
 </div>
 
-<aui:script position="inline" use="liferay-staging">
-	Liferay.Staging.Branching.init(
+<aui:script position="inline" use="liferay-staging-branch">
+	Liferay.StagingBar.init(
 		{
 			namespace: '<portlet:namespace />'
 		}
 	);
 </aui:script>
+
+<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequest, portletName + ".doConfigure") %>'>
+	<aui:script use="aui-base">
+		if (window.parent) {
+			var stagingBarPortletBoundaryId = '#p_p_id_<%= PortletKeys.STAGING_BAR %>_';
+
+			var data;
+
+			<c:if test='<%= SessionMessages.contains(renderRequest, portletName + ".notAjaxable") %>'>
+				data = {
+					portletAjaxable: false
+				};
+			</c:if>
+
+			Liferay.Util.getOpener().Liferay.Portlet.refresh(stagingBarPortletBoundaryId, data);
+		}
+	</aui:script>
+</c:if>

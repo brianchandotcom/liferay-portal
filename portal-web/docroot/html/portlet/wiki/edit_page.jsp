@@ -320,7 +320,7 @@ if (Validator.isNull(redirect)) {
 
 				long classPK = resourcePrimKey;
 
-				if (!newPage && !wikiPage.isApproved() && (wikiPage.getVersion() != WikiPageConstants.DEFAULT_VERSION)) {
+				if (!newPage && !wikiPage.isApproved() && (wikiPage.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
 					try {
 						AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
 

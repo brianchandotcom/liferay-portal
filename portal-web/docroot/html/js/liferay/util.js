@@ -987,10 +987,6 @@
 				var uri = options.uri;
 				var width = options.width || 680;
 
-				options.dialog = {
-					stack: false
-				};
-
 				var editorButton = A.one(button);
 
 				if (editorButton) {
@@ -1538,7 +1534,19 @@
 		Util,
 		'updateCheckboxValue',
 		function(checkbox) {
-			A.one(checkbox).previous().val(checkbox.checked);
+			checkbox = A.one(checkbox);
+
+			if (checkbox) {
+				var checked = checkbox.attr('checked');
+
+				var value = '';
+
+				if (checked) {
+					value = checkbox.val();
+				}
+
+				checkbox.previous().val(value);
+			}
 		},
 		['aui-base']
 	);

@@ -268,13 +268,13 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		java.lang.String recordSetKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows,
+		int minDisplayRows, int scope,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecordSetLocalService.addRecordSet(userId, groupId,
 			ddmStructureId, recordSetKey, nameMap, descriptionMap,
-			minDisplayRows, serviceContext);
+			minDisplayRows, scope, serviceContext);
 	}
 
 	public void addRecordSetResources(
@@ -352,35 +352,36 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end,
+		long companyId, long groupId, java.lang.String keywords, int scope,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecordSetLocalService.search(companyId, groupId, keywords,
-			start, end, orderByComparator);
+			scope, start, end, orderByComparator);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
 		long companyId, long groupId, java.lang.String name,
-		java.lang.String description, boolean andOperator, int start, int end,
+		java.lang.String description, int scope, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecordSetLocalService.search(companyId, groupId, name,
-			description, andOperator, start, end, orderByComparator);
+			description, scope, andOperator, start, end, orderByComparator);
 	}
 
 	public int searchCount(long companyId, long groupId,
-		java.lang.String keywords)
+		java.lang.String keywords, int scope)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecordSetLocalService.searchCount(companyId, groupId,
-			keywords);
+			keywords, scope);
 	}
 
 	public int searchCount(long companyId, long groupId, java.lang.String name,
-		java.lang.String description, boolean andOperator)
+		java.lang.String description, int scope, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecordSetLocalService.searchCount(companyId, groupId, name,
-			description, andOperator);
+			description, scope, andOperator);
 	}
 
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateMinDisplayRows(

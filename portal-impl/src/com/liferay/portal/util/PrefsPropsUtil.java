@@ -354,35 +354,70 @@ public class PrefsPropsUtil {
 		PortletPreferences preferences, long companyId, String name,
 		double defaultValue) {
 
-		return preferences.getValue(name, String.valueOf(defaultValue));
+		String value = getString(preferences, companyId, name);
+
+		if (value != null) {
+			return value;
+		}
+		else {
+			return String.valueOf(defaultValue);
+		}
 	}
 
 	public static String getString(
 		PortletPreferences preferences, long companyId, String name,
 		int defaultValue) {
 
-		return preferences.getValue(name, String.valueOf(defaultValue));
+		String value = getString(preferences, companyId, name);
+
+		if (value != null) {
+			return value;
+		}
+		else {
+			return String.valueOf(defaultValue);
+		}
 	}
 
 	public static String getString(
 		PortletPreferences preferences, long companyId, String name,
 		long defaultValue) {
 
-		return preferences.getValue(name, String.valueOf(defaultValue));
+		String value = getString(preferences, companyId, name);
+
+		if (value != null) {
+			return value;
+		}
+		else {
+			return String.valueOf(defaultValue);
+		}
 	}
 
 	public static String getString(
 		PortletPreferences preferences, long companyId, String name,
 		short defaultValue) {
 
-		return preferences.getValue(name, String.valueOf(defaultValue));
+		String value = getString(preferences, companyId, name);
+
+		if (value != null) {
+			return value;
+		}
+		else {
+			return String.valueOf(defaultValue);
+		}
 	}
 
 	public static String getString(
 		PortletPreferences preferences, long companyId, String name,
 		String defaultValue) {
 
-		return preferences.getValue(name, defaultValue);
+		String value = getString(preferences, companyId, name);
+
+		if (value != null) {
+			return value;
+		}
+		else {
+			return defaultValue;
+		}
 	}
 
 	public static String getString(String name) throws SystemException {

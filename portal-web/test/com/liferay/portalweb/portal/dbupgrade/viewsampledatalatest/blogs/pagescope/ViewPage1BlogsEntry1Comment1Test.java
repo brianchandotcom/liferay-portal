@@ -48,7 +48,7 @@ public class ViewPage1BlogsEntry1Comment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("2 Comments"),
@@ -64,9 +64,9 @@ public class ViewPage1BlogsEntry1Comment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//a[@class='user-name']"));
+			selenium.getText("//span[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
@@ -93,16 +93,12 @@ public class ViewPage1BlogsEntry1Comment1Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Default"),
-			selenium.getText("//div[2]/span/a"));
+		assertEquals(RuntimeVariables.replace("Scope: Default"),
+			selenium.getText("//div/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("//div[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertEquals(RuntimeVariables.replace("2 Comments"),
-			selenium.getText("//span[@class='comments']/a"));
-		selenium.clickAt("//span[@class='comments']/a",
-			RuntimeVariables.replace("2 Comments"));
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a",
+			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
@@ -112,8 +108,8 @@ public class ViewPage1BlogsEntry1Comment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//a[@class='user-name']"));
+			selenium.getText("//span[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
-			selenium.getText("//form/div/div/div[1]/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div[1]/div[3]/div/div[1]"));
 	}
 }

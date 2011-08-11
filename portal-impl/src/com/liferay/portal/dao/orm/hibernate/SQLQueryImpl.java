@@ -83,22 +83,28 @@ public class SQLQueryImpl implements SQLQuery {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	public List list() throws ORMException {
-		return list(true);
+	public List<?> list() throws ORMException {
+		return list(false, false);
 	}
 
-	@SuppressWarnings("rawtypes")
-	public List list(boolean unmodifiable) throws ORMException {
+	public List<?> list(boolean unmodifiable) throws ORMException {
+		return list(true, unmodifiable);
+	}
+
+	public List<?> list(boolean copy, boolean unmodifiable)
+		throws ORMException {
+
 		try {
-			List list = _sqlQuery.list();
+			List<?> list = _sqlQuery.list();
 
 			if (unmodifiable) {
-				return new UnmodifiableList(list);
+				list = new UnmodifiableList<Object>(list);
 			}
-			else {
-				return ListUtil.copy(list);
+			else if (copy) {
+				list = ListUtil.copy(list);
 			}
+
+			return list;
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);

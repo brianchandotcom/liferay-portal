@@ -16,16 +16,24 @@
 
 <%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
+<c:if test="<%= showToolbar %>">
+	<liferay-util:include page="/html/portlet/dynamic_data_mapping/toolbar.jsp">
+		<liferay-util:param name="toolbarItem" value="view-all" />
+	</liferay-util:include>
+</c:if>
+
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 
-	<liferay-ui:header
-		localizeTitle="<%= false %>"
-		title="<%= scopeStructureName %>"
-	/>
+	<c:if test="<%= !showToolbar %>">
+		<liferay-ui:header
+			localizeTitle="<%= false %>"
+			title="<%= scopeStructureName %>"
+		/>
+	</c:if>
 
 	<liferay-ui:search-form
 		page="/html/portlet/dynamic_data_mapping/structure_search.jsp"

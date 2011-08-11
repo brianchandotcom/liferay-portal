@@ -22,9 +22,9 @@ import com.liferay.portlet.journal.model.JournalArticle;
  */
 public class ArticleTitleComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "title ASC";
+	public static String ORDER_BY_ASC = "JournalArticle.title ASC";
 
-	public static String ORDER_BY_DESC = "title DESC";
+	public static String ORDER_BY_DESC = "JournalArticle.title DESC";
 
 	public static String[] ORDER_BY_FIELDS = {"title"};
 

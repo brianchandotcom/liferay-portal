@@ -62,7 +62,8 @@ create table DDLRecordSet (
 	recordSetKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
-	minDisplayRows INTEGER
+	minDisplayRows INTEGER,
+	scope INTEGER
 );
 
 create table DDMContent (
@@ -177,6 +178,10 @@ create table DLFileEntryTypes_DLFolders (
 alter table DLFileEntry add repositoryId LONG;
 alter table DLFileEntry add mimeType VARCHAR(75) null;
 alter table DLFileEntry add fileEntryTypeId LONG;
+alter table DLFileEntry add smallImageId bigint;
+alter table DLFileEntry add largeImageId bigint;
+alter table DLFileEntry add custom1ImageId bigint;
+alter table DLFileEntry add custom2ImageId bigint;
 
 COMMIT_TRANSACTION;
 
@@ -202,6 +207,10 @@ alter table DLFileVersion add repositoryId LONG;
 alter table DLFileVersion add fileEntryId LONG;
 alter table DLFileVersion add mimeType VARCHAR(75) null;
 alter table DLFileVersion add fileEntryTypeId LONG;
+alter table DLFileVersion add smallImageId bigint;
+alter table DLFileVersion add largeImageId bigint;
+alter table DLFileVersion add custom1ImageId bigint;
+alter table DLFileVersion add custom2ImageId bigint;
 
 COMMIT_TRANSACTION;
 
@@ -222,8 +231,9 @@ create table DLSync (
 	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
-	fileId VARCHAR(75) null,
+	fileId LONG,
 	repositoryId LONG,
+	parentFolderId LONG,
 	event VARCHAR(75) null,
 	type_ VARCHAR(75) null
 );
@@ -350,6 +360,52 @@ update MBMessage set format = 'bbcode';
 alter table MBThread add companyId LONG;
 alter table MBThread add rootMessageUserId LONG;
 
+create table MDRAction (
+	uuid_ VARCHAR(75) null,
+	actionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	ruleGroupId LONG,
+	ruleId LONG,
+	name STRING null,
+	description STRING null,
+	type_ VARCHAR(75) null,
+	typeSettings VARCHAR(75) null
+);
+
+create table MDRRule (
+	uuid_ VARCHAR(75) null,
+	ruleId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	ruleGroupId LONG,
+	name STRING null,
+	description STRING null,
+	type_ VARCHAR(75) null,
+	typeSettings VARCHAR(75) null
+);
+
+create table MDRRuleGroup (
+	uuid_ VARCHAR(75) null,
+	ruleGroupId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name STRING null,
+	description STRING null
+);
+
 alter table PollsVote add companyId LONG;
 alter table PollsVote add userName VARCHAR(75) null;
 alter table PollsVote add createDate DATE null,;
@@ -384,7 +440,32 @@ create table RepositoryEntry (
 	mappedId VARCHAR(75) null
 );
 
+create table ResourceBlock (
+    resourceBlockId LONG not null primary key,
+    companyId LONG,
+    groupId LONG,
+    name VARCHAR(75) null,
+    permissionsHash VARCHAR(75) null,
+    referenceCount LONG
+);
+
+create table ResourceBlockPermission (
+    resourceBlockPermissionId LONG not null primary key,
+    resourceBlockId LONG,
+    roleId LONG,
+    actionIds LONG
+);
+
 alter table ResourcePermission add ownerId LONG;
+
+create table ResourceTypePermission (
+    resourceTypePermissionId LONG not null primary key,
+    companyId LONG,
+    groupId LONG,
+    name VARCHAR(75) null,
+    roleId LONG,
+    actionIds LONG
+);
 
 alter table SocialEquityLog add extraData VARCHAR(255) null;
 

@@ -108,6 +108,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>strict</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>useCustomPage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

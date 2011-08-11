@@ -33,7 +33,8 @@ public class ThemeHelper {
 	public static final String TEMPLATE_EXTENSION_VM = "vm";
 
 	public static String getResourcePath(
-		ServletContext servletContext, Theme theme, String path) {
+		ServletContext servletContext, Theme theme, String portletId,
+		String path) {
 
 		StringBundler sb = new StringBundler(9);
 
@@ -75,6 +76,12 @@ public class ThemeHelper {
 			sb.append(StringPool.SLASH);
 			sb.append(path.substring(start, end));
 			sb.append(StringPool.PERIOD);
+
+			if (Validator.isNotNull(portletId)) {
+				sb.append(portletId);
+				sb.append(StringPool.PERIOD);
+			}
+
 			sb.append(TEMPLATE_EXTENSION_FTL);
 
 			return sb.toString();
@@ -93,6 +100,12 @@ public class ThemeHelper {
 			sb.append(StringPool.SLASH);
 			sb.append(path.substring(start, end));
 			sb.append(StringPool.PERIOD);
+
+			if (Validator.isNotNull(portletId)) {
+				sb.append(portletId);
+				sb.append(StringPool.PERIOD);
+			}
+
 			sb.append(TEMPLATE_EXTENSION_VM);
 
 			return sb.toString();
@@ -103,14 +116,31 @@ public class ThemeHelper {
 	}
 
 	public static boolean resourceExists(
-			ServletContext servletContext, Theme theme, String path)
+			ServletContext servletContext, Theme theme, String portletId,
+			String path)
+		throws Exception {
+
+		boolean exists = _resourceExists(
+			servletContext, theme, portletId, path);
+
+		if (!exists && Validator.isNotNull(portletId)) {
+			exists = _resourceExists(servletContext, theme, null, path);
+		}
+
+		return exists;
+	}
+
+	private static boolean _resourceExists(
+			ServletContext servletContext, Theme theme, String portletId,
+			String path)
 		throws Exception {
 
 		if (Validator.isNull(path)) {
 			return false;
 		}
 
-		String resourcePath = getResourcePath(servletContext, theme, path);
+		String resourcePath = getResourcePath(
+			servletContext, theme, portletId, path);
 
 		String extension = theme.getTemplateExtension();
 

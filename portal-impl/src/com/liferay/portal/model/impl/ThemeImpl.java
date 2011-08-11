@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Plugin;
@@ -41,10 +42,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
+ * @author Raymond Augé
  */
 public class ThemeImpl extends PluginBaseImpl implements Theme {
 
@@ -213,6 +218,28 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		return Plugin.TYPE_THEME;
 	}
 
+	public String getResourcePath(
+		ServletContext servletContext, String portletId, String path) {
+
+		if (PropsValues.LAYOUT_TEMPLATE_CACHE_ENABLED) {
+			String key = encodeKey(portletId, path);
+
+			if (!_resourcePathCache.containsKey(key)) {
+
+				String resourcePath = ThemeHelper.getResourcePath(
+					servletContext, this, portletId, path);
+
+				_resourcePathCache.put(key, resourcePath);
+			}
+
+			return _resourcePathCache.get(key);
+		}
+		else {
+			return ThemeHelper.getResourcePath(
+				servletContext, this, portletId, path);
+		}
+	}
+
 	public String getRootPath() {
 		return _rootPath;
 	}
@@ -365,6 +392,29 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		return _warFile;
 	}
 
+	public boolean resourceExists(
+			ServletContext servletContext, String portletId, String path)
+		throws Exception {
+
+		if (PropsValues.LAYOUT_TEMPLATE_CACHE_ENABLED) {
+			String key = encodeKey(portletId, path);
+
+			if (!_resourceExistsCache.containsKey(key)) {
+
+				boolean exists = ThemeHelper.resourceExists(
+					servletContext, this, portletId, path);
+
+				_resourceExistsCache.put(key, exists);
+			}
+
+			return _resourceExistsCache.get(key);
+		}
+		else {
+			return ThemeHelper.resourceExists(
+				servletContext, this, portletId, path);
+		}
+	}
+
 	public void setCssPath(String cssPath) {
 		_cssPath = cssPath;
 	}
@@ -468,6 +518,14 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		_wapTheme = wapTheme;
 	}
 
+	protected String encodeKey(String portletId, String path) {
+		if (Validator.isNull(portletId)) {
+			return path;
+		}
+
+		return path.concat(StringPool.POUND).concat(portletId);
+	}
+
 	protected boolean isAvailable(ThemeCompanyLimit limit, long id) {
 		boolean available = true;
 
@@ -549,6 +607,10 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	private String _javaScriptPath = "${root-path}/js";
 	private boolean _loadFromServletContext;
 	private String _name;
+	private Map<String,Boolean> _resourceExistsCache =
+		new ConcurrentHashMap<String,Boolean>();
+	private Map<String,String> _resourcePathCache =
+		new ConcurrentHashMap<String,String>();
 	private String _rootPath = "/";
 	private String _servletContextName = StringPool.BLANK;
 	private Map<String, ThemeSetting> _settings =

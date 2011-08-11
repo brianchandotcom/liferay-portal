@@ -17,7 +17,6 @@ package com.liferay.portal.servlet.filters.servletcontextinclude;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
@@ -59,6 +58,13 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 				return false;
 			}
 
+			Boolean strict = (Boolean)request.getAttribute(
+				WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT);
+
+			if ((strict != null) && strict.booleanValue()) {
+				return false;
+			}
+
 			FilterConfig filterConfig = getFilterConfig();
 
 			ServletContext servletContext = filterConfig.getServletContext();
@@ -66,7 +72,18 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 			String uri = (String)request.getAttribute(
 				WebKeys.INVOKER_FILTER_URI);
 
-			if (ThemeHelper.resourceExists(servletContext, theme, uri)) {
+			String portletId = null;
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			if ((themeDisplay != null) && Validator.isNotNull(
+					themeDisplay.getPortletDisplay().getId())) {
+
+				portletId = themeDisplay.getPortletDisplay().getId();
+			}
+
+			if (theme.resourceExists(servletContext, portletId, uri)) {
 				request.setAttribute(
 					WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_THEME, theme);
 				request.setAttribute(

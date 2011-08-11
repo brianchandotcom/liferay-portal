@@ -34,7 +34,7 @@ List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(classNam
 for (AssetVocabulary vocabulary : vocabularies) {
 	vocabulary = vocabulary.toEscapedModel();
 
-	String vocabularyName = vocabulary.getName();
+	String vocabularyName = vocabulary.getTitle(themeDisplay.getLocale());
 
 	List<AssetCategory> curCategories = _filterCategories(categories, vocabulary);
 %>
@@ -53,7 +53,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 						portletURL.setParameter("categoryId", String.valueOf(category.getCategoryId()));
 					%>
 
-						<a class="asset-category" href="<%= portletURL.toString() %>"><%= _buildCategoryPath(category) %></a>
+						<a class="asset-category" href="<%= portletURL.toString() %>"><%= _buildCategoryPath(category, themeDisplay.getLocale()) %></a>
 
 					<%
 					}
@@ -68,7 +68,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 					%>
 
 						<span class="asset-category">
-							<%= _buildCategoryPath(category) %>
+							<%= _buildCategoryPath(category, themeDisplay.getLocale()) %>
 						</span>
 
 					<%
@@ -84,11 +84,11 @@ for (AssetVocabulary vocabulary : vocabularies) {
 %>
 
 <%!
-private String _buildCategoryPath(AssetCategory category) throws PortalException, SystemException {
+private String _buildCategoryPath(AssetCategory category, Locale locale) throws PortalException, SystemException {
 	List<AssetCategory> ancestorCategories = category.getAncestors();
 
 	if (ancestorCategories.isEmpty()) {
-		return category.getName();
+		return category.getTitle(locale);
 	}
 
 	Collections.reverse(ancestorCategories);
@@ -98,11 +98,11 @@ private String _buildCategoryPath(AssetCategory category) throws PortalException
 	for (AssetCategory ancestorCategory : ancestorCategories) {
 		ancestorCategory = ancestorCategory.toEscapedModel();
 
-		sb.append(ancestorCategory.getName());
+		sb.append(ancestorCategory.getTitle(locale));
 		sb.append(" &raquo; ");
 	}
 
-	sb.append(category.getName());
+	sb.append(category.getTitle(locale));
 
 	return sb.toString();
 }

@@ -305,14 +305,14 @@ public class StringUtil {
 		}
 
 		if (offset > s.length()) {
-			offset = s.length();
+			return s.concat(insert);
 		}
+		else {
+			String prefix = s.substring(0, offset);
+			String postfix = s.substring(offset);
 
-		StringBuilder sb = new StringBuilder(s);
-
-		sb.insert(offset, insert);
-
-		return sb.toString();
+			return prefix.concat(insert).concat(postfix);
+		}
 	}
 
 	public static String lowerCase(String s) {

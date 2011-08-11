@@ -418,6 +418,7 @@
 		</portlet-ref>
 		<permissions>
 			<supports>
+				<action-key>ADD_LAYOUT</action-key>
 				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
@@ -436,6 +437,7 @@
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
+				<action-key>ADD_LAYOUT</action-key>
 				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>

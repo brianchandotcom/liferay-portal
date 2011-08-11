@@ -76,6 +76,7 @@ import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
+import com.liferay.portlet.asset.util.AssetValidatorThreadLocal;
 import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -770,6 +771,7 @@ public class PortletImporter {
 			portletDataElement.attributeValue("path"));
 
 		try {
+			AssetValidatorThreadLocal.setEnabled(false);
 			SocialActivityThreadLocal.setEnabled(false);
 			WorkflowThreadLocal.setEnabled(false);
 
@@ -782,6 +784,7 @@ public class PortletImporter {
 			throw e;
 		}
 		finally {
+			AssetValidatorThreadLocal.setEnabled(true);
 			SocialActivityThreadLocal.setEnabled(true);
 			WorkflowThreadLocal.setEnabled(true);
 		}

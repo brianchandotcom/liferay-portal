@@ -196,6 +196,10 @@ public class IncludeTag extends AttributesTagSupport {
 		_portletId = portletId;
 	}
 
+	public void setStrict(boolean strict) {
+		_strict = strict;
+	}
+
 	public void setUseCustomPage(boolean useCustomPage) {
 		_useCustomPage = useCustomPage;
 	}
@@ -382,7 +386,7 @@ public class IncludeTag extends AttributesTagSupport {
 	protected boolean themeResourceExists(String page)
 		throws Exception {
 
-		if (!_THEME_JSP_OVERRIDE_ENABLED) {
+		if ((page == null) || !_THEME_JSP_OVERRIDE_ENABLED || _strict) {
 			return false;
 		}
 
@@ -454,6 +458,7 @@ public class IncludeTag extends AttributesTagSupport {
 	private boolean _calledSetAttributes;
 	private String _page;
 	private String _portletId;
+	private boolean _strict = false;
 	private TrackedServletRequest _trackedRequest;
 	private boolean _useCustomPage = true;
 

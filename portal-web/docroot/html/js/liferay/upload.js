@@ -90,7 +90,6 @@ AUI().add(
 			instance._browseText = Liferay.Language.get('browse-you-can-select-multiple-files');
 			instance._cancelUploadsText = Liferay.Language.get('cancel-all-uploads');
 			instance._cancelFileText = Liferay.Language.get('cancel-upload');
-			instance._zeroByteFile = Liferay.Language.get('cannot-upload-zero-byte-files-please-use-the-classic-uploader');
 			instance._clearRecentUploadsText = Liferay.Language.get('clear-documents-already-saved');
 			instance._deleteFileText = Liferay.Language.get('delete-file');
 			instance._duplicateFileText = Liferay.Language.get('please-enter-a-unique-document-name');
@@ -106,6 +105,7 @@ AUI().add(
 			instance._unexpectedUploadErrorText = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
 			instance._uploadsCompleteText = Liferay.Language.get('all-files-ready-to-be-saved');
 			instance._uploadStatusText = Liferay.Language.get('uploading-file-x-of-x');
+			instance._zeroByteFileText = Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader');
 
 			instance._errorMessages = {
 				'1000': instance._duplicateFileText,
@@ -218,7 +218,7 @@ AUI().add(
 				else if(error_code == SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE) {
 					var ul = instance.getFileListUl();
 
-					ul.append('<li class="upload-file upload-error"><span class="file-title">' + file.name + '</span> <span class="error-message">' + instance._zeroByteFile + '</span></li>');
+					ul.append('<li class="upload-file upload-error"><span class="file-title">' + file.name + '</span> <span class="error-message">' + instance._zeroByteFileText + '</span></li>');
 				}
 			},
 

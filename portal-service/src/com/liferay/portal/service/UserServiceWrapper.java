@@ -143,6 +143,7 @@ public class UserServiceWrapper implements UserService {
 		int birthdayMonth, int birthdayDay, int birthdayYear,
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
+		java.util.List<com.liferay.portal.model.Address> addresses,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -151,7 +152,7 @@ public class UserServiceWrapper implements UserService {
 			facebookId, openId, locale, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
 			jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-			sendEmail, serviceContext);
+			sendEmail, addresses, serviceContext);
 	}
 
 	public void addUserGroupUsers(long userGroupId, long[] userIds)

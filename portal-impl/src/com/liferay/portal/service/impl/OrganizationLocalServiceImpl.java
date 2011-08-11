@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -123,6 +124,7 @@ public class OrganizationLocalServiceImpl
 	 * @param  comments the comments about the organization
 	 * @param  site whether the organization is to be associated with a main
 	 *         site
+	 * @param  addresses the organization's addresses
 	 * @param  serviceContext the organization's service context (optionally
 	 *         <code>null</code>). Can specify the organization's asset category
 	 *         IDs, asset tag names, and expando bridge attributes.
@@ -135,7 +137,8 @@ public class OrganizationLocalServiceImpl
 	public Organization addOrganization(
 			long userId, long parentOrganizationId, String name, String type,
 			boolean recursable, long regionId, long countryId, int statusId,
-			String comments, boolean site, ServiceContext serviceContext)
+			String comments, boolean site, List<Address> addresses,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Organization
@@ -165,6 +168,11 @@ public class OrganizationLocalServiceImpl
 		organization.setComments(comments);
 
 		organizationPersistence.update(organization, false);
+
+		// Addresses
+
+		UsersAdminUtil.updateAddresses(
+			Organization.class.getName(), organizationId, addresses);
 
 		// Group
 

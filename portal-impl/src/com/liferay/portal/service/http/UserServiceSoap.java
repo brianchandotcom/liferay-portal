@@ -256,6 +256,7 @@ public class UserServiceSoap {
 		int birthdayMonth, int birthdayDay, int birthdayYear,
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
+		com.liferay.portal.model.AddressSoap[] addresses,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -266,7 +267,8 @@ public class UserServiceSoap {
 					lastName, prefixId, suffixId, male, birthdayMonth,
 					birthdayDay, birthdayYear, jobTitle, groupIds,
 					organizationIds, roleIds, userGroupIds, sendEmail,
-					serviceContext);
+					com.liferay.portal.model.impl.AddressModelImpl.toModels(
+						addresses), serviceContext);
 
 			return com.liferay.portal.model.UserSoap.toSoapModel(returnValue);
 		}

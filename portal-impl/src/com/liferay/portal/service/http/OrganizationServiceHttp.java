@@ -138,7 +138,9 @@ public class OrganizationServiceHttp {
 		HttpPrincipal httpPrincipal, long parentOrganizationId,
 		java.lang.String name, java.lang.String type, boolean recursable,
 		long regionId, long countryId, int statusId, java.lang.String comments,
-		boolean site, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean site,
+		java.util.List<com.liferay.portal.model.Address> addresses,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -147,7 +149,8 @@ public class OrganizationServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					parentOrganizationId, name, type, recursable, regionId,
-					countryId, statusId, comments, site, serviceContext);
+					countryId, statusId, comments, site, addresses,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -766,7 +769,7 @@ public class OrganizationServiceHttp {
 	private static final Class<?>[] _addOrganizationParameterTypes2 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			boolean.class, long.class, long.class, int.class,
-			java.lang.String.class, boolean.class,
+			java.lang.String.class, boolean.class, java.util.List.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addPasswordPolicyOrganizationsParameterTypes3 =

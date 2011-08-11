@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Account;
+import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Contact;
@@ -463,7 +464,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				locale, firstName, middleName, lastName, prefixId, suffixId,
 				male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
 				groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
-				serviceContext);
+				new ArrayList<Address>(), serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
@@ -533,6 +534,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  userGroupIds the primary keys of the user's user groups
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
+	 * @param  addresses the user's addresses
 	 * @param  serviceContext the user's service context (optionally
 	 *         <code>null</code>). Can specify the user's universally unique
 	 *         identifier (with the <code>uuid</code> attribute), asset category
@@ -550,7 +552,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, boolean sendEmail,
-			ServiceContext serviceContext)
+			List<Address> addresses, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// User
@@ -715,6 +717,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setJobTitle(jobTitle);
 
 		contactPersistence.update(contact, false, serviceContext);
+
+		// Addresses
+
+		UsersAdminUtil.updateAddresses(
+			Contact.class.getName(), user.getContactId(), addresses);
 
 		// Group
 

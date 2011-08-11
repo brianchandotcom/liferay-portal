@@ -129,6 +129,7 @@ public class OrganizationServiceUtil {
 	* @param comments the comments about the organization
 	* @param site whether the organization is to be associated with a main
 	site
+	* @param addresses the organization's addresses
 	* @param serviceContext the organization's service context (optionally
 	<code>null</code>). Can specify the organization's asset category
 	IDs, asset tag names, and expando bridge attributes.
@@ -142,13 +143,14 @@ public class OrganizationServiceUtil {
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
 		long countryId, int statusId, java.lang.String comments, boolean site,
+		java.util.List<com.liferay.portal.model.Address> addresses,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addOrganization(parentOrganizationId, name, type,
 			recursable, regionId, countryId, statusId, comments, site,
-			serviceContext);
+			addresses, serviceContext);
 	}
 
 	/**

@@ -155,6 +155,7 @@ public class UserServiceUtil {
 		int birthdayMonth, int birthdayDay, int birthdayYear,
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
+		java.util.List<com.liferay.portal.model.Address> addresses,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -164,7 +165,7 @@ public class UserServiceUtil {
 			openId, locale, firstName, middleName, lastName, prefixId,
 			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
 			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
-			serviceContext);
+			addresses, serviceContext);
 	}
 
 	public static void addUserGroupUsers(long userGroupId, long[] userIds)

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.velocity.VelocityContext;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
@@ -75,8 +76,7 @@ public class ThemeUtil {
 			includeVM(servletContext, request, pageContext, page, theme, true);
 		}
 		else {
-			String path =
-				theme.getTemplatesPath() + StringPool.SLASH + page;
+			String path = theme.getTemplatesPath() + StringPool.SLASH + page;
 
 			includeJSP(servletContext, request, response, path, theme);
 		}
@@ -104,8 +104,23 @@ public class ThemeUtil {
 			ServletContextPool.put(servletContextName, servletContext);
 		}
 
-		String resourcePath = ThemeHelper.getResourcePath(
-			servletContext, theme, path);
+		String portletId = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			portletId = themeDisplay.getPortletDisplay().getId();
+		}
+
+		String resourcePath = theme.getResourcePath(
+			servletContext, portletId, path);
+
+		if (!FreeMarkerEngineUtil.resourceExists(resourcePath) &&
+			Validator.isNotNull(portletId)) {
+
+			resourcePath = theme.getResourcePath(servletContext, null, path);
+		}
 
 		if (!FreeMarkerEngineUtil.resourceExists(resourcePath)) {
 			_log.error(resourcePath + " does not exist");
@@ -258,8 +273,23 @@ public class ThemeUtil {
 			ServletContextPool.put(servletContextName, servletContext);
 		}
 
-		String resourcePath = ThemeHelper.getResourcePath(
-			servletContext, theme, page);
+		String portletId = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			portletId = themeDisplay.getPortletDisplay().getId();
+		}
+
+		String resourcePath = theme.getResourcePath(
+			servletContext, portletId, page);
+
+		if (!VelocityEngineUtil.resourceExists(resourcePath) &&
+			Validator.isNotNull(portletId)) {
+
+			resourcePath = theme.getResourcePath(servletContext, null, page);
+		}
 
 		if (!VelocityEngineUtil.resourceExists(resourcePath)) {
 			_log.error(resourcePath + " does not exist");

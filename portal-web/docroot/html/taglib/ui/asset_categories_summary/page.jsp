@@ -21,8 +21,6 @@
 <%@ page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil" %>
 <%@ page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %>
 
-<%@ page import="java.util.Locale" %>
-
 <%
 String className = (String)request.getAttribute("liferay-ui:asset-categories-summary:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-summary:classPK"));

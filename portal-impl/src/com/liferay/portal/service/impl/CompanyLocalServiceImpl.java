@@ -714,10 +714,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			companyId);
 
 		try {
-			if (properties.containsKey(PropsKeys.LOCALES)) {
+			String newLocales = properties.getProperty(PropsKeys.LOCALES);
+
+			if (newLocales != null) {
 				String oldLocales = preferences.getValue(
 					PropsKeys.LOCALES, StringPool.BLANK);
-				String newLocales = properties.getProperty(PropsKeys.LOCALES);
 
 				if (!Validator.equals(oldLocales, newLocales)) {
 					LanguageUtil.resetAvailableLocales(companyId);

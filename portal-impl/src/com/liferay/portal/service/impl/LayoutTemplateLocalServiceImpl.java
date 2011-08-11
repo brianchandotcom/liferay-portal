@@ -170,11 +170,14 @@ public class LayoutTemplateLocalServiceImpl
 			String layoutTemplateId = entry.getKey();
 			LayoutTemplate layoutTemplate = entry.getValue();
 
+			LayoutTemplate warLayoutTemplate = null;
+
 			if (_themesCustom.containsKey(layoutTemplateId)) {
 				customLayoutTemplates.add(_themesCustom.get(layoutTemplateId));
 			}
-			else if (_warCustom.containsKey(layoutTemplateId)) {
-				customLayoutTemplates.add(_warCustom.get(layoutTemplateId));
+			else if ((warLayoutTemplate = _warCustom.get(layoutTemplateId)) !=
+				null) {
+				customLayoutTemplates.add(warLayoutTemplate);
 			}
 			else {
 				customLayoutTemplates.add(layoutTemplate);

@@ -209,13 +209,13 @@ public class WordPressImporter {
 			Map<String, Long> userMap, DateFormat dateFormat, Element entryEl)
 		throws PortalException, SystemException {
 
-		long userId = context.getUserId(null);
-
 		String creator = entryEl.elementText(
 			SAXReaderUtil.createQName("creator", _NS_DC));
 
-		if (userMap.containsKey(creator)) {
-			userId = userMap.get(creator);
+		Long userId = userMap.get(creator);
+
+		if (userId == null) {
+			userId = context.getUserId(null);
 		}
 
 		String title = entryEl.elementTextTrim("title");

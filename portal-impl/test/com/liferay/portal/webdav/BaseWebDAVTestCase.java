@@ -193,9 +193,10 @@ public class BaseWebDAVTestCase extends TestCase {
 		if (data != null) {
 			request.setContent(data);
 
-			if (headers.containsKey(HttpHeaders.CONTENT_TYPE)) {
-				request.setContentType(
-					headers.remove(HttpHeaders.CONTENT_TYPE));
+			String contentType = headers.remove(HttpHeaders.CONTENT_TYPE);
+
+			if (contentType != null) {
+				request.setContentType(contentType);
 			}
 			else {
 				request.setContentType(ContentTypes.TEXT_PLAIN);

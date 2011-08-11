@@ -20,6 +20,7 @@ import java.util.Map;
 /**
  * @author Michael Young
  * @author Connor McKay
+ * @author Shuyang Zhou
  */
 public class InheritableMap<K, V> extends HashMap<K, V> {
 
@@ -60,8 +61,10 @@ public class InheritableMap<K, V> extends HashMap<K, V> {
 
 	@Override
 	public V get(Object key) {
-	 	if (super.containsKey(key)) {
-			return super.get(key);
+		V value = super.get(key);
+
+		if (value != null) {
+			return value;
 		}
 		else if (_parentMap != null) {
 			return _parentMap.get(key);
@@ -76,8 +79,10 @@ public class InheritableMap<K, V> extends HashMap<K, V> {
 
 	@Override
 	public V remove(Object key) {
-		if (super.containsKey(key)) {
-			return super.remove(key);
+		V value = super.remove(key);
+
+		if (value != null) {
+			return value;
 		}
 		else if (_parentMap != null) {
 			return _parentMap.remove(key);

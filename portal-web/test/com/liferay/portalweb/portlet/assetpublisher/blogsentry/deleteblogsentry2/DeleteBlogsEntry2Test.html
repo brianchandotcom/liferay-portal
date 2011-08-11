@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DeleteBlogsEntryBlogsTest</title>
+<title>DeleteBlogsEntry2Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">DeleteBlogsEntryBlogsTest</td></tr>
+<tr><td rowspan="1" colspan="3">DeleteBlogsEntry2Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -24,19 +24,19 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//h3/a</td>
-	<td>Blogs2 Entry2 Title2</td>
+	<td>assertText</td>
+	<td>//h3[@class='asset-title']/a</td>
+	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//h1[@class='header-title']</td>
-	<td>Blogs2 Entry2 Title2</td>
+	<td>clickAtAndWait</td>
+	<td>//h3[@class='asset-title']/a</td>
+	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//h1[@class='header-title']</td>
-	<td>Blogs2 Entry2 Title2</td>
+	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -49,19 +49,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//section/div/div/div/div[2]</td>
-	<td>The asset could not be found.</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[2]</td>
+	<td>//div[@class='portlet-msg-error']</td>
 	<td>The asset could not be found.</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.blogsentry.deleteblogsentryblogs;
+package com.liferay.portalweb.portlet.assetpublisher.blogsentry.deleteblogsentry2;
 
 import com.liferay.portalweb.portal.BaseTests;
 
@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeleteBlogsEntryBlogsTests extends BaseTests {
+public class DeleteBlogsEntry2Tests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
@@ -30,10 +30,11 @@ public class DeleteBlogsEntryBlogsTests extends BaseTests {
 		testSuite.addTestSuite(AddPageAPTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddPortletAPTest.class);
-		testSuite.addTestSuite(ConfigurePortletFullContentViewTest.class);
-		testSuite.addTestSuite(AddBlogsEntryTest.class);
+		testSuite.addTestSuite
+			(ConfigurePortletAssetLinkBehaviorShowFullContentTest.class);
+		testSuite.addTestSuite(AddBlogsEntry1Test.class);
 		testSuite.addTestSuite(AddBlogsEntry2Test.class);
-		testSuite.addTestSuite(DeleteBlogsEntryBlogsTest.class);
+		testSuite.addTestSuite(DeleteBlogsEntry2Test.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

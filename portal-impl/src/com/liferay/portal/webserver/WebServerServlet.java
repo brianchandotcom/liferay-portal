@@ -429,13 +429,27 @@ public class WebServerServlet extends HttpServlet {
 	@Override
 	protected long getLastModified(HttpServletRequest request) {
 		try {
-			Image image = getImage(request, false);
+			Date modifiedDate = null;
+
+			Image image = getImage(request, true);
 
 			if (image == null) {
-				return -1;
-			}
+				String path = HttpUtil.fixPath(request.getPathInfo());
 
-			Date modifiedDate = image.getModifiedDate();
+				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+
+				FileEntry fileEntry = getFileEntry(pathArray);
+
+				if (fileEntry == null) {
+					return -1;
+				}
+				else {
+					modifiedDate = fileEntry.getModifiedDate();
+				}
+			}
+			else {
+				modifiedDate = image.getModifiedDate();
+			}
 
 			if (modifiedDate == null) {
 				modifiedDate = PortalUtil.getUptime();

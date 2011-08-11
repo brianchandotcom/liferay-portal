@@ -24,13 +24,13 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//h3/a</td>
+	<td>assertText</td>
+	<td>//h3[@class='asset-title']/a</td>
 	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//h1[@class='header-title']</td>
+	<td>clickAtAndWait</td>
+	<td>//h3[@class='asset-title']/a</td>
 	<td>Blogs Entry2 Title</td>
 </tr>
 <tr>
@@ -49,19 +49,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//section/div/div/div/div[2]</td>
-	<td>The asset could not be found.</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[2]</td>
+	<td>//div[@class='portlet-msg-error']</td>
 	<td>The asset could not be found.</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>

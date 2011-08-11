@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.blogsentry.deleteblogsentryblogs;
+package com.liferay.portalweb.portlet.assetpublisher.blogsentry.deleteblogsentry2;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntry1Test extends BaseTestCase {
-	public void testAddBlogsEntry1() throws Exception {
+public class ConfigurePortletAssetLinkBehaviorShowFullContentTest
+	extends BaseTestCase {
+	public void testConfigurePortletAssetLinkBehaviorShowFullContent()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -41,18 +43,13 @@ public class AddBlogsEntry1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Asset Publisher Test Page",
-			RuntimeVariables.replace("Asset Publisher Test Page"));
+		selenium.click(RuntimeVariables.replace(
+				"link=Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Add Blog Entry']",
-			RuntimeVariables.replace("Add Blog Entry"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_33_title']",
-			RuntimeVariables.replace("Blogs Entry1 Title"));
-		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -61,7 +58,7 @@ public class AddBlogsEntry1Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//td[@id='cke_contents__33_editor']/iframe")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -72,20 +69,40 @@ public class AddBlogsEntry1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Blogs Entry1 Content"));
-		selenium.selectFrame("relative=top");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@id='assetPublisherDisplaySettingsPanel']/div[2]/fieldset[1]/div/span[5]/span/label")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace("Publish"));
+		selenium.select("//select[@id='_86_assetLinkBehavior']",
+			RuntimeVariables.replace("Show Full Content"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
+				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("//div[@class='entry-title']/h2/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+		assertEquals("Show Full Content",
+			selenium.getSelectedLabel("//select[@id='_86_assetLinkBehavior']"));
 	}
 }

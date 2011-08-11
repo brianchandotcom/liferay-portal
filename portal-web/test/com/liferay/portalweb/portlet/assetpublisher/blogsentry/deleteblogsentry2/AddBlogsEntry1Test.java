@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.blogsentry.deleteblogsentryblogs;
+package com.liferay.portalweb.portlet.assetpublisher.blogsentry.deleteblogsentry2;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletAPTest extends BaseTestCase {
-	public void testAddPortletAP() throws Exception {
+public class AddBlogsEntry1Test extends BaseTestCase {
+	public void testAddBlogsEntry1() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -41,14 +41,18 @@ public class AddPortletAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace(
-				"link=Asset Publisher Test Page"));
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.clickAt("//input[@value='Add Blog Entry']",
+			RuntimeVariables.replace("Add Blog Entry"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_33_title']",
+			RuntimeVariables.replace("Blogs Entry1 Title"));
+		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -56,8 +60,8 @@ public class AddPortletAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[@title='Asset Publisher']/p/a")) {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__33_editor']/iframe")) {
 					break;
 				}
 			}
@@ -68,45 +72,20 @@ public class AddPortletAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@title='Asset Publisher']/p/a",
-			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
+		selenium.type("//body", RuntimeVariables.replace("Blogs Entry1 Content"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//section"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[2]/div/section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//div[2]/div/section"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
+			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

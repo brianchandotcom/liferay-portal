@@ -105,6 +105,7 @@ AUI().add(
 			instance._unexpectedUploadErrorText = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
 			instance._uploadsCompleteText = Liferay.Language.get('all-files-ready-to-be-saved');
 			instance._uploadStatusText = Liferay.Language.get('uploading-file-x-of-x');
+			instance._zeroByteFileText = Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader');
 
 			instance._errorMessages = {
 				'1000': instance._duplicateFileText,
@@ -213,6 +214,11 @@ AUI().add(
 					var ul = instance.getFileListUl();
 
 					ul.append('<li class="upload-file upload-error"><span class="file-title">' + file.name + '</span> <span class="error-message">' + instance._invalidFileSizeText + '</span></li>');
+				}
+				else if(error_code == SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE) {
+					var ul = instance.getFileListUl();
+
+					ul.append('<li class="upload-file upload-error"><span class="file-title">' + file.name + '</span> <span class="error-message">' + instance._zeroByteFileText + '</span></li>');
 				}
 			},
 

@@ -322,6 +322,12 @@ public class AssetCategoryLocalServiceUtil {
 		getService().deleteVocabularyCategories(vocabularyId);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetCategory fetchCategory(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchCategory(categoryId);
+	}
+
 	public static java.lang.String[] getCategoryNames()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCategoryNames();

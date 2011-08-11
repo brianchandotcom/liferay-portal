@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -55,6 +54,7 @@ import javax.servlet.jsp.JspException;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  * @author Eduardo Lundgren
+ * @author Raymond Augé
  */
 public class IncludeTag extends AttributesTagSupport {
 
@@ -313,6 +313,9 @@ public class IncludeTag extends AttributesTagSupport {
 		HttpServletRequest request = getServletRequest();
 
 		request.setAttribute(WebKeys.SERVLET_PATH, page);
+		request.setAttribute(
+			WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT,
+			Boolean.valueOf(_strict));
 
 		HttpServletResponse response = new PipingServletResponse(
 			pageContext, isTrimNewLines());
@@ -336,6 +339,8 @@ public class IncludeTag extends AttributesTagSupport {
 
 			method.invoke(obj, request, response, true);
 		}
+
+		request.removeAttribute(WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT);
 	}
 
 	protected boolean isCleanUpSetAttributes() {
@@ -395,14 +400,25 @@ public class IncludeTag extends AttributesTagSupport {
 
 		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
 
-		if (_log.isDebugEnabled() && Validator.isNotNull(page)) {
-			String resourcePath = ThemeHelper.getResourcePath(
-				servletContext, theme, page);
+		String portletId = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			portletId = themeDisplay.getPortletDisplay().getId();
+		}
+
+		boolean exists = theme.resourceExists(servletContext, portletId, page);
+
+		if (_log.isDebugEnabled() && exists) {
+			String resourcePath = theme.getResourcePath(
+				servletContext, null, page);
 
 			_log.debug(resourcePath);
 		}
 
-		return ThemeHelper.resourceExists(servletContext, theme, page);
+		return exists;
 	}
 
 	private void _doInclude(String page) throws JspException {

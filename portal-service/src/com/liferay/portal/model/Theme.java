@@ -23,8 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 
@@ -134,5 +137,12 @@ public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 	public void setLoadFromServletContext(boolean loadFromServletContext);
 
 	public String getVelocityResourceListener();
+
+	public String getResourcePath(
+		ServletContext servletContext, String portletId, String path);
+
+	public boolean resourceExists(
+			ServletContext servletContext, String portletId, String path)
+		throws Exception;
 
 }

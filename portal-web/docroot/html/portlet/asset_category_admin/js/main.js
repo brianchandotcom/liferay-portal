@@ -1811,6 +1811,8 @@ AUI().add(
 							instance._closeEditSection();
 							instance._hidePanels();
 							instance._displayVocabularyCategories(instance._selectedVocabularyId);
+
+							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'));
 						}
 						else {
 							var errorMessage = Liferay.Language.get('your-request-failed-to-complete');

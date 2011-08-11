@@ -24,6 +24,10 @@ AUI().add(
 
 		var CSS_COLUMN_WIDTH_CATEGORY_FULL = 'aui-w75';
 
+		var EVENT_CLICK  = 'click';
+
+		var EVENT_SUBMIT = 'submit';
+
 		var EXCEPTION_NO_SUCH_VOCABULARY = 'NoSuchVocabularyException';
 
 		var EXCEPTION_PRINCIPAL = 'auth.PrincipalException';
@@ -46,10 +50,11 @@ AUI().add(
 
 		var TPL_VOCABULARY_LIST = '<li class="vocabulary-category results-row {cssClassSelected}" data-vocabulary="{name}" data-vocabularyId="{vocabularyId}" tabIndex="0">' +
 			'<div class="vocabulary-content-wrapper">' +
-					'<span class="vocabulary-item">' +
-						'<a href="javascript:;" data-vocabularyId="{vocabularyId}" tabIndex="-1">{name}</a>' +
-					'</span>' +
-					'<a href="javascript:;" class="vocabulary-item-actions-trigger" data-vocabularyId="{vocabularyId}"></a>' +
+				'<input type="checkbox" class="vocabulary-item-check aui-field-input-choice" name="vocabulary-item-check" data-vocabularyId="{vocabularyId}" data-vocabularyName="{name}">' +
+				'<span class="vocabulary-item">' +
+					'<a href="javascript:;" data-vocabularyId="{vocabularyId}" tabIndex="-1">{name}</a>' +
+				'</span>' +
+				'<a href="javascript:;" class="vocabulary-item-actions-trigger" data-vocabularyId="{vocabularyId}"></a>' +
 			'</div>' +
 		'</li>';
 
@@ -94,7 +99,7 @@ AUI().add(
 						instance._searchInput = A.one('#' + namespace + 'categoriesAdminSearchInput');
 						instance._searchType = A.one('#' + namespace + 'categoriesAdminSelectSearch');
 
-						A.one('.category-view-close').on('click', instance._closeEditSection, instance);
+						A.one('.category-view-close').on(EVENT_CLICK, instance._closeEditSection, instance);
 
 						instance._searchType.on(
 							'change',
@@ -103,7 +108,7 @@ AUI().add(
 							}
 						);
 
-						instance._categoryViewContainer.on('click', instance._onCategoryViewContainerClick, instance);
+						instance._categoryViewContainer.on(EVENT_CLICK, instance._onCategoryViewContainerClick, instance);
 
 						var portletMessageContainer = instance._portletMessageContainer;
 
@@ -111,12 +116,19 @@ AUI().add(
 
 						var vocabularyList = A.one(instance._vocabularyContainerSelector);
 
-						vocabularyList.on('click', instance._onVocabularyListClick, instance);
+						vocabularyList.on(EVENT_CLICK, instance._onVocabularyListClick, instance);
 						vocabularyList.on('key', instance._onVocabularyListSelect, 'up:13', instance);
 
-						A.one('#' + namespace + 'addCategoryButton').on('click', instance._onShowCategoryPanel, instance, ACTION_ADD);
-						A.one('#' + namespace + 'addVocabularyButton').on('click', instance._onShowVocabularyPanel, instance, ACTION_ADD);
-						A.one('#' + namespace + 'categoryPermissionsButton').on('click', instance._onChangePermissions, instance);
+						A.one('#' + namespace + 'addCategoryButton').on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
+						A.one('#' + namespace + 'addVocabularyButton').on(EVENT_CLICK, instance._onShowVocabularyPanel, instance, ACTION_ADD);
+						A.one('#' + namespace + 'categoryPermissionsButton').on(EVENT_CLICK, instance._onChangePermissions, instance);
+						A.one('#' + namespace + 'deleteSelectedVocabularies').on(EVENT_CLICK, instance._deleteSelectedVocabularies, instance);
+
+						var checkAllVocabulariesCheckbox = A.one('#' + namespace + 'checkAllVocabulariesCheckbox');
+
+						checkAllVocabulariesCheckbox.on(EVENT_CLICK, instance._checkAllVocabularies, instance);
+
+						instance._checkAllVocabulariesCheckbox = checkAllVocabulariesCheckbox;
 
 						instance._createLiveSearch();
 
@@ -256,6 +268,12 @@ AUI().add(
 						);
 
 						return children.length;
+					},
+
+					_checkAllVocabularies: function(event) {
+						var currentCheckedStatus = event.currentTarget.attr('checked');
+
+						A.all('.vocabulary-item-check').attr('checked', currentCheckedStatus);
 					},
 
 					_closeEditSection: function() {
@@ -564,6 +582,30 @@ AUI().add(
 							},
 							callback
 						);
+					},
+
+					_deleteSelectedVocabularies: function(event) {
+						var instance = this;
+
+						var vocabularyNodes = A.all('.vocabulary-item-check:checked');
+
+						if (vocabularyNodes.size() > 0) {
+							if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-vocabularies'))) {
+								var checkedItemsIds = vocabularyNodes.attr('data-vocabularyId');
+
+								if (checkedItemsIds.length > 0) {
+									Liferay.Service.Asset.AssetVocabulary.deleteVocabularies(
+										{
+											vocabularyIds: checkedItemsIds
+										},
+										A.bind(instance._processVocabularyDeletion, instance)
+									);
+								}
+							}
+						}
+						else {
+							alert(Liferay.Language.get('there-are-no-selected-vocabularies'));
+						}
 					},
 
 					_deleteVocabulary: function(vocabularyId, callback) {
@@ -1103,13 +1145,13 @@ AUI().add(
 
 						var categoryFormAdd = instance._categoryPanelAdd.get('contentBox').one('form.update-category-form');
 
-						categoryFormAdd.detach('submit');
+						categoryFormAdd.detach(EVENT_SUBMIT);
 
-						categoryFormAdd.on('submit', instance._onCategoryFormSubmit, instance, categoryFormAdd);
+						categoryFormAdd.on(EVENT_SUBMIT, instance._onCategoryFormSubmit, instance, categoryFormAdd);
 
 						var closeButton = categoryFormAdd.one('.aui-button-input-cancel');
 
-						closeButton.on('click', instance._onCategoryAddButtonClose, instance);
+						closeButton.on(EVENT_CLICK, instance._onCategoryAddButtonClose, instance);
 
 						instance._categoryFormAdd = categoryFormAdd;
 
@@ -1123,14 +1165,14 @@ AUI().add(
 
 						var categoryFormEdit = instance._panelEdit.get('contentBox').one('form.update-category-form');
 
-						categoryFormEdit.detach('submit');
+						categoryFormEdit.detach(EVENT_SUBMIT);
 
-						categoryFormEdit.on('submit', instance._onCategoryFormSubmit, instance, categoryFormEdit);
+						categoryFormEdit.on(EVENT_SUBMIT, instance._onCategoryFormSubmit, instance, categoryFormEdit);
 
 						var closeButton = categoryFormEdit.one('.aui-button-input-cancel');
 
 						closeButton.on(
-							'click',
+							EVENT_CLICK,
 							function(event, panel) {
 								panel.hide();
 							},
@@ -1141,13 +1183,13 @@ AUI().add(
 						var buttonDeleteCategory = categoryFormEdit.one('#deleteCategoryButton');
 
 						if (buttonDeleteCategory) {
-							buttonDeleteCategory.on('click', instance._onCategoryDelete, instance);
+							buttonDeleteCategory.on(EVENT_CLICK, instance._onCategoryDelete, instance);
 						}
 
 						var buttonChangeCategoryPermissions = categoryFormEdit.one('#updateCategoryPermissions');
 
 						if (buttonChangeCategoryPermissions) {
-							buttonChangeCategoryPermissions.on('click', instance._onChangePermissions, instance);
+							buttonChangeCategoryPermissions.on(EVENT_CLICK, instance._onChangePermissions, instance);
 						}
 
 						var inputCategoryNameNode = categoryFormEdit.one('.category-name input');
@@ -1160,14 +1202,14 @@ AUI().add(
 
 						var vocabularyFormAdd = instance._vocabularyPanelAdd.get('contentBox').one('form.update-vocabulary-form');
 
-						vocabularyFormAdd.detach('submit');
+						vocabularyFormAdd.detach(EVENT_SUBMIT);
 
-						vocabularyFormAdd.on('submit', instance._onVocabularyFormSubmit, instance, vocabularyFormAdd);
+						vocabularyFormAdd.on(EVENT_SUBMIT, instance._onVocabularyFormSubmit, instance, vocabularyFormAdd);
 
 						var closeButton = vocabularyFormAdd.one('.aui-button-input-cancel');
 
 						closeButton.on(
-							'click',
+							EVENT_CLICK,
 							function(event, panel) {
 								panel.hide();
 							},
@@ -1187,14 +1229,14 @@ AUI().add(
 
 						var vocabularyFormEdit = instance._panelEdit.get('contentBox').one('form.update-vocabulary-form');
 
-						vocabularyFormEdit.detach('submit');
+						vocabularyFormEdit.detach(EVENT_SUBMIT);
 
-						vocabularyFormEdit.on('submit', instance._onVocabularyFormSubmit, instance, vocabularyFormEdit);
+						vocabularyFormEdit.on(EVENT_SUBMIT, instance._onVocabularyFormSubmit, instance, vocabularyFormEdit);
 
 						var closeButton = vocabularyFormEdit.one('.aui-button-input-cancel');
 
 						closeButton.on(
-							'click',
+							EVENT_CLICK,
 							function(event, panel) {
 								panel.hide();
 							},
@@ -1205,13 +1247,13 @@ AUI().add(
 						var buttonDeleteVocabulary = vocabularyFormEdit.one('#deleteVocabularyButton');
 
 						if (buttonDeleteVocabulary) {
-							buttonDeleteVocabulary.on('click', instance._onVocabularyDelete, instance);
+							buttonDeleteVocabulary.on(EVENT_CLICK, instance._onVocabularyDelete, instance);
 						}
 
 						var buttonChangeVocabularyPermissions = vocabularyFormEdit.one('#vocabulary-change-permissions');
 
 						if (buttonChangeVocabularyPermissions) {
-							buttonChangeVocabularyPermissions.on('click', instance._onChangePermissions, instance);
+							buttonChangeVocabularyPermissions.on(EVENT_CLICK, instance._onChangePermissions, instance);
 						}
 
 						var inputVocabularyEditNameNode = vocabularyFormEdit.one('.vocabulary-name input');
@@ -1223,6 +1265,8 @@ AUI().add(
 						var instance = this;
 
 						instance._closeEditSection();
+
+						instance._checkAllVocabulariesCheckbox.attr('checked', false);
 
 						instance._displayList(
 							function() {
@@ -1600,29 +1644,7 @@ AUI().add(
 						var instance = this;
 
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-vocabulary'))) {
-							instance._deleteVocabulary(
-								instance._selectedVocabularyId,
-								function(message) {
-									var errorKey;
-									var exception = message.exception;
-
-									if (!exception) {
-										instance._closeEditSection();
-										instance._hidePanels();
-										instance._loadData();
-									}
-									else {
-										if (exception.indexOf(EXCEPTION_PRINCIPAL) > -1) {
-											errorKey = Liferay.Language.get('you-do-not-have-permission-to-access-the-requested-resource');
-										}
-										else {
-											errorKey = Liferay.Language.get('your-request-failed-to-complete');
-										}
-
-										instance._sendMessage(MESSAGE_TYPE_ERROR, errorKey);
-									}
-								}
-							);
+							instance._deleteVocabulary(instance._selectedVocabularyId, instance._processVocabularyDeletion, instance);
 						}
 					},
 
@@ -1700,6 +1722,30 @@ AUI().add(
 						}
 
 						instance._loadData();
+					},
+
+					_processVocabularyDeletion: function(result) {
+						var instance = this;
+
+						var exception = result.exception;
+
+						if (!exception) {
+							instance._closeEditSection();
+							instance._hidePanels();
+							instance._loadData();
+						}
+						else {
+							var errorKey;
+
+							if (exception.indexOf(EXCEPTION_PRINCIPAL) > -1) {
+								errorKey = Liferay.Language.get('you-do-not-have-permission-to-access-the-requested-resource');
+							}
+							else {
+								errorKey = Liferay.Language.get('your-request-failed-to-complete');
+							}
+
+							instance._sendMessage(MESSAGE_TYPE_ERROR, errorKey);
+						}
 					},
 
 					_resetCategoriesProperties: function(event) {

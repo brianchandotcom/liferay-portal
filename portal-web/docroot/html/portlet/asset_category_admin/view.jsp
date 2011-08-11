@@ -23,9 +23,26 @@
 		<div class="lfr-header-row-content">
 			<div class="toolbar">
 				<aui:button-row cssClass="categories-admin-actions">
+					<aui:input cssClass="select-vocabularies aui-state-default" inline="<%= true %>" label="" name="checkAllVocabularies" type="checkbox" title='<%= LanguageUtil.get(pageContext, "check-all-vocabularies") %>' />
+
 					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_VOCABULARY) %>">
 						<aui:button cssClass="add-vocabulary-button" name="addVocabularyButton" value="add-vocabulary" />
 					</c:if>
+
+					<liferay-ui:icon-menu
+						align="left"
+						direction="down"
+						icon=""
+						message="actions"
+						showExpanded="<%= false %>"
+						showWhenSingleIcon="true"
+					>
+						<liferay-ui:icon
+							id="deleteSelectedVocabularies"
+							image="delete"
+							url="javascript:;"
+						/>
+					</liferay-ui:icon-menu>
 
 					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_CATEGORY) %>">
 						<aui:button cssClass="add-category-button" name="addCategoryButton" value="add-category" />

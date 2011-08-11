@@ -21,7 +21,11 @@ import java.io.File;
 import java.io.InputStream;
 
 /**
+ * The interface for all file store implementations. Most, if not all
+ * implementations should extend from the class {@link BaseStore}.
+ *
  * @author Brian Wing Shun Chan
+ * @see    BaseStore
  */
 public interface Store {
 

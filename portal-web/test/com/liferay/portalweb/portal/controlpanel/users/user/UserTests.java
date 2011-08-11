@@ -88,6 +88,7 @@ import com.liferay.portalweb.portal.controlpanel.users.user.deactivateuser.Deact
 import com.liferay.portalweb.portal.controlpanel.users.user.deleteuser.DeleteUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.restoreuser.RestoreUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.searchuser.SearchUserTests;
+import com.liferay.portalweb.portal.controlpanel.users.user.searchuserquotes.SearchUserQuotesTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -173,6 +174,7 @@ public class UserTests extends BaseTests {
 		testSuite.addTest(DeleteUserTests.suite());
 		testSuite.addTest(RestoreUserTests.suite());
 		testSuite.addTest(SearchUserTests.suite());
+		testSuite.addTest(SearchUserQuotesTests.suite());
 
 		return testSuite;
 	}

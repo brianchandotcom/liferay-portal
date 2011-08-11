@@ -765,6 +765,12 @@ var defaultTypes = []]>
 				/>
 			</not>
 			<then>
+				<zip destfile="third-party/${tinymce.file}"
+					update="true"
+				>
+					<zipfileset dir="docroot/html/js/editor/tiny_mce/langs" prefix="tinymce/jscripts/tiny_mce/langs" />
+	  			</zip>
+				
 				<delete dir="docroot/html/js/editor/tiny_mce" />
 				<delete dir="docroot/html/js/editor/tinymce" />
 

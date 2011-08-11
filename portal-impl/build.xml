@@ -2,9 +2,13 @@
 
 <project name="portal-impl" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
 	<property name="test.properties" value="portal-test.properties" />
-
+	
 	<import file="../build-common-java.xml" />
 
+	<property name="tinyMCE.dest.dir" value="${tinyMCE.dest.dir}" />
+	<property name="tinyMCE.download.baseurl" value="${tinyMCE.download.baseurl}" />
+	<property name="tinyMCE.languages" value="${tinyMCE.languages}" />
+		
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Portal Impl" />
@@ -219,8 +223,22 @@ public class Creole10Parser]]></replacevalue>
 		</java>
 
 		<copy file="${lang.dir}/${lang.file}.properties" tofile="${lang.dir}/${lang.file}_en.properties" />
+		
+		<antcall target="build-lang-tinymce" />
 	</target>
 
+	<target name="build-lang-tinymce">
+		<java 
+			classname="com.liferay.portal.tools.TinyMCELanguageBuilder"
+			classpathref="project.classpath"
+		>
+			<arg value="tinyMCE.dest.dir=${tinyMCE.dest.dir}" />
+			<arg value="tinyMCE.download.baseurl=${tinyMCE.download.baseurl}" />
+			<arg value="tinyMCE.languages=${tinyMCE.languages}" />
+		</java>
+		<antcall target="print-current-time" />
+	</target>
+	
 	<target name="build-lib-versions">
 		<java
 			classname="com.liferay.portal.tools.XSLTBuilder"

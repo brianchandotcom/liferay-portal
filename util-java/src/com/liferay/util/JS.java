@@ -14,6 +14,7 @@
 
 package com.liferay.util;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -24,21 +25,44 @@ import java.net.URLEncoder;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class JS {
 
 	public static String getSafeName(String name) {
-		String safeName =
-			StringUtil.replace(
-				name,
-				new String[] {
-					StringPool.SPACE, StringPool.DASH, StringPool.PERIOD
-				},
-				new String[] {
-					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK
-				});
+		if (name == null) {
+			return null;
+		}
 
-		return safeName;
+		StringBuilder sb = null;
+		int index = 0;
+
+		for (int i = 0; i < name.length(); i++) {
+			char c = name.charAt(i);
+
+			switch (c) {
+				case CharPool.SPACE :
+				case CharPool.DASH :
+				case CharPool.PERIOD :
+					if (sb == null) {
+						sb = new StringBuilder(name.length() - 1);
+
+						sb.append(name, index, i);
+					}
+					break;
+				default :
+					if (sb != null) {
+						sb.append(c);
+					}
+			}
+		}
+
+		if (sb == null) {
+			return name;
+		}
+		else {
+			return sb.toString();
+		}
 	}
 
 	/**

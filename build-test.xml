@@ -2278,7 +2278,14 @@ file.
 						<isset property="skip.rebuild-database" />
 					</not>
 					<then>
-						<delete dir="${user.home}/liferay" />
+						<if>
+							<not>
+								<isset property="skip.delete-liferay-home" />
+							</not>
+							<then>
+								<delete dir="${user.home}/liferay"/>
+							</then>
+						</if>
 
 						<if>
 							<equals arg1="${db.type}" arg2="db2" />

@@ -31,17 +31,18 @@ tck.url=true</echo>
 
 work.dir=${basedir.unix}/tools/tck/work</echo>
 
-		<delete dir="${liferay.home}/data" />
-		<delete dir="${liferay.home}/deploy" />
+		<delete dir="${user.home}/liferay" />
 
-		<copy todir="${liferay.home}/deploy" flatten="true">
+		<copy todir="${user.home}/liferay/deploy" flatten="true">
 			<fileset
 				dir="tools/tck"
 				includes="**/*.war"
 			/>
 		</copy>
 
-		<antcall target="rebuild-database" inheritAll="false" />
+		<antcall target="rebuild-database" inheritAll="false">
+			<param name="skip.delete-liferay-home" value="true" />
+		</antcall>
 	</target>
 
 	<target name="run-tck-286-tomcat">

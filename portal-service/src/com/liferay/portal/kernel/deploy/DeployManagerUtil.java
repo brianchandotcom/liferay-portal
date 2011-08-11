@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
+ * @author Ryan Park
  */
 public class DeployManagerUtil {
 
@@ -48,6 +49,10 @@ public class DeployManagerUtil {
 		throws PortalException, SystemException {
 
 		return getDeployManager().getInstalledPlugins();
+	}
+
+	public static boolean isDeployed(String context) {
+		return getDeployManager().isDeployed(context);
 	}
 
 	public static boolean isExtPlugin(File file) {

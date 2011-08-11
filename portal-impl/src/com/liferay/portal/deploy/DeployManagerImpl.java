@@ -49,6 +49,7 @@ import java.util.zip.ZipFile;
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
+ * @author Ryan Park
  */
 public class DeployManagerImpl implements DeployManager {
 
@@ -105,6 +106,10 @@ public class DeployManagerImpl implements DeployManager {
 		throws PortalException, SystemException {
 
 		return PluginPackageUtil.getInstalledPluginPackages();
+	}
+
+	public boolean isDeployed(String context) {
+		return PluginPackageUtil.isInstalled(context);
 	}
 
 	public boolean isExtPlugin(File file) {

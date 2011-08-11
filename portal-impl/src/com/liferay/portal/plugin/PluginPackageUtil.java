@@ -56,11 +56,8 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-
 import java.net.MalformedURLException;
-
 import java.text.DateFormat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -178,6 +175,10 @@ public class PluginPackageUtil {
 
 	public static boolean isInstallationInProcess(String context) {
 		return _instance._isInstallationInProcess(context);
+	}
+
+	public static boolean isInstalled(String context) {
+		return _instance._isInstalled(context);
 	}
 
 	public static boolean isTrusted(String repositoryURL)
@@ -545,6 +546,15 @@ public class PluginPackageUtil {
 		if (_installedPluginPackages.getInstallingPluginPackage(
 				context) != null) {
 
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean _isInstalled(String context) {
+		if (_installedPluginPackages.getPluginPackage(context) != null) {
 			return true;
 		}
 		else {

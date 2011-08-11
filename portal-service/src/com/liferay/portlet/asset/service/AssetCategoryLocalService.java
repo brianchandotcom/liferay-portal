@@ -281,6 +281,11 @@ public interface AssetCategoryLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetCategory fetchCategory(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getCategoryNames()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

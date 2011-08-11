@@ -621,7 +621,7 @@ public class DLStoreUtil {
 
 		getStore().updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel, sourceFileName);
+			toVersionLabel);
 	}
 
 	/**

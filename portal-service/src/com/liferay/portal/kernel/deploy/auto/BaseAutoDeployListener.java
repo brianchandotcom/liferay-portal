@@ -39,6 +39,16 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		return DeployManagerUtil.isLayoutTemplatePlugin(file);
 	}
 
+	public boolean isLiferayPackage(File file) {
+		String fileName = file.getName();
+
+		if (fileName.endsWith(".lpkg")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isMatchingFile(File file, String checkXmlFile)
 		throws AutoDeployException {
 

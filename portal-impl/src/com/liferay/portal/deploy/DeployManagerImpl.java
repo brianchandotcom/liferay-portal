@@ -43,12 +43,8 @@ import com.liferay.portal.util.Portal;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.zip.ZipFile;
-
-import org.apache.commons.io.FileUtils;
 
 /**
  * @author Jonathan Potter
@@ -110,6 +106,10 @@ public class DeployManagerImpl implements DeployManager {
 		throws PortalException, SystemException {
 
 		return PluginPackageUtil.getInstalledPluginPackages();
+	}
+
+	public boolean isDeployed(String context) {
+		return PluginPackageUtil.isInstalled(context);
 	}
 
 	public boolean isExtPlugin(File file) {
@@ -239,10 +239,10 @@ public class DeployManagerImpl implements DeployManager {
 
 	public void redeploy(String context) throws Exception {
 		if (ServerDetector.isJetty()) {
-			redeployJetty(context);
+			DeployUtil.redeployJetty(context);
 		}
-		else if (ServerDetector.isTomcat()) {
-			redeployTomcat(context);
+		else {
+			DeployUtil.redeployTomcat(context);
 		}
 	}
 
@@ -326,31 +326,6 @@ public class DeployManagerImpl implements DeployManager {
 		deployer.addRequiredJar(jars, "util-java.jar");
 
 		return deployer;
-	}
-
-	protected void redeployJetty(String context) throws Exception {
-		String contextsDirName = System.getProperty("jetty.home") + "/contexts";
-
-		File contextXml = new File(contextsDirName + "/" + context + ".xml");
-
-		if (contextXml.exists()) {
-			FileUtils.touch(contextXml);
-		}
-		else {
-			Map<String, String> filterMap = new HashMap<String, String>();
-
-			filterMap.put("context", context);
-
-			DeployUtil.copyDependencyXml(
-				"jetty-context-configure.xml", contextsDirName, filterMap,
-				true);
-		}
-	}
-
-	protected void redeployTomcat(String context) throws Exception {
-		File webXml = new File(getDeployDir(), context + "/WEB-INF/web.xml");
-
-		FileUtils.touch(webXml);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DeployManagerImpl.class);

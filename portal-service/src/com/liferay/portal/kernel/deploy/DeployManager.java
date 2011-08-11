@@ -38,6 +38,8 @@ public interface DeployManager {
 	public List<PluginPackage> getInstalledPlugins()
 		throws PortalException, SystemException;
 
+	public boolean isDeployed(String context);
+
 	public boolean isExtPlugin(File file);
 
 	public boolean isHookPlugin(File file) throws AutoDeployException;

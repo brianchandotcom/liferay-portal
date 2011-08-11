@@ -51,6 +51,10 @@ public class DeployManagerUtil {
 		return getDeployManager().getInstalledPlugins();
 	}
 
+	public static boolean isDeployed(String context) {
+		return getDeployManager().isDeployed(context);
+	}
+
 	public static boolean isExtPlugin(File file) {
 		return getDeployManager().isExtPlugin(file);
 	}

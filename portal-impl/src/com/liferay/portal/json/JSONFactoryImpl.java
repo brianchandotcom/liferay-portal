@@ -48,7 +48,7 @@ public class JSONFactoryImpl implements JSONFactory {
 		 }
 	}
 
-	public String convertJSONMLtoXML(String jsonml) {
+	public String convertJSONMLArrayToXML(String jsonml) {
 		try {
 			org.json.JSONArray jsonArray = new org.json.JSONArray(jsonml);
 
@@ -61,11 +61,37 @@ public class JSONFactoryImpl implements JSONFactory {
 		}
 	}
 
-	public String convertXMLtoJSONML(String xml) {
+	public String convertJSONMLObjectToXML(String jsonml) {
+		try {
+			org.json.JSONObject jsonObject = new org.json.JSONObject(jsonml);
+
+			return JSONML.toString(jsonObject);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new IllegalStateException("Unable to convert to XML", e);
+		}
+	}
+
+	public String convertXMLtoJSONMLArray(String xml) {
 		try {
 			org.json.JSONArray jsonArray = JSONML.toJSONArray(xml);
 
 			return jsonArray.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new IllegalStateException("Unable to convert to JSONML", e);
+		}
+	}
+
+	public String convertXMLtoJSONMLObject(String xml) {
+		try {
+			org.json.JSONObject jsonObject = JSONML.toJSONObject(xml);
+
+			return jsonObject.toString();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -17,11 +17,14 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.net.URL;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Raymond Augé
@@ -31,6 +34,21 @@ public class ThemeHelper {
 	public static final String TEMPLATE_EXTENSION_FTL = "ftl";
 
 	public static final String TEMPLATE_EXTENSION_VM = "vm";
+
+	public static String getPortletId(HttpServletRequest request) {
+		String portletId = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			portletId = portletDisplay.getId();
+		}
+
+		return portletId;
+	}
 
 	public static String getResourcePath(
 		ServletContext servletContext, Theme theme, String portletId,

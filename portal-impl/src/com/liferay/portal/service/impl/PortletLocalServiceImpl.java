@@ -108,7 +108,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Skip
 	public void addPortletCategory(long companyId, String categoryName) {
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
-			String.valueOf(companyId), WebKeys.PORTLET_CATEGORY);
+			companyId, WebKeys.PORTLET_CATEGORY);
 
 		if (portletCategory == null) {
 			_log.error(
@@ -244,7 +244,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			portlet.getPortletId(), portletActions);
 
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
-			String.valueOf(portlet.getCompanyId()), WebKeys.PORTLET_CATEGORY);
+			portlet.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
 		if (portletCategory == null) {
 			_log.error(

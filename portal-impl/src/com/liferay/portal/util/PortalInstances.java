@@ -390,7 +390,7 @@ public class PortalInstances {
 
 			PortletCategory portletCategory =
 				(PortletCategory)WebAppPool.get(
-					String.valueOf(companyId), WebKeys.PORTLET_CATEGORY);
+					companyId, WebKeys.PORTLET_CATEGORY);
 
 			if (portletCategory == null) {
 				portletCategory = new PortletCategory();
@@ -406,8 +406,7 @@ public class PortalInstances {
 
 				PortletCategory currentPortletCategory =
 					(PortletCategory)WebAppPool.get(
-						String.valueOf(currentCompanyId),
-						WebKeys.PORTLET_CATEGORY);
+						currentCompanyId, WebKeys.PORTLET_CATEGORY);
 
 				if (currentPortletCategory != null) {
 					portletCategory.merge(currentPortletCategory);
@@ -415,8 +414,7 @@ public class PortalInstances {
 			}
 
 			WebAppPool.put(
-				String.valueOf(companyId), WebKeys.PORTLET_CATEGORY,
-				portletCategory);
+				companyId, WebKeys.PORTLET_CATEGORY, portletCategory);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

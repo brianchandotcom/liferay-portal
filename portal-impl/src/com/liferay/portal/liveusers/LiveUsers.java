@@ -145,32 +145,27 @@ public class LiveUsers {
 	}
 
 	private Map<Long, Set<Long>> _getLiveUsers(long companyId) {
-		String companyIdString = String.valueOf(companyId);
-
 		Map<Long, Set<Long>> liveUsers = (Map<Long, Set<Long>>)WebAppPool.get(
-			companyIdString, WebKeys.LIVE_USERS);
+			companyId, WebKeys.LIVE_USERS);
 
 		if (liveUsers == null) {
 			liveUsers = new ConcurrentHashMap<Long, Set<Long>>();
 
-			WebAppPool.put(companyIdString, WebKeys.LIVE_USERS, liveUsers);
+			WebAppPool.put(companyId, WebKeys.LIVE_USERS, liveUsers);
 		}
 
 		return liveUsers;
 	}
 
 	private Map<String, UserTracker> _getSessionUsers(long companyId) {
-		String companyIdString = String.valueOf(companyId);
-
 		Map<String, UserTracker> sessionUsers =
 			(Map<String, UserTracker>)WebAppPool.get(
-				companyIdString, WebKeys.LIVE_SESSION_USERS);
+				companyId, WebKeys.LIVE_SESSION_USERS);
 
 		if (sessionUsers == null) {
 			sessionUsers = new ConcurrentHashMap<String, UserTracker>();
 
-			WebAppPool.put(
-				companyIdString, WebKeys.LIVE_SESSION_USERS, sessionUsers);
+			WebAppPool.put(companyId, WebKeys.LIVE_SESSION_USERS, sessionUsers);
 		}
 
 		return sessionUsers;
@@ -190,17 +185,15 @@ public class LiveUsers {
 	}
 
 	private Map<Long, List<UserTracker>> _getUserTrackersMap(long companyId) {
-		String companyIdString = String.valueOf(companyId);
-
 		Map<Long, List<UserTracker>> userTrackersMap =
 			(Map<Long, List<UserTracker>>)WebAppPool.get(
-				companyIdString, WebKeys.LIVE_USER_TRACKERS);
+				companyId, WebKeys.LIVE_USER_TRACKERS);
 
 		if (userTrackersMap == null) {
 			userTrackersMap = new ConcurrentHashMap<Long, List<UserTracker>>();
 
 			WebAppPool.put(
-				companyIdString, WebKeys.LIVE_USER_TRACKERS, userTrackersMap);
+				companyId, WebKeys.LIVE_USER_TRACKERS, userTrackersMap);
 		}
 
 		return userTrackersMap;

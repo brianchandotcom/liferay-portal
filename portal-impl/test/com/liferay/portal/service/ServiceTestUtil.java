@@ -190,8 +190,8 @@ public class ServiceTestUtil {
 		}
 
 		WebAppPool.put(
-			String.valueOf(TestPropsValues.COMPANY_ID),
-			WebKeys.PORTLET_CATEGORY, new PortletCategory());
+			TestPropsValues.COMPANY_ID,	WebKeys.PORTLET_CATEGORY,
+			new PortletCategory());
 
 		for (int i = 0; i < 200; i++) {
 			String portletId = String.valueOf(i);

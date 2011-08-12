@@ -361,7 +361,7 @@ int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getComp
 						<portlet:renderURL var="moreResultsURL">
 							<portlet:param name="struts_action" value="/search/search" />
 							<portlet:param name="primarySearch" value="<%= portlet.getOpenSearchClass() %>" />
-							<portlet:param name="keywords" value="<%= HtmlUtil.escape(keywords) %>" />
+							<portlet:param name="keywords" value="<%= HtmlUtil.escapeHREF(keywords) %>" />
 							<portlet:param name="format" value="<%= format %>" />
 						</portlet:renderURL>
 

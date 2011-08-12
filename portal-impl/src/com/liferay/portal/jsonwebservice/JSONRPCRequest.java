@@ -16,8 +16,6 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,16 +23,32 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import jodd.servlet.ServletUtil;
 
 /**
  * @author Igor Spasic
  */
 public class JSONRPCRequest {
+	
+	public static JSONRPCRequest detectJSONRPCRequest(
+		HttpServletRequest request) {
 
-	public JSONRPCRequest(HttpServletRequest request) {
 		try {
 			String requestBody = ServletUtil.readRequestBody(request);
+
+			if (Validator.isNull(requestBody)) {
+				return null;
+			}
+
+			if (!requestBody.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+				return null;
+			}
+
+			if (!requestBody.endsWith(StringPool.CLOSE_CURLY_BRACE)) {
+				return null;
+			}
 
 			JSONDeserializer<HashMap<Object, Object>> jsonDeserializer =
 				JSONFactoryUtil.createJSONDeserializer();
@@ -45,15 +59,22 @@ public class JSONRPCRequest {
 			HashMap<Object, Object> requestBodyMap =
 				jsonDeserializer.deserialize(requestBody);
 
-			_id = (Integer)requestBodyMap.get("id");
-			_jsonrpc = (String)requestBodyMap.get("jsonrpc");
-			_method = (String)requestBodyMap.get("method");
-			_parameters = (Map<String, ?>)requestBodyMap.get("params");
+			JSONRPCRequest jsonrpcRequest = new JSONRPCRequest();
+			
+			jsonrpcRequest._id = (Integer)requestBodyMap.get("id");
+			jsonrpcRequest._jsonrpc = (String)requestBodyMap.get("jsonrpc");
+			jsonrpcRequest._method = (String)requestBodyMap.get("method");
+			jsonrpcRequest._parameters =
+				(Map<String, ?>)requestBodyMap.get("params");
 
-			_valid = true;
+			if (Validator.isNull(jsonrpcRequest._method)) {
+				return null;
+			}
+
+			return jsonrpcRequest;
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			return null;
 		}
 	}
 
@@ -77,16 +98,25 @@ public class JSONRPCRequest {
 		return _parameters.keySet();
 	}
 
-	public boolean isValid() {
-		return _valid;
+	public void setId(Integer id) {
+		_id = id;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JSONRPCRequest.class);
+	public void setJsonrpc(String jsonrpc) {
+		_jsonrpc = jsonrpc;
+	}
+
+	public void setMethod(String method) {
+		_method = method;
+	}
+
+	public void setParameters(Map<String, ?> parameters) {
+		_parameters = parameters;
+	}
 
 	private Integer _id;
 	private String _jsonrpc;
 	private String _method;
 	private Map<String, ?> _parameters;
-	private boolean _valid;
 
 }

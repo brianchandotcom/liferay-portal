@@ -53,6 +53,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -152,11 +153,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			boolean sendEmail, List<Address> addresses,
-			List<EmailAddress> emailAddresses, List<Phone> phones,
-			List<Website> websites,
+			List<Address> addresses, List<EmailAddress> emailAddresses,
+			List<Phone> phones, List<Website> websites,
 			List<AnnouncementsDelivery> announcementsDelivers,
-			ServiceContext serviceContext)
+			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -169,8 +169,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				screenName, emailAddress, facebookId, openId, locale, firstName,
 				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-				roleIds, userGroupIds, sendEmail, addresses, emailAddresses,
-				phones, websites, announcementsDelivers, serviceContext);
+				roleIds, userGroupIds, addresses, emailAddresses, phones,
+				websites, announcementsDelivers, sendEmail, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
@@ -198,7 +198,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				screenName, emailAddress, facebookId, openId, locale, firstName,
 				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-				roleIds, userGroupIds, sendEmail, serviceContext);
+				roleIds, userGroupIds, Collections.<Address>emptyList(),
+				sendEmail, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
@@ -213,11 +214,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			boolean sendEmail, List<Address> addresses,
-			List<EmailAddress> emailAddresses, List<Phone> phones,
-			List<Website> websites,
+			List<Address> addresses, List<EmailAddress> emailAddresses,
+			List<Phone> phones, List<Website> websites,
 			List<AnnouncementsDelivery> announcementsDelivers,
-			ServiceContext serviceContext)
+			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = addUserWithWorkflow(
@@ -225,10 +225,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			screenName, emailAddress, facebookId, openId, locale, firstName,
 			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
-
-		UsersAdminUtil.updateAddresses(
-			Contact.class.getName(), user.getContactId(), addresses);
+			roleIds, userGroupIds, addresses, sendEmail, serviceContext);
 
 		UsersAdminUtil.updateEmailAddresses(
 			Contact.class.getName(), user.getContactId(), emailAddresses);
@@ -252,7 +249,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			boolean sendEmail, ServiceContext serviceContext)
+			List<Address> addresses, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
@@ -289,7 +287,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			organizationIds, roleIds, userGroupIds, addresses, sendEmail,
+			serviceContext);
 	}
 
 	public void addUserGroupUsers(long userGroupId, long[] userIds)
@@ -690,15 +689,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = updateUser(
-			userId, oldPassword, newPassword1, newPassword2, passwordReset,
-			reminderQueryQuestion, reminderQueryAnswer, screenName,
-			emailAddress, facebookId, openId, languageId, timeZoneId, greeting,
-			comments, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
-			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
-			jobTitle, groupIds, organizationIds, roleIds,
-			userGroupRoles, userGroupIds, serviceContext);
+		User user = userLocalService.getUser(userId);
 
 		UsersAdminUtil.updateAddresses(
 			Contact.class.getName(), user.getContactId(), addresses);
@@ -714,7 +705,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		updateAnnouncementsDeliveries(user.getUserId(), announcementsDelivers);
 
-		return user;
+		return updateUser(
+			userId, oldPassword, newPassword1, newPassword2, passwordReset,
+			reminderQueryQuestion, reminderQueryAnswer, screenName,
+			emailAddress, facebookId, openId, languageId, timeZoneId, greeting,
+			comments, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
+			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
+			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
+			userGroupIds, serviceContext);
 	}
 
 	public User updateUser(

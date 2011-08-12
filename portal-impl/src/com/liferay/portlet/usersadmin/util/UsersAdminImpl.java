@@ -104,6 +104,29 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UsersAdminImpl implements UsersAdmin {
 
+	public void addAddresses(
+			long userId, String className, long classPK,
+			List<Address> addresses)
+		throws PortalException, SystemException {
+
+		for (Address address : addresses) {
+			String street1 = address.getStreet1();
+			String street2 = address.getStreet2();
+			String street3 = address.getStreet3();
+			String city = address.getCity();
+			String zip = address.getZip();
+			long regionId = address.getRegionId();
+			long countryId = address.getCountryId();
+			int typeId = address.getTypeId();
+			boolean mailing = address.isMailing();
+			boolean primary = address.isPrimary();
+
+			address = AddressLocalServiceUtil.addAddress(
+				userId, className, classPK, street1, street2, street3, city,
+				zip, regionId, countryId, typeId, mailing, primary);
+		}
+	}
+
 	public void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest request,
 			RenderResponse renderResponse)

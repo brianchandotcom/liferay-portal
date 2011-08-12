@@ -35,7 +35,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -150,6 +150,32 @@ public class DeployUtil {
 		if (undeployInterval > 0) {
 			Thread.sleep(undeployInterval);
 		}
+	}
+
+	public static void redeployJetty(String context) throws Exception {
+		String contextsDirName = System.getProperty("jetty.home") + "/contexts";
+
+		File contextXml = new File(contextsDirName + "/" + context + ".xml");
+
+		if (contextXml.exists()) {
+			FileUtil.touch(contextXml);
+		}
+		else {
+			Map<String, String> filterMap = new HashMap<String, String>();
+			filterMap.put("context", context);
+
+			File resourceFile =
+				new File(getResourcePath("jetty-context-configure.xml"));
+
+			CopyTask.copyFileRename(
+				resourceFile, contextXml, filterMap, true, true);
+		}
+	}
+
+	public static void redeployTomcat(String context) throws Exception {
+		File webXml = new File(getAutoDeployDestDir(), "/WEB-INF/web.xml");
+
+		FileUtil.touch(webXml);
 	}
 
 	private DeployUtil() {

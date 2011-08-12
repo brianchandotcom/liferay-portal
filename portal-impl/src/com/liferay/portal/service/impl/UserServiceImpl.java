@@ -54,6 +54,7 @@ import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -198,8 +199,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				screenName, emailAddress, facebookId, openId, locale, firstName,
 				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-				roleIds, userGroupIds, new ArrayList<Address>(), sendEmail,
-				serviceContext);
+				roleIds, userGroupIds, Collections.<Address>emptyList(),
+				sendEmail, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);

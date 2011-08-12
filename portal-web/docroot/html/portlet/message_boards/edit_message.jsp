@@ -223,7 +223,7 @@ if (Validator.isNull(redirect)) {
 				for (int i = 0; i < existingAttachments.length; i++) {
 					String existingPath = existingAttachments[i];
 
-					String existingName = StringUtil.extractLast(existingPath, StringPool.SLASH);
+					String existingName = StringUtil.extractLast(existingPath, CharPool.SLASH);
 				%>
 
 					<tr>

@@ -17,6 +17,7 @@ package com.liferay.portal.lar;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -174,122 +175,129 @@ public class PortletExporter {
 			stopWatch.start();
 		}
 
-		LayoutCache layoutCache = new LayoutCache();
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-		if (!layout.isTypeControlPanel() && !layout.isTypePanel() &&
-			!layout.isTypePortlet()) {
-
-			throw new LayoutImportException(
-				"Layout type " + layout.getType() + " is not valid");
-		}
-
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-			layout.getCompanyId());
-
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
-
-		long scopeGroupId = groupId;
-
-		javax.portlet.PortletPreferences jxPreferences =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portletId);
-
-		String scopeType = GetterUtil.getString(
-			jxPreferences.getValue("lfrScopeType", null));
-		String scopeLayoutUuid = GetterUtil.getString(
-			jxPreferences.getValue("lfrScopeLayoutUuid", null));
-
-		if (Validator.isNotNull(scopeType)) {
-			Group scopeGroup = null;
-
-			if (scopeType.equals("company")) {
-				scopeGroup = GroupLocalServiceUtil.getCompanyGroup(
-					layout.getCompanyId());
-			}
-			else if (Validator.isNotNull(scopeLayoutUuid)) {
-				scopeGroup = layout.getScopeGroup();
-			}
-
-			if (scopeGroup != null) {
-				scopeGroupId = scopeGroup.getGroupId();
-			}
-		}
-
-		PortletDataContext portletDataContext = new PortletDataContextImpl(
-			layout.getCompanyId(), scopeGroupId, parameterMap,
-			new HashSet<String>(), startDate, endDate, zipWriter);
-
-		portletDataContext.setPortetDataContextListener(
-			new PortletDataContextListenerImpl(portletDataContext));
-
-		portletDataContext.setPlid(plid);
-		portletDataContext.setOldPlid(plid);
-		portletDataContext.setScopeType(scopeType);
-		portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		Element headerElement = rootElement.addElement("header");
-
-		headerElement.addAttribute(
-			"build-number", String.valueOf(ReleaseInfo.getBuildNumber()));
-		headerElement.addAttribute("export-date", Time.getRFC822());
-
-		if (portletDataContext.hasDateRange()) {
-			headerElement.addAttribute(
-				"start-date",
-				String.valueOf(portletDataContext.getStartDate()));
-			headerElement.addAttribute(
-				"end-date", String.valueOf(portletDataContext.getEndDate()));
-		}
-
-		headerElement.addAttribute("type", "portlet");
-		headerElement.addAttribute("group-id", String.valueOf(scopeGroupId));
-		headerElement.addAttribute(
-			"private-layout", String.valueOf(layout.isPrivateLayout()));
-		headerElement.addAttribute(
-			"root-portlet-id", PortletConstants.getRootPortletId(portletId));
-
-		exportPortlet(
-			portletDataContext, layoutCache, portletId, layout, rootElement,
-			defaultUserId, exportPermissions, exportPortletArchivedSetups,
-			exportPortletData, exportPortletSetup, exportPortletUserPreferences,
-			exportUserPermissions);
-
-		if (exportCategories) {
-			exportAssetCategories(portletDataContext);
-		}
-
-		exportAssetLinks(portletDataContext);
-		exportAssetTags(portletDataContext);
-		exportComments(portletDataContext);
-		exportExpandoTables(portletDataContext);
-		exportLocks(portletDataContext);
-
-		if (exportPermissions) {
-			_permissionExporter.exportPortletDataPermissions(
-				portletDataContext);
-		}
-
-		exportRatingsEntries(portletDataContext, rootElement);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Exporting portlet took " + stopWatch.getTime() + " ms");
-		}
-
 		try {
-			portletDataContext.addZipEntry(
-				"/manifest.xml", document.formattedString());
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
+			ImportExportThreadLocal.setPortletImportInProcess(true);
 
-		return zipWriter.getFile();
+			LayoutCache layoutCache = new LayoutCache();
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			if (!layout.isTypeControlPanel() && !layout.isTypePanel() &&
+				!layout.isTypePortlet()) {
+
+				throw new LayoutImportException(
+					"Layout type " + layout.getType() + " is not valid");
+			}
+
+			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+				layout.getCompanyId());
+
+			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+			long scopeGroupId = groupId;
+
+			javax.portlet.PortletPreferences jxPreferences =
+				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+					layout, portletId);
+
+			String scopeType = GetterUtil.getString(
+				jxPreferences.getValue("lfrScopeType", null));
+			String scopeLayoutUuid = GetterUtil.getString(
+				jxPreferences.getValue("lfrScopeLayoutUuid", null));
+
+			if (Validator.isNotNull(scopeType)) {
+				Group scopeGroup = null;
+
+				if (scopeType.equals("company")) {
+					scopeGroup = GroupLocalServiceUtil.getCompanyGroup(
+						layout.getCompanyId());
+				}
+				else if (Validator.isNotNull(scopeLayoutUuid)) {
+					scopeGroup = layout.getScopeGroup();
+				}
+
+				if (scopeGroup != null) {
+					scopeGroupId = scopeGroup.getGroupId();
+				}
+			}
+
+			PortletDataContext portletDataContext = new PortletDataContextImpl(
+				layout.getCompanyId(), scopeGroupId, parameterMap,
+				new HashSet<String>(), startDate, endDate, zipWriter);
+
+			portletDataContext.setPortetDataContextListener(
+				new PortletDataContextListenerImpl(portletDataContext));
+
+			portletDataContext.setPlid(plid);
+			portletDataContext.setOldPlid(plid);
+			portletDataContext.setScopeType(scopeType);
+			portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
+
+			Document document = SAXReaderUtil.createDocument();
+
+			Element rootElement = document.addElement("root");
+
+			Element headerElement = rootElement.addElement("header");
+
+			headerElement.addAttribute(
+				"build-number", String.valueOf(ReleaseInfo.getBuildNumber()));
+			headerElement.addAttribute("export-date", Time.getRFC822());
+
+			if (portletDataContext.hasDateRange()) {
+				headerElement.addAttribute(
+					"start-date",
+					String.valueOf(portletDataContext.getStartDate()));
+				headerElement.addAttribute(
+					"end-date", String.valueOf(portletDataContext.getEndDate()));
+			}
+
+			headerElement.addAttribute("type", "portlet");
+			headerElement.addAttribute("group-id", String.valueOf(scopeGroupId));
+			headerElement.addAttribute(
+				"private-layout", String.valueOf(layout.isPrivateLayout()));
+			headerElement.addAttribute(
+				"root-portlet-id", PortletConstants.getRootPortletId(portletId));
+
+			exportPortlet(
+				portletDataContext, layoutCache, portletId, layout, rootElement,
+				defaultUserId, exportPermissions, exportPortletArchivedSetups,
+				exportPortletData, exportPortletSetup, exportPortletUserPreferences,
+				exportUserPermissions);
+
+			if (exportCategories) {
+				exportAssetCategories(portletDataContext);
+			}
+
+			exportAssetLinks(portletDataContext);
+			exportAssetTags(portletDataContext);
+			exportComments(portletDataContext);
+			exportExpandoTables(portletDataContext);
+			exportLocks(portletDataContext);
+
+			if (exportPermissions) {
+				_permissionExporter.exportPortletDataPermissions(
+					portletDataContext);
+			}
+
+			exportRatingsEntries(portletDataContext, rootElement);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Exporting portlet took " + stopWatch.getTime() + " ms");
+			}
+
+			try {
+				portletDataContext.addZipEntry(
+					"/manifest.xml", document.formattedString());
+			}
+			catch (IOException ioe) {
+				throw new SystemException(ioe);
+			}
+
+			return zipWriter.getFile();
+		}
+		finally {
+			ImportExportThreadLocal.setPortletImportInProcess(false);
+		}
 	}
 
 	protected void exportAssetCategories(PortletDataContext portletDataContext)

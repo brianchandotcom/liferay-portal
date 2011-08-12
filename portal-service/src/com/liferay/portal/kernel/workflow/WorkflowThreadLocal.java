@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
@@ -22,6 +23,10 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 public class WorkflowThreadLocal {
 
 	public static boolean isEnabled() {
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			return false;
+		}
+
 		return _enabled.get().booleanValue();
 	}
 

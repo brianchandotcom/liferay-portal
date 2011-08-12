@@ -20,6 +20,7 @@ import com.liferay.portalweb.portal.controlpanel.users.useraddress.adduseraddres
 import com.liferay.portalweb.portal.controlpanel.users.useraddress.adduseraddressmultiple.AddUserAddressMultipleTests;
 import com.liferay.portalweb.portal.controlpanel.users.useraddress.adduseraddressstreetnull.AddUserAddressStreetNullTests;
 import com.liferay.portalweb.portal.controlpanel.users.useraddress.adduseraddresszipnull.AddUserAddressZipNullTests;
+import com.liferay.portalweb.portal.controlpanel.users.useraddress.searchuseraddresscp.SearchUserAddressCPTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,6 +38,7 @@ public class UserAddressTests extends BaseTests {
 		testSuite.addTest(AddUserAddressMultipleTests.suite());
 		testSuite.addTest(AddUserAddressStreetNullTests.suite());
 		testSuite.addTest(AddUserAddressZipNullTests.suite());
+		testSuite.addTest(SearchUserAddressCPTests.suite());
 
 		return testSuite;
 	}

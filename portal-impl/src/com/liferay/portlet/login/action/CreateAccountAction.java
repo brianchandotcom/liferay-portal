@@ -70,7 +70,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.login.util.LoginUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

@@ -720,8 +720,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Addresses
 
-		UsersAdminUtil.updateAddresses(
-			Contact.class.getName(), user.getContactId(), addresses);
+		if (!addresses.isEmpty()) {
+			UsersAdminUtil.updateAddresses(
+				Contact.class.getName(), user.getContactId(), addresses);
+		}
 
 		// Group
 

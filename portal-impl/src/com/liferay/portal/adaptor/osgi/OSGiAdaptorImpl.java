@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.taglib.util.ThemeUtil;
 import com.liferay.util.UniqueList;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -121,7 +120,8 @@ public class OSGiAdaptorImpl implements Adaptor {
 		getBundleExportPackages(
 			MVCPortlet.class, "com.liferay.util.bridges", packages);
 		getBundleExportPackages(
-			ThemeUtil.class, "com.liferay.util.taglib", packages);
+			"com.liferay.taglib.util.ThemeUtil",
+			"com.liferay.util.taglib", packages);
 		getBundleExportPackages(
 			UniqueList.class, "com.liferay.util.java", packages);
 
@@ -176,6 +176,18 @@ public class OSGiAdaptorImpl implements Adaptor {
 			String[] values = StringUtil.split(value);
 
 			packages.addAll(Arrays.asList(values));
+		}
+	}
+
+	protected void getBundleExportPackages(
+		String className, String bundleSymbolicName, List<String> packages) {
+
+		try {
+			getBundleExportPackages(
+				Class.forName(className), bundleSymbolicName, packages);
+		}
+		catch (ClassNotFoundException cnfe) {
+			_log.error(cnfe, cnfe);
 		}
 	}
 

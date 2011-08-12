@@ -96,8 +96,10 @@ AUI().add(
 
 						var namespace = instance._prefixedPortletId;
 
-						instance._searchInput = A.one('#' + namespace + 'categoriesAdminSearchInput');
-						instance._searchType = A.one('#' + namespace + 'categoriesAdminSelectSearch');
+						var idPrefix = '#' + namespace;
+
+						instance._searchInput = A.one(idPrefix + 'categoriesAdminSearchInput');
+						instance._searchType = A.one(idPrefix + 'categoriesAdminSelectSearch');
 
 						A.one('.category-view-close').on(EVENT_CLICK, instance._closeEditSection, instance);
 
@@ -117,14 +119,15 @@ AUI().add(
 						var vocabularyList = A.one(instance._vocabularyContainerSelector);
 
 						vocabularyList.on(EVENT_CLICK, instance._onVocabularyListClick, instance);
+
 						vocabularyList.on('key', instance._onVocabularyListSelect, 'up:13', instance);
 
-						A.one('#' + namespace + 'addCategoryButton').on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
-						A.one('#' + namespace + 'addVocabularyButton').on(EVENT_CLICK, instance._onShowVocabularyPanel, instance, ACTION_ADD);
-						A.one('#' + namespace + 'categoryPermissionsButton').on(EVENT_CLICK, instance._onChangePermissions, instance);
-						A.one('#' + namespace + 'deleteSelectedVocabularies').on(EVENT_CLICK, instance._deleteSelectedVocabularies, instance);
+						A.one(idPrefix + 'addCategoryButton').on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
+						A.one(idPrefix + 'addVocabularyButton').on(EVENT_CLICK, instance._onShowVocabularyPanel, instance, ACTION_ADD);
+						A.one(idPrefix + 'categoryPermissionsButton').on(EVENT_CLICK, instance._onChangePermissions, instance);
+						A.one(idPrefix + 'deleteSelectedVocabularies').on(EVENT_CLICK, instance._deleteSelectedVocabularies, instance);
 
-						var checkAllVocabulariesCheckbox = A.one('#' + namespace + 'checkAllVocabulariesCheckbox');
+						var checkAllVocabulariesCheckbox = A.one(idPrefix + 'checkAllVocabulariesCheckbox');
 
 						checkAllVocabulariesCheckbox.on(EVENT_CLICK, instance._checkAllVocabularies, instance);
 
@@ -598,7 +601,7 @@ AUI().add(
 										{
 											vocabularyIds: checkedItemsIds
 										},
-										A.bind(instance._processVocabularyDeletion, instance)
+										A.bind(instance._processActionResult, instance)
 									);
 								}
 							}
@@ -615,7 +618,7 @@ AUI().add(
 							{
 								vocabularyId: vocabularyId
 							},
-							callback
+							A.bind(callback, instance)
 						);
 					},
 
@@ -951,12 +954,18 @@ AUI().add(
 					_filterCategory: function(categories, parentCategoryId) {
 						var instance = this;
 
-						return A.Array.filter(
-							categories,
-							function(item, index, collection) {
-								return (item.parentCategoryId == parentCategoryId);
-							}
-						);
+						var filteredCategories;
+
+						if (Lang.isArray(categories)) {
+							filteredCategories = A.Array.filter(
+								categories,
+								function(item, index, collection) {
+									return (item.parentCategoryId == parentCategoryId);
+								}
+							);
+						}
+
+						return filteredCategories || [];
 					},
 
 					_focusCategoryPanelAdd: function() {
@@ -1644,7 +1653,7 @@ AUI().add(
 						var instance = this;
 
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-vocabulary'))) {
-							instance._deleteVocabulary(instance._selectedVocabularyId, instance._processVocabularyDeletion, instance);
+							instance._deleteVocabulary(instance._selectedVocabularyId, instance._processActionResult);
 						}
 					},
 
@@ -1668,7 +1677,12 @@ AUI().add(
 
 						instance._onVocabularyListSelect(event);
 
-						if (event.target.hasClass('vocabulary-item-actions-trigger')) {
+						var target = event.target;
+
+						if (target.hasClass('vocabulary-item-check')) {
+							Liferay.Util.checkAllBox(event.currentTarget, 'vocabulary-item-check', instance._checkAllVocabulariesCheckbox);
+						}
+						else if (event.target.hasClass('vocabulary-item-actions-trigger')) {
 							instance._showVocabularyPanel(ACTION_EDIT);
 						}
 					},
@@ -1724,7 +1738,7 @@ AUI().add(
 						instance._loadData();
 					},
 
-					_processVocabularyDeletion: function(result) {
+					_processActionResult: function(result) {
 						var instance = this;
 
 						var exception = result.exception;

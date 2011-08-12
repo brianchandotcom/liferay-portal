@@ -49,6 +49,11 @@ public interface UsersAdmin {
 
 	public static final String CUSTOM_QUESTION = "write-my-own-question";
 
+	public void addAddresses(
+			long userId, String className, long classPK,
+			List<Address> addresses)
+		throws PortalException, SystemException;
+
 	public void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest request,
 			RenderResponse renderResponse)

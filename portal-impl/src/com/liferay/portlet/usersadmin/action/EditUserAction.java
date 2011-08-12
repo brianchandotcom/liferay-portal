@@ -373,7 +373,6 @@ public class EditUserAction extends PortletAction {
 			actionRequest);
 		long[] userGroupIds = getLongArray(
 			actionRequest, "userGroupsSearchContainerPrimaryKeys");
-		boolean sendEmail = true;
 		List<Address> addresses = UsersAdminUtil.getAddresses(
 			actionRequest);
 		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
@@ -382,6 +381,7 @@ public class EditUserAction extends PortletAction {
 		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
 		List<AnnouncementsDelivery> announcementsDeliveries =
 			getAnnouncementsDeliveries(actionRequest);
+		boolean sendEmail = true;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
@@ -391,9 +391,9 @@ public class EditUserAction extends PortletAction {
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			LocaleUtil.getDefault(), firstName, middleName, lastName, prefixId,
 			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
-			addresses, emailAddresses, phones, websites,
-			announcementsDeliveries, serviceContext);
+			groupIds, organizationIds, roleIds, userGroupIds, addresses,
+			emailAddresses, phones, websites, announcementsDeliveries,
+			sendEmail, serviceContext);
 
 		if (!userGroupRoles.isEmpty()) {
 			for (UserGroupRole userGroupRole : userGroupRoles) {

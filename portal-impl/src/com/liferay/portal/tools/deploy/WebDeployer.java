@@ -116,7 +116,7 @@ public class WebDeployer extends BaseDeployer {
 		String pluginName = pluginPackage.getName();
 		String pluginType = pluginPackage.getTypes().get(0);
 		String pluginTypeName = TextFormatter.format(
-				pluginType, TextFormatter.J);
+			pluginType, TextFormatter.J);
 
 		if (!pluginType.equals(Plugin.TYPE_WEB)) {
 			return;

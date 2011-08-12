@@ -17,6 +17,7 @@ package com.liferay.portlet.social.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -24,7 +25,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.NoSuchActivityException;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
-import com.liferay.portlet.social.util.SocialActivityThreadLocal;
 
 import java.util.Date;
 import java.util.List;
@@ -40,7 +40,7 @@ public class SocialActivityLocalServiceImpl
 			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException, SystemException {
 
-		if (!SocialActivityThreadLocal.isEnabled()) {
+		if (ImportExportThreadLocal.isImportInProcess()) {
 			return null;
 		}
 

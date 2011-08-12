@@ -71,6 +71,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.login.util.LoginUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -258,7 +259,7 @@ public class CreateAccountAction extends PortletAction {
 		long[] organizationIds = null;
 		long[] roleIds = null;
 		long[] userGroupIds = null;
-		List<Address> addresses = new ArrayList<Address>();
+		List<Address> addresses = Collections.<Address>emptyList();
 		boolean sendEmail = true;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

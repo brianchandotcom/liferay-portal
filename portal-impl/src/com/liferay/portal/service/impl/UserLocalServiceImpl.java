@@ -130,6 +130,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -464,7 +465,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				locale, firstName, middleName, lastName, prefixId, suffixId,
 				male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
 				groupIds, organizationIds, roleIds, userGroupIds,
-				new ArrayList<Address>(), sendEmail, serviceContext);
+				Collections.<Address>emptyList(), sendEmail, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
@@ -720,8 +721,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Addresses
 
-		UsersAdminUtil.updateAddresses(
-			Contact.class.getName(), user.getContactId(), addresses);
+		if (!addresses.isEmpty()) {
+			UsersAdminUtil.updateAddresses(
+				Contact.class.getName(), user.getContactId(), addresses);
+		}
 
 		// Group
 

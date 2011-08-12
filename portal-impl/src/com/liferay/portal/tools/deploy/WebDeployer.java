@@ -17,12 +17,17 @@ package com.liferay.portal.tools.deploy;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.model.Plugin;
 import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Brian Wing Shun Chan
@@ -87,6 +92,69 @@ public class WebDeployer extends BaseDeployer {
 		sb.append("</listener>");
 
 		return sb.toString();
+	}
+
+	@Override
+	public void processPluginPackageProperties(
+			File srcFile, String displayName, PluginPackage pluginPackage)
+		throws Exception {
+
+		if (pluginPackage == null) {
+			return;
+		}
+
+		Properties properties = getPluginPackageProperties(srcFile);
+
+		if ((properties == null) || (properties.size() == 0)) {
+			return;
+		}
+
+		String moduleGroupId = pluginPackage.getGroupId();
+		String moduleArtifactId = pluginPackage.getArtifactId();
+		String moduleVersion = pluginPackage.getVersion();
+
+		String pluginName = pluginPackage.getName();
+		String pluginType = pluginPackage.getTypes().get(0);
+		String pluginTypeName = TextFormatter.format(
+				pluginType, TextFormatter.J);
+
+		if (!pluginType.equals(Plugin.TYPE_WEB)) {
+			return;
+		}
+
+		String tags = getPluginPackageTagsXml(pluginPackage.getTags());
+		String shortDescription = pluginPackage.getShortDescription();
+		String longDescription = pluginPackage.getLongDescription();
+		String changeLog = pluginPackage.getChangeLog();
+		String pageURL = pluginPackage.getPageURL();
+		String author = pluginPackage.getAuthor();
+		String licenses = getPluginPackageLicensesXml(
+			pluginPackage.getLicenses());
+		String liferayVersions = getPluginPackageLiferayVersionsXml(
+			pluginPackage.getLiferayVersions());
+
+		Map<String, String> filterMap = new HashMap<String, String>();
+
+		filterMap.put("module_group_id", moduleGroupId);
+		filterMap.put("module_artifact_id", moduleArtifactId);
+		filterMap.put("module_version", moduleVersion);
+
+		filterMap.put("plugin_name", pluginName);
+		filterMap.put("plugin_type", pluginType);
+		filterMap.put("plugin_type_name", pluginTypeName);
+
+		filterMap.put("tags", tags);
+		filterMap.put("short_description", shortDescription);
+		filterMap.put("long_description", longDescription);
+		filterMap.put("change_log", changeLog);
+		filterMap.put("page_url", pageURL);
+		filterMap.put("author", author);
+		filterMap.put("licenses", licenses);
+		filterMap.put("liferay_versions", liferayVersions);
+
+		copyDependencyXml(
+			"liferay-plugin-package.xml", srcFile + "/WEB-INF", filterMap,
+			true);
 	}
 
 }

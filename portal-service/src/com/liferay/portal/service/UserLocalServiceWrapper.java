@@ -485,6 +485,7 @@ public class UserLocalServiceWrapper implements UserLocalService {
 	* @param organizationIds the primary keys of the user's organizations
 	* @param roleIds the primary keys of the roles this user possesses
 	* @param userGroupIds the primary keys of the user's user groups
+	* @param addresses the user's addresses
 	* @param sendEmail whether to send the user an email notification about
 	their new account
 	* @param serviceContext the user's service context (optionally
@@ -505,7 +506,9 @@ public class UserLocalServiceWrapper implements UserLocalService {
 		java.lang.String lastName, int prefixId, int suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear,
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds, long[] userGroupIds, boolean sendEmail,
+		long[] roleIds, long[] userGroupIds,
+		java.util.List<com.liferay.portal.model.Address> addresses,
+		boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -514,7 +517,7 @@ public class UserLocalServiceWrapper implements UserLocalService {
 			emailAddress, facebookId, openId, locale, firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
 			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupIds, sendEmail, serviceContext);
+			userGroupIds, addresses, sendEmail, serviceContext);
 	}
 
 	/**

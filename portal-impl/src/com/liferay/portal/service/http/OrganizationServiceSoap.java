@@ -177,6 +177,7 @@ public class OrganizationServiceSoap {
 	* @param comments the comments about the organization
 	* @param site whether the organization is to be associated with a main
 	site
+	* @param addresses the organization's addresses
 	* @param serviceContext the organization's service context (optionally
 	<code>null</code>). Can specify the organization's asset category
 	IDs, asset tag names, and expando bridge attributes.
@@ -190,12 +191,15 @@ public class OrganizationServiceSoap {
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
 		long countryId, int statusId, java.lang.String comments, boolean site,
+		com.liferay.portal.model.AddressSoap[] addresses,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Organization returnValue = OrganizationServiceUtil.addOrganization(parentOrganizationId,
 					name, type, recursable, regionId, countryId, statusId,
-					comments, site, serviceContext);
+					comments, site,
+					com.liferay.portal.model.impl.AddressModelImpl.toModels(
+						addresses), serviceContext);
 
 			return com.liferay.portal.model.OrganizationSoap.toSoapModel(returnValue);
 		}

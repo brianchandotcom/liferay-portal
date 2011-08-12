@@ -62,9 +62,7 @@ public class DoAsURLTag extends TagSupport {
 
 			if (!layouts.isEmpty()) {
 				layout = layouts.get(0);
-			}
 
-			if (layout != null) {
 				doAsURL = layout.getFriendlyURL();
 			}
 

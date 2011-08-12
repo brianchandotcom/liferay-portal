@@ -15,7 +15,12 @@
 package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.servlet.DirectServletContext;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -59,6 +64,8 @@ public class JSPSearchEntry extends SearchEntry {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(_path);
 
+			_request.setAttribute(WebKeys.SERVLET_PATH, _path);
+
 			requestDispatcher.include(
 				_request, new PipingServletResponse(pageContext));
 		}
@@ -80,8 +87,17 @@ public class JSPSearchEntry extends SearchEntry {
 	}
 
 	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+		if (_DIRECT_SERVLET_CONTEXT_ENABLED) {
+			_servletContext = new DirectServletContext(servletContext);
+		}
+		else {
+			_servletContext = servletContext;
+		}
 	}
+
+	private static final boolean _DIRECT_SERVLET_CONTEXT_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_ENABLED));
 
 	private String _path;
 	private HttpServletRequest _request;

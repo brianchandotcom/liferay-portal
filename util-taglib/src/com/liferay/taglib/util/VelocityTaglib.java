@@ -14,9 +14,13 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.servlet.DirectServletContext;
 import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.taglib.TagSupport;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -360,6 +364,10 @@ public class VelocityTaglib {
 	}
 
 	public void include(String page) throws Exception {
+		if (_DIRECT_SERVLET_CONTEXT_ENABLED) {
+			_request.setAttribute(WebKeys.SERVLET_PATH, page);
+		}
+
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(page);
 
@@ -369,6 +377,10 @@ public class VelocityTaglib {
 	public VelocityTaglib init(
 		ServletContext servletContext, HttpServletRequest request,
 		HttpServletResponse response, PageContext pageContext) {
+
+		if (_DIRECT_SERVLET_CONTEXT_ENABLED) {
+			servletContext = new DirectServletContext(servletContext);
+		}
 
 		_servletContext = servletContext;
 		_request = request;
@@ -626,6 +638,10 @@ public class VelocityTaglib {
 		tagSupport.setPageContext(
 			new PipingPageContext(_pageContext, _response.getWriter()));
 	}
+
+	private static final boolean _DIRECT_SERVLET_CONTEXT_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_ENABLED));
 
 	private PageContext _pageContext;
 	private HttpServletRequest _request;

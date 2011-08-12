@@ -17,6 +17,7 @@ create index IX_9C7EB9F on AnnouncementsFlag (entryId);
 create unique index IX_4539A99C on AnnouncementsFlag (userId, entryId, value);
 
 create index IX_E639E2F6 on AssetCategory (groupId);
+create index IX_2008FACB on AssetCategory (groupId, vocabularyId);
 create index IX_D61ABE08 on AssetCategory (name, vocabularyId);
 create index IX_7BB1826B on AssetCategory (parentCategoryId);
 create index IX_9DDD15EA on AssetCategory (parentCategoryId, name);

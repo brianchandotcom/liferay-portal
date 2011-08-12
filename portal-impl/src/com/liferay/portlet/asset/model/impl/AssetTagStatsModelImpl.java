@@ -74,6 +74,15 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetTagStats"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.asset.model.AssetTagStats"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long TAGID_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return AssetTagStats.class;
@@ -118,6 +127,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	}
 
 	public void setTagId(long tagId) {
+		_bitMask |= TAGID_BIT_MASK;
+
 		if (!_setOriginalTagId) {
 			_setOriginalTagId = true;
 
@@ -144,6 +155,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -273,6 +286,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		assetTagStatsModelImpl._originalClassNameId = assetTagStatsModelImpl._classNameId;
 
 		assetTagStatsModelImpl._setOriginalClassNameId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -340,6 +355,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			AssetTagStats.class
 		};
+	private long _bitMask;
 	private long _tagStatsId;
 	private long _tagId;
 	private long _originalTagId;

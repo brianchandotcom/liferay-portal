@@ -89,6 +89,17 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Group"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Group"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long NAME_BIT_MASK = 2L;
+	public static long ACTIVE_BIT_MASK = 4L;
+	public static long FRIENDLYURL_BIT_MASK = 8L;
+	public static long CLASSPK_BIT_MASK = 16L;
+	public static long COMPANYID_BIT_MASK = 32L;
+	public static long TYPE_BIT_MASK = 64L;
+	public static long LIVEGROUPID_BIT_MASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -131,6 +142,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -212,6 +227,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -257,6 +274,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -276,6 +295,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -304,6 +325,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public void setLiveGroupId(long liveGroupId) {
+		_bitMask |= LIVEGROUPID_BIT_MASK;
+
 		if (!_setOriginalLiveGroupId) {
 			_setOriginalLiveGroupId = true;
 
@@ -328,6 +351,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -359,7 +384,19 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public void setType(int type) {
+		_bitMask |= TYPE_BIT_MASK;
+
+		if (!_setOriginalType) {
+			_setOriginalType = true;
+
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public int getOriginalType() {
+		return _originalType;
 	}
 
 	@JSON
@@ -387,6 +424,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public void setFriendlyURL(String friendlyURL) {
+		_bitMask |= FRIENDLYURL_BIT_MASK;
+
 		if (_originalFriendlyURL == null) {
 			_originalFriendlyURL = _friendlyURL;
 		}
@@ -421,7 +460,19 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public void setActive(boolean active) {
+		_bitMask |= ACTIVE_BIT_MASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
 	}
 
 	@Override
@@ -543,7 +594,17 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		groupModelImpl._originalName = groupModelImpl._name;
 
+		groupModelImpl._originalType = groupModelImpl._type;
+
+		groupModelImpl._setOriginalType = false;
+
 		groupModelImpl._originalFriendlyURL = groupModelImpl._friendlyURL;
+
+		groupModelImpl._originalActive = groupModelImpl._active;
+
+		groupModelImpl._setOriginalActive = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -715,6 +776,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Group.class
 		};
+	private long _bitMask;
 	private long _groupId;
 	private long _companyId;
 	private long _originalCompanyId;
@@ -735,11 +797,15 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private String _originalName;
 	private String _description;
 	private int _type;
+	private int _originalType;
+	private boolean _setOriginalType;
 	private String _typeSettings;
 	private String _friendlyURL;
 	private String _originalFriendlyURL;
 	private boolean _site;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private transient ExpandoBridge _expandoBridge;
 	private Group _escapedModelProxy;
 }

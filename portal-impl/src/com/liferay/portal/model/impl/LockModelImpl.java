@@ -80,6 +80,17 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Lock"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Lock"),
+			true);
+	public static long EXPIRATIONDATE_BIT_MASK = 1L;
+	public static long CLASSNAME_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
+	public static long KEY_BIT_MASK = 8L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return Lock.class;
@@ -121,7 +132,15 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	public long getLockId() {
@@ -187,6 +206,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public void setClassName(String className) {
+		_bitMask |= CLASSNAME_BIT_MASK;
+
 		if (_originalClassName == null) {
 			_originalClassName = _className;
 		}
@@ -208,6 +229,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public void setKey(String key) {
+		_bitMask |= KEY_BIT_MASK;
+
 		if (_originalKey == null) {
 			_originalKey = _key;
 		}
@@ -249,7 +272,17 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public void setExpirationDate(Date expirationDate) {
+		_bitMask |= EXPIRATIONDATE_BIT_MASK;
+
+		if (_originalExpirationDate == null) {
+			_originalExpirationDate = _expirationDate;
+		}
+
 		_expirationDate = expirationDate;
+	}
+
+	public Date getOriginalExpirationDate() {
+		return _originalExpirationDate;
 	}
 
 	@Override
@@ -352,9 +385,15 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	public void resetOriginalValues() {
 		LockModelImpl lockModelImpl = this;
 
+		lockModelImpl._originalUuid = lockModelImpl._uuid;
+
 		lockModelImpl._originalClassName = lockModelImpl._className;
 
 		lockModelImpl._originalKey = lockModelImpl._key;
+
+		lockModelImpl._originalExpirationDate = lockModelImpl._expirationDate;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -522,7 +561,9 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Lock.class
 		};
+	private long _bitMask;
 	private String _uuid;
+	private String _originalUuid;
 	private long _lockId;
 	private long _companyId;
 	private long _userId;
@@ -536,6 +577,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private String _owner;
 	private boolean _inheritable;
 	private Date _expirationDate;
+	private Date _originalExpirationDate;
 	private transient ExpandoBridge _expandoBridge;
 	private Lock _escapedModelProxy;
 }

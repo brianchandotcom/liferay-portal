@@ -85,6 +85,12 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFileEntryType"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.documentlibrary.model.DLFileEntryType"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long DESCRIPTION_BIT_MASK = 2L;
+	public static long NAME_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -123,6 +129,10 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -194,7 +204,19 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -266,7 +288,17 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -280,7 +312,17 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	}
 
 	public void setDescription(String description) {
+		_bitMask |= DESCRIPTION_BIT_MASK;
+
+		if (_originalDescription == null) {
+			_originalDescription = _description;
+		}
+
 		_description = description;
+	}
+
+	public String getOriginalDescription() {
+		return GetterUtil.getString(_originalDescription);
 	}
 
 	@Override
@@ -379,6 +421,17 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	@Override
 	public void resetOriginalValues() {
+		DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl = this;
+
+		dlFileEntryTypeModelImpl._originalGroupId = dlFileEntryTypeModelImpl._groupId;
+
+		dlFileEntryTypeModelImpl._setOriginalGroupId = false;
+
+		dlFileEntryTypeModelImpl._originalName = dlFileEntryTypeModelImpl._name;
+
+		dlFileEntryTypeModelImpl._originalDescription = dlFileEntryTypeModelImpl._description;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -518,8 +571,11 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLFileEntryType.class
 		};
+	private long _bitMask;
 	private long _fileEntryTypeId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
@@ -527,7 +583,9 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
+	private String _originalName;
 	private String _description;
+	private String _originalDescription;
 	private transient ExpandoBridge _expandoBridge;
 	private DLFileEntryType _escapedModelProxy;
 }

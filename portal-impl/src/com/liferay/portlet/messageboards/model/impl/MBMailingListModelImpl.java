@@ -97,6 +97,17 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBMailingList"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.messageboards.model.MBMailingList"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long CATEGORYID_BIT_MASK = 2L;
+	public static long ACTIVE_BIT_MASK = 4L;
+	public static long UUID_BIT_MASK = 8L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return MBMailingList.class;
@@ -162,6 +173,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -233,6 +246,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	}
 
 	public void setCategoryId(long categoryId) {
+		_bitMask |= CATEGORYID_BIT_MASK;
+
 		if (!_setOriginalCategoryId) {
 			_setOriginalCategoryId = true;
 
@@ -444,7 +459,19 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	}
 
 	public void setActive(boolean active) {
+		_bitMask |= ACTIVE_BIT_MASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
 	}
 
 	@Override
@@ -571,6 +598,12 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		mbMailingListModelImpl._originalCategoryId = mbMailingListModelImpl._categoryId;
 
 		mbMailingListModelImpl._setOriginalCategoryId = false;
+
+		mbMailingListModelImpl._originalActive = mbMailingListModelImpl._active;
+
+		mbMailingListModelImpl._setOriginalActive = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -894,6 +927,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			MBMailingList.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _mailingListId;
@@ -926,6 +960,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	private String _outPassword;
 	private boolean _allowAnonymous;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private transient ExpandoBridge _expandoBridge;
 	private MBMailingList _escapedModelProxy;
 }

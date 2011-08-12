@@ -112,6 +112,16 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingItem"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.shopping.model.ShoppingItem"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long LARGEIMAGEID_BIT_MASK = 2L;
+	public static long MEDIUMIMAGEID_BIT_MASK = 4L;
+	public static long CATEGORYID_BIT_MASK = 8L;
+	public static long COMPANYID_BIT_MASK = 16L;
+	public static long SKU_BIT_MASK = 32L;
+	public static long SMALLIMAGEID_BIT_MASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -176,6 +186,10 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return models;
 	}
 
+	public long getBitMask() {
+		return _bitMask;
+	}
+
 	public Class<?> getModelClass() {
 		return ShoppingItem.class;
 	}
@@ -221,7 +235,19 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -230,6 +256,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -298,7 +326,19 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	}
 
 	public void setCategoryId(long categoryId) {
+		_bitMask |= CATEGORYID_BIT_MASK;
+
+		if (!_setOriginalCategoryId) {
+			_setOriginalCategoryId = true;
+
+			_originalCategoryId = _categoryId;
+		}
+
 		_categoryId = categoryId;
+	}
+
+	public long getOriginalCategoryId() {
+		return _originalCategoryId;
 	}
 
 	@JSON
@@ -312,6 +352,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	}
 
 	public void setSku(String sku) {
+		_bitMask |= SKU_BIT_MASK;
+
 		if (_originalSku == null) {
 			_originalSku = _sku;
 		}
@@ -530,6 +572,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	}
 
 	public void setSmallImageId(long smallImageId) {
+		_bitMask |= SMALLIMAGEID_BIT_MASK;
+
 		if (!_setOriginalSmallImageId) {
 			_setOriginalSmallImageId = true;
 
@@ -576,6 +620,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	}
 
 	public void setMediumImageId(long mediumImageId) {
+		_bitMask |= MEDIUMIMAGEID_BIT_MASK;
+
 		if (!_setOriginalMediumImageId) {
 			_setOriginalMediumImageId = true;
 
@@ -622,6 +668,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	}
 
 	public void setLargeImageId(long largeImageId) {
+		_bitMask |= LARGEIMAGEID_BIT_MASK;
+
 		if (!_setOriginalLargeImageId) {
 			_setOriginalLargeImageId = true;
 
@@ -778,9 +826,17 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	public void resetOriginalValues() {
 		ShoppingItemModelImpl shoppingItemModelImpl = this;
 
+		shoppingItemModelImpl._originalGroupId = shoppingItemModelImpl._groupId;
+
+		shoppingItemModelImpl._setOriginalGroupId = false;
+
 		shoppingItemModelImpl._originalCompanyId = shoppingItemModelImpl._companyId;
 
 		shoppingItemModelImpl._setOriginalCompanyId = false;
+
+		shoppingItemModelImpl._originalCategoryId = shoppingItemModelImpl._categoryId;
+
+		shoppingItemModelImpl._setOriginalCategoryId = false;
 
 		shoppingItemModelImpl._originalSku = shoppingItemModelImpl._sku;
 
@@ -795,6 +851,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		shoppingItemModelImpl._originalLargeImageId = shoppingItemModelImpl._largeImageId;
 
 		shoppingItemModelImpl._setOriginalLargeImageId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -1170,8 +1228,11 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ShoppingItem.class
 		};
+	private long _bitMask;
 	private long _itemId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
@@ -1181,6 +1242,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _categoryId;
+	private long _originalCategoryId;
+	private boolean _setOriginalCategoryId;
 	private String _sku;
 	private String _originalSku;
 	private String _name;

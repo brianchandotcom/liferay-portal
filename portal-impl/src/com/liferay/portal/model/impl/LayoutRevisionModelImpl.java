@@ -116,6 +116,15 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.LayoutRevision"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.LayoutRevision"),
+			true);
+	public static long STATUS_BIT_MASK = 1L;
+	public static long PLID_BIT_MASK = 2L;
+	public static long PARENTLAYOUTREVISIONID_BIT_MASK = 4L;
+	public static long LAYOUTSETBRANCHID_BIT_MASK = 8L;
+	public static long LAYOUTBRANCHID_BIT_MASK = 16L;
+	public static long HEAD_BIT_MASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -175,6 +184,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -289,6 +302,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
+		_bitMask |= LAYOUTSETBRANCHID_BIT_MASK;
+
 		if (!_setOriginalLayoutSetBranchId) {
 			_setOriginalLayoutSetBranchId = true;
 
@@ -308,7 +323,19 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setLayoutBranchId(long layoutBranchId) {
+		_bitMask |= LAYOUTBRANCHID_BIT_MASK;
+
+		if (!_setOriginalLayoutBranchId) {
+			_setOriginalLayoutBranchId = true;
+
+			_originalLayoutBranchId = _layoutBranchId;
+		}
+
 		_layoutBranchId = layoutBranchId;
+	}
+
+	public long getOriginalLayoutBranchId() {
+		return _originalLayoutBranchId;
 	}
 
 	@JSON
@@ -317,7 +344,19 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setParentLayoutRevisionId(long parentLayoutRevisionId) {
+		_bitMask |= PARENTLAYOUTREVISIONID_BIT_MASK;
+
+		if (!_setOriginalParentLayoutRevisionId) {
+			_setOriginalParentLayoutRevisionId = true;
+
+			_originalParentLayoutRevisionId = _parentLayoutRevisionId;
+		}
+
 		_parentLayoutRevisionId = parentLayoutRevisionId;
+	}
+
+	public long getOriginalParentLayoutRevisionId() {
+		return _originalParentLayoutRevisionId;
 	}
 
 	@JSON
@@ -330,6 +369,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setHead(boolean head) {
+		_bitMask |= HEAD_BIT_MASK;
+
 		if (!_setOriginalHead) {
 			_setOriginalHead = true;
 
@@ -362,6 +403,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setPlid(long plid) {
+		_bitMask |= PLID_BIT_MASK;
+
 		if (!_setOriginalPlid) {
 			_setOriginalPlid = true;
 
@@ -951,7 +994,19 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setStatus(int status) {
+		_bitMask |= STATUS_BIT_MASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -1170,6 +1225,14 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 		layoutRevisionModelImpl._setOriginalLayoutSetBranchId = false;
 
+		layoutRevisionModelImpl._originalLayoutBranchId = layoutRevisionModelImpl._layoutBranchId;
+
+		layoutRevisionModelImpl._setOriginalLayoutBranchId = false;
+
+		layoutRevisionModelImpl._originalParentLayoutRevisionId = layoutRevisionModelImpl._parentLayoutRevisionId;
+
+		layoutRevisionModelImpl._setOriginalParentLayoutRevisionId = false;
+
 		layoutRevisionModelImpl._originalHead = layoutRevisionModelImpl._head;
 
 		layoutRevisionModelImpl._setOriginalHead = false;
@@ -1177,6 +1240,12 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		layoutRevisionModelImpl._originalPlid = layoutRevisionModelImpl._plid;
 
 		layoutRevisionModelImpl._setOriginalPlid = false;
+
+		layoutRevisionModelImpl._originalStatus = layoutRevisionModelImpl._status;
+
+		layoutRevisionModelImpl._setOriginalStatus = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -1559,6 +1628,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			LayoutRevision.class
 		};
+	private long _bitMask;
 	private long _layoutRevisionId;
 	private long _groupId;
 	private long _companyId;
@@ -1571,7 +1641,11 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	private long _originalLayoutSetBranchId;
 	private boolean _setOriginalLayoutSetBranchId;
 	private long _layoutBranchId;
+	private long _originalLayoutBranchId;
+	private boolean _setOriginalLayoutBranchId;
 	private long _parentLayoutRevisionId;
+	private long _originalParentLayoutRevisionId;
+	private boolean _setOriginalParentLayoutRevisionId;
 	private boolean _head;
 	private boolean _originalHead;
 	private boolean _setOriginalHead;
@@ -1594,6 +1668,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	private String _wapColorSchemeId;
 	private String _css;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserUuid;
 	private String _statusByUserName;

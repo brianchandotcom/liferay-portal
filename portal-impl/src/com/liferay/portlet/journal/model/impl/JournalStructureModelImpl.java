@@ -98,6 +98,13 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalStructure"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.journal.model.JournalStructure"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long PARENTSTRUCTUREID_BIT_MASK = 2L;
+	public static long STRUCTUREID_BIT_MASK = 4L;
+	public static long UUID_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -140,6 +147,10 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -209,6 +220,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -291,6 +304,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public void setStructureId(String structureId) {
+		_bitMask |= STRUCTUREID_BIT_MASK;
+
 		if (_originalStructureId == null) {
 			_originalStructureId = _structureId;
 		}
@@ -313,7 +328,17 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public void setParentStructureId(String parentStructureId) {
+		_bitMask |= PARENTSTRUCTUREID_BIT_MASK;
+
+		if (_originalParentStructureId == null) {
+			_originalParentStructureId = _parentStructureId;
+		}
+
 		_parentStructureId = parentStructureId;
+	}
+
+	public String getOriginalParentStructureId() {
+		return GetterUtil.getString(_originalParentStructureId);
 	}
 
 	@JSON
@@ -619,6 +644,10 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		journalStructureModelImpl._setOriginalGroupId = false;
 
 		journalStructureModelImpl._originalStructureId = journalStructureModelImpl._structureId;
+
+		journalStructureModelImpl._originalParentStructureId = journalStructureModelImpl._parentStructureId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -814,6 +843,7 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			JournalStructure.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _id;
@@ -829,6 +859,7 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	private String _structureId;
 	private String _originalStructureId;
 	private String _parentStructureId;
+	private String _originalParentStructureId;
 	private String _name;
 	private String _description;
 	private String _xsd;

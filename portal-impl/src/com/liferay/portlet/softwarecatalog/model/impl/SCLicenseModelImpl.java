@@ -81,6 +81,11 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.softwarecatalog.model.SCLicense"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.softwarecatalog.model.SCLicense"),
+			true);
+	public static long RECOMMENDED_BIT_MASK = 1L;
+	public static long ACTIVE_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -115,6 +120,10 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -219,7 +228,19 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	}
 
 	public void setActive(boolean active) {
+		_bitMask |= ACTIVE_BIT_MASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
 	}
 
 	@JSON
@@ -232,7 +253,19 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	}
 
 	public void setRecommended(boolean recommended) {
+		_bitMask |= RECOMMENDED_BIT_MASK;
+
+		if (!_setOriginalRecommended) {
+			_setOriginalRecommended = true;
+
+			_originalRecommended = _recommended;
+		}
+
 		_recommended = recommended;
+	}
+
+	public boolean getOriginalRecommended() {
+		return _originalRecommended;
 	}
 
 	@Override
@@ -326,6 +359,17 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	@Override
 	public void resetOriginalValues() {
+		SCLicenseModelImpl scLicenseModelImpl = this;
+
+		scLicenseModelImpl._originalActive = scLicenseModelImpl._active;
+
+		scLicenseModelImpl._setOriginalActive = false;
+
+		scLicenseModelImpl._originalRecommended = scLicenseModelImpl._recommended;
+
+		scLicenseModelImpl._setOriginalRecommended = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -421,12 +465,17 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SCLicense.class
 		};
+	private long _bitMask;
 	private long _licenseId;
 	private String _name;
 	private String _url;
 	private boolean _openSource;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private boolean _recommended;
+	private boolean _originalRecommended;
+	private boolean _setOriginalRecommended;
 	private transient ExpandoBridge _expandoBridge;
 	private SCLicense _escapedModelProxy;
 }

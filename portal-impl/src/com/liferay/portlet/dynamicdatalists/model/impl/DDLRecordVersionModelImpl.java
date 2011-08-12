@@ -87,6 +87,16 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion"),
+			true);
+	public static long RECORDID_BIT_MASK = 1L;
+	public static long STATUS_BIT_MASK = 2L;
+	public static long VERSION_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return DDLRecordVersion.class;
@@ -200,6 +210,8 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	}
 
 	public void setRecordId(long recordId) {
+		_bitMask |= RECORDID_BIT_MASK;
+
 		if (!_setOriginalRecordId) {
 			_setOriginalRecordId = true;
 
@@ -223,6 +235,8 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	}
 
 	public void setVersion(String version) {
+		_bitMask |= VERSION_BIT_MASK;
+
 		if (_originalVersion == null) {
 			_originalVersion = _version;
 		}
@@ -247,7 +261,19 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	}
 
 	public void setStatus(int status) {
+		_bitMask |= STATUS_BIT_MASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	public long getStatusByUserId() {
@@ -440,6 +466,12 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		ddlRecordVersionModelImpl._setOriginalRecordId = false;
 
 		ddlRecordVersionModelImpl._originalVersion = ddlRecordVersionModelImpl._version;
+
+		ddlRecordVersionModelImpl._originalStatus = ddlRecordVersionModelImpl._status;
+
+		ddlRecordVersionModelImpl._setOriginalStatus = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -627,6 +659,7 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DDLRecordVersion.class
 		};
+	private long _bitMask;
 	private long _recordVersionId;
 	private long _groupId;
 	private long _companyId;
@@ -643,6 +676,8 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	private String _originalVersion;
 	private int _displayIndex;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserUuid;
 	private String _statusByUserName;

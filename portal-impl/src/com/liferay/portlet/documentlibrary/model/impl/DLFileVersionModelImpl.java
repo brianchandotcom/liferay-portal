@@ -105,6 +105,12 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFileVersion"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.documentlibrary.model.DLFileVersion"),
+			true);
+	public static long STATUS_BIT_MASK = 1L;
+	public static long FILEENTRYID_BIT_MASK = 2L;
+	public static long VERSION_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -158,6 +164,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -272,6 +282,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public void setFileEntryId(long fileEntryId) {
+		_bitMask |= FILEENTRYID_BIT_MASK;
+
 		if (!_setOriginalFileEntryId) {
 			_setOriginalFileEntryId = true;
 
@@ -389,6 +401,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public void setVersion(String version) {
+		_bitMask |= VERSION_BIT_MASK;
+
 		if (_originalVersion == null) {
 			_originalVersion = _version;
 		}
@@ -451,7 +465,19 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public void setStatus(int status) {
+		_bitMask |= STATUS_BIT_MASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -674,6 +700,12 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionModelImpl._setOriginalFileEntryId = false;
 
 		dlFileVersionModelImpl._originalVersion = dlFileVersionModelImpl._version;
+
+		dlFileVersionModelImpl._originalStatus = dlFileVersionModelImpl._status;
+
+		dlFileVersionModelImpl._setOriginalStatus = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -977,6 +1009,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLFileVersion.class
 		};
+	private long _bitMask;
 	private long _fileVersionId;
 	private long _groupId;
 	private long _companyId;
@@ -1003,6 +1036,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private long _custom1ImageId;
 	private long _custom2ImageId;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserUuid;
 	private String _statusByUserName;

@@ -71,6 +71,17 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.RepositoryEntry"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.RepositoryEntry"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long UUID_BIT_MASK = 2L;
+	public static long MAPPEDID_BIT_MASK = 4L;
+	public static long REPOSITORYID_BIT_MASK = 8L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return RepositoryEntry.class;
@@ -136,6 +147,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -154,6 +167,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	}
 
 	public void setRepositoryId(long repositoryId) {
+		_bitMask |= REPOSITORYID_BIT_MASK;
+
 		if (!_setOriginalRepositoryId) {
 			_setOriginalRepositoryId = true;
 
@@ -177,6 +192,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	}
 
 	public void setMappedId(String mappedId) {
+		_bitMask |= MAPPEDID_BIT_MASK;
+
 		if (_originalMappedId == null) {
 			_originalMappedId = _mappedId;
 		}
@@ -293,6 +310,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		repositoryEntryModelImpl._setOriginalRepositoryId = false;
 
 		repositoryEntryModelImpl._originalMappedId = repositoryEntryModelImpl._mappedId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -380,6 +399,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			RepositoryEntry.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _repositoryEntryId;

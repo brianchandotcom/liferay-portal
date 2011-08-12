@@ -74,6 +74,18 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialRelation"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.social.model.SocialRelation"),
+			true);
+	public static long USERID1_BIT_MASK = 1L;
+	public static long COMPANYID_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
+	public static long TYPE_BIT_MASK = 8L;
+	public static long USERID2_BIT_MASK = 16L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return SocialRelation.class;
@@ -115,7 +127,15 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	public long getRelationId() {
@@ -131,7 +151,19 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getCreateDate() {
@@ -147,6 +179,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public void setUserId1(long userId1) {
+		_bitMask |= USERID1_BIT_MASK;
+
 		if (!_setOriginalUserId1) {
 			_setOriginalUserId1 = true;
 
@@ -165,6 +199,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public void setUserId2(long userId2) {
+		_bitMask |= USERID2_BIT_MASK;
+
 		if (!_setOriginalUserId2) {
 			_setOriginalUserId2 = true;
 
@@ -183,6 +219,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public void setType(int type) {
+		_bitMask |= TYPE_BIT_MASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -292,6 +330,12 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public void resetOriginalValues() {
 		SocialRelationModelImpl socialRelationModelImpl = this;
 
+		socialRelationModelImpl._originalUuid = socialRelationModelImpl._uuid;
+
+		socialRelationModelImpl._originalCompanyId = socialRelationModelImpl._companyId;
+
+		socialRelationModelImpl._setOriginalCompanyId = false;
+
 		socialRelationModelImpl._originalUserId1 = socialRelationModelImpl._userId1;
 
 		socialRelationModelImpl._setOriginalUserId1 = false;
@@ -303,6 +347,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		socialRelationModelImpl._originalType = socialRelationModelImpl._type;
 
 		socialRelationModelImpl._setOriginalType = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -400,9 +446,13 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SocialRelation.class
 		};
+	private long _bitMask;
 	private String _uuid;
+	private String _originalUuid;
 	private long _relationId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _createDate;
 	private long _userId1;
 	private long _originalUserId1;

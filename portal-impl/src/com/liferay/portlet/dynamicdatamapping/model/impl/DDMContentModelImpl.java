@@ -89,6 +89,16 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMContent"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMContent"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long COMPANYID_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return DDMContent.class;
@@ -154,6 +164,8 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -172,7 +184,19 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -439,6 +463,12 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		ddmContentModelImpl._originalGroupId = ddmContentModelImpl._groupId;
 
 		ddmContentModelImpl._setOriginalGroupId = false;
+
+		ddmContentModelImpl._originalCompanyId = ddmContentModelImpl._companyId;
+
+		ddmContentModelImpl._setOriginalCompanyId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -606,6 +636,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DDMContent.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _contentId;
@@ -613,6 +644,8 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

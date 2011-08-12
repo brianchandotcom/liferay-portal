@@ -78,6 +78,13 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourceBlock"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.ResourceBlock"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long PERMISSIONSHASH_BIT_MASK = 2L;
+	public static long NAME_BIT_MASK = 4L;
+	public static long COMPANYID_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -112,6 +119,10 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -159,6 +170,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -178,6 +191,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -202,6 +217,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -224,6 +241,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setPermissionsHash(String permissionsHash) {
+		_bitMask |= PERMISSIONSHASH_BIT_MASK;
+
 		if (_originalPermissionsHash == null) {
 			_originalPermissionsHash = _permissionsHash;
 		}
@@ -350,6 +369,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		resourceBlockModelImpl._originalName = resourceBlockModelImpl._name;
 
 		resourceBlockModelImpl._originalPermissionsHash = resourceBlockModelImpl._permissionsHash;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -445,6 +466,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ResourceBlock.class
 		};
+	private long _bitMask;
 	private long _resourceBlockId;
 	private long _companyId;
 	private long _originalCompanyId;

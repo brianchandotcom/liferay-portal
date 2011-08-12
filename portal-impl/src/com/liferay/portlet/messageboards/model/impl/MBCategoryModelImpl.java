@@ -93,6 +93,13 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBCategory"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.messageboards.model.MBCategory"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long PARENTCATEGORYID_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
+	public static long UUID_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -136,6 +143,10 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -205,6 +216,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -224,7 +237,19 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -282,7 +307,19 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	}
 
 	public void setParentCategoryId(long parentCategoryId) {
+		_bitMask |= PARENTCATEGORYID_BIT_MASK;
+
+		if (!_setOriginalParentCategoryId) {
+			_setOriginalParentCategoryId = true;
+
+			_originalParentCategoryId = _parentCategoryId;
+		}
+
 		_parentCategoryId = parentCategoryId;
+	}
+
+	public long getOriginalParentCategoryId() {
+		return _originalParentCategoryId;
 	}
 
 	@JSON
@@ -476,6 +513,16 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		mbCategoryModelImpl._originalGroupId = mbCategoryModelImpl._groupId;
 
 		mbCategoryModelImpl._setOriginalGroupId = false;
+
+		mbCategoryModelImpl._originalCompanyId = mbCategoryModelImpl._companyId;
+
+		mbCategoryModelImpl._setOriginalCompanyId = false;
+
+		mbCategoryModelImpl._originalParentCategoryId = mbCategoryModelImpl._parentCategoryId;
+
+		mbCategoryModelImpl._setOriginalParentCategoryId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -682,6 +729,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			MBCategory.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _categoryId;
@@ -689,12 +737,16 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _parentCategoryId;
+	private long _originalParentCategoryId;
+	private boolean _setOriginalParentCategoryId;
 	private String _name;
 	private String _description;
 	private String _displayStyle;

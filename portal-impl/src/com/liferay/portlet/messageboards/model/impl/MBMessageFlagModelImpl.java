@@ -81,6 +81,13 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBMessageFlag"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.messageboards.model.MBMessageFlag"),
+			true);
+	public static long FLAG_BIT_MASK = 1L;
+	public static long THREADID_BIT_MASK = 2L;
+	public static long USERID_BIT_MASK = 4L;
+	public static long MESSAGEID_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -115,6 +122,10 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -162,6 +173,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -198,7 +211,19 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 	}
 
 	public void setThreadId(long threadId) {
+		_bitMask |= THREADID_BIT_MASK;
+
+		if (!_setOriginalThreadId) {
+			_setOriginalThreadId = true;
+
+			_originalThreadId = _threadId;
+		}
+
 		_threadId = threadId;
+	}
+
+	public long getOriginalThreadId() {
+		return _originalThreadId;
 	}
 
 	@JSON
@@ -207,6 +232,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 	}
 
 	public void setMessageId(long messageId) {
+		_bitMask |= MESSAGEID_BIT_MASK;
+
 		if (!_setOriginalMessageId) {
 			_setOriginalMessageId = true;
 
@@ -226,6 +253,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 	}
 
 	public void setFlag(int flag) {
+		_bitMask |= FLAG_BIT_MASK;
+
 		if (!_setOriginalFlag) {
 			_setOriginalFlag = true;
 
@@ -338,6 +367,10 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 
 		mbMessageFlagModelImpl._setOriginalUserId = false;
 
+		mbMessageFlagModelImpl._originalThreadId = mbMessageFlagModelImpl._threadId;
+
+		mbMessageFlagModelImpl._setOriginalThreadId = false;
+
 		mbMessageFlagModelImpl._originalMessageId = mbMessageFlagModelImpl._messageId;
 
 		mbMessageFlagModelImpl._setOriginalMessageId = false;
@@ -345,6 +378,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		mbMessageFlagModelImpl._originalFlag = mbMessageFlagModelImpl._flag;
 
 		mbMessageFlagModelImpl._setOriginalFlag = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -435,6 +470,7 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			MBMessageFlag.class
 		};
+	private long _bitMask;
 	private long _messageFlagId;
 	private long _userId;
 	private String _userUuid;
@@ -442,6 +478,8 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 	private boolean _setOriginalUserId;
 	private Date _modifiedDate;
 	private long _threadId;
+	private long _originalThreadId;
+	private boolean _setOriginalThreadId;
 	private long _messageId;
 	private long _originalMessageId;
 	private boolean _setOriginalMessageId;

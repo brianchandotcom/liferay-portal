@@ -85,6 +85,11 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Team"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Team"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long NAME_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -122,6 +127,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -231,6 +240,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -255,6 +266,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -381,6 +394,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		teamModelImpl._setOriginalGroupId = false;
 
 		teamModelImpl._originalName = teamModelImpl._name;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -520,6 +535,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Team.class
 		};
+	private long _bitMask;
 	private long _teamId;
 	private long _companyId;
 	private long _userId;

@@ -77,6 +77,14 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PasswordTracker"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.PasswordTracker"),
+			true);
+	public static long USERID_BIT_MASK = 1L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return PasswordTracker.class;
@@ -121,6 +129,14 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -130,6 +146,10 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	public Date getCreateDate() {
@@ -261,6 +281,13 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public void resetOriginalValues() {
+		PasswordTrackerModelImpl passwordTrackerModelImpl = this;
+
+		passwordTrackerModelImpl._originalUserId = passwordTrackerModelImpl._userId;
+
+		passwordTrackerModelImpl._setOriginalUserId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -341,9 +368,12 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			PasswordTracker.class
 		};
+	private long _bitMask;
 	private long _passwordTrackerId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private String _password;
 	private transient ExpandoBridge _expandoBridge;

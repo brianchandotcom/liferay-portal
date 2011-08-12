@@ -79,6 +79,18 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.documentlibrary.model.DLContent"),
+			true);
+	public static long PATH_BIT_MASK = 1L;
+	public static long COMPANYID_BIT_MASK = 2L;
+	public static long PORTLETID_BIT_MASK = 4L;
+	public static long REPOSITORYID_BIT_MASK = 8L;
+	public static long VERSION_BIT_MASK = 16L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return DLContent.class;
@@ -131,6 +143,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -154,6 +168,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setPortletId(String portletId) {
+		_bitMask |= PORTLETID_BIT_MASK;
+
 		if (_originalPortletId == null) {
 			_originalPortletId = _portletId;
 		}
@@ -170,6 +186,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setRepositoryId(long repositoryId) {
+		_bitMask |= REPOSITORYID_BIT_MASK;
+
 		if (!_setOriginalRepositoryId) {
 			_setOriginalRepositoryId = true;
 
@@ -193,6 +211,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setPath(String path) {
+		_bitMask |= PATH_BIT_MASK;
+
 		if (_originalPath == null) {
 			_originalPath = _path;
 		}
@@ -214,6 +234,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public void setVersion(String version) {
+		_bitMask |= VERSION_BIT_MASK;
+
 		if (_originalVersion == null) {
 			_originalVersion = _version;
 		}
@@ -370,6 +392,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		dlContentModelImpl._originalVersion = dlContentModelImpl._version;
 
 		_dataBlobModel = null;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -493,6 +517,7 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLContent.class
 		};
+	private long _bitMask;
 	private long _contentId;
 	private long _groupId;
 	private long _companyId;

@@ -82,6 +82,11 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.announcements.model.AnnouncementsDelivery"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.announcements.model.AnnouncementsDelivery"),
+			true);
+	public static long USERID_BIT_MASK = 1L;
+	public static long TYPE_BIT_MASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -119,6 +124,10 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -175,6 +184,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -207,6 +218,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	}
 
 	public void setType(String type) {
+		_bitMask |= TYPE_BIT_MASK;
+
 		if (_originalType == null) {
 			_originalType = _type;
 		}
@@ -358,6 +371,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		announcementsDeliveryModelImpl._setOriginalUserId = false;
 
 		announcementsDeliveryModelImpl._originalType = announcementsDeliveryModelImpl._type;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -456,6 +471,7 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			AnnouncementsDelivery.class
 		};
+	private long _bitMask;
 	private long _deliveryId;
 	private long _companyId;
 	private long _userId;

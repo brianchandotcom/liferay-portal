@@ -65,6 +65,15 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.OrgGroupRole"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.OrgGroupRole"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long ROLEID_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return OrgGroupRole.class;
@@ -111,7 +120,19 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	public long getRoleId() {
@@ -119,7 +140,19 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 	}
 
 	public void setRoleId(long roleId) {
+		_bitMask |= ROLEID_BIT_MASK;
+
+		if (!_setOriginalRoleId) {
+			_setOriginalRoleId = true;
+
+			_originalRoleId = _roleId;
+		}
+
 		_roleId = roleId;
+	}
+
+	public long getOriginalRoleId() {
+		return _originalRoleId;
 	}
 
 	@Override
@@ -189,6 +222,17 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 	@Override
 	public void resetOriginalValues() {
+		OrgGroupRoleModelImpl orgGroupRoleModelImpl = this;
+
+		orgGroupRoleModelImpl._originalGroupId = orgGroupRoleModelImpl._groupId;
+
+		orgGroupRoleModelImpl._setOriginalGroupId = false;
+
+		orgGroupRoleModelImpl._originalRoleId = orgGroupRoleModelImpl._roleId;
+
+		orgGroupRoleModelImpl._setOriginalRoleId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -248,8 +292,13 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			OrgGroupRole.class
 		};
+	private long _bitMask;
 	private long _organizationId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _roleId;
+	private long _originalRoleId;
+	private boolean _setOriginalRoleId;
 	private OrgGroupRole _escapedModelProxy;
 }

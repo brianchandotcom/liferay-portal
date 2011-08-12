@@ -96,6 +96,12 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.mobiledevicerules.model.MDRRule"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.mobiledevicerules.model.MDRRule"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long UUID_BIT_MASK = 2L;
+	public static long RULEGROUPID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -137,6 +143,10 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -206,6 +216,8 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -283,7 +295,19 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	}
 
 	public void setRuleGroupId(long ruleGroupId) {
+		_bitMask |= RULEGROUPID_BIT_MASK;
+
+		if (!_setOriginalRuleGroupId) {
+			_setOriginalRuleGroupId = true;
+
+			_originalRuleGroupId = _ruleGroupId;
+		}
+
 		_ruleGroupId = ruleGroupId;
+	}
+
+	public long getOriginalRuleGroupId() {
+		return _originalRuleGroupId;
 	}
 
 	@JSON
@@ -603,6 +627,12 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		mdrRuleModelImpl._originalGroupId = mdrRuleModelImpl._groupId;
 
 		mdrRuleModelImpl._setOriginalGroupId = false;
+
+		mdrRuleModelImpl._originalRuleGroupId = mdrRuleModelImpl._ruleGroupId;
+
+		mdrRuleModelImpl._setOriginalRuleGroupId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -792,6 +822,7 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			MDRRule.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _ruleId;
@@ -805,6 +836,8 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _ruleGroupId;
+	private long _originalRuleGroupId;
+	private boolean _setOriginalRuleGroupId;
 	private String _name;
 	private String _description;
 	private String _type;

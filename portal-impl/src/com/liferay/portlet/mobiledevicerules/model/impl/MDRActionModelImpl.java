@@ -97,6 +97,12 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.mobiledevicerules.model.MDRAction"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.mobiledevicerules.model.MDRAction"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long RULEID_BIT_MASK = 2L;
+	public static long UUID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -139,6 +145,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -208,6 +218,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -294,7 +306,19 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	public void setRuleId(long ruleId) {
+		_bitMask |= RULEID_BIT_MASK;
+
+		if (!_setOriginalRuleId) {
+			_setOriginalRuleId = true;
+
+			_originalRuleId = _ruleId;
+		}
+
 		_ruleId = ruleId;
+	}
+
+	public long getOriginalRuleId() {
+		return _originalRuleId;
 	}
 
 	@JSON
@@ -615,6 +639,12 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		mdrActionModelImpl._originalGroupId = mdrActionModelImpl._groupId;
 
 		mdrActionModelImpl._setOriginalGroupId = false;
+
+		mdrActionModelImpl._originalRuleId = mdrActionModelImpl._ruleId;
+
+		mdrActionModelImpl._setOriginalRuleId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -812,6 +842,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			MDRAction.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _actionId;
@@ -826,6 +857,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	private Date _modifiedDate;
 	private long _ruleGroupId;
 	private long _ruleId;
+	private long _originalRuleId;
+	private boolean _setOriginalRuleId;
 	private String _name;
 	private String _description;
 	private String _type;

@@ -76,6 +76,7 @@ public class SocialEquityHistoryModelImpl extends BaseModelImpl<SocialEquityHist
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialEquityHistory"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = false;
 
 	public Class<?> getModelClass() {
 		return SocialEquityHistory.class;

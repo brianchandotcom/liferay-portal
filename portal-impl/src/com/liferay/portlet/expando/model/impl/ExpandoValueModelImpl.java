@@ -81,6 +81,15 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.expando.model.ExpandoValue"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.expando.model.ExpandoValue"),
+			true);
+	public static long TABLEID_BIT_MASK = 1L;
+	public static long CLASSNAMEID_BIT_MASK = 2L;
+	public static long DATA_BIT_MASK = 4L;
+	public static long CLASSPK_BIT_MASK = 8L;
+	public static long ROWID_BIT_MASK = 16L;
+	public static long COLUMNID_BIT_MASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -117,6 +126,10 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -173,6 +186,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setTableId(long tableId) {
+		_bitMask |= TABLEID_BIT_MASK;
+
 		if (!_setOriginalTableId) {
 			_setOriginalTableId = true;
 
@@ -192,6 +207,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setColumnId(long columnId) {
+		_bitMask |= COLUMNID_BIT_MASK;
+
 		if (!_setOriginalColumnId) {
 			_setOriginalColumnId = true;
 
@@ -211,6 +228,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setRowId(long rowId) {
+		_bitMask |= ROWID_BIT_MASK;
+
 		if (!_setOriginalRowId) {
 			_setOriginalRowId = true;
 
@@ -238,7 +257,19 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -247,6 +278,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -271,7 +304,17 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setData(String data) {
+		_bitMask |= DATA_BIT_MASK;
+
+		if (_originalData == null) {
+			_originalData = _data;
+		}
+
 		_data = data;
+	}
+
+	public String getOriginalData() {
+		return GetterUtil.getString(_originalData);
 	}
 
 	@Override
@@ -402,9 +445,17 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 		expandoValueModelImpl._setOriginalRowId = false;
 
+		expandoValueModelImpl._originalClassNameId = expandoValueModelImpl._classNameId;
+
+		expandoValueModelImpl._setOriginalClassNameId = false;
+
 		expandoValueModelImpl._originalClassPK = expandoValueModelImpl._classPK;
 
 		expandoValueModelImpl._setOriginalClassPK = false;
+
+		expandoValueModelImpl._originalData = expandoValueModelImpl._data;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -510,6 +561,7 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ExpandoValue.class
 		};
+	private long _bitMask;
 	private long _valueId;
 	private long _companyId;
 	private long _tableId;
@@ -522,9 +574,12 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	private long _originalRowId;
 	private boolean _setOriginalRowId;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private String _data;
+	private String _originalData;
 	private ExpandoValue _escapedModelProxy;
 }

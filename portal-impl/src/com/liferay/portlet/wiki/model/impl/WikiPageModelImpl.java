@@ -102,6 +102,21 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.wiki.model.WikiPage"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.wiki.model.WikiPage"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long TITLE_BIT_MASK = 2L;
+	public static long NODEID_BIT_MASK = 4L;
+	public static long STATUS_BIT_MASK = 8L;
+	public static long USERID_BIT_MASK = 16L;
+	public static long PARENTTITLE_BIT_MASK = 32L;
+	public static long RESOURCEPRIMKEY_BIT_MASK = 64L;
+	public static long FORMAT_BIT_MASK = 128L;
+	public static long UUID_BIT_MASK = 256L;
+	public static long REDIRECTTITLE_BIT_MASK = 512L;
+	public static long HEAD_BIT_MASK = 1024L;
+	public static long VERSION_BIT_MASK = 2048L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -153,6 +168,10 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -222,6 +241,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setResourcePrimKey(long resourcePrimKey) {
+		_bitMask |= RESOURCEPRIMKEY_BIT_MASK;
+
 		if (!_setOriginalResourcePrimKey) {
 			_setOriginalResourcePrimKey = true;
 
@@ -245,6 +266,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -273,6 +296,14 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -282,6 +313,10 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -322,6 +357,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setNodeId(long nodeId) {
+		_bitMask |= NODEID_BIT_MASK;
+
 		if (!_setOriginalNodeId) {
 			_setOriginalNodeId = true;
 
@@ -346,6 +383,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setTitle(String title) {
+		_bitMask |= TITLE_BIT_MASK;
+
 		if (_originalTitle == null) {
 			_originalTitle = _title;
 		}
@@ -363,6 +402,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setVersion(double version) {
+		_bitMask |= VERSION_BIT_MASK;
+
 		if (!_setOriginalVersion) {
 			_setOriginalVersion = true;
 
@@ -428,7 +469,17 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setFormat(String format) {
+		_bitMask |= FORMAT_BIT_MASK;
+
+		if (_originalFormat == null) {
+			_originalFormat = _format;
+		}
+
 		_format = format;
+	}
+
+	public String getOriginalFormat() {
+		return GetterUtil.getString(_originalFormat);
 	}
 
 	@JSON
@@ -441,7 +492,19 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setHead(boolean head) {
+		_bitMask |= HEAD_BIT_MASK;
+
+		if (!_setOriginalHead) {
+			_setOriginalHead = true;
+
+			_originalHead = _head;
+		}
+
 		_head = head;
+	}
+
+	public boolean getOriginalHead() {
+		return _originalHead;
 	}
 
 	@JSON
@@ -455,7 +518,17 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setParentTitle(String parentTitle) {
+		_bitMask |= PARENTTITLE_BIT_MASK;
+
+		if (_originalParentTitle == null) {
+			_originalParentTitle = _parentTitle;
+		}
+
 		_parentTitle = parentTitle;
+	}
+
+	public String getOriginalParentTitle() {
+		return GetterUtil.getString(_originalParentTitle);
 	}
 
 	@JSON
@@ -469,7 +542,17 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setRedirectTitle(String redirectTitle) {
+		_bitMask |= REDIRECTTITLE_BIT_MASK;
+
+		if (_originalRedirectTitle == null) {
+			_originalRedirectTitle = _redirectTitle;
+		}
+
 		_redirectTitle = redirectTitle;
+	}
+
+	public String getOriginalRedirectTitle() {
+		return GetterUtil.getString(_originalRedirectTitle);
 	}
 
 	@JSON
@@ -478,7 +561,19 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public void setStatus(int status) {
+		_bitMask |= STATUS_BIT_MASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -716,6 +811,10 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 		wikiPageModelImpl._setOriginalGroupId = false;
 
+		wikiPageModelImpl._originalUserId = wikiPageModelImpl._userId;
+
+		wikiPageModelImpl._setOriginalUserId = false;
+
 		wikiPageModelImpl._originalNodeId = wikiPageModelImpl._nodeId;
 
 		wikiPageModelImpl._setOriginalNodeId = false;
@@ -725,6 +824,22 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		wikiPageModelImpl._originalVersion = wikiPageModelImpl._version;
 
 		wikiPageModelImpl._setOriginalVersion = false;
+
+		wikiPageModelImpl._originalFormat = wikiPageModelImpl._format;
+
+		wikiPageModelImpl._originalHead = wikiPageModelImpl._head;
+
+		wikiPageModelImpl._setOriginalHead = false;
+
+		wikiPageModelImpl._originalParentTitle = wikiPageModelImpl._parentTitle;
+
+		wikiPageModelImpl._originalRedirectTitle = wikiPageModelImpl._redirectTitle;
+
+		wikiPageModelImpl._originalStatus = wikiPageModelImpl._status;
+
+		wikiPageModelImpl._setOriginalStatus = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -1019,6 +1134,7 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			WikiPage.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _pageId;
@@ -1031,6 +1147,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -1046,10 +1164,17 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	private String _content;
 	private String _summary;
 	private String _format;
+	private String _originalFormat;
 	private boolean _head;
+	private boolean _originalHead;
+	private boolean _setOriginalHead;
 	private String _parentTitle;
+	private String _originalParentTitle;
 	private String _redirectTitle;
+	private String _originalRedirectTitle;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserUuid;
 	private String _statusByUserName;

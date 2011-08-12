@@ -90,6 +90,15 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Role"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Role"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long SUBTYPE_BIT_MASK = 2L;
+	public static long NAME_BIT_MASK = 4L;
+	public static long CLASSPK_BIT_MASK = 8L;
+	public static long COMPANYID_BIT_MASK = 16L;
+	public static long TYPE_BIT_MASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -127,6 +136,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -186,6 +199,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -213,6 +228,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -232,6 +249,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -256,6 +275,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -455,7 +476,19 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setType(int type) {
+		_bitMask |= TYPE_BIT_MASK;
+
+		if (!_setOriginalType) {
+			_setOriginalType = true;
+
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public int getOriginalType() {
+		return _originalType;
 	}
 
 	@JSON
@@ -469,7 +502,17 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setSubtype(String subtype) {
+		_bitMask |= SUBTYPE_BIT_MASK;
+
+		if (_originalSubtype == null) {
+			_originalSubtype = _subtype;
+		}
+
 		_subtype = subtype;
+	}
+
+	public String getOriginalSubtype() {
+		return GetterUtil.getString(_originalSubtype);
 	}
 
 	@Override
@@ -581,6 +624,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		roleModelImpl._setOriginalClassPK = false;
 
 		roleModelImpl._originalName = roleModelImpl._name;
+
+		roleModelImpl._originalType = roleModelImpl._type;
+
+		roleModelImpl._setOriginalType = false;
+
+		roleModelImpl._originalSubtype = roleModelImpl._subtype;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -712,6 +763,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Role.class
 		};
+	private long _bitMask;
 	private long _roleId;
 	private long _companyId;
 	private long _originalCompanyId;
@@ -727,7 +779,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private String _title;
 	private String _description;
 	private int _type;
+	private int _originalType;
+	private boolean _setOriginalType;
 	private String _subtype;
+	private String _originalSubtype;
 	private transient ExpandoBridge _expandoBridge;
 	private Role _escapedModelProxy;
 }

@@ -70,6 +70,16 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Shard"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Shard"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long NAME_BIT_MASK = 2L;
+	public static long CLASSPK_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return Shard.class;
@@ -122,6 +132,8 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -140,6 +152,8 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -163,6 +177,8 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -276,6 +292,8 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		shardModelImpl._setOriginalClassPK = false;
 
 		shardModelImpl._originalName = shardModelImpl._name;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -349,6 +367,7 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Shard.class
 		};
+	private long _bitMask;
 	private long _shardId;
 	private long _classNameId;
 	private long _originalClassNameId;

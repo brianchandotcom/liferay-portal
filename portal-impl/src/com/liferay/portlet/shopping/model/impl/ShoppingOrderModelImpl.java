@@ -130,6 +130,14 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingOrder"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.shopping.model.ShoppingOrder"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long PPTXNID_BIT_MASK = 2L;
+	public static long USERID_BIT_MASK = 4L;
+	public static long NUMBER_BIT_MASK = 8L;
+	public static long PPPAYMENTSTATUS_BIT_MASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -211,6 +219,10 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		return models;
 	}
 
+	public long getBitMask() {
+		return _bitMask;
+	}
+
 	public Class<?> getModelClass() {
 		return ShoppingOrder.class;
 	}
@@ -256,7 +268,19 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -274,6 +298,14 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -283,6 +315,10 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -328,6 +364,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setNumber(String number) {
+		_bitMask |= NUMBER_BIT_MASK;
+
 		if (_originalNumber == null) {
 			_originalNumber = _number;
 		}
@@ -821,6 +859,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setPpTxnId(String ppTxnId) {
+		_bitMask |= PPTXNID_BIT_MASK;
+
 		if (_originalPpTxnId == null) {
 			_originalPpTxnId = _ppTxnId;
 		}
@@ -843,7 +883,17 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setPpPaymentStatus(String ppPaymentStatus) {
+		_bitMask |= PPPAYMENTSTATUS_BIT_MASK;
+
+		if (_originalPpPaymentStatus == null) {
+			_originalPpPaymentStatus = _ppPaymentStatus;
+		}
+
 		_ppPaymentStatus = ppPaymentStatus;
+	}
+
+	public String getOriginalPpPaymentStatus() {
+		return GetterUtil.getString(_originalPpPaymentStatus);
 	}
 
 	@JSON
@@ -1050,9 +1100,21 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public void resetOriginalValues() {
 		ShoppingOrderModelImpl shoppingOrderModelImpl = this;
 
+		shoppingOrderModelImpl._originalGroupId = shoppingOrderModelImpl._groupId;
+
+		shoppingOrderModelImpl._setOriginalGroupId = false;
+
+		shoppingOrderModelImpl._originalUserId = shoppingOrderModelImpl._userId;
+
+		shoppingOrderModelImpl._setOriginalUserId = false;
+
 		shoppingOrderModelImpl._originalNumber = shoppingOrderModelImpl._number;
 
 		shoppingOrderModelImpl._originalPpTxnId = shoppingOrderModelImpl._ppTxnId;
+
+		shoppingOrderModelImpl._originalPpPaymentStatus = shoppingOrderModelImpl._ppPaymentStatus;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -1710,11 +1772,16 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ShoppingOrder.class
 		};
+	private long _bitMask;
 	private long _orderId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -1759,6 +1826,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	private String _ppTxnId;
 	private String _originalPpTxnId;
 	private String _ppPaymentStatus;
+	private String _originalPpPaymentStatus;
 	private double _ppPaymentGross;
 	private String _ppReceiverEmail;
 	private String _ppPayerEmail;

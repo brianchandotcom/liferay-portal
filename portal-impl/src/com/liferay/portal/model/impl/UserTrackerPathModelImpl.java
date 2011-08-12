@@ -72,6 +72,14 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.UserTrackerPath"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.UserTrackerPath"),
+			true);
+	public static long USERTRACKERID_BIT_MASK = 1L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return UserTrackerPath.class;
@@ -116,7 +124,19 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	}
 
 	public void setUserTrackerId(long userTrackerId) {
+		_bitMask |= USERTRACKERID_BIT_MASK;
+
+		if (!_setOriginalUserTrackerId) {
+			_setOriginalUserTrackerId = true;
+
+			_originalUserTrackerId = _userTrackerId;
+		}
+
 		_userTrackerId = userTrackerId;
+	}
+
+	public long getOriginalUserTrackerId() {
+		return _originalUserTrackerId;
 	}
 
 	public String getPath() {
@@ -231,6 +251,13 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	@Override
 	public void resetOriginalValues() {
+		UserTrackerPathModelImpl userTrackerPathModelImpl = this;
+
+		userTrackerPathModelImpl._originalUserTrackerId = userTrackerPathModelImpl._userTrackerId;
+
+		userTrackerPathModelImpl._setOriginalUserTrackerId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -311,8 +338,11 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			UserTrackerPath.class
 		};
+	private long _bitMask;
 	private long _userTrackerPathId;
 	private long _userTrackerId;
+	private long _originalUserTrackerId;
+	private boolean _setOriginalUserTrackerId;
 	private String _path;
 	private Date _pathDate;
 	private transient ExpandoBridge _expandoBridge;

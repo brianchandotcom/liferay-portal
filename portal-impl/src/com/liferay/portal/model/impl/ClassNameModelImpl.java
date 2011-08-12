@@ -75,6 +75,10 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ClassName"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.ClassName"),
+			true);
+	public static long VALUE_BIT_MASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -105,6 +109,10 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -165,6 +173,8 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	}
 
 	public void setValue(String value) {
+		_bitMask |= VALUE_BIT_MASK;
+
 		if (_originalValue == null) {
 			_originalValue = _value;
 		}
@@ -268,6 +278,8 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		ClassNameModelImpl classNameModelImpl = this;
 
 		classNameModelImpl._originalValue = classNameModelImpl._value;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -325,6 +337,7 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ClassName.class
 		};
+	private long _bitMask;
 	private long _classNameId;
 	private String _value;
 	private String _originalValue;

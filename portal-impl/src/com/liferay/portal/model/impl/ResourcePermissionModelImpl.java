@@ -80,6 +80,16 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourcePermission"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.ResourcePermission"),
+			true);
+	public static long SCOPE_BIT_MASK = 1L;
+	public static long PRIMKEY_BIT_MASK = 2L;
+	public static long OWNERID_BIT_MASK = 4L;
+	public static long NAME_BIT_MASK = 8L;
+	public static long ACTIONIDS_BIT_MASK = 16L;
+	public static long COMPANYID_BIT_MASK = 32L;
+	public static long ROLEID_BIT_MASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -117,6 +127,10 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -164,6 +178,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -188,6 +204,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -205,6 +223,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setScope(int scope) {
+		_bitMask |= SCOPE_BIT_MASK;
+
 		if (!_setOriginalScope) {
 			_setOriginalScope = true;
 
@@ -229,6 +249,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setPrimKey(String primKey) {
+		_bitMask |= PRIMKEY_BIT_MASK;
+
 		if (_originalPrimKey == null) {
 			_originalPrimKey = _primKey;
 		}
@@ -246,6 +268,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setRoleId(long roleId) {
+		_bitMask |= ROLEID_BIT_MASK;
+
 		if (!_setOriginalRoleId) {
 			_setOriginalRoleId = true;
 
@@ -265,6 +289,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setOwnerId(long ownerId) {
+		_bitMask |= OWNERID_BIT_MASK;
+
 		if (!_setOriginalOwnerId) {
 			_setOriginalOwnerId = true;
 
@@ -284,6 +310,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setActionIds(long actionIds) {
+		_bitMask |= ACTIONIDS_BIT_MASK;
+
 		if (!_setOriginalActionIds) {
 			_setOriginalActionIds = true;
 
@@ -417,6 +445,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		resourcePermissionModelImpl._originalActionIds = resourcePermissionModelImpl._actionIds;
 
 		resourcePermissionModelImpl._setOriginalActionIds = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -528,6 +558,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ResourcePermission.class
 		};
+	private long _bitMask;
 	private long _resourcePermissionId;
 	private long _companyId;
 	private long _originalCompanyId;

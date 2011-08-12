@@ -103,6 +103,14 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalTemplate"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.journal.model.JournalTemplate"),
+			true);
+	public static long TEMPLATEID_BIT_MASK = 1L;
+	public static long GROUPID_BIT_MASK = 2L;
+	public static long STRUCTUREID_BIT_MASK = 4L;
+	public static long UUID_BIT_MASK = 8L;
+	public static long SMALLIMAGEID_BIT_MASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -150,6 +158,10 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -219,6 +231,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -301,6 +315,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setTemplateId(String templateId) {
+		_bitMask |= TEMPLATEID_BIT_MASK;
+
 		if (_originalTemplateId == null) {
 			_originalTemplateId = _templateId;
 		}
@@ -323,7 +339,17 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setStructureId(String structureId) {
+		_bitMask |= STRUCTUREID_BIT_MASK;
+
+		if (_originalStructureId == null) {
+			_originalStructureId = _structureId;
+		}
+
 		_structureId = structureId;
+	}
+
+	public String getOriginalStructureId() {
+		return GetterUtil.getString(_originalStructureId);
 	}
 
 	@JSON
@@ -568,6 +594,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setSmallImageId(long smallImageId) {
+		_bitMask |= SMALLIMAGEID_BIT_MASK;
+
 		if (!_setOriginalSmallImageId) {
 			_setOriginalSmallImageId = true;
 
@@ -708,9 +736,13 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 
 		journalTemplateModelImpl._originalTemplateId = journalTemplateModelImpl._templateId;
 
+		journalTemplateModelImpl._originalStructureId = journalTemplateModelImpl._structureId;
+
 		journalTemplateModelImpl._originalSmallImageId = journalTemplateModelImpl._smallImageId;
 
 		journalTemplateModelImpl._setOriginalSmallImageId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -958,6 +990,7 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			JournalTemplate.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _id;
@@ -973,6 +1006,7 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	private String _templateId;
 	private String _originalTemplateId;
 	private String _structureId;
+	private String _originalStructureId;
 	private String _name;
 	private String _description;
 	private String _xsl;

@@ -73,6 +73,15 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ServiceComponent"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.ServiceComponent"),
+			true);
+	public static long BUILDNUMBER_BIT_MASK = 1L;
+	public static long BUILDNAMESPACE_BIT_MASK = 2L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ServiceComponent.class;
@@ -122,6 +131,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	}
 
 	public void setBuildNamespace(String buildNamespace) {
+		_bitMask |= BUILDNAMESPACE_BIT_MASK;
+
 		if (_originalBuildNamespace == null) {
 			_originalBuildNamespace = _buildNamespace;
 		}
@@ -138,6 +149,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	}
 
 	public void setBuildNumber(long buildNumber) {
+		_bitMask |= BUILDNUMBER_BIT_MASK;
+
 		if (!_setOriginalBuildNumber) {
 			_setOriginalBuildNumber = true;
 
@@ -288,6 +301,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		serviceComponentModelImpl._originalBuildNumber = serviceComponentModelImpl._buildNumber;
 
 		serviceComponentModelImpl._setOriginalBuildNumber = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -375,6 +390,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ServiceComponent.class
 		};
+	private long _bitMask;
 	private long _serviceComponentId;
 	private String _buildNamespace;
 	private String _originalBuildNamespace;

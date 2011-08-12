@@ -75,6 +75,17 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.softwarecatalog.model.SCProductScreenshot"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.softwarecatalog.model.SCProductScreenshot"),
+			true);
+	public static long PRIORITY_BIT_MASK = 1L;
+	public static long FULLIMAGEID_BIT_MASK = 2L;
+	public static long THUMBNAILID_BIT_MASK = 4L;
+	public static long PRODUCTENTRYID_BIT_MASK = 8L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return SCProductScreenshot.class;
@@ -135,6 +146,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	}
 
 	public void setProductEntryId(long productEntryId) {
+		_bitMask |= PRODUCTENTRYID_BIT_MASK;
+
 		if (!_setOriginalProductEntryId) {
 			_setOriginalProductEntryId = true;
 
@@ -153,6 +166,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	}
 
 	public void setThumbnailId(long thumbnailId) {
+		_bitMask |= THUMBNAILID_BIT_MASK;
+
 		if (!_setOriginalThumbnailId) {
 			_setOriginalThumbnailId = true;
 
@@ -171,6 +186,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	}
 
 	public void setFullImageId(long fullImageId) {
+		_bitMask |= FULLIMAGEID_BIT_MASK;
+
 		if (!_setOriginalFullImageId) {
 			_setOriginalFullImageId = true;
 
@@ -189,6 +206,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	}
 
 	public void setPriority(int priority) {
+		_bitMask |= PRIORITY_BIT_MASK;
+
 		if (!_setOriginalPriority) {
 			_setOriginalPriority = true;
 
@@ -333,6 +352,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		scProductScreenshotModelImpl._originalPriority = scProductScreenshotModelImpl._priority;
 
 		scProductScreenshotModelImpl._setOriginalPriority = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -425,6 +446,7 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SCProductScreenshot.class
 		};
+	private long _bitMask;
 	private long _productScreenshotId;
 	private long _companyId;
 	private long _groupId;

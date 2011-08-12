@@ -81,6 +81,20 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialEquityLog"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.social.model.SocialEquityLog"),
+			true);
+	public static long ACTIONDATE_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long EXTRADATA_BIT_MASK = 4L;
+	public static long ACTIVE_BIT_MASK = 8L;
+	public static long ACTIONID_BIT_MASK = 16L;
+	public static long TYPE_BIT_MASK = 32L;
+	public static long ASSETENTRYID_BIT_MASK = 64L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return SocialEquityLog.class;
@@ -141,6 +155,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -167,6 +183,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setAssetEntryId(long assetEntryId) {
+		_bitMask |= ASSETENTRYID_BIT_MASK;
+
 		if (!_setOriginalAssetEntryId) {
 			_setOriginalAssetEntryId = true;
 
@@ -190,6 +208,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setActionId(String actionId) {
+		_bitMask |= ACTIONID_BIT_MASK;
+
 		if (_originalActionId == null) {
 			_originalActionId = _actionId;
 		}
@@ -206,6 +226,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setActionDate(int actionDate) {
+		_bitMask |= ACTIONDATE_BIT_MASK;
+
 		if (!_setOriginalActionDate) {
 			_setOriginalActionDate = true;
 
@@ -228,6 +250,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setActive(boolean active) {
+		_bitMask |= ACTIVE_BIT_MASK;
+
 		if (!_setOriginalActive) {
 			_setOriginalActive = true;
 
@@ -254,6 +278,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setType(int type) {
+		_bitMask |= TYPE_BIT_MASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -285,6 +311,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setExtraData(String extraData) {
+		_bitMask |= EXTRADATA_BIT_MASK;
+
 		if (_originalExtraData == null) {
 			_originalExtraData = _extraData;
 		}
@@ -420,6 +448,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		socialEquityLogModelImpl._setOriginalType = false;
 
 		socialEquityLogModelImpl._originalExtraData = socialEquityLogModelImpl._extraData;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -563,6 +593,7 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SocialEquityLog.class
 		};
+	private long _bitMask;
 	private long _equityLogId;
 	private long _groupId;
 	private long _companyId;

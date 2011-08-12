@@ -91,6 +91,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Account"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = false;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

@@ -85,6 +85,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Repository"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Repository"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -124,6 +128,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -171,7 +179,19 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -381,6 +401,13 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public void resetOriginalValues() {
+		RepositoryModelImpl repositoryModelImpl = this;
+
+		repositoryModelImpl._originalGroupId = repositoryModelImpl._groupId;
+
+		repositoryModelImpl._setOriginalGroupId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -542,8 +569,11 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Repository.class
 		};
+	private long _bitMask;
 	private long _repositoryId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;

@@ -72,6 +72,17 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourceTypePermission"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.ResourceTypePermission"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long NAME_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
+	public static long ROLEID_BIT_MASK = 8L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ResourceTypePermission.class;
@@ -116,6 +127,8 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -134,6 +147,8 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -157,6 +172,8 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -173,6 +190,8 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	}
 
 	public void setRoleId(long roleId) {
+		_bitMask |= ROLEID_BIT_MASK;
+
 		if (!_setOriginalRoleId) {
 			_setOriginalRoleId = true;
 
@@ -302,6 +321,8 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 		resourceTypePermissionModelImpl._originalRoleId = resourceTypePermissionModelImpl._roleId;
 
 		resourceTypePermissionModelImpl._setOriginalRoleId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -391,6 +412,7 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ResourceTypePermission.class
 		};
+	private long _bitMask;
 	private long _resourceTypePermissionId;
 	private long _companyId;
 	private long _originalCompanyId;

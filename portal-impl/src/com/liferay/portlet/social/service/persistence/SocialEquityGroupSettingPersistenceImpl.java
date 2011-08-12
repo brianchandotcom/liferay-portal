@@ -74,10 +74,15 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	public static final String FINDER_CLASS_NAME_ENTITY = SocialEquityGroupSettingImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_T = new FinderPath(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED,
 			SocialEquityGroupSettingImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByG_C_T",
+			SocialEquityGroupSettingModelImpl.GROUPID_BIT_MASK |
+			SocialEquityGroupSettingModelImpl.CLASSNAMEID_BIT_MASK |
+			SocialEquityGroupSettingModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -85,6 +90,9 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_T = new FinderPath(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByG_C_T",
+			SocialEquityGroupSettingModelImpl.GROUPID_BIT_MASK |
+			SocialEquityGroupSettingModelImpl.CLASSNAMEID_BIT_MASK |
+			SocialEquityGroupSettingModelImpl.TYPE_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -93,6 +101,10 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED,
 			SocialEquityGroupSettingImpl.class, FINDER_CLASS_NAME_LIST,
 			"findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
+			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityGroupSettingImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -321,37 +333,38 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew ||
+				!SocialEquityGroupSettingModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
 
 		EntityCacheUtil.putResult(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityGroupSettingImpl.class,
 			socialEquityGroupSetting.getPrimaryKey(), socialEquityGroupSetting);
 
-		if (!isNew &&
-				((socialEquityGroupSetting.getGroupId() != socialEquityGroupSettingModelImpl.getOriginalGroupId()) ||
-				(socialEquityGroupSetting.getClassNameId() != socialEquityGroupSettingModelImpl.getOriginalClassNameId()) ||
-				(socialEquityGroupSetting.getType() != socialEquityGroupSettingModelImpl.getOriginalType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_T,
-				new Object[] {
-					Long.valueOf(
-						socialEquityGroupSettingModelImpl.getOriginalGroupId()),
-					Long.valueOf(
-						socialEquityGroupSettingModelImpl.getOriginalClassNameId()),
-					Integer.valueOf(
-						socialEquityGroupSettingModelImpl.getOriginalType())
-				});
-		}
-
-		if (isNew ||
-				((socialEquityGroupSetting.getGroupId() != socialEquityGroupSettingModelImpl.getOriginalGroupId()) ||
-				(socialEquityGroupSetting.getClassNameId() != socialEquityGroupSettingModelImpl.getOriginalClassNameId()) ||
-				(socialEquityGroupSetting.getType() != socialEquityGroupSettingModelImpl.getOriginalType()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_T,
 				new Object[] {
 					Long.valueOf(socialEquityGroupSetting.getGroupId()),
 					Long.valueOf(socialEquityGroupSetting.getClassNameId()),
 					Integer.valueOf(socialEquityGroupSetting.getType())
 				}, socialEquityGroupSetting);
+		}
+		else {
+			if ((socialEquityGroupSettingModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_G_C_T.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_T,
+					new Object[] {
+						Long.valueOf(
+							socialEquityGroupSettingModelImpl.getOriginalGroupId()),
+						Long.valueOf(
+							socialEquityGroupSettingModelImpl.getOriginalClassNameId()),
+						Integer.valueOf(
+							socialEquityGroupSettingModelImpl.getOriginalType())
+					});
+			}
 		}
 
 		return socialEquityGroupSetting;
@@ -673,12 +686,25 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	 */
 	public List<SocialEquityGroupSetting> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<SocialEquityGroupSetting> list = (List<SocialEquityGroupSetting>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<SocialEquityGroupSetting> list = (List<SocialEquityGroupSetting>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -723,14 +749,12 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

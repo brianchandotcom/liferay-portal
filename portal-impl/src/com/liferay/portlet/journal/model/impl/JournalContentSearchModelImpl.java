@@ -74,6 +74,18 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalContentSearch"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.journal.model.JournalContentSearch"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long LAYOUTID_BIT_MASK = 2L;
+	public static long PORTLETID_BIT_MASK = 4L;
+	public static long PRIVATELAYOUT_BIT_MASK = 8L;
+	public static long ARTICLEID_BIT_MASK = 16L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return JournalContentSearch.class;
@@ -118,6 +130,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -148,6 +162,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setPrivateLayout(boolean privateLayout) {
+		_bitMask |= PRIVATELAYOUT_BIT_MASK;
+
 		if (!_setOriginalPrivateLayout) {
 			_setOriginalPrivateLayout = true;
 
@@ -166,6 +182,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setLayoutId(long layoutId) {
+		_bitMask |= LAYOUTID_BIT_MASK;
+
 		if (!_setOriginalLayoutId) {
 			_setOriginalLayoutId = true;
 
@@ -189,6 +207,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setPortletId(String portletId) {
+		_bitMask |= PORTLETID_BIT_MASK;
+
 		if (_originalPortletId == null) {
 			_originalPortletId = _portletId;
 		}
@@ -210,6 +230,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setArticleId(String articleId) {
+		_bitMask |= ARTICLEID_BIT_MASK;
+
 		if (_originalArticleId == null) {
 			_originalArticleId = _articleId;
 		}
@@ -332,6 +354,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		journalContentSearchModelImpl._originalPortletId = journalContentSearchModelImpl._portletId;
 
 		journalContentSearchModelImpl._originalArticleId = journalContentSearchModelImpl._articleId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -435,6 +459,7 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			JournalContentSearch.class
 		};
+	private long _bitMask;
 	private long _contentSearchId;
 	private long _groupId;
 	private long _originalGroupId;

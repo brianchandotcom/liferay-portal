@@ -118,6 +118,23 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalArticle"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.journal.model.JournalArticle"),
+			true);
+	public static long URLTITLE_BIT_MASK = 1L;
+	public static long STATUS_BIT_MASK = 2L;
+	public static long CLASSNAMEID_BIT_MASK = 4L;
+	public static long LAYOUTUUID_BIT_MASK = 8L;
+	public static long SMALLIMAGEID_BIT_MASK = 16L;
+	public static long ARTICLEID_BIT_MASK = 32L;
+	public static long VERSION_BIT_MASK = 64L;
+	public static long TEMPLATEID_BIT_MASK = 128L;
+	public static long GROUPID_BIT_MASK = 256L;
+	public static long RESOURCEPRIMKEY_BIT_MASK = 512L;
+	public static long CLASSPK_BIT_MASK = 1024L;
+	public static long STRUCTUREID_BIT_MASK = 2048L;
+	public static long UUID_BIT_MASK = 4096L;
+	public static long COMPANYID_BIT_MASK = 8192L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -178,6 +195,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -247,11 +268,23 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setResourcePrimKey(long resourcePrimKey) {
+		_bitMask |= RESOURCEPRIMKEY_BIT_MASK;
+
+		if (!_setOriginalResourcePrimKey) {
+			_setOriginalResourcePrimKey = true;
+
+			_originalResourcePrimKey = _resourcePrimKey;
+		}
+
 		_resourcePrimKey = resourcePrimKey;
 	}
 
 	public boolean isResourceMain() {
 		return true;
+	}
+
+	public long getOriginalResourcePrimKey() {
+		return _originalResourcePrimKey;
 	}
 
 	@JSON
@@ -260,6 +293,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -279,7 +314,19 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -345,6 +392,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -364,7 +413,19 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -378,6 +439,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setArticleId(String articleId) {
+		_bitMask |= ARTICLEID_BIT_MASK;
+
 		if (_originalArticleId == null) {
 			_originalArticleId = _articleId;
 		}
@@ -395,6 +458,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setVersion(double version) {
+		_bitMask |= VERSION_BIT_MASK;
+
 		if (!_setOriginalVersion) {
 			_setOriginalVersion = true;
 
@@ -508,7 +573,17 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setUrlTitle(String urlTitle) {
+		_bitMask |= URLTITLE_BIT_MASK;
+
+		if (_originalUrlTitle == null) {
+			_originalUrlTitle = _urlTitle;
+		}
+
 		_urlTitle = urlTitle;
+	}
+
+	public String getOriginalUrlTitle() {
+		return GetterUtil.getString(_originalUrlTitle);
 	}
 
 	@JSON
@@ -643,6 +718,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setStructureId(String structureId) {
+		_bitMask |= STRUCTUREID_BIT_MASK;
+
 		if (_originalStructureId == null) {
 			_originalStructureId = _structureId;
 		}
@@ -665,7 +742,17 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setTemplateId(String templateId) {
+		_bitMask |= TEMPLATEID_BIT_MASK;
+
+		if (_originalTemplateId == null) {
+			_originalTemplateId = _templateId;
+		}
+
 		_templateId = templateId;
+	}
+
+	public String getOriginalTemplateId() {
+		return GetterUtil.getString(_originalTemplateId);
 	}
 
 	@JSON
@@ -679,7 +766,17 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setLayoutUuid(String layoutUuid) {
+		_bitMask |= LAYOUTUUID_BIT_MASK;
+
+		if (_originalLayoutUuid == null) {
+			_originalLayoutUuid = _layoutUuid;
+		}
+
 		_layoutUuid = layoutUuid;
+	}
+
+	public String getOriginalLayoutUuid() {
+		return GetterUtil.getString(_originalLayoutUuid);
 	}
 
 	@JSON
@@ -741,7 +838,19 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setSmallImageId(long smallImageId) {
+		_bitMask |= SMALLIMAGEID_BIT_MASK;
+
+		if (!_setOriginalSmallImageId) {
+			_setOriginalSmallImageId = true;
+
+			_originalSmallImageId = _smallImageId;
+		}
+
 		_smallImageId = smallImageId;
+	}
+
+	public long getOriginalSmallImageId() {
+		return _originalSmallImageId;
 	}
 
 	@JSON
@@ -764,7 +873,19 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public void setStatus(int status) {
+		_bitMask |= STATUS_BIT_MASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -988,13 +1109,25 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		journalArticleModelImpl._originalUuid = journalArticleModelImpl._uuid;
 
+		journalArticleModelImpl._originalResourcePrimKey = journalArticleModelImpl._resourcePrimKey;
+
+		journalArticleModelImpl._setOriginalResourcePrimKey = false;
+
 		journalArticleModelImpl._originalGroupId = journalArticleModelImpl._groupId;
 
 		journalArticleModelImpl._setOriginalGroupId = false;
 
+		journalArticleModelImpl._originalCompanyId = journalArticleModelImpl._companyId;
+
+		journalArticleModelImpl._setOriginalCompanyId = false;
+
 		journalArticleModelImpl._originalClassNameId = journalArticleModelImpl._classNameId;
 
 		journalArticleModelImpl._setOriginalClassNameId = false;
+
+		journalArticleModelImpl._originalClassPK = journalArticleModelImpl._classPK;
+
+		journalArticleModelImpl._setOriginalClassPK = false;
 
 		journalArticleModelImpl._originalArticleId = journalArticleModelImpl._articleId;
 
@@ -1002,7 +1135,23 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		journalArticleModelImpl._setOriginalVersion = false;
 
+		journalArticleModelImpl._originalUrlTitle = journalArticleModelImpl._urlTitle;
+
 		journalArticleModelImpl._originalStructureId = journalArticleModelImpl._structureId;
+
+		journalArticleModelImpl._originalTemplateId = journalArticleModelImpl._templateId;
+
+		journalArticleModelImpl._originalLayoutUuid = journalArticleModelImpl._layoutUuid;
+
+		journalArticleModelImpl._originalSmallImageId = journalArticleModelImpl._smallImageId;
+
+		journalArticleModelImpl._setOriginalSmallImageId = false;
+
+		journalArticleModelImpl._originalStatus = journalArticleModelImpl._status;
+
+		journalArticleModelImpl._setOriginalStatus = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -1414,14 +1563,19 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			JournalArticle.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _id;
 	private long _resourcePrimKey;
+	private long _originalResourcePrimKey;
+	private boolean _setOriginalResourcePrimKey;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
@@ -1431,6 +1585,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _articleId;
 	private String _originalArticleId;
 	private double _version;
@@ -1438,21 +1594,28 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private boolean _setOriginalVersion;
 	private String _title;
 	private String _urlTitle;
+	private String _originalUrlTitle;
 	private String _description;
 	private String _content;
 	private String _type;
 	private String _structureId;
 	private String _originalStructureId;
 	private String _templateId;
+	private String _originalTemplateId;
 	private String _layoutUuid;
+	private String _originalLayoutUuid;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _reviewDate;
 	private boolean _indexable;
 	private boolean _smallImage;
 	private long _smallImageId;
+	private long _originalSmallImageId;
+	private boolean _setOriginalSmallImageId;
 	private String _smallImageURL;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserUuid;
 	private String _statusByUserName;

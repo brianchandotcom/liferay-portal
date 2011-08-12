@@ -75,6 +75,20 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalArticleImage"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.journal.model.JournalArticleImage"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long TEMPIMAGE_BIT_MASK = 2L;
+	public static long ELNAME_BIT_MASK = 4L;
+	public static long LANGUAGEID_BIT_MASK = 8L;
+	public static long ELINSTANCEID_BIT_MASK = 16L;
+	public static long ARTICLEID_BIT_MASK = 32L;
+	public static long VERSION_BIT_MASK = 64L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return JournalArticleImage.class;
@@ -119,6 +133,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -142,6 +158,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setArticleId(String articleId) {
+		_bitMask |= ARTICLEID_BIT_MASK;
+
 		if (_originalArticleId == null) {
 			_originalArticleId = _articleId;
 		}
@@ -158,6 +176,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setVersion(double version) {
+		_bitMask |= VERSION_BIT_MASK;
+
 		if (!_setOriginalVersion) {
 			_setOriginalVersion = true;
 
@@ -181,6 +201,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setElInstanceId(String elInstanceId) {
+		_bitMask |= ELINSTANCEID_BIT_MASK;
+
 		if (_originalElInstanceId == null) {
 			_originalElInstanceId = _elInstanceId;
 		}
@@ -202,6 +224,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setElName(String elName) {
+		_bitMask |= ELNAME_BIT_MASK;
+
 		if (_originalElName == null) {
 			_originalElName = _elName;
 		}
@@ -223,6 +247,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setLanguageId(String languageId) {
+		_bitMask |= LANGUAGEID_BIT_MASK;
+
 		if (_originalLanguageId == null) {
 			_originalLanguageId = _languageId;
 		}
@@ -243,7 +269,19 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setTempImage(boolean tempImage) {
+		_bitMask |= TEMPIMAGE_BIT_MASK;
+
+		if (!_setOriginalTempImage) {
+			_setOriginalTempImage = true;
+
+			_originalTempImage = _tempImage;
+		}
+
 		_tempImage = tempImage;
+	}
+
+	public boolean getOriginalTempImage() {
+		return _originalTempImage;
 	}
 
 	@Override
@@ -358,6 +396,12 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		journalArticleImageModelImpl._originalElName = journalArticleImageModelImpl._elName;
 
 		journalArticleImageModelImpl._originalLanguageId = journalArticleImageModelImpl._languageId;
+
+		journalArticleImageModelImpl._originalTempImage = journalArticleImageModelImpl._tempImage;
+
+		journalArticleImageModelImpl._setOriginalTempImage = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -481,6 +525,7 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			JournalArticleImage.class
 		};
+	private long _bitMask;
 	private long _articleImageId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -497,6 +542,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	private String _languageId;
 	private String _originalLanguageId;
 	private boolean _tempImage;
+	private boolean _originalTempImage;
+	private boolean _setOriginalTempImage;
 	private transient ExpandoBridge _expandoBridge;
 	private JournalArticleImage _escapedModelProxy;
 }

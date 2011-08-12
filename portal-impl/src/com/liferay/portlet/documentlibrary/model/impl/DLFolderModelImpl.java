@@ -94,6 +94,16 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFolder"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.documentlibrary.model.DLFolder"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long NAME_BIT_MASK = 2L;
+	public static long PARENTFOLDERID_BIT_MASK = 4L;
+	public static long MOUNTPOINT_BIT_MASK = 8L;
+	public static long COMPANYID_BIT_MASK = 16L;
+	public static long UUID_BIT_MASK = 32L;
+	public static long REPOSITORYID_BIT_MASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -138,6 +148,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -209,6 +223,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -228,7 +244,19 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -286,6 +314,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setRepositoryId(long repositoryId) {
+		_bitMask |= REPOSITORYID_BIT_MASK;
+
 		if (!_setOriginalRepositoryId) {
 			_setOriginalRepositoryId = true;
 
@@ -309,7 +339,19 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setMountPoint(boolean mountPoint) {
+		_bitMask |= MOUNTPOINT_BIT_MASK;
+
+		if (!_setOriginalMountPoint) {
+			_setOriginalMountPoint = true;
+
+			_originalMountPoint = _mountPoint;
+		}
+
 		_mountPoint = mountPoint;
+	}
+
+	public boolean getOriginalMountPoint() {
+		return _originalMountPoint;
 	}
 
 	@JSON
@@ -318,6 +360,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setParentFolderId(long parentFolderId) {
+		_bitMask |= PARENTFOLDERID_BIT_MASK;
+
 		if (!_setOriginalParentFolderId) {
 			_setOriginalParentFolderId = true;
 
@@ -342,6 +386,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -522,15 +568,25 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderModelImpl._setOriginalGroupId = false;
 
+		dlFolderModelImpl._originalCompanyId = dlFolderModelImpl._companyId;
+
+		dlFolderModelImpl._setOriginalCompanyId = false;
+
 		dlFolderModelImpl._originalRepositoryId = dlFolderModelImpl._repositoryId;
 
 		dlFolderModelImpl._setOriginalRepositoryId = false;
+
+		dlFolderModelImpl._originalMountPoint = dlFolderModelImpl._mountPoint;
+
+		dlFolderModelImpl._setOriginalMountPoint = false;
 
 		dlFolderModelImpl._originalParentFolderId = dlFolderModelImpl._parentFolderId;
 
 		dlFolderModelImpl._setOriginalParentFolderId = false;
 
 		dlFolderModelImpl._originalName = dlFolderModelImpl._name;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -739,6 +795,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLFolder.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _folderId;
@@ -746,6 +803,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
@@ -755,6 +814,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private long _originalRepositoryId;
 	private boolean _setOriginalRepositoryId;
 	private boolean _mountPoint;
+	private boolean _originalMountPoint;
+	private boolean _setOriginalMountPoint;
 	private long _parentFolderId;
 	private long _originalParentFolderId;
 	private boolean _setOriginalParentFolderId;

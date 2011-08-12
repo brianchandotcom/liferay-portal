@@ -69,6 +69,16 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.expando.model.ExpandoTable"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.expando.model.ExpandoTable"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long NAME_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return ExpandoTable.class;
@@ -113,6 +123,8 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -139,6 +151,8 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -162,6 +176,8 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	}
 
 	public void setName(String name) {
+		_bitMask |= NAME_BIT_MASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -260,6 +276,8 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		expandoTableModelImpl._setOriginalClassNameId = false;
 
 		expandoTableModelImpl._originalName = expandoTableModelImpl._name;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -333,6 +351,7 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ExpandoTable.class
 		};
+	private long _bitMask;
 	private long _tableId;
 	private long _companyId;
 	private long _originalCompanyId;

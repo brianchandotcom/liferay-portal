@@ -79,6 +79,17 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFileRank"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.documentlibrary.model.DLFileRank"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
+	public static long FILEENTRYID_BIT_MASK = 8L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return DLFileRank.class;
@@ -123,7 +134,19 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	public long getCompanyId() {
@@ -131,6 +154,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -149,6 +174,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -183,6 +210,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	public void setFileEntryId(long fileEntryId) {
+		_bitMask |= FILEENTRYID_BIT_MASK;
+
 		if (!_setOriginalFileEntryId) {
 			_setOriginalFileEntryId = true;
 
@@ -291,6 +320,10 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public void resetOriginalValues() {
 		DLFileRankModelImpl dlFileRankModelImpl = this;
 
+		dlFileRankModelImpl._originalGroupId = dlFileRankModelImpl._groupId;
+
+		dlFileRankModelImpl._setOriginalGroupId = false;
+
 		dlFileRankModelImpl._originalCompanyId = dlFileRankModelImpl._companyId;
 
 		dlFileRankModelImpl._setOriginalCompanyId = false;
@@ -302,6 +335,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		dlFileRankModelImpl._originalFileEntryId = dlFileRankModelImpl._fileEntryId;
 
 		dlFileRankModelImpl._setOriginalFileEntryId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -392,8 +427,11 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLFileRank.class
 		};
+	private long _bitMask;
 	private long _fileRankId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

@@ -95,6 +95,14 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.softwarecatalog.model.SCProductEntry"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.softwarecatalog.model.SCProductEntry"),
+			true);
+	public static long GROUPID_BIT_MASK = 1L;
+	public static long REPOARTIFACTID_BIT_MASK = 2L;
+	public static long REPOGROUPID_BIT_MASK = 4L;
+	public static long USERID_BIT_MASK = 8L;
+	public static long COMPANYID_BIT_MASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -139,6 +147,10 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -189,7 +201,19 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -198,7 +222,19 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -207,6 +243,14 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -216,6 +260,10 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -359,6 +407,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	}
 
 	public void setRepoGroupId(String repoGroupId) {
+		_bitMask |= REPOGROUPID_BIT_MASK;
+
 		if (_originalRepoGroupId == null) {
 			_originalRepoGroupId = _repoGroupId;
 		}
@@ -381,6 +431,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	}
 
 	public void setRepoArtifactId(String repoArtifactId) {
+		_bitMask |= REPOARTIFACTID_BIT_MASK;
+
 		if (_originalRepoArtifactId == null) {
 			_originalRepoArtifactId = _repoArtifactId;
 		}
@@ -506,9 +558,23 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	public void resetOriginalValues() {
 		SCProductEntryModelImpl scProductEntryModelImpl = this;
 
+		scProductEntryModelImpl._originalGroupId = scProductEntryModelImpl._groupId;
+
+		scProductEntryModelImpl._setOriginalGroupId = false;
+
+		scProductEntryModelImpl._originalCompanyId = scProductEntryModelImpl._companyId;
+
+		scProductEntryModelImpl._setOriginalCompanyId = false;
+
+		scProductEntryModelImpl._originalUserId = scProductEntryModelImpl._userId;
+
+		scProductEntryModelImpl._setOriginalUserId = false;
+
 		scProductEntryModelImpl._originalRepoGroupId = scProductEntryModelImpl._repoGroupId;
 
 		scProductEntryModelImpl._originalRepoArtifactId = scProductEntryModelImpl._repoArtifactId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -746,11 +812,18 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			SCProductEntry.class
 		};
+	private long _bitMask;
 	private long _productEntryId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;

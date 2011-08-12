@@ -89,6 +89,14 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Website"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Website"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long PRIMARY_BIT_MASK = 2L;
+	public static long USERID_BIT_MASK = 4L;
+	public static long CLASSPK_BIT_MASK = 8L;
+	public static long COMPANYID_BIT_MASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -128,6 +136,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -175,7 +187,19 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -184,6 +208,14 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -193,6 +225,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -241,7 +277,19 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -250,7 +298,19 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -286,7 +346,19 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	}
 
 	public void setPrimary(boolean primary) {
+		_bitMask |= PRIMARY_BIT_MASK;
+
+		if (!_setOriginalPrimary) {
+			_setOriginalPrimary = true;
+
+			_originalPrimary = _primary;
+		}
+
 		_primary = primary;
+	}
+
+	public boolean getOriginalPrimary() {
+		return _originalPrimary;
 	}
 
 	@Override
@@ -385,6 +457,29 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public void resetOriginalValues() {
+		WebsiteModelImpl websiteModelImpl = this;
+
+		websiteModelImpl._originalCompanyId = websiteModelImpl._companyId;
+
+		websiteModelImpl._setOriginalCompanyId = false;
+
+		websiteModelImpl._originalUserId = websiteModelImpl._userId;
+
+		websiteModelImpl._setOriginalUserId = false;
+
+		websiteModelImpl._originalClassNameId = websiteModelImpl._classNameId;
+
+		websiteModelImpl._setOriginalClassNameId = false;
+
+		websiteModelImpl._originalClassPK = websiteModelImpl._classPK;
+
+		websiteModelImpl._setOriginalClassPK = false;
+
+		websiteModelImpl._originalPrimary = websiteModelImpl._primary;
+
+		websiteModelImpl._setOriginalPrimary = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -534,18 +629,29 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Website.class
 		};
+	private long _bitMask;
 	private long _websiteId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _url;
 	private int _typeId;
 	private boolean _primary;
+	private boolean _originalPrimary;
+	private boolean _setOriginalPrimary;
 	private transient ExpandoBridge _expandoBridge;
 	private Website _escapedModelProxy;
 }

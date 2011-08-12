@@ -75,17 +75,33 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	public static final String FINDER_CLASS_NAME_ENTITY = DLSyncImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
 		".List";
+	public static final String FINDER_CLASS_NAME_LIST_PAGE_ORDER = FINDER_CLASS_NAME_ENTITY +
+		".List_Page_Order";
 	public static final FinderPath FINDER_PATH_FETCH_BY_FILEID = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, DLSyncImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByFileId",
+			DLSyncModelImpl.FILEID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_FILEID = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByFileId",
+			DLSyncModelImpl.FILEID_BIT_MASK,
 			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FIND_BY_C_M_R = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, DLSyncImpl.class,
 			FINDER_CLASS_NAME_LIST, "findByC_M_R",
+			DLSyncModelImpl.COMPANYID_BIT_MASK |
+			DLSyncModelImpl.MODIFIEDDATE_BIT_MASK |
+			DLSyncModelImpl.REPOSITORYID_BIT_MASK,
+			new String[] {
+				Long.class.getName(), Date.class.getName(), Long.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_C_M_R_PAGE_ORDER = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
+			DLSyncModelImpl.FINDER_CACHE_ENABLED, DLSyncImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findByC_M_R",
+			DLSyncModelImpl.COMPANYID_BIT_MASK |
+			DLSyncModelImpl.MODIFIEDDATE_BIT_MASK |
+			DLSyncModelImpl.REPOSITORYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Date.class.getName(), Long.class.getName(),
 				
@@ -95,12 +111,18 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_M_R = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countByC_M_R",
+			DLSyncModelImpl.COMPANYID_BIT_MASK |
+			DLSyncModelImpl.MODIFIEDDATE_BIT_MASK |
+			DLSyncModelImpl.REPOSITORYID_BIT_MASK,
 			new String[] {
 				Long.class.getName(), Date.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, DLSyncImpl.class,
 			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FIND_ALL_PAGE_ORDER = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
+			DLSyncModelImpl.FINDER_CACHE_ENABLED, DLSyncImpl.class,
+			FINDER_CLASS_NAME_LIST_PAGE_ORDER, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
@@ -307,21 +329,42 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_PAGE_ORDER);
+
+		if (isNew || !DLSyncModelImpl.COLUMN_BIT_MASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		}
+		else {
+			if ((dlSyncModelImpl.getBitMask() &
+					FINDER_PATH_FIND_BY_C_M_R.getColumnBitMask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlSyncModelImpl.getOriginalCompanyId()),
+						
+						dlSyncModelImpl.getOriginalModifiedDate(),
+						Long.valueOf(dlSyncModelImpl.getOriginalRepositoryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_M_R, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_M_R, args);
+			}
+		}
 
 		EntityCacheUtil.putResult(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncImpl.class, dlSync.getPrimaryKey(), dlSync);
 
-		if (!isNew &&
-				(dlSync.getFileId() != dlSyncModelImpl.getOriginalFileId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
-				new Object[] { Long.valueOf(dlSyncModelImpl.getOriginalFileId()) });
-		}
-
-		if (isNew ||
-				(dlSync.getFileId() != dlSyncModelImpl.getOriginalFileId())) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID,
 				new Object[] { Long.valueOf(dlSync.getFileId()) }, dlSync);
+		}
+		else {
+			if ((dlSyncModelImpl.getBitMask() &
+					FINDER_PATH_COUNT_BY_FILEID.getColumnBitMask()) != 0) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
+					new Object[] {
+						Long.valueOf(dlSyncModelImpl.getOriginalFileId())
+					});
+			}
 		}
 
 		return dlSync;
@@ -632,14 +675,27 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	public List<DLSync> findByC_M_R(long companyId, Date modifiedDate,
 		long repositoryId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId, modifiedDate, repositoryId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLSync> list = (List<DLSync>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_M_R,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] { companyId, modifiedDate, repositoryId };
+
+			finderPath = FINDER_PATH_FIND_BY_C_M_R;
+		}
+		else {
+			finderArgs = new Object[] {
+					companyId, modifiedDate, repositoryId,
+					
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_BY_C_M_R_PAGE_ORDER;
+		}
+
+		List<DLSync> list = (List<DLSync>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -701,14 +757,12 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_M_R,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_M_R,
-						finderArgs, list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1015,12 +1069,25 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 */
 	public List<DLSync> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = null;
+		FinderPath finderPath = null;
 
-		List<DLSync> list = (List<DLSync>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = FINDER_ALL_ARGS;
+
+			finderPath = FINDER_PATH_FIND_ALL;
+		}
+		else {
+			finderArgs = new Object[] {
+					String.valueOf(start), String.valueOf(end),
+					String.valueOf(orderByComparator)
+				};
+
+			finderPath = FINDER_PATH_FIND_ALL_PAGE_ORDER;
+		}
+
+		List<DLSync> list = (List<DLSync>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1065,14 +1132,12 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);

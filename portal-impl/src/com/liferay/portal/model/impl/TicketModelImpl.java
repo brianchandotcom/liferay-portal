@@ -80,6 +80,14 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Ticket"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Ticket"),
+			true);
+	public static long KEY_BIT_MASK = 1L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return Ticket.class;
@@ -169,6 +177,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	}
 
 	public void setKey(String key) {
+		_bitMask |= KEY_BIT_MASK;
+
 		if (_originalKey == null) {
 			_originalKey = _key;
 		}
@@ -314,6 +324,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		TicketModelImpl ticketModelImpl = this;
 
 		ticketModelImpl._originalKey = ticketModelImpl._key;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -447,6 +459,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Ticket.class
 		};
+	private long _bitMask;
 	private long _ticketId;
 	private long _companyId;
 	private Date _createDate;

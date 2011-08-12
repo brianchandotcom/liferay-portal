@@ -72,6 +72,16 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBDiscussion"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.messageboards.model.MBDiscussion"),
+			true);
+	public static long THREADID_BIT_MASK = 1L;
+	public static long CLASSNAMEID_BIT_MASK = 2L;
+	public static long CLASSPK_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return MBDiscussion.class;
@@ -124,6 +134,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -142,6 +154,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -160,6 +174,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	}
 
 	public void setThreadId(long threadId) {
+		_bitMask |= THREADID_BIT_MASK;
+
 		if (!_setOriginalThreadId) {
 			_setOriginalThreadId = true;
 
@@ -277,6 +293,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		mbDiscussionModelImpl._originalThreadId = mbDiscussionModelImpl._threadId;
 
 		mbDiscussionModelImpl._setOriginalThreadId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -344,6 +362,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			MBDiscussion.class
 		};
+	private long _bitMask;
 	private long _discussionId;
 	private long _classNameId;
 	private long _originalClassNameId;

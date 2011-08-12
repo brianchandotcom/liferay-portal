@@ -103,6 +103,16 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.blogs.model.BlogsEntry"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.blogs.model.BlogsEntry"),
+			true);
+	public static long URLTITLE_BIT_MASK = 1L;
+	public static long DISPLAYDATE_BIT_MASK = 2L;
+	public static long GROUPID_BIT_MASK = 4L;
+	public static long STATUS_BIT_MASK = 8L;
+	public static long USERID_BIT_MASK = 16L;
+	public static long COMPANYID_BIT_MASK = 32L;
+	public static long UUID_BIT_MASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -154,6 +164,10 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -223,6 +237,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	public void setGroupId(long groupId) {
+		_bitMask |= GROUPID_BIT_MASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -242,7 +258,19 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -251,6 +279,14 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -260,6 +296,10 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -319,6 +359,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	public void setUrlTitle(String urlTitle) {
+		_bitMask |= URLTITLE_BIT_MASK;
+
 		if (_originalUrlTitle == null) {
 			_originalUrlTitle = _urlTitle;
 		}
@@ -364,7 +406,17 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	public void setDisplayDate(Date displayDate) {
+		_bitMask |= DISPLAYDATE_BIT_MASK;
+
+		if (_originalDisplayDate == null) {
+			_originalDisplayDate = _displayDate;
+		}
+
 		_displayDate = displayDate;
+	}
+
+	public Date getOriginalDisplayDate() {
+		return _originalDisplayDate;
 	}
 
 	@JSON
@@ -449,7 +501,19 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	public void setStatus(int status) {
+		_bitMask |= STATUS_BIT_MASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -654,7 +718,23 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 		blogsEntryModelImpl._setOriginalGroupId = false;
 
+		blogsEntryModelImpl._originalCompanyId = blogsEntryModelImpl._companyId;
+
+		blogsEntryModelImpl._setOriginalCompanyId = false;
+
+		blogsEntryModelImpl._originalUserId = blogsEntryModelImpl._userId;
+
+		blogsEntryModelImpl._setOriginalUserId = false;
+
 		blogsEntryModelImpl._originalUrlTitle = blogsEntryModelImpl._urlTitle;
+
+		blogsEntryModelImpl._originalDisplayDate = blogsEntryModelImpl._displayDate;
+
+		blogsEntryModelImpl._originalStatus = blogsEntryModelImpl._status;
+
+		blogsEntryModelImpl._setOriginalStatus = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -956,6 +1036,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			BlogsEntry.class
 		};
+	private long _bitMask;
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;
@@ -963,8 +1044,12 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -974,6 +1059,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	private String _description;
 	private String _content;
 	private Date _displayDate;
+	private Date _originalDisplayDate;
 	private boolean _allowPingbacks;
 	private boolean _allowTrackbacks;
 	private String _trackbacks;
@@ -981,6 +1067,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	private long _smallImageId;
 	private String _smallImageURL;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserUuid;
 	private String _statusByUserName;

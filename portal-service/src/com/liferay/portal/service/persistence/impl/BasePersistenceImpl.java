@@ -342,6 +342,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		throw new UnsupportedOperationException();
 	}
 
+	protected static final Object[] FINDER_ALL_ARGS = new Object[0];
+
 	protected static final String ORDER_BY_ASC = " ASC";
 
 	protected static final String ORDER_BY_ASC_HAS_NEXT = " ASC, ";

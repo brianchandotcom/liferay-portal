@@ -73,6 +73,10 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ListType"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.ListType"),
+			true);
+	public static long TYPE_BIT_MASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -104,6 +108,10 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -170,7 +178,17 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	}
 
 	public void setType(String type) {
+		_bitMask |= TYPE_BIT_MASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	@Override
@@ -247,6 +265,11 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public void resetOriginalValues() {
+		ListTypeModelImpl listTypeModelImpl = this;
+
+		listTypeModelImpl._originalType = listTypeModelImpl._type;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -318,8 +341,10 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			ListType.class
 		};
+	private long _bitMask;
 	private int _listTypeId;
 	private String _name;
 	private String _type;
+	private String _originalType;
 	private ListType _escapedModelProxy;
 }

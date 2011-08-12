@@ -73,6 +73,16 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.UserIdMapper"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.UserIdMapper"),
+			true);
+	public static long EXTERNALUSERID_BIT_MASK = 1L;
+	public static long USERID_BIT_MASK = 2L;
+	public static long TYPE_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return UserIdMapper.class;
@@ -117,6 +127,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -148,6 +160,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	}
 
 	public void setType(String type) {
+		_bitMask |= TYPE_BIT_MASK;
+
 		if (_originalType == null) {
 			_originalType = _type;
 		}
@@ -182,6 +196,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	}
 
 	public void setExternalUserId(String externalUserId) {
+		_bitMask |= EXTERNALUSERID_BIT_MASK;
+
 		if (_originalExternalUserId == null) {
 			_originalExternalUserId = _externalUserId;
 		}
@@ -294,6 +310,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		userIdMapperModelImpl._originalType = userIdMapperModelImpl._type;
 
 		userIdMapperModelImpl._originalExternalUserId = userIdMapperModelImpl._externalUserId;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -387,6 +405,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			UserIdMapper.class
 		};
+	private long _bitMask;
 	private long _userIdMapperId;
 	private long _userId;
 	private String _userUuid;

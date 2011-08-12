@@ -78,6 +78,12 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink"),
+			true);
+	public static long CLASSNAMEID_BIT_MASK = 1L;
+	public static long STRUCTUREID_BIT_MASK = 2L;
+	public static long CLASSPK_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -111,6 +117,10 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -166,7 +176,19 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_bitMask |= CLASSNAMEID_BIT_MASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -175,6 +197,8 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	}
 
 	public void setClassPK(long classPK) {
+		_bitMask |= CLASSPK_BIT_MASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -194,7 +218,19 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	}
 
 	public void setStructureId(long structureId) {
+		_bitMask |= STRUCTUREID_BIT_MASK;
+
+		if (!_setOriginalStructureId) {
+			_setOriginalStructureId = true;
+
+			_originalStructureId = _structureId;
+		}
+
 		_structureId = structureId;
+	}
+
+	public long getOriginalStructureId() {
+		return _originalStructureId;
 	}
 
 	@Override
@@ -290,9 +326,19 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	public void resetOriginalValues() {
 		DDMStructureLinkModelImpl ddmStructureLinkModelImpl = this;
 
+		ddmStructureLinkModelImpl._originalClassNameId = ddmStructureLinkModelImpl._classNameId;
+
+		ddmStructureLinkModelImpl._setOriginalClassNameId = false;
+
 		ddmStructureLinkModelImpl._originalClassPK = ddmStructureLinkModelImpl._classPK;
 
 		ddmStructureLinkModelImpl._setOriginalClassPK = false;
+
+		ddmStructureLinkModelImpl._originalStructureId = ddmStructureLinkModelImpl._structureId;
+
+		ddmStructureLinkModelImpl._setOriginalStructureId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -361,12 +407,17 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DDMStructureLink.class
 		};
+	private long _bitMask;
 	private long _structureLinkId;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private long _structureId;
+	private long _originalStructureId;
+	private boolean _setOriginalStructureId;
 	private transient ExpandoBridge _expandoBridge;
 	private DDMStructureLink _escapedModelProxy;
 }

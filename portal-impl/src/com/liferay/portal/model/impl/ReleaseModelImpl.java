@@ -76,6 +76,14 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Release"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.Release"),
+			true);
+	public static long SERVLETCONTEXTNAME_BIT_MASK = 1L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return Release.class;
@@ -141,6 +149,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	}
 
 	public void setServletContextName(String servletContextName) {
+		_bitMask |= SERVLETCONTEXTNAME_BIT_MASK;
+
 		if (_originalServletContextName == null) {
 			_originalServletContextName = _servletContextName;
 		}
@@ -291,6 +301,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		ReleaseModelImpl releaseModelImpl = this;
 
 		releaseModelImpl._originalServletContextName = releaseModelImpl._servletContextName;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -423,6 +435,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			Release.class
 		};
+	private long _bitMask;
 	private long _releaseId;
 	private Date _createDate;
 	private Date _modifiedDate;

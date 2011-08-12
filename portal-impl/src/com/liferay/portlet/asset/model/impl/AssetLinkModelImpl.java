@@ -82,6 +82,16 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetLink"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.asset.model.AssetLink"),
+			true);
+	public static long ENTRYID2_BIT_MASK = 1L;
+	public static long ENTRYID1_BIT_MASK = 2L;
+	public static long TYPE_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return AssetLink.class;
@@ -171,6 +181,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	}
 
 	public void setEntryId1(long entryId1) {
+		_bitMask |= ENTRYID1_BIT_MASK;
+
 		if (!_setOriginalEntryId1) {
 			_setOriginalEntryId1 = true;
 
@@ -189,6 +201,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	}
 
 	public void setEntryId2(long entryId2) {
+		_bitMask |= ENTRYID2_BIT_MASK;
+
 		if (!_setOriginalEntryId2) {
 			_setOriginalEntryId2 = true;
 
@@ -207,6 +221,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	}
 
 	public void setType(int type) {
+		_bitMask |= TYPE_BIT_MASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -343,6 +359,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		assetLinkModelImpl._originalType = assetLinkModelImpl._type;
 
 		assetLinkModelImpl._setOriginalType = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -463,6 +481,7 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			AssetLink.class
 		};
+	private long _bitMask;
 	private long _linkId;
 	private long _companyId;
 	private long _userId;

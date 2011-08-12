@@ -84,6 +84,12 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.LayoutBranch"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.LayoutBranch"),
+			true);
+	public static long PLID_BIT_MASK = 1L;
+	public static long LAYOUTSETBRANCHID_BIT_MASK = 2L;
+	public static long MASTER_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -122,6 +128,10 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -218,6 +228,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	}
 
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
+		_bitMask |= LAYOUTSETBRANCHID_BIT_MASK;
+
 		if (!_setOriginalLayoutSetBranchId) {
 			_setOriginalLayoutSetBranchId = true;
 
@@ -237,6 +249,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	}
 
 	public void setPlid(long plid) {
+		_bitMask |= PLID_BIT_MASK;
+
 		if (!_setOriginalPlid) {
 			_setOriginalPlid = true;
 
@@ -288,6 +302,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	}
 
 	public void setMaster(boolean master) {
+		_bitMask |= MASTER_BIT_MASK;
+
 		if (!_setOriginalMaster) {
 			_setOriginalMaster = true;
 
@@ -411,6 +427,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		layoutBranchModelImpl._originalMaster = layoutBranchModelImpl._master;
 
 		layoutBranchModelImpl._setOriginalMaster = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -544,6 +562,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			LayoutBranch.class
 		};
+	private long _bitMask;
 	private long _LayoutBranchId;
 	private long _groupId;
 	private long _companyId;

@@ -86,6 +86,13 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLSync"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.documentlibrary.model.DLSync"),
+			true);
+	public static long FILEID_BIT_MASK = 1L;
+	public static long COMPANYID_BIT_MASK = 2L;
+	public static long REPOSITORYID_BIT_MASK = 4L;
+	public static long MODIFIEDDATE_BIT_MASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -123,6 +130,10 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -170,7 +181,19 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -188,7 +211,17 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setModifiedDate(Date modifiedDate) {
+		_bitMask |= MODIFIEDDATE_BIT_MASK;
+
+		if (_originalModifiedDate == null) {
+			_originalModifiedDate = _modifiedDate;
+		}
+
 		_modifiedDate = modifiedDate;
+	}
+
+	public Date getOriginalModifiedDate() {
+		return _originalModifiedDate;
 	}
 
 	@JSON
@@ -197,6 +230,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setFileId(long fileId) {
+		_bitMask |= FILEID_BIT_MASK;
+
 		if (!_setOriginalFileId) {
 			_setOriginalFileId = true;
 
@@ -216,7 +251,19 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setRepositoryId(long repositoryId) {
+		_bitMask |= REPOSITORYID_BIT_MASK;
+
+		if (!_setOriginalRepositoryId) {
+			_setOriginalRepositoryId = true;
+
+			_originalRepositoryId = _repositoryId;
+		}
+
 		_repositoryId = repositoryId;
+	}
+
+	public long getOriginalRepositoryId() {
+		return _originalRepositoryId;
 	}
 
 	@JSON
@@ -380,9 +427,21 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	public void resetOriginalValues() {
 		DLSyncModelImpl dlSyncModelImpl = this;
 
+		dlSyncModelImpl._originalCompanyId = dlSyncModelImpl._companyId;
+
+		dlSyncModelImpl._setOriginalCompanyId = false;
+
+		dlSyncModelImpl._originalModifiedDate = dlSyncModelImpl._modifiedDate;
+
 		dlSyncModelImpl._originalFileId = dlSyncModelImpl._fileId;
 
 		dlSyncModelImpl._setOriginalFileId = false;
+
+		dlSyncModelImpl._originalRepositoryId = dlSyncModelImpl._repositoryId;
+
+		dlSyncModelImpl._setOriginalRepositoryId = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -516,14 +575,20 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLSync.class
 		};
+	private long _bitMask;
 	private long _syncId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private Date _originalModifiedDate;
 	private long _fileId;
 	private long _originalFileId;
 	private boolean _setOriginalFileId;
 	private long _repositoryId;
+	private long _originalRepositoryId;
+	private boolean _setOriginalRepositoryId;
 	private long _parentFolderId;
 	private String _event;
 	private String _type;

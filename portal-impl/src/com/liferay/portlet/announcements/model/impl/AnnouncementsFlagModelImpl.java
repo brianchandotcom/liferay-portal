@@ -83,6 +83,12 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.announcements.model.AnnouncementsFlag"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portlet.announcements.model.AnnouncementsFlag"),
+			true);
+	public static long USERID_BIT_MASK = 1L;
+	public static long VALUE_BIT_MASK = 2L;
+	public static long ENTRYID_BIT_MASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -117,6 +123,10 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		}
 
 		return models;
+	}
+
+	public long getBitMask() {
+		return _bitMask;
 	}
 
 	public Class<?> getModelClass() {
@@ -164,6 +174,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	public void setUserId(long userId) {
+		_bitMask |= USERID_BIT_MASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -200,6 +212,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	public void setEntryId(long entryId) {
+		_bitMask |= ENTRYID_BIT_MASK;
+
 		if (!_setOriginalEntryId) {
 			_setOriginalEntryId = true;
 
@@ -219,6 +233,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	public void setValue(int value) {
+		_bitMask |= VALUE_BIT_MASK;
+
 		if (!_setOriginalValue) {
 			_setOriginalValue = true;
 
@@ -350,6 +366,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		announcementsFlagModelImpl._originalValue = announcementsFlagModelImpl._value;
 
 		announcementsFlagModelImpl._setOriginalValue = false;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -432,6 +450,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			AnnouncementsFlag.class
 		};
+	private long _bitMask;
 	private long _flagId;
 	private long _userId;
 	private String _userUuid;

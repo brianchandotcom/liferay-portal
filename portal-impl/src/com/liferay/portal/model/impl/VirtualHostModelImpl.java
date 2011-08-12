@@ -70,6 +70,16 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.VirtualHost"),
 			true);
+	public static final boolean COLUMN_BIT_MASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bit.mask.enabled.com.liferay.portal.model.VirtualHost"),
+			true);
+	public static long HOSTNAME_BIT_MASK = 1L;
+	public static long LAYOUTSETID_BIT_MASK = 2L;
+	public static long COMPANYID_BIT_MASK = 4L;
+
+	public long getBitMask() {
+		return _bitMask;
+	}
 
 	public Class<?> getModelClass() {
 		return VirtualHost.class;
@@ -114,6 +124,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	}
 
 	public void setCompanyId(long companyId) {
+		_bitMask |= COMPANYID_BIT_MASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -132,6 +144,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	}
 
 	public void setLayoutSetId(long layoutSetId) {
+		_bitMask |= LAYOUTSETID_BIT_MASK;
+
 		if (!_setOriginalLayoutSetId) {
 			_setOriginalLayoutSetId = true;
 
@@ -155,6 +169,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	}
 
 	public void setHostname(String hostname) {
+		_bitMask |= HOSTNAME_BIT_MASK;
+
 		if (_originalHostname == null) {
 			_originalHostname = _hostname;
 		}
@@ -268,6 +284,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		virtualHostModelImpl._setOriginalLayoutSetId = false;
 
 		virtualHostModelImpl._originalHostname = virtualHostModelImpl._hostname;
+
+		_bitMask = 0;
 	}
 
 	@Override
@@ -341,6 +359,7 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			VirtualHost.class
 		};
+	private long _bitMask;
 	private long _virtualHostId;
 	private long _companyId;
 	private long _originalCompanyId;

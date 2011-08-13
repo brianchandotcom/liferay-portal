@@ -23,6 +23,8 @@
 
 	var TAG_EMPHASIZE = '//';
 
+	var TAG_LIST_ITEM = 'li';
+
 	var TAG_ORDERED_LIST = 'ol';
 
 	var TAG_ORDERED_LIST_ITEM = '#';
@@ -272,7 +274,7 @@
 				else if (tagName == TAG_UNORDERED_LIST) {
 					instance._handleUnorderedList(element, listTagsIn, listTagsOut);
 				}
-				else if (tagName == 'li') {
+				else if (tagName == TAG_LIST_ITEM) {
 					instance._handleListItem(element, listTagsIn, listTagsOut);
 				}
 				else if (tagName == TAG_ORDERED_LIST) {
@@ -424,6 +426,14 @@
 		},
 
 		_handleStrong: function(element, listTagsIn, listTagsOut) {
+			var instance = this;
+
+			if (instance._isParentNode(element, TAG_LIST_ITEM) &&
+				(!element.previousSibling || instance._isIgnorable(element.previousSibling))) {
+
+				listTagsIn.push(STR_SPACE);
+			}
+
 			listTagsIn.push(TAG_BOLD);
 			listTagsOut.push(TAG_BOLD);
 		},
@@ -467,15 +477,9 @@
 
 			instance._skipParse = true;
 
-			var endResult = instance._endResult;
-
-			if (instance._isDataAvailable() && !instance._isLastItemNewLine()) {
-				endResult.push(NEW_LINE);
-			}
-
 			listTagsIn.push('{{{');
 
-			listTagsOut.push('}}}', NEW_LINE);
+			listTagsOut.push('}}}');
 		},
 
 		_handleUnorderedList: function(element, listTagsIn, listTagsOut) {
@@ -505,6 +509,12 @@
 			var endResult = instance._endResult;
 
 			return endResult && REGEX_LASTCHAR_NEWLINE.test(endResult.slice(-1));
+		},
+
+		_isParentNode: function(element, tagName) {
+			var parentNode = element.parentNode;
+
+			return parentNode && parentNode.tagName && parentNode.tagName.toLowerCase() == tagName;
 		},
 
 		_isWhitespace: function(node) {

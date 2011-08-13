@@ -95,15 +95,12 @@ public class JSONWebServiceActionsManagerImpl
 			if (method.equals(HttpMethods.POST) &&
 				!PortalUtil.isMultipartRequest(request)) {
 
-				jsonRpcRequest = new JSONRPCRequest(request);
+				jsonRpcRequest = JSONRPCRequest.detectJSONRPCRequest(request);
 
-				if (jsonRpcRequest.isValid()) {
+				if (jsonRpcRequest != null) {
 					path += StringPool.SLASH + jsonRpcRequest.getMethod();
 
 					method = null;
-				}
-				else {
-					jsonRpcRequest = null;
 				}
 			}
 		}

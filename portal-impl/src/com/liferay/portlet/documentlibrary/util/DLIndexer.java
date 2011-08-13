@@ -139,12 +139,16 @@ public class DLIndexer extends BaseIndexer {
 
 		Set<DDMStructure> ddmStructuresSet = new TreeSet<DDMStructure>();
 
-		for (long groupId : searchContext.getGroupIds()) {
-			List<DLFileEntryType> dlFileEntryTypes =
-				DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(groupId);
+		long[] groupIds = searchContext.getGroupIds();
 
-			for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-				ddmStructuresSet.addAll(dlFileEntryType.getDDMStructures());
+		if ((groupIds != null) && (groupIds.length > 0)) {
+			for (long groupId : searchContext.getGroupIds()) {
+				List<DLFileEntryType> dlFileEntryTypes =
+					DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(groupId);
+
+				for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+					ddmStructuresSet.addAll(dlFileEntryType.getDDMStructures());
+				}
 			}
 		}
 

@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -41,7 +42,7 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 
 		if (Validator.isNotNull(emailAddress)) {
 			screenName = StringUtil.extractFirst(
-				emailAddress, StringPool.AT).toLowerCase();
+				emailAddress, CharPool.AT).toLowerCase();
 
 			screenName = StringUtil.replace(
 				screenName,

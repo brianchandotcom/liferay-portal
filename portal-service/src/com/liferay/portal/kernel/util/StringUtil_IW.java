@@ -69,9 +69,17 @@ public class StringUtil_IW {
 		return StringUtil.extractDigits(s);
 	}
 
+	public java.lang.String extractFirst(java.lang.String s, char delimiter) {
+		return StringUtil.extractFirst(s, delimiter);
+	}
+
 	public java.lang.String extractFirst(java.lang.String s,
 		java.lang.String delimiter) {
 		return StringUtil.extractFirst(s, delimiter);
+	}
+
+	public java.lang.String extractLast(java.lang.String s, char delimiter) {
+		return StringUtil.extractLast(s, delimiter);
 	}
 
 	public java.lang.String extractLast(java.lang.String s,

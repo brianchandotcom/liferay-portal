@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -661,7 +662,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		sb.append(newAttachmentsDir);
 		sb.append(StringPool.SLASH);
-		sb.append(StringUtil.extractLast(fileName, StringPool.SLASH));
+		sb.append(StringUtil.extractLast(fileName, CharPool.SLASH));
 
 		String newFileName = sb.toString();
 

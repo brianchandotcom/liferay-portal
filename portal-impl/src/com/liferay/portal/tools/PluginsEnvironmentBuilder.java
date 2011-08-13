@@ -237,7 +237,7 @@ public class PluginsEnvironmentBuilder {
 		String projectDirName = projectDir.getCanonicalPath();
 
 		String projectName = StringUtil.extractLast(
-			projectDirName, File.separator);
+			projectDirName, File.separatorChar);
 
 		boolean javaProject = false;
 

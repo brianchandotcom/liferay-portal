@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.taglib.util.PositionTagSupport;
+import com.liferay.taglib.aui.base.BaseScriptTag;
 
 import java.util.Set;
 
@@ -36,9 +36,7 @@ import javax.servlet.jsp.tagext.BodyContent;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class ScriptTag extends PositionTagSupport {
-
-	public static final String PAGE = "/html/taglib/aui/script/page.jsp";
+public class ScriptTag extends BaseScriptTag {
 
 	public static void doTag(
 			String position, String use, String bodyContentString,
@@ -100,18 +98,21 @@ public class ScriptTag extends PositionTagSupport {
 
 		try {
 			StringBundler bodyContentSB = getBodyContentAsStringBundler();
+			String use = getUse();
 
 			if (positionInline) {
 				ScriptData scriptData = new ScriptData();
 
 				request.setAttribute(ScriptTag.class.getName(), scriptData);
 
-				scriptData.append(bodyContentSB, _use);
+				scriptData.append(bodyContentSB, use);
+
+				String page = getPage();
 
 				if (FileAvailabilityUtil.isAvailable(
-						pageContext.getServletContext(), PAGE)) {
+						pageContext.getServletContext(), page)) {
 
-					PortalIncludeUtil.include(pageContext, PAGE);
+					PortalIncludeUtil.include(pageContext, page);
 				}
 				else {
 					processEndTag(scriptData);
@@ -127,7 +128,7 @@ public class ScriptTag extends PositionTagSupport {
 					request.setAttribute(WebKeys.AUI_SCRIPT_DATA, scriptData);
 				}
 
-				scriptData.append(bodyContentSB, _use);
+				scriptData.append(bodyContentSB, use);
 			}
 
 			return EVAL_PAGE;
@@ -146,15 +147,9 @@ public class ScriptTag extends PositionTagSupport {
 		}
 	}
 
-	public void setUse(String use) {
-		_use = use;
-	}
-
 	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_use = null;
+	public String getPosition() {
+		return getPositionValue();
 	}
 
 	protected void processEndTag(ScriptData scriptData) throws Exception {
@@ -202,7 +197,5 @@ public class ScriptTag extends PositionTagSupport {
 
 		jspWriter.write("\n// ]]>\n</script>");
 	}
-
-	private String _use;
 
 }

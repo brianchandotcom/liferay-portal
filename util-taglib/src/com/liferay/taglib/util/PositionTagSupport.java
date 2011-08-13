@@ -29,33 +29,7 @@ import javax.servlet.jsp.tagext.BodyTag;
 public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 
 	public String getPosition() {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		String position = _position;
-
-		String fragmentId = ParamUtil.getString(request, "p_f_id");
-
-		if (Validator.isNotNull(fragmentId)) {
-			position = _POSITION_INLINE;
-		}
-
-		if (Validator.isNull(position)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			if (themeDisplay.isIsolated() ||
-				themeDisplay.isLifecycleResource() ||
-				themeDisplay.isStateExclusive()) {
-
-				position = _POSITION_INLINE;
-			}
-			else {
-				position = _POSITION_AUTO;
-			}
-		}
-
-		return position;
+		return getPositionValue();
 	}
 
 	public boolean isPositionAuto() {
@@ -86,6 +60,36 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 
 	protected void cleanUp() {
 		_position = null;
+	}
+
+	protected String getPositionValue() {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		String position = _position;
+
+		String fragmentId = ParamUtil.getString(request, "p_f_id");
+
+		if (Validator.isNotNull(fragmentId)) {
+			position = _POSITION_INLINE;
+		}
+
+		if (Validator.isNull(position)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay.isIsolated() ||
+				themeDisplay.isLifecycleResource() ||
+				themeDisplay.isStateExclusive()) {
+
+				position = _POSITION_INLINE;
+			}
+			else {
+				position = _POSITION_AUTO;
+			}
+		}
+
+		return position;
 	}
 
 	private static final String _POSITION_AUTO = "auto";

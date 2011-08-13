@@ -91,6 +91,16 @@ public class AssetCategoryServiceUtil {
 		return getService().getChildCategories(parentCategoryId, start, end, obc);
 	}
 
+	public static com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
+		long groupId, long vocabularyId, java.lang.String name, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getJSONVocabularyCategories(groupId, vocabularyId, name,
+			start, end, obc);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -101,6 +111,16 @@ public class AssetCategoryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategories(
+		long groupId, long vocabularyId, java.lang.String name, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getVocabularyCategories(groupId, vocabularyId, name, start,
+			end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategories(
 		long parentCategoryId, long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -108,6 +128,19 @@ public class AssetCategoryServiceUtil {
 		return getService()
 				   .getVocabularyCategories(parentCategoryId, vocabularyId,
 			start, end, obc);
+	}
+
+	public static int getVocabularyCategoriesCount(long groupId,
+		long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getVocabularyCategoriesCount(groupId, vocabularyId);
+	}
+
+	public static int getVocabularyCategoriesCount(long groupId,
+		long vocabularyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getVocabularyCategoriesCount(groupId, vocabularyId, name);
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyRootCategories(

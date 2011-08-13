@@ -33,6 +33,21 @@ public class AssetCategoryFinderUtil {
 		return getFinder().countByG_N_P(groupId, name, categoryProperties);
 	}
 
+	public static int filterCountByG_V_N(long groupId, long vocabularyId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().filterCountByG_V_N(groupId, vocabularyId, name);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> filterFindByG_V_N(
+		long groupId, long vocabularyId, java.lang.String name, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByG_V_N(groupId, vocabularyId, name, start, end,
+			obc);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByEntryId(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.SystemException {

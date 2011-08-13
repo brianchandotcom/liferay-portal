@@ -118,9 +118,9 @@ public class AssetVocabularyFinderImpl
 	}
 
 	protected List<AssetVocabulary> doFindByG_N(
-		long groupId, String name, int start, int end,
-		OrderByComparator obc, boolean inlineSQLHelper)
-		throws NoSuchVocabularyException, SystemException {
+			long groupId, String name, int start, int end,
+			OrderByComparator obc, boolean inlineSQLHelper)
+		throws SystemException {
 
 		name = name.trim().toLowerCase();
 
@@ -149,27 +149,8 @@ public class AssetVocabularyFinderImpl
 			qPos.add(name);
 			qPos.add(name);
 
-			List<AssetVocabulary> list = q.list();
-
-			if (list.size() == 0) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("No AssetVocabulary exists with the key ");
-				sb.append("{groupId=");
-				sb.append(groupId);
-				sb.append(", name=");
-				sb.append(name);
-				sb.append("}");
-
-				throw new NoSuchVocabularyException(sb.toString());
-			}
-			else {
-				return (List<AssetVocabulary>)QueryUtil.list(
-					q, getDialect(), start, end);
-			}
-		}
-		catch (NoSuchVocabularyException nsve) {
-			throw nsve;
+			return (List<AssetVocabulary>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

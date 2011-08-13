@@ -22,13 +22,16 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -50,6 +53,9 @@ public class AssetCategoryFinderImpl
 	public static String COUNT_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".countByG_N_P";
 
+	public static String COUNT_BY_G_V_N =
+		AssetCategoryFinder.class.getName() + ".countByG_V_N";
+
 	public static String FIND_BY_ENTRY_ID =
 		AssetCategoryFinder.class.getName() + ".findByEntryId";
 
@@ -61,6 +67,9 @@ public class AssetCategoryFinderImpl
 
 	public static String FIND_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".findByG_N_P";
+
+	public static String FIND_BY_G_V_N =
+		AssetCategoryFinder.class.getName() + ".findByG_V_N";
 
 	public int countByG_C_N(long groupId, long classNameId, String name)
 		throws SystemException {
@@ -143,6 +152,21 @@ public class AssetCategoryFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	public int filterCountByG_V_N(long groupId, long vocabularyId, String name)
+		throws SystemException {
+
+		return doCountByG_V_N(groupId, vocabularyId, name, true);
+	}
+
+	public List<AssetCategory> filterFindByG_V_N(
+			long groupId, long vocabularyId, String name, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return doFindByG_V_N(
+			groupId, vocabularyId, name, start, end, obc, true);
 	}
 
 	public List<AssetCategory> findByEntryId(long entryId)
@@ -292,6 +316,99 @@ public class AssetCategoryFinderImpl
 
 			setJoin(qPos, categoryProperties);
 			qPos.add(groupId);
+			qPos.add(name);
+			qPos.add(name);
+
+			return (List<AssetCategory>)QueryUtil.list(
+				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountByG_V_N(
+			long groupId, long vocabularyId, String name,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_G_V_N);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetCategory.class.getName(),
+					"AssetCategory.categoryId", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(vocabularyId);
+			qPos.add(name);
+			qPos.add(name);
+
+			Iterator<Long> itr = q.list().iterator();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<AssetCategory> doFindByG_V_N(
+		long groupId, long vocabularyId, String name, int start, int end,
+		OrderByComparator obc, boolean inlineSQLHelper)
+		throws SystemException {
+
+		name = name.trim().toLowerCase();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_V_N);
+
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetVocabulary.class.getName(),
+					"AssetCategory.categoryId", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("AssetCategory", AssetCategoryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(vocabularyId);
 			qPos.add(name);
 			qPos.add(name);
 

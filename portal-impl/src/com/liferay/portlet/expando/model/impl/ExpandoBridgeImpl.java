@@ -31,6 +31,7 @@ import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoColumnServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoValueServiceUtil;
 
 import java.io.Serializable;
@@ -67,14 +68,34 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void addAttribute(String name) throws PortalException {
-		addAttribute(name, ExpandoColumnConstants.STRING, null);
+		addAttribute(name, ExpandoColumnConstants.STRING, null, true);
+	}
+
+	public void addAttribute(String name, boolean secure)
+		throws PortalException {
+
+		addAttribute(name, ExpandoColumnConstants.STRING, null, secure);
 	}
 
 	public void addAttribute(String name, int type) throws PortalException {
-		addAttribute(name, type, null);
+		addAttribute(name, type, null, true);
 	}
 
-	public void addAttribute(String name, int type, Serializable defaultValue)
+	public void addAttribute(String name, int type, boolean secure)
+		throws PortalException {
+
+		addAttribute(name, type, null, secure);
+	}
+
+	public void addAttribute(
+			String name, int type, Serializable defaultValue)
+		throws PortalException {
+
+		addAttribute(name, type, defaultValue, true);
+	}
+
+	public void addAttribute(
+			String name, int type, Serializable defaultValue, boolean secure)
 		throws PortalException {
 
 		try {
@@ -89,8 +110,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 					_companyId, _className);
 			}
 
-			ExpandoColumnServiceUtil.addColumn(
-				table.getTableId(), name, type, defaultValue);
+			if (secure) {
+				ExpandoColumnServiceUtil.addColumn(
+					table.getTableId(), name, type, defaultValue);
+			}
+			else {
+				ExpandoColumnLocalServiceUtil.addColumn(
+					table.getTableId(), name, type, defaultValue);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof PortalException) {
@@ -103,12 +130,23 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public Serializable getAttribute(String name) {
+		return getAttribute(name, true);
+	}
+
+	public Serializable getAttribute(String name, boolean secure) {
 		Serializable data = null;
 
 		try {
-			data = ExpandoValueServiceUtil.getData(
-				_companyId, _className,
-				ExpandoTableConstants.DEFAULT_TABLE_NAME, name, _classPK);
+			if (secure) {
+				data = ExpandoValueServiceUtil.getData(
+					_companyId, _className,
+					ExpandoTableConstants.DEFAULT_TABLE_NAME, name, _classPK);
+			}
+			else {
+				data = ExpandoValueLocalServiceUtil.getData(
+					_companyId, _className,
+					ExpandoTableConstants.DEFAULT_TABLE_NAME, name, _classPK);
+			}
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -268,15 +306,27 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void setAttribute(String name, Serializable value) {
+		setAttribute(name, value, true);
+	}
+
+	public void setAttribute(String name, Serializable value, boolean secure) {
 		if (_classPK <= 0) {
 			throw new UnsupportedOperationException();
 		}
 
 		try {
-			ExpandoValueServiceUtil.addValue(
-				_companyId, _className,
-				ExpandoTableConstants.DEFAULT_TABLE_NAME, name, _classPK,
-				value);
+			if (secure) {
+				ExpandoValueServiceUtil.addValue(
+					_companyId, _className,
+					ExpandoTableConstants.DEFAULT_TABLE_NAME, name, _classPK,
+					value);
+			}
+			else {
+				ExpandoValueLocalServiceUtil.addValue(
+					_companyId, _className,
+					ExpandoTableConstants.DEFAULT_TABLE_NAME, name, _classPK,
+					value);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -301,13 +351,25 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	public void setAttributeProperties(
 		String name, UnicodeProperties properties) {
 
+		setAttributeProperties(name, properties, true);
+	}
+
+	public void setAttributeProperties(
+		String name, UnicodeProperties properties, boolean secure) {
+
 		try {
 			ExpandoColumn column =
 				ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
 					_companyId, _className, name);
 
-			ExpandoColumnServiceUtil.updateTypeSettings(
-				column.getColumnId(), properties.toString());
+			if (secure) {
+				ExpandoColumnServiceUtil.updateTypeSettings(
+					column.getColumnId(), properties.toString());
+			}
+			else {
+				ExpandoColumnLocalServiceUtil.updateTypeSettings(
+					column.getColumnId(), properties.toString());
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -315,21 +377,31 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void setAttributes(Map<String, Serializable> attributes) {
+		setAttributes(attributes, true);
+	}
+
+	public void setAttributes(
+		Map<String, Serializable> attributes, boolean secure) {
+
 		if (attributes == null) {
 			return;
 		}
 
 		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
-			setAttribute(entry.getKey(), entry.getValue());
+			setAttribute(entry.getKey(), entry.getValue(), secure);
 		}
 	}
 
 	public void setAttributes(ServiceContext serviceContext) {
+		setAttributes(serviceContext, true);
+	}
+
+	public void setAttributes(ServiceContext serviceContext, boolean secure) {
 		if (serviceContext == null) {
 			return;
 		}
 
-		setAttributes(serviceContext.getExpandoBridgeAttributes());
+		setAttributes(serviceContext.getExpandoBridgeAttributes(), secure);
 	}
 
 	public void setClassName(String className) {

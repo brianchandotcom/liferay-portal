@@ -30,12 +30,24 @@ public interface ExpandoBridge {
 
 	public void addAttribute(String name) throws PortalException;
 
+	public void addAttribute(String name, boolean secure)
+		throws PortalException;
+
 	public void addAttribute(String name, int type) throws PortalException;
+
+	public void addAttribute(String name, int type, boolean secure)
+		throws PortalException;
 
 	public void addAttribute(String name, int type, Serializable defaultValue)
 		throws PortalException;
 
+	public void addAttribute(
+			String name, int type, Serializable defaultValue, boolean secure)
+		throws PortalException;
+
 	public Serializable getAttribute(String name);
+
+	public Serializable getAttribute(String name, boolean secure);
 
 	public Serializable getAttributeDefault(String name);
 
@@ -59,14 +71,24 @@ public interface ExpandoBridge {
 
 	public void setAttribute(String name, Serializable value);
 
+	public void setAttribute(String name, Serializable value, boolean secure);
+
 	public void setAttributeDefault(String name, Serializable defaultValue);
 
 	public void setAttributeProperties(
 		String name, UnicodeProperties properties);
 
+	public void setAttributeProperties(
+		String name, UnicodeProperties properties, boolean secure);
+
 	public void setAttributes(Map<String, Serializable> attributes);
 
+	public void setAttributes(
+		Map<String, Serializable> attributes, boolean secure);
+
 	public void setAttributes(ServiceContext serviceContext);
+
+	public void setAttributes(ServiceContext serviceContext, boolean secure);
 
 	public void setClassName(String className);
 

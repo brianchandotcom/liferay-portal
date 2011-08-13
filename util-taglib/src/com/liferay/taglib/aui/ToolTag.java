@@ -14,13 +14,13 @@
 
 package com.liferay.taglib.aui;
 
-import javax.servlet.jsp.tagext.TagSupport;
+import com.liferay.taglib.aui.base.BaseToolTag;
 
 /**
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
-public class ToolTag extends TagSupport {
+public class ToolTag extends BaseToolTag {
 
 	@Override
 	public int doStartTag() {
@@ -32,40 +32,8 @@ public class ToolTag extends TagSupport {
 		return EVAL_PAGE;
 	}
 
-	public String getHandler() {
-		return _handler;
-	}
-
-	public String getIcon() {
-		return _icon;
-	}
-
-	@Override
-	public String getId() {
-		return _id;
-	}
-
-	public void setHandler(String handler) {
-		_handler = handler;
-	}
-
-	public void setIcon(String icon) {
-		_icon = icon;
-	}
-
-	@Override
-	public void setId(String id) {
-		_id = id;
-	}
-
 	protected void cleanUp() {
-		_handler = null;
-		_icon = null;
-		_id = null;
+		super.cleanUp();
 	}
-
-	private String _handler;
-	private String _icon;
-	private String _id;
 
 }

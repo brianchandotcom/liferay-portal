@@ -85,7 +85,8 @@ public class PortletURLAction extends Action {
 		String resourceId = ParamUtil.getString(request, "resourceId");
 		String returnToFullPageURL = ParamUtil.getString(
 			request, "returnToFullPageURL");
-		boolean secure = ParamUtil.getBoolean(request, "secure");
+		boolean secure = ParamUtil.getBoolean(
+			request, "secure", request.isSecure());
 		String windowState = ParamUtil.getString(request, "windowState");
 
 		PortletURLImpl portletURL = new PortletURLImpl(

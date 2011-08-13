@@ -44,7 +44,7 @@ if (record != null) {
 	<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRecordURL %>" cssClass="lfr-dynamic-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " %>'>
+<aui:form action="<%= editRecordURL %>" cssClass="lfr-dynamic-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); submitForm(event.target);" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
@@ -108,9 +108,9 @@ if (record != null) {
 			}
 			%>
 
-			<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveRecord(true);" %>' type="submit" value="<%= saveButtonLabel %>" />
+			<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' type="submit" value="<%= saveButtonLabel %>" />
 
-			<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "saveRecord(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
+			<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
 
 			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 		</aui:button-row>
@@ -118,7 +118,7 @@ if (record != null) {
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />saveRecord(draft) {
+	function <portlet:namespace />setWorkflowAction(draft) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (record == null) ? Constants.ADD : Constants.UPDATE %>";
 
 		if (draft) {
@@ -127,8 +127,6 @@ if (record != null) {
 		else {
 			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
 		}
-
-		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>
 

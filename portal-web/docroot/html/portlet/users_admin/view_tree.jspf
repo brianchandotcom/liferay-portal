@@ -55,7 +55,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 		<c:when test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
 
 			<%
-			String parentOrganizationName = LanguageUtil.get(pageContext, "users-home");
+			String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
 
 			if (!organization.isRoot()) {
 				Organization parentOrganization = organization.getParentOrganization();

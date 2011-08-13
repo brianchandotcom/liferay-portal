@@ -430,6 +430,7 @@
 
 			if (instance._isParentNode(element, TAG_LIST_ITEM) &&
 				(!element.previousSibling || instance._isIgnorable(element.previousSibling))) {
+
 				listTagsIn.push(STR_SPACE);
 			}
 

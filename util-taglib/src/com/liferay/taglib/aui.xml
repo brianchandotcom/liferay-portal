@@ -898,6 +898,25 @@
 			</attribute>
 		</attributes>
 	</component>-->
+	<component name="Validator" className="ValidatorTagImpl" parentClass="com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport" writeJSP="false">
+		<attributes>
+			<attribute>
+				<name>errorMessage</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
+				<name>name</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+				<required>true</required>
+			</attribute>
+		</attributes>
+	</component>
 	<component name="WorkflowStatus">
 		<attributes>
 			<attribute>

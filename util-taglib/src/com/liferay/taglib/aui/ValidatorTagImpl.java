@@ -14,10 +14,10 @@
 
 package com.liferay.taglib.aui;
 
-import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.taglib.aui.base.BaseValidatorTagImpl;
 import com.liferay.util.PwdGenerator;
 
 import javax.servlet.jsp.tagext.BodyContent;
@@ -28,24 +28,25 @@ import javax.servlet.jsp.tagext.BodyTag;
  * @author Brian Wing Shun Chan
  */
 public class ValidatorTagImpl
-	extends BaseBodyTagSupport implements BodyTag, ValidatorTag {
+	extends BaseValidatorTagImpl implements BodyTag, ValidatorTag {
 
 	public ValidatorTagImpl() {
 	}
 
 	public ValidatorTagImpl(String name, String errorMessage, String body) {
-		_name = name;
-		_errorMessage = errorMessage;
+		setName(name);
+		setErrorMessage(errorMessage);
+
 		_body = body;
 
 		processCustom();
 	}
 
 	public void cleanUp() {
+		super.cleanUp();
+
 		_body = null;
 		_custom = false;
-		_errorMessage = null;
-		_name = null;
 	}
 
 	@Override
@@ -64,10 +65,12 @@ public class ValidatorTagImpl
 		InputTag inputTag = (InputTag)findAncestorWithClass(
 			this, InputTag.class);
 
-		ValidatorTag validatorTag = new ValidatorTagImpl(
-			_name, _errorMessage, _body);
+		String name = getName();
 
-		inputTag.addValidatorTag(_name, validatorTag);
+		ValidatorTag validatorTag = new ValidatorTagImpl(
+			name, getErrorMessage(), _body);
+
+		inputTag.addValidatorTag(name, validatorTag);
 
 		return EVAL_BODY_BUFFERED;
 	}
@@ -81,15 +84,13 @@ public class ValidatorTagImpl
 	}
 
 	public String getErrorMessage() {
-		if (_errorMessage == null) {
+		String errorMessage = super.getErrorMessage();
+
+		if (errorMessage == null) {
 			return StringPool.BLANK;
 		}
 
-		return _errorMessage;
-	}
-
-	public String getName() {
-		return _name;
+		return errorMessage;
 	}
 
 	public boolean isCustom() {
@@ -100,26 +101,18 @@ public class ValidatorTagImpl
 		_body = body;
 	}
 
-	public void setErrorMessage(String errorMessage) {
-		_errorMessage = errorMessage;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
 	protected void processCustom() {
-		if (_name.equals("custom")) {
+		String name = getName();
+
+		if (name.equals("custom")) {
 			_custom = true;
 
-			_name = _name.concat(StringPool.UNDERLINE).concat(
-				PwdGenerator.getPassword(PwdGenerator.KEY3, 4));
+			setName(name.concat(StringPool.UNDERLINE).concat(
+				PwdGenerator.getPassword(PwdGenerator.KEY3, 4)));
 		}
 	}
 
 	private String _body;
 	private boolean _custom = false;
-	private String _errorMessage;
-	private String _name;
 
 }

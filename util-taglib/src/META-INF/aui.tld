@@ -845,4 +845,24 @@
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
+	<tag>
+		<name>validator</name>
+		<tag-class>com.liferay.taglib.aui.ValidatorTagImpl</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>errorMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[]]></description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
 </taglib>

@@ -19,10 +19,16 @@
 .portlet-asset-category-admin {
 	.categories-admin-actions {
 		clear: none;
+		float: left;
 		margin: 0;
 
 		.permissions-button {
 			margin-left: 1em;
+		}
+
+		.category-actions {
+			margin-left: 0.3em;
+			margin-right: 0;
 		}
 	}
 
@@ -70,21 +76,11 @@
 	}
 
 	.select-vocabularies, .select-categories {
-		border-color: #5F5F5F;
 		float: left;
-		line-height: 0;
-		margin-right: 2px;
-		padding: 0;
+	}
 
-		.aui-field-element {
-			padding: 5px 4px 4px;
-			border: 1px solid #FFF;
-			border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
-
-			.aui-field-input-choice {
-				margin: 0;
-			}
-		}
+	.select-categories {
+		margin-left: 12px;
 	}
 
 	.vocabulary-list-container-content, .vocabulary-categories-container-content, .vocabulary-edit-category-content {

@@ -64,9 +64,9 @@ AUI().add(
 
 		var AssetCategoryAdmin = A.Component.create(
 			{
-				NAME: 'assetcategoryadmin',
-
 				EXTENDS: A.Base,
+
+				NAME: 'assetcategoryadmin',
 
 				prototype: {
 					initializer: function(config) {
@@ -97,6 +97,9 @@ AUI().add(
 						var namespace = instance._prefixedPortletId;
 
 						var idPrefix = '#' + namespace;
+
+						instance._toggleAllCategories = A.debounce(instance._toggleAllCategoriesFn, 50);
+						instance._toggleAllVocabularies = A.debounce(instance._toggleAllVocabulariesFn, 50);
 
 						instance._searchInput = A.one(idPrefix + 'categoriesAdminSearchInput');
 						instance._searchType = A.one(idPrefix + 'categoriesAdminSelectSearch');
@@ -130,8 +133,7 @@ AUI().add(
 						A.one(idPrefix + 'addCategoryButton').on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
 						A.one(idPrefix + 'addVocabularyButton').on(EVENT_CLICK, instance._onShowVocabularyPanel, instance, ACTION_ADD);
 						A.one(idPrefix + 'categoryPermissionsButton').on(EVENT_CLICK, instance._onChangePermissions, instance);
-						A.one(idPrefix + 'deleteSelectedVocabularies').on(EVENT_CLICK, instance._deleteSelectedVocabularies, instance);
-						A.one(idPrefix + 'deleteSelectedVocabularies').on(EVENT_CLICK, instance._deleteSelectedVocabularies, instance);
+						A.one(idPrefix + 'deleteSelectedItems').on(EVENT_CLICK, instance._deleteSelected, instance);
 
 						var checkAllVocabulariesCheckbox = A.one(idPrefix + 'checkAllVocabulariesCheckbox');
 
@@ -139,7 +141,7 @@ AUI().add(
 
 						instance._checkAllVocabulariesCheckbox = checkAllVocabulariesCheckbox;
 
-						var checkAllCategoriesCheckbox = A.one('#' + namespace + 'checkAllCategoriesCheckbox');
+						var checkAllCategoriesCheckbox = A.one(idPrefix + 'checkAllCategoriesCheckbox');
 
 						checkAllCategoriesCheckbox.on(EVENT_CLICK, instance._checkAllCategories, instance);
 
@@ -252,6 +254,11 @@ AUI().add(
 										label: Liferay.Util.escapeHTML(item.name),
 										leaf: false,
 										on: {
+											checkedChange: function(event) {
+												if (event.newVal) {
+													instance._toggleAllVocabularies(false);
+												}
+											},
 											select: function(event) {
 												var categoryId = instance._getCategoryId(event.target)
 
@@ -288,29 +295,13 @@ AUI().add(
 					_checkAllCategories: function(event) {
 						var instance = this;
 
-						var categoriesTreeView = instance._categoriesTreeView;
-
-						if (categoriesTreeView) {
-							var currentCheckedStatus = event.currentTarget.attr('checked');
-
-							categoriesTreeView.eachChildren(
-								function(child) {
-									if (currentCheckedStatus) {
-										child.check();
-									}
-									else {
-										child.uncheck();
-									}
-								},
-								true
-							);
-						}
+						instance._toggleAllCategories(event.currentTarget.attr('checked'));
 					},
 
 					_checkAllVocabularies: function(event) {
-						var currentCheckedStatus = event.currentTarget.attr('checked');
+						var instance = this;
 
-						A.all('.vocabulary-item-check').attr('checked', currentCheckedStatus);
+						instance._toggleAllVocabularies(event.currentTarget.attr('checked'));
 					},
 
 					_closeEditSection: function() {
@@ -621,52 +612,57 @@ AUI().add(
 						);
 					},
 
-					_deleteSelectedCategories: function(event) {
+					_deleteSelected: function(event) {
 						var instance = this;
 
-						if (instance._categoriesTreeView) {
-							var selectedCategoriesIds = instance._getSelectedCategoriesId();
+						var vocabulary = true;
 
-							if (selectedCategoriesIds.length > 0) {
-								if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-categories'))) {
+						var ids = A.all('.vocabulary-item-check:checked').attr('data-vocabularyId');
 
-									if (selectedCategoriesIds.length > 0) {
-										Liferay.Service.Asset.AssetCategory.deleteCategories(
-											{
-												categoryIds: selectedCategoriesIds
-											},
-											A.bind(instance._processCategoryDeletion, instance)
-										);
-									}
-								}
+						if (ids.length) {
+							instance._deleteSelectedVocabularies(ids);
+						}
+						else {
+							ids = instance._getSelectedCategoriesId();
+
+							if (ids.length) {
+								instance._deleteSelectedCategories(ids);
 							}
-							else {
-								alert(Liferay.Language.get('there-are-no-selected-categories'));
-							}
+						}
+
+						if (!ids.length) {
+							alert(Liferay.Language.get('there-are-no-selected-vocabularies-or-categories'));
 						}
 					},
 
-					_deleteSelectedVocabularies: function(event) {
+					_deleteSelectedCategories: function(categoryIds) {
 						var instance = this;
 
-						var vocabularyNodes = A.all('.vocabulary-item-check:checked');
+						if (instance._categoriesTreeView &&
+							categoryIds.length > 0 &&
+							confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-categories'))) {
 
-						if (vocabularyNodes.size() > 0) {
-							if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-vocabularies'))) {
-								var checkedItemsIds = vocabularyNodes.attr('data-vocabularyId');
-
-								if (checkedItemsIds.length > 0) {
-									Liferay.Service.Asset.AssetVocabulary.deleteVocabularies(
-										{
-											vocabularyIds: checkedItemsIds
-										},
-										A.bind(instance._processActionResult, instance)
-									);
-								}
-							}
+							Liferay.Service.Asset.AssetCategory.deleteCategories(
+								{
+									categoryIds: categoryIds
+								},
+								A.bind(instance._processCategoryDeletion, instance)
+							);
 						}
-						else {
-							alert(Liferay.Language.get('there-are-no-selected-vocabularies'));
+					},
+
+					_deleteSelectedVocabularies: function(vocabularyIds) {
+						var instance = this;
+
+						if (vocabularyIds.length > 0 &&
+							confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-vocabularies'))) {
+
+							Liferay.Service.Asset.AssetVocabulary.deleteVocabularies(
+								{
+									vocabularyIds: vocabularyIds
+								},
+								A.bind(instance._processVocabularyDeletion, instance)
+							);
 						}
 					},
 
@@ -1717,7 +1713,7 @@ AUI().add(
 						var instance = this;
 
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-vocabulary'))) {
-							instance._deleteVocabulary(instance._selectedVocabularyId, instance._processActionResult);
+							instance._deleteVocabulary(instance._selectedVocabularyId, instance._processVocabularyDeletion);
 						}
 					},
 
@@ -1745,6 +1741,8 @@ AUI().add(
 
 						if (target.hasClass('vocabulary-item-check')) {
 							Liferay.Util.checkAllBox(event.currentTarget, 'vocabulary-item-check', instance._checkAllVocabulariesCheckbox);
+
+							instance._toggleAllCategories(false);
 						}
 						else if (event.target.hasClass('vocabulary-item-actions-trigger')) {
 							instance._showVocabularyPanel(ACTION_EDIT);
@@ -1825,7 +1823,7 @@ AUI().add(
 						}
 					},
 
-					_processActionResult: function(result) {
+					_processVocabularyDeletion: function(result) {
 						var instance = this;
 
 						var exception = result.exception;
@@ -2163,6 +2161,40 @@ AUI().add(
 						if (forceStart) {
 							vocabularyPanelEdit.io.start();
 						}
+					},
+
+					_toggleAllCategoriesFn: function(state) {
+						var instance = this;
+
+						var categoriesTreeView = instance._categoriesTreeView;
+
+						instance._checkAllCategoriesCheckbox.attr('checked', state);
+
+						if (categoriesTreeView) {
+							categoriesTreeView.eachChildren(
+								function(child) {
+									if (state) {
+										child.check();
+									}
+									else {
+										child.uncheck();
+									}
+								},
+								true
+							);
+						}
+					},
+
+					_toggleAllVocabulariesFn: function(state) {
+						var instance = this;
+
+						if (state === true) {
+							instance._toggleAllCategories(false);
+						}
+
+						instance._checkAllVocabulariesCheckbox.attr('checked', state);
+
+						A.all('.vocabulary-item-check').attr('checked', state);
 					},
 
 					_unselectAllVocabularies: function() {

@@ -7,12 +7,19 @@
 		<author>Nathan Cavanaugh</author>
 		<author>Julio Camarero</author>
 	</authors>
-	<!--<component name="A" bodyContent="true" alloyComponent="false">
+	<component name="A" bodyContent="true" writeJSP="false">
 		<attributes>
 			<attribute>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
+				<name>data</name>
+				<inputType><![CDATA[java.util.Map<java.lang.String,java.lang.Object>]]></inputType>
+				<outputType><![CDATA[java.util.Map<java.lang.String,java.lang.Object>]]></outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -45,14 +52,28 @@
 				<description></description>
 			</attribute>
 			<attribute>
+				<name>onClick</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
 				<name>target</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
+			<attribute>
+				<name>title</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
 		</attributes>
-	</component>-->
+	</component>
 	<component name="Button" alloyComponent="false">
 		<attributes>
 			<attribute>
@@ -573,7 +594,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<!--<component name="ModelContext">
+	<component name="ModelContext" writeJSP="false">
 		<attributes>
 			<attribute>
 				<name>bean</name>
@@ -584,13 +605,13 @@
 			</attribute>
 			<attribute>
 				<name>model</name>
-				<inputType>java.lang.Class</inputType>
-				<outputType>java.lang.Class</outputType>
+				<inputType><![CDATA[java.lang.Class<?>]]></inputType>
+				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
 		</attributes>
-	</component>-->
+	</component>
 	<component name="Option" bodyContent="true">
 		<attributes>
 			<attribute>
@@ -883,13 +904,6 @@
 				<description></description>
 			</attribute>
 			<attribute>
-				<name>helpMessage</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-				<defaultValue>a-new-version-will-be-created-automatically-if-this-content-is-modified</defaultValue>
-				<description></description>
-			</attribute>
-			<attribute>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -905,6 +919,13 @@
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
+				<name>helpMessage</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue>a-new-version-will-be-created-automatically-if-this-content-is-modified</defaultValue>
 				<description></description>
 			</attribute>
 			<attribute>

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.aui.base.BaseATag;
 
 import java.util.Map;
 
@@ -36,70 +36,13 @@ import javax.servlet.jsp.JspWriter;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class ATag extends IncludeTag {
-
-	public void setCssClass(String cssClass) {
-		_cssClass = cssClass;
-	}
-
-	public void setData(Map<String,Object> data) {
-		_data = data;
-	}
-
-	public void setHref(String href) {
-		_href = href;
-	}
-
-	public void setId(String id) {
-		_id = id;
-	}
-
-	public void setLabel(String label) {
-		_label = label;
-	}
-
-	public void setLang(String lang) {
-		_lang = lang;
-	}
-
-	public void setOnClick(String onClick) {
-		_onClick = onClick;
-	}
-
-	public void setTarget(String target) {
-		_target = target;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	@Override
-	protected void cleanUp() {
-		_cssClass = null;
-		_data = null;
-		_href = null;
-		_id = null;
-		_label = null;
-		_lang = null;
-		_onClick = null;
-		_target = null;
-		_title = null;
-	}
-
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
+public class ATag extends BaseATag {
 
 	protected boolean isOpensNewWindow() {
-		if ((_target != null) &&
-			(_target.equals("_blank") || _target.equals("_new"))) {
+		String target = getTarget();
+
+		if ((target != null) &&
+			(target.equals("_blank") || target.equals("_new"))) {
 
 			return true;
 		}
@@ -112,7 +55,7 @@ public class ATag extends IncludeTag {
 	protected int processEndTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
-		if (Validator.isNotNull(_href)) {
+		if (Validator.isNotNull(getHref())) {
 			if (isOpensNewWindow()) {
 				jspWriter.write("<span class=\"opens-new-window-accessible\">");
 				jspWriter.write(
@@ -133,51 +76,60 @@ public class ATag extends IncludeTag {
 	protected int processStartTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
+		String href = getHref();
+		String cssClass = getCssClass();
+		String id = getId();
 		String namespace = _getNamespace();
+		String lang = getLang();
+		String onClick = getOnClick();
+		String target = getTarget();
+		String title = getTitle();
+		Map<String, Object> data = getData();
+		String label = getLabel();
 
-		if (Validator.isNotNull(_href)) {
+		if (Validator.isNotNull(href)) {
 			jspWriter.write("<a ");
 
-			if (Validator.isNotNull(_cssClass)) {
+			if (Validator.isNotNull(cssClass)) {
 				jspWriter.write("class=\"");
-				jspWriter.write(_cssClass);
+				jspWriter.write(cssClass);
 				jspWriter.write("\" ");
 			}
 
 			jspWriter.write("href=\"");
-			jspWriter.write(HtmlUtil.escape(_href));
+			jspWriter.write(HtmlUtil.escape(href));
 			jspWriter.write("\" ");
 
-			if (Validator.isNotNull(_id)) {
+			if (Validator.isNotNull(id)) {
 				jspWriter.write("id=\"");
 				jspWriter.write(namespace);
-				jspWriter.write(_id);
+				jspWriter.write(id);
 				jspWriter.write("\" ");
 			}
 
-			if (Validator.isNotNull(_lang)) {
+			if (Validator.isNotNull(lang)) {
 				jspWriter.write("lang=\"");
-				jspWriter.write(_lang);
+				jspWriter.write(lang);
 				jspWriter.write("\" ");
 			}
 
-			if (Validator.isNotNull(_onClick)) {
+			if (Validator.isNotNull(onClick)) {
 				jspWriter.write("onClick=\"");
-				jspWriter.write(_onClick);
+				jspWriter.write(onClick);
 				jspWriter.write("\" ");
 			}
 
-			if (Validator.isNotNull(_target)) {
+			if (Validator.isNotNull(target)) {
 				jspWriter.write("target=\"");
-				jspWriter.write(_target);
+				jspWriter.write(target);
 				jspWriter.write("\" ");
 			}
 
-			if (Validator.isNotNull(_title) || isOpensNewWindow()) {
+			if (Validator.isNotNull(title) || isOpensNewWindow()) {
 				jspWriter.write("title=\"");
 
-				if (Validator.isNotNull(_title)) {
-					jspWriter.write(LanguageUtil.get(pageContext, _title));
+				if (Validator.isNotNull(title)) {
+					jspWriter.write(LanguageUtil.get(pageContext, title));
 				}
 
 				if (isOpensNewWindow()) {
@@ -194,45 +146,45 @@ public class ATag extends IncludeTag {
 				jspWriter.write(customAttributes.toString());
 			}
 
-			if (_data != null) {
-				jspWriter.write(AUIUtil.buildData(_data));
+			if (data != null) {
+				jspWriter.write(AUIUtil.buildData(data));
 			}
 
 			writeDynamicAttributes(jspWriter);
 
 			jspWriter.write(">");
 
-			if (Validator.isNotNull(_label)) {
-				jspWriter.write(LanguageUtil.get(pageContext, _label));
+			if (Validator.isNotNull(label)) {
+				jspWriter.write(LanguageUtil.get(pageContext, label));
 			}
 		}
 		else {
 			jspWriter.write("<span ");
 
-			if (Validator.isNotNull(_cssClass)) {
+			if (Validator.isNotNull(cssClass)) {
 				jspWriter.write("class=\"");
-				jspWriter.write(_cssClass);
+				jspWriter.write(cssClass);
 				jspWriter.write("\" ");
 			}
 
-			if (Validator.isNotNull(_id)) {
+			if (Validator.isNotNull(id)) {
 				jspWriter.write("id=\"");
 				jspWriter.write(namespace);
-				jspWriter.write(_id);
+				jspWriter.write(id);
 				jspWriter.write("\" ");
 			}
 
-			if (Validator.isNotNull(_lang)) {
+			if (Validator.isNotNull(lang)) {
 				jspWriter.write("lang=\"");
-				jspWriter.write(_lang);
+				jspWriter.write(lang);
 				jspWriter.write("\" ");
 			}
 
-			if (Validator.isNotNull(_title) || isOpensNewWindow()) {
+			if (Validator.isNotNull(title) || isOpensNewWindow()) {
 				jspWriter.write("title=\"");
 
-				if (Validator.isNotNull(_title)) {
-					jspWriter.write(LanguageUtil.get(pageContext, _title));
+				if (Validator.isNotNull(title)) {
+					jspWriter.write(LanguageUtil.get(pageContext, title));
 				}
 
 				if (isOpensNewWindow()) {
@@ -249,16 +201,16 @@ public class ATag extends IncludeTag {
 				jspWriter.write(customAttributes.toString());
 			}
 
-			if (_data != null) {
-				jspWriter.write(AUIUtil.buildData(_data));
+			if (data != null) {
+				jspWriter.write(AUIUtil.buildData(data));
 			}
 
 			writeDynamicAttributes(jspWriter);
 
 			jspWriter.write(">");
 
-			if (Validator.isNotNull(_label)) {
-				jspWriter.write(LanguageUtil.get(pageContext, _label));
+			if (Validator.isNotNull(label)) {
+				jspWriter.write(LanguageUtil.get(pageContext, label));
 			}
 		}
 
@@ -283,21 +235,5 @@ public class ATag extends IncludeTag {
 
 		return namespace;
 	}
-
-	private static final String _END_PAGE =
-		"/html/taglib/aui/a/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/aui/a/start.jsp";
-
-	private String _cssClass;
-	private Map<String, Object> _data;
-	private String _href;
-	private String _id;
-	private String _label;
-	private String _lang;
-	private String _onClick;
-	private String _target;
-	private String _title;
 
 }

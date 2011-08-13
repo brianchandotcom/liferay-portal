@@ -389,6 +389,8 @@ public class PropsValues {
 
 	public static final String DEFAULT_WAP_THEME_ID = PropsUtil.get(PropsKeys.DEFAULT_WAP_THEME_ID);
 
+	public static final String DEVICE_RULE_GROUP_CLONE_POSTFIX = PropsUtil.get(PropsKeys.DEVICE_RULE_GROUP_CLONE_POSTFIX);
+
 	public static final boolean DIRECT_SERVLET_CONTEXT_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_ENABLED));
 
 	public static final boolean DISCUSSION_SUBSCRIBE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DISCUSSION_SUBSCRIBE_BY_DEFAULT));

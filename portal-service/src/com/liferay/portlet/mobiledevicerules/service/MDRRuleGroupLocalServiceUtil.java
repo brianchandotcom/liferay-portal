@@ -79,11 +79,13 @@ public class MDRRuleGroupLocalServiceUtil {
 	* Deletes the m d r rule group from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mdrRuleGroup the m d r rule group
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteMDRRuleGroup(
 		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteMDRRuleGroup(mdrRuleGroup);
 	}
 
@@ -269,6 +271,89 @@ public class MDRRuleGroupLocalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup addMDRRuleGroup(
+		long groupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addMDRRuleGroup(groupId, nameMap, descriptionMap,
+			serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup cloneMDRRuleGroup(
+		long ruleGroupId, long targetGroupId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .cloneMDRRuleGroup(ruleGroupId, targetGroupId, serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup cloneMDRRuleGroup(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup,
+		long targetGroupId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .cloneMDRRuleGroup(ruleGroup, targetGroupId, serviceContext);
+	}
+
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchMDRRuleGroup(
+		long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchMDRRuleGroup(ruleGroupId);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByGroupId(groupId);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByGroupId(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByGroupId(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(groupId, name);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
+		long groupId, java.lang.String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(groupId, name, start, end);
+	}
+
+	public static int searchCount(long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().searchCount(groupId, name);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateRuleGroup(
+		long ruleGroupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateRuleGroup(ruleGroupId, nameMap, descriptionMap,
+			serviceContext);
 	}
 
 	public static MDRRuleGroupLocalService getService() {

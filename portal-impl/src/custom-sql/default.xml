@@ -13,6 +13,7 @@
 	<sql file="custom-sql/expando.xml" />
 	<sql file="custom-sql/journal.xml" />
 	<sql file="custom-sql/messageboards.xml" />
+    <sql file="custom-sql/mobiledevicerules.xml" />
 	<sql file="custom-sql/polls.xml" />
 	<sql file="custom-sql/ratings.xml" />
 	<sql file="custom-sql/shopping.xml" />

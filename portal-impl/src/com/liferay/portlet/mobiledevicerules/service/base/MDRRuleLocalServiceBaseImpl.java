@@ -48,6 +48,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalService;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleService;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistence;
+import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistence;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRulePersistence;
 
@@ -144,9 +145,11 @@ public abstract class MDRRuleLocalServiceBaseImpl implements MDRRuleLocalService
 	 * Deletes the m d r rule from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param mdrRule the m d r rule
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteMDRRule(MDRRule mdrRule) throws SystemException {
+	public void deleteMDRRule(MDRRule mdrRule)
+		throws PortalException, SystemException {
 		mdrRulePersistence.remove(mdrRule);
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
@@ -495,6 +498,24 @@ public abstract class MDRRuleLocalServiceBaseImpl implements MDRRuleLocalService
 	}
 
 	/**
+	 * Returns the m d r rule group finder.
+	 *
+	 * @return the m d r rule group finder
+	 */
+	public MDRRuleGroupFinder getMDRRuleGroupFinder() {
+		return mdrRuleGroupFinder;
+	}
+
+	/**
+	 * Sets the m d r rule group finder.
+	 *
+	 * @param mdrRuleGroupFinder the m d r rule group finder
+	 */
+	public void setMDRRuleGroupFinder(MDRRuleGroupFinder mdrRuleGroupFinder) {
+		this.mdrRuleGroupFinder = mdrRuleGroupFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -730,6 +751,8 @@ public abstract class MDRRuleLocalServiceBaseImpl implements MDRRuleLocalService
 	protected MDRRuleGroupService mdrRuleGroupService;
 	@BeanReference(type = MDRRuleGroupPersistence.class)
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;
+	@BeanReference(type = MDRRuleGroupFinder.class)
+	protected MDRRuleGroupFinder mdrRuleGroupFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

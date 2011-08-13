@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder.countByG_N">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT ruleGroupId) AS COUNT_VALUE
+			FROM
+				MDRRuleGroup
+			WHERE
+				(groupId = ?) AND
+				(
+					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder.findByG_N">
+		<![CDATA[
+			SELECT
+				{MDRRuleGroup.*}
+			FROM
+				MDRRuleGroup
+			WHERE
+				((groupId = ?) AND
+				(
+					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$])
+				))
+			ORDER BY
+				MDRRuleGroup.name DESC
+		]]>
+	</sql>
+</custom-sql>

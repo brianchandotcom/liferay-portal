@@ -1953,10 +1953,20 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="ruleGroupId" type="long" />
 		<field name="ruleId" type="long" />
-		<field name="name" type="String" localized="true" />
-		<field name="description" type="String" localized="true" />
-		<field name="type" type="String" />
-		<field name="typeSettings" type="String" />
+		<field name="name" type="String" localized="true">
+			<hint name="display-width">150</hint>
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="type" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRule">
 		<field name="uuid" type="String" />
@@ -1968,10 +1978,20 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="ruleGroupId" type="long" />
-		<field name="name" type="String" localized="true" />
-		<field name="description" type="String" localized="true" />
-		<field name="type" type="String" />
-		<field name="typeSettings" type="String" />
+		<field name="name" type="String" localized="true">
+			<hint name="display-width">150</hint>
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="type" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup">
 		<field name="uuid" type="String" />
@@ -1982,8 +2002,14 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true" />
-		<field name="description" type="String" localized="true" />
+		<field name="name" type="String" localized="true">
+			<hint name="display-width">150</hint>
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
 	</model>
 	<model name="com.liferay.portlet.polls.model.PollsChoice">
 		<field name="uuid" type="String" />

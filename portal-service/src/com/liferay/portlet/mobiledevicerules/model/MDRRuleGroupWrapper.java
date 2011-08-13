@@ -494,7 +494,8 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 		return new MDRRuleGroupWrapper((MDRRuleGroup)_mdrRuleGroup.clone());
 	}
 
-	public int compareTo(MDRRuleGroup mdrRuleGroup) {
+	public int compareTo(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup) {
 		return _mdrRuleGroup.compareTo(mdrRuleGroup);
 	}
 
@@ -503,11 +504,11 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 		return _mdrRuleGroup.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<MDRRuleGroup> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> toCacheModel() {
 		return _mdrRuleGroup.toCacheModel();
 	}
 
-	public MDRRuleGroup toEscapedModel() {
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup toEscapedModel() {
 		return new MDRRuleGroupWrapper(_mdrRuleGroup.toEscapedModel());
 	}
 
@@ -523,6 +524,12 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mdrRuleGroup.persist();
+	}
+
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> getRules()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroup.getRules();
 	}
 
 	public MDRRuleGroup getWrappedMDRRuleGroup() {

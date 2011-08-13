@@ -39,6 +39,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalService;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleService;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistence;
+import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistence;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRulePersistence;
 
@@ -228,6 +229,24 @@ public abstract class MDRRuleServiceBaseImpl extends PrincipalBean
 	public void setMDRRuleGroupPersistence(
 		MDRRuleGroupPersistence mdrRuleGroupPersistence) {
 		this.mdrRuleGroupPersistence = mdrRuleGroupPersistence;
+	}
+
+	/**
+	 * Returns the m d r rule group finder.
+	 *
+	 * @return the m d r rule group finder
+	 */
+	public MDRRuleGroupFinder getMDRRuleGroupFinder() {
+		return mdrRuleGroupFinder;
+	}
+
+	/**
+	 * Sets the m d r rule group finder.
+	 *
+	 * @param mdrRuleGroupFinder the m d r rule group finder
+	 */
+	public void setMDRRuleGroupFinder(MDRRuleGroupFinder mdrRuleGroupFinder) {
+		this.mdrRuleGroupFinder = mdrRuleGroupFinder;
 	}
 
 	/**
@@ -462,6 +481,8 @@ public abstract class MDRRuleServiceBaseImpl extends PrincipalBean
 	protected MDRRuleGroupService mdrRuleGroupService;
 	@BeanReference(type = MDRRuleGroupPersistence.class)
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;
+	@BeanReference(type = MDRRuleGroupFinder.class)
+	protected MDRRuleGroupFinder mdrRuleGroupFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

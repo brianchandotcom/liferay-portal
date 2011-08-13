@@ -271,6 +271,106 @@ public class MDRActionLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction addMDRAction(
+		long groupId, long ruleGroupId, long ruleId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addMDRAction(groupId, ruleGroupId, ruleId, nameMap,
+			descriptionMap, type, typeSettingsProperties, serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction addMDRAction(
+		long groupId, long ruleGroupId, long ruleId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addMDRAction(groupId, ruleGroupId, ruleId, nameMap,
+			descriptionMap, type, typeSettings, serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction cloneMDRAction(
+		long actionId, long targetRuleId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .cloneMDRAction(actionId, targetRuleId, serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction cloneMDRAction(
+		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction,
+		long targetRuleId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .cloneMDRAction(mdrAction, targetRuleId, serviceContext);
+	}
+
+	public static void deleteMDRActions(long ruleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteMDRActions(ruleId);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchMDRAction(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchMDRAction(actionId);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActions(
+		long ruleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMDRActions(ruleId);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActions(
+		long ruleId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMDRActions(ruleId, start, end);
+	}
+
+	public static int getMDRActionsCount(long ruleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMDRActionsCount(ruleId);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction updateAction(
+		long actionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateAction(actionId, nameMap, descriptionMap, type,
+			typeSettingsProperties, serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction updateAction(
+		long actionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateAction(actionId, nameMap, descriptionMap, type,
+			typeSettings, serviceContext);
+	}
+
 	public static MDRActionLocalService getService() {
 		if (_service == null) {
 			_service = (MDRActionLocalService)PortalBeanLocatorUtil.locate(MDRActionLocalService.class.getName());

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
 /**
  * @author Edward C. Han
  */
@@ -21,5 +23,31 @@ public class MDRActionImpl extends MDRActionBaseImpl {
 
 	public MDRActionImpl() {
 	}
+
+	public UnicodeProperties getTypeSettingsProperties() {
+		if (_typeSettingsProperties == null) {
+			_typeSettingsProperties = new UnicodeProperties(true);
+
+			_typeSettingsProperties.fastLoad(super.getTypeSettings());
+		}
+
+		return _typeSettingsProperties;
+	}
+
+	public void setTypeSettings(String typeSettings) {
+		super.setTypeSettings(typeSettings);
+
+		_typeSettingsProperties = null;
+	}
+
+	public void setTypeSettingsProperties(
+		UnicodeProperties typeSettingsProperties) {
+
+		_typeSettingsProperties = typeSettingsProperties;
+
+		super.setTypeSettings(_typeSettingsProperties.toString());
+	}
+
+	private UnicodeProperties _typeSettingsProperties = null;
 
 }

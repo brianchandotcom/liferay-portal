@@ -28,16 +28,32 @@
 <%-- Available Translations --%>
 
 <%
-Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+boolean canonical = GetterUtil.getBoolean(layout.getTypeSettingsProperties().get("canonical"), false);
 
-for (Locale curLocale : availableLocales) {
-	if (!curLocale.equals(locale)) {
-		String alternateFriendlyURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay, curLocale);
-%>
+if(canonical){
+	Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
-		<link href="<%= alternateFriendlyURL %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" title="<%= layout.getHTMLTitle(curLocale) %>" />
+	if(availableLocales.length > 1 && layout.isPublicLayout()) {
+		Locale defaultLocale = LocaleUtil.getDefault();
 
-<%
+		String canonicalURL = PortalUtil.getCanonicalURL(request);
+		%>
+
+		<link href="<%= canonicalURL %>" rel="canonical" />
+
+		<%
+		if (locale.equals(defaultLocale)) {
+			for (Locale curLocale : availableLocales) {
+				if(!curLocale.equals(defaultLocale)) {
+					String alternateURL = PortalUtil.getAlternateURL(request, canonicalURL, curLocale);
+		%>
+
+					<link href="<%= alternateURL %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" title="<%= layout.getHTMLTitle(curLocale) %>" />
+
+		<%
+				}
+			}
+		}
 	}
 }
 %>

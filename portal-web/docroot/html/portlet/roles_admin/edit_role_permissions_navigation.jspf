@@ -124,7 +124,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 			</optgroup>
 
 			<%
-			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(String.valueOf(company.getCompanyId()), WebKeys.PORTLET_CATEGORY);
+			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
 			Set<String> hiddenPortletIds = portletCategory.getCategory(PortletCategoryConstants.NAME_HIDDEN).getPortletIds();
 			%>

@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.TreeNodeView;
 import com.liferay.portal.kernel.util.TreeView;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,7 +34,6 @@ import com.liferay.portlet.PortletConfigFactoryUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -63,7 +63,7 @@ public class PortletListerImpl implements PortletLister {
 		}
 
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
-			String.valueOf(_user.getCompanyId()), WebKeys.PORTLET_CATEGORY);
+			_user.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
 		List<PortletCategory> categories = ListUtil.fromCollection(
 			portletCategory.getCategories());
@@ -207,12 +207,8 @@ public class PortletListerImpl implements PortletLister {
 					ResourceBundle resourceBundle =
 						portletConfig.getResourceBundle(_user.getLocale());
 
-					try {
-						externalPortletCategory = resourceBundle.getString(
-							portletCategory.getName());
-					}
-					catch (MissingResourceException mre) {
-					}
+					externalPortletCategory = ResourceBundleUtil.getString(
+						resourceBundle, portletCategory.getName());
 				}
 			}
 		}

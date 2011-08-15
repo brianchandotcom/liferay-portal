@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
@@ -434,6 +438,12 @@ public class BaseRepositoryProxyBean
 		throws PortalException, SystemException {
 
 		_baseRepository.revertFileEntry(fileEntryId, version, serviceContext);
+	}
+
+	public Hits search(SearchContext searchContext, Query query)
+		throws SearchException {
+
+		return _baseRepository.search(searchContext, query);
 	}
 
 	public void setCompanyId(long companyId) {

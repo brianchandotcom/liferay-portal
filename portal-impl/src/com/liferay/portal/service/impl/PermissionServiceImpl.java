@@ -410,8 +410,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 
 			if (!resourceActions.contains(ActionKeys.DEFINE_PERMISSIONS) ||
 				!permissionChecker.hasPermission(
-						groupId, name, primKey,
-						ActionKeys.DEFINE_PERMISSIONS)) {
+					groupId, name, primKey, ActionKeys.DEFINE_PERMISSIONS)) {
 
 				throw new PrincipalException();
 			}

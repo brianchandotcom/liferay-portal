@@ -170,7 +170,11 @@ public class UnsyncStringWriter extends Writer {
 
 	@Override
 	public void write(String string, int offset, int length) {
-		if (stringBundler != null) {
+		if ((string == null) ||
+			((offset == 0) && (length == string.length()))) {
+			write(string);
+		}
+		else if (stringBundler != null) {
 			stringBundler.append(string.substring(offset, offset + length));
 		}
 		else {

@@ -16,13 +16,15 @@ package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 
+import java.io.File;
+
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
  */
 public interface AutoDeployer {
 
-	public void autoDeploy(String fileName, String context)
+	public void autoDeploy(File file, String context)
 		throws AutoDeployException;
 
 }

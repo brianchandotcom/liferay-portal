@@ -548,7 +548,8 @@ public class MDRRuleWrapper implements MDRRule {
 		return new MDRRuleWrapper((MDRRule)_mdrRule.clone());
 	}
 
-	public int compareTo(MDRRule mdrRule) {
+	public int compareTo(
+		com.liferay.portlet.mobiledevicerules.model.MDRRule mdrRule) {
 		return _mdrRule.compareTo(mdrRule);
 	}
 
@@ -557,11 +558,11 @@ public class MDRRuleWrapper implements MDRRule {
 		return _mdrRule.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<MDRRule> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.mobiledevicerules.model.MDRRule> toCacheModel() {
 		return _mdrRule.toCacheModel();
 	}
 
-	public MDRRule toEscapedModel() {
+	public com.liferay.portlet.mobiledevicerules.model.MDRRule toEscapedModel() {
 		return new MDRRuleWrapper(_mdrRule.toEscapedModel());
 	}
 
@@ -577,6 +578,21 @@ public class MDRRuleWrapper implements MDRRule {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mdrRule.persist();
+	}
+
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _mdrRule.getTypeSettingsProperties();
+	}
+
+	public void setTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		_mdrRule.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getActions()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRule.getActions();
 	}
 
 	public MDRRule getWrappedMDRRule() {

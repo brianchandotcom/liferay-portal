@@ -14,12 +14,29 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.mobiledevicerules.model.MDRRule;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
+
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Edward C. Han
  */
 public class MDRRuleGroupImpl extends MDRRuleGroupBaseImpl {
 
 	public MDRRuleGroupImpl() {
+	}
+
+	public List<MDRRule> getRules() throws PortalException, SystemException {
+		if (getRuleGroupId() > 0) {
+			return MDRRuleLocalServiceUtil.getRules(getRuleGroupId());
+		}
+		else {
+			return Collections.emptyList();
+		}
 	}
 
 }

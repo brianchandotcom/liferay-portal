@@ -112,7 +112,7 @@ public class MBMessagePermission {
 		}
 
 		return permissionChecker.hasPermission(
-			groupId, MBMessage.class.getName(), message.getRootMessageId(),
+			groupId, MBMessage.class.getName(), message.getMessageId(),
 			actionId);
 	}
 

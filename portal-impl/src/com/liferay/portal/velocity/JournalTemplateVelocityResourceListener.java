@@ -42,7 +42,7 @@ public class JournalTemplateVelocityResourceListener
 		InputStream is = null;
 
 		try {
-			int pos = source.indexOf(JOURNAL_SEPARATOR + StringPool.SLASH);
+			int pos = source.indexOf(_PREFIX);
 
 			if (pos != -1) {
 				int x = source.indexOf(CharPool.SLASH, pos);
@@ -77,6 +77,9 @@ public class JournalTemplateVelocityResourceListener
 
 		return is;
 	}
+
+	private static final String _PREFIX = JOURNAL_SEPARATOR.concat(
+		StringPool.SLASH);
 
 	private static Log _log = LogFactoryUtil.getLog(
 		JournalTemplateVelocityResourceListener.class);

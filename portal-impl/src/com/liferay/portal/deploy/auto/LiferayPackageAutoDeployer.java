@@ -26,7 +26,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.InputStream;
-
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -47,12 +46,11 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 		}
 	}
 
-	public void autoDeploy(String fileName, String context)
+	public void autoDeploy(File file, String context)
 		throws AutoDeployException {
 
 		try {
-			ZipFile zipFile = new ZipFile(
-				new File(baseDir + StringPool.SLASH + fileName));
+			ZipFile zipFile = new ZipFile(file);
 
 			Enumeration<? extends ZipEntry> enu = zipFile.entries();
 
@@ -70,7 +68,8 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Extracting " + zipEntryFileName + " from " + fileName);
+						"Extracting " + zipEntryFileName + " from " +
+							file.getName());
 				}
 
 				InputStream inputStream = null;

@@ -681,7 +681,11 @@ public class GroupFinderImpl
 
 			Map<String, String> joinMap = _getJoinMap();
 
-			sb.append(joinMap.get(key));
+			String joinValue = joinMap.get(key);
+
+			if (Validator.isNotNull(joinValue)) {
+				sb.append(joinValue);
+			}
 		}
 
 		return sb.toString();
@@ -732,7 +736,11 @@ public class GroupFinderImpl
 
 				Map<String, String> whereMap = _getWhereMap();
 
-				sb.append(whereMap.get(key));
+				String whereValue = whereMap.get(key);
+
+				if (Validator.isNotNull(whereValue)) {
+					sb.append(whereValue);
+				}
 			}
 		}
 

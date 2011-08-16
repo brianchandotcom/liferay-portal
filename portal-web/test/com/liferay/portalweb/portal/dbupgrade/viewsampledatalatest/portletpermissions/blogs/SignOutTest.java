@@ -30,7 +30,7 @@ public class SignOutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Sign Out")) {
+				if (selenium.isVisible("link=Sign Out")) {
 					break;
 				}
 			}
@@ -41,7 +41,7 @@ public class SignOutTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Sign Out", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

@@ -30,8 +30,7 @@ public class ViewBlogsPortletNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=Blogs Portlet Permissions Page")) {
+				if (selenium.isVisible("link=Blogs Portlet Permissions Page")) {
 					break;
 				}
 			}
@@ -43,7 +42,7 @@ public class ViewBlogsPortletNullTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Portlet Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(

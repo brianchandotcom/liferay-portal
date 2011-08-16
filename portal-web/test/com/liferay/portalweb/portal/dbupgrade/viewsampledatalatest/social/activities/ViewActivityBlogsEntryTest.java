@@ -30,7 +30,7 @@ public class ViewActivityBlogsEntryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Activities Page")) {
+				if (selenium.isVisible("link=Activities Page")) {
 					break;
 				}
 			}
@@ -41,11 +41,12 @@ public class ViewActivityBlogsEntryTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Activities Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Activities Page",
+			RuntimeVariables.replace("Activities Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Joe wrote a new blog entry, Blogs Entry Title."),
+				"Joe wrote a new blog entry, Blogs Entry Title, in Liferay."),
 			selenium.getText("xPath=(//div[@class='activity-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("xPath=(//div[@class='activity-title'])[2]/a"));

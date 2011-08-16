@@ -398,6 +398,22 @@ public class MainServlet extends ActionServlet {
 
 			return;
 		}
+		
+		try {
+		
+			long groupId = getGroupId(request);
+			
+			if (processSiteInactiveRequest(request, response, groupId)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Processed site inactive request");
+				}
+	
+				return;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Set portal port");
@@ -665,6 +681,16 @@ public class MainServlet extends ActionServlet {
 
 	protected long getCompanyId(HttpServletRequest request) {
 		return PortalInstances.getCompanyId(request);
+	}
+	
+	protected long getGroupId(HttpServletRequest request) 
+		throws PortalException, SystemException {
+
+		long plid = ParamUtil.getLong(request, "p_l_id");
+	
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			
+		return layout.getGroupId();
 	}
 
 	protected String getPassword(HttpServletRequest request) {
@@ -1229,6 +1255,36 @@ public class MainServlet extends ActionServlet {
 
 		servletOutputStream.print(html);
 
+		return true;
+	}
+	
+	protected boolean processSiteInactiveRequest(
+			HttpServletRequest request, HttpServletResponse response, 
+			long groupId)
+		throws IOException, PortalException, SystemException {
+
+		if (GroupLocalServiceUtil.getGroup(groupId).isActive()) {
+			return false;
+		}
+	
+		response.setContentType(ContentTypes.TEXT_HTML_UTF8);
+	
+		Locale locale = LocaleUtil.getDefault();
+	
+		String siteInactiveMessage = LanguageUtil.get(
+			locale,
+			"this-site-is-inactive-please-contact-the-administrator");
+	
+		String html = ContentUtil.get(
+			"com/liferay/portal/dependencies/site_inactive.html");
+	
+		html = StringUtil.replace(
+			html, "[$SITE_INACTIVE_MESSAGE$]", siteInactiveMessage);
+	
+		ServletOutputStream servletOutputStream = response.getOutputStream();
+	
+		servletOutputStream.print(html);
+	
 		return true;
 	}
 

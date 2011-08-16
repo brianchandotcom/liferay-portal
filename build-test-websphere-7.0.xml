@@ -50,7 +50,10 @@
 		</exec>
 
 		<replace file="server.xml">
-			<replacefilter token="genericJvmArguments=&quot;&quot;" value="genericJvmArguments=&quot;-Dfile.encoding=UTF8&quot;" />
+			<replacefilter token="genericJvmArguments=&quot;&quot;" value="genericJvmArguments=&quot;-Dfile.encoding=UTF8 -Xk22000 -Xp64k,16k&quot;" />
+			<replacefilter token="verboseModeGarbageCollection=&quot;false&quot;" value="verboseModeGarbageCollection=&quot;true&quot;" />
+			<replacefilter token="verboseModeJNI=&quot;false&quot;" value="verboseModeJNI=&quot;false&quot; initialHeapSize=&quot;256&quot; maximumHeapSize=&quot;1024&quot;" />
+			<replacefilter token="xmi:id=&quot;DynamicCache_1183122130078&quot; enable=&quot;true&quot;" value="xmi:id=&quot;DynamicCache_1183122130078&quot; enable=&quot;true&quot; defaultPriority=&quot;3&quot; hashSize=&quot;0&quot; cacheSize=&quot;3000&quot;" />
 		</replace>
 
 		<exec executable="${pscp.executable}">

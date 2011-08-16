@@ -33,6 +33,7 @@ public class SearchWCDWebContentTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletWCSTest.class);
 		testSuite.addTestSuite(AddWCDWebContentTest.class);
 		testSuite.addTestSuite(SearchWCDWebContentTest.class);
+		testSuite.addTestSuite(SearchWCDWebContentQuotesTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

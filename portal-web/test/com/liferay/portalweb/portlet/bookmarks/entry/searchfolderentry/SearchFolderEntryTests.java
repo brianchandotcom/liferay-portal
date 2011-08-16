@@ -32,6 +32,7 @@ public class SearchFolderEntryTests extends BaseTests {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderEntryTest.class);
 		testSuite.addTestSuite(SearchFolderEntryTest.class);
+		testSuite.addTestSuite(SearchFolderEntryQuotesTest.class);
 		testSuite.addTestSuite(SearchNullFolderEntryTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksEntryTest.class);

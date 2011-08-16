@@ -32,6 +32,7 @@ public class SearchCategoryMessageTests extends BaseTests {
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryMessageTest.class);
 		testSuite.addTestSuite(SearchCategoryMessageTest.class);
+		testSuite.addTestSuite(SearchCategoryMessageQuotesTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

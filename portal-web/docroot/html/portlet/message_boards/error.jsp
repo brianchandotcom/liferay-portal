@@ -22,6 +22,7 @@
 />
 
 <liferay-ui:error exception="<%= BannedUserException.class %>" message="you-have-been-banned-by-the-moderator" />
+<liferay-ui:error exception="<%= LockedThreadException.class %>" message="thread-is-locked" />
 <liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="the-category-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchMessageException.class %>" message="the-message-could-not-be-found" />
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 
 import javax.portlet.ActionRequest;
@@ -46,7 +47,8 @@ public class DeleteThreadAction extends PortletAction {
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException) {
+			if (e instanceof PrincipalException ||
+				e instanceof LockedThreadException) {
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
 				setForward(actionRequest, "portlet.message_boards.error");

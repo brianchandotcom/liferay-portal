@@ -85,11 +85,15 @@ public abstract class AbstractSearchEngineConfigurator {
 
 		MessageBus messageBus = getMessageBus();
 
-		messageBus.removeDestination(
+		Destination searchReaderDestination = messageBus.removeDestination(
 			searchEngineRegistration.getSearchReaderDestinationName());
 
-		messageBus.removeDestination(
+		searchReaderDestination.close(true);
+
+		Destination searchWriterDestination = messageBus.removeDestination(
 			searchEngineRegistration.getSearchWriterDestinationName());
+
+		searchWriterDestination.close(true);
 
 		SearchEngine searchEngine = searchEngineRegistration.getSearchEngine();
 
@@ -105,14 +109,14 @@ public abstract class AbstractSearchEngineConfigurator {
 		SearchEngine originalSearchEngine =
 			originalSearchEngineProxy.getSearchEngine();
 
-		Destination searchReaderDestination = getSearchReaderDestination(
+		searchReaderDestination = getSearchReaderDestination(
 			messageBus, originalSearchEngine);
 
 		registerInvokerMessageListener(
 			searchReaderDestination,
 			searchEngineRegistration.getOriginalSearchReaderMessageListeners());
 
-		Destination searchWriterDestination = getSearchWriterDestination(
+		searchWriterDestination = getSearchWriterDestination(
 			messageBus, originalSearchEngine);
 
 		registerInvokerMessageListener(

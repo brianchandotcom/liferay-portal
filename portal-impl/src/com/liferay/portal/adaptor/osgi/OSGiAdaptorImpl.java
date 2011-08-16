@@ -164,6 +164,7 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 		bundleContext.addServiceListener(
 			new ServiceListener(bundleContext), _PORTAL_SERVICE_FILTER);
 
+		registerServletContext(servletContext);
 		registerApplicationContext((ApplicationContext)applicationContext);
 	}
 
@@ -296,6 +297,22 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 
 		bundleContext.registerService(
 			names.toArray(new String[names.size()]), bean, properties);
+	}
+
+	protected void registerServletContext(ServletContext servletContext) {
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		Hashtable<String,Object> properties = new Hashtable<String, Object>();
+
+		properties.put(Constants.SERVICE_VENDOR, ReleaseInfo.getVendor());
+
+		properties.put(
+			OSGiConstants.PORTAL_SERVICE_BEAN_NAME,
+			ServletContext.class.getName());
+
+		bundleContext.registerService(
+			new String[] {ServletContext.class.getName()}, servletContext,
+			properties);
 	}
 
 	private static final String _PORTAL_SERVICE_FILTER =

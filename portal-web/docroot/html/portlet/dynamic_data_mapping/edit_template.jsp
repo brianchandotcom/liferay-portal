@@ -32,6 +32,10 @@ long groupId = BeanParamUtil.getLong(template, request, "groupId", scopeGroupId)
 
 DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
+if ((structure == null) && (template != null)) {
+	structure = template.getStructure();
+}
+
 long structureId = BeanParamUtil.getLong(structure, request, "structureId");
 
 String type = BeanParamUtil.getString(template, request, "type", "detail");

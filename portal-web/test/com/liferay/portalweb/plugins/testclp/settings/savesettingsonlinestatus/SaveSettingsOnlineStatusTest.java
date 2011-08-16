@@ -47,14 +47,14 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Test CLP Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("true"),
 					selenium.getText(
 						"//div[@class='portlet-body']/table/tbody/tr[2]/td[4]"));
 				selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Settings"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -62,7 +62,7 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("onlineStatus")) {
+						if (selenium.isVisible("//input[@id='onlineStatus']")) {
 							break;
 						}
 					}
@@ -82,10 +82,12 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("onlineStatus", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='onlineStatus']",
+					RuntimeVariables.replace("Show me as online."));
 
 			case 2:
-				selenium.clickAt("saveSettings", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='saveSettings']",
+					RuntimeVariables.replace("Save Settings"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -127,7 +129,7 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Test CLP Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("false"),

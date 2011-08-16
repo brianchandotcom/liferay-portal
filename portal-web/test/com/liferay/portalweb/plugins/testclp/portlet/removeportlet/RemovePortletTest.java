@@ -41,7 +41,8 @@ public class RemovePortletTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Test CLP Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Test CLP Test Page",
+			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

@@ -1184,3 +1184,19 @@ Liferay.Service.registerClass(
 		updatePage: true
 	}
 );
+
+Liferay.Service.register("Liferay.Service.OA", "com.liferay.portlet.osgiadmin.service");
+
+Liferay.Service.registerClass(
+	Liferay.Service.OA, "OSGi",
+	{
+		addBundle: true,
+		getBundleContext: true,
+		getFramework: true,
+		getState: true,
+		startBundle: true,
+		stopBundle: true,
+		uninstallBundle: true,
+		updateBundle: true
+	}
+);

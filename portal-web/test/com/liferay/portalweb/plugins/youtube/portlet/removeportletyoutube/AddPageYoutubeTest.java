@@ -23,9 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageYoutubeTest extends BaseTestCase {
 	public void testAddPageYoutube() throws Exception {
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("main-content", RuntimeVariables.replace(""));
-		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-		selenium.clickAt("navigation", RuntimeVariables.replace(""));
+		selenium.clickAt("//nav[@id='navigation']",
+			RuntimeVariables.replace("Navigation"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -33,7 +32,7 @@ public class AddPageYoutubeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("addPage")) {
+				if (selenium.isElementPresent("//a[@id='addPage']")) {
 					break;
 				}
 			}
@@ -44,7 +43,8 @@ public class AddPageYoutubeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("addPage", RuntimeVariables.replace(""));
+		selenium.clickAt("//a[@id='addPage']",
+			RuntimeVariables.replace("Add Page"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -52,7 +52,7 @@ public class AddPageYoutubeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -63,9 +63,11 @@ public class AddPageYoutubeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input", RuntimeVariables.replace("Youtube Test Page"));
+		selenium.type("//input[@type='text']",
+			RuntimeVariables.replace("Youtube Test Page"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -84,7 +86,8 @@ public class AddPageYoutubeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Youtube Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Youtube Test Page",
+			RuntimeVariables.replace("Youtube Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

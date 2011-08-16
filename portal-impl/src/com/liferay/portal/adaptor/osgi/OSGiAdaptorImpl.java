@@ -62,7 +62,11 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Raymond Augé
  */
-public class OSGiAdaptorImpl implements Adaptor {
+public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
+
+	public Framework getFramework() {
+		return _framework;
+	}
 
 	public void init(
 			ServletContext servletContext, Object applicationContext)

@@ -61,7 +61,8 @@ public class GetLayoutsAction extends JSONAction {
 		List<Layout> layoutAncestors = null;
 
 		if (targetLayoutPlid != 0) {
-			Layout targetLayout = LayoutLocalServiceUtil.getLayout(targetLayoutPlid);
+			Layout targetLayout =
+				LayoutLocalServiceUtil.getLayout(targetLayoutPlid);
 
 			layoutAncestors = targetLayout.getAncestors();
 		}

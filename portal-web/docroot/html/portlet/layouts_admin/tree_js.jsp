@@ -213,9 +213,9 @@ if (!selectableTree) {
 		{
 			alwaysShowHitArea: true,
 			draggable: false,
+			expanded: expanded,
 			id: rootId,
 			label: rootLabel,
-			expanded: expanded,
 			leaf: false
 		}
 	);

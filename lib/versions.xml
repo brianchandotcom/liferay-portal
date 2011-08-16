@@ -1641,6 +1641,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>portal/equinox.jar</file-name>
+		<version>3.7.0.v20110613</version>
+		<project-name>Eclipse OSGi Platform</project-name>
+		<project-url>http://www.eclipse.org/equinox/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>portal/fastutil.jar</file-name>
 		<version>5.0.5</version>
 		<project-name>Fastutil</project-name>
@@ -2491,18 +2502,6 @@
 			<license>
 				<license-name>Apache License 1.1</license-name>
 				<copyright-notice>Copyright (c) 2000-2002 The Apache Software Foundation. All rights reserved.</copyright-notice>
-			</license>
-		</licenses>
-	</library>
-
-	<library>
-		<file-name>portal/osgi.core.jar</file-name>
-		<version>4.2</version>
-		<project-name>OSGi Service Platform</project-name>
-		<project-url>http://www.osgi.org</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
 			</license>
 		</licenses>
 	</library>

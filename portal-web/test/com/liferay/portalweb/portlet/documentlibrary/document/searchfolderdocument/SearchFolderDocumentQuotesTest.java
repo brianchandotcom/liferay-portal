@@ -46,7 +46,7 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_keywords']",
-			RuntimeVariables.replace("\"Test1\""));
+			RuntimeVariables.replace("\"Test1 Document1\""));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
@@ -57,7 +57,7 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Test1 Document1")) {
+				if (selenium.isVisible("//div[@class='search-info']/span[1]")) {
 					break;
 				}
 			}
@@ -68,6 +68,61 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Test1 Document1"));
+		assertEquals(RuntimeVariables.replace(
+				"Searched for \"Test1 Document1\" in every folder."),
+			selenium.getText("//div[@class='search-info']/span[1]"));
+		assertEquals(RuntimeVariables.replace("Test1 Document1"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Document Library Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Document Library Test Page",
+			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_20_keywords']",
+			RuntimeVariables.replace("\"Test1 Document1 1\""));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='search-info']/span[1]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Searched for \"Test1 Document1 1\" in every folder."),
+			selenium.getText("//div[@class='search-info']/span[1]"));
+		assertFalse(selenium.isElementPresent("//span[@class='document-title']"));
+		assertFalse(selenium.isElementPresent("link=Test1 Document1"));
 	}
 }

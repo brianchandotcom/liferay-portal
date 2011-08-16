@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SearchUserTestQuotesTest extends BaseTestCase {
-	public void testSearchUserTestQuotes() throws Exception {
+public class SearchUserQuotesTest extends BaseTestCase {
+	public void testSearchUserQuotes() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -64,7 +64,16 @@ public class SearchUserTestQuotesTest extends BaseTestCase {
 
 			case 2:
 				selenium.type("//input[@name='_11_keywords']",
-					RuntimeVariables.replace("\"TestFirst\""));
+					RuntimeVariables.replace(
+						"\"TestFirst1 TestMiddle1 TestLast1\""));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				assertTrue(selenium.isElementPresent("link=TestFirst1"));
+				selenium.type("//input[@name='_11_keywords']",
+					RuntimeVariables.replace("\"TestFirst1\""));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));

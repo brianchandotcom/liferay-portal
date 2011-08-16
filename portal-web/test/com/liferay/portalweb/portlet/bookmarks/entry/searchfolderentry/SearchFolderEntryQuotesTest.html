@@ -26,7 +26,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_keywords1']</td>
-	<td>"Test"</td>
+	<td>"Test Folder Entry"</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -34,9 +34,54 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Test Folder Entry</td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Test Folder Entry</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Bookmarks Test Page</td>
+	<td>Bookmarks Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Bookmarks Test Page</td>
+	<td>Bookmarks Test Page</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_28_keywords1']</td>
+	<td>"Test Entry"</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No entries were found that matched the keywords: "Test Entry".</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Test Folder</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Test Folder Entry</td>
+	<td><br /></td>
 </tr>
 
 </tbody></table>

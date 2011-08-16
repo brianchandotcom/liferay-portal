@@ -41,11 +41,14 @@ public class AddPortletTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Test Misc Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Test Misc Page",
+			RuntimeVariables.replace("Test Misc Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -53,28 +56,7 @@ public class AddPortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("t"));
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@title='Test Misc']/p/a")) {
+				if (selenium.isElementPresent("//div[@title='Test Misc']/p/a")) {
 					break;
 				}
 			}
@@ -86,7 +68,7 @@ public class AddPortletTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@title='Test Misc']/p/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

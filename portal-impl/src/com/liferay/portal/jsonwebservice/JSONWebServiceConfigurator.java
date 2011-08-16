@@ -36,7 +36,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import jodd.io.findfile.FindClass;
+import jodd.io.findfile.ClassFinder;
 import jodd.io.findfile.FindFile;
 import jodd.io.findfile.WildcardFindFile;
 
@@ -47,7 +47,7 @@ import org.apache.commons.lang.time.StopWatch;
 /**
  * @author Igor Spasic
  */
-public class JSONWebServiceConfigurator extends FindClass {
+public class JSONWebServiceConfigurator extends ClassFinder {
 
 	public JSONWebServiceConfigurator() {
 		setIncludedJars(
@@ -91,8 +91,9 @@ public class JSONWebServiceConfigurator extends FindClass {
 
 			classPathFiles[0] = classPathFile;
 
-			FindFile findFile = new WildcardFindFile(
-				libDir, "*-portlet-service.jar");
+			FindFile findFile = new WildcardFindFile("*-portlet-service.jar");
+
+			findFile.searchPath(libDir);
 
 			classPathFiles[1] = findFile.nextFile();
 
@@ -165,7 +166,7 @@ public class JSONWebServiceConfigurator extends FindClass {
 	}
 
 	@Override
-	protected void onEntry(FindClass.EntryData entryData) throws Exception {
+	protected void onEntry(EntryData entryData) throws Exception {
 		String className = entryData.getName();
 
 		if (className.endsWith("Service") ||

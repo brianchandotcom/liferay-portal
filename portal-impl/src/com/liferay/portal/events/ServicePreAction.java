@@ -54,7 +54,6 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
@@ -70,7 +69,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -80,12 +78,7 @@ import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
-import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
-import com.liferay.portal.service.permission.OrganizationPermissionUtil;
-import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
-import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.CookieKeys;
@@ -615,197 +608,28 @@ public class ServicePreAction extends Action {
 	}
 
 	/**
-	 * @deprecated Use <code>isViewableGroup</code>.
+	 * @deprecated
 	 */
 	protected boolean isViewableCommunity(
 			User user, long groupId, boolean privateLayout,
 			PermissionChecker permissionChecker)
 		throws PortalException, SystemException {
 
-		return isViewableGroup(
-			user, groupId, privateLayout, 0, null, permissionChecker);
+		return LayoutPermissionUtil.contains(
+			permissionChecker, groupId, privateLayout, 0, ActionKeys.VIEW);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	protected boolean isViewableGroup(
 			User user, long groupId, boolean privateLayout, long layoutId,
 			String controlPanelCategory, PermissionChecker permissionChecker)
 		throws PortalException, SystemException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		// Inactive sites are not viewable
-
-		if (!group.isActive()) {
-			return false;
-		}
-		else if (group.isStagingGroup()) {
-			Group liveGroup = group.getLiveGroup();
-
-			if (!liveGroup.isActive()) {
-				return false;
-			}
-		}
-
-		// User private layouts are only viewable by the user and anyone who can
-		// update the user. The user must also be active.
-
-		if (group.isUser()) {
-			long groupUserId = group.getClassPK();
-
-			if (groupUserId == user.getUserId()) {
-				return true;
-			}
-			else {
-				User groupUser = UserLocalServiceUtil.getUserById(groupUserId);
-
-				if (!groupUser.isActive()) {
-					return false;
-				}
-
-				if (privateLayout) {
-					if (UserPermissionUtil.contains(
-							permissionChecker, groupUserId,
-							groupUser.getOrganizationIds(),
-							ActionKeys.UPDATE)) {
-
-						return true;
-					}
-					else {
-						return false;
-					}
-				}
-			}
-		}
-
-		// If the current group is staging, only users with editorial rights
-		// can access it
-
-		if (group.isStagingGroup()) {
-			if (user.isDefaultUser()) {
-				return false;
-			}
-
-			if (GroupPermissionUtil.contains(
-					permissionChecker, groupId, ActionKeys.MANAGE_LAYOUTS) ||
-				GroupPermissionUtil.contains(
-					permissionChecker, groupId, ActionKeys.MANAGE_STAGING) ||
-				GroupPermissionUtil.contains(
-					permissionChecker, groupId, ActionKeys.PUBLISH_STAGING) ||
-				((layoutId > 0) && LayoutPermissionUtil.contains(
-					permissionChecker, groupId, privateLayout, layoutId,
-					ActionKeys.UPDATE))) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		// Most public layouts are viewable
-
-		if (!privateLayout) {
-			return true;
-		}
-
-		// Control panel layouts are only viewable by authenticated users
-
-		if (group.isControlPanel()) {
-			if (PortalPermissionUtil.contains(
-					permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
-
-				return true;
-			}
-			else {
-				if (Validator.isNotNull(controlPanelCategory)) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-		}
-
-		// Site layouts are only viewable by users who are members of the site
-		// or by users who can update the site
-
-		if (group.isSite()) {
-			if (GroupLocalServiceUtil.hasUserGroup(user.getUserId(), groupId)) {
-				return true;
-			}
-			else if (GroupPermissionUtil.contains(
-						permissionChecker, groupId, ActionKeys.UPDATE)) {
-
-				return true;
-			}
-		}
-
-		// Organization site layouts are also viewable by users who belong to
-		// the organization or by users who can update organization
-
-		if (group.isCompany()) {
-			return false;
-		}
-		else if (group.isLayoutPrototype()) {
-			if (LayoutPrototypePermissionUtil.contains(
-					permissionChecker, group.getClassPK(), ActionKeys.VIEW)) {
-
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else if (group.isLayoutSetPrototype()) {
-			if (LayoutSetPrototypePermissionUtil.contains(
-					permissionChecker, group.getClassPK(), ActionKeys.VIEW)) {
-
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else if (group.isOrganization()) {
-			long organizationId = group.getOrganizationId();
-
-			if (OrganizationLocalServiceUtil.hasUserOrganization(
-					user.getUserId(), organizationId, false, true, false)) {
-
-				return true;
-			}
-			else if (OrganizationPermissionUtil.contains(
-						permissionChecker, organizationId, ActionKeys.UPDATE)) {
-
-				return true;
-			}
-
-			if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-				List<Organization> userOrgs =
-					OrganizationLocalServiceUtil.getUserOrganizations(
-						user.getUserId(), true);
-
-				for (Organization organization : userOrgs) {
-					for (Organization ancestorOrganization :
-							organization.getAncestors()) {
-
-						if (organizationId ==
-								ancestorOrganization.getOrganizationId()) {
-
-							return true;
-						}
-					}
-				}
-			}
-		}
-		else if (group.isUserGroup()) {
-			if (GroupPermissionUtil.contains(
-					permissionChecker, groupId, ActionKeys.MANAGE_LAYOUTS)) {
-
-				return true;
-			}
-		}
-
-		return false;
+		return LayoutPermissionUtil.contains(
+			permissionChecker, groupId, privateLayout, layoutId,
+			controlPanelCategory, ActionKeys.VIEW);
 	}
 
 	protected List<Layout> mergeAdditionalLayouts(
@@ -1235,10 +1059,10 @@ public class ServicePreAction extends Action {
 					request.setAttribute(WebKeys.REQUESTED_LAYOUT, layout);
 				}
 
-				boolean isViewableGroup = isViewableGroup(
-					user, layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), controlPanelCategory,
-					permissionChecker);
+				boolean isViewableGroup = LayoutPermissionUtil.contains(
+					permissionChecker, layout.getLayoutId(),
+					layout.isPrivateLayout(), layout.getLayoutId(),
+					controlPanelCategory, ActionKeys.VIEW);
 
 				if (!isViewableGroup && group.isStagingGroup()) {
 					layout = null;

@@ -43,8 +43,19 @@ public interface LayoutPermission {
 		throws PortalException, SystemException;
 
 	public boolean contains(
+			PermissionChecker permissionChecker, Layout layout,
+			String controlPanelCategory, String actionId)
+		throws PortalException, SystemException;
+
+	public boolean contains(
 			PermissionChecker permissionChecker, long groupId,
 			boolean privateLayout, long layoutId, String actionId)
+		throws PortalException, SystemException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId,
+			boolean privateLayout, long layoutId, String controlPanelCategory,
+			String actionId)
 		throws PortalException, SystemException;
 
 	public boolean contains(

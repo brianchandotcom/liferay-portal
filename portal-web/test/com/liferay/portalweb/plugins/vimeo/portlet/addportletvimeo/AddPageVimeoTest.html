@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AddPageVimeoTest</title>
 </head>
 <body>
@@ -15,58 +12,39 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
+</tr><tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
+	<td>//nav[@id='navigation']</td>
+	<td>Navigation</td>
+</tr><tr>
+	<td>waitForElementPresent</td>
+	<td>//a[@id='addPage']</td>
+	<td>Add Page</td>
+</tr><tr>
 	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
-</tr>
-<tr>
+	<td>//a[@id='addPage']</td>
+	<td>Add Page</td>
+</tr><tr>
 	<td>waitForVisible</td>
-	<td>addPage</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>addPage</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input</td>
-	<td></td>
-</tr>
-<tr>
+	<td>//input[@type='text']</td>
+	<td>Page Name</td>
+</tr><tr>
 	<td>type</td>
-	<td>//input</td>
+	<td>//input[@type='text']</td>
 	<td>Vimeo Test Page</td>
-</tr>
-<tr>
+</tr><tr>
 	<td>clickAt</td>
-	<td>save</td>
-	<td></td>
-</tr>
-<tr>
+	<td>//button[@id='save']</td>
+	<td>Save</td>
+</tr><tr>
 	<td>waitForVisible</td>
 	<td>link=Vimeo Test Page</td>
-	<td></td>
-</tr>
-<tr>
+	<td>Vimeo Test Page</td>
+</tr><tr>
 	<td>clickAtAndWait</td>
 	<td>link=Vimeo Test Page</td>
-	<td></td>
+	<td>Vimeo Test Page</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

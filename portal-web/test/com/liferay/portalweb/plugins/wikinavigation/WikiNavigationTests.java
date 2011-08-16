@@ -28,7 +28,8 @@ public class WikiNavigationTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(AddPortletPageMenuTest.class);
+		testSuite.addTestSuite(AddPortletTreeMenuTest.class);
 		testSuite.addTestSuite(DeletePageTest.class);
 
 		return testSuite;

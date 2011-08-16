@@ -241,9 +241,14 @@
 	<target name="test-${test.ant.script.command}-websphere-7.0-mysql-firefox">
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
+			<param name="vm.vmdk.suffix" value="websphere-7.0.0.7" />
 		</antcall>
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
 			<property name="test.name" value="${test.ant.script.suite}" />
 		</ant>
 	</target>

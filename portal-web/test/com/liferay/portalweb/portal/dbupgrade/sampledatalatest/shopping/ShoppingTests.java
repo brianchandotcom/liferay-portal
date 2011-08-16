@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.category.CategoryTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.coupon.CouponTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.item.ItemTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.order.OrderTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +26,17 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTests extends BaseTests {
+public class ShoppingTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTest(CategoryTests.suite());
+		testSuite.addTest(CouponTests.suite());
+		testSuite.addTest(ItemTests.suite());
+		testSuite.addTest(OrderTests.suite());
 
 		return testSuite;
- 	}
+	}
 
 }

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledata606.calendar.calendarevent;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +22,18 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTests extends BaseTests {
+public class CalendarEventTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTestSuite(AddCommunityCalendarEventTest.class);
+		testSuite.addTestSuite(AddPageCalendarEventTest.class);
+		testSuite.addTestSuite(AddPortletCalendarEventTest.class);
+		testSuite.addTestSuite(AddCalendarEventTest.class);
+		testSuite.addTestSuite(ViewCalendarEventTest.class);
 
 		return testSuite;
- 	}
+	}
 
 }

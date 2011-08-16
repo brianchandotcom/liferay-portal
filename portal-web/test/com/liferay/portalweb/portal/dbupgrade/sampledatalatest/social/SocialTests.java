@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledata606.social;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.social.activities.ActivitiesTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.social.relation.RelationTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.social.request.RequestTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +25,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTests extends BaseTests {
+public class SocialTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTest(ActivitiesTests.suite());
+		testSuite.addTest(RelationTests.suite());
+		testSuite.addTest(RequestTests.suite());
 
 		return testSuite;
- 	}
+	}
 
 }

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledata606.tags.messageboards;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +22,25 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTests extends BaseTests {
+public class MessageBoardsTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTestSuite(AddCommunityTagsMBTest.class);
+		testSuite.addTestSuite(AddPageMBTest.class);
+		testSuite.addTestSuite(AddPortletMBTest.class);
+		testSuite.addTestSuite(AddMBCategoryTest.class);
+		testSuite.addTestSuite(AddMBMessage1Tag1Test.class);
+		testSuite.addTestSuite(AddMBMessage2Tag2Test.class);
+		testSuite.addTestSuite(AddMBMessage3Tag3Test.class);
+		testSuite.addTestSuite(AddMBMessageATagTest.class);
+		testSuite.addTestSuite(AddMBMessageBTagTest.class);
+		testSuite.addTestSuite(AddMBMessageCTagTest.class);
+		testSuite.addTestSuite(SearchTagsTest.class);
+		testSuite.addTestSuite(ViewTagsTest.class);
 
 		return testSuite;
- 	}
+	}
 
 }

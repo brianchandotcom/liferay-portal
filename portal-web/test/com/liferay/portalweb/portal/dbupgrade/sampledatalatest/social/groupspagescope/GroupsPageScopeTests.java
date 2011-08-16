@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledata606.social.groupspagescope;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +22,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTests extends BaseTests {
+public class GroupsPageScopeTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTestSuite(ViewGroupsPageScopeTest.class);
 
 		return testSuite;
- 	}
+	}
 
 }

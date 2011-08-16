@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledata606.expando.webform;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +22,23 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTests extends BaseTests {
+public class WebFormTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTestSuite(AddCommunityExpandoWebFormTest.class);
+		testSuite.addTestSuite(AddPageWFTest.class);
+		testSuite.addTestSuite(AddPortletWFTest.class);
+		testSuite.addTestSuite(AddFormFieldRadioTest.class);
+		testSuite.addTestSuite(AddFormFieldParagraphTest.class);
+		testSuite.addTestSuite(AddFormFieldCheckboxTest.class);
+		testSuite.addTestSuite(SendForm1Test.class);
+		testSuite.addTestSuite(SendForm2Test.class);
+		testSuite.addTestSuite(SendForm3Test.class);
+		testSuite.addTestSuite(ViewWebFormTest.class);
 
 		return testSuite;
- 	}
+	}
 
 }

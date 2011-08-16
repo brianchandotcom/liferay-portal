@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.order;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +22,21 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTests extends BaseTests {
+public class OrderTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTestSuite(AddCommunityShoppingOrderTest.class);
+		testSuite.addTestSuite(AddPageShoppingOrderTest.class);
+		testSuite.addTestSuite(AddPortletShoppingOrderTest.class);
+		testSuite.addTestSuite(AddCategoryTest.class);
+		testSuite.addTestSuite(AddCategoryItemTest.class);
+		testSuite.addTestSuite(AddToShoppingCartCategoryItemTest.class);
+		testSuite.addTestSuite(CheckOutOrderTest.class);
+		testSuite.addTestSuite(ViewCheckOutOrderTest.class);
 
 		return testSuite;
- 	}
+	}
 
 }

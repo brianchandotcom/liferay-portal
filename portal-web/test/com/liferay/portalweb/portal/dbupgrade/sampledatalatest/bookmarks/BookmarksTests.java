@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledata606.bookmarks;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.bookmarks.bookmarksentry.BookmarksEntryTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.bookmarks.bookmarksfolder.BookmarksFolderTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +24,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTests extends BaseTests {
+public class BookmarksTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTest(BookmarksEntryTests.suite());
+		testSuite.addTest(BookmarksFolderTests.suite());
 
 		return testSuite;
- 	}
+	}
 
 }

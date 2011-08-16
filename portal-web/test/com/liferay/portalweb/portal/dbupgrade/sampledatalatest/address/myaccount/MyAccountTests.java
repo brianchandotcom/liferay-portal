@@ -12,25 +12,26 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.address.myaccount;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Oriana Tham
  */
-public class WikiTests extends BaseTests {
+public class MyAccountTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTestSuite(AddAddress1MyAccountTest.class);
+		testSuite.addTestSuite(AddAddress2MyAccountTest.class);
+		testSuite.addTestSuite(AddAddress3MyAccountTest.class);
 
 		return testSuite;
- 	}
+	}
 
 }

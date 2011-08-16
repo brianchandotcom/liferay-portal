@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki;
+package com.liferay.portalweb.portal.dbupgrade.sampledata606.expando.webcontent;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage.WikiPageTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +22,24 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTests extends BaseTests {
+public class WebContentTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTestSuite(AddCommunityExpandoWebContentTest.class);
+		testSuite.addTestSuite(AddPageWCDTest.class);
+		testSuite.addTestSuite(AddPortletWCDTest.class);
+		testSuite.addTestSuite(AddStructureExpandoTest.class);
+		testSuite.addTestSuite(AddTemplateExpandoTest.class);
+		testSuite.addTestSuite(AddWebContentExpandoTest.class);
+		testSuite.addTestSuite(SelectWebContentExpandoTest.class);
+		testSuite.addTestSuite(CreateAccountExpando1Test.class);
+		testSuite.addTestSuite(CreateAccountExpando2Test.class);
+		testSuite.addTestSuite(CreateAccountExpando3Test.class);
+		testSuite.addTestSuite(ViewWebContentExpandoTest.class);
 
 		return testSuite;
- 	}
+	}
 
 }

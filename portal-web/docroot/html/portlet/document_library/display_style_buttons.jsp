@@ -77,15 +77,18 @@ String keywords = ParamUtil.getString(request, "keywords");
 			children: [
 				{
 					handler: A.bind(onButtonClick, null, 'icon'),
-					icon: 'display-icon'
+					icon: 'display-icon',
+					title: '<liferay-ui:message key="icon-view" />'
 				},
 				{
 					handler: A.bind(onButtonClick, null, 'descriptive'),
-					icon: 'display-descriptive'
+					icon: 'display-descriptive',
+					title: '<liferay-ui:message key="descriptive-view" />'
 				},
 				{
 					handler: A.bind(onButtonClick, null, 'list'),
-					icon: 'display-list'
+					icon: 'display-list',
+					title: '<liferay-ui:message key="list-view" />'
 				}
 			]
 		}

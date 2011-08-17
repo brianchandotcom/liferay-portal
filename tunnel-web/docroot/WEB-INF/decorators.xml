@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf8"?>
+
+<decorators defaultdir="/doc">
+
+	<decorator name="jsonws" page="jsonws-decorator.jsp">
+		<pattern>/jsonws</pattern>
+		<pattern>/jsonws/</pattern>
+	</decorator>
+
+</decorators>

@@ -2731,6 +2731,17 @@
 		</comments>
 	</library>
 	<library>
+		<file-name>portal/sitemesh.jar</file-name>
+		<version>2.4.2</version>
+		<project-name>Sitemesh</project-name>
+		<project-url>http://www.sitemesh.org/</project-url>
+		<licenses>
+			<license>
+				<license-name>The Apache Software License, Version 1.1</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>portal/slf4j-api.jar</file-name>
 		<version>1.5.11</version>
 		<project-name>SLF4J</project-name>

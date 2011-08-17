@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MethodParameterNamesResolverUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -24,7 +25,8 @@ import java.lang.reflect.Method;
  * @author Igor Spasic
  */
 public class JSONWebServiceActionConfig
-	implements Comparable<JSONWebServiceActionConfig> {
+	implements Comparable<JSONWebServiceActionConfig>,
+	JSONWebServiceActionMapping {
 
 	public JSONWebServiceActionConfig(
 		Class<?> actionClass, Method actionMethod, String path, String method) {
@@ -42,13 +44,12 @@ public class JSONWebServiceActionConfig
 		StringBundler sb = new StringBundler(_parameterNames.length * 2 + 4);
 
 		sb.append(_path);
-		sb.append(CharPool.PLUS);
+		sb.append(CharPool.MINUS);
 		sb.append(_parameterNames.length);
-		sb.append(CharPool.PLUS);
 
 		for (String parameterName : _parameterNames) {
+			sb.append(CharPool.MINUS);
 			sb.append(parameterName);
-			sb.append(CharPool.PLUS);
 		}
 
 		_fullPath = sb.toString();
@@ -82,6 +83,10 @@ public class JSONWebServiceActionConfig
 
 	public String getPath() {
 		return _path;
+	}
+
+	public String getSignature() {
+		return _fullPath;
 	}
 
 	@Override

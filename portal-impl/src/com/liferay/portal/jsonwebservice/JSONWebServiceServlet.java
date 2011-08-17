@@ -14,15 +14,12 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -35,10 +32,10 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -63,61 +60,57 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		String path = GetterUtil.getString(request.getPathInfo());
 
-		if (path.equals("/dump")) {
-			dumpMappings(response);
-		}
-		else {
-			super.service(request, response);
-		}
-	}
+		if (path.equals(StringPool.SLASH) || path.equals(StringPool.BLANK)) {
 
-	protected void dumpMappings(HttpServletResponse response)
-		throws IOException {
+			String uri = request.getRequestURI();
 
-		List<String[]> mappings =
-			JSONWebServiceActionsManagerUtil.dumpMappings();
+			int secureIndex = uri.indexOf("/secure/");
 
-		StringBundler sb = new StringBundler(mappings.size() * 6 + 2);
+			if (secureIndex != -1) {
 
-		sb.append("<html><body><table border=\"1\">");
+				uri = uri.substring(0, secureIndex) + uri.substring(secureIndex + 7);
 
-		for (String[] mapping : mappings) {
-			sb.append("<tr><td>");
+				String query = request.getQueryString();
 
-			if (mapping[0] == null) {
-				sb.append(StringPool.STAR);
+				if (query != null) {
+					uri += StringPool.QUESTION + query;
+				}
+
+				response.sendRedirect(uri);
+
+				return;
+			}
+
+			List<JSONWebServiceActionMapping> mappings =
+				JSONWebServiceActionsManagerUtil.getMappings();
+
+			String action = request.getParameter("action");
+
+			RequestDispatcher requestDispatcher = null;
+
+			if (action == null) {
+				request.setAttribute("mappings", mappings);
+
+				requestDispatcher =
+					request.getRequestDispatcher("/doc/jsonws-toc.jsp");
 			}
 			else {
-				sb.append(mapping[0]);
+				JSONWebServiceActionMapping jsonWebServiceActionMapping =
+					JSONWebServiceActionsManagerUtil.lookupMapping(action);
+
+				request.setAttribute("action", jsonWebServiceActionMapping);
+
+				requestDispatcher =
+					request.getRequestDispatcher("/doc/jsonws-entry.jsp");
+
 			}
 
-			sb.append("</td><td>");
-			sb.append(mapping[1]);
-			sb.append("</td><td>");
+			requestDispatcher.forward(request, response);
 
-			String classMethodName = mapping[2];
-
-			classMethodName = StringUtil.replace(
-				classMethodName, "com.liferay.portal.", "c.l.p.");
-			classMethodName = StringUtil.replace(
-				classMethodName, "com.liferay.", "c.l.");
-
-			sb.append(classMethodName);
-			sb.append("</td></tr>");
+			return;
 		}
 
-		sb.append("</table></body></html>");
-
-		response.setContentType(ContentTypes.TEXT_HTML);
-		response.setHeader(
-			HttpHeaders.CACHE_CONTROL,
-			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-
-		PrintWriter printWriter = response.getWriter();
-
-		printWriter.write(sb.toString());
-
-		printWriter.close();
+		super.service(request, response);
 	}
 
 	@Override

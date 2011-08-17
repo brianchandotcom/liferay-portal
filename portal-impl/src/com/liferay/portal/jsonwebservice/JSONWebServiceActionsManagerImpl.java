@@ -15,6 +15,7 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.BinarySearch;
@@ -37,39 +38,16 @@ import javax.servlet.http.HttpServletRequest;
 public class JSONWebServiceActionsManagerImpl
 	implements JSONWebServiceActionsManager {
 
-	public List<String[]> dumpMappings() {
-		List<String[]> mappings = new ArrayList<String[]>();
+	public List<JSONWebServiceActionMapping> getMappings() {
+
+		List<JSONWebServiceActionMapping> mappings =
+			new ArrayList<JSONWebServiceActionMapping>(
+				_jsonWebServiceActionConfigs.size());
 
 		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
-				_jsonWebServiceActionConfigs) {
+			_jsonWebServiceActionConfigs) {
 
-			String[] parameterNames =
-				jsonWebServiceActionConfig.getParameterNames();
-
-			Class<?> actionClass = jsonWebServiceActionConfig.getActionClass();
-			Method actionMethod = jsonWebServiceActionConfig.getActionMethod();
-
-			String methodName = actionMethod.getName();
-
-			methodName += "(";
-
-			for (int i = 0; i < parameterNames.length; i++) {
-				if (i != 0) {
-					methodName += ", ";
-				}
-
-				methodName += parameterNames[i];
-			}
-
-			methodName += ")";
-
-			String[] mapping = new String[] {
-				jsonWebServiceActionConfig.getMethod(),
-				jsonWebServiceActionConfig.getPath(),
-				actionClass.getName() + '#' + methodName
-			};
-
-			mappings.add(mapping);
+			mappings.add(jsonWebServiceActionConfig);
 		}
 
 		return mappings;
@@ -128,6 +106,17 @@ public class JSONWebServiceActionsManagerImpl
 
 		return new JSONWebServiceActionImpl(
 			jsonWebServiceActionConfig, jsonWebServiceActionParameters);
+	}
+
+	public JSONWebServiceActionMapping lookupMapping(String signature) {
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig
+			: _jsonWebServiceActionConfigs) {
+
+			if (jsonWebServiceActionConfig.getSignature().equals(signature)) {
+				return jsonWebServiceActionConfig;
+			}
+		}
+		return null;
 	}
 
 	public void registerJSONWebServiceAction(

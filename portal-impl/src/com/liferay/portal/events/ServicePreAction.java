@@ -1060,7 +1060,7 @@ public class ServicePreAction extends Action {
 				}
 
 				boolean isViewableGroup = LayoutPermissionUtil.contains(
-					permissionChecker, layout.getLayoutId(),
+					permissionChecker, layout.getGroupId(),
 					layout.isPrivateLayout(), layout.getLayoutId(),
 					controlPanelCategory, ActionKeys.VIEW);
 

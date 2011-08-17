@@ -90,6 +90,12 @@ public class ScriptTag extends BaseScriptTag {
 	}
 
 	@Override
+	protected void cleanUp() {
+		setPosition(null);
+		setUse(null);
+	}
+
+	@Override
 	public int doEndTag() throws JspException {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
@@ -146,11 +152,6 @@ public class ScriptTag extends BaseScriptTag {
 				cleanUp();
 			}
 		}
-	}
-
-	@Override
-	public String getPosition() {
-		return getPositionValue();
 	}
 
 	protected void processEndTag(ScriptData scriptData) throws Exception {

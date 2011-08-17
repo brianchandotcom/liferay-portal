@@ -750,6 +750,19 @@ public class GroupFinderImpl
 	protected String replaceJoinAndWhere(
 		String sql, LinkedHashMap<String, Object> params) {
 
+		if (params.isEmpty()) {
+			return StringUtil.replace(
+				sql,
+				new String[] {
+					"[$JOIN$]",
+					"[$WHERE$]"
+				},
+				new String[] {
+					StringPool.BLANK,
+					StringPool.BLANK
+				});
+		}
+
 		StringBundler sb = new StringBundler(params.size() + 1);
 
 		sb.append(sql);

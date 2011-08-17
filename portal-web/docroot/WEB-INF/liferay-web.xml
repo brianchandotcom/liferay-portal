@@ -485,6 +485,12 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Auto Login Filter</filter-name>
+		<url-pattern>/osgi/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Auto Login Filter</filter-name>
 		<url-pattern>/user/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
@@ -552,6 +558,12 @@
 	<filter-mapping>
 		<filter-name>ETag Filter</filter-name>
 		<url-pattern>/group/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>ETag Filter</filter-name>
+		<url-pattern>/osgi/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
@@ -713,6 +725,12 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Secure Main Servlet Filter</filter-name>
+		<url-pattern>/osgi/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Secure Main Servlet Filter</filter-name>
 		<url-pattern>/user/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
@@ -756,6 +774,12 @@
 	<filter-mapping>
 		<filter-name>GZip Filter</filter-name>
 		<url-pattern>/language/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>GZip Filter</filter-name>
+		<url-pattern>/osgi/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
@@ -805,6 +829,12 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Theme Preview Filter</filter-name>
+		<url-pattern>/osgi/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Theme Preview Filter</filter-name>
 		<url-pattern>/user/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
@@ -830,6 +860,12 @@
 	<filter-mapping>
 		<filter-name>Strip Filter</filter-name>
 		<url-pattern>/group/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Strip Filter</filter-name>
+		<url-pattern>/osgi/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
@@ -917,6 +953,12 @@
 	<filter-mapping>
 		<filter-name>Monitoring Filter</filter-name>
 		<url-pattern>/group/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Monitoring Filter</filter-name>
+		<url-pattern>/osgi/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>

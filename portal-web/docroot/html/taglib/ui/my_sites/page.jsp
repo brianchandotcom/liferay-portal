@@ -26,6 +26,7 @@ if (max <= 0) {
 }
 
 List<Group> mySites = user.getMySites(max);
+String _ORGANIZATION_NAME_DELIMETER = " LFR_ORGANIZATION ";
 %>
 
 <c:if test="<%= !mySites.isEmpty() %>">
@@ -202,6 +203,10 @@ List<Group> mySites = user.getMySites(max);
 									else {
 										siteName = mySite.getName();
 									}
+
+									if (siteName.indexOf(_ORGANIZATION_NAME_DELIMETER) != -1) {
+										siteName = siteName.substring(siteName.indexOf(_ORGANIZATION_NAME_DELIMETER) + _ORGANIZATION_NAME_DELIMETER.length());
+									}
 									%>
 
 									<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
@@ -242,6 +247,10 @@ List<Group> mySites = user.getMySites(max);
 									}
 									else {
 										siteName = mySite.getName();
+									}
+
+									if (siteName.indexOf(_ORGANIZATION_NAME_DELIMETER) != -1) {
+										siteName = siteName.substring(siteName.indexOf(_ORGANIZATION_NAME_DELIMETER) + _ORGANIZATION_NAME_DELIMETER.length());
 									}
 									%>
 

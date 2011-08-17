@@ -72,7 +72,7 @@ redirectURL.setParameter("title", HttpUtil.encodeURL(title));
 PortletURL addPageURL = renderResponse.createRenderURL();
 
 addPageURL.setParameter("struts_action", "/wiki/edit_page");
-addPageURL.setParameter("redirect", String.valueOf(redirectURL));
+addPageURL.setParameter("redirect", redirectURL.toString());
 addPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 addPageURL.setParameter("title", StringPool.BLANK);
 addPageURL.setParameter("editTitle", "1");
@@ -84,7 +84,7 @@ if (wikiPage != null) {
 PortletURL editPageURL = renderResponse.createRenderURL();
 
 editPageURL.setParameter("struts_action", "/wiki/edit_page");
-editPageURL.setParameter("redirect", String.valueOf(redirectURL));
+editPageURL.setParameter("redirect", redirectURL.toString());
 editPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 editPageURL.setParameter("title", title);
 
@@ -170,7 +170,7 @@ if (wikiPage != null) {
 		PortletURL viewPageDetailsURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
 		viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details");
-		viewPageDetailsURL.setParameter("redirect", String.valueOf(redirectURL));
+		viewPageDetailsURL.setParameter("redirect", redirectURL.toString());
 		%>
 
 		<liferay-ui:icon
@@ -340,7 +340,7 @@ if (wikiPage != null) {
 					formAction="<%= discussionURL %>"
 					formName="fm2"
 					ratingsEnabled="<%= enableCommentRatings %>"
-					redirect="<%= String.valueOf(redirectURL) %>"
+					redirect="<%= redirectURL.toString() %>"
 					subject="<%= wikiPage.getTitle() %>"
 					userId="<%= wikiPage.getUserId() %>"
 				/>

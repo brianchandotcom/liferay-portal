@@ -302,32 +302,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									userName="<%= HtmlUtil.escape(message.getUserName()) %>"
 									displayStyle="<%= 2 %>"
 								/>
-
-								<div class="lfr-discussion-posted-on">
-									<c:choose>
-										<c:when test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
-											<%= LanguageUtil.format(pageContext, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate())) %>
-										</c:when>
-										<c:otherwise>
-
-											<%
-											MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParentMessageId());
-
-											StringBundler sb = new StringBundler(7);
-
-											sb.append("<a href=\"#");
-											sb.append(randomNamespace);
-											sb.append("message_");
-											sb.append(parentMessage.getMessageId());
-											sb.append("\">");
-											sb.append(HtmlUtil.escape(parentMessage.getUserName()));
-											sb.append("</a>");
-											%>
-
-											<%= LanguageUtil.format(pageContext, "posted-on-x-in-reply-to-x", new Object[] {dateFormatDateTime.format(message.getModifiedDate()), sb.toString()}) %>
-										</c:otherwise>
-									</c:choose>
-								</div>
 							</div>
 
 							<aui:column cssClass="lfr-discussion-body">
@@ -487,6 +461,32 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									</c:if>
 
 								</aui:layout>
+
+								<div class="lfr-discussion-posted-on">
+									<c:choose>
+										<c:when test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
+											<%= LanguageUtil.format(pageContext, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate())) %>
+										</c:when>
+										<c:otherwise>
+
+											<%
+											MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParentMessageId());
+
+											StringBundler sb = new StringBundler(7);
+
+											sb.append("<a href=\"#");
+											sb.append(randomNamespace);
+											sb.append("message_");
+											sb.append(parentMessage.getMessageId());
+											sb.append("\">");
+											sb.append(HtmlUtil.escape(parentMessage.getUserName()));
+											sb.append("</a>");
+											%>
+
+											<%= LanguageUtil.format(pageContext, "posted-on-x-in-reply-to-x", new Object[] {dateFormatDateTime.format(message.getModifiedDate()), sb.toString()}) %>
+										</c:otherwise>
+									</c:choose>
+								</div>
 							</aui:column>
 						</div>
 

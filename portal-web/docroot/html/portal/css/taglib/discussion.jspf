@@ -27,13 +27,20 @@
 .taglib-discussion .lfr-discussion {
 	border-bottom: 1px solid #DDD;
 	margin: 0 0 5px;
-	padding: 5px 0 5px 60px;
+	padding: 5px 0 20px 60px;
 	position: relative;
 	width: auto;
 }
 
 .taglib-discussion .lfr-discussion.last {
 	border-bottom-width: 0;
+}
+
+.taglib-discussion .lfr-discussion-details {
+	left: 5px;
+	position: absolute;
+	top: 0px;
+	width: 65px;
 }
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display .user-details .user-name, .taglib-discussion .lfr-discussion-details .taglib-user-display .user-profile-image {
@@ -55,16 +62,7 @@
 }
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display .user-profile-image img {
-	left: 5px;
-	position: absolute;
-	top: 5px;
 	width: 50px;
-}
-
-.taglib-discussion .lfr-discussion-details .lfr-discussion-posted-on {
-	color: #999;
-	float: right;
-	font-size: .9em;
 }
 
 .taglib-discussion .lfr-discussion-body {
@@ -73,8 +71,14 @@
 	padding: 5px 0 5px;
 }
 
+.taglib-discussion .lfr-discussion-body .lfr-discussion-posted-on {
+	color: #999;
+	float: right;
+	font-size: .9em;
+}
+
 .taglib-discussion .lfr-discussion-message {
-	margin-right: 1em;
+	margin: 0 1em 0 0.5em;
 	padding-bottom: 1em;
 }
 

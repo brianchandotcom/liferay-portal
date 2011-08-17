@@ -670,11 +670,10 @@ public class ServicePreAction extends Action {
 			guestLayouts = (List<Layout>)viewableLayouts[1];
 
 			if (layouts == null) {
-				layouts = guestLayouts;
+				return guestLayouts;
 			}
-			else {
-				layouts.addAll(0, guestLayouts);
-			}
+
+			layouts.addAll(0, guestLayouts);
 		}
 		else {
 			HttpSession session = request.getSession();

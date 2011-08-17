@@ -785,14 +785,17 @@ AUI().add(
 
 								var movieBoundingBox = instance._movieBoundingBox;
 
+								var metadataContainer = instance._metadataContainer;
+								var metadataExplanationContainer = instance._metadataExplanationContainer;
+
 								if (fallback && fallback.hasClass(newUploaderClass)) {
 									if (movieBoundingBox) {
 										movieBoundingBox.hide();
 									}
 
-									if (instance._metadataContainer && instance._metadataExplanationContainer) {
-										instance._metadataContainer.hide();
-										instance._metadataExplanationContainer.hide();
+									if (metadataContainer && metadataExplanationContainer) {
+										metadataContainer.hide();
+										metadataExplanationContainer.hide();
 									}
 
 									instance._container.hide();
@@ -816,7 +819,7 @@ AUI().add(
 										movieBoundingBox.show();
 									}
 
-									if (instance._metadataContainer && instance._metadataExplanationContainer) {
+									if (metadataContainer && metadataExplanationContainer) {
 										var totalFiles = instance._fileList.all('li input[name=' + instance._namespace('selectUploadedFileCheckbox') + ']');
 
 										var selectedFiles = totalFiles.filter(':checked');
@@ -824,10 +827,10 @@ AUI().add(
 										var selectedFilesCount = selectedFiles.size();
 
 										if (selectedFilesCount > 0) {
-											instance._metadataContainer.show();
+											metadataContainer.show();
 										}
 										else {
-											instance._metadataExplanationContainer.show();
+											metadataExplanationContainer.show();
 										}
 									}
 
@@ -976,7 +979,10 @@ AUI().add(
 			_updateMetadataContainer: function() {
 				var instance = this;
 
-				if (instance._metadataContainer && instance._metadataExplanationContainer) {
+				var metadataContainer = instance._metadataContainer;
+				var metadataExplanationContainer = instance._metadataExplanationContainer;
+
+				if (metadataContainer && metadataExplanationContainer) {
 					var totalFiles = instance._fileList.all('li input[name=' + instance._namespace('selectUploadedFileCheckbox') + ']');
 
 					var totalFilesCount = totalFiles.size();
@@ -991,8 +997,8 @@ AUI().add(
 						selectedFileName = selectedFiles.item(0).attr('data-fileName');
 					}
 
-					if (instance._metadataContainer) {
-						instance._metadataContainer.toggle((selectedFilesCount > 0));
+					if (metadataContainer) {
+						metadataContainer.toggle((selectedFilesCount > 0));
 
 						var selectedFilesText = instance._noFilesSelectedText;
 
@@ -1006,15 +1012,15 @@ AUI().add(
 							selectedFilesText = instance._allFilesSelectedText;
 						}
 
-						var selectedFilesCountContainer = instance._metadataContainer.one('.selected-files-count');
+						var selectedFilesCountContainer = metadataContainer.one('.selected-files-count');
 
 						if (selectedFilesCountContainer != null) {
 							selectedFilesCountContainer.setContent(selectedFilesText);
 						}
 					}
 
-					if (instance._metadataExplanationContainer) {
-						instance._metadataExplanationContainer.toggle((!selectedFilesCount) && (totalFilesCount > 0));
+					if (metadataExplanationContainer) {
+						metadataExplanationContainer.toggle((!selectedFilesCount) && (totalFilesCount > 0));
 					}
 				}
 			},

@@ -348,7 +348,7 @@ for (int i = 0; i < results.size(); i++) {
 
 					folderDescriptionSearchEntry.setData(data);
 					folderDescriptionSearchEntry.setHref(rowURL.toString());
-					folderDescriptionSearchEntry.setName(folderTitle);
+					folderDescriptionSearchEntry.setName(curFolder.getDescription());
 
 					row.addSearchEntry(folderDescriptionSearchEntry);
 

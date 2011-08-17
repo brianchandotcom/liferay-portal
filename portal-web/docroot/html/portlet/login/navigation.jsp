@@ -65,7 +65,7 @@ if (Validator.isNotNull(strutsAction) && !strutsAction.equals("/login/login")) {
 				</portlet:renderURL>
 
 				<liferay-ui:icon
-					message="anonymous"
+					message="guest"
 					src='<%= themeDisplay.getPathThemeImages() + "/common/user_icon.png" %>'
 					url="<%= anonymousURL %>"
 				/>

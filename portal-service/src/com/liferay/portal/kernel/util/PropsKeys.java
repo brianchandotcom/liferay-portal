@@ -1178,6 +1178,8 @@ public interface PropsKeys {
 	public static final String LUCENE_STORE_JDBC_DIALECT = "lucene.store.jdbc.dialect.";
 
 	public static final String LUCENE_STORE_TYPE = "lucene.store.type";
+	
+	public static final String LUCENE_STORE_TYPE_FILE_FORCE_MMAP = "lucene.store.type.file.force.mmap";
 
 	public static final String MAIL_AUDIT_TRAIL = "mail.audit.trail";
 

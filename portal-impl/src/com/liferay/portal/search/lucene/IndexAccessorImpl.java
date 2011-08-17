@@ -55,6 +55,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.store.jdbc.JdbcDirectory;
 import org.apache.lucene.store.jdbc.JdbcStoreException;
@@ -320,7 +321,12 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private FSDirectory _getDirectory(String path) throws IOException {
-		return FSDirectory.open(new File(path));
+		if (PropsValues.LUCENE_STORE_TYPE_FILE_FORCE_MMAP) {
+			return new MMapDirectory(new File(path));
+		}
+		else {
+			return FSDirectory.open(new File(path));
+		}
 	}
 
 	private Directory _getLuceneDirFile() {

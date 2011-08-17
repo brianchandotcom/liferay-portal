@@ -400,10 +400,7 @@ public class MainServlet extends ActionServlet {
 		}
 		
 		try {
-		
-			long groupId = getGroupId(request);
-			
-			if (processSiteInactiveRequest(request, response, groupId)) {
+			if (processSiteInactiveRequest(request, response)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Processed site inactive request");
 				}
@@ -683,16 +680,6 @@ public class MainServlet extends ActionServlet {
 		return PortalInstances.getCompanyId(request);
 	}
 	
-	protected long getGroupId(HttpServletRequest request) 
-		throws PortalException, SystemException {
-
-		long plid = ParamUtil.getLong(request, "p_l_id");
-	
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-			
-		return layout.getGroupId();
-	}
-
 	protected String getPassword(HttpServletRequest request) {
 		return PortalUtil.getUserPassword(request);
 	}
@@ -1259,11 +1246,16 @@ public class MainServlet extends ActionServlet {
 	}
 	
 	protected boolean processSiteInactiveRequest(
-			HttpServletRequest request, HttpServletResponse response, 
-			long groupId)
+			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, PortalException, SystemException {
 
-		if (GroupLocalServiceUtil.getGroup(groupId).isActive()) {
+		long plid = ParamUtil.getLong(request, "p_l_id");
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		Group group = layout.getGroup();
+
+		if (group.isActive()) {
 			return false;
 		}
 	
@@ -1272,8 +1264,7 @@ public class MainServlet extends ActionServlet {
 		Locale locale = LocaleUtil.getDefault();
 	
 		String siteInactiveMessage = LanguageUtil.get(
-			locale,
-			"this-site-is-inactive-please-contact-the-administrator");
+			locale, "this-site-is-inactive-please-contact-the-administrator");
 	
 		String html = ContentUtil.get(
 			"com/liferay/portal/dependencies/site_inactive.html");

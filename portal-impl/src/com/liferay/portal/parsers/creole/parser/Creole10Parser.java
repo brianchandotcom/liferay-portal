@@ -16058,7 +16058,7 @@ public class Creole10Parser extends Parser {
 							if (failed) {
 								return node;
 							}
-							if (backtracking == 0) {
+							if ((backtracking == 0) && (l != null)) {
 								node.add(l);
 							}
 
@@ -16073,7 +16073,7 @@ public class Creole10Parser extends Parser {
 							if (failed) {
 								return node;
 							}
-							if (backtracking == 0) {
+							if ((backtracking == 0) && (i != null)) {
 								node.add(i);
 							}
 

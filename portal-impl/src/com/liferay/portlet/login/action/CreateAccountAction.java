@@ -57,6 +57,7 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -351,7 +352,7 @@ public class CreateAccountAction extends PortletAction {
 		User anonymousUser = UserLocalServiceUtil.getUserByEmailAddress(
 			themeDisplay.getCompanyId(), emailAddress);
 
-		UserServiceUtil.deleteUser(anonymousUser.getUserId());
+		UserLocalServiceUtil.deleteUser(anonymousUser.getUserId());
 
 		addUser(actionRequest, actionResponse);
 	}

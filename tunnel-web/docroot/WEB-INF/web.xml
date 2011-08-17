@@ -37,6 +37,10 @@
 			<param-value>REQUEST</param-value>
 		</init-param>
 	</filter>
+	<filter>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+	</filter>
 	<filter-mapping>
 		<filter-name>Invoker Filter - ERROR</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -56,6 +60,10 @@
 		<filter-name>Invoker Filter - REQUEST</filter-name>
 		<url-pattern>/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+			<filter-name>sitemesh</filter-name>
+			<url-pattern>/jsonws/*</url-pattern>
 	</filter-mapping>
 	<servlet>
 		<servlet-name>Atom Servlet</servlet-name>

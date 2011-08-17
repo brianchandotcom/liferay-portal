@@ -16,22 +16,23 @@ package com.liferay.portal.kernel.jsonwebservice;
 
 import java.lang.reflect.Method;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Igor Spasic
  */
-public interface JSONWebServiceActionsManager {
+public interface JSONWebServiceActionMapping {
 
-	public List<JSONWebServiceActionMapping> getMappings();
+	public Class<?> getActionClass();
 
-	public JSONWebServiceAction lookup(HttpServletRequest request);
+	public Method getActionMethod();
 
-	public JSONWebServiceActionMapping lookupMapping(String signature);
+	public String getMethod();
 
-	public void registerJSONWebServiceAction(
-		Class<?> actionClass, Method actionMethod, String path, String method);
+	public String[] getParameterNames();
+
+	public Class<?>[] getParameterTypes();
+
+	public String getPath();
+
+	public String getSignature();
 
 }

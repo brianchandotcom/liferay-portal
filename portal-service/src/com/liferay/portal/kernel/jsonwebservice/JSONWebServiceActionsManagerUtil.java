@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JSONWebServiceActionsManagerUtil {
 
-	public static List<String[]> dumpMappings() {
-		return _jsonWebServiceActionsManager.dumpMappings();
+	public static List<JSONWebServiceActionMapping> getMappings() {
+		return _jsonWebServiceActionsManager.getMappings();
 	}
 
 	public static JSONWebServiceActionsManager
@@ -37,6 +37,10 @@ public class JSONWebServiceActionsManagerUtil {
 
 	public static JSONWebServiceAction lookup(HttpServletRequest request) {
 		return getJSONWebServiceActionsManager().lookup(request);
+	}
+
+	public static JSONWebServiceActionMapping lookupMapping(String signature) {
+		return getJSONWebServiceActionsManager().lookupMapping(signature);
 	}
 
 	public static void registerJSONWebServiceAction(

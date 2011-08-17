@@ -29,7 +29,13 @@ public class TestMiscTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageTest.class);
 		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(AddPageDLTest.class);
+		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(ViewPortletTestMiscTest.class);
+		testSuite.addTestSuite(ViewActionResponseNormalStateMiscTest.class);
+		testSuite.addTestSuite(ViewActionResponseExclusiveStateMiscTest.class);
+		testSuite.addTestSuite(ViewResourceResponseMiscTest.class);
+		testSuite.addTestSuite(TearDownDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

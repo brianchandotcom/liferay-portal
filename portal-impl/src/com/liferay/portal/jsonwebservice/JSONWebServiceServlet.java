@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -59,7 +60,26 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		String path = GetterUtil.getString(request.getPathInfo());
 
-		if (path.equals("/") || path.equals("")) {
+		if (path.equals(StringPool.SLASH) || path.equals(StringPool.BLANK)) {
+
+			String uri = request.getRequestURI();
+
+			int secureIndex = uri.indexOf("/secure/");
+
+			if (secureIndex != -1) {
+
+				uri = uri.substring(0, secureIndex) + uri.substring(secureIndex + 7);
+
+				String query = request.getQueryString();
+
+				if (query != null) {
+					uri += StringPool.QUESTION + query;
+				}
+
+				response.sendRedirect(uri);
+
+				return;
+			}
 
 			List<JSONWebServiceActionMapping> mappings =
 				JSONWebServiceActionsManagerUtil.getMappings();

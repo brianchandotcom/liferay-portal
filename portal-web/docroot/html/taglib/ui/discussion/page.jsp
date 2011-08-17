@@ -73,6 +73,8 @@ else {
 }
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+String strutsAction = ParamUtil.getString(request, "struts_action");
 %>
 
 <div class="aui-helper-hidden lfr-message-response" id="<portlet:namespace />discussion-status-messages"></div>
@@ -168,7 +170,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							postReplyButtonLabel = LanguageUtil.get(pageContext, "reply-as");
 						}
 
-						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBDiscussion.class.getName())) {
+						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBDiscussion.class.getName()) && !strutsAction.contains("workflow")) {
 							postReplyButtonLabel = LanguageUtil.get(pageContext, "submit-for-publication");
 						}
 						%>

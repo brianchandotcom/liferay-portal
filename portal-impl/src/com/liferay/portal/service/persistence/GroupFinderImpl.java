@@ -751,7 +751,16 @@ public class GroupFinderImpl
 		String sql, LinkedHashMap<String, Object> params) {
 
 		if (params.isEmpty()) {
-			return sql;
+			return StringUtil.replace(
+				sql,
+				new String[] {
+					"[$JOIN$]",
+					"[$WHERE$]"
+				},
+				new String[] {
+					StringPool.BLANK,
+					StringPool.BLANK
+				});
 		}
 
 		StringBundler sb = new StringBundler(params.size() + 1);

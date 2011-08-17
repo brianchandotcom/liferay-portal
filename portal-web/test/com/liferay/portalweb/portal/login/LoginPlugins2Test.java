@@ -117,7 +117,7 @@ public class LoginPlugins2Test extends BaseTestCase {
 				Thread.sleep(5000);
 
 				boolean iAgreePresent = selenium.isElementPresent(
-						"//span/input");
+						"//input[@value='I Agree']");
 
 				if (!iAgreePresent) {
 					label = 2;

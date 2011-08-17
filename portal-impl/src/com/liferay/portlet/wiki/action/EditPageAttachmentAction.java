@@ -219,7 +219,8 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(
 			actionRequest);
 
-		long nodeId = ParamUtil.getLong(uploadRequest, "nodeId");
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+
 		File file = uploadRequest.getFile("file");
 		String sourceFileName = uploadRequest.getFileName("file");
 

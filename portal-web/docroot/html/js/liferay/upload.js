@@ -790,6 +790,11 @@ AUI().add(
 										movieBoundingBox.hide();
 									}
 
+									if (instance._metadataContainer && instance._metadataExplanationContainer) {
+										instance._metadataContainer.hide();
+										instance._metadataExplanationContainer.hide();
+									}
+
 									instance._container.hide();
 									instance._fallbackContainer.show();
 
@@ -809,6 +814,21 @@ AUI().add(
 								else {
 									if (movieBoundingBox) {
 										movieBoundingBox.show();
+									}
+
+									if (instance._metadataContainer && instance._metadataExplanationContainer) {
+										var totalFiles = instance._fileList.all('li input[name=' + instance._namespace('selectUploadedFileCheckbox') + ']');
+
+										var selectedFiles = totalFiles.filter(':checked');
+
+										var selectedFilesCount = selectedFiles.size();
+
+										if (selectedFilesCount > 0) {
+											instance._metadataContainer.show();
+										}
+										else {
+											instance._metadataExplanationContainer.show();
+										}
 									}
 
 									instance._container.show();
@@ -988,7 +1008,9 @@ AUI().add(
 
 						var selectedFilesCountContainer = instance._metadataContainer.one('.selected-files-count');
 
-						selectedFilesCountContainer.setContent(selectedFilesText);
+						if (selectedFilesCountContainer != null) {
+							selectedFilesCountContainer.setContent(selectedFilesText);
+						}
 					}
 
 					if (instance._metadataExplanationContainer) {

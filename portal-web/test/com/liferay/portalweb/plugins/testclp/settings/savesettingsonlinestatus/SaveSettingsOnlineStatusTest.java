@@ -55,6 +55,7 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 						"//div[@class='portlet-body']/table/tbody/tr[2]/td[4]"));
 				selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
 					RuntimeVariables.replace("Settings"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -82,8 +83,12 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 					continue;
 				}
 
+				assertTrue(selenium.isChecked("//input[@id='onlineStatus']"));
+				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='onlineStatus']",
 					RuntimeVariables.replace("Show me as online."));
+				assertFalse(selenium.isChecked("//input[@id='onlineStatus']"));
+				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.clickAt("//input[@id='saveSettings']",

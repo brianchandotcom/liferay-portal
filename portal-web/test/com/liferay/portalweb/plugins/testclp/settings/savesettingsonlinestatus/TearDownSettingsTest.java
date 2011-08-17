@@ -52,6 +52,7 @@ public class TearDownSettingsTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
 					RuntimeVariables.replace("Settings"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

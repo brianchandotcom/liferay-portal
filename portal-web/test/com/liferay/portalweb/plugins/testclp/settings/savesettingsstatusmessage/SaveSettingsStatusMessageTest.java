@@ -50,6 +50,7 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 				"//div[@class='portlet-body']/table/tbody/tr[2]/td[7]"));
 		selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
 			RuntimeVariables.replace("Settings"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -71,7 +72,6 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 		selenium.type("statusMessage",
 			RuntimeVariables.replace("status message."));
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(10000);
 		selenium.clickAt("//input[@id='saveSettings']",
 			RuntimeVariables.replace("Save Settings"));
 

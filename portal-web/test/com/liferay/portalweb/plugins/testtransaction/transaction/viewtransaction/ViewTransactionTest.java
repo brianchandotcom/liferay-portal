@@ -49,9 +49,13 @@ public class ViewTransactionTest extends BaseTestCase {
 				"BarLocalServiceUtil.addBar_Success=PASSED"));
 		assertTrue(selenium.isPartialText("//p[1]",
 				"BarLocalServiceUtil.addBarAndClassName_PortalRollback=PASSED"));
+		assertTrue(selenium.isPartialText("//p[1]",
+				"BarLocalServiceUtil.addBarAndClassName_PortletRollback=PASSED"));
 		assertTrue(selenium.isPartialText("//p[2]",
 				"PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_Success=PASSED"));
 		assertTrue(selenium.isPartialText("//p[2]",
 				"PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortalRollback=PASSED"));
+		assertTrue(selenium.isPartialText("//p[2]",
+				"PortletServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortletRollback=PASSED"));
 	}
 }

@@ -69,12 +69,30 @@ public class SA_DefineMARoleTest extends BaseTestCase {
 			RuntimeVariables.replace("label=Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//form/div[1]/div/table/tbody/tr/th/input",
-			RuntimeVariables.replace("Select All"));
-		selenium.clickAt("//form/div[2]/div/table/tbody/tr/th/input",
-			RuntimeVariables.replace("Select All"));
-		selenium.clickAt("//form/div[3]/div/table/tbody/tr/th/input",
-			RuntimeVariables.replace("Select All"));
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[1]"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[1]",
+			RuntimeVariables.replace("Select All [Message Boards]"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[1]"));
+		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[2]",
+			RuntimeVariables.replace("Select All [Message Board Category]"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
+		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[3]"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[3]",
+			RuntimeVariables.replace("Select All [Message Board Message]"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[3]"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

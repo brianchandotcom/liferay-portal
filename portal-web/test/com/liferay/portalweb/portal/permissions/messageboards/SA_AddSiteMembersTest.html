@@ -24,14 +24,9 @@
 	<td>Control Panel</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>link=Sites</td>
 	<td>Sites</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>Actions</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -44,27 +39,32 @@
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Manage Memberships</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Add Members</td>
-	<td>Add Members</td>
-</tr>
-<tr>
-	<td>clickAt</td>
 	<td>link=Add Members</td>
 	<td>Add Members</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>User</td>
 </tr>
@@ -84,7 +84,17 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_174_allRowIds']</td>
+	<td>Check All</td>
+</tr>
+<tr>
 	<td>clickAt</td>
+	<td>//input[@name='_174_allRowIds']</td>
+	<td>Check All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@name='_174_allRowIds']</td>
 	<td>Check All</td>
 </tr>
@@ -109,7 +119,17 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_174_allRowIds']</td>
+	<td>Check All</td>
+</tr>
+<tr>
 	<td>clickAt</td>
+	<td>//input[@name='_174_allRowIds']</td>
+	<td>Check All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@name='_174_allRowIds']</td>
 	<td>Check All</td>
 </tr>

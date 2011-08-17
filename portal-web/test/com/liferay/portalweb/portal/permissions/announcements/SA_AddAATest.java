@@ -49,8 +49,7 @@ public class SA_AddAATest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@class='lfr-portlet-toolbar']/span[2]/ul/li/strong/a",
-			RuntimeVariables.replace("Add"));
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -101,9 +100,12 @@ public class SA_AddAATest extends BaseTestCase {
 			RuntimeVariables.replace("label=1987"));
 		selenium.select("//select[@id='_125_male']",
 			RuntimeVariables.replace("label=Female"));
-		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_125_passwordLink']",
+				"Password"));
 		selenium.clickAt("//a[@id='_125_passwordLink']",
 			RuntimeVariables.replace("Password"));
 
@@ -130,7 +132,8 @@ public class SA_AddAATest extends BaseTestCase {
 		selenium.type("//input[@id='_125_password2']",
 			RuntimeVariables.replace("password"));
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

@@ -10,7 +10,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/site-name/</td>
 	<td></td>
 </tr>
 <tr>
@@ -24,7 +24,7 @@
 	<td>Message Boards Permissions Page</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>assertText</td>
 	<td>//a/strong</td>
 	<td>Category Name</td>
 </tr>
@@ -34,17 +34,27 @@
 	<td>Add Category</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Edit</td>
 </tr>
@@ -60,7 +70,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/site-name/</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,9 +89,24 @@
 	<td>Permissions</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Permissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -100,7 +125,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/site-name/</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,9 +174,19 @@
 	<td>Category Name</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>

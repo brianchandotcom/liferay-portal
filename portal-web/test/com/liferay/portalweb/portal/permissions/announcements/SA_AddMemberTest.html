@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-portlet-toolbar']/span[2]/ul/li/strong/a</td>
+	<td>link=Add</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -99,9 +99,14 @@
 	<td>label=Male</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_passwordLink']</td>
+	<td>Password</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -124,7 +129,7 @@
 	<td>password</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>

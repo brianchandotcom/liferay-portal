@@ -46,24 +46,7 @@ public class SA_AddSiteMembersTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[@title='Actions']/ul/li/strong/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
@@ -76,9 +59,8 @@ public class SA_AddSiteMembersTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Manage Memberships")
-										.equals(selenium.getText(
-								"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"))) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -89,25 +71,12 @@ public class SA_AddSiteMembersTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
-			RuntimeVariables.replace("Manage Memberships"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Add Members")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		assertEquals(RuntimeVariables.replace("Manage Memberships"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Add Members",
 			RuntimeVariables.replace("Add Members"));
@@ -130,6 +99,9 @@ public class SA_AddSiteMembersTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("User"));
 		selenium.waitForPageToLoad("30000");
@@ -141,8 +113,12 @@ public class SA_AddSiteMembersTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isChecked("//input[@name='_174_allRowIds']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='_174_allRowIds']",
 			RuntimeVariables.replace("Check All"));
+		assertTrue(selenium.isChecked("//input[@name='_174_allRowIds']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Update Associations']",
 			RuntimeVariables.replace("Update Associations"));
 		selenium.waitForPageToLoad("30000");
@@ -157,8 +133,12 @@ public class SA_AddSiteMembersTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isChecked("//input[@name='_174_allRowIds']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='_174_allRowIds']",
 			RuntimeVariables.replace("Check All"));
+		assertTrue(selenium.isChecked("//input[@name='_174_allRowIds']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Update Associations']",
 			RuntimeVariables.replace("Update Associations"));
 		selenium.waitForPageToLoad("30000");

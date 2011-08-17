@@ -44,6 +44,7 @@ public class Guest_ViewTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
 		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 		assertTrue(selenium.isVisible("//a[@id='sign-in']"));
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AA_AssertActionsTest extends BaseTestCase {
 	public void testAA_AssertActions() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -57,7 +57,7 @@ public class AA_AssertActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Show")) {
+				if (selenium.isVisible("link=Show")) {
 					break;
 				}
 			}
@@ -76,7 +76,7 @@ public class AA_AssertActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Hide")) {
+				if (selenium.isVisible("link=Hide")) {
 					break;
 				}
 			}
@@ -95,7 +95,7 @@ public class AA_AssertActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Show")) {
+				if (selenium.isVisible("link=Show")) {
 					break;
 				}
 			}

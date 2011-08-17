@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SA_AddGeneralAnnouncementTest extends BaseTestCase {
 	public void testSA_AddGeneralAnnouncement() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -43,43 +43,11 @@ public class SA_AddGeneralAnnouncementTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Permissions Page",
 			RuntimeVariables.replace("Announcements Permissions Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Manage Entries")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_84_distributionScope']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("label=General"));
@@ -104,5 +72,10 @@ public class SA_AddGeneralAnnouncementTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test General Announcement"),
 			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("General"),
+			selenium.getText("//tr[3]/td[2]/a"));
+		assertTrue(selenium.isElementPresent("//tr[3]/td[3]/a"));
+		assertTrue(selenium.isElementPresent("//tr[3]/td[4]/a"));
+		assertTrue(selenium.isElementPresent("//tr[3]/td[5]/a"));
 	}
 }

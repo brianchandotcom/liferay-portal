@@ -48,8 +48,7 @@ public class SA_AddSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@class='lfr-portlet-toolbar']/span[2]/ul/li/strong/a",
-			RuntimeVariables.replace("Add"));
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AA_AssertViewTest extends BaseTestCase {
 	public void testAA_AssertView() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -45,36 +45,35 @@ public class AA_AssertViewTest extends BaseTestCase {
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Test General Announcement"));
-		assertTrue(selenium.isTextPresent(
+		assertEquals(RuntimeVariables.replace("Test AA Announcement"),
+			selenium.getText("xPath=(//h3[@class='entry-title'])[1]/a"));
+		assertEquals(RuntimeVariables.replace("Test General Announcement"),
+			selenium.getText("xPath=(//h3[@class='entry-title'])[2]/a"));
+		assertEquals(RuntimeVariables.replace("Announcements Administrator"),
+			selenium.getText("xPath=(//span[@class='entry-scope'])[1]"));
+		assertEquals(RuntimeVariables.replace("General"),
+			selenium.getText("xPath=(//span[@class='entry-scope'])[2]"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//p[@class=' entry-content entry-type-general'])[1]",
+				"This is a test AA Announcement."));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//p[@class=' entry-content entry-type-general'])[2]",
 				"This is a test General Announcement."));
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_84_distributionScope']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("label=Announcements Administrator"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test AA Announcement"),
+			selenium.getText("//tr[3]/td/a"));
+		selenium.select("//select[@id='_84_distributionScope']",
+			RuntimeVariables.replace("label=Guest"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Test Guest Announcement"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("label=Site Member"));

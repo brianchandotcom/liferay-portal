@@ -128,7 +128,7 @@ boolean createNewPage = true;
 
 			rowURL.setParameter("struts_action", "/wiki/view");
 			rowURL.setParameter("nodeName", node.getName());
-			rowURL.setParameter("title", title);
+			rowURL.setParameter("title", HttpUtil.encodeURL(title));
 
 			row.addText(curNode.getName(), rowURL);
 

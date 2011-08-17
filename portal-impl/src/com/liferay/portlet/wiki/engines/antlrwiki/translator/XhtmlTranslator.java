@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.engines.antlrwiki.translator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -228,7 +229,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		String pageTitle = linkNode.getLink();
 
 		if ((page != null) && (_viewPageURL != null)) {
-			_viewPageURL.setParameter("title", pageTitle);
+			_viewPageURL.setParameter("title", HttpUtil.encodeURL(pageTitle));
 
 			append(_viewPageURL.toString());
 		}

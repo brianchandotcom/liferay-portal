@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -185,7 +186,7 @@ public class WikiIndexer extends BaseIndexer {
 
 		portletURL.setParameter("struts_action", "/wiki/view");
 		portletURL.setParameter("nodeId", nodeId);
-		portletURL.setParameter("title", title);
+		portletURL.setParameter("title", HttpUtil.encodeURL(title));
 
 		return new Summary(title, content, portletURL);
 	}

@@ -10,6 +10,11 @@ AUI().add(
 			undo: 'undo_layout_revision'
 		};
 
+		var MAP_TEXT_REVISION = {
+			redo: Liferay.Language.get('are-you-sure-you-want-to-redo-your-last-changes'),
+			undo: Liferay.Language.get('are-you-sure-you-want-to-undo-your-last-changes')
+		};
+
 		A.mix(
 			StagingBar,
 			{

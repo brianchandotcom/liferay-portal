@@ -134,7 +134,6 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 			List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(themeDisplay.getScopeGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true);
 
 			for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
-
 				PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, classNameFileEntry.getValue(), allAssetCategoryIds, allAssetTagNames, StringPool.BLANK, String.valueOf(curDLFileEntryType.getPrimaryKey()));
 
 				String name = classNameFileEntry.getValue();

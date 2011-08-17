@@ -360,8 +360,6 @@
 		<configuration-action-class>com.liferay.portlet.imagegallerydisplay.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLDisplayPortletDataHandlerImpl</portlet-data-handler-class>
-		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>12.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<scopeable>true</scopeable>

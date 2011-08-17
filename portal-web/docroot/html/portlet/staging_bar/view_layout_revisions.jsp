@@ -19,9 +19,18 @@
 <%
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
+LayoutRevision recentLayoutRevision = null;
+
 long currentLayoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSetBranchId, plid);
 
-LayoutRevision recentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(currentLayoutRevisionId);
+if (currentLayoutRevisionId > 0) {
+	recentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(currentLayoutRevisionId);
+}
+else {
+	recentLayoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
+
+	currentLayoutRevisionId = recentLayoutRevision.getLayoutRevisionId();
+}
 
 List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
 %>

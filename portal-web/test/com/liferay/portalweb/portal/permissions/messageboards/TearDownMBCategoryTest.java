@@ -27,7 +27,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/web/guest/home/");
+				selenium.open("/web/site-name/");
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -48,12 +48,12 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Message Boards Permissions Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Message Boards Permissions Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
 				boolean mbCategory1Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
+						"//a/strong");
 
 				if (!mbCategory1Present) {
 					label = 2;
@@ -62,7 +62,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -92,7 +92,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 			case 2:
 
 				boolean mbCategory2Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
+						"//a/strong");
 
 				if (!mbCategory2Present) {
 					label = 3;
@@ -100,8 +100,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("eval(selenium.isElementPresent('//a/strong'))",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -131,7 +131,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 			case 3:
 
 				boolean mbCategory3Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
+						"//a/strong");
 
 				if (!mbCategory3Present) {
 					label = 4;
@@ -140,7 +140,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -170,7 +170,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 			case 4:
 
 				boolean mbCategory4Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
+						"//a/strong");
 
 				if (!mbCategory4Present) {
 					label = 5;
@@ -179,7 +179,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -209,7 +209,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 			case 5:
 
 				boolean mbCategory5Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
+						"//a/strong");
 
 				if (!mbCategory5Present) {
 					label = 6;
@@ -218,7 +218,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Guest_AssertActionsTest extends BaseTestCase {
 	public void testGuest_AssertActions() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -42,7 +42,7 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//input[@value='Add Category']"));
@@ -51,7 +51,9 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent("link=Subscribe"));
 		assertFalse(selenium.isElementPresent("link=Banned Users"));
 		assertFalse(selenium.isElementPresent("link=Delete"));
-		selenium.clickAt("link=Permissions Test 1", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent(
@@ -62,11 +64,15 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent("link=Delete"));
 		assertFalse(selenium.isElementPresent(
 				"//input[@value='Post New Thread']"));
-		selenium.clickAt("link=Test Thread 1", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Thread Subject"),
+			selenium.getText("//tr[3]/td/a"));
+		selenium.clickAt("//tr[3]/td/a",
+			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Test Thread Message 1"));
-		assertTrue(selenium.isTextPresent("Test Thread Message Reply 1"));
+		assertEquals(RuntimeVariables.replace("Thread Body"),
+			selenium.getText("//div[@class='thread-body']"));
+		assertTrue(selenium.isTextPresent("Thread Body Reply"));
 		assertFalse(selenium.isElementPresent("link=Edit"));
 		assertFalse(selenium.isElementPresent("link=Permissions"));
 		assertFalse(selenium.isElementPresent("link=Delete"));

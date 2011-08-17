@@ -30,7 +30,7 @@ public class Guest_ViewTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_58_login")) {
+				if (selenium.isVisible("//input[@id='_58_login']")) {
 					break;
 				}
 			}
@@ -41,10 +41,10 @@ public class Guest_ViewTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("_58_login"));
-		assertTrue(selenium.isElementPresent("//input[@value='Sign In']"));
-		assertTrue(selenium.isElementPresent("link=Sign In"));
-		selenium.open("/web/guest/home/");
+		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
+		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
+		assertTrue(selenium.isVisible("//a[@id='sign-in']"));
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -64,17 +64,22 @@ public class Guest_ViewTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Permissions Test 1"));
-		selenium.clickAt("link=Permissions Test 1", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Test Thread 1", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Thread Subject"),
+			selenium.getText("//tr[3]/td/a"));
+		selenium.clickAt("//tr[3]/td/a",
+			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Test Thread Message 1"));
-		assertTrue(selenium.isTextPresent("Test Thread Message Reply 1"));
+		assertEquals(RuntimeVariables.replace("Thread Body"),
+			selenium.getText("//div[@class='thread-body']"));
+		assertTrue(selenium.isTextPresent("Thread Body Reply"));
 	}
 }

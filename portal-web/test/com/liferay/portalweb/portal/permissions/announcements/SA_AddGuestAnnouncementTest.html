@@ -10,63 +10,78 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/site-name/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Announcements Permissions Page</td>
-	<td></td>
+	<td>Announcements Permissions Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Announcements Permissions Page</td>
-	<td></td>
+	<td>Announcements Permissions Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Manage Entries</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_84_distributionScope</td>
-	<td></td>
+	<td>Manage Entries</td>
 </tr>
 <tr>
 	<td>selectAndWait</td>
-	<td>_84_distributionScope</td>
+	<td>//select[@id='_84_distributionScope']</td>
 	<td>label=Guest</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Entry']</td>
-	<td></td>
+	<td>Add Entry</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_84_title</td>
+	<td>//input[@id='_84_title']</td>
 	<td>Test Guest Announcement</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_84_url</td>
+	<td>//input[@id='_84_url']</td>
 	<td>http://www.liferay.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_84_content</td>
+	<td>//textarea[@id='_84_content']</td>
 	<td>This is a test Guest Announcement.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>Test Guest Announcement</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>General</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Test Guest Announcement</td>
-	<td></td>
+	<td>//tr[3]/td[3]/a</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//tr[3]/td[4]/a</td>
+	<td>Display Date</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//tr[3]/td[5]/a</td>
+	<td>Expiration Date</td>
 </tr>
 
 </tbody></table>

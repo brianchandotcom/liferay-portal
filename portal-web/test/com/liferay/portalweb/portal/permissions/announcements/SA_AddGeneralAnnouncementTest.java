@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SA_AddGeneralAnnouncementTest extends BaseTestCase {
 	public void testSA_AddGeneralAnnouncement() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -42,50 +42,40 @@ public class SA_AddGeneralAnnouncementTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Manage Entries", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Manage Entries",
+			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_84_distributionScope")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.select("_84_distributionScope",
+		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("label=General"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Entry']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Entry"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_84_title",
+		selenium.type("//input[@id='_84_title']",
 			RuntimeVariables.replace("Test General Announcement"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_84_url",
+		selenium.type("//input[@id='_84_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_84_content",
+		selenium.type("//textarea[@id='_84_content']",
 			RuntimeVariables.replace("This is a test General Announcement."));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Test General Announcement"));
+		assertEquals(RuntimeVariables.replace("Test General Announcement"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("General"),
+			selenium.getText("//tr[3]/td[2]/a"));
+		assertTrue(selenium.isElementPresent("//tr[3]/td[3]/a"));
+		assertTrue(selenium.isElementPresent("//tr[3]/td[4]/a"));
+		assertTrue(selenium.isElementPresent("//tr[3]/td[5]/a"));
 	}
 }

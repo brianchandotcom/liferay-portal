@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_AssertActionsTest extends BaseTestCase {
 	public void testMember_AssertActions() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -42,33 +42,46 @@ public class Member_AssertActionsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//input[@value='Search']"));
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText("//div[2]/div/span/a/span[1]"));
-		assertTrue(selenium.isElementPresent("link=Subscribe"));
-		assertFalse(selenium.isElementPresent("//input[@value='Add Category']"));
-		assertFalse(selenium.isElementPresent("link=Delete"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
+		assertEquals(RuntimeVariables.replace("Subscribe"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		assertFalse(selenium.isElementPresent("link=Edit"));
+		assertFalse(selenium.isElementPresent("link=Permissions"));
+		assertFalse(selenium.isElementPresent("link=Move Thread"));
+		assertFalse(selenium.isElementPresent("link=Delete"));
+		assertFalse(selenium.isElementPresent("link=Add Category"));
 		assertFalse(selenium.isElementPresent("link=Banned Users"));
-		assertFalse(selenium.isElementPresent("//img[@alt='Permissions']"));
-		assertTrue(selenium.isElementPresent("link=Permissions Test 1"));
-		selenium.clickAt("link=Permissions Test 1", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Test Thread 1"));
+		assertEquals(RuntimeVariables.replace("Thread Subject"),
+			selenium.getText("//tr[3]/td/a"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
 		assertFalse(selenium.isElementPresent("link=Edit"));
 		assertFalse(selenium.isElementPresent("link=Move"));
 		assertFalse(selenium.isElementPresent("link=Delete"));
-		assertTrue(selenium.isElementPresent(
-				"//input[@value='Post New Thread']"));
-		selenium.clickAt("link=Test Thread 1", RuntimeVariables.replace(""));
+		assertTrue(selenium.isVisible("//input[@value='Post New Thread']"));
+		selenium.clickAt("//tr[3]/td/a",
+			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Reply"));
-		assertTrue(selenium.isElementPresent("link=Reply with Quote"));
+		assertEquals(RuntimeVariables.replace("Reply"),
+			selenium.getText(
+				"//ul[@class='edit-controls lfr-component']/li[2]/span/a"));
+		assertEquals(RuntimeVariables.replace("Reply with Quote"),
+			selenium.getText(
+				"//ul[@class='edit-controls lfr-component']/li[3]/span/a"));
 		assertFalse(selenium.isElementPresent("link=Delete"));
 		assertFalse(selenium.isElementPresent("link=Edit"));
 		assertFalse(selenium.isElementPresent("link=Permissions"));

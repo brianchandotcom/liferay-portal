@@ -14,64 +14,69 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>_58_login</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//input[@id='_58_login']</td>
+	<td>Email Address</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>_58_login</td>
-	<td></td>
+	<td>assertVisible</td>
+	<td>//input[@id='_58_login']</td>
+	<td>Email Address</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Sign In</td>
-	<td></td>
+	<td>assertVisible</td>
+	<td>//a[@id='sign-in']</td>
+	<td>Sign In</td>
 </tr>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/site-name/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Message Boards Permissions Page</td>
-	<td></td>
+	<td>Message Boards Permissions Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards Permissions Page</td>
-	<td></td>
+	<td>Message Boards Permissions Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Permissions Test 1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Permissions Test 1</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Category Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Test Thread 1</td>
-	<td></td>
+	<td>//a/strong</td>
+	<td>Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td/a</td>
+	<td>Thread Subject</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[3]/td/a</td>
+	<td>Thread Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='thread-body']</td>
+	<td>Thread Body</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Test Thread Message 1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Test Thread Message Reply 1</td>
-	<td></td>
+	<td>Thread Body Reply</td>
+	<td>Thread Body Reply</td>
 </tr>
 
 </tbody></table>

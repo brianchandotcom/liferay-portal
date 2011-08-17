@@ -1,0 +1,234 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MA_AssertActionsTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MA_AssertActionsTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/site-name/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Permissions Page</td>
+	<td>Message Boards Permissions Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Message Boards Permissions Page</td>
+	<td>Message Boards Permissions Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Category Name</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//input[@value='Add Category']</td>
+	<td>Add Category</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_19_name']</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//textarea[@id='_19_description']</td>
+	<td>Description</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/site-name/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Permissions Page</td>
+	<td>Message Boards Permissions Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Message Boards Permissions Page</td>
+	<td>Message Boards Permissions Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Permissions']</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Category Name</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/site-name/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Permissions Page</td>
+	<td>Message Boards Permissions Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Message Boards Permissions Page</td>
+	<td>Message Boards Permissions Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/span/a/span[1]</td>
+	<td>RSS</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='top-links-navigation']/span[6]/a</td>
+	<td>Banned Users</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='top-links-navigation']/span[6]/a</td>
+	<td>Banned Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no banned users.</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='top-links-navigation']/span[1]/a</td>
+	<td>Message Boards Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Category Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a/strong</td>
+	<td>Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Unsubscribe</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Move Thread</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td/a</td>
+	<td>Thread Subject</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[3]/td/a</td>
+	<td>Thread Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='edit-controls lfr-component']/li[2]/span/a</td>
+	<td>Reply</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_DismissAnnouncementTest extends BaseTestCase {
 	public void testMember_DismissAnnouncement() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -42,10 +42,11 @@ public class Member_DismissAnnouncementTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Mark as Read", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Mark as Read",
+			RuntimeVariables.replace("Mark as Read"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -64,7 +65,7 @@ public class Member_DismissAnnouncementTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Show", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Show", RuntimeVariables.replace("Show"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -83,7 +84,7 @@ public class Member_DismissAnnouncementTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Hide", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Hide", RuntimeVariables.replace("Hide"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

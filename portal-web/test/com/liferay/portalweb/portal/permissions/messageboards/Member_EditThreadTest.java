@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_EditThreadTest extends BaseTestCase {
 	public void testMember_EditThread() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -42,31 +42,65 @@ public class Member_EditThreadTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Permissions Test 1"),
+		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Test Thread 2", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Thread Subject 2"),
+			selenium.getText("//tr[3]/td/a"));
+		selenium.clickAt("//tr[3]/td/a",
+			RuntimeVariables.replace("Thread Subject 2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Edit"));
-		selenium.clickAt("link=Edit", RuntimeVariables.replace(""));
+		assertTrue(selenium.isVisible(
+				"//td[@class='thread-bottom']/ul/li[2]/span/a"));
+		selenium.clickAt("//td[@class='thread-bottom']/ul/li[2]/span/a",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_subject",
-			RuntimeVariables.replace("Test Thread 2 Edited"));
+		selenium.type("//input[@id='_19_subject']",
+			RuntimeVariables.replace("Thread Subject 2 Edited"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_textArea",
-			RuntimeVariables.replace("Test Thread 2 Edited"));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__19_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
+		selenium.type("//body", RuntimeVariables.replace("Thread Body 2 Edited"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Test Thread 2 Edited"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Thread Subject 2 Edited"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Thread Subject 2 Edited"),
+			selenium.getText("//div[@class='subject']/a/strong"));
+		assertEquals(RuntimeVariables.replace("Thread Body 2 Edited"),
+			selenium.getText("//div[@class='thread-body']"));
 	}
 }

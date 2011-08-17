@@ -415,7 +415,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			key = path.concat(StringPool.POUND).concat(portletId);
 		}
 
-		Boolean resourceExists = _resourceExistsMap.containsKey(key);
+		Boolean resourceExists = _resourceExistsMap.get(key);
 
 		if (resourceExists != null) {
 			return resourceExists;

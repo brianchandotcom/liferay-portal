@@ -9,7 +9,7 @@
 		<copy todir="docroot/WEB-INF/lib">
 			<fileset
 				dir="${project.dir}/lib/portal"
-				includes="commons-logging.jar,log4j.jar"
+				includes="commons-logging.jar,log4j.jar,sitemesh.jar"
 			/>
 		</copy>
 

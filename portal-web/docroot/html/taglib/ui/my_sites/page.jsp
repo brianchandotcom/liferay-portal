@@ -200,7 +200,7 @@ List<Group> mySites = user.getMySites(max);
 										siteName = HtmlUtil.escape(themeDisplay.getAccount().getName());
 									}
 									else {
-										siteName = mySite.getName();
+										siteName = mySite.getDescriptiveName();
 									}
 									%>
 
@@ -241,7 +241,7 @@ List<Group> mySites = user.getMySites(max);
 										siteName = HtmlUtil.escape(themeDisplay.getAccount().getName());
 									}
 									else {
-										siteName = mySite.getName();
+										siteName = mySite.getDescriptiveName();
 									}
 									%>
 

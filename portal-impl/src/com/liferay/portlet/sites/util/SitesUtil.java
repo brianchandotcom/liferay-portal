@@ -226,8 +226,7 @@ public class SitesUtil {
 		}
 
 		if (LayoutPermissionUtil.contains(
-				permissionChecker, groupId, privateLayout, layoutId,
-				ActionKeys.DELETE)) {
+				permissionChecker, layout, ActionKeys.DELETE)) {
 
 			LayoutSettings layoutSettings = LayoutSettings.getInstance(layout);
 

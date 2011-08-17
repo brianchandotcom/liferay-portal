@@ -365,9 +365,7 @@ public class EditLayoutsAction extends PortletAction {
 
 		if (layout != null) {
 			hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
-				permissionChecker, layout.getGroupId(),
-				layout.isPrivateLayout(), layout.getLayoutId(),
-				ActionKeys.UPDATE);
+				permissionChecker, layout, ActionKeys.UPDATE);
 		}
 
 		boolean hasPermission = true;

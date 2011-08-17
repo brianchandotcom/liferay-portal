@@ -129,9 +129,7 @@ public class UpdateLayoutAction extends JSONAction {
 		}
 		else if (cmd.equals("drag")) {
 			if (LayoutPermissionUtil.contains(
-					permissionChecker, layout.getGroupId(),
-					layout.isPrivateLayout(), layout.getLayoutId(),
-					ActionKeys.UPDATE)) {
+					permissionChecker, layout, ActionKeys.UPDATE)) {
 
 				String height = ParamUtil.getString(request, "height");
 				String width = ParamUtil.getString(request, "width");

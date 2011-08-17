@@ -1060,9 +1060,8 @@ public class ServicePreAction extends Action {
 				}
 
 				boolean isViewableGroup = LayoutPermissionUtil.contains(
-					permissionChecker, layout.getLayoutId(),
-					layout.isPrivateLayout(), layout.getLayoutId(),
-					controlPanelCategory, ActionKeys.VIEW);
+					permissionChecker, layout, controlPanelCategory,
+					ActionKeys.VIEW);
 
 				if (!isViewableGroup && group.isStagingGroup()) {
 					layout = null;

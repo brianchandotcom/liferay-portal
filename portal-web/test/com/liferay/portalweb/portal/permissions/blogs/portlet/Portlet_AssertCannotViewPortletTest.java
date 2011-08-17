@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Portlet_AssertCannotViewPortletTest extends BaseTestCase {
 	public void testPortlet_AssertCannotViewPortlet() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,10 +42,11 @@ public class Portlet_AssertCannotViewPortletTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"You do not have the roles required to access this portlet."));
+		assertEquals(RuntimeVariables.replace(
+				"You do not have the roles required to access this portlet."),
+			selenium.getText("//div[@class='portlet-msg-error']"));
 	}
 }

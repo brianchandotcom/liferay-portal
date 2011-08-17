@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Guest_ViewCommentsTest extends BaseTestCase {
 	public void testGuest_ViewComments() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,15 +42,19 @@ public class Guest_ViewCommentsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Permissions Blogs Test Entry",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("CA Permissions Blogs Test Comment"));
-		assertTrue(selenium.isTextPresent(
-				"Member Permissions Blogs Test Comment"));
+		assertEquals(RuntimeVariables.replace(
+				"BA Permissions Blogs Test Comment"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
+		assertEquals(RuntimeVariables.replace(
+				"Member Permissions Blogs Test Comment"),
+			selenium.getText(
+				"//div[@class='lfr-discussion last']/div[3]/div/div"));
 	}
 }

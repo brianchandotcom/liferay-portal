@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Portlet_EditEntryTest extends BaseTestCase {
 	public void testPortlet_EditEntry() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,23 +42,18 @@ public class Portlet_EditEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portlet1 Temporary1 Entry1",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
+			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Portlet1 Temporary1 Entry1"),
-			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace(
-				"This is a temporary portlet permissions entry!"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		selenium.clickAt("link=Edit", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Edit", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_33_title",
-			RuntimeVariables.replace("Edited1 Portlet1 Temporary1 Entry1"));
+		selenium.type("//input[@id='_33_title']",
+			RuntimeVariables.replace("Blogs Entry Title Edited"));
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
@@ -80,26 +77,19 @@ public class Portlet_EditEntryTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.type("//body",
-			RuntimeVariables.replace(
-				"This is an edited temporary portlet permissions entry!"));
+			RuntimeVariables.replace("Blogs Entry Content Edited"));
 		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
 		assertEquals(RuntimeVariables.replace(
-				"Edited1 Portlet1 Temporary1 Entry1"),
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title Edited"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace(
-				"This is an edited temporary portlet permissions entry!"),
-			selenium.getText("//div[@class='entry-body']/p"));
-		assertNotEquals(RuntimeVariables.replace("Portlet1 Temporary1 Entry1"),
-			selenium.getText("//h1[@class='header-title']/span"));
-		assertNotEquals(RuntimeVariables.replace(
-				"This is a temporary portlet permissions entry!"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content Edited"),
 			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

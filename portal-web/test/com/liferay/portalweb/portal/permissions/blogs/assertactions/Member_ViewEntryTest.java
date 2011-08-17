@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_ViewEntryTest extends BaseTestCase {
 	public void testMember_ViewEntry() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,16 +42,16 @@ public class Member_ViewEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent(
-				"link=Permissions Blogs Test Entry"));
+		assertTrue(selenium.isVisible("link=Permissions Blogs Test Entry"));
 		selenium.clickAt("link=Permissions Blogs Test Entry",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"This is a permissions blogs test entry"));
+		assertEquals(RuntimeVariables.replace(
+				"This is a permissions blogs test entry"),
+			selenium.getText("//div[@class='entry-body']"));
 	}
 }

@@ -9,29 +9,34 @@
 <tr><td rowspan="1" colspan="3">Guest_ViewEntryTest</td></tr>
 </thead><tbody>
 <tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>link=Blogs Permissions Page</td>
-	<td></td>
+	<td>Blogs Permissions Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Permissions Page</td>
-	<td></td>
+	<td>Blogs Permissions Page</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Permissions Blogs Test Entry</td>
-	<td></td>
+	<td>Permissions Blogs Test Entry</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Permissions Blogs Test Entry</td>
-	<td></td>
+	<td>Permissions Blogs Test Entry</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='entry-body']</td>
 	<td>This is a permissions blogs test entry</td>
-	<td></td>
 </tr>
 
 </tbody></table>

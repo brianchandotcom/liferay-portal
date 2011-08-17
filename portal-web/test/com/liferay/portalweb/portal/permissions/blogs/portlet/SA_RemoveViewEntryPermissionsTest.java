@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SA_RemoveViewEntryPermissionsTest extends BaseTestCase {
 	public void testSA_RemoveViewEntryPermissions() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,44 +42,32 @@ public class SA_RemoveViewEntryPermissionsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portlet1 Temporary1 Entry1",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs Entry Title Temporary",
+			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Permissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Permissions",
+			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Save']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.uncheck("16_ACTION_VIEW");
-		selenium.uncheck("//tr[7]/td[8]/input");
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.uncheck("//input[@name='16_ACTION_VIEW']");
+		selenium.uncheck("//tr[5]/td[8]/input");
+		selenium.uncheck("//tr[6]/td[8]/input");
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isChecked("16_ACTION_VIEW"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isChecked("//tr[7]/td[8]/input"));
+		assertFalse(selenium.isChecked("//tr[5]/td[8]/input"));
+		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isChecked("//tr[6]/td[8]/input"));
 		selenium.saveScreenShotAndSource();
 	}
 }

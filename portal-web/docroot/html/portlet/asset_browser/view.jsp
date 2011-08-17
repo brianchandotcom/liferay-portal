@@ -80,7 +80,7 @@ portletURL.setParameter("typeSelection", typeSelection);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(typeSelection, assetEntryId);
 
-			if (assetEntry.getEntryId() == refererAssetEntryId) {
+			if ((assetEntry.getEntryId() == refererAssetEntryId) || !assetEntry.isVisible()) {
 				continue;
 			}
 

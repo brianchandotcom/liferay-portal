@@ -30,7 +30,7 @@ public class ImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,6 +49,8 @@ public class ImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//menu/span/ul/li/strong/a"));
 		selenium.clickAt("//menu/span/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 
@@ -84,6 +86,10 @@ public class ImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\messageboards\\dependencies\\Message_Boards-Selenium.portlet.lar"));
 		selenium.saveScreenShotAndSource();
+		selenium.type("_86_importFileName",
+			RuntimeVariables.replace(
+				"G:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\messageboards\\dependencies\\Message_Boards-Selenium.portlet.lar"));
+		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_DELETE_PORTLET_DATACheckbox']"));
 		selenium.saveScreenShotAndSource();
@@ -103,24 +109,6 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Import']",
 			RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

@@ -30,7 +30,7 @@ public class AddQuestionThreadTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,6 +49,9 @@ public class AddQuestionThreadTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"T\u00e9st Cat\u00e9gory Edit\u00e9d"),
+			selenium.getText("//tr[4]/td[2]/a[1]/strong"));
 		selenium.clickAt("//tr[4]/td[2]/a[1]/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
@@ -57,28 +60,11 @@ public class AddQuestionThreadTest extends BaseTestCase {
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='_162_questionCheckbox']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		assertFalse(selenium.isChecked("//input[@name='_162_questionCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='_162_questionCheckbox']",
 			RuntimeVariables.replace("Mark as a Question Checkbox"));
-		selenium.typeKeys("//input[@name='_162_subject']",
-			RuntimeVariables.replace("Favorite Color Test Question"));
+		assertTrue(selenium.isChecked("//input[@name='_162_questionCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_162_subject']",
 			RuntimeVariables.replace("Favorite Color Test Question"));
@@ -93,24 +79,6 @@ public class AddQuestionThreadTest extends BaseTestCase {
 		selenium.clickAt("link=T\u00e9st Cat\u00e9gory Edit\u00e9d",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Waiting for an Answer")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Waiting for an Answer"));
 	}

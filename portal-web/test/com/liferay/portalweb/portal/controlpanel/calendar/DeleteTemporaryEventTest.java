@@ -30,7 +30,7 @@ public class DeleteTemporaryEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -48,6 +48,9 @@ public class DeleteTemporaryEventTest extends BaseTestCase {
 		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isElementPresent("link=Temporary Event"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//tr[6]/td[4]/span/ul/li/strong/a"));
 		selenium.clickAt("//tr[6]/td[4]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 

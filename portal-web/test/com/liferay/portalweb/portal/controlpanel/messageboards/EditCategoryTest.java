@@ -30,7 +30,7 @@ public class EditCategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,6 +49,8 @@ public class EditCategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//tr[4]/td[6]/span/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[4]/td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
@@ -77,9 +79,6 @@ public class EditCategoryTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("//input[@id='_162_name']",
-			RuntimeVariables.replace("T\u00e9st Cat\u00e9gor Edit\u00e9d"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_162_name']",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.saveScreenShotAndSource();
@@ -90,24 +89,6 @@ public class EditCategoryTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

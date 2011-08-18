@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -32,6 +32,11 @@
 	<td>clickAtAndWait</td>
 	<td>link=Events</td>
 	<td>Events</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -59,7 +64,7 @@
 	<td>Repeat Daily</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//input[@name='_8_dailyType']</td>
 	<td></td>
 </tr>
@@ -99,19 +104,9 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Year</td>
-	<td>Year</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -132,11 +127,6 @@
 	<td>clickAtAndWait</td>
 	<td>//a[contains(@href, 'javascript:_8_updateCalendar(0, 1, 2010);')]</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Repeating Test Event</td>
-	<td>Repeating Test Event</td>
 </tr>
 <tr>
 	<td>assertText</td>

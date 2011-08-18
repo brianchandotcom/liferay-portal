@@ -35,7 +35,7 @@ public class TearDownEventCPTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
 					}
@@ -68,6 +68,8 @@ public class TearDownEventCPTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[6]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -89,6 +91,9 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
@@ -107,6 +112,8 @@ public class TearDownEventCPTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[6]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -128,6 +135,9 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
@@ -146,6 +156,8 @@ public class TearDownEventCPTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[6]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -167,6 +179,9 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
@@ -185,6 +200,8 @@ public class TearDownEventCPTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[6]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -206,6 +223,9 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
@@ -224,6 +244,8 @@ public class TearDownEventCPTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[6]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -245,6 +267,9 @@ public class TearDownEventCPTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");

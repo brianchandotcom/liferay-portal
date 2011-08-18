@@ -30,7 +30,7 @@ public class AddNullEntryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,6 +49,8 @@ public class AddNullEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
+			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");

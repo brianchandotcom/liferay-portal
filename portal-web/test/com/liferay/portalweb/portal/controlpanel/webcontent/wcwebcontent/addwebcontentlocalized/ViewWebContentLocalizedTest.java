@@ -30,7 +30,7 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -45,37 +45,59 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("link=Web Content"));
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Hello World Localized Article"),
+			selenium.getText("//td[3]/a"));
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("Hello World Localized Article"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
+		assertEquals("Hello World Localized Article",
+			selenium.getValue("//input[@id='_15_title_en_US']"));
 		assertEquals("Hello World Page Name",
 			selenium.getValue("//input[@id='page-name']"));
 		assertEquals("Hello World Page Description",
 			selenium.getValue("//input[@id='page-description']"));
-		selenium.clickAt("//a[@id='_15_changeLanguageId']",
-			RuntimeVariables.replace("Change"));
-		selenium.select("//select[@name='_15_defaultLanguageId']",
+		assertEquals(RuntimeVariables.replace("Chinese (China)"),
+			selenium.getText("//span[@id='_15_availableTranslationsLinks']/a"));
+		selenium.clickAt("//span[@id='_15_availableTranslationsLinks']/a",
 			RuntimeVariables.replace("Chinese (China)"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//iframe[@id='_15_zh_CN']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//iframe[@id='_15_zh_CN']");
+		assertEquals(RuntimeVariables.replace("Hello World Localized Article"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace(
+				"Translating Web Content to Chinese (China)"),
+			selenium.getText("//div[@id='_15_availableTranslationContainer']"));
+		assertEquals("Hello World Localized Article",
+			selenium.getValue("//input[@id='_15_title_zh_CN']"));
 		assertEquals("\u4e16\u754c\u60a8\u597d Page Name",
 			selenium.getValue("//input[@id='page-name']"));
 		assertEquals("\u4e16\u754c\u60a8\u597d Page Description",
 			selenium.getValue("//input[@id='page-description']"));
-		selenium.clickAt("_15_changeLanguageId",
-			RuntimeVariables.replace("Change"));
-		selenium.select("_15_defaultLanguageId",
-			RuntimeVariables.replace("English (United States)"));
-		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 	}
 }

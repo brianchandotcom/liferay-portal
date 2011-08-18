@@ -35,7 +35,7 @@ public class SearchStructureTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
 					}
@@ -100,8 +100,11 @@ public class SearchStructureTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
-						"Web Content Structure Name\nWeb Content Structure Description"),
+						"Web Content Structure Name"),
 					selenium.getText("//td[3]/a"));
+				assertEquals(RuntimeVariables.replace(
+						"Web Content Structure Description"),
+					selenium.getText("//td[4]/a"));
 				selenium.type("//input[@name='_15_keywords']",
 					RuntimeVariables.replace("structure1"));
 				selenium.saveScreenShotAndSource();

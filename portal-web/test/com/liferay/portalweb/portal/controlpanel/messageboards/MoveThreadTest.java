@@ -35,7 +35,7 @@ public class MoveThreadTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
 					}
@@ -54,14 +54,22 @@ public class MoveThreadTest extends BaseTestCase {
 					RuntimeVariables.replace("Message Boards"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
+					selenium.getText("//tr[4]/td[2]/a[1]/strong"));
 				selenium.clickAt("//tr[4]/td[2]/a[1]/strong",
 					RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace(
+						"T\u00e9st Subcat\u00e9gory"),
+					selenium.getText("//a/strong"));
 				selenium.clickAt("//a/strong",
 					RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace(
+						"S\u00e9cond T\u00e9st Subcat\u00e9gory"),
+					selenium.getText("//a/strong"));
 				selenium.clickAt("//a/strong",
 					RuntimeVariables.replace(
 						"S\u00e9cond T\u00e9st Subcat\u00e9gory"));
@@ -78,8 +86,14 @@ public class MoveThreadTest extends BaseTestCase {
 					RuntimeVariables.replace("Move Thread"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertFalse(selenium.isChecked(
+						"//input[@id='_162_addExplanationPostCheckbox']"));
+				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_162_addExplanationPostCheckbox']",
 					RuntimeVariables.replace("Add post explanation."));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_162_addExplanationPostCheckbox']"));
+				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -98,16 +112,34 @@ public class MoveThreadTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.typeKeys("//input[@id='_162_subject']",
-					RuntimeVariables.replace("Moved to Sujr"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_162_subject']",
 					RuntimeVariables.replace("Moved to Sujr"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("//textarea[@id='_162_editor']",
+				Thread.sleep(5000);
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//td[@id='cke_contents__162_editor']/iframe")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.selectFrame(
+					"//td[@id='cke_contents__162_editor']/iframe");
+				selenium.type("//body",
 					RuntimeVariables.replace(
 						"Trust and paths will be straightened."));
-				selenium.saveScreenShotAndSource();
 				selenium.selectFrame("relative=top");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Select']",

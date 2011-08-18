@@ -30,7 +30,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -73,16 +73,20 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("TEST"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace(
-				"Test Web Content Structure\nThis is a test web content structure!"),
+		assertEquals(RuntimeVariables.replace("Test Web Content Structure"),
 			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"This is a test web content structure!"),
+			selenium.getText("//td[4]/a"));
 		selenium.clickAt("link=Templates", RuntimeVariables.replace("Templates"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("TEST"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace(
-				"Test Web Content Template\n This is a test web content template!"),
+		assertEquals(RuntimeVariables.replace("Test Web Content Template"),
 			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"This is a test web content template!"),
+			selenium.getText("//td[4]/a"));
 	}
 }

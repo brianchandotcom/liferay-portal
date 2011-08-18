@@ -30,7 +30,7 @@ public class AddSecondSubcategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,10 +49,14 @@ public class AddSecondSubcategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
+			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
+			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
@@ -60,27 +64,6 @@ public class AddSecondSubcategoryTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Subcategory']",
 			RuntimeVariables.replace("Add Subcategory"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_162_name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("//input[@id='_162_name']",
-			RuntimeVariables.replace("S\u00e9cond T\u00e9st Subcat\u00e9gor"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_162_name']",
 			RuntimeVariables.replace("S\u00e9cond T\u00e9st Subcat\u00e9gory"));
@@ -93,28 +76,10 @@ public class AddSecondSubcategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"S\u00e9cond T\u00e9st Subcat\u00e9gory"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isTextPresent(
+				"S\u00e9cond T\u00e9st Subcat\u00e9gory"));
 	}
 }

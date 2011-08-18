@@ -30,7 +30,7 @@ public class DeleteMessageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,9 +49,14 @@ public class DeleteMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Sujr"),
+			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Sujr"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"),
+			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"));
@@ -69,7 +74,10 @@ public class DeleteMessageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+				if (RuntimeVariables.replace(
+							"Your request completed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-success']"))) {
 					break;
 				}
 			}
@@ -86,24 +94,6 @@ public class DeleteMessageTest extends BaseTestCase {
 		selenium.clickAt("link=Moved to Sujr",
 			RuntimeVariables.replace("Moved to Sujr"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='thread-body']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Trust and paths will be straightened."),

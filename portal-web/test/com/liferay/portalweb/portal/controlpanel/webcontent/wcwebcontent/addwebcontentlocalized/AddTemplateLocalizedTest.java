@@ -30,7 +30,7 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -56,10 +56,10 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Template"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_15_name']",
+		selenium.type("//input[@id='_15_name_en_US']",
 			RuntimeVariables.replace("Test Localized Template"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@id='_15_description']",
+		selenium.type("//textarea[@id='_15_description_en_US']",
 			RuntimeVariables.replace("This is a test localized template."));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Select']",
@@ -99,28 +99,14 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
-		assertTrue(selenium.isTextPresent("Test Localized Template"));
+		assertEquals(RuntimeVariables.replace("Test Localized Template"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"This is a test localized template."),
+			selenium.getText("//td[4]/a"));
 	}
 }

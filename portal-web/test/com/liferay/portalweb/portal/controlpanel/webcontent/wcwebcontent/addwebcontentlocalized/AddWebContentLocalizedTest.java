@@ -30,7 +30,7 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -102,7 +102,28 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			RuntimeVariables.replace("Save as Draft"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		Thread.sleep(5000);
+		selenium.type("//input[@id='page-name']",
+			RuntimeVariables.replace("Hello World Page Name"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='page-description']",
+			RuntimeVariables.replace("Hello World Page Description"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save as Draft']",
+			RuntimeVariables.replace("Save as Draft"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Add Translation"),
+			selenium.getText("//span[2]/ul/li/strong/a/span"));
+		selenium.clickAt("//span[2]/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add Translation"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -110,7 +131,8 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
 					break;
 				}
 			}
@@ -121,25 +143,30 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.type("//input[@id='page-name']",
-			RuntimeVariables.replace("Hello World Page Name"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='page-description']",
-			RuntimeVariables.replace("Hello World Page Description"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a[@id='_15_changeLanguageId']",
-			RuntimeVariables.replace("Change"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Changing the default language will delete all unsaved content. Do you want to proceed[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
-		selenium.select("//select[@name='_15_defaultLanguageId']",
-			RuntimeVariables.replace("Chinese (China)"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Chinese (China)"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
 		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//iframe[@id='_15_zh_CN']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//iframe[@id='_15_zh_CN']");
 		selenium.type("//input[@id='page-name']",
 			RuntimeVariables.replace("\u4e16\u754c\u60a8\u597d Page Name"));
 		selenium.saveScreenShotAndSource();
@@ -147,49 +174,31 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"\u4e16\u754c\u60a8\u597d Page Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace("Publish"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Hello World Localized Article")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		Thread.sleep(5000);
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent(
-				"link=Hello World Localized Article"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isElementPresent("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Hello World Localized Article"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Approved"),
+			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isElementPresent("//td[5]/a"));
+		assertTrue(selenium.isElementPresent("//td[6]/a"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//td[7]/a"));
 	}
 }

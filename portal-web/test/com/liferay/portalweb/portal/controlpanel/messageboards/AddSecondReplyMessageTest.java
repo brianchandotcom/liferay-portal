@@ -30,7 +30,7 @@ public class AddSecondReplyMessageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,10 +49,14 @@ public class AddSecondReplyMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
+			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
+			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
@@ -61,25 +65,9 @@ public class AddSecondReplyMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Reply"),
+			selenium.getText(
+				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
@@ -90,24 +78,6 @@ public class AddSecondReplyMessageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

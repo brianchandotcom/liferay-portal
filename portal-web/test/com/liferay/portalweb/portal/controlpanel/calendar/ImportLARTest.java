@@ -30,7 +30,7 @@ public class ImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -48,6 +48,8 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//menu/span/ul/li/strong/a"));
 		selenium.clickAt("//menu/span/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 
@@ -101,30 +103,18 @@ public class ImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\calendar\\dependencies\\Calendar-Selenium.portlet.lar"));
 		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isChecked(
+				"//input[@id='_86_DELETE_PORTLET_DATACheckbox']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_86_DELETE_PORTLET_DATACheckbox']",
 			RuntimeVariables.replace(
 				"Delete portlet data before importing Checkbox"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_DELETE_PORTLET_DATACheckbox']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Import']",
 			RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

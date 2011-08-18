@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_15_name']</td>
+	<td>//input[@id='_15_name_en_US']</td>
 	<td>Test Localized Template</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea[@id='_15_description']</td>
+	<td>//textarea[@id='_15_description_en_US']</td>
 	<td>This is a test localized template.</td>
 </tr>
 <tr>
@@ -94,11 +94,6 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
@@ -109,9 +104,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
 	<td>Test Localized Template</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>This is a test localized template.</td>
 </tr>
 
 </tbody></table>

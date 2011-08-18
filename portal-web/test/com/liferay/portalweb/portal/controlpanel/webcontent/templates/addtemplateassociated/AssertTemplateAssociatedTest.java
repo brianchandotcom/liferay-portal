@@ -30,7 +30,7 @@ public class AssertTemplateAssociatedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,7 +49,9 @@ public class AssertTemplateAssociatedTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/span/ul/li/strong/a/img",
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//div/span/ul/li/strong/a/span"));
+		selenium.clickAt("//div/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

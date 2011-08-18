@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -99,19 +99,14 @@
 	<td>Save as Draft</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -124,24 +119,59 @@
 	<td>Hello World Page Description</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//a[@id='_15_changeLanguageId']</td>
-	<td>Change</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save as Draft']</td>
+	<td>Save as Draft</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Changing the default language will delete all unsaved content. Do you want to proceed?</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>selectAndWait</td>
-	<td>//select[@name='_15_defaultLanguageId']</td>
+	<td>assertText</td>
+	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>Add Translation</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>Add Translation</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Chinese (China)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Chinese (China)</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
 	<td>Chinese (China)</td>
 </tr>
 <tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_15_zh_CN']</td>
+	<td>Web Content Translation</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_15_zh_CN']</td>
+	<td>Web Content Translation</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -154,14 +184,14 @@
 	<td>世界您好 Page Description</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//input[@value='Publish']</td>
-	<td>Publish</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -169,14 +199,49 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Hello World Localized Article</td>
-	<td>Hello World Localized Article</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Hello World Localized Article</td>
+	<td>//td[2]/a</td>
+	<td>WC WebContent ID</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
 	<td>Hello World Localized Article</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Approved</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//td[5]/a</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//td[6]/a</td>
+	<td>Display Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[7]/a</td>
+	<td>Joe Bloggs</td>
 </tr>
 
 </tbody></table>

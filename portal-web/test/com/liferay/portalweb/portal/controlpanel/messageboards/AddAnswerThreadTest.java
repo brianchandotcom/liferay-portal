@@ -30,7 +30,7 @@ public class AddAnswerThreadTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -92,24 +92,6 @@ public class AddAnswerThreadTest extends BaseTestCase {
 		selenium.clickAt("link=T\u00e9st Cat\u00e9gory Edit\u00e9d",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Resolved")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Resolved"));
 		assertFalse(selenium.isElementPresent("link=Waiting for an Answer"));

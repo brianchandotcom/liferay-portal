@@ -36,7 +36,7 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
 					}
@@ -102,8 +102,11 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
-						"Web Content Template Name\n Web Content Template Description"),
+						"Web Content Template Name"),
 					selenium.getText("//td[3]/a"));
+				assertEquals(RuntimeVariables.replace(
+						"Web Content Template Description"),
+					selenium.getText("//td[4]/a"));
 				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace(
 						"web1 content1 template1 description1"));

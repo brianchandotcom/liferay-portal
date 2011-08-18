@@ -30,7 +30,7 @@ public class AddTemplateAssociatedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -56,10 +56,10 @@ public class AddTemplateAssociatedTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Template"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_15_name']",
+		selenium.type("//input[@id='_15_name_en_US']",
 			RuntimeVariables.replace("Web Content Template Name Associated"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@id='_15_description']",
+		selenium.type("//textarea[@id='_15_description_en_US']",
 			RuntimeVariables.replace(
 				"Web Content Template Description Associated"));
 		selenium.saveScreenShotAndSource();
@@ -94,8 +94,8 @@ public class AddTemplateAssociatedTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Structure Name"),
 			selenium.getText("//a[@id='_15_structureName']"));
-		selenium.clickAt("//input[@id='_15_editorButton']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Launch Editor']",
+			RuntimeVariables.replace("Launch Editor"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -114,29 +114,9 @@ public class AddTemplateAssociatedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//textarea[@id='_15_xslContent']",
-			RuntimeVariables.replace(""));
 		selenium.type("//textarea[@id='_15_xslContent']",
 			RuntimeVariables.replace(
 				"<h1>$title.getData()</h1>\n\n<a href=\"$ltp.getUrl()\">See Page</a>"));
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Update']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@value='Update']");
 		Thread.sleep(5000);
@@ -144,30 +124,15 @@ public class AddTemplateAssociatedTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementPresent("//tr[4]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"Web Content Template Name Associated\n Web Content Template Description Associated"),
+				"Web Content Template Name Associated"),
 			selenium.getText("//tr[4]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"Web Content Template Description Associated"),
+			selenium.getText("//tr[4]/td[4]/a"));
 	}
 }

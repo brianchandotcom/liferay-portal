@@ -1,0 +1,129 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddBlogsEntrySiteTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddBlogsEntrySiteTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div[1]/div/div/div/ul[1]/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div[1]/div/div/div/ul[1]/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[contains(@class, 'social-office-enabled')]</td>
+	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span/a</td>
+	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span/a</td>
+	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h2/a/span</td>
+	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[5]/a/span</td>
+	<td>Blog</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//nav/ul/li[5]/a/span</td>
+	<td>Blog</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span[2]</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Add Blog Entry']</td>
+	<td>Add Blog Entry</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_33_title']</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__33_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__33_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//body</td>
+	<td>Blogs Entry Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/a</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-body']/p</td>
+	<td>Blogs Entry Content</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

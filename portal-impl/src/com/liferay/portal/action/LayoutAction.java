@@ -210,7 +210,6 @@ public class LayoutAction extends Action {
 				authLoginURL = HttpUtil.setParameter(
 					authLoginURL, "p_p_id",
 					PropsValues.AUTH_LOGIN_PORTLET_NAME);
-
 				authLoginURL = HttpUtil.setParameter(
 					authLoginURL, redirectParam, currentURL);
 

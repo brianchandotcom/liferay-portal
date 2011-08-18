@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.messageboards.subscription;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.messageboards.subscription;
 
 import com.liferay.portalweb.portal.BaseTests;
 

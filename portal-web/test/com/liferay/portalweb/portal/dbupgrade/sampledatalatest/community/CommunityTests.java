@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.community;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.community;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.community.membershiprequest.MembershipRequestTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.community.membershiprequest.MembershipRequestTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.messageboards;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.messageboards;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.messageboards.mbban.MBBanTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.messageboards.subscription.SubscriptionTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.messageboards.mbban.MBBanTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.messageboards.subscription.SubscriptionTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

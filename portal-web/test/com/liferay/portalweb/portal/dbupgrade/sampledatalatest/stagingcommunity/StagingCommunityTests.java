@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.stagingcommunity;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.stagingcommunity;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.stagingcommunity.quartz.QuartzTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.stagingcommunity.webcontentdisplay.WebContentDisplayTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.stagingcommunity.quartz.QuartzTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.stagingcommunity.webcontentdisplay.WebContentDisplayTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

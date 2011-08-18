@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.wiki.wikipage;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.wikipage;
 
 import com.liferay.portalweb.portal.BaseTests;
 

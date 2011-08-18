@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.announcementsdelivery.myaccount;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.announcementsdelivery.myaccount;
 
 import com.liferay.portalweb.portal.BaseTests;
 

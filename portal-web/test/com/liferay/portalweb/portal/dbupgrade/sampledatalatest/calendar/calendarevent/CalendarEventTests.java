@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.calendar.calendarevent;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.calendar.calendarevent;
 
 import com.liferay.portalweb.portal.BaseTests;
 

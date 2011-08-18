@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.stagingcommunity.webcontentdisplay;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.stagingcommunity.webcontentdisplay;
 
 import com.liferay.portalweb.portal.BaseTests;
 

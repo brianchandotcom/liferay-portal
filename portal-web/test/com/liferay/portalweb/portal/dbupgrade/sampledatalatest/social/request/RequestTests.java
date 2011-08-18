@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.social.request;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.social.request;
 
 import com.liferay.portalweb.portal.BaseTests;
 

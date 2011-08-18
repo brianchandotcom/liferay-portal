@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.calendar;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.calendar;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.calendar.calendarevent.CalendarEventTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.calendar.calendarevent.CalendarEventTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

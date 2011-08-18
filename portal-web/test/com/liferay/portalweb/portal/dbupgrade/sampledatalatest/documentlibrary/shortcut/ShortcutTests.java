@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.documentlibrary.shortcut;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.shortcut;
 
 import com.liferay.portalweb.portal.BaseTests;
 

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.shopping;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.category.CategoryTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.coupon.CouponTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.item.ItemTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.order.OrderTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.shopping.category.CategoryTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.shopping.coupon.CouponTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.shopping.item.ItemTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.shopping.order.OrderTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

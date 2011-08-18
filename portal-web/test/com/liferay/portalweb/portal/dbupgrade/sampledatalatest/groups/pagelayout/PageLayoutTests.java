@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.groups.pagelayout;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.groups.pagelayout;
 
 import com.liferay.portalweb.portal.BaseTests;
 

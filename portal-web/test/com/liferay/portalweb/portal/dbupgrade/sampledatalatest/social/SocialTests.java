@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.social;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.social;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.social.activities.ActivitiesTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.social.relation.RelationTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.social.request.RequestTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.social.activities.ActivitiesTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.social.relation.RelationTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.social.request.RequestTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

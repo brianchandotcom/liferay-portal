@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.webcontent;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.webcontent;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.webcontent.imageassociation.ImageAssociationTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.webcontent.journalfeed.WCJournalFeedTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.webcontent.imageassociation.ImageAssociationTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.webcontent.journalfeed.WCJournalFeedTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

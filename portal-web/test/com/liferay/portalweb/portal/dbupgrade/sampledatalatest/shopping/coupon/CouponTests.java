@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.shopping.coupon;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.shopping.coupon;
 
 import com.liferay.portalweb.portal.BaseTests;
 

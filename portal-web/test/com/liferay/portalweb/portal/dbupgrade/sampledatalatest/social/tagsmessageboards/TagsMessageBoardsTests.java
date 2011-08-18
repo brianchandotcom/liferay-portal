@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.social.tagsmessageboards;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.social.tagsmessageboards;
 
 import com.liferay.portalweb.portal.BaseTests;
 

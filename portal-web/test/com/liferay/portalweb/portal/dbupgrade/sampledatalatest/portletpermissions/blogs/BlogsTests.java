@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.portletpermissions.blogs;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.portletpermissions.blogs;
 
 import com.liferay.portalweb.portal.BaseTests;
 

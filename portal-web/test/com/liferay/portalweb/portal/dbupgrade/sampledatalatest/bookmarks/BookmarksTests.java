@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.bookmarks;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.bookmarks;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.bookmarks.bookmarksentry.BookmarksEntryTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.bookmarks.bookmarksfolder.BookmarksFolderTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.bookmarks.bookmarksentry.BookmarksEntryTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.bookmarks.bookmarksfolder.BookmarksFolderTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

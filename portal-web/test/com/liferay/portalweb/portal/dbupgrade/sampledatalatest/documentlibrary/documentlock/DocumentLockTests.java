@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.documentlibrary.documentlock;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.documentlock;
 
 import com.liferay.portalweb.portal.BaseTests;
 

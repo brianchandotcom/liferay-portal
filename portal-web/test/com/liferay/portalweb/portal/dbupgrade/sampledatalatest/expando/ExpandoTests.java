@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.expando;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.expando;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.expando.webcontent.WebContentTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.expando.webform.WebFormTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.expando.webcontent.WebContentTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.expando.webform.WebFormTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

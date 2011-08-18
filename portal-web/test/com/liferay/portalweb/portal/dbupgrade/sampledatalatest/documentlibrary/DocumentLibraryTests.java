@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.documentlibrary;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.documentlibrary.document.DocumentTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.documentlibrary.documentlock.DocumentLockTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.documentlibrary.documentversion.DocumentVersionTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.documentlibrary.folder.FolderTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.documentlibrary.shortcut.ShortcutTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.document.DocumentTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.documentlock.DocumentLockTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.documentversion.DocumentVersionTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.folder.FolderTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.shortcut.ShortcutTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.portletpermissions;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.portletpermissions;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.portletpermissions.blogs.BlogsTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.portletpermissions.blogs.BlogsTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.announcements;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.announcements;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.announcements.announcementsentry.AnnouncementsEntryTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.announcements.announcementsentry.AnnouncementsEntryTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

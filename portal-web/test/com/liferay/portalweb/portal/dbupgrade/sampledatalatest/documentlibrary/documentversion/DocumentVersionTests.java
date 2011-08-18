@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.documentlibrary.documentversion;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.documentversion;
 
 import com.liferay.portalweb.portal.BaseTests;
 

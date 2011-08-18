@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.community.membershiprequest;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.community.membershiprequest;
 
 import com.liferay.portalweb.portal.BaseTests;
 

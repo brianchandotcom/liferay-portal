@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.bookmarks.bookmarksfolder;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.bookmarks.bookmarksfolder;
 
 import com.liferay.portalweb.portal.BaseTests;
 

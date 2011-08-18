@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledata606.groups;
+package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.groups;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.groups.groupsorgs.GroupsOrgsTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.groups.groupsroles.GroupsRolesTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.groups.groupsusergroups.GroupsUserGroupsTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.groups.pagelayout.PageLayoutTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.groups.pagescope.PageScopeTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledata606.groups.usergroup.UserGroupTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.groups.groupsorgs.GroupsOrgsTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.groups.groupsroles.GroupsRolesTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.groups.groupsusergroups.GroupsUserGroupsTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.groups.pagelayout.PageLayoutTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.groups.pagescope.PageScopeTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.groups.usergroup.UserGroupTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

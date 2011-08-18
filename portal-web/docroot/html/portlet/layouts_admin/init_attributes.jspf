@@ -94,8 +94,6 @@ try {
 catch (NoSuchLayoutException nsle) {
 }
 
-LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
-
 Layout refererLayout = null;
 
 try {
@@ -152,6 +150,8 @@ if (liveGroup.isUser()) {
 if (selGroup.isLayoutSetPrototype()) {
 	privateLayout = true;
 }
+
+LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
 
 LayoutLister layoutLister = new LayoutLister();
 

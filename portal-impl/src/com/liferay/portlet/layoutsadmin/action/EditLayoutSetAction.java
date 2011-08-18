@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,6 +31,7 @@ import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.model.ThemeSetting;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -43,6 +45,8 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.util.servlet.UploadException;
 
 import java.io.File;
+
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -231,26 +235,37 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 				deleteThemeSettings(typeSettingsProperties, device);
 
-				if (Validator.equals(themeId, oldThemeId)) {
-					UnicodeProperties themeSettingsProperties =
-						PropertiesParamUtil.getProperties(
-							actionRequest,
-							device + "ThemeSettingsProperties--");
+				Map<String, ThemeSetting> configurableSettings =
+					theme.getConfigurableSettings();
 
-					for (String key : themeSettingsProperties.keySet()) {
-						String defaultValue = theme.getSetting(key);
-						String newValue = themeSettingsProperties.get(key);
+				if (configurableSettings.isEmpty() ||
+					!Validator.equals(themeId, oldThemeId)) {
 
-						if (!newValue.equals(defaultValue)) {
-							typeSettingsProperties.setProperty(
-								ThemeSettingImpl.namespaceProperty(device, key),
-								newValue);
-						}
-						else {
-							typeSettingsProperties.remove(
-								ThemeSettingImpl.namespaceProperty(
-									device, key));
-						}
+					continue;
+				}
+
+				for (String key : configurableSettings.keySet()) {
+					ThemeSetting themeSetting = configurableSettings.get(key);
+
+					String type = GetterUtil.getString(
+						themeSetting.getType(), "text");
+
+					String property = device + "ThemeSettingsProperties--" +
+						key + StringPool.DOUBLE_DASH;
+
+					String defaultValue = themeSetting.getValue();
+					String newValue = ParamUtil.getString(
+						actionRequest, property);
+
+					if (type.equals("checkbox")) {
+						newValue = String.valueOf(
+							GetterUtil.getBoolean(newValue));
+					}
+
+					if (!newValue.equals(defaultValue)) {
+						typeSettingsProperties.setProperty(
+							ThemeSettingImpl.namespaceProperty(device, key),
+							newValue);
 					}
 				}
 			}

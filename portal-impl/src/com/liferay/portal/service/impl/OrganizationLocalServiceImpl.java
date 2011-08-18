@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.DuplicateOrganizationException;
+import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.OrganizationNameException;
 import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.OrganizationTypeException;
@@ -385,6 +386,12 @@ public class OrganizationLocalServiceImpl
 		// Group
 
 		Group group = organization.getGroup();
+
+		if (group.isSite()) {
+			group.setSite(false);
+
+			groupPersistence.update(group, false);
+		}
 
 		groupLocalService.deleteGroup(group);
 

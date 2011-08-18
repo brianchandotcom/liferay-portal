@@ -533,7 +533,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Group
 
-		groupPersistence.remove(group);
+		if (group.isOrganization() && group.isSite()) {
+			group.setSite(false);
+
+			groupPersistence.update(group, false);
+		} 
+		else {
+			groupPersistence.remove(group);
+		}
 
 		// Permission cache
 

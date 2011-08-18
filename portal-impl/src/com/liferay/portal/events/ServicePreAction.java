@@ -669,6 +669,10 @@ public class ServicePreAction extends Action {
 
 			guestLayouts = (List<Layout>)viewableLayouts[1];
 
+			if (layouts == null) {
+				return guestLayouts;
+			}
+
 			layouts.addAll(0, guestLayouts);
 		}
 		else {
@@ -715,7 +719,9 @@ public class ServicePreAction extends Action {
 
 				previousLayouts = (List<Layout>)viewableLayouts[1];
 
-				layouts.addAll(previousLayouts);
+				if (previousLayouts != null) {
+					layouts.addAll(previousLayouts);
+				}
 			}
 		}
 

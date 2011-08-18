@@ -75,7 +75,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			classname="org.antlr.Tool"
 			classpathref="antlr.classpath"
 			fork="true"
-			maxmemory="512m"
+			maxmemory="1024m"
 			newenvironment="true"
 		>
 			<arg value="-o" />

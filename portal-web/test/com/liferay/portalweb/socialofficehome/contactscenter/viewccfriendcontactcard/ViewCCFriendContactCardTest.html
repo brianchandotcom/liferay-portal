@@ -1,0 +1,89 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewCCFriendContactCardTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewCCFriendContactCardTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[2]/div/ul/li[2]/a</td>
+	<td>Contacts Center</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/div/ul/li[2]/a</td>
+	<td>Contacts Center</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[1]/a/img</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[1]/div/div/div/div[2]/a</td>
+	<td>View 1 friends.</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//div[1]/a/img</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li/div[2]/div[1]</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/span</td>
+	<td>socialofficefriendea@liferay.com</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[1]/a/img</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/h1/span</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/div[1]/div/div[1]/div/a</td>
+	<td>socialofficefriendea@liferay.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/div[1]/div/div[2]/div</td>
+	<td>Friend</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[3]/div[3]</td>
+	<td>Recent Activity</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/div[1]</td>
+	<td>Whats Happening Content</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

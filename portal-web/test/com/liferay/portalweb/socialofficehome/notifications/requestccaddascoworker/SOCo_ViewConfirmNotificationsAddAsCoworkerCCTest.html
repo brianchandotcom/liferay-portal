@@ -1,0 +1,59 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SOCo_ViewConfirmNotificationsAddAsCoworkerCCTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOCo_ViewConfirmNotificationsAddAsCoworkerCCTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/socialofficecoworkersn/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div[1]/ul/li[2]/a</td>
+	<td>Contacts Center</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div[1]/ul/li[2]/a</td>
+	<td>Contacts Center</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[1]/a/img</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[1]/div/div/div/div[2]/a</td>
+	<td>View 1 coworkers.</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//div[1]/a/img</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li/div[2]/div[1]</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/span</td>
+	<td>test@liferay.com</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -398,6 +398,19 @@ public class MainServlet extends ActionServlet {
 
 			return;
 		}
+		
+		try {
+			if (processSiteInactiveRequest(request, response)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Processed site inactive request");
+				}
+	
+				return;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Set portal port");
@@ -666,7 +679,7 @@ public class MainServlet extends ActionServlet {
 	protected long getCompanyId(HttpServletRequest request) {
 		return PortalInstances.getCompanyId(request);
 	}
-
+	
 	protected String getPassword(HttpServletRequest request) {
 		return PortalUtil.getUserPassword(request);
 	}
@@ -1229,6 +1242,40 @@ public class MainServlet extends ActionServlet {
 
 		servletOutputStream.print(html);
 
+		return true;
+	}
+	
+	protected boolean processSiteInactiveRequest(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, PortalException, SystemException {
+
+		long plid = ParamUtil.getLong(request, "p_l_id");
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		Group group = layout.getGroup();
+
+		if (group.isActive()) {
+			return false;
+		}
+	
+		response.setContentType(ContentTypes.TEXT_HTML_UTF8);
+	
+		Locale locale = LocaleUtil.getDefault();
+	
+		String siteInactiveMessage = LanguageUtil.get(
+			locale, "this-site-is-inactive-please-contact-the-administrator");
+	
+		String html = ContentUtil.get(
+			"com/liferay/portal/dependencies/site_inactive.html");
+	
+		html = StringUtil.replace(
+			html, "[$SITE_INACTIVE_MESSAGE$]", siteInactiveMessage);
+	
+		ServletOutputStream servletOutputStream = response.getOutputStream();
+	
+		servletOutputStream.print(html);
+	
 		return true;
 	}
 

@@ -80,6 +80,10 @@ if (group != null) {
 
 	seoSections = PropsValues.SITES_FORM_UPDATE_SEO;
 	advancedSections = PropsValues.SITES_FORM_UPDATE_ADVANCED;
+
+	if ((windowState == LiferayWindowState.POP_UP) && ArrayUtil.contains(advancedSections, "staging")) {
+		advancedSections = ArrayUtil.remove(advancedSections, "staging");
+	}
 }
 
 String[][] categorySections = {mainSections, seoSections, advancedSections};

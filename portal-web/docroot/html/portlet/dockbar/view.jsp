@@ -124,13 +124,13 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 				<div class="aui-menu manage-content-menu aui-overlaycontext-hidden" id="<portlet:namespace />manageContentContainer">
 					<div class="aui-menu-content">
 						<ul>
-							<c:if test="<%= themeDisplay.isShowPageSettingsIcon() %>">
+							<c:if test="<%= themeDisplay.isShowPageSettingsIcon() && (themeDisplay.getURLPageSettings() != null) %>">
 								<li class="first manage-page use-dialog">
 									<aui:a href="<%= themeDisplay.getURLPageSettings().toString() %>" label="page" title="manage-page" />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon() && !themeDisplay.isStateMaximized() %>">
+							<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon() && !themeDisplay.isStateMaximized() && (themeDisplay.getURLPageSettings() != null) %>">
 								<li class="page-layout use-dialog">
 									<aui:a href='<%= themeDisplay.getURLPageSettings().toString() + "#layout" %>' label="page-layout" title="manage-page" />
 								</li>
@@ -142,19 +142,19 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() && !group.isLayoutPrototype() %>">
+							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() && !group.isLayoutPrototype() && (themeDisplay.getURLSiteSettings() != null) %>">
 								<li class="settings use-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteSettings().toString() %>" label="site-settings" title="edit-site-settings" />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() %>">
+							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() && (themeDisplay.getURLSiteMapSettings() != null) %>">
 								<li class="sitemap use-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteMapSettings().toString() %>" label="site-pages" title="manage-site-pages" />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowManageSiteMembershipsIcon() && !group.isLayoutPrototype() %>">
+							<c:if test="<%= themeDisplay.isShowManageSiteMembershipsIcon() && !group.isLayoutPrototype() && (themeDisplay.getURLManageSiteMemberships() != null) %>">
 								<li class="manage-site-memberships use-dialog">
 									<aui:a href="<%= themeDisplay.getURLManageSiteMemberships().toString() %>" label="site-memberships" title="manage-site-memberships" />
 								</li>
@@ -264,11 +264,13 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 
 		<li class="user-avatar <%= themeDisplay.isImpersonated() ? "impersonating-user has-submenu" : "" %>" id="<portlet:namespace />userAvatar">
 			<span class="user-links <%= themeDisplay.isImpersonated() ? "menu-button": "" %>">
-				<aui:a cssClass="user-portrait use-dialog" href="<%= themeDisplay.getURLMyAccount().toString() %>" title="manage-my-account">
-					<img alt="<%= HtmlUtil.escape(user.getFullName()) %>" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
-				</aui:a>
+				<c:if test="<%= themeDisplay.getURLMyAccount() != null %>">
+					<aui:a cssClass="user-portrait use-dialog" href="<%= themeDisplay.getURLMyAccount().toString() %>" title="manage-my-account">
+						<img alt="<%= HtmlUtil.escape(user.getFullName()) %>" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
+					</aui:a>
 
-				<aui:a cssClass="user-fullname use-dialog" href="<%= themeDisplay.getURLMyAccount().toString() %>" title="manage-my-account"><%= HtmlUtil.escape(user.getFullName()) %></aui:a>
+					<aui:a cssClass="user-fullname use-dialog" href="<%= themeDisplay.getURLMyAccount().toString() %>" title="manage-my-account"><%= HtmlUtil.escape(user.getFullName()) %></aui:a>
+				</c:if>
 
 				<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
 					<span class="sign-out">(<aui:a href="<%= themeDisplay.getURLSignOut() %>" label="sign-out" />)</span>

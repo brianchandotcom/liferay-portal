@@ -284,8 +284,8 @@ public class PortletPermissionImpl implements PortletPermission {
 				groupId, name, primKey, actionId);
 		}
 
-		if (LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE) &&
+		if (GroupPermissionUtil.contains(
+				permissionChecker, groupId, ActionKeys.MANAGE_LAYOUTS) &&
 			hasLayoutManagerPermission(portletId, actionId)) {
 
 			return true;

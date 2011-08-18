@@ -1,0 +1,79 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewLinkHomeTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewLinkHomeTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div[1]/ul/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div[1]/ul/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='home selected']/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//li[@class='selected']/a/span</td>
+	<td>Profile</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[1]/h1/span</td>
+	<td>What's happening?</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//textarea</td>
+	<td>Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
+	<td>You have no microblogs entry.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/section/header/h1/span</td>
+	<td>Activities</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
+	<td>There are no recent activities.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div/input[1]</td>
+	<td>Sites Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[3]/span[2]</td>
+	<td>Liferay</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

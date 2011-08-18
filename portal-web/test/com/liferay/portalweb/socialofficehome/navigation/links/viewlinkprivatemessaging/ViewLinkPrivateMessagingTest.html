@@ -1,0 +1,59 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewLinkPrivateMessagingTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewLinkPrivateMessagingTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//section/div/div/div/div[1]/ul/li[4]/a</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//section/div/div/div/div[1]/ul/li[4]/a</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//input[@value='New Message']</td>
+	<td>New Message</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No messages found.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div/input[1]</td>
+	<td>Sites Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[3]/span[2]</td>
+	<td>Liferay</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -24,14 +24,9 @@
 	<td>Control Panel</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>link=Users and Organizations</td>
 	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@id='_125_keywords']</td>
-	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -39,14 +34,9 @@
 	<td>Portlet@liferay.com</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//tbody/tr[3]/td[2]/a</td>
-	<td>Portlet</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -54,12 +44,12 @@
 	<td>Portlet</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//tbody/tr[3]/td[2]/a</td>
 	<td>Portlet</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_125_rolesLink']</td>
 	<td>Roles</td>
 </tr>

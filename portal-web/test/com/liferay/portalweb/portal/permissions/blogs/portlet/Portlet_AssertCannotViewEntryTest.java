@@ -47,5 +47,7 @@ public class Portlet_AssertCannotViewEntryTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("Blogs Entry Title Temporary"));
 		assertFalse(selenium.isElementPresent("//input[@value='Search']"));
+		assertEquals(RuntimeVariables.replace("Showing 0 results."),
+			selenium.getText("//div[@class='search-results']"));
 	}
 }

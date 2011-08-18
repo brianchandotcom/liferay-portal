@@ -70,6 +70,8 @@ public class TearDownBlogsRolesTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -91,6 +93,9 @@ public class TearDownBlogsRolesTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
@@ -121,6 +126,8 @@ public class TearDownBlogsRolesTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -142,6 +149,9 @@ public class TearDownBlogsRolesTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
@@ -173,6 +183,8 @@ public class TearDownBlogsRolesTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -194,6 +206,9 @@ public class TearDownBlogsRolesTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
@@ -224,6 +239,8 @@ public class TearDownBlogsRolesTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -245,6 +262,9 @@ public class TearDownBlogsRolesTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");

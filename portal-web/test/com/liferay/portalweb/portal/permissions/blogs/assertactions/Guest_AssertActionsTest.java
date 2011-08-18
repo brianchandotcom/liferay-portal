@@ -85,5 +85,59 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent("link=Permissions"));
 		assertFalse(selenium.isElementPresent("link=Delete"));
 		assertTrue(selenium.isElementPresent("link=Sign in to vote."));
+		selenium.clickAt("//input[@value='Reply as...']",
+			RuntimeVariables.replace("Reply as..."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//iframe[@id='_33_']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//iframe[@id='_33_']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//label[@for='_164_login']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Email Address"),
+			selenium.getText("//label[@for='_164_login']"));
+		assertTrue(selenium.isVisible("//input[@id='_164_login']"));
+		assertEquals(RuntimeVariables.replace("Password"),
+			selenium.getText("//label[@for='_164_password']"));
+		assertTrue(selenium.isVisible("//input[@id='_164_password']"));
+		assertFalse(selenium.isChecked("//input[@id='_164_rememberMeCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Remember Me"),
+			selenium.getText("//label[@for='_164_rememberMeCheckbox']"));
+		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
+		selenium.selectFrame("relative=top");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//button[@id='closethick']",
+			RuntimeVariables.replace(""));
 	}
 }

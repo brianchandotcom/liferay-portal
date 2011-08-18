@@ -49,8 +49,24 @@ public class Portlet_AddCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("link=Be the first."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Be the first.")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Be the first.",
 			RuntimeVariables.replace("Be the first."));
 

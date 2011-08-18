@@ -161,5 +161,7 @@ public class LoginUsersTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 	}
 }

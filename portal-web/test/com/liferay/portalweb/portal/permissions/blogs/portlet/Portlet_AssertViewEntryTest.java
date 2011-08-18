@@ -49,6 +49,8 @@ public class Portlet_AssertViewEntryTest extends BaseTestCase {
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content Temporary"),
 			selenium.getText("//div[@class='entry-body']/p"));
+		assertEquals(RuntimeVariables.replace("Showing 1 result."),
+			selenium.getText("//div[@class='search-results']"));
 		selenium.type("//input[@id='_33_keywords']",
 			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.saveScreenShotAndSource();

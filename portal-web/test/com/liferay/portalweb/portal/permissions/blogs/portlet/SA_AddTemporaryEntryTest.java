@@ -85,6 +85,8 @@ public class SA_AddTemporaryEntryTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title Temporary"),
-			selenium.getText("//div[@class='entry-title']"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content Temporary"),
+			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

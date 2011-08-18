@@ -332,16 +332,14 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "first", _first);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "id", _id);
-		setNamespacedAttribute(
-			request, "ignoreRequestValue", _ignoreRequestValue);
+		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
 		setNamespacedAttribute(request, "inlineField", _inlineField);
 		setNamespacedAttribute(request, "inlineLabel", _inlineLabel);
 		setNamespacedAttribute(request, "inputCssClass", _inputCssClass);
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "last", _last);
 		setNamespacedAttribute(request, "listType", _listType);
-		setNamespacedAttribute(
-			request, "listTypeFieldName", _listTypeFieldName);
+		setNamespacedAttribute(request, "listTypeFieldName", _listTypeFieldName);
 		setNamespacedAttribute(request, "multiple", _multiple);
 		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "onChange", _onChange);

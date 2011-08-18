@@ -693,13 +693,6 @@
 	<component name="Script" parentClass="com.liferay.taglib.util.PositionTagSupport" writeJSP="false">
 		<attributes>
 			<attribute>
-				<name>position</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-				<defaultValue></defaultValue>
-				<description></description>
-			</attribute>
-			<attribute>
 				<name>use</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

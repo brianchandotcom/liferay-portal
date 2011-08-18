@@ -30,27 +30,15 @@ public class BaseScriptTag extends com.liferay.taglib.util.PositionTagSupport {
 		return super.doStartTag();
 	}
 
-	@Override
-	public java.lang.String getPosition() {
-		return _position;
-	}
-
 	public java.lang.String getUse() {
 		return _use;
-	}
-
-	@Override
-	public void setPosition(java.lang.String position) {
-		_position = position;
 	}
 
 	public void setUse(java.lang.String use) {
 		_use = use;
 	}
 
-	@Override
 	protected void cleanUp() {
-		_position = null;
 		_use = null;
 	}
 
@@ -61,7 +49,6 @@ public class BaseScriptTag extends com.liferay.taglib.util.PositionTagSupport {
 	private static final String _PAGE =
 		"/html/taglib/aui/script/page.jsp";
 
-	private java.lang.String _position = null;
 	private java.lang.String _use = null;
 
 }

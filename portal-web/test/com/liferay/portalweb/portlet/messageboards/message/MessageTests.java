@@ -46,6 +46,7 @@ import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategoryme
 import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategorymessagereplyexplanation.SplitThreadCategoryMessageReplyExplanationTests;
 import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategorymessagereplymultiple.SplitThreadCategoryMessageReplyMultipleTests;
 import com.liferay.portalweb.portlet.messageboards.message.unmarkcategorymessagequestionreply.UnmarkCategoryMessageQuestionReplyTests;
+import com.liferay.portalweb.portlet.messageboards.message.userviewmbthreadmessagegmail.UserViewMBThreadMessageGmailTests;
 import com.liferay.portalweb.portlet.messageboards.message.viewcategorymessagemyposts.ViewCategoryMessageMyPostsTests;
 import com.liferay.portalweb.portlet.messageboards.message.viewcategorymessagepostcount.ViewCategoryMessagePostCountTests;
 import com.liferay.portalweb.portlet.messageboards.message.viewcategorymessagerecentposts.ViewCategoryMessageRecentPostsTests;
@@ -97,6 +98,7 @@ public class MessageTests extends BaseTests {
 			SplitThreadCategoryMessageReplyExplanationTests.suite());
 		testSuite.addTest(SplitThreadCategoryMessageReplyMultipleTests.suite());
 		testSuite.addTest(UnmarkCategoryMessageQuestionReplyTests.suite());
+		testSuite.addTest(UserViewMBThreadMessageGmailTests.suite());
 		testSuite.addTest(ViewCategoryMessageMyPostsTests.suite());
 		testSuite.addTest(ViewCategoryMessagePostCountTests.suite());
 		testSuite.addTest(ViewCategoryMessageRecentPostsTests.suite());

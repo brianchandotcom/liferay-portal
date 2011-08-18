@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -43,6 +44,8 @@ import jodd.io.findfile.WildcardFindFile;
 import jodd.util.ClassLoaderUtil;
 
 import org.apache.commons.lang.time.StopWatch;
+
+import org.objectweb.asm.ClassReader;
 
 /**
  * @author Igor Spasic
@@ -155,10 +158,6 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		}
 	}
 
-	public void setCheckBytecodeSignature(boolean checkBytecodeSignature) {
-		_checkBytecodeSignature = checkBytecodeSignature;
-	}
-
 	public void setJSONWebServiceActionsManager(
 		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
 
@@ -172,12 +171,34 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		if (className.endsWith("Service") ||
 			className.endsWith("ServiceImpl")) {
 
-			if (_checkBytecodeSignature) {
-				InputStream inputStream = entryData.openInputStream();
+			InputStream inputStream = entryData.openInputStream();
 
-				if (!isTypeSignatureInUse(
-						inputStream, _jsonWebServiceAnnotationBytes)) {
+			if (!isTypeSignatureInUse(
+				inputStream, _jsonWebServiceAnnotationBytes)) {
 
+				return;
+			}
+
+			if (!entryData.isArchive()) {
+
+				StreamUtil.cleanUp(inputStream);
+
+				ClassReader classReader =
+					new ClassReader(entryData.openInputStream());
+
+				JSONWebServiceClassVisitor classVisitor =
+					new JSONWebServiceClassVisitor();
+
+				try {
+					classReader.accept(classVisitor, 0);
+				}
+				catch (Exception ex) {
+					return;
+				}
+
+				String extractedClassName = classVisitor.getClassName();
+
+				if (!extractedClassName.equals(className)) {
 					return;
 				}
 			}
@@ -349,7 +370,6 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 	private static Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceConfigurator.class);
 
-	private boolean _checkBytecodeSignature = true;
 	private ClassLoader _classLoader;
 	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
 	private byte[] _jsonWebServiceAnnotationBytes =

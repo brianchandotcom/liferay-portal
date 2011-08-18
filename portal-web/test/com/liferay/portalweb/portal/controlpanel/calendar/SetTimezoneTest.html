@@ -15,16 +15,21 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Joe Bloggs</td>
-	<td></td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Joe Bloggs</td>
-	<td></td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
+	<td>link=My Account</td>
+	<td>My Account</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
 	<td>//a[@id='_2_displaySettingsLink']</td>
 	<td>Display Settings</td>
 </tr>
@@ -35,32 +40,27 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_2_timeZoneId</td>
-	<td></td>
+	<td>//select[@name='_2_timeZoneId']</td>
+	<td>Time Zone</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_2_timeZoneId</td>
+	<td>//select[@name='_2_timeZoneId']</td>
 	<td>label=(UTC -08:00) Pacific Standard Time</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_timeZoneId</td>
+	<td>//select[@name='_2_timeZoneId']</td>
 	<td>(UTC -08:00) Pacific Standard Time</td>
 </tr>
 

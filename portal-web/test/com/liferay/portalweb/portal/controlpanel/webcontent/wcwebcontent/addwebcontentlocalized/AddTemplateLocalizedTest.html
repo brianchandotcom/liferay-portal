@@ -16,57 +16,42 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
-	<td>Web Content</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
-</tr>	
+</tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Templates</td>
-	<td></td>
+	<td>Templates</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Template']</td>
-	<td></td>
+	<td>Add Template</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_name</td>
+	<td>//input[@id='_15_name_en_US']</td>
 	<td>Test Localized Template</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_description</td>
+	<td>//textarea[@id='_15_description_en_US']</td>
 	<td>This is a test localized template.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForPopUp</td>
-	<td>structure</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>structure</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -74,58 +59,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=LOCALIZED'))</td>
-	<td>localizedPresentA</td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Test Localized Structure<br />This is a test localized structure.</td>
 </tr>
 <tr>
-	<td>gotoIf</td>
-	<td>${localizedPresentA}</td>
-	<td>LocalizedPresentA</td>
-</tr>
-<tr>
-	<td>close</td>
-	<td>structure</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>LocalizedPresentA</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=LOCALIZED'))</td>
-	<td>localizedPresentB</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${localizedPresentB}</td>
-	<td>LocalizedNotPresentB</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=LOCALIZED</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>LocalizedNotPresentB</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//td[2]/a</td>
+	<td>Test Localized Structure<br />This is a test localized structure.</td>
 </tr>
 <tr>
 	<td>pause</td>
 	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Test Localized Structure</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,33 +85,33 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_xsl</td>
+	<td>//input[@id='_15_xsl']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\controlpanel\webcontent\wcwebcontent\addwebcontentlocalized\dependencies\LocalizedTemplate.htm</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=LOCALIZED</td>
+	<td>//td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
 	<td>Test Localized Template</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>This is a test localized template.</td>
 </tr>
 
 </tbody></table>

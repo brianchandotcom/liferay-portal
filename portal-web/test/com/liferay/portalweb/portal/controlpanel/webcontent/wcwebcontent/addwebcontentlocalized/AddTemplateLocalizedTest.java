@@ -22,111 +22,91 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddTemplateLocalizedTest extends BaseTestCase {
 	public void testAddTemplateLocalized() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-				selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
-					RuntimeVariables.replace("Web Content"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Templates", RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Add Template']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.type("_15_name",
-					RuntimeVariables.replace("Test Localized Template"));
-				selenium.saveScreenShotAndSource();
-				selenium.type("_15_description",
-					RuntimeVariables.replace(
-						"This is a test localized template."));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Select']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPopUp("structure",
-					RuntimeVariables.replace("30000"));
-				selenium.selectWindow("structure");
-				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
-
-				boolean localizedPresentA = selenium.isElementPresent(
-						"link=LOCALIZED");
-
-				if (localizedPresentA) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.close();
-				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
-
-			case 2:
-
-				boolean localizedPresentB = selenium.isElementPresent(
-						"link=LOCALIZED");
-
-				if (!localizedPresentB) {
-					label = 3;
-
-					continue;
-				}
-
-				selenium.click("link=LOCALIZED");
-				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
-
-			case 3:
-				Thread.sleep(5000);
-				assertTrue(selenium.isElementPresent(
-						"link=Test Localized Structure"));
-				selenium.type("_15_xsl",
-					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\webcontent\\wcwebcontent\\addwebcontentlocalized\\dependencies\\LocalizedTemplate.htm"));
-				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isTextPresent(
-						"Your request completed successfully."));
-				assertTrue(selenium.isElementPresent("link=LOCALIZED"));
-				assertTrue(selenium.isTextPresent("Test Localized Template"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isElementPresent("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Templates", RuntimeVariables.replace("Templates"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Add Template']",
+			RuntimeVariables.replace("Add Template"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_15_name_en_US']",
+			RuntimeVariables.replace("Test Localized Template"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//textarea[@id='_15_description_en_US']",
+			RuntimeVariables.replace("This is a test localized template."));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Select']",
+			RuntimeVariables.replace("Select"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace(
+				"Test Localized Structure\nThis is a test localized structure."),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a",
+			RuntimeVariables.replace(
+				"Test Localized Structure\nThis is a test localized structure."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Test Localized Structure")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isElementPresent("link=Test Localized Structure"));
+		selenium.type("//input[@id='_15_xsl']",
+			RuntimeVariables.replace(
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\webcontent\\wcwebcontent\\addwebcontentlocalized\\dependencies\\LocalizedTemplate.htm"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isElementPresent("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Test Localized Template"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"This is a test localized template."),
+			selenium.getText("//td[4]/a"));
 	}
 }

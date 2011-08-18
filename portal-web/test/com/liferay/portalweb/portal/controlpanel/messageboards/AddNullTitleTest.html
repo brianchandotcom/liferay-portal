@@ -16,66 +16,56 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards</td>
-	<td></td>
+	<td>Message Boards</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Tést Catégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Tést Catégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Post New Thread']</td>
-	<td></td>
+	<td>Post New Thread</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_162_subject</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__162_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__162_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//body</td>
+	<td>//textarea[@id='_162_editor']</td>
 	<td>This is a Null Test Entry!</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>This field is required.</td>
+	<td>type</td>
+	<td>//input[@id='_162_subject']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//label/div</td>
+	<td>This field is required.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-form-validator-message required']</td>
+	<td>//label/div</td>
 	<td>This field is required.</td>
 </tr>
 

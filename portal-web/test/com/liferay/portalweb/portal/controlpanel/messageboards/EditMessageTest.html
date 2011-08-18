@@ -16,67 +16,67 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards</td>
-	<td></td>
+	<td>Message Boards</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[4]/td[2]/a[1]/strong</td>
+	<td>Tést Catégory Editéd</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[4]/td[2]/a[1]/strong</td>
+	<td>Tést Catégory Editéd</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Tést Méssagé</td>
-	<td></td>
+	<td>Tést Méssagé</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Edit</td>
-	<td></td>
+	<td>Edit</td>
 </tr>
 <tr>
-	<td>typeKeys</td>
-	<td>_162_subject</td>
+	<td>type</td>
+	<td>//input[@id='_162_subject']</td>
 	<td>Tést Méssagé Edited</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_162_subject</td>
-	<td>Tést Méssagé Edited</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_162_textArea</td>
+	<td>//textarea[@id='_162_editor']</td>
 	<td>This is edited test Méssagé!</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Publish']</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>

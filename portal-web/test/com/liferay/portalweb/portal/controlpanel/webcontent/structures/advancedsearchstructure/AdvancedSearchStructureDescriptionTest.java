@@ -48,16 +48,15 @@ public class AdvancedSearchStructureDescriptionTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-				selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Structures", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Structures",
+					RuntimeVariables.replace("Structures"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -71,7 +70,7 @@ public class AdvancedSearchStructureDescriptionTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Advanced \u00bb",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
 
@@ -81,7 +80,7 @@ public class AdvancedSearchStructureDescriptionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_15_description")) {
+						if (selenium.isVisible("//input[@id='_15_description']")) {
 							break;
 						}
 					}
@@ -92,28 +91,61 @@ public class AdvancedSearchStructureDescriptionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.type("_15_description",
+				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace(
 						"web content structure description"));
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_15_description", RuntimeVariables.replace(""));
+				selenium.type("//input[@id='_15_description']",
+					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
-				selenium.type("_15_description",
+				assertEquals(RuntimeVariables.replace(
+						"Web Content Structure Name"),
+					selenium.getText("//td[3]/a"));
+				assertEquals(RuntimeVariables.replace(
+						"Web Content Structure Description"),
+					selenium.getText("//td[4]/a"));
+				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace(
 						"web1 content1 structure1 description1"));
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_15_description", RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace(""));
+				selenium.saveScreenShotAndSource();
+				assertFalse(selenium.isTextPresent("Web Content Structure Name"));
+				assertFalse(selenium.isTextPresent(
+						"Web Content Structure Description"));
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='portlet-msg-info']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace(
+						"No structures were found."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 
 			case 100:
 				label = -1;

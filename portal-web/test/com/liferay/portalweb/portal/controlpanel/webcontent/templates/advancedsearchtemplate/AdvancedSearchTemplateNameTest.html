@@ -16,27 +16,22 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
-	<td>Web Content</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
-</tr>	
+</tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Templates</td>
-	<td></td>
+	<td>Templates</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -51,7 +46,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
-	<td></td>
+	<td>Advanced »</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -60,48 +55,63 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_15_name</td>
-	<td></td>
+	<td>//input[@id='_15_name']</td>
+	<td>Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_name</td>
+	<td>//input[@id='_15_name']</td>
 	<td>web content template name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_name</td>
+	<td>//input[@id='_15_name']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Web Content Template Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Web Content Template Description</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>_15_name</td>
+	<td>//input[@id='_15_name']</td>
 	<td>web1 content1 template1 name1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_name</td>
+	<td>//input[@id='_15_name']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=TEMPLATEID</td>
+	<td>assertTextNotPresent</td>
+	<td>Web Content Template Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Web Content Template Description</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
-	<td></td>
+	<td>« Basic</td>
 </tr>
 
 </tbody></table>

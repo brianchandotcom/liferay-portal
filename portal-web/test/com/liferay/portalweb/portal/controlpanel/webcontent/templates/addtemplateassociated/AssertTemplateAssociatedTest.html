@@ -16,23 +16,18 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
-	<td>Web Content</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
-</tr>	
+</tr>
 <tr>
 	<td>assertText</td>
 	<td>//div/span/ul/li/strong/a/span</td>
@@ -59,19 +54,29 @@
 	<td>Basic Web Content</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_15_changeStructureButton']</td>
+	<td>Change</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='_15_changeStructureButton']</td>
+	<td>Change</td>
+</tr>
+<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>_15_changeStructureBtn</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Web Content Structure Name<br />Web Content Structure Description</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>_15_changeStructureBtn</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//td[2]/a</td>
+	<td>Web Content Structure Name<br />Web Content Structure Description</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -79,89 +84,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>ChangeStructure</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>name=ChangeStructure</td>
-	<td></td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=STRUCTUREID'))</td>
-	<td>templatePresentA</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${templatePresentA}</td>
-	<td>TemplatePresentA</td>
-</tr>
-<tr>
-	<td>close</td>
-	<td>name=structure</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>TemplatePresentA</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=STRUCTUREID'))</td>
-	<td>templatePresentB</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${templatePresentB}</td>
-	<td>TemplateNotPresentB</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=STRUCTUREID</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=STRUCTUREID</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>TemplateNotPresentB</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForText</td>
+	<td>//span[@id='_15_structureNameLabel']</td>
+	<td>Web Content Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_15_structureNameLabel</td>
-	<td>Web Content Structure Name (Use Default)</td>
+	<td>//span[@id='_15_structureNameLabel']</td>
+	<td>Web Content Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//label/a</td>
+	<td>//span[@class='template-name-label']</td>
 	<td>Web Content Template Name Associated</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>link=Web Content Template Name</td>
-	<td></td>
+	<td>Web Content Template Name</td>
 </tr>
 
 </tbody></table>

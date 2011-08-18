@@ -47,12 +47,10 @@ public class AdvancedSearchWebContentNameTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-				selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
@@ -67,7 +65,7 @@ public class AdvancedSearchWebContentNameTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Advanced \u00bb",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
 
@@ -77,7 +75,7 @@ public class AdvancedSearchWebContentNameTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_15_title_en_US")) {
+						if (selenium.isVisible("//input[@id='_15_title']")) {
 							break;
 						}
 					}
@@ -88,29 +86,31 @@ public class AdvancedSearchWebContentNameTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.type("_15_title_en_US",
+				selenium.type("//input[@id='_15_title']",
 					RuntimeVariables.replace("web content name"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_15_title_en_US", RuntimeVariables.replace(""));
+				selenium.type("//input[@id='_15_title']",
+					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Web Content Name"),
 					selenium.getText("//td[3]/a"));
-				selenium.type("_15_title_en_US",
+				selenium.type("//input[@id='_15_title']",
 					RuntimeVariables.replace("web1 content1 name1"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_15_title_en_US", RuntimeVariables.replace(""));
+				selenium.type("//input[@id='_15_title']",
+					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isElementPresent("link=Web Content Name"));
 				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 100:
 				label = -1;

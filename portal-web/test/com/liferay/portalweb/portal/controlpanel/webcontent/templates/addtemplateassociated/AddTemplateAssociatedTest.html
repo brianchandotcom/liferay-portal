@@ -16,57 +16,42 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
-	<td>Web Content</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
-</tr>	
+</tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Templates</td>
-	<td></td>
+	<td>Templates</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Template']</td>
-	<td></td>
+	<td>Add Template</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_name</td>
+	<td>//input[@id='_15_name_en_US']</td>
 	<td>Web Content Template Name Associated</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_description</td>
+	<td>//textarea[@id='_15_description_en_US']</td>
 	<td>Web Content Template Description Associated</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForPopUp</td>
-	<td>structure</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>name=structure</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -74,64 +59,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=STRUCTUREID'))</td>
-	<td>templatePresentA</td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Web Content Structure Name<br />Web Content Structure Description</td>
 </tr>
 <tr>
-	<td>gotoIf</td>
-	<td>${templatePresentA}</td>
-	<td>TemplatePresentA</td>
+	<td>clickAt</td>
+	<td>//td[2]/a</td>
+	<td>Web Content Structure Name<br />Web Content Structure Description</td>
 </tr>
 <tr>
-	<td>close</td>
-	<td>name=structure</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>TemplatePresentA</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=STRUCTUREID'))</td>
-	<td>templatePresentB</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${templatePresentB}</td>
-	<td>TemplateNotPresentB</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=STRUCTUREID</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>TemplateNotPresentB</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
+	<td>waitForText</td>
+	<td>//a[@id='_15_structureName']</td>
+	<td>Web Content Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_15_structureName</td>
+	<td>//a[@id='_15_structureName']</td>
 	<td>Web Content Structure Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_15_editorButton</td>
-	<td></td>
+	<td>//input[@value='Launch Editor']</td>
+	<td>Launch Editor</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//textarea[@id='_15_xslContent']</td>
-	<td></td>
+	<td>XSL Content</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -139,14 +94,9 @@
 	<td><h1>$title.getData()</h1><br /><br /><a href="$ltp.getUrl()">See Page</a></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Update']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>click</td>
 	<td>//input[@value='Update']</td>
-	<td></td>
+	<td>Update</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -156,17 +106,27 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//tr[4]/td[2]/a</td>
+	<td>Template ID</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr[4]/td[3]/a</td>
-	<td>Web Content Template Name Associated<br /> Web Content Template Description Associated</td>
+	<td>Web Content Template Name Associated</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/a</td>
+	<td>Web Content Template Description Associated</td>
 </tr>
 
 </tbody></table>

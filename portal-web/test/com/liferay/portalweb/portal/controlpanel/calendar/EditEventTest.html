@@ -16,17 +16,27 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar</td>
-	<td></td>
+	<td>Calendar</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Test Event</td>
+	<td>Edited Test Event</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -34,7 +44,12 @@
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Edit</td>
 </tr>
@@ -44,44 +59,39 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>_8_title</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
-	<td>_8_title</td>
+	<td>//input[@id='_8_title']</td>
 	<td>Edited Test Event</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_8_description</td>
+	<td>//input[@id='_8_description']</td>
 	<td>This is a test event! This test event has been edited.</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_startDateHour</td>
+	<td>//select[@name='_8_startDateHour']</td>
 	<td>label=5</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_startDateAmPm</td>
+	<td>//select[@name='_8_startDateAmPm']</td>
 	<td>label=AM</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Edited Test Event</td>
-	<td></td>
+	<td>Edited Test Event</td>
 </tr>
 
 </tbody></table>

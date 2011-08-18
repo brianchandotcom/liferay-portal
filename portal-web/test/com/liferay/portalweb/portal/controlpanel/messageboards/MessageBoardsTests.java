@@ -45,11 +45,11 @@ public class MessageBoardsTests extends BaseTests {
 		testSuite.addTestSuite(DeleteMessageTest.class);
 		testSuite.addTestSuite(EditCategoryTest.class);
 		testSuite.addTestSuite(EditMessageTest.class);
+		testSuite.addTestSuite(AddQuestionThreadTest.class);
+		testSuite.addTestSuite(AddAnswerThreadTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryCPTest.class);
 		testSuite.addTestSuite(ImportLARTest.class);
 		testSuite.addTestSuite(AssertImportLARTest.class);
-		testSuite.addTestSuite(AddQuestionThreadTest.class);
-		testSuite.addTestSuite(AddAnswerThreadTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryCPTest.class);
 
 		return testSuite;

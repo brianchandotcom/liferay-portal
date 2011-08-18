@@ -41,90 +41,44 @@ public class AddQuestionThreadTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Message Boards", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards",
+			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//tr[4]/td[1]/a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"T\u00e9st Cat\u00e9gory Edit\u00e9d"),
+			selenium.getText("//tr[4]/td[2]/a[1]/strong"));
+		selenium.clickAt("//tr[4]/td[2]/a[1]/strong",
+			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Post New Thread']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_162_questionCheckbox")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		assertFalse(selenium.isChecked("//input[@name='_162_questionCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_162_questionCheckbox", RuntimeVariables.replace(""));
-		selenium.typeKeys("_162_subject",
+		selenium.clickAt("//input[@name='_162_questionCheckbox']",
+			RuntimeVariables.replace("Mark as a Question Checkbox"));
+		assertTrue(selenium.isChecked("//input[@name='_162_questionCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@name='_162_subject']",
 			RuntimeVariables.replace("Favorite Color Test Question"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_162_subject",
-			RuntimeVariables.replace("Favorite Color Test Question"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_162_textArea",
+		selenium.type("//textarea[@id='_162_editor']",
 			RuntimeVariables.replace("What is your favorite color?"));
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Publish']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=T\u00e9st Cat\u00e9gory Edit\u00e9d",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Waiting for an Answer")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Waiting for an Answer"));
 	}

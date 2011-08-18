@@ -41,21 +41,32 @@ public class AddNullTitleTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Message Boards", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards",
+			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Post New Thread']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_162_subject", RuntimeVariables.replace(""));
+		selenium.type("//textarea[@id='_162_editor']",
+			RuntimeVariables.replace("This is a Null Test Entry!"));
 		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_162_subject']",
+			RuntimeVariables.replace(""));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -63,8 +74,8 @@ public class AddNullTitleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__162_editor']/iframe")) {
+				if (RuntimeVariables.replace("This field is required.")
+										.equals(selenium.getText("//label/div"))) {
 					break;
 				}
 			}
@@ -75,16 +86,7 @@ public class AddNullTitleTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.selectFrame("//td[@id='cke_contents__162_editor']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("This is a Null Test Entry!"));
-		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("This field is required."));
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
 		assertEquals(RuntimeVariables.replace("This field is required."),
-			selenium.getText(
-				"//div[@class='aui-form-validator-message required']"));
+			selenium.getText("//label/div"));
 	}
 }

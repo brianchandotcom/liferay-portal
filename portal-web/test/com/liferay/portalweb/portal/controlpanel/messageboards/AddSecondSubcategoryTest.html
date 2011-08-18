@@ -16,71 +16,66 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards</td>
-	<td></td>
+	<td>Message Boards</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Tést Catégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Tést Catégory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Subcategory']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_162_name</td>
-	<td></td>
-</tr>
-<tr>
-	<td>typeKeys</td>
-	<td>_162_name</td>
-	<td>Sécond Tést Subcatégor</td>
+	<td>Add Subcategory</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_162_name</td>
+	<td>//input[@id='_162_name']</td>
 	<td>Sécond Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_162_description</td>
+	<td>//textarea[@id='_162_description']</td>
 	<td>This is a sécond tést subcatégory!</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
 	<td>Sécond Tést Subcatégory</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
 	<td></td>
 </tr>
 

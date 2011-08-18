@@ -16,27 +16,27 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
-	<td>Web Content</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
-</tr>	
+</tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Structures</td>
-	<td></td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//td[2]/a</td>
+	<td>structureID</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -51,7 +51,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
-	<td></td>
+	<td>Advanced »</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -60,53 +60,63 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_15_searchStructureId</td>
-	<td></td>
+	<td>//input[@id='_15_searchStructureId']</td>
+	<td>Structure Id</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_searchStructureId</td>
-	<td>structureid</td>
+	<td>//input[@id='_15_searchStructureId']</td>
+	<td>${structureID}</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_searchStructureId</td>
+	<td>//input[@id='_15_searchStructureId']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>STRUCTUREID</td>
+	<td>//td[3]/a</td>
+	<td>Web Content Structure Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Web Content Structure Description</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_searchStructureId</td>
-	<td>structureid1</td>
+	<td>//input[@id='_15_searchStructureId']</td>
+	<td>test</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_searchStructureId</td>
+	<td>//input[@id='_15_searchStructureId']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=STRUCTUREID</td>
+	<td>assertTextNotPresent</td>
+	<td>Web Content Structure Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Web Content Structure Description</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
-	<td></td>
+	<td>« Basic</td>
 </tr>
 
 </tbody></table>

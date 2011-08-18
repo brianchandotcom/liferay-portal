@@ -16,51 +16,26 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>clickAtAndWait</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
-	<td>Web Content</td>
-</tr>	
-<tr>
-	<td>assertText</td>
-	<td>//div/span/ul/li/strong/a/span</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div/span/ul/li/strong/a/span</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Basic Web Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Basic Web Content</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Basic Web Content</td>
+	<td>//input[@value='Add']</td>
+	<td>Add Web Content</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_title_en_US</td>
+	<td>//input[@id='_15_title_en_US']</td>
 	<td>Web Content Name</td>
 </tr>
 <tr>
@@ -120,17 +95,17 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>_15_neverExpireCheckbox</td>
+	<td>//input[@id='_15_neverExpireCheckbox']</td>
 	<td>Never Auto Expire</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_15_neverExpireCheckbox</td>
+	<td>//input[@id='_15_neverExpireCheckbox']</td>
 	<td>Never Auto Expire</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>_15_neverExpireCheckbox</td>
+	<td>//input[@id='_15_neverExpireCheckbox']</td>
 	<td>Never Auto Expire</td>
 </tr>
 <tr>
@@ -165,42 +140,42 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>_15_expirationDateMonth</td>
+	<td>//select[@id='_15_expirationDateMonth']</td>
 	<td>label=December</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_15_expirationDateDay</td>
+	<td>//select[@id='_15_expirationDateDay']</td>
 	<td>label=31</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_15_expirationDateYear</td>
+	<td>//select[@id='_15_expirationDateYear']</td>
 	<td>label=2015</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_15_expirationDateHour</td>
+	<td>//select[@name='_15_expirationDateHour']</td>
 	<td>label=12</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_15_expirationDateMinute</td>
+	<td>//select[@name='_15_expirationDateMinute']</td>
 	<td>label=:00</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_15_expirationDateAmPm</td>
+	<td>//select[@name='_15_expirationDateAmPm']</td>
 	<td>label=AM</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
@@ -225,37 +200,37 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>_15_neverExpireCheckbox</td>
+	<td>//input[@id='_15_neverExpireCheckbox']</td>
 	<td>Never Auto Expire</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_15_expirationDateMonth</td>
+	<td>//select[@id='_15_expirationDateMonth']</td>
 	<td>December</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_15_expirationDateDay</td>
+	<td>//select[@id='_15_expirationDateDay']</td>
 	<td>31</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_15_expirationDateYear</td>
+	<td>//select[@id='_15_expirationDateYear']</td>
 	<td>2015</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_15_expirationDateHour</td>
+	<td>//select[@name='_15_expirationDateHour']</td>
 	<td>12</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_15_expirationDateMinute</td>
+	<td>//select[@name='_15_expirationDateMinute']</td>
 	<td>:00</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_15_expirationDateAmPm</td>
+	<td>//select[@name='_15_expirationDateAmPm']</td>
 	<td>AM</td>
 </tr>
 

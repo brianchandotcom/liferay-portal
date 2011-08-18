@@ -41,46 +41,19 @@ public class AddWebContentExpirationDateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-		selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//div/span/ul/li/strong/a/span"));
-		selenium.clickAt("//div/span/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Basic Web Content"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.clickAt("//input[@value='Add']",
+			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_15_title_en_US",
+		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
@@ -120,11 +93,11 @@ public class AddWebContentExpirationDateTest extends BaseTestCase {
 				"//select[@name='_15_expirationDateMinute' and @disabled='disabled']"));
 		assertTrue(selenium.isElementPresent(
 				"//select[@name='_15_expirationDateAmPm' and @disabled='disabled']"));
-		assertTrue(selenium.isChecked("_15_neverExpireCheckbox"));
+		assertTrue(selenium.isChecked("//input[@id='_15_neverExpireCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_15_neverExpireCheckbox",
+		selenium.clickAt("//input[@id='_15_neverExpireCheckbox']",
 			RuntimeVariables.replace("Never Auto Expire"));
-		assertFalse(selenium.isChecked("_15_neverExpireCheckbox"));
+		assertFalse(selenium.isChecked("//input[@id='_15_neverExpireCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent(
 				"//select[@id='_15_expirationDateMonth' and @disabled='disabled']"));
@@ -138,25 +111,25 @@ public class AddWebContentExpirationDateTest extends BaseTestCase {
 				"//select[@name='_15_expirationDateMinute' and @disabled='disabled']"));
 		assertFalse(selenium.isElementPresent(
 				"//select[@name='_15_expirationDateAmPm' and @disabled='disabled']"));
-		selenium.select("_15_expirationDateMonth",
+		selenium.select("//select[@id='_15_expirationDateMonth']",
 			RuntimeVariables.replace("label=December"));
-		selenium.select("_15_expirationDateDay",
+		selenium.select("//select[@id='_15_expirationDateDay']",
 			RuntimeVariables.replace("label=31"));
-		selenium.select("_15_expirationDateYear",
+		selenium.select("//select[@id='_15_expirationDateYear']",
 			RuntimeVariables.replace("label=2015"));
-		selenium.select("_15_expirationDateHour",
+		selenium.select("//select[@name='_15_expirationDateHour']",
 			RuntimeVariables.replace("label=12"));
-		selenium.select("_15_expirationDateMinute",
+		selenium.select("//select[@name='_15_expirationDateMinute']",
 			RuntimeVariables.replace("label=:00"));
-		selenium.select("_15_expirationDateAmPm",
+		selenium.select("//select[@name='_15_expirationDateAmPm']",
 			RuntimeVariables.replace("label=AM"));
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
@@ -166,15 +139,22 @@ public class AddWebContentExpirationDateTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
-		assertFalse(selenium.isChecked("_15_neverExpireCheckbox"));
+		assertFalse(selenium.isChecked("//input[@id='_15_neverExpireCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		assertEquals("December",
-			selenium.getSelectedLabel("_15_expirationDateMonth"));
-		assertEquals("31", selenium.getSelectedLabel("_15_expirationDateDay"));
-		assertEquals("2015", selenium.getSelectedLabel("_15_expirationDateYear"));
-		assertEquals("12", selenium.getSelectedLabel("_15_expirationDateHour"));
+			selenium.getSelectedLabel("//select[@id='_15_expirationDateMonth']"));
+		assertEquals("31",
+			selenium.getSelectedLabel("//select[@id='_15_expirationDateDay']"));
+		assertEquals("2015",
+			selenium.getSelectedLabel("//select[@id='_15_expirationDateYear']"));
+		assertEquals("12",
+			selenium.getSelectedLabel(
+				"//select[@name='_15_expirationDateHour']"));
 		assertEquals(":00",
-			selenium.getSelectedLabel("_15_expirationDateMinute"));
-		assertEquals("AM", selenium.getSelectedLabel("_15_expirationDateAmPm"));
+			selenium.getSelectedLabel(
+				"//select[@name='_15_expirationDateMinute']"));
+		assertEquals("AM",
+			selenium.getSelectedLabel(
+				"//select[@name='_15_expirationDateAmPm']"));
 	}
 }

@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards</td>
-	<td></td>
+	<td>Message Boards</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -39,19 +39,29 @@
 	<td>Tést Catégory</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>assertText</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Tést Subcatégory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Sécond Tést Subcatégory</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a/strong</td>
+	<td>Sécond Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Tést Méssagé to bé Délétéd</td>
-	<td></td>
+	<td>Tést Méssagé to bé Délétéd</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
@@ -61,27 +71,37 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Move Thread</td>
-	<td></td>
+	<td>Move Thread</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_162_addExplanationPostCheckbox']</td>
+	<td>Add post explanation.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_162_addExplanationPostCheckbox</td>
-	<td></td>
+	<td>//input[@id='_162_addExplanationPostCheckbox']</td>
+	<td>Add post explanation.</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_162_addExplanationPostCheckbox']</td>
+	<td>Add post explanation.</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_162_subject</td>
+	<td>//input[@id='_162_subject']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>typeKeys</td>
-	<td>_162_subject</td>
+	<td>type</td>
+	<td>//input[@id='_162_subject']</td>
 	<td>Moved to Sujr</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>_162_subject</td>
-	<td>Moved to Sujr</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -106,7 +126,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForPopUp</td>
@@ -136,7 +156,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Categories</td>
-	<td></td>
+	<td>Categories</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -146,7 +166,7 @@
 <tr>
 	<td>click</td>
 	<td>//input[@value='Choose']</td>
-	<td></td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -161,22 +181,22 @@
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Sujr</td>
-	<td></td>
+	<td>Sujr</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Move Thread']</td>
-	<td></td>
+	<td>Move Thread</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Sujr</td>
-	<td></td>
+	<td>Sujr</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Tést Méssagé to bé Délétéd</td>
-	<td></td>
+	<td>Tést Méssagé to bé Délétéd</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
@@ -191,12 +211,12 @@
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>link=Tést Subcatégory</td>
-	<td></td>
+	<td>Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>link=Tést Catégory</td>
-	<td></td>
+	<td>Tést Catégory</td>
 </tr>
 
 </tbody></table>

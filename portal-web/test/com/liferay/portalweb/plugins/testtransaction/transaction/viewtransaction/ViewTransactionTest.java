@@ -45,10 +45,17 @@ public class ViewTransactionTest extends BaseTestCase {
 			RuntimeVariables.replace("Test Transaction Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("BarLocalServiceUtil.addBar=PASSED"));
-		assertTrue(selenium.isTextPresent(
-				"BarLocalServiceUtil.addBarPortalRollback=PASSED"));
-		assertTrue(selenium.isTextPresent(
-				"BarLocalServiceUtil.addBarPortletRollback=PASSED"));
+		assertTrue(selenium.isPartialText("//p[1]",
+				"BarLocalServiceUtil.addBar_Success=PASSED"));
+		assertTrue(selenium.isPartialText("//p[1]",
+				"BarLocalServiceUtil.addBarAndClassName_PortalRollback=PASSED"));
+		assertTrue(selenium.isPartialText("//p[1]",
+				"BarLocalServiceUtil.addBarAndClassName_PortletRollback=PASSED"));
+		assertTrue(selenium.isPartialText("//p[2]",
+				"PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_Success=PASSED"));
+		assertTrue(selenium.isPartialText("//p[2]",
+				"PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortalRollback=PASSED"));
+		assertTrue(selenium.isPartialText("//p[2]",
+				"PortletServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortletRollback=PASSED"));
 	}
 }

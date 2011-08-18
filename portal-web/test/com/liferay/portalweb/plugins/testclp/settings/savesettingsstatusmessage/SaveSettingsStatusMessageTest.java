@@ -41,14 +41,16 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Test CLP Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Test CLP Test Page",
+			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText(
 				"//div[@class='portlet-body']/table/tbody/tr[2]/td[7]"));
 		selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Settings"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -56,7 +58,7 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("statusMessage")) {
+				if (selenium.isVisible("//input[@id='statusMessage']")) {
 					break;
 				}
 			}
@@ -70,7 +72,8 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 		selenium.type("statusMessage",
 			RuntimeVariables.replace("status message."));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("saveSettings", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@id='saveSettings']",
+			RuntimeVariables.replace("Save Settings"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -111,7 +114,8 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Test CLP Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Test CLP Test Page",
+			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("status message."),

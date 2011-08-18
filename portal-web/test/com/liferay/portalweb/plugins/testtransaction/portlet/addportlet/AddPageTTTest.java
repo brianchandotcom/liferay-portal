@@ -52,7 +52,7 @@ public class AddPageTTTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -63,10 +63,11 @@ public class AddPageTTTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input",
+		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Test Transaction Page"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("save", RuntimeVariables.replace("Save"));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

@@ -29,6 +29,7 @@ public class TestHookTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageTest.class);
 		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(AssertPortletContentsTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

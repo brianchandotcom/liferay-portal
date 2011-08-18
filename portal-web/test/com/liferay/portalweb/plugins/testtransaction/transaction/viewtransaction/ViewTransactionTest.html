@@ -24,19 +24,34 @@
 	<td>Test Transaction Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>BarLocalServiceUtil.addBar=PASSED</td>
-	<td></td>
+	<td>assertPartialText</td>
+	<td>//p[1]</td>
+	<td>BarLocalServiceUtil.addBar_Success=PASSED</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>BarLocalServiceUtil.addBarPortalRollback=PASSED</td>
-	<td></td>
+	<td>assertPartialText</td>
+	<td>//p[1]</td>
+	<td>BarLocalServiceUtil.addBarAndClassName_PortalRollback=PASSED</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>BarLocalServiceUtil.addBarPortletRollback=PASSED</td>
-	<td></td>
+	<td>assertPartialText</td>
+	<td>//p[1]</td>
+	<td>BarLocalServiceUtil.addBarAndClassName_PortletRollback=PASSED</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[2]</td>
+	<td>PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_Success=PASSED</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[2]</td>
+	<td>PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortalRollback=PASSED</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[2]</td>
+	<td>PortletServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortletRollback=PASSED</td>
 </tr>
 
 </tbody></table>

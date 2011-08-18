@@ -41,10 +41,11 @@ public class RemovePortletVimeoTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Vimeo Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Vimeo Test Page",
+			RuntimeVariables.replace("Vimeo Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click("//span[3]/a/img");
+		selenium.click("//img[@alt='Remove']");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();

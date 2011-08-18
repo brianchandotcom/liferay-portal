@@ -42,7 +42,7 @@ public class RemovePortletTETest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Today's Events Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Today's Events Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

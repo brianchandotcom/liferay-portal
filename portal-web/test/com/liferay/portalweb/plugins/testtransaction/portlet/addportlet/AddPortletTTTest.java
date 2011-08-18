@@ -45,9 +45,10 @@ public class AddPortletTTTest extends BaseTestCase {
 			RuntimeVariables.replace("Test Transaction Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=More\u2026",
-			RuntimeVariables.replace("More\u2026"));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -55,28 +56,8 @@ public class AddPortletTTTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("t"));
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@title='Test Transaction']/p/a")) {
+				if (selenium.isElementPresent(
+							"//div[@title='Test Transaction']/p/a")) {
 					break;
 				}
 			}

@@ -12,58 +12,39 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
+</tr><tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
-</tr>
-<tr>
+	<td>//nav[@id='navigation']</td>
+	<td>Navigation</td>
+</tr><tr>
 	<td>waitForElementPresent</td>
-	<td>addPage</td>
-	<td></td>
-</tr>
-<tr>
+	<td>//a[@id='addPage']</td>
+	<td>Add Page</td>
+</tr><tr>
 	<td>clickAt</td>
-	<td>addPage</td>
-	<td></td>
-</tr>
-<tr>
+	<td>//a[@id='addPage']</td>
+	<td>Add Page</td>
+</tr><tr>
 	<td>waitForVisible</td>
-	<td>//input</td>
-	<td></td>
-</tr>
-<tr>
+	<td>//input[@type='text']</td>
+	<td>Page Name</td>
+</tr><tr>
 	<td>type</td>
-	<td>//input</td>
+	<td>//input[@type='text']</td>
 	<td>Wiki Navigation Test Page</td>
-</tr>
-<tr>
+</tr><tr>
 	<td>clickAt</td>
-	<td>save</td>
-	<td></td>
-</tr>
-<tr>
+	<td>//button[@id='save']</td>
+	<td>Save</td>
+</tr><tr>
 	<td>waitForVisible</td>
 	<td>link=Wiki Navigation Test Page</td>
-	<td></td>
-</tr>
-<tr>
+	<td>Wiki Navigation Test Page</td>
+</tr><tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Navigation Test Page</td>
-	<td></td>
+	<td>Wiki Navigation Test Page</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

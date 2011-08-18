@@ -16,47 +16,47 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Stocks Test Page</td>
-	<td></td>
+	<td>Stocks Test Page</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Stocks Test Page</td>
-	<td></td>
+	<td>Stocks Test Page</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
 	<td>//strong/a</td>
-	<td></td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//strong/a</td>
-	<td></td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Preferences</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Preferences</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_1_WAR_stocksportlet_symbols</td>
+	<td>//section[@id='portlet_1_WAR_stocksportlet']/div/div/div/form/textarea</td>
 	<td>GOOG</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Return to Full Page</td>
-	<td></td>
+	<td>//a[@class='portlet-icon-back']</td>
+	<td>Return to Full Page</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=GOOG</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//section[@id='portlet_1_WAR_stocksportlet']/div/div/div/form/table/tbody/tr/td[1]/a</td>
+	<td>GOOG</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>

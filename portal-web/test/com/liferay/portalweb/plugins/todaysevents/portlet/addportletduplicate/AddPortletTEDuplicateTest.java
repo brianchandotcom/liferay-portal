@@ -42,11 +42,13 @@ public class AddPortletTEDuplicateTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Today's Events Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Today's Events Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -54,28 +56,8 @@ public class AddPortletTEDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("t"));
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@title=\"Today's Events\"]")) {
+				if (selenium.isElementPresent(
+							"//div[@title=\"Today's Events\"]")) {
 					break;
 				}
 			}

@@ -28,7 +28,10 @@ public class SunTourIPCTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(AddPortletTourDetailsTest.class);
+		testSuite.addTestSuite(AddPortletTourListingsTest.class);
+		testSuite.addTestSuite(AddPortletTourMapTest.class);
+		testSuite.addTestSuite(AddPortletTourWeatherTest.class);
 		testSuite.addTestSuite(DeletePageTest.class);
 
 		return testSuite;

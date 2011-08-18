@@ -63,20 +63,23 @@ public class EditPreferencesTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.click("//strong/a");
-		selenium.click(RuntimeVariables.replace("link=Preferences"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_1_WAR_stocksportlet_symbols",
+		selenium.type("//section[@id='portlet_1_WAR_stocksportlet']/div/div/div/form/textarea",
 			RuntimeVariables.replace("GOOG"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Return to Full Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//a[@class='portlet-icon-back']",
+			RuntimeVariables.replace("Return to Full Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("link=GOOG"));
+		selenium.clickAt("//section[@id='portlet_1_WAR_stocksportlet']/div/div/div/form/table/tbody/tr/td[1]/a",
+			RuntimeVariables.replace("GOOG"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Change"));

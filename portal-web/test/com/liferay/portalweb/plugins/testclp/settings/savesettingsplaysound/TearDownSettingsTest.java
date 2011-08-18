@@ -47,11 +47,12 @@ public class TearDownSettingsTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Test CLP Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Settings"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -59,7 +60,7 @@ public class TearDownSettingsTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("statusMessage")) {
+						if (selenium.isVisible("//input[@id='statusMessage']")) {
 							break;
 						}
 					}
@@ -70,7 +71,8 @@ public class TearDownSettingsTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.type("statusMessage", RuntimeVariables.replace(""));
+				selenium.type("//input[@id='statusMessage']",
+					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 
 				boolean onlineStatusChecked = selenium.isChecked("onlineStatus");
@@ -81,7 +83,8 @@ public class TearDownSettingsTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("onlineStatus", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='onlineStatus']",
+					RuntimeVariables.replace("Show me as online."));
 
 			case 2:
 
@@ -96,7 +99,8 @@ public class TearDownSettingsTest extends BaseTestCase {
 				selenium.clickAt("playSound", RuntimeVariables.replace(""));
 
 			case 3:
-				selenium.clickAt("saveSettings", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='saveSettings']",
+					RuntimeVariables.replace("Save Settings"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -116,7 +120,8 @@ public class TearDownSettingsTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("saveSettings", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='saveSettings']",
+					RuntimeVariables.replace("Save Settings"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

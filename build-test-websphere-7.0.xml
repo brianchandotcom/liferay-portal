@@ -105,9 +105,21 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-tunnel-web')<
 			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
 		</exec>
 
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\startServer.bat server1" />
-		</exec>
+		<if>
+			<or>
+				<isset property="hook.plugins.includes" />
+				<isset property="plugins.version.includes" />
+				<isset property="portlet.plugins.includes" />
+				<isset property="portlet.plugins.upgrade.includes" />
+				<isset property="theme.plugins.includes" />
+				<isset property="web.plugins.includes" />
+			</or>
+			<then>
+				<exec executable="${plink.executable}">
+					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\startServer.bat server1" />
+				</exec>
+			</then>
+		</if>
 
 		<if>
 			<isset property="hook.plugins.includes" />
@@ -180,9 +192,21 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-tunnel-web')<
 			</then>
 		</if>
 
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
-		</exec>
+		<if>
+			<or>
+				<isset property="hook.plugins.includes" />
+				<isset property="plugins.version.includes" />
+				<isset property="portlet.plugins.includes" />
+				<isset property="portlet.plugins.upgrade.includes" />
+				<isset property="theme.plugins.includes" />
+				<isset property="web.plugins.includes" />
+			</or>
+			<then>
+				<exec executable="${plink.executable}">
+					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
+				</exec>
+			</then>
+		</if>
 
 		<antcall target="revert-test-properties" />
 

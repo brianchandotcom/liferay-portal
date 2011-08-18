@@ -43,7 +43,6 @@ package com.liferay.portal.parsers.creole.parser;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.parsers.creole.ast.ASTNode;
-import com.liferay.portal.parsers.creole.ast.BaseListNode;
 import com.liferay.portal.parsers.creole.ast.BoldTextNode;
 import com.liferay.portal.parsers.creole.ast.CollectionNode;
 import com.liferay.portal.parsers.creole.ast.extension.TableOfContentsNode;
@@ -107,7 +106,8 @@ import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 		
 		return _wikipage;
 	}
-	
+}
+
 				
 wikipage
 	:	( whitespaces )?  p=paragraphs  { _wikipage = new WikiPageNode($p.sections); } EOF
@@ -268,8 +268,7 @@ heading returns [ASTNode header]
 		$heading::items = new CollectionNode();	
 		$heading::text = new String();
 	}
-/*	:	heading_markup  {$heading::nestedLevel++;} heading_content { $header = new HeadingNode($heading::text,$heading::nestedLevel); }  ( heading_markup )?  ( blanks )?*/
-	:	heading_markup  {$heading::nestedLevel++;} hc =heading_content { $header = new HeadingNode($heading::items,$heading::nestedLevel); }  ( heading_markup )?  ( blanks )?
+	:	heading_markup  {$heading::nestedLevel++;} heading_content { $header = new HeadingNode($heading::items,$heading::nestedLevel); }  ( heading_markup )?  ( blanks )?
 		paragraph_separator
 	;
 heading_content
@@ -277,10 +276,10 @@ heading_content
 	|	ht = heading_text {$heading::items= $ht.items;}
 	;
 
-// DO THIS IMPROVEMENT?? Not sure it does work!!
 heading_text returns [CollectionNode items = null]
 	:	te = heading_cellcontent {$items = $te.items;}
-	;	
+	;
+
 heading_cellcontent returns [CollectionNode items = new CollectionNode()]
 	:	onestar  ( tcp = heading_cellcontentpart  {$items.add($tcp.node); } onestar )*
 	;
@@ -328,6 +327,7 @@ heading_inlineelement returns [ASTNode element = null]
 heading_unformatted_text returns [StringBundler text = new StringBundler()]
 	:	( c = ~(LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN |EQUAL | ESCAPE | NEWLINE | EOF  )  {$text.append($c.text);} )+
 	;
+
 
 /////////////////////////////////   L I S T   /////////////////////////////////
 
@@ -597,7 +597,12 @@ link_interwiki_pagename returns [StringBundler text = new StringBundler()]
 	:	( c = ~( PIPE | LINK_CLOSE | NEWLINE | EOF ) { $text.append($c.text); } ) +
 	;
 link_description returns [CollectionNode node = new CollectionNode()]
-	:	( l = link_descriptionpart {$node.add($l.text);}
+	:	( l = link_descriptionpart {
+					// Recover code: some bad syntax could include null elements in the collection		
+					if($l.text != null) {
+						$node.add($l.text);
+					}
+				}
 		| i = image {$node.add($i.image);})+
 	;
 link_descriptionpart returns [ASTNode text = null]
@@ -751,16 +756,18 @@ extension_statement
 
 
 /////////////////////////////  TABLE OF CONTENTS EXTENSION  /////////////////////////////
+
 table_of_contents returns [ASTNode tableOfContents = new TableOfContentsNode()]
 	:	/*TABLE_OF_CONTENTS_OPEN_MARKUP*/ TABLE_OF_CONTENTS_TEXT  /*TABLE_OF_CONTENTS_CLOSE_MARKUP*/	
 	;
+
+
 onestar
 	:	( { input.LA(2) != STAR }?  ( STAR )?)
 	| 
 	;
 escaped returns [ScapedNode scaped = new ScapedNode()]
-	:	ESCAPE  STAR  STAR { $scaped.setContent("**") ; }
-	|	ESCAPE   c =. { $scaped.setContent($c.text) ; }
+	:	ESCAPE   c =. { $scaped.setContent($c.text) ; }
 		// '.' in a parser rule means arbitrary token, not character
 	;
 paragraph_separator

@@ -61,10 +61,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	public void visit(BoldTextNode boldTextNode) {
 		append("<strong>");
 
-		if (boldTextNode.getContent() != null) {
-			append(HtmlUtil.escape(boldTextNode.getContent()));
-		}
-		else {
+		if (boldTextNode.hasContent()) {
 			traverse(boldTextNode.getChildASTNodes());
 		}
 
@@ -129,10 +126,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	public void visit(ItalicTextNode italicTextNode) {
 		append("<em>");
 
-		if (italicTextNode.getContent() != null) {
-			append(HtmlUtil.escape(italicTextNode.getContent()));
-		}
-		else {
+		if (italicTextNode.hasContent()) {
 			traverse(italicTextNode.getChildASTNodes());
 		}
 

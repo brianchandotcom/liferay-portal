@@ -50,7 +50,10 @@
 		</exec>
 
 		<replace file="server.xml">
-			<replacefilter token="genericJvmArguments=&quot;&quot;" value="genericJvmArguments=&quot;-Dfile.encoding=UTF8&quot;" />
+			<replacefilter token="genericJvmArguments=&quot;&quot;" value="genericJvmArguments=&quot;-Dfile.encoding=UTF8 -Xk22000 -Xp64k,16k&quot;" />
+			<replacefilter token="verboseModeGarbageCollection=&quot;false&quot;" value="verboseModeGarbageCollection=&quot;true&quot;" />
+			<replacefilter token="verboseModeJNI=&quot;false&quot;" value="verboseModeJNI=&quot;false&quot; initialHeapSize=&quot;256&quot; maximumHeapSize=&quot;1024&quot;" />
+			<replacefilter token="xmi:id=&quot;DynamicCache_1183122130078&quot; enable=&quot;true&quot;" value="xmi:id=&quot;DynamicCache_1183122130078&quot; enable=&quot;true&quot; defaultPriority=&quot;3&quot; hashSize=&quot;0&quot; cacheSize=&quot;3000&quot;" />
 		</replace>
 
 		<exec executable="${pscp.executable}">
@@ -73,9 +76,7 @@ $AdminConfig save
 
 $AdminApp install "C:/tunnel-web.war" {-appname liferay-tunnel-web -contextroot /tunnel-web}
 
-$AdminConfig save
-
-$AdminControl stopServer server1</echo>
+$AdminConfig save</echo>
 
 		<exec executable="${pscp.executable}">
 			<arg line="-pw ${vm.password} wsadmin.jacl ${vm.username}@${vm.host}:/" />
@@ -88,6 +89,117 @@ $AdminControl stopServer server1</echo>
 		</exec>
 
 		<antcall target="revert-test-properties" />
+
+		<exec executable="${plink.executable}">
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
+		</exec>
+
+		<if>
+			<or>
+				<isset property="hook.plugins.includes" />
+				<isset property="plugins.version.includes" />
+				<isset property="portlet.plugins.includes" />
+				<isset property="portlet.plugins.upgrade.includes" />
+				<isset property="theme.plugins.includes" />
+				<isset property="web.plugins.includes" />
+			</or>
+			<then>
+				<exec executable="${plink.executable}">
+					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\startServer.bat server1" />
+				</exec>
+			</then>
+		</if>
+
+		<if>
+			<isset property="hook.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-websphere-6.1-plugins">
+					<property name="plugin.types" value="hooks" />
+					<property name="plugins.deployed" value="${plugins.deployed}" />
+					<property name="plugins.includes" value="${hook.plugins.includes}" />
+				</ant>
+
+				<property name="plugins.deployed" value="true" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="plugins.version.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-versioned-websphere-6.1-plugins">
+					<property name="plugins.includes" value="${plugins.version.includes}" />
+				</ant>
+			</then>
+		</if>
+
+		<if>
+			<isset property="portlet.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-websphere-6.1-plugins">
+					<property name="plugin.types" value="portlets" />
+					<property name="plugins.deployed" value="${plugins.deployed}" />
+					<property name="plugins.includes" value="${portlet.plugins.includes}" />
+				</ant>
+
+				<property name="plugins.deployed" value="true" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="portlet.plugins.upgrade.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-upgrade-websphere-6.1-plugins">
+					<property name="plugin.types" value="portlets" />
+					<property name="plugins.includes" value="${portlet.plugins.upgrade.includes}" />
+				</ant>
+			</then>
+		</if>
+
+		<if>
+			<isset property="theme.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-websphere-6.1-plugins">
+					<property name="plugin.types" value="themes" />
+					<property name="plugins.deployed" value="${plugins.deployed}" />
+					<property name="plugins.includes" value="${theme.plugins.includes}" />
+				</ant>
+
+				<property name="plugins.deployed" value="true" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="web.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-websphere-6.1-plugins">
+					<property name="plugin.types" value="webs" />
+					<property name="plugins.deployed" value="${plugins.deployed}" />
+					<property name="plugins.includes" value="${web.plugins.includes}" />
+				</ant>
+
+				<property name="plugins.deployed" value="true" />
+			</then>
+		</if>
+
+		<exec executable="${plink.executable}">
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
+		</exec>
+
+		<if>
+			<or>
+				<isset property="hook.plugins.includes" />
+				<isset property="plugins.version.includes" />
+				<isset property="portlet.plugins.includes" />
+				<isset property="portlet.plugins.upgrade.includes" />
+				<isset property="theme.plugins.includes" />
+				<isset property="web.plugins.includes" />
+			</or>
+			<then>
+				<exec executable="${plink.executable}">
+					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
+				</exec>
+			</then>
+		</if>
 
 		<replace
 			file="portal-impl/test/test-portal-impl.properties"

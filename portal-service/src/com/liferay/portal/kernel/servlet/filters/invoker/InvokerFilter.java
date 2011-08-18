@@ -104,6 +104,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	@Override
 	protected void doPortalInit() throws Exception {
+		_INVOKER_FILTER_CHAIN_SIZE = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
+
 		ServletContext servletContext = _filterConfig.getServletContext();
 
 		InvokerFilterHelper invokerFilterHelper =
@@ -194,8 +197,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		return uri;
 	}
 
-	private static final int _INVOKER_FILTER_CHAIN_SIZE = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
+	private static int _INVOKER_FILTER_CHAIN_SIZE;
 
 	private Dispatcher _dispatcher;
 	private ConcurrentLRUCache<Integer, InvokerFilterChain> _filterChains;

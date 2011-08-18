@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.LiferayFilter;
+import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -175,9 +176,15 @@ public class InvokerFilterHelper {
 			String filterClassName, Map<String, String> initParameterMap)
 		throws Exception {
 
-		Thread currentThread = Thread.currentThread();
+		ClassLoader contextClassLoader =
+			(ClassLoader)servletContext.getAttribute(
+				PortletServlet.PORTLET_CLASS_LOADER);
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		if (contextClassLoader == null) {
+			Thread currentThread = Thread.currentThread();
+
+			contextClassLoader = currentThread.getContextClassLoader();
+		}
 
 		Filter filter = (Filter)InstanceFactory.newInstance(
 			contextClassLoader, filterClassName);

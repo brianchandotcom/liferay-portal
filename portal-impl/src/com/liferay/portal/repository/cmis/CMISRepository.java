@@ -26,12 +26,21 @@ import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.HitsImpl;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
@@ -39,6 +48,7 @@ import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.cmis.model.CMISFileEntry;
 import com.liferay.portal.repository.cmis.model.CMISFileVersion;
 import com.liferay.portal.repository.cmis.model.CMISFolder;
+import com.liferay.portal.repository.cmis.search.CMISQueryBuilder;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
@@ -1002,6 +1012,103 @@ public class CMISRepository extends BaseCmisRepository {
 		String uuid = (String)ids[1];
 
 		return new CMISFileEntry(this, uuid, fileEntryId, document);
+	}
+
+	public Hits search(SearchContext searchContext, Query query)
+		throws SearchException {
+
+		long startTime = System.currentTimeMillis();
+
+		Hits hits = new HitsImpl();
+
+		String queryStmt = CMISQueryBuilder.buildQuery(searchContext, query);
+
+		try {
+			Session session = getSession();
+
+			ItemIterable<QueryResult> results = session.query(queryStmt, false);
+
+			long totalResults = results.getTotalNumItems();
+
+			int start = searchContext.getStart();
+			int end = searchContext.getEnd();
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
+				start = 0;
+				end = (int) totalResults;
+			}
+
+			int subsetTotal = end - start;
+
+			String[] queryTerms = new String[0];
+			com.liferay.portal.kernel.search.Document[] subsetDocs =
+				new DocumentImpl[subsetTotal];
+			String[] subsetSnippets = new String[subsetTotal];
+			float[] subsetScores = new float[subsetTotal];
+
+			QueryConfig queryConfig = query.getQueryConfig();
+
+			boolean scoreEnabled = queryConfig.isScoreEnabled();
+
+			Iterator<QueryResult> iterator = results.skipTo(start).iterator();
+
+			int index = 0;
+
+			for (int i = start; i < end; i++) {
+				QueryResult queryResult = iterator.next();
+
+				String objectId = queryResult.getPropertyValueByQueryName(
+					PropertyIds.OBJECT_ID);
+				float score = queryResult.getPropertyValueByQueryName("SCORE");
+
+				FileEntry fileEntry = toFileEntry(objectId);
+
+				DocumentImpl doc = new DocumentImpl();
+
+				Field entryClassNameField = new Field(
+					Field.ENTRY_CLASS_NAME, fileEntry.getModelClassName());
+
+				Field entryClassPkField = new Field(
+					Field.ENTRY_CLASS_PK, String.valueOf(
+						fileEntry.getFileEntryId()));
+
+				Field titleField = new Field(Field.TITLE, fileEntry.getTitle());
+
+				doc.add(entryClassNameField);
+				doc.add(entryClassPkField);
+				doc.add(titleField);
+
+				subsetDocs[index] = doc;
+
+				if (scoreEnabled) {
+					subsetScores[index] = score;
+				}
+				else {
+					subsetScores[index] = 1;
+				}
+
+				subsetSnippets[index] = StringPool.BLANK;
+
+				index++;
+			}
+
+			float searchTime =
+				(float)(System.currentTimeMillis() - startTime) / Time.SECOND;
+
+			hits.setDocs(subsetDocs);
+			hits.setLength((int)totalResults);
+			hits.setQuery(query);
+			hits.setQueryTerms(queryTerms);
+			hits.setScores(subsetScores);
+			hits.setSearchTime(searchTime);
+			hits.setSnippets(subsetSnippets);
+			hits.setStart(startTime);
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+
+		return hits;
 	}
 
 	@Override

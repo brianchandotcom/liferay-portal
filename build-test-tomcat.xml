@@ -200,9 +200,12 @@ web.server.display.node=true</echo>
 				/>
 			</then>
 			<elseif>
-				<equals arg1="${lp.version}" arg2="5.2.9" />
-				<equals arg1="${lp.version}" arg2="6.0.10" />
-				<equals arg1="${lp.version}" arg2="6.0.11" />
+				<or>
+					<equals arg1="${lp.version}" arg2="5.2.9" />
+					<equals arg1="${lp.version}" arg2="6.0.10" />
+					<equals arg1="${lp.version}" arg2="6.0.11" />
+					<equals arg1="${lp.version}" arg2="6.0.12" />
+				</or>
 				<then>
 					<copy
 						todir="${user.home}/liferay/deploy">

@@ -378,6 +378,12 @@ public class AssetEntryLocalServiceUtil {
 		getService().incrementViewCounter(userId, className, classPK, increment);
 	}
 
+	public static void reindex(
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> entries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().reindex(entries);
+	}
+
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, java.lang.String className, java.lang.String keywords,
 		int start, int end)

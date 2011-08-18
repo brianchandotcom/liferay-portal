@@ -53,7 +53,6 @@ List<Group> mySites = user.getMySites(max);
 			String privateAddPageHREF = null;
 
 			if (regularSite && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.MANAGE_LAYOUTS)) {
-			
 				PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.MY_SITES, plid, PortletRequest.ACTION_PHASE);
 
 				addPageURL.setWindowState(WindowState.NORMAL);
@@ -320,13 +319,13 @@ List<Group> mySites = user.getMySites(max);
 												<c:if test="<%= userSite %>">
 													id="my-site-public-pages"
 												</c:if>
-		
+
 												<c:if test="<%= publicLayoutsPageCount > 0 %>">
 													onclick="Liferay.Util.forcePost(this); return false;"
 												</c:if>
 		
 												><liferay-ui:message key="public-pages" /> <span class="page-count">(<%= publicLayoutsPageCount %>)</span></a>
-		
+
 												<c:if test="<%= publicAddPageHREF != null %>">
 													<a class="add-page" href="<%= HtmlUtil.escape(publicAddPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;"><liferay-ui:message key="manage-pages" /></a>
 												</c:if>

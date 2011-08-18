@@ -101,6 +101,7 @@ if (!selectableTree) {
 							}
 						},
 						alwaysShowHitArea: node.hasChildren,
+						expanded : node.targetLayoutAncestor,
 						id: TreeUtil.createId(node.layoutId, node.plid),
 						type: '<%= selectableTree ? "task" : "io" %>'
 					};
@@ -202,10 +203,17 @@ if (!selectableTree) {
 		rootLabel = TreeUtil.createLink(rootLabel, TreeUtil.DEFAULT_PARENT_LAYOUT_ID);
 	}
 
+	var expanded = false;
+
+	if (<%= selPlid != 0 %>){
+		expanded = true;
+	}
+
 	var rootNode = new RootNodeType(
 		{
 			alwaysShowHitArea: true,
 			draggable: false,
+			expanded: expanded,
 			id: rootId,
 			label: rootLabel,
 			leaf: false
@@ -239,7 +247,8 @@ if (!selectableTree) {
 						return {
 							groupId: <%= groupId %>,
 							privateLayout: <%= privateLayout %>,
-							parentLayoutId: parentLayoutId
+							parentLayoutId: parentLayoutId,
+							targetLayoutPlid: '<%= selPlid %>'
 						};
 					},
 					method: AUI.defaults.io.method

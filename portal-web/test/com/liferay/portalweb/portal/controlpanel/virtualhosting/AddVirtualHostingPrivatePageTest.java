@@ -60,24 +60,8 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//td[7]/span/ul/li/strong/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[7]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[7]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -119,7 +103,7 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//input[@id='_134_name_en_US']")) {
+						if (selenium.isVisible("//input[@id='_156_name_en_US']")) {
 							break;
 						}
 					}
@@ -130,31 +114,12 @@ public class AddVirtualHostingPrivatePageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@id='_134_name_en_US']",
+				selenium.type("//input[@id='_156_name_en_US']",
 					RuntimeVariables.replace("Private Page"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Add Page']",
 					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),

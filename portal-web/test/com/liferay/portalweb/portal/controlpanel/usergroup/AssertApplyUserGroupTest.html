@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -27,6 +27,11 @@
 	<td>clickAtAndWait</td>
 	<td>link=Users and Organizations</td>
 	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[1]/span[1]/ul/li/strong/a/span</td>
+	<td>View</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -49,7 +54,7 @@
 	<td>User Groups</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertText</td>
 	<td>//td[4]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
@@ -60,27 +65,42 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>View Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Assign Members</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>View Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Assign Members</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>View Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Assign Members</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>selenium</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[3]</td>
 	<td>selenium01</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[4]/a</td>
+	<td>//tr[4]/td[3]</td>
 	<td>selenium02</td>
 </tr>
 

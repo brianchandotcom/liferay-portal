@@ -107,6 +107,13 @@ public class FindFolderAction extends Action {
 		}
 
 		plid = PortalUtil.getPlidFromPortletId(
+			groupId, PortletKeys.DOCUMENT_LIBRARY);
+
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			return plid;
+		}
+
+		plid = PortalUtil.getPlidFromPortletId(
 			groupId, PortletKeys.DOCUMENT_LIBRARY_DISPLAY);
 
 		if (plid != LayoutConstants.DEFAULT_PLID) {

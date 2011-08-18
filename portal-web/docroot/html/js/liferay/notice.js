@@ -60,6 +60,20 @@ AUI().add(
 		};
 
 		Notice.prototype = {
+			close: function() {
+				var instance = this;
+
+				var notice = instance._notice;
+
+				notice.hide();
+
+				instance._body.removeClass('has-alerts');
+
+				if (instance._onClose) {
+					instance._onClose();
+				}
+			},
+
 			setClosing: function() {
 				var instance = this;
 
@@ -81,9 +95,7 @@ AUI().add(
 			_createHTML: function() {
 				var instance = this;
 
-				var notice = A.Node.create('<div class="' + instance._noticeClass + '" dynamic="true"><div class="popup-alert-content"></div></div>');
-
-				notice.html(instance._content);
+				var notice = A.Node.create('<div class="' + instance._noticeClass + '" dynamic="true">' + instance._content + '</div>');
 
 				instance._addCloseButton(notice);
 				instance._addToggleButton(notice);
@@ -112,18 +124,7 @@ AUI().add(
 
 					var closeButton = notice.one('.popup-alert-close');
 
-					closeButton.on(
-						'click',
-						function() {
-							notice.hide();
-							notice.remove(true);
-							instance._body.removeClass('has-alerts');
-
-							if (instance._onClose) {
-								instance._onClose();
-							}
-						}
-					);
+					closeButton.on('click', instance.close, instance);
 				}
 			},
 

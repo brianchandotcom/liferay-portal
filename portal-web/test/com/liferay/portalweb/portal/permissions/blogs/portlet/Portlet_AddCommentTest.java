@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Portlet_AddCommentTest extends BaseTestCase {
 	public void testPortlet_AddComment() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,14 +42,13 @@ public class Portlet_AddCommentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Portlet1 Temporary1 Entry1",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
+			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Be the first.", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -55,7 +56,7 @@ public class Portlet_AddCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_33_postReplyBody0")) {
+				if (selenium.isVisible("link=Be the first.")) {
 					break;
 				}
 			}
@@ -66,17 +67,73 @@ public class Portlet_AddCommentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_33_postReplyBody0",
-			RuntimeVariables.replace("This is a portlet comment!"));
+		selenium.clickAt("link=Be the first.",
+			RuntimeVariables.replace("Be the first."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//textarea[@name='_33_postReplyBody0']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_33_postReplyBody0", RuntimeVariables.replace("\\48"));
-		selenium.keyPress("_33_postReplyBody0", RuntimeVariables.replace("\\8"));
-		selenium.clickAt("//input[@value='Reply']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@value='Reply']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertEquals(RuntimeVariables.replace("This is a portlet comment!"),
-			selenium.getText("//div/div/div[3]/div/div[1]"));
+		selenium.type("//textarea[@name='_33_postReplyBody0']",
+			RuntimeVariables.replace("Portlet Comment"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Reply']",
+			RuntimeVariables.replace("Reply"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-message-response portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request processed successfully."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Portlet Comment"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

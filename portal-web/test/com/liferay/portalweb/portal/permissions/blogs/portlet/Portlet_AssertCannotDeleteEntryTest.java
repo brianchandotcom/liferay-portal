@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Portlet_AssertCannotDeleteEntryTest extends BaseTestCase {
 	public void testPortlet_AssertCannotDeleteEntry() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,13 +42,11 @@ public class Portlet_AssertCannotDeleteEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//div[@class='entry-title']/a",
-				"Portlet1 Temporary1 Entry1"));
-		selenium.clickAt("//div[@class='entry-title']/a",
-			RuntimeVariables.replace("Portlet1 Temporary1 Entry1"));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
+			RuntimeVariables.replace("Blogs Entry Title Edited"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("link=Delete"));

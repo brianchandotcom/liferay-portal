@@ -22,13 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Portlet_AssertViewPortletTest extends BaseTestCase {
 	public void testPortlet_AssertViewPortlet() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Blogs Permissions Page")) {
+				if (selenium.isVisible("link=Blogs Permissions Page")) {
 					break;
 				}
 			}
@@ -40,12 +42,13 @@ public class Portlet_AssertViewPortletTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(
 				"You do not have the roles required to access this portlet."));
-		assertTrue(selenium.isTextPresent("Showing 0 results."));
+		assertEquals(RuntimeVariables.replace("Showing 0 results."),
+			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText("//span/a/span[1]"));
 	}

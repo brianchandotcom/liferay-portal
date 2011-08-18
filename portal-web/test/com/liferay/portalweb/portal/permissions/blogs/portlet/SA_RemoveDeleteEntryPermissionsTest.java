@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SA_RemoveDeleteEntryPermissionsTest extends BaseTestCase {
 	public void testSA_RemoveDeleteEntryPermissions() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,43 +42,29 @@ public class SA_RemoveDeleteEntryPermissionsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//div[@class='entry-title']/a",
-				"Portlet1 Temporary1 Entry1"));
-		selenium.clickAt("//div[@class='entry-title']/a",
-			RuntimeVariables.replace("Portlet1 Temporary1 Entry1"));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
+			RuntimeVariables.replace("Blogs Entry Title Edited"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Permissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Permissions",
+			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Save']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.uncheck("//tr[7]/td[3]/input");
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.uncheck("//tr[5]/td[3]/input");
+		selenium.uncheck("//tr[6]/td[3]/input");
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isChecked("//tr[7]/td[3]/input"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isChecked("//tr[5]/td[3]/input"));
+		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isChecked("//tr[6]/td[3]/input"));
 		selenium.saveScreenShotAndSource();
 	}
 }

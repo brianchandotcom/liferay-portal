@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Portlet_DeleteOwnEntryTest extends BaseTestCase {
 	public void testPortlet_DeleteOwnEntry() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,17 +42,22 @@ public class Portlet_DeleteOwnEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("link=Delete"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
+			selenium.getText("//div[@class='entry-body']/p"));
+		selenium.clickAt("link=Delete", RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isElementPresent(
-				"link=Portlet1 Portlet1 Permissions1 Entry1"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 	}
 }

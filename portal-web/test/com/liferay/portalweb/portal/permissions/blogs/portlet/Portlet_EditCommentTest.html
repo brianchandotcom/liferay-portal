@@ -9,54 +9,79 @@
 <tr><td rowspan="1" colspan="3">Portlet_EditCommentTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Blogs Permissions Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Blogs Permissions Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Portlet1 Temporary1 Entry1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=Edit</td>
+	<td>open</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>_33_editReplyBody1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_33_editReplyBody1</td>
-	<td>This is a portlet comment! Edited!</td>
+	<td>link=Blogs Permissions Page</td>
+	<td>Blogs Permissions Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>link=Blogs Permissions Page</td>
+	<td>Blogs Permissions Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title Temporary</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[@class='lfr-discussion-delete-reply']/span/a</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div[3]/div/div[1]</td>
-	<td>This is a portlet comment! Edited!</td>
+	<td>//li[@class='lfr-discussion-delete-reply']/span/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[@class='lfr-discussion-delete-reply']/span/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//textarea[@name='_33_editReplyBody1']</td>
+	<td>Comment</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@name='_33_editReplyBody1']</td>
+	<td>Portlet Comment Edited</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td>Portlet Comment Edited</td>
 </tr>
 <tr>
 	<td>assertNotText</td>
-	<td>//div/div/div[3]/div/div[1]</td>
-	<td>This is a portlet comment!</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td>Portlet Comment</td>
 </tr>
 
 </tbody></table>

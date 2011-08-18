@@ -18,8 +18,6 @@ import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.permissions.blogs.assertactions.AssertActionsTests;
 import com.liferay.portalweb.portal.permissions.blogs.portlet.PortletTests;
 import com.liferay.portalweb.portal.permissions.blogs.scope.ScopeTests;
-import com.liferay.portalweb.portal.permissions.blogs.setup.SetupTests;
-import com.liferay.portalweb.portal.permissions.blogs.teardown.TearDownTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,11 +30,9 @@ public class BlogsTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(SetupTests.suite());
 		testSuite.addTest(AssertActionsTests.suite());
 		testSuite.addTest(PortletTests.suite());
 		testSuite.addTest(ScopeTests.suite());
-		testSuite.addTest(TearDownTests.suite());
 
 		return testSuite;
 	}

@@ -22,37 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Portlet_AssertViewEntryTest extends BaseTestCase {
 	public void testPortlet_AssertViewEntry() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Blogs Permissions Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Portlet1 Temporary1 Entry1"));
-		selenium.clickAt("link=Portlet1 Temporary1 Entry1",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Portlet1 Temporary1 Entry1"),
-			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace(
-				"This is a temporary portlet permissions entry!"),
-			selenium.getText("//p"));
+		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -72,17 +42,23 @@ public class Portlet_AssertViewEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_33_keywords",
-			RuntimeVariables.replace("Portlet1 Temporary1 Entry1"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title Temporary"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content Temporary"),
+			selenium.getText("//div[@class='entry-body']/p"));
+		assertEquals(RuntimeVariables.replace("Showing 1 result."),
+			selenium.getText("//div[@class='search-results']"));
+		selenium.type("//input[@id='_33_keywords']",
+			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Portlet1 Temporary1 Entry1"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title Temporary"),
 			selenium.getText("//td[2]/a"));
 	}
 }

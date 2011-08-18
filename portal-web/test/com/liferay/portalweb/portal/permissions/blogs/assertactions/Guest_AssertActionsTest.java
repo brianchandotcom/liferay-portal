@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Guest_AssertActionsTest extends BaseTestCase {
 	public void testGuest_AssertActions() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,7 +42,7 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//input[@value='Search']"));
@@ -52,13 +54,90 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//input[@value='Add Blog Entry']"));
 		selenium.clickAt("link=Permissions Blogs Test Entry",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent("link=Add Comment"));
+		assertEquals(RuntimeVariables.replace("Add Comment"),
+			selenium.getText(
+				"//fieldset[@class='aui-fieldset add-comment ']/div/span/a"));
+		selenium.click(
+			"//fieldset[@class='aui-fieldset add-comment ']/div/span/a");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//textarea[@name='_33_postReplyBody0']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isElementPresent("//input[@value='Reply']"));
 		assertFalse(selenium.isElementPresent("link=Edit"));
 		assertFalse(selenium.isElementPresent("link=Permissions"));
 		assertFalse(selenium.isElementPresent("link=Delete"));
 		assertTrue(selenium.isElementPresent("link=Sign in to vote."));
+		selenium.clickAt("//input[@value='Reply as...']",
+			RuntimeVariables.replace("Reply as..."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//iframe[@id='_33_']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//iframe[@id='_33_']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//label[@for='_164_login']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Email Address"),
+			selenium.getText("//label[@for='_164_login']"));
+		assertTrue(selenium.isVisible("//input[@id='_164_login']"));
+		assertEquals(RuntimeVariables.replace("Password"),
+			selenium.getText("//label[@for='_164_password']"));
+		assertTrue(selenium.isVisible("//input[@id='_164_password']"));
+		assertFalse(selenium.isChecked("//input[@id='_164_rememberMeCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Remember Me"),
+			selenium.getText("//label[@for='_164_rememberMeCheckbox']"));
+		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
+		selenium.selectFrame("relative=top");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//button[@id='closethick']",
+			RuntimeVariables.replace(""));
 	}
 }

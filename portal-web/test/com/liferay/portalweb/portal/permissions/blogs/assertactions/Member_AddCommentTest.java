@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_AddCommentTest extends BaseTestCase {
 	public void testMember_AddComment() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
@@ -40,14 +42,18 @@ public class Member_AddCommentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Permissions Blogs Test Entry",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Comment", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Comment"),
+			selenium.getText(
+				"//fieldset[@class='aui-fieldset add-comment ']/div/span/a"));
+		selenium.click(
+			"//fieldset[@class='aui-fieldset add-comment ']/div/span/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -55,7 +61,7 @@ public class Member_AddCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_33_postReplyBody0")) {
+				if (selenium.isVisible("//textarea[@name='_33_postReplyBody0']")) {
 					break;
 				}
 			}
@@ -66,17 +72,36 @@ public class Member_AddCommentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_33_postReplyBody0",
+		selenium.type("//textarea[@name='_33_postReplyBody0']",
 			RuntimeVariables.replace("Member Permissions Blogs Test Comment"));
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_33_postReplyBody0", RuntimeVariables.replace("\\48"));
-		selenium.keyPress("_33_postReplyBody0", RuntimeVariables.replace("\\8"));
-		selenium.clickAt("//input[@value='Reply']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//input[@value='Reply']",
+			RuntimeVariables.replace("Reply"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@id='_33_discussion-status-messages']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isTextPresent(
-				"Member Permissions Blogs Test Comment"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request processed successfully."),
+			selenium.getText("//div[@id='_33_discussion-status-messages']"));
+		assertEquals(RuntimeVariables.replace(
+				"Member Permissions Blogs Test Comment"),
+			selenium.getText(
+				"//div[@class='lfr-discussion last']/div[3]/div/div"));
 	}
 }

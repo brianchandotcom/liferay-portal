@@ -56,10 +56,10 @@ public class DeleteBlogsEntryCommentCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
-			selenium.getText("//form/div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//div[3]/div/div[5]/div/span/a/span"));
-		selenium.clickAt("//div[3]/div/div[5]/div/span/a/span",
+			selenium.getText("//li[4]/span/a/span"));
+		selenium.clickAt("//li[4]/span/a/span",
 			RuntimeVariables.replace("Delete"));
 
 		for (int second = 0;; second++) {

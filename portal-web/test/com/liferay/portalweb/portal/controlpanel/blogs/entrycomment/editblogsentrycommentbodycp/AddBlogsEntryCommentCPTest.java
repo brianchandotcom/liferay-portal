@@ -107,6 +107,6 @@ public class AddBlogsEntryCommentCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
-			selenium.getText("//form/div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
 	}
 }

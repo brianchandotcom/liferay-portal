@@ -56,11 +56,10 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
-			selenium.getText("//form/div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//div[3]/div/div[4]/div/span/a/span"));
-		selenium.clickAt("//div[3]/div/div[4]/div/span/a/span",
-			RuntimeVariables.replace("Edit"));
+			selenium.getText("//li[3]/span/a/span"));
+		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -87,10 +86,9 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 		selenium.keyPress("_161_editReplyBody1", RuntimeVariables.replace("\\8"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-		assertFalse(selenium.isVisible("_161_editReplyBody1"));
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body Edited"),
-			selenium.getText("//form/div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
 	}
 }

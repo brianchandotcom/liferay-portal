@@ -130,14 +130,13 @@ public class PortletURLUtil {
 	public static String getRefreshURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(32);
 
 		sb.append(themeDisplay.getPathMain());
-		sb.append("/portal/render_portlet?");
+		sb.append("/portal/render_portlet?p_l_id=");
 
 		long plid = themeDisplay.getPlid();
 
-		sb.append("p_l_id=");
 		sb.append(plid);
 
 		Portlet portlet = (Portlet)request.getAttribute(
@@ -148,9 +147,7 @@ public class PortletURLUtil {
 		sb.append("&p_p_id=");
 		sb.append(portletId);
 
-		sb.append("&p_p_lifecycle=0");
-
-		sb.append("&p_t_lifecycle=");
+		sb.append("&p_p_lifecycle=0&p_t_lifecycle=");
 		sb.append(themeDisplay.getLifecycle());
 
 		WindowState windowState = WindowState.NORMAL;
@@ -173,12 +170,11 @@ public class PortletURLUtil {
 		sb.append("&p_p_state=");
 		sb.append(windowState);
 
-		sb.append("&p_p_mode=view");
+		sb.append("&p_p_mode=view&p_p_col_id=");
 
 		String columnId = (String)request.getAttribute(
 			WebKeys.RENDER_PORTLET_COLUMN_ID);
 
-		sb.append("&p_p_col_id=");
 		sb.append(columnId);
 
 		Integer columnPos = (Integer)request.getAttribute(

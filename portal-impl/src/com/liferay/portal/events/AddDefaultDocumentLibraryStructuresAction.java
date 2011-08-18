@@ -208,7 +208,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 	}
 
 	protected String buildDLRawMetadataElementXML(String name, Field field) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(12);
 
 		sb.append("<dynamic-element dataType=\"string\" name=\"");
 		sb.append(field.getName());
@@ -229,7 +229,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 	protected String buildDLRawMetadataStructureXML(
 		String name, Field[] fields) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(8 + fields.length);
 
 		sb.append("<structure><name><![CDATA[");
 		sb.append(name);
@@ -250,7 +250,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 	}
 
 	protected String buildDLRawMetadataXML(Map<String, Field[]> fields) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(2 + fields.size());
 
 		sb.append("<?xml version=\"1.0\"?><root>");
 

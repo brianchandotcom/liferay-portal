@@ -1058,10 +1058,14 @@ public class HttpImpl implements Http {
 						for (Map.Entry<String, String> entry :
 								parts.entrySet()) {
 
-							StringPart stringPart = new StringPart(
-								entry.getKey(), entry.getValue());
+							String value = entry.getValue();
 
-							partsList.add(stringPart);
+							if (value != null) {
+								StringPart stringPart = new StringPart(
+									entry.getKey(), value);
+
+								partsList.add(stringPart);
+							}
 						}
 					}
 

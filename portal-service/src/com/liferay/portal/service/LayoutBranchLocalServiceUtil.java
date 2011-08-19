@@ -283,12 +283,6 @@ public class LayoutBranchLocalServiceUtil {
 		getService().deleteLayoutSetBranchLayoutBranches(layoutSetBranchId);
 	}
 
-	public static java.util.List<com.liferay.portal.model.LayoutBranch> getLayoutSetBranchLayoutBranches(
-		long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getLayoutSetBranchLayoutBranches(layoutSetBranchId);
-	}
-
 	public static java.util.List<com.liferay.portal.model.LayoutBranch> getLayoutBranches(
 		long layoutSetBranchId, long plid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -296,6 +290,12 @@ public class LayoutBranchLocalServiceUtil {
 		return getService()
 				   .getLayoutBranches(layoutSetBranchId, plid, start, end,
 			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portal.model.LayoutBranch> getLayoutSetBranchLayoutBranches(
+		long layoutSetBranchId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLayoutSetBranchLayoutBranches(layoutSetBranchId);
 	}
 
 	public static com.liferay.portal.model.LayoutBranch getMasterLayoutBranch(

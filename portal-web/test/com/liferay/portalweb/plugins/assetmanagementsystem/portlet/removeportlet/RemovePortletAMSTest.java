@@ -42,7 +42,7 @@ public class RemovePortletAMSTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Management System Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Asset Management System Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

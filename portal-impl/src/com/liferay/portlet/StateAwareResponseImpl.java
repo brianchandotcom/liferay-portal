@@ -305,7 +305,8 @@ public abstract class StateAwareResponseImpl
 			values = ArrayUtil.append(oldValues, values);
 		}
 
-		_publicRenderParameters.put(PortletQNameUtil.getKey(qName), values);
+		_publicRenderParameters.put(
+			PortletQNameUtil.getPublicRenderParameterName(qName), values);
 
 		return true;
 	}

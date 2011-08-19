@@ -15,10 +15,7 @@
 package com.liferay.portalweb.socialofficehome.notifications;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.socialofficehome.notifications.requestccaddascoworker.RequestCCAddAsCoworkerTests;
-import com.liferay.portalweb.socialofficehome.notifications.requestccaddasfriend.RequestCCAddAsFriendTests;
-import com.liferay.portalweb.socialofficehome.notifications.requestprofileaddascoworker.RequestProfileAddAsCoworkerTests;
-import com.liferay.portalweb.socialofficehome.notifications.requestprofileaddasfriend.RequestProfileAddAsFriendTests;
+import com.liferay.portalweb.socialofficehome.notifications.requests.RequestsTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,10 +28,7 @@ public class NotificationsTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(RequestCCAddAsCoworkerTests.suite());
-		testSuite.addTest(RequestCCAddAsFriendTests.suite());
-		testSuite.addTest(RequestProfileAddAsCoworkerTests.suite());
-		testSuite.addTest(RequestProfileAddAsFriendTests.suite());
+		testSuite.addTest(RequestsTests.suite());
 
 		return testSuite;
 	}

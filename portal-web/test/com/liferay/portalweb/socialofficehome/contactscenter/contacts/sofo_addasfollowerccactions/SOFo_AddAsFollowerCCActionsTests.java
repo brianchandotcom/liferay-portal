@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities;
+package com.liferay.portalweb.socialofficehome.contactscenter.contacts.sofo_addasfollowerccactions;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.socialofficehome.activities.microblogsentryactivities.MicroblogsEntryActivitiesTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,12 +22,21 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActivitiesTests extends BaseTests {
+public class SOFo_AddAsFollowerCCActionsTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(MicroblogsEntryActivitiesTests.suite());
+		testSuite.addTestSuite(AddUserSOFollowerTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOFo_NewPasswordTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOFo_SignInTest.class);
+		testSuite.addTestSuite(SOFo_AddAsFollowerCCActionsTest.class);
+		testSuite.addTestSuite(SOFo_ViewAddAsFollowerCCActionsTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOSignInTest.class);
+		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;
 	}

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities;
+package com.liferay.portalweb.socialofficehome.contactscenter.contacts.viewccrequestslink;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.socialofficehome.activities.microblogsentryactivities.MicroblogsEntryActivitiesTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,12 +22,21 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActivitiesTests extends BaseTests {
+public class ViewCCRequestsLinkTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(MicroblogsEntryActivitiesTests.suite());
+		testSuite.addTestSuite(AddUserSOFriendTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOFr_NewPasswordTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOFr_SignInTest.class);
+		testSuite.addTestSuite(SOFr_AddAsFriendCCActionsTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOSignInTest.class);
+		testSuite.addTestSuite(ViewCCRequestsLinkTest.class);
+		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;
 	}

@@ -915,7 +915,7 @@ AUI().add(
 						var firstIndex = 0;
 
 						if (!otherHolders.size()) {
-							otherHolders = fieldset.all('.aui-field');
+							otherHolders = fieldset.all('.aui-field-content');
 							firstIndex = 1;
 						}
 

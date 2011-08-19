@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g 2011-08-18 11:58:15
+// $ANTLR 3.0.1 /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g 2011-08-19 12:28:58
 
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
@@ -39,7 +39,6 @@ import com.liferay.portal.parsers.creole.ast.table.TableCellNode;
 import com.liferay.portal.parsers.creole.ast.table.TableDataNode;
 import com.liferay.portal.parsers.creole.ast.table.TableHeaderNode;
 import com.liferay.portal.parsers.creole.ast.table.TableNode;
-import com.liferay.portal.parsers.creole.ast.TextNode;
 import com.liferay.portal.parsers.creole.ast.UnorderedListItemNode;
 import com.liferay.portal.parsers.creole.ast.UnorderedListNode;
 import com.liferay.portal.parsers.creole.ast.UnformattedTextNode;
@@ -135,16 +134,16 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start wikipage
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:112:1: wikipage : ( whitespaces )? p= paragraphs EOF ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:111:1: wikipage : ( whitespaces )? p= paragraphs EOF ;
 	public final void wikipage() throws RecognitionException {
 	CollectionNode p = null;
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:113:2: ( ( whitespaces )? p= paragraphs EOF )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:113:4: ( whitespaces )? p= paragraphs EOF
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:112:2: ( ( whitespaces )? p= paragraphs EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:112:4: ( whitespaces )? p= paragraphs EOF
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:113:4: ( whitespaces )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:112:4: ( whitespaces )?
 		int alt1=2;
 		int LA1_0 = input.LA(1);
 
@@ -153,7 +152,7 @@ public class Creole10Parser extends Parser {
 		}
 		switch (alt1) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:113:6: whitespaces
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:112:6: whitespaces
 			{
 			pushFollow(FOLLOW_whitespaces_in_wikipage118);
 			whitespaces();
@@ -189,7 +188,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start paragraphs
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:115:1: paragraphs returns [CollectionNode sections = new CollectionNode()] : (p= paragraph )* ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:114:1: paragraphs returns [CollectionNode sections = new CollectionNode()] : (p= paragraph )* ;
 	public final CollectionNode paragraphs() throws RecognitionException {
 	CollectionNode sections =  new CollectionNode();
 
@@ -197,10 +196,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:116:2: ( (p= paragraph )* )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:116:4: (p= paragraph )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:115:2: ( (p= paragraph )* )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:115:4: (p= paragraph )*
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:116:4: (p= paragraph )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:115:4: (p= paragraph )*
 		loop2:
 		do {
 		int alt2=2;
@@ -213,7 +212,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt2) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:116:5: p= paragraph
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:115:5: p= paragraph
 			{
 			pushFollow(FOLLOW_paragraph_in_paragraphs149);
 			p=paragraph();
@@ -251,7 +250,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start paragraph
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:122:1: paragraph returns [ASTNode node = null] : (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:121:1: paragraph returns [ASTNode node = null] : (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? );
 	public final ASTNode paragraph() throws RecognitionException {
 	ASTNode node =	null;
 
@@ -273,7 +272,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:123:2: (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:122:2: (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? )
 		int alt6=3;
 		switch ( input.LA(1) ) {
 		case NOWIKI_OPEN:
@@ -289,7 +288,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return node;}
 			NoViableAltException nvae =
-			new NoViableAltException("122:1: paragraph returns [ASTNode node = null] : (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? );", 6, 1, input);
+			new NoViableAltException("121:1: paragraph returns [ASTNode node = null] : (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? );", 6, 1, input);
 
 			throw nvae;
 		}
@@ -389,7 +388,7 @@ public class Creole10Parser extends Parser {
 		default:
 			if (backtracking>0) {failed=true; return node;}
 			NoViableAltException nvae =
-			new NoViableAltException("122:1: paragraph returns [ASTNode node = null] : (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? );", 6, 2, input);
+			new NoViableAltException("121:1: paragraph returns [ASTNode node = null] : (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? );", 6, 2, input);
 
 			throw nvae;
 		}
@@ -475,14 +474,14 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("122:1: paragraph returns [ASTNode node = null] : (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? );", 6, 0, input);
+			new NoViableAltException("121:1: paragraph returns [ASTNode node = null] : (n= nowiki_block | blanks paragraph_separator | ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )? );", 6, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt6) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:123:4: n= nowiki_block
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:122:4: n= nowiki_block
 			{
 			pushFollow(FOLLOW_nowiki_block_in_paragraph170);
 			n=nowiki_block();
@@ -495,7 +494,7 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:124:4: blanks paragraph_separator
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:123:4: blanks paragraph_separator
 			{
 			pushFollow(FOLLOW_blanks_in_paragraph177);
 			blanks();
@@ -509,9 +508,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 3 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:125:4: ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:124:4: ( blanks )? (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph ) ( paragraph_separator )?
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:125:4: ( blanks )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:124:4: ( blanks )?
 			int alt3=2;
 			int LA3_0 = input.LA(1);
 
@@ -520,7 +519,7 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt3) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:125:6: blanks
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:124:6: blanks
 				{
 				pushFollow(FOLLOW_blanks_in_paragraph187);
 				blanks();
@@ -532,7 +531,7 @@ public class Creole10Parser extends Parser {
 
 			}
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:126:4: (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:125:4: (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph )
 			int alt4=7;
 			switch ( input.LA(1) ) {
 			case TABLE_OF_CONTENTS_TEXT:
@@ -559,7 +558,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return node;}
 				NoViableAltException nvae =
-				new NoViableAltException("126:4: (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph )", 4, 3, input);
+				new NoViableAltException("125:4: (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph )", 4, 3, input);
 
 				throw nvae;
 			}
@@ -578,7 +577,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return node;}
 				NoViableAltException nvae =
-				new NoViableAltException("126:4: (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph )", 4, 4, input);
+				new NoViableAltException("125:4: (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph )", 4, 4, input);
 
 				throw nvae;
 			}
@@ -669,14 +668,14 @@ public class Creole10Parser extends Parser {
 			default:
 			if (backtracking>0) {failed=true; return node;}
 			NoViableAltException nvae =
-				new NoViableAltException("126:4: (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph )", 4, 0, input);
+				new NoViableAltException("125:4: (tof= table_of_contents | h= heading | {...}?hn= horizontalrule | lu= list_unord | lo= list_ord | t= table | tp= text_paragraph )", 4, 0, input);
 
 			throw nvae;
 			}
 
 			switch (alt4) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:126:6: tof= table_of_contents
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:125:6: tof= table_of_contents
 				{
 				pushFollow(FOLLOW_table_of_contents_in_paragraph201);
 				tof=table_of_contents();
@@ -689,7 +688,7 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 2 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:127:6: h= heading
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:126:6: h= heading
 				{
 				pushFollow(FOLLOW_heading_in_paragraph218);
 				h=heading();
@@ -702,7 +701,7 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 3 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:128:6: {...}?hn= horizontalrule
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:127:6: {...}?hn= horizontalrule
 				{
 				if ( !( input.LA(1) == DASH && input.LA(2) == DASH &&
 							input.LA(3) == DASH && input.LA(4) == DASH ) ) {
@@ -720,7 +719,7 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 4 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:131:6: lu= list_unord
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:130:6: lu= list_unord
 				{
 				pushFollow(FOLLOW_list_unord_in_paragraph249);
 				lu=list_unord();
@@ -733,7 +732,7 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 5 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:132:6: lo= list_ord
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:131:6: lo= list_ord
 				{
 				pushFollow(FOLLOW_list_ord_in_paragraph262);
 				lo=list_ord();
@@ -746,7 +745,7 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 6 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:133:6: t= table
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:132:6: t= table
 				{
 				pushFollow(FOLLOW_table_in_paragraph275);
 				t=table();
@@ -759,7 +758,7 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 7 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:134:6: tp= text_paragraph
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:133:6: tp= text_paragraph
 				{
 				pushFollow(FOLLOW_text_paragraph_in_paragraph288);
 				tp=text_paragraph();
@@ -774,7 +773,7 @@ public class Creole10Parser extends Parser {
 
 			}
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:135:7: ( paragraph_separator )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:134:7: ( paragraph_separator )?
 			int alt5=2;
 			int LA5_0 = input.LA(1);
 
@@ -797,7 +796,7 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt5) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:135:9: paragraph_separator
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:134:9: paragraph_separator
 				{
 				pushFollow(FOLLOW_paragraph_separator_in_paragraph301);
 				paragraph_separator();
@@ -827,7 +826,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_paragraph
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:142:1: text_paragraph returns [ ParagraphNode paragraph = new ParagraphNode() ] : (tl= text_line | ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:141:1: text_paragraph returns [ ParagraphNode paragraph = new ParagraphNode() ] : (tl= text_line | ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator )+ ;
 	public final ParagraphNode text_paragraph() throws RecognitionException {
 	ParagraphNode paragraph =  new ParagraphNode();
 
@@ -839,10 +838,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:2: ( (tl= text_line | ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:4: (tl= text_line | ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:142:2: ( (tl= text_line | ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:142:4: (tl= text_line | ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:4: (tl= text_line | ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:142:4: (tl= text_line | ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator )+
 		int cnt8=0;
 		loop8:
 		do {
@@ -990,7 +989,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt8) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:6: tl= text_line
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:142:6: tl= text_line
 			{
 			pushFollow(FOLLOW_text_line_in_text_paragraph329);
 			tl=text_line();
@@ -1003,7 +1002,7 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:144:5: ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:5: ( NOWIKI_OPEN ~ ( NEWLINE ) )=>nw= nowiki_inline (te= text_element )* text_lineseparator
 			{
 			pushFollow(FOLLOW_nowiki_inline_in_text_paragraph361);
 			nw=nowiki_inline();
@@ -1012,7 +1011,7 @@ public class Creole10Parser extends Parser {
 			if ( backtracking==0 ) {
 			  paragraph.addChildASTNode(nw);
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:145:66: (te= text_element )*
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:144:66: (te= text_element )*
 			loop7:
 			do {
 			int alt7=2;
@@ -1025,7 +1024,7 @@ public class Creole10Parser extends Parser {
 
 			switch (alt7) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:145:68: te= text_element
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:144:68: te= text_element
 				{
 				pushFollow(FOLLOW_text_element_in_text_paragraph372);
 				te=text_element();
@@ -1077,7 +1076,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_line
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:148:1: text_line returns [LineNode line = new LineNode()] : first= text_firstelement (element= text_element )* text_lineseparator ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:147:1: text_line returns [LineNode line = new LineNode()] : first= text_firstelement (element= text_element )* text_lineseparator ;
 	public final LineNode text_line() throws RecognitionException {
 	LineNode line =  new LineNode();
 
@@ -1087,17 +1086,21 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:149:2: (first= text_firstelement (element= text_element )* text_lineseparator )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:149:4: first= text_firstelement (element= text_element )* text_lineseparator
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:148:2: (first= text_firstelement (element= text_element )* text_lineseparator )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:148:4: first= text_firstelement (element= text_element )* text_lineseparator
 		{
 		pushFollow(FOLLOW_text_firstelement_in_text_line404);
 		first=text_firstelement();
 		_fsp--;
 		if (failed) return line;
 		if ( backtracking==0 ) {
-		  line.addChildASTNode(first); 
+
+											if (first != null) { // recovering from errors
+												line.addChildASTNode(first);
+											}
+										
 		}
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:149:70: (element= text_element )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:153:9: (element= text_element )*
 		loop9:
 		do {
 		int alt9=2;
@@ -1110,9 +1113,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt9) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:149:72: element= text_element
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:153:11: element= text_element
 			{
-			pushFollow(FOLLOW_text_element_in_text_line415);
+			pushFollow(FOLLOW_text_element_in_text_line423);
 			element=text_element();
 			_fsp--;
 			if (failed) return line;
@@ -1131,7 +1134,7 @@ public class Creole10Parser extends Parser {
 		}
 		} while (true);
 
-		pushFollow(FOLLOW_text_lineseparator_in_text_line430);
+		pushFollow(FOLLOW_text_lineseparator_in_text_line438);
 		text_lineseparator();
 		_fsp--;
 		if (failed) return line;
@@ -1151,7 +1154,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_firstelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:155:1: text_firstelement returns [ASTNode item = null] : ({...}?tf= text_formattedelement | tu= text_first_unformattedelement );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:159:1: text_firstelement returns [ASTNode item = null] : ({...}?tf= text_formattedelement | tu= text_first_unformattedelement );
 	public final ASTNode text_firstelement() throws RecognitionException {
 	ASTNode item =	null;
 
@@ -1161,7 +1164,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:156:2: ({...}?tf= text_formattedelement | tu= text_first_unformattedelement )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:160:2: ({...}?tf= text_formattedelement | tu= text_first_unformattedelement )
 		int alt10=2;
 		int LA10_0 = input.LA(1);
 
@@ -1174,19 +1177,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return item;}
 		NoViableAltException nvae =
-			new NoViableAltException("155:1: text_firstelement returns [ASTNode item = null] : ({...}?tf= text_formattedelement | tu= text_first_unformattedelement );", 10, 0, input);
+			new NoViableAltException("159:1: text_firstelement returns [ASTNode item = null] : ({...}?tf= text_formattedelement | tu= text_first_unformattedelement );", 10, 0, input);
 
 		throw nvae;
 		}
 		switch (alt10) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:156:4: {...}?tf= text_formattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:160:4: {...}?tf= text_formattedelement
 			{
 			if ( !( input.LA(1) != STAR || (input.LA(1) == STAR && input.LA(2) == STAR) ) ) {
 			if (backtracking>0) {failed=true; return item;}
 			throw new FailedPredicateException(input, "text_firstelement", " input.LA(1) != STAR || (input.LA(1) == STAR && input.LA(2) == STAR) ");
 			}
-			pushFollow(FOLLOW_text_formattedelement_in_text_firstelement452);
+			pushFollow(FOLLOW_text_formattedelement_in_text_firstelement460);
 			tf=text_formattedelement();
 			_fsp--;
 			if (failed) return item;
@@ -1197,9 +1200,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:158:4: tu= text_first_unformattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:162:4: tu= text_first_unformattedelement
 			{
-			pushFollow(FOLLOW_text_first_unformattedelement_in_text_firstelement463);
+			pushFollow(FOLLOW_text_first_unformattedelement_in_text_firstelement471);
 			tu=text_first_unformattedelement();
 			_fsp--;
 			if (failed) return item;
@@ -1224,7 +1227,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_formattedelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:160:1: text_formattedelement returns [FormattedTextNode item = null] : ( ital_markup ic= text_italcontent ( ( NEWLINE )? ital_markup )? | bold_markup bc= text_boldcontent ( ( NEWLINE )? bold_markup )? );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:164:1: text_formattedelement returns [FormattedTextNode item = null] : ( ital_markup ic= text_italcontent ( ( NEWLINE )? ital_markup )? | bold_markup bc= text_boldcontent ( ( NEWLINE )? bold_markup )? );
 	public final FormattedTextNode text_formattedelement() throws RecognitionException {
 	FormattedTextNode item =  null;
 
@@ -1234,7 +1237,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:161:2: ( ital_markup ic= text_italcontent ( ( NEWLINE )? ital_markup )? | bold_markup bc= text_boldcontent ( ( NEWLINE )? bold_markup )? )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:2: ( ital_markup ic= text_italcontent ( ( NEWLINE )? ital_markup )? | bold_markup bc= text_boldcontent ( ( NEWLINE )? bold_markup )? )
 		int alt15=2;
 		int LA15_0 = input.LA(1);
 
@@ -1247,26 +1250,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return item;}
 		NoViableAltException nvae =
-			new NoViableAltException("160:1: text_formattedelement returns [FormattedTextNode item = null] : ( ital_markup ic= text_italcontent ( ( NEWLINE )? ital_markup )? | bold_markup bc= text_boldcontent ( ( NEWLINE )? bold_markup )? );", 15, 0, input);
+			new NoViableAltException("164:1: text_formattedelement returns [FormattedTextNode item = null] : ( ital_markup ic= text_italcontent ( ( NEWLINE )? ital_markup )? | bold_markup bc= text_boldcontent ( ( NEWLINE )? bold_markup )? );", 15, 0, input);
 
 		throw nvae;
 		}
 		switch (alt15) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:161:4: ital_markup ic= text_italcontent ( ( NEWLINE )? ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:4: ital_markup ic= text_italcontent ( ( NEWLINE )? ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_text_formattedelement479);
+			pushFollow(FOLLOW_ital_markup_in_text_formattedelement487);
 			ital_markup();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_text_italcontent_in_text_formattedelement485);
+			pushFollow(FOLLOW_text_italcontent_in_text_formattedelement493);
 			ic=text_italcontent();
 			_fsp--;
 			if (failed) return item;
 			if ( backtracking==0 ) {
 			   item = new ItalicTextNode(ic); 
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:161:81: ( ( NEWLINE )? ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:81: ( ( NEWLINE )? ital_markup )?
 			int alt12=2;
 			int LA12_0 = input.LA(1);
 
@@ -1282,9 +1285,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt12) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:161:83: ( NEWLINE )? ital_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:83: ( NEWLINE )? ital_markup
 				{
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:161:83: ( NEWLINE )?
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:83: ( NEWLINE )?
 				int alt11=2;
 				int LA11_0 = input.LA(1);
 
@@ -1293,16 +1296,16 @@ public class Creole10Parser extends Parser {
 				}
 				switch (alt11) {
 				case 1 :
-					// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:161:85: NEWLINE
+					// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:85: NEWLINE
 					{
-					match(input,NEWLINE,FOLLOW_NEWLINE_in_text_formattedelement494); if (failed) return item;
+					match(input,NEWLINE,FOLLOW_NEWLINE_in_text_formattedelement502); if (failed) return item;
 
 					}
 					break;
 
 				}
 
-				pushFollow(FOLLOW_ital_markup_in_text_formattedelement500);
+				pushFollow(FOLLOW_ital_markup_in_text_formattedelement508);
 				ital_markup();
 				_fsp--;
 				if (failed) return item;
@@ -1316,20 +1319,20 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:162:4: bold_markup bc= text_boldcontent ( ( NEWLINE )? bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:166:4: bold_markup bc= text_boldcontent ( ( NEWLINE )? bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_text_formattedelement508);
+			pushFollow(FOLLOW_bold_markup_in_text_formattedelement516);
 			bold_markup();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_text_boldcontent_in_text_formattedelement515);
+			pushFollow(FOLLOW_text_boldcontent_in_text_formattedelement523);
 			bc=text_boldcontent();
 			_fsp--;
 			if (failed) return item;
 			if ( backtracking==0 ) {
 			  item = new BoldTextNode(bc); 
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:162:79: ( ( NEWLINE )? bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:166:79: ( ( NEWLINE )? bold_markup )?
 			int alt14=2;
 			int LA14_0 = input.LA(1);
 
@@ -1353,9 +1356,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt14) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:162:81: ( NEWLINE )? bold_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:166:81: ( NEWLINE )? bold_markup
 				{
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:162:81: ( NEWLINE )?
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:166:81: ( NEWLINE )?
 				int alt13=2;
 				int LA13_0 = input.LA(1);
 
@@ -1364,16 +1367,16 @@ public class Creole10Parser extends Parser {
 				}
 				switch (alt13) {
 				case 1 :
-					// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:162:83: NEWLINE
+					// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:166:83: NEWLINE
 					{
-					match(input,NEWLINE,FOLLOW_NEWLINE_in_text_formattedelement524); if (failed) return item;
+					match(input,NEWLINE,FOLLOW_NEWLINE_in_text_formattedelement532); if (failed) return item;
 
 					}
 					break;
 
 				}
 
-				pushFollow(FOLLOW_bold_markup_in_text_formattedelement530);
+				pushFollow(FOLLOW_bold_markup_in_text_formattedelement538);
 				bold_markup();
 				_fsp--;
 				if (failed) return item;
@@ -1401,7 +1404,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_boldcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:164:1: text_boldcontent returns [ CollectionNode text = new CollectionNode() ] : ( ( NEWLINE )? (p= text_boldcontentpart )* | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:168:1: text_boldcontent returns [ CollectionNode text = new CollectionNode() ] : ( ( NEWLINE )? (p= text_boldcontentpart )* | EOF );
 	public final CollectionNode text_boldcontent() throws RecognitionException {
 	CollectionNode text =  new CollectionNode();
 
@@ -1409,7 +1412,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:2: ( ( NEWLINE )? (p= text_boldcontentpart )* | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:2: ( ( NEWLINE )? (p= text_boldcontentpart )* | EOF )
 		int alt18=2;
 		int LA18_0 = input.LA(1);
 
@@ -1422,15 +1425,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return text;}
 		NoViableAltException nvae =
-			new NoViableAltException("164:1: text_boldcontent returns [ CollectionNode text = new CollectionNode() ] : ( ( NEWLINE )? (p= text_boldcontentpart )* | EOF );", 18, 0, input);
+			new NoViableAltException("168:1: text_boldcontent returns [ CollectionNode text = new CollectionNode() ] : ( ( NEWLINE )? (p= text_boldcontentpart )* | EOF );", 18, 0, input);
 
 		throw nvae;
 		}
 		switch (alt18) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:4: ( NEWLINE )? (p= text_boldcontentpart )*
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:4: ( NEWLINE )? (p= text_boldcontentpart )*
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:4: ( NEWLINE )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:4: ( NEWLINE )?
 			int alt16=2;
 			int LA16_0 = input.LA(1);
 
@@ -1439,16 +1442,16 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt16) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:6: NEWLINE
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:6: NEWLINE
 				{
-				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_boldcontent549); if (failed) return text;
+				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_boldcontent557); if (failed) return text;
 
 				}
 				break;
 
 			}
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:18: (p= text_boldcontentpart )*
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:18: (p= text_boldcontentpart )*
 			loop17:
 			do {
 			int alt17=2;
@@ -1574,9 +1577,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt17) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:165:20: p= text_boldcontentpart
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:20: p= text_boldcontentpart
 				{
-				pushFollow(FOLLOW_text_boldcontentpart_in_text_boldcontent561);
+				pushFollow(FOLLOW_text_boldcontentpart_in_text_boldcontent569);
 				p=text_boldcontentpart();
 				_fsp--;
 				if (failed) return text;
@@ -1596,9 +1599,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:166:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:170:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_text_boldcontent572); if (failed) return text;
+			match(input,EOF,FOLLOW_EOF_in_text_boldcontent580); if (failed) return text;
 
 			}
 			break;
@@ -1617,7 +1620,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_italcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:168:1: text_italcontent returns [ CollectionNode text = new CollectionNode() ] : ( ( NEWLINE )? (p= text_italcontentpart )* | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:172:1: text_italcontent returns [ CollectionNode text = new CollectionNode() ] : ( ( NEWLINE )? (p= text_italcontentpart )* | EOF );
 	public final CollectionNode text_italcontent() throws RecognitionException {
 	CollectionNode text =  new CollectionNode();
 
@@ -1625,7 +1628,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:2: ( ( NEWLINE )? (p= text_italcontentpart )* | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:2: ( ( NEWLINE )? (p= text_italcontentpart )* | EOF )
 		int alt21=2;
 		int LA21_0 = input.LA(1);
 
@@ -1638,15 +1641,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return text;}
 		NoViableAltException nvae =
-			new NoViableAltException("168:1: text_italcontent returns [ CollectionNode text = new CollectionNode() ] : ( ( NEWLINE )? (p= text_italcontentpart )* | EOF );", 21, 0, input);
+			new NoViableAltException("172:1: text_italcontent returns [ CollectionNode text = new CollectionNode() ] : ( ( NEWLINE )? (p= text_italcontentpart )* | EOF );", 21, 0, input);
 
 		throw nvae;
 		}
 		switch (alt21) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:4: ( NEWLINE )? (p= text_italcontentpart )*
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:4: ( NEWLINE )? (p= text_italcontentpart )*
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:4: ( NEWLINE )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:4: ( NEWLINE )?
 			int alt19=2;
 			int LA19_0 = input.LA(1);
 
@@ -1655,16 +1658,16 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt19) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:6: NEWLINE
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:6: NEWLINE
 				{
-				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_italcontent588); if (failed) return text;
+				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_italcontent596); if (failed) return text;
 
 				}
 				break;
 
 			}
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:18: (p= text_italcontentpart )*
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:18: (p= text_italcontentpart )*
 			loop20:
 			do {
 			int alt20=2;
@@ -1779,9 +1782,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt20) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:169:20: p= text_italcontentpart
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:20: p= text_italcontentpart
 				{
-				pushFollow(FOLLOW_text_italcontentpart_in_text_italcontent600);
+				pushFollow(FOLLOW_text_italcontentpart_in_text_italcontent608);
 				p=text_italcontentpart();
 				_fsp--;
 				if (failed) return text;
@@ -1801,9 +1804,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:170:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:174:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_text_italcontent611); if (failed) return text;
+			match(input,EOF,FOLLOW_EOF_in_text_italcontent619); if (failed) return text;
 
 			}
 			break;
@@ -1822,7 +1825,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_element
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:172:1: text_element returns [ASTNode item = null] : ( onestar tu1= text_unformattedelement | tu2= text_unformattedelement onestar | tf= text_formattedelement );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:176:1: text_element returns [ASTNode item = null] : ( onestar tu1= text_unformattedelement | tu2= text_unformattedelement onestar | tf= text_formattedelement );
 	public final ASTNode text_element() throws RecognitionException {
 	ASTNode item =	null;
 
@@ -1834,7 +1837,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:2: ( onestar tu1= text_unformattedelement | tu2= text_unformattedelement onestar | tf= text_formattedelement )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:177:2: ( onestar tu1= text_unformattedelement | tu2= text_unformattedelement onestar | tf= text_formattedelement )
 		int alt22=3;
 		switch ( input.LA(1) ) {
 		case STAR:
@@ -1850,7 +1853,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return item;}
 			NoViableAltException nvae =
-			new NoViableAltException("172:1: text_element returns [ASTNode item = null] : ( onestar tu1= text_unformattedelement | tu2= text_unformattedelement onestar | tf= text_formattedelement );", 22, 1, input);
+			new NoViableAltException("176:1: text_element returns [ASTNode item = null] : ( onestar tu1= text_unformattedelement | tu2= text_unformattedelement onestar | tf= text_formattedelement );", 22, 1, input);
 
 			throw nvae;
 		}
@@ -1964,20 +1967,20 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return item;}
 		NoViableAltException nvae =
-			new NoViableAltException("172:1: text_element returns [ASTNode item = null] : ( onestar tu1= text_unformattedelement | tu2= text_unformattedelement onestar | tf= text_formattedelement );", 22, 0, input);
+			new NoViableAltException("176:1: text_element returns [ASTNode item = null] : ( onestar tu1= text_unformattedelement | tu2= text_unformattedelement onestar | tf= text_formattedelement );", 22, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt22) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:173:4: onestar tu1= text_unformattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:177:4: onestar tu1= text_unformattedelement
 			{
-			pushFollow(FOLLOW_onestar_in_text_element626);
+			pushFollow(FOLLOW_onestar_in_text_element634);
 			onestar();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_text_unformattedelement_in_text_element633);
+			pushFollow(FOLLOW_text_unformattedelement_in_text_element641);
 			tu1=text_unformattedelement();
 			_fsp--;
 			if (failed) return item;
@@ -1988,13 +1991,13 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:174:4: tu2= text_unformattedelement onestar
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:178:4: tu2= text_unformattedelement onestar
 			{
-			pushFollow(FOLLOW_text_unformattedelement_in_text_element644);
+			pushFollow(FOLLOW_text_unformattedelement_in_text_element652);
 			tu2=text_unformattedelement();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_onestar_in_text_element647);
+			pushFollow(FOLLOW_onestar_in_text_element655);
 			onestar();
 			_fsp--;
 			if (failed) return item;
@@ -2005,9 +2008,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 3 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:175:4: tf= text_formattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:179:4: tf= text_formattedelement
 			{
-			pushFollow(FOLLOW_text_formattedelement_in_text_element658);
+			pushFollow(FOLLOW_text_formattedelement_in_text_element666);
 			tf=text_formattedelement();
 			_fsp--;
 			if (failed) return item;
@@ -2032,7 +2035,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_boldcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:178:1: text_boldcontentpart returns [FormattedTextNode node = null] : ( ital_markup t= text_bolditalcontent ( ital_markup )? | tf= text_formattedcontent );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:182:1: text_boldcontentpart returns [FormattedTextNode node = null] : ( ital_markup t= text_bolditalcontent ( ital_markup )? | tf= text_formattedcontent );
 	public final FormattedTextNode text_boldcontentpart() throws RecognitionException {
 	FormattedTextNode node =  null;
 
@@ -2042,7 +2045,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:179:2: ( ital_markup t= text_bolditalcontent ( ital_markup )? | tf= text_formattedcontent )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:2: ( ital_markup t= text_bolditalcontent ( ital_markup )? | tf= text_formattedcontent )
 		int alt24=2;
 		int LA24_0 = input.LA(1);
 
@@ -2055,26 +2058,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("178:1: text_boldcontentpart returns [FormattedTextNode node = null] : ( ital_markup t= text_bolditalcontent ( ital_markup )? | tf= text_formattedcontent );", 24, 0, input);
+			new NoViableAltException("182:1: text_boldcontentpart returns [FormattedTextNode node = null] : ( ital_markup t= text_bolditalcontent ( ital_markup )? | tf= text_formattedcontent );", 24, 0, input);
 
 		throw nvae;
 		}
 		switch (alt24) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:179:4: ital_markup t= text_bolditalcontent ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:4: ital_markup t= text_bolditalcontent ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_text_boldcontentpart675);
+			pushFollow(FOLLOW_ital_markup_in_text_boldcontentpart683);
 			ital_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_text_bolditalcontent_in_text_boldcontentpart682);
+			pushFollow(FOLLOW_text_bolditalcontent_in_text_boldcontentpart690);
 			t=text_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
 			if ( backtracking==0 ) {
 			  node = new ItalicTextNode(t); 
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:179:84: ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:84: ( ital_markup )?
 			int alt23=2;
 			int LA23_0 = input.LA(1);
 
@@ -2083,9 +2086,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt23) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:179:86: ital_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:86: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_text_boldcontentpart689);
+				pushFollow(FOLLOW_ital_markup_in_text_boldcontentpart697);
 				ital_markup();
 				_fsp--;
 				if (failed) return node;
@@ -2099,9 +2102,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:180:4: tf= text_formattedcontent
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:184:4: tf= text_formattedcontent
 			{
-			pushFollow(FOLLOW_text_formattedcontent_in_text_boldcontentpart701);
+			pushFollow(FOLLOW_text_formattedcontent_in_text_boldcontentpart709);
 			tf=text_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -2126,7 +2129,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_italcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:182:1: text_italcontentpart returns [FormattedTextNode node = null] : ( bold_markup t= text_bolditalcontent ( bold_markup )? | tf= text_formattedcontent );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:186:1: text_italcontentpart returns [FormattedTextNode node = null] : ( bold_markup t= text_bolditalcontent ( bold_markup )? | tf= text_formattedcontent );
 	public final FormattedTextNode text_italcontentpart() throws RecognitionException {
 	FormattedTextNode node =  null;
 
@@ -2136,7 +2139,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:2: ( bold_markup t= text_bolditalcontent ( bold_markup )? | tf= text_formattedcontent )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:2: ( bold_markup t= text_bolditalcontent ( bold_markup )? | tf= text_formattedcontent )
 		int alt26=2;
 		int LA26_0 = input.LA(1);
 
@@ -2152,7 +2155,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return node;}
 			NoViableAltException nvae =
-			new NoViableAltException("182:1: text_italcontentpart returns [FormattedTextNode node = null] : ( bold_markup t= text_bolditalcontent ( bold_markup )? | tf= text_formattedcontent );", 26, 1, input);
+			new NoViableAltException("186:1: text_italcontentpart returns [FormattedTextNode node = null] : ( bold_markup t= text_bolditalcontent ( bold_markup )? | tf= text_formattedcontent );", 26, 1, input);
 
 			throw nvae;
 		}
@@ -2163,26 +2166,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("182:1: text_italcontentpart returns [FormattedTextNode node = null] : ( bold_markup t= text_bolditalcontent ( bold_markup )? | tf= text_formattedcontent );", 26, 0, input);
+			new NoViableAltException("186:1: text_italcontentpart returns [FormattedTextNode node = null] : ( bold_markup t= text_bolditalcontent ( bold_markup )? | tf= text_formattedcontent );", 26, 0, input);
 
 		throw nvae;
 		}
 		switch (alt26) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:4: bold_markup t= text_bolditalcontent ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:4: bold_markup t= text_bolditalcontent ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_text_italcontentpart717);
+			pushFollow(FOLLOW_bold_markup_in_text_italcontentpart725);
 			bold_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_text_bolditalcontent_in_text_italcontentpart724);
+			pushFollow(FOLLOW_text_bolditalcontent_in_text_italcontentpart732);
 			t=text_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
 			if ( backtracking==0 ) {
 			   node = new BoldTextNode(t); 
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:82: ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:82: ( bold_markup )?
 			int alt25=2;
 			int LA25_0 = input.LA(1);
 
@@ -2195,9 +2198,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt25) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:183:84: bold_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:84: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_text_italcontentpart730);
+				pushFollow(FOLLOW_bold_markup_in_text_italcontentpart738);
 				bold_markup();
 				_fsp--;
 				if (failed) return node;
@@ -2211,9 +2214,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:184:4: tf= text_formattedcontent
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:188:4: tf= text_formattedcontent
 			{
-			pushFollow(FOLLOW_text_formattedcontent_in_text_italcontentpart742);
+			pushFollow(FOLLOW_text_formattedcontent_in_text_italcontentpart750);
 			tf=text_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -2238,7 +2241,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_bolditalcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:186:1: text_bolditalcontent returns [ASTNode items = null] : ( ( NEWLINE )? (tf= text_formattedcontent )? | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:190:1: text_bolditalcontent returns [ASTNode items = null] : ( ( NEWLINE )? (tf= text_formattedcontent )? | EOF );
 	public final ASTNode text_bolditalcontent() throws RecognitionException {
 	ASTNode items =  null;
 
@@ -2246,7 +2249,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:2: ( ( NEWLINE )? (tf= text_formattedcontent )? | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:2: ( ( NEWLINE )? (tf= text_formattedcontent )? | EOF )
 		int alt29=2;
 		int LA29_0 = input.LA(1);
 
@@ -2259,15 +2262,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return items;}
 		NoViableAltException nvae =
-			new NoViableAltException("186:1: text_bolditalcontent returns [ASTNode items = null] : ( ( NEWLINE )? (tf= text_formattedcontent )? | EOF );", 29, 0, input);
+			new NoViableAltException("190:1: text_bolditalcontent returns [ASTNode items = null] : ( ( NEWLINE )? (tf= text_formattedcontent )? | EOF );", 29, 0, input);
 
 		throw nvae;
 		}
 		switch (alt29) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:4: ( NEWLINE )? (tf= text_formattedcontent )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:4: ( NEWLINE )? (tf= text_formattedcontent )?
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:4: ( NEWLINE )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:4: ( NEWLINE )?
 			int alt27=2;
 			int LA27_0 = input.LA(1);
 
@@ -2276,16 +2279,16 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt27) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:6: NEWLINE
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:6: NEWLINE
 				{
-				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_bolditalcontent760); if (failed) return items;
+				match(input,NEWLINE,FOLLOW_NEWLINE_in_text_bolditalcontent768); if (failed) return items;
 
 				}
 				break;
 
 			}
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:18: (tf= text_formattedcontent )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:18: (tf= text_formattedcontent )?
 			int alt28=2;
 			switch ( input.LA(1) ) {
 			case STAR:
@@ -2401,9 +2404,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt28) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:187:20: tf= text_formattedcontent
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:20: tf= text_formattedcontent
 				{
-				pushFollow(FOLLOW_text_formattedcontent_in_text_bolditalcontent771);
+				pushFollow(FOLLOW_text_formattedcontent_in_text_bolditalcontent779);
 				tf=text_formattedcontent();
 				_fsp--;
 				if (failed) return items;
@@ -2420,9 +2423,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:188:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:192:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_text_bolditalcontent781); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_text_bolditalcontent789); if (failed) return items;
 
 			}
 			break;
@@ -2441,7 +2444,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_formattedcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:190:1: text_formattedcontent returns [CollectionNode items = new CollectionNode ()] : onestar (t= text_unformattedelement onestar ( text_linebreak )? )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:194:1: text_formattedcontent returns [CollectionNode items = new CollectionNode ()] : onestar (t= text_unformattedelement onestar ( text_linebreak )? )+ ;
 	public final CollectionNode text_formattedcontent() throws RecognitionException {
 	CollectionNode items =	new CollectionNode ();
 
@@ -2449,14 +2452,14 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:2: ( onestar (t= text_unformattedelement onestar ( text_linebreak )? )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:4: onestar (t= text_unformattedelement onestar ( text_linebreak )? )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:2: ( onestar (t= text_unformattedelement onestar ( text_linebreak )? )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:4: onestar (t= text_unformattedelement onestar ( text_linebreak )? )+
 		{
-		pushFollow(FOLLOW_onestar_in_text_formattedcontent795);
+		pushFollow(FOLLOW_onestar_in_text_formattedcontent803);
 		onestar();
 		_fsp--;
 		if (failed) return items;
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:13: (t= text_unformattedelement onestar ( text_linebreak )? )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:13: (t= text_unformattedelement onestar ( text_linebreak )? )+
 		int cnt31=0;
 		loop31:
 		do {
@@ -2567,20 +2570,20 @@ public class Creole10Parser extends Parser {
 
 		switch (alt31) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:15: t= text_unformattedelement onestar ( text_linebreak )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:15: t= text_unformattedelement onestar ( text_linebreak )?
 			{
-			pushFollow(FOLLOW_text_unformattedelement_in_text_formattedcontent804);
+			pushFollow(FOLLOW_text_unformattedelement_in_text_formattedcontent812);
 			t=text_unformattedelement();
 			_fsp--;
 			if (failed) return items;
 			if ( backtracking==0 ) {
 			  items.add(t); 
 			}
-			pushFollow(FOLLOW_onestar_in_text_formattedcontent809);
+			pushFollow(FOLLOW_onestar_in_text_formattedcontent817);
 			onestar();
 			_fsp--;
 			if (failed) return items;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:81: ( text_linebreak )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:81: ( text_linebreak )?
 			int alt30=2;
 			int LA30_0 = input.LA(1);
 
@@ -2602,9 +2605,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt30) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:191:83: text_linebreak
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:195:83: text_linebreak
 				{
-				pushFollow(FOLLOW_text_linebreak_in_text_formattedcontent814);
+				pushFollow(FOLLOW_text_linebreak_in_text_formattedcontent822);
 				text_linebreak();
 				_fsp--;
 				if (failed) return items;
@@ -2644,18 +2647,18 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_linebreak
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:193:1: text_linebreak : {...}? text_lineseparator ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:197:1: text_linebreak : {...}? text_lineseparator ;
 	public final void text_linebreak() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:194:2: ({...}? text_lineseparator )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:194:4: {...}? text_lineseparator
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:198:2: ({...}? text_lineseparator )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:198:4: {...}? text_lineseparator
 		{
 		if ( !( input.LA(2) != DASH && input.LA(2) != POUND && 
 			input.LA(2) != EQUAL && input.LA(2) != NEWLINE ) ) {
 		if (backtracking>0) {failed=true; return ;}
 		throw new FailedPredicateException(input, "text_linebreak", " input.LA(2) != DASH && input.LA(2) != POUND && \n\t\tinput.LA(2) != EQUAL && input.LA(2) != NEWLINE ");
 		}
-		pushFollow(FOLLOW_text_lineseparator_in_text_linebreak834);
+		pushFollow(FOLLOW_text_lineseparator_in_text_linebreak842);
 		text_lineseparator();
 		_fsp--;
 		if (failed) return ;
@@ -2675,7 +2678,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_inlineelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:198:1: text_inlineelement returns [ASTNode element = null ] : (tf= text_first_inlineelement | nwi= nowiki_inline );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:202:1: text_inlineelement returns [ASTNode element = null ] : (tf= text_first_inlineelement | nwi= nowiki_inline );
 	public final ASTNode text_inlineelement() throws RecognitionException {
 	ASTNode element =  null;
 
@@ -2685,7 +2688,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:199:2: (tf= text_first_inlineelement | nwi= nowiki_inline )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:203:2: (tf= text_first_inlineelement | nwi= nowiki_inline )
 		int alt32=2;
 		int LA32_0 = input.LA(1);
 
@@ -2698,15 +2701,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return element;}
 		NoViableAltException nvae =
-			new NoViableAltException("198:1: text_inlineelement returns [ASTNode element = null ] : (tf= text_first_inlineelement | nwi= nowiki_inline );", 32, 0, input);
+			new NoViableAltException("202:1: text_inlineelement returns [ASTNode element = null ] : (tf= text_first_inlineelement | nwi= nowiki_inline );", 32, 0, input);
 
 		throw nvae;
 		}
 		switch (alt32) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:199:4: tf= text_first_inlineelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:203:4: tf= text_first_inlineelement
 			{
-			pushFollow(FOLLOW_text_first_inlineelement_in_text_inlineelement852);
+			pushFollow(FOLLOW_text_first_inlineelement_in_text_inlineelement860);
 			tf=text_first_inlineelement();
 			_fsp--;
 			if (failed) return element;
@@ -2717,9 +2720,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:200:4: nwi= nowiki_inline
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:204:4: nwi= nowiki_inline
 			{
-			pushFollow(FOLLOW_nowiki_inline_in_text_inlineelement863);
+			pushFollow(FOLLOW_nowiki_inline_in_text_inlineelement871);
 			nwi=nowiki_inline();
 			_fsp--;
 			if (failed) return element;
@@ -2744,7 +2747,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_first_inlineelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:202:1: text_first_inlineelement returns [ASTNode element = null] : (l= link | i= image | e= extension );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:206:1: text_first_inlineelement returns [ASTNode element = null] : (l= link | i= image | e= extension );
 	public final ASTNode text_first_inlineelement() throws RecognitionException {
 	ASTNode element =  null;
 
@@ -2756,7 +2759,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:203:2: (l= link | i= image | e= extension )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:207:2: (l= link | i= image | e= extension )
 		int alt33=3;
 		switch ( input.LA(1) ) {
 		case LINK_OPEN:
@@ -2777,16 +2780,16 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return element;}
 		NoViableAltException nvae =
-			new NoViableAltException("202:1: text_first_inlineelement returns [ASTNode element = null] : (l= link | i= image | e= extension );", 33, 0, input);
+			new NoViableAltException("206:1: text_first_inlineelement returns [ASTNode element = null] : (l= link | i= image | e= extension );", 33, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt33) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:204:3: l= link
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:208:3: l= link
 			{
-			pushFollow(FOLLOW_link_in_text_first_inlineelement886);
+			pushFollow(FOLLOW_link_in_text_first_inlineelement894);
 			l=link();
 			_fsp--;
 			if (failed) return element;
@@ -2797,9 +2800,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:205:4: i= image
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:209:4: i= image
 			{
-			pushFollow(FOLLOW_image_in_text_first_inlineelement897);
+			pushFollow(FOLLOW_image_in_text_first_inlineelement905);
 			i=image();
 			_fsp--;
 			if (failed) return element;
@@ -2810,9 +2813,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 3 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:206:4: e= extension
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:210:4: e= extension
 			{
-			pushFollow(FOLLOW_extension_in_text_first_inlineelement907);
+			pushFollow(FOLLOW_extension_in_text_first_inlineelement915);
 			e=extension();
 			_fsp--;
 			if (failed) return element;
@@ -2837,7 +2840,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_first_unformattedelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:208:1: text_first_unformattedelement returns [ASTNode item = null] : (tfu= text_first_unformatted | tfi= text_first_inlineelement );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:212:1: text_first_unformattedelement returns [ASTNode item = null] : (tfu= text_first_unformatted | tfi= text_first_inlineelement );
 	public final ASTNode text_first_unformattedelement() throws RecognitionException {
 	ASTNode item =	null;
 
@@ -2847,7 +2850,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:209:2: (tfu= text_first_unformatted | tfi= text_first_inlineelement )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:213:2: (tfu= text_first_unformatted | tfi= text_first_inlineelement )
 		int alt34=2;
 		int LA34_0 = input.LA(1);
 
@@ -2860,15 +2863,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return item;}
 		NoViableAltException nvae =
-			new NoViableAltException("208:1: text_first_unformattedelement returns [ASTNode item = null] : (tfu= text_first_unformatted | tfi= text_first_inlineelement );", 34, 0, input);
+			new NoViableAltException("212:1: text_first_unformattedelement returns [ASTNode item = null] : (tfu= text_first_unformatted | tfi= text_first_inlineelement );", 34, 0, input);
 
 		throw nvae;
 		}
 		switch (alt34) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:209:4: tfu= text_first_unformatted
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:213:4: tfu= text_first_unformatted
 			{
-			pushFollow(FOLLOW_text_first_unformatted_in_text_first_unformattedelement927);
+			pushFollow(FOLLOW_text_first_unformatted_in_text_first_unformattedelement935);
 			tfu=text_first_unformatted();
 			_fsp--;
 			if (failed) return item;
@@ -2879,9 +2882,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:210:4: tfi= text_first_inlineelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:214:4: tfi= text_first_inlineelement
 			{
-			pushFollow(FOLLOW_text_first_inlineelement_in_text_first_unformattedelement938);
+			pushFollow(FOLLOW_text_first_inlineelement_in_text_first_unformattedelement946);
 			tfi=text_first_inlineelement();
 			_fsp--;
 			if (failed) return item;
@@ -2906,7 +2909,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_first_unformatted
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:212:1: text_first_unformatted returns [CollectionNode items = new CollectionNode()] : (t= text_first_unformmatted_text | ( forced_linebreak | e= escaped )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:216:1: text_first_unformatted returns [CollectionNode items = new CollectionNode()] : (t= text_first_unformmatted_text | ( forced_linebreak | e= escaped )+ );
 	public final CollectionNode text_first_unformatted() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -2916,7 +2919,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:213:2: (t= text_first_unformmatted_text | ( forced_linebreak | e= escaped )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:217:2: (t= text_first_unformmatted_text | ( forced_linebreak | e= escaped )+ )
 		int alt36=2;
 		int LA36_0 = input.LA(1);
 
@@ -2929,15 +2932,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return items;}
 		NoViableAltException nvae =
-			new NoViableAltException("212:1: text_first_unformatted returns [CollectionNode items = new CollectionNode()] : (t= text_first_unformmatted_text | ( forced_linebreak | e= escaped )+ );", 36, 0, input);
+			new NoViableAltException("216:1: text_first_unformatted returns [CollectionNode items = new CollectionNode()] : (t= text_first_unformmatted_text | ( forced_linebreak | e= escaped )+ );", 36, 0, input);
 
 		throw nvae;
 		}
 		switch (alt36) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:213:6: t= text_first_unformmatted_text
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:217:6: t= text_first_unformmatted_text
 			{
-			pushFollow(FOLLOW_text_first_unformmatted_text_in_text_first_unformatted960);
+			pushFollow(FOLLOW_text_first_unformmatted_text_in_text_first_unformatted968);
 			t=text_first_unformmatted_text();
 			_fsp--;
 			if (failed) return items;
@@ -2948,9 +2951,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:214:5: ( forced_linebreak | e= escaped )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:218:5: ( forced_linebreak | e= escaped )+
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:214:5: ( forced_linebreak | e= escaped )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:218:5: ( forced_linebreak | e= escaped )+
 			int cnt35=0;
 			loop35:
 			do {
@@ -2973,9 +2976,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt35) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:214:6: forced_linebreak
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:218:6: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_text_first_unformatted969);
+				pushFollow(FOLLOW_forced_linebreak_in_text_first_unformatted977);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return items;
@@ -2986,9 +2989,9 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 2 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:215:5: e= escaped
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:219:5: e= escaped
 				{
-				pushFollow(FOLLOW_escaped_in_text_first_unformatted981);
+				pushFollow(FOLLOW_escaped_in_text_first_unformatted989);
 				e=escaped();
 				_fsp--;
 				if (failed) return items;
@@ -3027,17 +3030,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_first_unformmatted_text
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:218:1: text_first_unformmatted_text returns [StringBundler text = new StringBundler()] : (c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:222:1: text_first_unformmatted_text returns [StringBundler text = new StringBundler()] : (c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ ;
 	public final StringBundler text_first_unformmatted_text() throws RecognitionException {
 	StringBundler text =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:219:2: ( (c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:220:3: (c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:223:2: ( (c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:224:3: (c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:220:3: (c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:224:3: (c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
 		int cnt37=0;
 		loop37:
 		do {
@@ -3051,7 +3054,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt37) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:220:4: c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:224:4: c=~ ( POUND | STAR | EQUAL | PIPE | ITAL | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
@@ -3062,7 +3065,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_text_first_unformmatted_text1010);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_text_first_unformmatted_text1018);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -3098,7 +3101,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_unformattedelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:234:1: text_unformattedelement returns [ASTNode contents = null] : (text= text_unformatted | ti= text_inlineelement );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:238:1: text_unformattedelement returns [ASTNode contents = null] : (text= text_unformatted | ti= text_inlineelement );
 	public final ASTNode text_unformattedelement() throws RecognitionException {
 	ASTNode contents =  null;
 
@@ -3108,7 +3111,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:235:2: (text= text_unformatted | ti= text_inlineelement )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:239:2: (text= text_unformatted | ti= text_inlineelement )
 		int alt38=2;
 		int LA38_0 = input.LA(1);
 
@@ -3121,15 +3124,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return contents;}
 		NoViableAltException nvae =
-			new NoViableAltException("234:1: text_unformattedelement returns [ASTNode contents = null] : (text= text_unformatted | ti= text_inlineelement );", 38, 0, input);
+			new NoViableAltException("238:1: text_unformattedelement returns [ASTNode contents = null] : (text= text_unformatted | ti= text_inlineelement );", 38, 0, input);
 
 		throw nvae;
 		}
 		switch (alt38) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:235:4: text= text_unformatted
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:239:4: text= text_unformatted
 			{
-			pushFollow(FOLLOW_text_unformatted_in_text_unformattedelement1125);
+			pushFollow(FOLLOW_text_unformatted_in_text_unformattedelement1133);
 			text=text_unformatted();
 			_fsp--;
 			if (failed) return contents;
@@ -3140,9 +3143,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:236:4: ti= text_inlineelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:240:4: ti= text_inlineelement
 			{
-			pushFollow(FOLLOW_text_inlineelement_in_text_unformattedelement1136);
+			pushFollow(FOLLOW_text_inlineelement_in_text_unformattedelement1144);
 			ti=text_inlineelement();
 			_fsp--;
 			if (failed) return contents;
@@ -3167,7 +3170,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_unformatted
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:239:1: text_unformatted returns [CollectionNode items = new CollectionNode()] : (contents= text_unformated_text | ( forced_linebreak | e= escaped )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:243:1: text_unformatted returns [CollectionNode items = new CollectionNode()] : (contents= text_unformated_text | ( forced_linebreak | e= escaped )+ );
 	public final CollectionNode text_unformatted() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -3177,7 +3180,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:240:2: (contents= text_unformated_text | ( forced_linebreak | e= escaped )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:244:2: (contents= text_unformated_text | ( forced_linebreak | e= escaped )+ )
 		int alt40=2;
 		int LA40_0 = input.LA(1);
 
@@ -3190,15 +3193,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return items;}
 		NoViableAltException nvae =
-			new NoViableAltException("239:1: text_unformatted returns [CollectionNode items = new CollectionNode()] : (contents= text_unformated_text | ( forced_linebreak | e= escaped )+ );", 40, 0, input);
+			new NoViableAltException("243:1: text_unformatted returns [CollectionNode items = new CollectionNode()] : (contents= text_unformated_text | ( forced_linebreak | e= escaped )+ );", 40, 0, input);
 
 		throw nvae;
 		}
 		switch (alt40) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:240:5: contents= text_unformated_text
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:244:5: contents= text_unformated_text
 			{
-			pushFollow(FOLLOW_text_unformated_text_in_text_unformatted1158);
+			pushFollow(FOLLOW_text_unformated_text_in_text_unformatted1166);
 			contents=text_unformated_text();
 			_fsp--;
 			if (failed) return items;
@@ -3209,9 +3212,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:241:5: ( forced_linebreak | e= escaped )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:245:5: ( forced_linebreak | e= escaped )+
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:241:5: ( forced_linebreak | e= escaped )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:245:5: ( forced_linebreak | e= escaped )+
 			int cnt39=0;
 			loop39:
 			do {
@@ -3228,9 +3231,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt39) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:241:6: forced_linebreak
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:245:6: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_text_unformatted1167);
+				pushFollow(FOLLOW_forced_linebreak_in_text_unformatted1175);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return items;
@@ -3241,9 +3244,9 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 2 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:242:5: e= escaped
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:246:5: e= escaped
 				{
-				pushFollow(FOLLOW_escaped_in_text_unformatted1179);
+				pushFollow(FOLLOW_escaped_in_text_unformatted1187);
 				e=escaped();
 				_fsp--;
 				if (failed) return items;
@@ -3282,17 +3285,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_unformated_text
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:245:1: text_unformated_text returns [StringBundler text = new StringBundler()] : (c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:249:1: text_unformated_text returns [StringBundler text = new StringBundler()] : (c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ ;
 	public final StringBundler text_unformated_text() throws RecognitionException {
 	StringBundler text =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:246:1: ( (c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:247:2: (c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:250:1: ( (c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:251:2: (c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:247:2: (c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:251:2: (c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
 		int cnt41=0;
 		loop41:
 		do {
@@ -3306,7 +3309,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt41) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:247:3: c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:251:3: c=~ ( ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||(input.LA(1)>=EQUAL && input.LA(1)<=PIPE)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
@@ -3317,7 +3320,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_text_unformated_text1206);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_text_unformated_text1214);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -3360,7 +3363,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:261:1: heading returns [ASTNode header] : heading_markup heading_content ( heading_markup )? ( blanks )? paragraph_separator ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:265:1: heading returns [ASTNode header] : heading_markup heading_content ( heading_markup )? ( blanks )? paragraph_separator ;
 	public final ASTNode heading() throws RecognitionException {
 	heading_stack.push(new heading_scope());
 	ASTNode header = null;
@@ -3370,24 +3373,24 @@ public class Creole10Parser extends Parser {
 			((heading_scope)heading_stack.peek()).text = new String();
 		
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:271:2: ( heading_markup heading_content ( heading_markup )? ( blanks )? paragraph_separator )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:271:4: heading_markup heading_content ( heading_markup )? ( blanks )? paragraph_separator
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:2: ( heading_markup heading_content ( heading_markup )? ( blanks )? paragraph_separator )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:4: heading_markup heading_content ( heading_markup )? ( blanks )? paragraph_separator
 		{
-		pushFollow(FOLLOW_heading_markup_in_heading1310);
+		pushFollow(FOLLOW_heading_markup_in_heading1318);
 		heading_markup();
 		_fsp--;
 		if (failed) return header;
 		if ( backtracking==0 ) {
 		  ((heading_scope)heading_stack.peek()).nestedLevel++;
 		}
-		pushFollow(FOLLOW_heading_content_in_heading1315);
+		pushFollow(FOLLOW_heading_content_in_heading1323);
 		heading_content();
 		_fsp--;
 		if (failed) return header;
 		if ( backtracking==0 ) {
 		   header = new HeadingNode(((heading_scope)heading_stack.peek()).items,((heading_scope)heading_stack.peek()).nestedLevel); 
 		}
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:271:134: ( heading_markup )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:134: ( heading_markup )?
 		int alt42=2;
 		int LA42_0 = input.LA(1);
 
@@ -3396,9 +3399,9 @@ public class Creole10Parser extends Parser {
 		}
 		switch (alt42) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:271:136: heading_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:136: heading_markup
 			{
-			pushFollow(FOLLOW_heading_markup_in_heading1322);
+			pushFollow(FOLLOW_heading_markup_in_heading1330);
 			heading_markup();
 			_fsp--;
 			if (failed) return header;
@@ -3408,7 +3411,7 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:271:155: ( blanks )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:155: ( blanks )?
 		int alt43=2;
 		int LA43_0 = input.LA(1);
 
@@ -3417,9 +3420,9 @@ public class Creole10Parser extends Parser {
 		}
 		switch (alt43) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:271:157: blanks
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:157: blanks
 			{
-			pushFollow(FOLLOW_blanks_in_heading1330);
+			pushFollow(FOLLOW_blanks_in_heading1338);
 			blanks();
 			_fsp--;
 			if (failed) return header;
@@ -3429,7 +3432,7 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		pushFollow(FOLLOW_paragraph_separator_in_heading1337);
+		pushFollow(FOLLOW_paragraph_separator_in_heading1345);
 		paragraph_separator();
 		_fsp--;
 		if (failed) return header;
@@ -3450,13 +3453,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_content
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:274:1: heading_content : ( heading_markup heading_content ( heading_markup )? | ht= heading_text );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:278:1: heading_content : ( heading_markup heading_content ( heading_markup )? | ht= heading_text );
 	public final void heading_content() throws RecognitionException {
 	CollectionNode ht = null;
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:2: ( heading_markup heading_content ( heading_markup )? | ht= heading_text )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:279:2: ( heading_markup heading_content ( heading_markup )? | ht= heading_text )
 		int alt45=2;
 		int LA45_0 = input.LA(1);
 
@@ -3469,26 +3472,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return ;}
 		NoViableAltException nvae =
-			new NoViableAltException("274:1: heading_content : ( heading_markup heading_content ( heading_markup )? | ht= heading_text );", 45, 0, input);
+			new NoViableAltException("278:1: heading_content : ( heading_markup heading_content ( heading_markup )? | ht= heading_text );", 45, 0, input);
 
 		throw nvae;
 		}
 		switch (alt45) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:4: heading_markup heading_content ( heading_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:279:4: heading_markup heading_content ( heading_markup )?
 			{
-			pushFollow(FOLLOW_heading_markup_in_heading_content1347);
+			pushFollow(FOLLOW_heading_markup_in_heading_content1355);
 			heading_markup();
 			_fsp--;
 			if (failed) return ;
 			if ( backtracking==0 ) {
 			  ((heading_scope)heading_stack.peek()).nestedLevel++;
 			}
-			pushFollow(FOLLOW_heading_content_in_heading_content1352);
+			pushFollow(FOLLOW_heading_content_in_heading_content1360);
 			heading_content();
 			_fsp--;
 			if (failed) return ;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:64: ( heading_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:279:64: ( heading_markup )?
 			int alt44=2;
 			int LA44_0 = input.LA(1);
 
@@ -3497,9 +3500,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt44) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:275:66: heading_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:279:66: heading_markup
 				{
-				pushFollow(FOLLOW_heading_markup_in_heading_content1357);
+				pushFollow(FOLLOW_heading_markup_in_heading_content1365);
 				heading_markup();
 				_fsp--;
 				if (failed) return ;
@@ -3513,9 +3516,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:276:4: ht= heading_text
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:280:4: ht= heading_text
 			{
-			pushFollow(FOLLOW_heading_text_in_heading_content1369);
+			pushFollow(FOLLOW_heading_text_in_heading_content1377);
 			ht=heading_text();
 			_fsp--;
 			if (failed) return ;
@@ -3540,7 +3543,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_text
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:279:1: heading_text returns [CollectionNode items = null] : te= heading_cellcontent ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:283:1: heading_text returns [CollectionNode items = null] : te= heading_cellcontent ;
 	public final CollectionNode heading_text() throws RecognitionException {
 	CollectionNode items =	null;
 
@@ -3548,10 +3551,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:280:2: (te= heading_cellcontent )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:280:4: te= heading_cellcontent
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:284:2: (te= heading_cellcontent )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:284:4: te= heading_cellcontent
 		{
-		pushFollow(FOLLOW_heading_cellcontent_in_heading_text1390);
+		pushFollow(FOLLOW_heading_cellcontent_in_heading_text1398);
 		te=heading_cellcontent();
 		_fsp--;
 		if (failed) return items;
@@ -3574,7 +3577,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_cellcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:283:1: heading_cellcontent returns [CollectionNode items = new CollectionNode()] : onestar (tcp= heading_cellcontentpart onestar )* ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:287:1: heading_cellcontent returns [CollectionNode items = new CollectionNode()] : onestar (tcp= heading_cellcontentpart onestar )* ;
 	public final CollectionNode heading_cellcontent() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -3582,14 +3585,14 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:284:2: ( onestar (tcp= heading_cellcontentpart onestar )* )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:284:4: onestar (tcp= heading_cellcontentpart onestar )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:288:2: ( onestar (tcp= heading_cellcontentpart onestar )* )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:288:4: onestar (tcp= heading_cellcontentpart onestar )*
 		{
-		pushFollow(FOLLOW_onestar_in_heading_cellcontent1407);
+		pushFollow(FOLLOW_onestar_in_heading_cellcontent1415);
 		onestar();
 		_fsp--;
 		if (failed) return items;
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:284:13: (tcp= heading_cellcontentpart onestar )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:288:13: (tcp= heading_cellcontentpart onestar )*
 		loop46:
 		do {
 		int alt46=2;
@@ -3602,16 +3605,22 @@ public class Creole10Parser extends Parser {
 
 		switch (alt46) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:284:15: tcp= heading_cellcontentpart onestar
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:288:15: tcp= heading_cellcontentpart onestar
 			{
-			pushFollow(FOLLOW_heading_cellcontentpart_in_heading_cellcontent1416);
+			pushFollow(FOLLOW_heading_cellcontentpart_in_heading_cellcontent1424);
 			tcp=heading_cellcontentpart();
 			_fsp--;
 			if (failed) return items;
 			if ( backtracking==0 ) {
-			  items.add(tcp); 
+
+									
+									if(tcp != null) { // some AST Node could be NULL if bad CREOLE syntax is wrotten
+										items.add(tcp); 
+									}
+									
+									
 			}
-			pushFollow(FOLLOW_onestar_in_heading_cellcontent1421);
+			pushFollow(FOLLOW_onestar_in_heading_cellcontent1436);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -3640,7 +3649,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_cellcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:286:1: heading_cellcontentpart returns [ASTNode node = null] : (tf= heading_formattedelement | tu= heading_unformattedelement );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:297:1: heading_cellcontentpart returns [ASTNode node = null] : (tf= heading_formattedelement | tu= heading_unformattedelement );
 	public final ASTNode heading_cellcontentpart() throws RecognitionException {
 	ASTNode node =	null;
 
@@ -3650,7 +3659,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:287:2: (tf= heading_formattedelement | tu= heading_unformattedelement )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:298:2: (tf= heading_formattedelement | tu= heading_unformattedelement )
 		int alt47=2;
 		switch ( input.LA(1) ) {
 		case ITAL:
@@ -3671,7 +3680,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return node;}
 			NoViableAltException nvae =
-			new NoViableAltException("286:1: heading_cellcontentpart returns [ASTNode node = null] : (tf= heading_formattedelement | tu= heading_unformattedelement );", 47, 2, input);
+			new NoViableAltException("297:1: heading_cellcontentpart returns [ASTNode node = null] : (tf= heading_formattedelement | tu= heading_unformattedelement );", 47, 2, input);
 
 			throw nvae;
 		}
@@ -3754,16 +3763,16 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("286:1: heading_cellcontentpart returns [ASTNode node = null] : (tf= heading_formattedelement | tu= heading_unformattedelement );", 47, 0, input);
+			new NoViableAltException("297:1: heading_cellcontentpart returns [ASTNode node = null] : (tf= heading_formattedelement | tu= heading_unformattedelement );", 47, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt47) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:287:4: tf= heading_formattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:298:4: tf= heading_formattedelement
 			{
-			pushFollow(FOLLOW_heading_formattedelement_in_heading_cellcontentpart1442);
+			pushFollow(FOLLOW_heading_formattedelement_in_heading_cellcontentpart1457);
 			tf=heading_formattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -3774,9 +3783,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:288:4: tu= heading_unformattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:299:4: tu= heading_unformattedelement
 			{
-			pushFollow(FOLLOW_heading_unformattedelement_in_heading_cellcontentpart1453);
+			pushFollow(FOLLOW_heading_unformattedelement_in_heading_cellcontentpart1468);
 			tu=heading_unformattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -3801,7 +3810,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_formattedelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:290:1: heading_formattedelement returns [ASTNode content = null] : ( ital_markup (tic= heading_italcontent )? ( ital_markup )? | bold_markup (tbc= heading_boldcontent )? ( bold_markup )? );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:301:1: heading_formattedelement returns [ASTNode content = null] : ( ital_markup (tic= heading_italcontent )? ( ital_markup )? | bold_markup (tbc= heading_boldcontent )? ( bold_markup )? );
 	public final ASTNode heading_formattedelement() throws RecognitionException {
 	ASTNode content =  null;
 
@@ -3811,7 +3820,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:291:2: ( ital_markup (tic= heading_italcontent )? ( ital_markup )? | bold_markup (tbc= heading_boldcontent )? ( bold_markup )? )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:2: ( ital_markup (tic= heading_italcontent )? ( ital_markup )? | bold_markup (tbc= heading_boldcontent )? ( bold_markup )? )
 		int alt52=2;
 		int LA52_0 = input.LA(1);
 
@@ -3824,19 +3833,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return content;}
 		NoViableAltException nvae =
-			new NoViableAltException("290:1: heading_formattedelement returns [ASTNode content = null] : ( ital_markup (tic= heading_italcontent )? ( ital_markup )? | bold_markup (tbc= heading_boldcontent )? ( bold_markup )? );", 52, 0, input);
+			new NoViableAltException("301:1: heading_formattedelement returns [ASTNode content = null] : ( ital_markup (tic= heading_italcontent )? ( ital_markup )? | bold_markup (tbc= heading_boldcontent )? ( bold_markup )? );", 52, 0, input);
 
 		throw nvae;
 		}
 		switch (alt52) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:291:4: ital_markup (tic= heading_italcontent )? ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:4: ital_markup (tic= heading_italcontent )? ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_heading_formattedelement1469);
+			pushFollow(FOLLOW_ital_markup_in_heading_formattedelement1484);
 			ital_markup();
 			_fsp--;
 			if (failed) return content;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:291:18: (tic= heading_italcontent )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:18: (tic= heading_italcontent )?
 			int alt48=2;
 			switch ( input.LA(1) ) {
 			case STAR:
@@ -3948,9 +3957,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt48) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:291:20: tic= heading_italcontent
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:20: tic= heading_italcontent
 				{
-				pushFollow(FOLLOW_heading_italcontent_in_heading_formattedelement1479);
+				pushFollow(FOLLOW_heading_italcontent_in_heading_formattedelement1494);
 				tic=heading_italcontent();
 				_fsp--;
 				if (failed) return content;
@@ -3963,7 +3972,7 @@ public class Creole10Parser extends Parser {
 
 			}
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:291:96: ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:96: ( ital_markup )?
 			int alt49=2;
 			int LA49_0 = input.LA(1);
 
@@ -3972,9 +3981,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt49) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:291:98: ital_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:98: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_heading_formattedelement1488);
+				pushFollow(FOLLOW_ital_markup_in_heading_formattedelement1503);
 				ital_markup();
 				_fsp--;
 				if (failed) return content;
@@ -3988,13 +3997,13 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:292:4: bold_markup (tbc= heading_boldcontent )? ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:4: bold_markup (tbc= heading_boldcontent )? ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_heading_formattedelement1496);
+			pushFollow(FOLLOW_bold_markup_in_heading_formattedelement1511);
 			bold_markup();
 			_fsp--;
 			if (failed) return content;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:292:16: (tbc= heading_boldcontent )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:16: (tbc= heading_boldcontent )?
 			int alt50=2;
 			switch ( input.LA(1) ) {
 			case STAR:
@@ -4106,9 +4115,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt50) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:292:18: tbc= heading_boldcontent
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:18: tbc= heading_boldcontent
 				{
-				pushFollow(FOLLOW_heading_boldcontent_in_heading_formattedelement1503);
+				pushFollow(FOLLOW_heading_boldcontent_in_heading_formattedelement1518);
 				tbc=heading_boldcontent();
 				_fsp--;
 				if (failed) return content;
@@ -4121,7 +4130,7 @@ public class Creole10Parser extends Parser {
 
 			}
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:292:90: ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:90: ( bold_markup )?
 			int alt51=2;
 			int LA51_0 = input.LA(1);
 
@@ -4134,9 +4143,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt51) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:292:92: bold_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:92: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_heading_formattedelement1513);
+				pushFollow(FOLLOW_bold_markup_in_heading_formattedelement1528);
 				bold_markup();
 				_fsp--;
 				if (failed) return content;
@@ -4164,7 +4173,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_boldcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:294:1: heading_boldcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (tb= heading_boldcontentpart onestar )+ | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:305:1: heading_boldcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (tb= heading_boldcontentpart onestar )+ | EOF );
 	public final CollectionNode heading_boldcontent() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -4172,7 +4181,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:295:2: ( onestar (tb= heading_boldcontentpart onestar )+ | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:306:2: ( onestar (tb= heading_boldcontentpart onestar )+ | EOF )
 		int alt54=2;
 		int LA54_0 = input.LA(1);
 
@@ -4185,19 +4194,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return items;}
 		NoViableAltException nvae =
-			new NoViableAltException("294:1: heading_boldcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (tb= heading_boldcontentpart onestar )+ | EOF );", 54, 0, input);
+			new NoViableAltException("305:1: heading_boldcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (tb= heading_boldcontentpart onestar )+ | EOF );", 54, 0, input);
 
 		throw nvae;
 		}
 		switch (alt54) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:295:4: onestar (tb= heading_boldcontentpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:306:4: onestar (tb= heading_boldcontentpart onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_heading_boldcontent1530);
+			pushFollow(FOLLOW_onestar_in_heading_boldcontent1545);
 			onestar();
 			_fsp--;
 			if (failed) return items;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:295:13: (tb= heading_boldcontentpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:306:13: (tb= heading_boldcontentpart onestar )+
 			int cnt53=0;
 			loop53:
 			do {
@@ -4308,16 +4317,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt53) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:295:15: tb= heading_boldcontentpart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:306:15: tb= heading_boldcontentpart onestar
 				{
-				pushFollow(FOLLOW_heading_boldcontentpart_in_heading_boldcontent1539);
+				pushFollow(FOLLOW_heading_boldcontentpart_in_heading_boldcontent1554);
 				tb=heading_boldcontentpart();
 				_fsp--;
 				if (failed) return items;
 				if ( backtracking==0 ) {
 				   items.add(tb); 
 				}
-				pushFollow(FOLLOW_onestar_in_heading_boldcontent1544);
+				pushFollow(FOLLOW_onestar_in_heading_boldcontent1559);
 				onestar();
 				_fsp--;
 				if (failed) return items;
@@ -4339,9 +4348,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:296:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:307:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_heading_boldcontent1552); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_heading_boldcontent1567); if (failed) return items;
 
 			}
 			break;
@@ -4360,7 +4369,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_italcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:298:1: heading_italcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (ti= heading_italcontentpart onestar )+ | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:309:1: heading_italcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (ti= heading_italcontentpart onestar )+ | EOF );
 	public final CollectionNode heading_italcontent() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -4368,7 +4377,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:299:2: ( onestar (ti= heading_italcontentpart onestar )+ | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:310:2: ( onestar (ti= heading_italcontentpart onestar )+ | EOF )
 		int alt56=2;
 		int LA56_0 = input.LA(1);
 
@@ -4381,19 +4390,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return items;}
 		NoViableAltException nvae =
-			new NoViableAltException("298:1: heading_italcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (ti= heading_italcontentpart onestar )+ | EOF );", 56, 0, input);
+			new NoViableAltException("309:1: heading_italcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (ti= heading_italcontentpart onestar )+ | EOF );", 56, 0, input);
 
 		throw nvae;
 		}
 		switch (alt56) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:299:4: onestar (ti= heading_italcontentpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:310:4: onestar (ti= heading_italcontentpart onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_heading_italcontent1566);
+			pushFollow(FOLLOW_onestar_in_heading_italcontent1581);
 			onestar();
 			_fsp--;
 			if (failed) return items;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:299:13: (ti= heading_italcontentpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:310:13: (ti= heading_italcontentpart onestar )+
 			int cnt55=0;
 			loop55:
 			do {
@@ -4504,16 +4513,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt55) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:299:15: ti= heading_italcontentpart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:310:15: ti= heading_italcontentpart onestar
 				{
-				pushFollow(FOLLOW_heading_italcontentpart_in_heading_italcontent1575);
+				pushFollow(FOLLOW_heading_italcontentpart_in_heading_italcontent1590);
 				ti=heading_italcontentpart();
 				_fsp--;
 				if (failed) return items;
 				if ( backtracking==0 ) {
 				   items.add(ti); 
 				}
-				pushFollow(FOLLOW_onestar_in_heading_italcontent1580);
+				pushFollow(FOLLOW_onestar_in_heading_italcontent1595);
 				onestar();
 				_fsp--;
 				if (failed) return items;
@@ -4535,9 +4544,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:300:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:311:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_heading_italcontent1588); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_heading_italcontent1603); if (failed) return items;
 
 			}
 			break;
@@ -4556,7 +4565,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_boldcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:302:1: heading_boldcontentpart returns [ASTNode node = null] : (tf= heading_formattedcontent | ital_markup tb= heading_bolditalcontent ( ital_markup )? );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:313:1: heading_boldcontentpart returns [ASTNode node = null] : (tf= heading_formattedcontent | ital_markup tb= heading_bolditalcontent ( ital_markup )? );
 	public final ASTNode heading_boldcontentpart() throws RecognitionException {
 	ASTNode node =	null;
 
@@ -4566,7 +4575,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:2: (tf= heading_formattedcontent | ital_markup tb= heading_bolditalcontent ( ital_markup )? )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:314:2: (tf= heading_formattedcontent | ital_markup tb= heading_bolditalcontent ( ital_markup )? )
 		int alt58=2;
 		int LA58_0 = input.LA(1);
 
@@ -4576,15 +4585,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("302:1: heading_boldcontentpart returns [ASTNode node = null] : (tf= heading_formattedcontent | ital_markup tb= heading_bolditalcontent ( ital_markup )? );", 58, 0, input);
+			new NoViableAltException("313:1: heading_boldcontentpart returns [ASTNode node = null] : (tf= heading_formattedcontent | ital_markup tb= heading_bolditalcontent ( ital_markup )? );", 58, 0, input);
 
 		throw nvae;
 		}
 		switch (alt58) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:303:4: tf= heading_formattedcontent
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:314:4: tf= heading_formattedcontent
 			{
-			pushFollow(FOLLOW_heading_formattedcontent_in_heading_boldcontentpart1606);
+			pushFollow(FOLLOW_heading_formattedcontent_in_heading_boldcontentpart1621);
 			tf=heading_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -4595,20 +4604,20 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:304:4: ital_markup tb= heading_bolditalcontent ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:315:4: ital_markup tb= heading_bolditalcontent ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_heading_boldcontentpart1613);
+			pushFollow(FOLLOW_ital_markup_in_heading_boldcontentpart1628);
 			ital_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_heading_bolditalcontent_in_heading_boldcontentpart1620);
+			pushFollow(FOLLOW_heading_bolditalcontent_in_heading_boldcontentpart1635);
 			tb=heading_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
 			if ( backtracking==0 ) {
 			   node = new ItalicTextNode(tb);  
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:304:94: ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:315:94: ( ital_markup )?
 			int alt57=2;
 			int LA57_0 = input.LA(1);
 
@@ -4617,9 +4626,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt57) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:304:96: ital_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:315:96: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_heading_boldcontentpart1627);
+				pushFollow(FOLLOW_ital_markup_in_heading_boldcontentpart1642);
 				ital_markup();
 				_fsp--;
 				if (failed) return node;
@@ -4647,7 +4656,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_italcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:306:1: heading_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= heading_bolditalcontent ( bold_markup )? | tf= heading_formattedcontent );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:317:1: heading_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= heading_bolditalcontent ( bold_markup )? | tf= heading_formattedcontent );
 	public final ASTNode heading_italcontentpart() throws RecognitionException {
 	ASTNode node =	null;
 
@@ -4657,7 +4666,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:307:2: ( bold_markup tb= heading_bolditalcontent ( bold_markup )? | tf= heading_formattedcontent )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:318:2: ( bold_markup tb= heading_bolditalcontent ( bold_markup )? | tf= heading_formattedcontent )
 		int alt60=2;
 		int LA60_0 = input.LA(1);
 
@@ -4673,7 +4682,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return node;}
 			NoViableAltException nvae =
-			new NoViableAltException("306:1: heading_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= heading_bolditalcontent ( bold_markup )? | tf= heading_formattedcontent );", 60, 1, input);
+			new NoViableAltException("317:1: heading_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= heading_bolditalcontent ( bold_markup )? | tf= heading_formattedcontent );", 60, 1, input);
 
 			throw nvae;
 		}
@@ -4684,26 +4693,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("306:1: heading_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= heading_bolditalcontent ( bold_markup )? | tf= heading_formattedcontent );", 60, 0, input);
+			new NoViableAltException("317:1: heading_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= heading_bolditalcontent ( bold_markup )? | tf= heading_formattedcontent );", 60, 0, input);
 
 		throw nvae;
 		}
 		switch (alt60) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:307:4: bold_markup tb= heading_bolditalcontent ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:318:4: bold_markup tb= heading_bolditalcontent ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_heading_italcontentpart1644);
+			pushFollow(FOLLOW_bold_markup_in_heading_italcontentpart1659);
 			bold_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_heading_bolditalcontent_in_heading_italcontentpart1651);
+			pushFollow(FOLLOW_heading_bolditalcontent_in_heading_italcontentpart1666);
 			tb=heading_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
 			if ( backtracking==0 ) {
 			  node = new BoldTextNode(tb); 
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:307:90: ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:318:90: ( bold_markup )?
 			int alt59=2;
 			int LA59_0 = input.LA(1);
 
@@ -4716,9 +4725,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt59) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:307:92: bold_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:318:92: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_heading_italcontentpart1658);
+				pushFollow(FOLLOW_bold_markup_in_heading_italcontentpart1673);
 				bold_markup();
 				_fsp--;
 				if (failed) return node;
@@ -4732,9 +4741,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:308:4: tf= heading_formattedcontent
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:319:4: tf= heading_formattedcontent
 			{
-			pushFollow(FOLLOW_heading_formattedcontent_in_heading_italcontentpart1670);
+			pushFollow(FOLLOW_heading_formattedcontent_in_heading_italcontentpart1685);
 			tf=heading_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -4759,7 +4768,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_bolditalcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:310:1: heading_bolditalcontent returns [CollectionNode elements = null] : ( onestar (tfc= heading_formattedcontent onestar )? | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:321:1: heading_bolditalcontent returns [CollectionNode elements = null] : ( onestar (tfc= heading_formattedcontent onestar )? | EOF );
 	public final CollectionNode heading_bolditalcontent() throws RecognitionException {
 	CollectionNode elements =  null;
 
@@ -4767,7 +4776,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:311:2: ( onestar (tfc= heading_formattedcontent onestar )? | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:322:2: ( onestar (tfc= heading_formattedcontent onestar )? | EOF )
 		int alt62=2;
 		int LA62_0 = input.LA(1);
 
@@ -4780,19 +4789,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return elements;}
 		NoViableAltException nvae =
-			new NoViableAltException("310:1: heading_bolditalcontent returns [CollectionNode elements = null] : ( onestar (tfc= heading_formattedcontent onestar )? | EOF );", 62, 0, input);
+			new NoViableAltException("321:1: heading_bolditalcontent returns [CollectionNode elements = null] : ( onestar (tfc= heading_formattedcontent onestar )? | EOF );", 62, 0, input);
 
 		throw nvae;
 		}
 		switch (alt62) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:311:4: onestar (tfc= heading_formattedcontent onestar )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:322:4: onestar (tfc= heading_formattedcontent onestar )?
 			{
-			pushFollow(FOLLOW_onestar_in_heading_bolditalcontent1686);
+			pushFollow(FOLLOW_onestar_in_heading_bolditalcontent1701);
 			onestar();
 			_fsp--;
 			if (failed) return elements;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:311:13: (tfc= heading_formattedcontent onestar )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:322:13: (tfc= heading_formattedcontent onestar )?
 			int alt61=2;
 			switch ( input.LA(1) ) {
 			case ITAL:
@@ -4899,16 +4908,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt61) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:311:15: tfc= heading_formattedcontent onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:322:15: tfc= heading_formattedcontent onestar
 				{
-				pushFollow(FOLLOW_heading_formattedcontent_in_heading_bolditalcontent1695);
+				pushFollow(FOLLOW_heading_formattedcontent_in_heading_bolditalcontent1710);
 				tfc=heading_formattedcontent();
 				_fsp--;
 				if (failed) return elements;
 				if ( backtracking==0 ) {
 				   elements = tfc; 
 				}
-				pushFollow(FOLLOW_onestar_in_heading_bolditalcontent1700);
+				pushFollow(FOLLOW_onestar_in_heading_bolditalcontent1715);
 				onestar();
 				_fsp--;
 				if (failed) return elements;
@@ -4922,9 +4931,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:312:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:323:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_heading_bolditalcontent1708); if (failed) return elements;
+			match(input,EOF,FOLLOW_EOF_in_heading_bolditalcontent1723); if (failed) return elements;
 
 			}
 			break;
@@ -4943,7 +4952,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_formattedcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:314:1: heading_formattedcontent returns [CollectionNode elements = new CollectionNode()] : (tu= heading_unformattedelement )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:325:1: heading_formattedcontent returns [CollectionNode elements = new CollectionNode()] : (tu= heading_unformattedelement )+ ;
 	public final CollectionNode heading_formattedcontent() throws RecognitionException {
 	CollectionNode elements =  new CollectionNode();
 
@@ -4951,10 +4960,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:315:2: ( (tu= heading_unformattedelement )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:315:4: (tu= heading_unformattedelement )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:326:2: ( (tu= heading_unformattedelement )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:326:4: (tu= heading_unformattedelement )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:315:4: (tu= heading_unformattedelement )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:326:4: (tu= heading_unformattedelement )+
 		int cnt63=0;
 		loop63:
 		do {
@@ -5065,9 +5074,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt63) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:315:6: tu= heading_unformattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:326:6: tu= heading_unformattedelement
 			{
-			pushFollow(FOLLOW_heading_unformattedelement_in_heading_formattedcontent1728);
+			pushFollow(FOLLOW_heading_unformattedelement_in_heading_formattedcontent1743);
 			tu=heading_unformattedelement();
 			_fsp--;
 			if (failed) return elements;
@@ -5104,7 +5113,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_unformattedelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:317:1: heading_unformattedelement returns [ASTNode content = null] : (tu= heading_unformatted_text | ti= heading_inlineelement );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:328:1: heading_unformattedelement returns [ASTNode content = null] : (tu= heading_unformatted_text | ti= heading_inlineelement );
 	public final ASTNode heading_unformattedelement() throws RecognitionException {
 	ASTNode content =  null;
 
@@ -5114,7 +5123,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:318:2: (tu= heading_unformatted_text | ti= heading_inlineelement )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:329:2: (tu= heading_unformatted_text | ti= heading_inlineelement )
 		int alt64=2;
 		int LA64_0 = input.LA(1);
 
@@ -5127,15 +5136,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return content;}
 		NoViableAltException nvae =
-			new NoViableAltException("317:1: heading_unformattedelement returns [ASTNode content = null] : (tu= heading_unformatted_text | ti= heading_inlineelement );", 64, 0, input);
+			new NoViableAltException("328:1: heading_unformattedelement returns [ASTNode content = null] : (tu= heading_unformatted_text | ti= heading_inlineelement );", 64, 0, input);
 
 		throw nvae;
 		}
 		switch (alt64) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:318:4: tu= heading_unformatted_text
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:329:4: tu= heading_unformatted_text
 			{
-			pushFollow(FOLLOW_heading_unformatted_text_in_heading_unformattedelement1751);
+			pushFollow(FOLLOW_heading_unformatted_text_in_heading_unformattedelement1766);
 			tu=heading_unformatted_text();
 			_fsp--;
 			if (failed) return content;
@@ -5146,9 +5155,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:319:4: ti= heading_inlineelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:330:4: ti= heading_inlineelement
 			{
-			pushFollow(FOLLOW_heading_inlineelement_in_heading_unformattedelement1763);
+			pushFollow(FOLLOW_heading_inlineelement_in_heading_unformattedelement1778);
 			ti=heading_inlineelement();
 			_fsp--;
 			if (failed) return content;
@@ -5173,7 +5182,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_inlineelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:321:1: heading_inlineelement returns [ASTNode element = null] : (l= link | i= image | nwi= nowiki_inline );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:332:1: heading_inlineelement returns [ASTNode element = null] : (l= link | i= image | nwi= nowiki_inline );
 	public final ASTNode heading_inlineelement() throws RecognitionException {
 	ASTNode element =  null;
 
@@ -5185,7 +5194,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:322:2: (l= link | i= image | nwi= nowiki_inline )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:333:2: (l= link | i= image | nwi= nowiki_inline )
 		int alt65=3;
 		switch ( input.LA(1) ) {
 		case LINK_OPEN:
@@ -5206,16 +5215,16 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return element;}
 		NoViableAltException nvae =
-			new NoViableAltException("321:1: heading_inlineelement returns [ASTNode element = null] : (l= link | i= image | nwi= nowiki_inline );", 65, 0, input);
+			new NoViableAltException("332:1: heading_inlineelement returns [ASTNode element = null] : (l= link | i= image | nwi= nowiki_inline );", 65, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt65) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:322:4: l= link
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:333:4: l= link
 			{
-			pushFollow(FOLLOW_link_in_heading_inlineelement1784);
+			pushFollow(FOLLOW_link_in_heading_inlineelement1799);
 			l=link();
 			_fsp--;
 			if (failed) return element;
@@ -5226,9 +5235,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:323:4: i= image
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:334:4: i= image
 			{
-			pushFollow(FOLLOW_image_in_heading_inlineelement1794);
+			pushFollow(FOLLOW_image_in_heading_inlineelement1809);
 			i=image();
 			_fsp--;
 			if (failed) return element;
@@ -5239,9 +5248,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 3 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:324:4: nwi= nowiki_inline
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:335:4: nwi= nowiki_inline
 			{
-			pushFollow(FOLLOW_nowiki_inline_in_heading_inlineelement1805);
+			pushFollow(FOLLOW_nowiki_inline_in_heading_inlineelement1820);
 			nwi=nowiki_inline();
 			_fsp--;
 			if (failed) return element;
@@ -5266,17 +5275,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_unformatted_text
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:327:1: heading_unformatted_text returns [StringBundler text = new StringBundler()] : (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF ) )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:338:1: heading_unformatted_text returns [StringBundler text = new StringBundler()] : (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF ) )+ ;
 	public final StringBundler heading_unformatted_text() throws RecognitionException {
 	StringBundler text =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:328:2: ( (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF ) )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:328:4: (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:339:2: ( (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF ) )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:339:4: (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF ) )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:328:4: (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:339:4: (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF ) )+
 		int cnt66=0;
 		loop66:
 		do {
@@ -5372,7 +5381,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt66) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:328:6: c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:339:6: c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=STAR)||(input.LA(1)>=PIPE && input.LA(1)<=ITAL)||(input.LA(1)>=EXTENSION && input.LA(1)<=FORCED_LINEBREAK)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
@@ -5383,7 +5392,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_heading_unformatted_text1830);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_heading_unformatted_text1845);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -5419,7 +5428,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_ord
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:334:1: list_ord returns [OrderedListNode orderedList = new OrderedListNode()] : (elem= list_ordelem )+ ( end_of_list )? ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:345:1: list_ord returns [OrderedListNode orderedList = new OrderedListNode()] : (elem= list_ordelem )+ ( end_of_list )? ;
 	public final OrderedListNode list_ord() throws RecognitionException {
 	OrderedListNode orderedList =  new OrderedListNode();
 
@@ -5427,10 +5436,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:335:2: ( (elem= list_ordelem )+ ( end_of_list )? )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:335:4: (elem= list_ordelem )+ ( end_of_list )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:346:2: ( (elem= list_ordelem )+ ( end_of_list )? )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:346:4: (elem= list_ordelem )+ ( end_of_list )?
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:335:4: (elem= list_ordelem )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:346:4: (elem= list_ordelem )+
 		int cnt67=0;
 		loop67:
 		do {
@@ -5444,9 +5453,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt67) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:335:6: elem= list_ordelem
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:346:6: elem= list_ordelem
 			{
-			pushFollow(FOLLOW_list_ordelem_in_list_ord1889);
+			pushFollow(FOLLOW_list_ordelem_in_list_ord1904);
 			elem=list_ordelem();
 			_fsp--;
 			if (failed) return orderedList;
@@ -5467,7 +5476,7 @@ public class Creole10Parser extends Parser {
 		cnt67++;
 		} while (true);
 
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:335:77: ( end_of_list )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:346:77: ( end_of_list )?
 		int alt68=2;
 		int LA68_0 = input.LA(1);
 
@@ -5479,9 +5488,9 @@ public class Creole10Parser extends Parser {
 		}
 		switch (alt68) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:335:79: end_of_list
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:346:79: end_of_list
 			{
-			pushFollow(FOLLOW_end_of_list_in_list_ord1899);
+			pushFollow(FOLLOW_end_of_list_in_list_ord1914);
 			end_of_list();
 			_fsp--;
 			if (failed) return orderedList;
@@ -5507,7 +5516,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_ordelem
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:337:1: list_ordelem returns [ASTNode item = null] : om= list_ordelem_markup elem= list_elem ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:348:1: list_ordelem returns [ASTNode item = null] : om= list_ordelem_markup elem= list_elem ;
 	public final ASTNode list_ordelem() throws RecognitionException {
 	CountLevel_stack.push(new CountLevel_scope());
 
@@ -5523,17 +5532,17 @@ public class Creole10Parser extends Parser {
 			((CountLevel_scope)CountLevel_stack.peek()).groups = new String();
 		
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:343:2: (om= list_ordelem_markup elem= list_elem )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:343:4: om= list_ordelem_markup elem= list_elem
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:354:2: (om= list_ordelem_markup elem= list_elem )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:354:4: om= list_ordelem_markup elem= list_elem
 		{
-		pushFollow(FOLLOW_list_ordelem_markup_in_list_ordelem1932);
+		pushFollow(FOLLOW_list_ordelem_markup_in_list_ordelem1947);
 		om=list_ordelem_markup();
 		_fsp--;
 		if (failed) return item;
 		if ( backtracking==0 ) {
 		  ++((CountLevel_scope)CountLevel_stack.peek()).level; ((CountLevel_scope)CountLevel_stack.peek()).currentMarkup = input.toString(om.start,om.stop); ((CountLevel_scope)CountLevel_stack.peek()).groups += input.toString(om.start,om.stop);
 		}
-		pushFollow(FOLLOW_list_elem_in_list_ordelem1940);
+		pushFollow(FOLLOW_list_elem_in_list_ordelem1955);
 		elem=list_elem();
 		_fsp--;
 		if (failed) return item;
@@ -5558,7 +5567,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_unord
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:346:1: list_unord returns [UnorderedListNode unorderedList = new UnorderedListNode()] : (elem= list_unordelem )+ ( end_of_list )? ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:357:1: list_unord returns [UnorderedListNode unorderedList = new UnorderedListNode()] : (elem= list_unordelem )+ ( end_of_list )? ;
 	public final UnorderedListNode list_unord() throws RecognitionException {
 	UnorderedListNode unorderedList =  new UnorderedListNode();
 
@@ -5566,10 +5575,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:347:2: ( (elem= list_unordelem )+ ( end_of_list )? )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:347:4: (elem= list_unordelem )+ ( end_of_list )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:358:2: ( (elem= list_unordelem )+ ( end_of_list )? )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:358:4: (elem= list_unordelem )+ ( end_of_list )?
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:347:4: (elem= list_unordelem )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:358:4: (elem= list_unordelem )+
 		int cnt69=0;
 		loop69:
 		do {
@@ -5583,9 +5592,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt69) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:347:6: elem= list_unordelem
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:358:6: elem= list_unordelem
 			{
-			pushFollow(FOLLOW_list_unordelem_in_list_unord1964);
+			pushFollow(FOLLOW_list_unordelem_in_list_unord1979);
 			elem=list_unordelem();
 			_fsp--;
 			if (failed) return unorderedList;
@@ -5606,7 +5615,7 @@ public class Creole10Parser extends Parser {
 		cnt69++;
 		} while (true);
 
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:347:80: ( end_of_list )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:358:80: ( end_of_list )?
 		int alt70=2;
 		int LA70_0 = input.LA(1);
 
@@ -5618,9 +5627,9 @@ public class Creole10Parser extends Parser {
 		}
 		switch (alt70) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:347:82: end_of_list
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:358:82: end_of_list
 			{
-			pushFollow(FOLLOW_end_of_list_in_list_unord1974);
+			pushFollow(FOLLOW_end_of_list_in_list_unord1989);
 			end_of_list();
 			_fsp--;
 			if (failed) return unorderedList;
@@ -5646,7 +5655,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_unordelem
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:349:1: list_unordelem returns [UnorderedListItemNode item = null] : um= list_unordelem_markup elem= list_elem ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:360:1: list_unordelem returns [UnorderedListItemNode item = null] : um= list_unordelem_markup elem= list_elem ;
 	public final UnorderedListItemNode list_unordelem() throws RecognitionException {
 	CountLevel_stack.push(new CountLevel_scope());
 
@@ -5661,17 +5670,17 @@ public class Creole10Parser extends Parser {
 			((CountLevel_scope)CountLevel_stack.peek()).level = 0;
 		
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:354:2: (um= list_unordelem_markup elem= list_elem )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:354:4: um= list_unordelem_markup elem= list_elem
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:365:2: (um= list_unordelem_markup elem= list_elem )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:365:4: um= list_unordelem_markup elem= list_elem
 		{
-		pushFollow(FOLLOW_list_unordelem_markup_in_list_unordelem2007);
+		pushFollow(FOLLOW_list_unordelem_markup_in_list_unordelem2022);
 		um=list_unordelem_markup();
 		_fsp--;
 		if (failed) return item;
 		if ( backtracking==0 ) {
 		  ++((CountLevel_scope)CountLevel_stack.peek()).level; ((CountLevel_scope)CountLevel_stack.peek()).currentMarkup = input.toString(um.start,um.stop);((CountLevel_scope)CountLevel_stack.peek()).groups += input.toString(um.start,um.stop);
 		}
-		pushFollow(FOLLOW_list_elem_in_list_unordelem2014);
+		pushFollow(FOLLOW_list_elem_in_list_unordelem2029);
 		elem=list_elem();
 		_fsp--;
 		if (failed) return item;
@@ -5696,7 +5705,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_elem
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:356:1: list_elem returns [CollectionNode items = null] : (m= list_elem_markup )* c= list_elemcontent list_elemseparator ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:367:1: list_elem returns [CollectionNode items = null] : (m= list_elem_markup )* c= list_elemcontent list_elemseparator ;
 	public final CollectionNode list_elem() throws RecognitionException {
 	CollectionNode items =	null;
 
@@ -5706,10 +5715,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:357:2: ( (m= list_elem_markup )* c= list_elemcontent list_elemseparator )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:357:4: (m= list_elem_markup )* c= list_elemcontent list_elemseparator
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:368:2: ( (m= list_elem_markup )* c= list_elemcontent list_elemseparator )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:368:4: (m= list_elem_markup )* c= list_elemcontent list_elemseparator
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:357:4: (m= list_elem_markup )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:368:4: (m= list_elem_markup )*
 		loop71:
 		do {
 		int alt71=2;
@@ -5725,9 +5734,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt71) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:357:6: m= list_elem_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:368:6: m= list_elem_markup
 			{
-			pushFollow(FOLLOW_list_elem_markup_in_list_elem2039);
+			pushFollow(FOLLOW_list_elem_markup_in_list_elem2054);
 			m=list_elem_markup();
 			_fsp--;
 			if (failed) return items;
@@ -5750,14 +5759,14 @@ public class Creole10Parser extends Parser {
 		}
 		} while (true);
 
-		pushFollow(FOLLOW_list_elemcontent_in_list_elem2050);
+		pushFollow(FOLLOW_list_elemcontent_in_list_elem2065);
 		c=list_elemcontent();
 		_fsp--;
 		if (failed) return items;
 		if ( backtracking==0 ) {
 		  items = c; 
 		}
-		pushFollow(FOLLOW_list_elemseparator_in_list_elem2055);
+		pushFollow(FOLLOW_list_elemseparator_in_list_elem2070);
 		list_elemseparator();
 		_fsp--;
 		if (failed) return items;
@@ -5779,13 +5788,13 @@ public class Creole10Parser extends Parser {
 	};
 
 	// $ANTLR start list_elem_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:366:1: list_elem_markup : ( list_ordelem_markup | list_unordelem_markup );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:377:1: list_elem_markup : ( list_ordelem_markup | list_unordelem_markup );
 	public final list_elem_markup_return list_elem_markup() throws RecognitionException {
 	list_elem_markup_return retval = new list_elem_markup_return();
 	retval.start = input.LT(1);
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:367:2: ( list_ordelem_markup | list_unordelem_markup )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:378:2: ( list_ordelem_markup | list_unordelem_markup )
 		int alt72=2;
 		int LA72_0 = input.LA(1);
 
@@ -5798,15 +5807,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return retval;}
 		NoViableAltException nvae =
-			new NoViableAltException("366:1: list_elem_markup : ( list_ordelem_markup | list_unordelem_markup );", 72, 0, input);
+			new NoViableAltException("377:1: list_elem_markup : ( list_ordelem_markup | list_unordelem_markup );", 72, 0, input);
 
 		throw nvae;
 		}
 		switch (alt72) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:367:4: list_ordelem_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:378:4: list_ordelem_markup
 			{
-			pushFollow(FOLLOW_list_ordelem_markup_in_list_elem_markup2065);
+			pushFollow(FOLLOW_list_ordelem_markup_in_list_elem_markup2080);
 			list_ordelem_markup();
 			_fsp--;
 			if (failed) return retval;
@@ -5814,9 +5823,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:368:4: list_unordelem_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:379:4: list_unordelem_markup
 			{
-			pushFollow(FOLLOW_list_unordelem_markup_in_list_elem_markup2070);
+			pushFollow(FOLLOW_list_unordelem_markup_in_list_elem_markup2085);
 			list_unordelem_markup();
 			_fsp--;
 			if (failed) return retval;
@@ -5840,7 +5849,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_elemcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:370:1: list_elemcontent returns [CollectionNode items = new CollectionNode()] : onestar (part= list_elemcontentpart onestar )* ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:381:1: list_elemcontent returns [CollectionNode items = new CollectionNode()] : onestar (part= list_elemcontentpart onestar )* ;
 	public final CollectionNode list_elemcontent() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -5848,14 +5857,14 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:371:2: ( onestar (part= list_elemcontentpart onestar )* )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:371:4: onestar (part= list_elemcontentpart onestar )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:382:2: ( onestar (part= list_elemcontentpart onestar )* )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:382:4: onestar (part= list_elemcontentpart onestar )*
 		{
-		pushFollow(FOLLOW_onestar_in_list_elemcontent2084);
+		pushFollow(FOLLOW_onestar_in_list_elemcontent2099);
 		onestar();
 		_fsp--;
 		if (failed) return items;
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:371:13: (part= list_elemcontentpart onestar )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:382:13: (part= list_elemcontentpart onestar )*
 		loop73:
 		do {
 		int alt73=2;
@@ -5868,16 +5877,16 @@ public class Creole10Parser extends Parser {
 
 		switch (alt73) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:371:15: part= list_elemcontentpart onestar
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:382:15: part= list_elemcontentpart onestar
 			{
-			pushFollow(FOLLOW_list_elemcontentpart_in_list_elemcontent2093);
+			pushFollow(FOLLOW_list_elemcontentpart_in_list_elemcontent2108);
 			part=list_elemcontentpart();
 			_fsp--;
 			if (failed) return items;
 			if ( backtracking==0 ) {
 			   items.add(part); 
 			}
-			pushFollow(FOLLOW_onestar_in_list_elemcontent2098);
+			pushFollow(FOLLOW_onestar_in_list_elemcontent2113);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -5906,7 +5915,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_elemcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:373:1: list_elemcontentpart returns [ASTNode node = null] : (tuf= text_unformattedelement | tf= list_formatted_elem );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:384:1: list_elemcontentpart returns [ASTNode node = null] : (tuf= text_unformattedelement | tf= list_formatted_elem );
 	public final ASTNode list_elemcontentpart() throws RecognitionException {
 	ASTNode node =	null;
 
@@ -5916,7 +5925,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:374:2: (tuf= text_unformattedelement | tf= list_formatted_elem )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:385:2: (tuf= text_unformattedelement | tf= list_formatted_elem )
 		int alt74=2;
 		int LA74_0 = input.LA(1);
 
@@ -5929,15 +5938,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("373:1: list_elemcontentpart returns [ASTNode node = null] : (tuf= text_unformattedelement | tf= list_formatted_elem );", 74, 0, input);
+			new NoViableAltException("384:1: list_elemcontentpart returns [ASTNode node = null] : (tuf= text_unformattedelement | tf= list_formatted_elem );", 74, 0, input);
 
 		throw nvae;
 		}
 		switch (alt74) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:374:4: tuf= text_unformattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:385:4: tuf= text_unformattedelement
 			{
-			pushFollow(FOLLOW_text_unformattedelement_in_list_elemcontentpart2119);
+			pushFollow(FOLLOW_text_unformattedelement_in_list_elemcontentpart2134);
 			tuf=text_unformattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -5953,9 +5962,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:380:4: tf= list_formatted_elem
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:391:4: tf= list_formatted_elem
 			{
-			pushFollow(FOLLOW_list_formatted_elem_in_list_elemcontentpart2130);
+			pushFollow(FOLLOW_list_formatted_elem_in_list_elemcontentpart2145);
 			tf=list_formatted_elem();
 			_fsp--;
 			if (failed) return node;
@@ -5980,7 +5989,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_formatted_elem
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:382:1: list_formatted_elem returns [CollectionNode contents = new CollectionNode()] : ( bold_markup onestar (boldContents= list_boldcontentpart onestar )* ( bold_markup )? | ital_markup onestar (italContents= list_italcontentpart onestar )* ( ital_markup )? );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:393:1: list_formatted_elem returns [CollectionNode contents = new CollectionNode()] : ( bold_markup onestar (boldContents= list_boldcontentpart onestar )* ( bold_markup )? | ital_markup onestar (italContents= list_italcontentpart onestar )* ( ital_markup )? );
 	public final CollectionNode list_formatted_elem() throws RecognitionException {
 	CollectionNode contents =  new CollectionNode();
 
@@ -5990,7 +5999,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:383:2: ( bold_markup onestar (boldContents= list_boldcontentpart onestar )* ( bold_markup )? | ital_markup onestar (italContents= list_italcontentpart onestar )* ( ital_markup )? )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:394:2: ( bold_markup onestar (boldContents= list_boldcontentpart onestar )* ( bold_markup )? | ital_markup onestar (italContents= list_italcontentpart onestar )* ( ital_markup )? )
 		int alt79=2;
 		int LA79_0 = input.LA(1);
 
@@ -6003,23 +6012,23 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return contents;}
 		NoViableAltException nvae =
-			new NoViableAltException("382:1: list_formatted_elem returns [CollectionNode contents = new CollectionNode()] : ( bold_markup onestar (boldContents= list_boldcontentpart onestar )* ( bold_markup )? | ital_markup onestar (italContents= list_italcontentpart onestar )* ( ital_markup )? );", 79, 0, input);
+			new NoViableAltException("393:1: list_formatted_elem returns [CollectionNode contents = new CollectionNode()] : ( bold_markup onestar (boldContents= list_boldcontentpart onestar )* ( bold_markup )? | ital_markup onestar (italContents= list_italcontentpart onestar )* ( ital_markup )? );", 79, 0, input);
 
 		throw nvae;
 		}
 		switch (alt79) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:383:4: bold_markup onestar (boldContents= list_boldcontentpart onestar )* ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:394:4: bold_markup onestar (boldContents= list_boldcontentpart onestar )* ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_list_formatted_elem2147);
+			pushFollow(FOLLOW_bold_markup_in_list_formatted_elem2162);
 			bold_markup();
 			_fsp--;
 			if (failed) return contents;
-			pushFollow(FOLLOW_onestar_in_list_formatted_elem2150);
+			pushFollow(FOLLOW_onestar_in_list_formatted_elem2165);
 			onestar();
 			_fsp--;
 			if (failed) return contents;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:383:26: (boldContents= list_boldcontentpart onestar )*
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:394:26: (boldContents= list_boldcontentpart onestar )*
 			loop75:
 			do {
 			int alt75=2;
@@ -6134,9 +6143,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt75) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:383:28: boldContents= list_boldcontentpart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:394:28: boldContents= list_boldcontentpart onestar
 				{
-				pushFollow(FOLLOW_list_boldcontentpart_in_list_formatted_elem2159);
+				pushFollow(FOLLOW_list_boldcontentpart_in_list_formatted_elem2174);
 				boldContents=list_boldcontentpart();
 				_fsp--;
 				if (failed) return contents;
@@ -6153,7 +6162,7 @@ public class Creole10Parser extends Parser {
 									contents.add(add);						
 									
 				}
-				pushFollow(FOLLOW_onestar_in_list_formatted_elem2169);
+				pushFollow(FOLLOW_onestar_in_list_formatted_elem2184);
 				onestar();
 				_fsp--;
 				if (failed) return contents;
@@ -6166,7 +6175,7 @@ public class Creole10Parser extends Parser {
 			}
 			} while (true);
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:395:3: ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:406:3: ( bold_markup )?
 			int alt76=2;
 			int LA76_0 = input.LA(1);
 
@@ -6179,9 +6188,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt76) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:395:5: bold_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:406:5: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_list_formatted_elem2178);
+				pushFollow(FOLLOW_bold_markup_in_list_formatted_elem2193);
 				bold_markup();
 				_fsp--;
 				if (failed) return contents;
@@ -6195,17 +6204,17 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:396:4: ital_markup onestar (italContents= list_italcontentpart onestar )* ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:407:4: ital_markup onestar (italContents= list_italcontentpart onestar )* ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_list_formatted_elem2186);
+			pushFollow(FOLLOW_ital_markup_in_list_formatted_elem2201);
 			ital_markup();
 			_fsp--;
 			if (failed) return contents;
-			pushFollow(FOLLOW_onestar_in_list_formatted_elem2191);
+			pushFollow(FOLLOW_onestar_in_list_formatted_elem2206);
 			onestar();
 			_fsp--;
 			if (failed) return contents;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:396:28: (italContents= list_italcontentpart onestar )*
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:407:28: (italContents= list_italcontentpart onestar )*
 			loop77:
 			do {
 			int alt77=2;
@@ -6320,9 +6329,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt77) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:396:30: italContents= list_italcontentpart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:407:30: italContents= list_italcontentpart onestar
 				{
-				pushFollow(FOLLOW_list_italcontentpart_in_list_formatted_elem2200);
+				pushFollow(FOLLOW_list_italcontentpart_in_list_formatted_elem2215);
 				italContents=list_italcontentpart();
 				_fsp--;
 				if (failed) return contents;
@@ -6339,7 +6348,7 @@ public class Creole10Parser extends Parser {
 									contents.add(add); 
 									
 				}
-				pushFollow(FOLLOW_onestar_in_list_formatted_elem2209);
+				pushFollow(FOLLOW_onestar_in_list_formatted_elem2224);
 				onestar();
 				_fsp--;
 				if (failed) return contents;
@@ -6352,7 +6361,7 @@ public class Creole10Parser extends Parser {
 			}
 			} while (true);
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:407:3: ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:418:3: ( ital_markup )?
 			int alt78=2;
 			int LA78_0 = input.LA(1);
 
@@ -6361,9 +6370,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt78) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:407:5: ital_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:418:5: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_list_formatted_elem2218);
+				pushFollow(FOLLOW_ital_markup_in_list_formatted_elem2233);
 				ital_markup();
 				_fsp--;
 				if (failed) return contents;
@@ -6396,7 +6405,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_boldcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:410:1: list_boldcontentpart returns [ASTNode contents = null] : ( ital_markup c= list_bolditalcontent ( ital_markup )? | (t= text_unformattedelement )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:421:1: list_boldcontentpart returns [ASTNode contents = null] : ( ital_markup c= list_bolditalcontent ( ital_markup )? | (t= text_unformattedelement )+ );
 	public final ASTNode list_boldcontentpart() throws RecognitionException {
 	list_boldcontentpart_stack.push(new list_boldcontentpart_scope());
 	ASTNode contents =  null;
@@ -6410,7 +6419,7 @@ public class Creole10Parser extends Parser {
 		((list_boldcontentpart_scope)list_boldcontentpart_stack.peek()).elements = new ArrayList<ASTNode>();		
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:417:2: ( ital_markup c= list_bolditalcontent ( ital_markup )? | (t= text_unformattedelement )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:428:2: ( ital_markup c= list_bolditalcontent ( ital_markup )? | (t= text_unformattedelement )+ )
 		int alt82=2;
 		int LA82_0 = input.LA(1);
 
@@ -6423,26 +6432,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return contents;}
 		NoViableAltException nvae =
-			new NoViableAltException("410:1: list_boldcontentpart returns [ASTNode contents = null] : ( ital_markup c= list_bolditalcontent ( ital_markup )? | (t= text_unformattedelement )+ );", 82, 0, input);
+			new NoViableAltException("421:1: list_boldcontentpart returns [ASTNode contents = null] : ( ital_markup c= list_bolditalcontent ( ital_markup )? | (t= text_unformattedelement )+ );", 82, 0, input);
 
 		throw nvae;
 		}
 		switch (alt82) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:417:4: ital_markup c= list_bolditalcontent ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:428:4: ital_markup c= list_bolditalcontent ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_list_boldcontentpart2244);
+			pushFollow(FOLLOW_ital_markup_in_list_boldcontentpart2259);
 			ital_markup();
 			_fsp--;
 			if (failed) return contents;
-			pushFollow(FOLLOW_list_bolditalcontent_in_list_boldcontentpart2251);
+			pushFollow(FOLLOW_list_bolditalcontent_in_list_boldcontentpart2266);
 			c=list_bolditalcontent();
 			_fsp--;
 			if (failed) return contents;
 			if ( backtracking==0 ) {
 			  contents = new ItalicTextNode(c);
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:417:86: ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:428:86: ( ital_markup )?
 			int alt80=2;
 			int LA80_0 = input.LA(1);
 
@@ -6451,9 +6460,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt80) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:417:88: ital_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:428:88: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_list_boldcontentpart2258);
+				pushFollow(FOLLOW_ital_markup_in_list_boldcontentpart2273);
 				ital_markup();
 				_fsp--;
 				if (failed) return contents;
@@ -6467,9 +6476,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:418:4: (t= text_unformattedelement )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:429:4: (t= text_unformattedelement )+
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:418:4: (t= text_unformattedelement )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:429:4: (t= text_unformattedelement )+
 			int cnt81=0;
 			loop81:
 			do {
@@ -6580,9 +6589,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt81) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:418:6: t= text_unformattedelement
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:429:6: t= text_unformattedelement
 				{
-				pushFollow(FOLLOW_text_unformattedelement_in_list_boldcontentpart2273);
+				pushFollow(FOLLOW_text_unformattedelement_in_list_boldcontentpart2288);
 				t=text_unformattedelement();
 				_fsp--;
 				if (failed) return contents;
@@ -6625,7 +6634,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_bolditalcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:422:1: list_bolditalcontent returns [ASTNode text = null] : (t= text_unformattedelement )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:433:1: list_bolditalcontent returns [ASTNode text = null] : (t= text_unformattedelement )+ ;
 	public final ASTNode list_bolditalcontent() throws RecognitionException {
 	ASTNode text =	null;
 
@@ -6633,10 +6642,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:423:2: ( (t= text_unformattedelement )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:423:4: (t= text_unformattedelement )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:434:2: ( (t= text_unformattedelement )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:434:4: (t= text_unformattedelement )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:423:4: (t= text_unformattedelement )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:434:4: (t= text_unformattedelement )+
 		int cnt83=0;
 		loop83:
 		do {
@@ -6747,9 +6756,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt83) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:423:6: t= text_unformattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:434:6: t= text_unformattedelement
 			{
-			pushFollow(FOLLOW_text_unformattedelement_in_list_bolditalcontent2305);
+			pushFollow(FOLLOW_text_unformattedelement_in_list_bolditalcontent2320);
 			t=text_unformattedelement();
 			_fsp--;
 			if (failed) return text;
@@ -6791,7 +6800,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_italcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:426:1: list_italcontentpart returns [ASTNode contents = null] : ( bold_markup c= list_bolditalcontent ( bold_markup )? | (t= text_unformattedelement )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:437:1: list_italcontentpart returns [ASTNode contents = null] : ( bold_markup c= list_bolditalcontent ( bold_markup )? | (t= text_unformattedelement )+ );
 	public final ASTNode list_italcontentpart() throws RecognitionException {
 	list_italcontentpart_stack.push(new list_italcontentpart_scope());
 	ASTNode contents =  null;
@@ -6805,7 +6814,7 @@ public class Creole10Parser extends Parser {
 		((list_italcontentpart_scope)list_italcontentpart_stack.peek()).elements = new ArrayList<ASTNode>();
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:433:2: ( bold_markup c= list_bolditalcontent ( bold_markup )? | (t= text_unformattedelement )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:444:2: ( bold_markup c= list_bolditalcontent ( bold_markup )? | (t= text_unformattedelement )+ )
 		int alt86=2;
 		int LA86_0 = input.LA(1);
 
@@ -6818,26 +6827,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return contents;}
 		NoViableAltException nvae =
-			new NoViableAltException("426:1: list_italcontentpart returns [ASTNode contents = null] : ( bold_markup c= list_bolditalcontent ( bold_markup )? | (t= text_unformattedelement )+ );", 86, 0, input);
+			new NoViableAltException("437:1: list_italcontentpart returns [ASTNode contents = null] : ( bold_markup c= list_bolditalcontent ( bold_markup )? | (t= text_unformattedelement )+ );", 86, 0, input);
 
 		throw nvae;
 		}
 		switch (alt86) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:433:4: bold_markup c= list_bolditalcontent ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:444:4: bold_markup c= list_bolditalcontent ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2335);
+			pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2350);
 			bold_markup();
 			_fsp--;
 			if (failed) return contents;
-			pushFollow(FOLLOW_list_bolditalcontent_in_list_italcontentpart2342);
+			pushFollow(FOLLOW_list_bolditalcontent_in_list_italcontentpart2357);
 			c=list_bolditalcontent();
 			_fsp--;
 			if (failed) return contents;
 			if ( backtracking==0 ) {
 			   contents = new BoldTextNode(c); 
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:433:86: ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:444:86: ( bold_markup )?
 			int alt84=2;
 			int LA84_0 = input.LA(1);
 
@@ -6850,9 +6859,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt84) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:433:88: bold_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:444:88: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2349);
+				pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2364);
 				bold_markup();
 				_fsp--;
 				if (failed) return contents;
@@ -6866,9 +6875,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:434:4: (t= text_unformattedelement )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:445:4: (t= text_unformattedelement )+
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:434:4: (t= text_unformattedelement )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:445:4: (t= text_unformattedelement )+
 			int cnt85=0;
 			loop85:
 			do {
@@ -6979,9 +6988,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt85) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:434:6: t= text_unformattedelement
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:445:6: t= text_unformattedelement
 				{
-				pushFollow(FOLLOW_text_unformattedelement_in_list_italcontentpart2363);
+				pushFollow(FOLLOW_text_unformattedelement_in_list_italcontentpart2378);
 				t=text_unformattedelement();
 				_fsp--;
 				if (failed) return contents;
@@ -7024,7 +7033,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:438:1: table returns [TableNode table = new TableNode()] : (tr= table_row )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:449:1: table returns [TableNode table = new TableNode()] : (tr= table_row )+ ;
 	public final TableNode table() throws RecognitionException {
 	TableNode table =  new TableNode();
 
@@ -7032,10 +7041,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:439:2: ( (tr= table_row )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:439:4: (tr= table_row )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:450:2: ( (tr= table_row )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:450:4: (tr= table_row )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:439:4: (tr= table_row )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:450:4: (tr= table_row )+
 		int cnt87=0;
 		loop87:
 		do {
@@ -7049,9 +7058,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt87) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:439:6: tr= table_row
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:450:6: tr= table_row
 			{
-			pushFollow(FOLLOW_table_row_in_table2393);
+			pushFollow(FOLLOW_table_row_in_table2408);
 			tr=table_row();
 			_fsp--;
 			if (failed) return table;
@@ -7088,7 +7097,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_row
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:441:1: table_row returns [CollectionNode row = new CollectionNode()] : (tc= table_cell )+ table_rowseparator ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:452:1: table_row returns [CollectionNode row = new CollectionNode()] : (tc= table_cell )+ table_rowseparator ;
 	public final CollectionNode table_row() throws RecognitionException {
 	CollectionNode row =  new CollectionNode();
 
@@ -7096,10 +7105,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:442:2: ( (tc= table_cell )+ table_rowseparator )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:442:4: (tc= table_cell )+ table_rowseparator
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:453:2: ( (tc= table_cell )+ table_rowseparator )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:453:4: (tc= table_cell )+ table_rowseparator
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:442:4: (tc= table_cell )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:453:4: (tc= table_cell )+
 		int cnt88=0;
 		loop88:
 		do {
@@ -7113,9 +7122,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt88) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:442:6: tc= table_cell
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:453:6: tc= table_cell
 			{
-			pushFollow(FOLLOW_table_cell_in_table_row2419);
+			pushFollow(FOLLOW_table_cell_in_table_row2434);
 			tc=table_cell();
 			_fsp--;
 			if (failed) return row;
@@ -7136,7 +7145,7 @@ public class Creole10Parser extends Parser {
 		cnt88++;
 		} while (true);
 
-		pushFollow(FOLLOW_table_rowseparator_in_table_row2427);
+		pushFollow(FOLLOW_table_rowseparator_in_table_row2442);
 		table_rowseparator();
 		_fsp--;
 		if (failed) return row;
@@ -7156,7 +7165,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_cell
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:444:1: table_cell returns [TableCellNode cell = null] : ({...}?th= table_headercell | tc= table_normalcell );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:455:1: table_cell returns [TableCellNode cell = null] : ({...}?th= table_headercell | tc= table_normalcell );
 	public final TableCellNode table_cell() throws RecognitionException {
 	TableCellNode cell =  null;
 
@@ -7166,7 +7175,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:445:2: ({...}?th= table_headercell | tc= table_normalcell )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:456:2: ({...}?th= table_headercell | tc= table_normalcell )
 		int alt89=2;
 		int LA89_0 = input.LA(1);
 
@@ -7185,7 +7194,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return cell;}
 			NoViableAltException nvae =
-				new NoViableAltException("444:1: table_cell returns [TableCellNode cell = null] : ({...}?th= table_headercell | tc= table_normalcell );", 89, 2, input);
+				new NoViableAltException("455:1: table_cell returns [TableCellNode cell = null] : ({...}?th= table_headercell | tc= table_normalcell );", 89, 2, input);
 
 			throw nvae;
 			}
@@ -7196,7 +7205,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return cell;}
 			NoViableAltException nvae =
-			new NoViableAltException("444:1: table_cell returns [TableCellNode cell = null] : ({...}?th= table_headercell | tc= table_normalcell );", 89, 1, input);
+			new NoViableAltException("455:1: table_cell returns [TableCellNode cell = null] : ({...}?th= table_headercell | tc= table_normalcell );", 89, 1, input);
 
 			throw nvae;
 		}
@@ -7204,19 +7213,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return cell;}
 		NoViableAltException nvae =
-			new NoViableAltException("444:1: table_cell returns [TableCellNode cell = null] : ({...}?th= table_headercell | tc= table_normalcell );", 89, 0, input);
+			new NoViableAltException("455:1: table_cell returns [TableCellNode cell = null] : ({...}?th= table_headercell | tc= table_normalcell );", 89, 0, input);
 
 		throw nvae;
 		}
 		switch (alt89) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:445:4: {...}?th= table_headercell
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:456:4: {...}?th= table_headercell
 			{
 			if ( !( input.LA(2) == EQUAL ) ) {
 			if (backtracking>0) {failed=true; return cell;}
 			throw new FailedPredicateException(input, "table_cell", " input.LA(2) == EQUAL ");
 			}
-			pushFollow(FOLLOW_table_headercell_in_table_cell2448);
+			pushFollow(FOLLOW_table_headercell_in_table_cell2463);
 			th=table_headercell();
 			_fsp--;
 			if (failed) return cell;
@@ -7227,9 +7236,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:446:4: tc= table_normalcell
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:457:4: tc= table_normalcell
 			{
-			pushFollow(FOLLOW_table_normalcell_in_table_cell2459);
+			pushFollow(FOLLOW_table_normalcell_in_table_cell2474);
 			tc=table_normalcell();
 			_fsp--;
 			if (failed) return cell;
@@ -7254,7 +7263,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_headercell
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:448:1: table_headercell returns [TableHeaderNode header = null] : table_headercell_markup tc= table_cellcontent ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:459:1: table_headercell returns [TableHeaderNode header = null] : table_headercell_markup tc= table_cellcontent ;
 	public final TableHeaderNode table_headercell() throws RecognitionException {
 	TableHeaderNode header =  null;
 
@@ -7262,14 +7271,14 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:449:2: ( table_headercell_markup tc= table_cellcontent )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:449:4: table_headercell_markup tc= table_cellcontent
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:460:2: ( table_headercell_markup tc= table_cellcontent )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:460:4: table_headercell_markup tc= table_cellcontent
 		{
-		pushFollow(FOLLOW_table_headercell_markup_in_table_headercell2475);
+		pushFollow(FOLLOW_table_headercell_markup_in_table_headercell2490);
 		table_headercell_markup();
 		_fsp--;
 		if (failed) return header;
-		pushFollow(FOLLOW_table_cellcontent_in_table_headercell2482);
+		pushFollow(FOLLOW_table_cellcontent_in_table_headercell2497);
 		tc=table_cellcontent();
 		_fsp--;
 		if (failed) return header;
@@ -7292,7 +7301,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_normalcell
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:451:1: table_normalcell returns [TableDataNode cell = null] : table_cell_markup tc= table_cellcontent ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:462:1: table_normalcell returns [TableDataNode cell = null] : table_cell_markup tc= table_cellcontent ;
 	public final TableDataNode table_normalcell() throws RecognitionException {
 	TableDataNode cell =  null;
 
@@ -7300,14 +7309,14 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:452:2: ( table_cell_markup tc= table_cellcontent )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:452:4: table_cell_markup tc= table_cellcontent
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:463:2: ( table_cell_markup tc= table_cellcontent )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:463:4: table_cell_markup tc= table_cellcontent
 		{
-		pushFollow(FOLLOW_table_cell_markup_in_table_normalcell2498);
+		pushFollow(FOLLOW_table_cell_markup_in_table_normalcell2513);
 		table_cell_markup();
 		_fsp--;
 		if (failed) return cell;
-		pushFollow(FOLLOW_table_cellcontent_in_table_normalcell2505);
+		pushFollow(FOLLOW_table_cellcontent_in_table_normalcell2520);
 		tc=table_cellcontent();
 		_fsp--;
 		if (failed) return cell;
@@ -7330,7 +7339,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_cellcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:454:1: table_cellcontent returns [CollectionNode items = new CollectionNode()] : onestar (tcp= table_cellcontentpart onestar )* ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:465:1: table_cellcontent returns [CollectionNode items = new CollectionNode()] : onestar (tcp= table_cellcontentpart onestar )* ;
 	public final CollectionNode table_cellcontent() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -7338,14 +7347,14 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:455:2: ( onestar (tcp= table_cellcontentpart onestar )* )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:455:4: onestar (tcp= table_cellcontentpart onestar )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:2: ( onestar (tcp= table_cellcontentpart onestar )* )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:4: onestar (tcp= table_cellcontentpart onestar )*
 		{
-		pushFollow(FOLLOW_onestar_in_table_cellcontent2521);
+		pushFollow(FOLLOW_onestar_in_table_cellcontent2536);
 		onestar();
 		_fsp--;
 		if (failed) return items;
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:455:13: (tcp= table_cellcontentpart onestar )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:13: (tcp= table_cellcontentpart onestar )*
 		loop90:
 		do {
 		int alt90=2;
@@ -7358,16 +7367,16 @@ public class Creole10Parser extends Parser {
 
 		switch (alt90) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:455:15: tcp= table_cellcontentpart onestar
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:15: tcp= table_cellcontentpart onestar
 			{
-			pushFollow(FOLLOW_table_cellcontentpart_in_table_cellcontent2530);
+			pushFollow(FOLLOW_table_cellcontentpart_in_table_cellcontent2545);
 			tcp=table_cellcontentpart();
 			_fsp--;
 			if (failed) return items;
 			if ( backtracking==0 ) {
 			  items.add(tcp); 
 			}
-			pushFollow(FOLLOW_onestar_in_table_cellcontent2535);
+			pushFollow(FOLLOW_onestar_in_table_cellcontent2550);
 			onestar();
 			_fsp--;
 			if (failed) return items;
@@ -7396,7 +7405,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_cellcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:457:1: table_cellcontentpart returns [ASTNode node = null] : (tf= table_formattedelement | tu= table_unformattedelement );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:468:1: table_cellcontentpart returns [ASTNode node = null] : (tf= table_formattedelement | tu= table_unformattedelement );
 	public final ASTNode table_cellcontentpart() throws RecognitionException {
 	ASTNode node =	null;
 
@@ -7406,7 +7415,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:458:2: (tf= table_formattedelement | tu= table_unformattedelement )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:469:2: (tf= table_formattedelement | tu= table_unformattedelement )
 		int alt91=2;
 		int LA91_0 = input.LA(1);
 
@@ -7419,15 +7428,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("457:1: table_cellcontentpart returns [ASTNode node = null] : (tf= table_formattedelement | tu= table_unformattedelement );", 91, 0, input);
+			new NoViableAltException("468:1: table_cellcontentpart returns [ASTNode node = null] : (tf= table_formattedelement | tu= table_unformattedelement );", 91, 0, input);
 
 		throw nvae;
 		}
 		switch (alt91) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:458:4: tf= table_formattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:469:4: tf= table_formattedelement
 			{
-			pushFollow(FOLLOW_table_formattedelement_in_table_cellcontentpart2556);
+			pushFollow(FOLLOW_table_formattedelement_in_table_cellcontentpart2571);
 			tf=table_formattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -7438,9 +7447,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:459:4: tu= table_unformattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:470:4: tu= table_unformattedelement
 			{
-			pushFollow(FOLLOW_table_unformattedelement_in_table_cellcontentpart2567);
+			pushFollow(FOLLOW_table_unformattedelement_in_table_cellcontentpart2582);
 			tu=table_unformattedelement();
 			_fsp--;
 			if (failed) return node;
@@ -7465,7 +7474,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_formattedelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:461:1: table_formattedelement returns [ASTNode content = null] : ( ital_markup (tic= table_italcontent )? ( ital_markup )? | bold_markup (tbc= table_boldcontent )? ( bold_markup )? );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:472:1: table_formattedelement returns [ASTNode content = null] : ( ital_markup (tic= table_italcontent )? ( ital_markup )? | bold_markup (tbc= table_boldcontent )? ( bold_markup )? );
 	public final ASTNode table_formattedelement() throws RecognitionException {
 	ASTNode content =  null;
 
@@ -7475,7 +7484,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:462:2: ( ital_markup (tic= table_italcontent )? ( ital_markup )? | bold_markup (tbc= table_boldcontent )? ( bold_markup )? )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:2: ( ital_markup (tic= table_italcontent )? ( ital_markup )? | bold_markup (tbc= table_boldcontent )? ( bold_markup )? )
 		int alt96=2;
 		int LA96_0 = input.LA(1);
 
@@ -7488,19 +7497,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return content;}
 		NoViableAltException nvae =
-			new NoViableAltException("461:1: table_formattedelement returns [ASTNode content = null] : ( ital_markup (tic= table_italcontent )? ( ital_markup )? | bold_markup (tbc= table_boldcontent )? ( bold_markup )? );", 96, 0, input);
+			new NoViableAltException("472:1: table_formattedelement returns [ASTNode content = null] : ( ital_markup (tic= table_italcontent )? ( ital_markup )? | bold_markup (tbc= table_boldcontent )? ( bold_markup )? );", 96, 0, input);
 
 		throw nvae;
 		}
 		switch (alt96) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:462:4: ital_markup (tic= table_italcontent )? ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:4: ital_markup (tic= table_italcontent )? ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_table_formattedelement2583);
+			pushFollow(FOLLOW_ital_markup_in_table_formattedelement2598);
 			ital_markup();
 			_fsp--;
 			if (failed) return content;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:462:18: (tic= table_italcontent )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:18: (tic= table_italcontent )?
 			int alt92=2;
 			switch ( input.LA(1) ) {
 			case STAR:
@@ -7616,9 +7625,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt92) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:462:20: tic= table_italcontent
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:20: tic= table_italcontent
 				{
-				pushFollow(FOLLOW_table_italcontent_in_table_formattedelement2593);
+				pushFollow(FOLLOW_table_italcontent_in_table_formattedelement2608);
 				tic=table_italcontent();
 				_fsp--;
 				if (failed) return content;
@@ -7631,7 +7640,7 @@ public class Creole10Parser extends Parser {
 
 			}
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:462:94: ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:94: ( ital_markup )?
 			int alt93=2;
 			int LA93_0 = input.LA(1);
 
@@ -7640,9 +7649,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt93) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:462:96: ital_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:96: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_table_formattedelement2602);
+				pushFollow(FOLLOW_ital_markup_in_table_formattedelement2617);
 				ital_markup();
 				_fsp--;
 				if (failed) return content;
@@ -7656,13 +7665,13 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:463:4: bold_markup (tbc= table_boldcontent )? ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:4: bold_markup (tbc= table_boldcontent )? ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_table_formattedelement2610);
+			pushFollow(FOLLOW_bold_markup_in_table_formattedelement2625);
 			bold_markup();
 			_fsp--;
 			if (failed) return content;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:463:16: (tbc= table_boldcontent )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:16: (tbc= table_boldcontent )?
 			int alt94=2;
 			switch ( input.LA(1) ) {
 			case STAR:
@@ -7787,9 +7796,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt94) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:463:18: tbc= table_boldcontent
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:18: tbc= table_boldcontent
 				{
-				pushFollow(FOLLOW_table_boldcontent_in_table_formattedelement2617);
+				pushFollow(FOLLOW_table_boldcontent_in_table_formattedelement2632);
 				tbc=table_boldcontent();
 				_fsp--;
 				if (failed) return content;
@@ -7802,7 +7811,7 @@ public class Creole10Parser extends Parser {
 
 			}
 
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:463:88: ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:88: ( bold_markup )?
 			int alt95=2;
 			int LA95_0 = input.LA(1);
 
@@ -7815,9 +7824,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt95) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:463:90: bold_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:90: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_table_formattedelement2627);
+				pushFollow(FOLLOW_bold_markup_in_table_formattedelement2642);
 				bold_markup();
 				_fsp--;
 				if (failed) return content;
@@ -7845,7 +7854,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_boldcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:465:1: table_boldcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (tb= table_boldcontentpart onestar )+ | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:476:1: table_boldcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (tb= table_boldcontentpart onestar )+ | EOF );
 	public final CollectionNode table_boldcontent() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -7853,7 +7862,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:2: ( onestar (tb= table_boldcontentpart onestar )+ | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:477:2: ( onestar (tb= table_boldcontentpart onestar )+ | EOF )
 		int alt98=2;
 		int LA98_0 = input.LA(1);
 
@@ -7866,19 +7875,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return items;}
 		NoViableAltException nvae =
-			new NoViableAltException("465:1: table_boldcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (tb= table_boldcontentpart onestar )+ | EOF );", 98, 0, input);
+			new NoViableAltException("476:1: table_boldcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (tb= table_boldcontentpart onestar )+ | EOF );", 98, 0, input);
 
 		throw nvae;
 		}
 		switch (alt98) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:4: onestar (tb= table_boldcontentpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:477:4: onestar (tb= table_boldcontentpart onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_table_boldcontent2644);
+			pushFollow(FOLLOW_onestar_in_table_boldcontent2659);
 			onestar();
 			_fsp--;
 			if (failed) return items;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:13: (tb= table_boldcontentpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:477:13: (tb= table_boldcontentpart onestar )+
 			int cnt97=0;
 			loop97:
 			do {
@@ -7993,16 +8002,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt97) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:466:15: tb= table_boldcontentpart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:477:15: tb= table_boldcontentpart onestar
 				{
-				pushFollow(FOLLOW_table_boldcontentpart_in_table_boldcontent2653);
+				pushFollow(FOLLOW_table_boldcontentpart_in_table_boldcontent2668);
 				tb=table_boldcontentpart();
 				_fsp--;
 				if (failed) return items;
 				if ( backtracking==0 ) {
 				   items.add(tb); 
 				}
-				pushFollow(FOLLOW_onestar_in_table_boldcontent2658);
+				pushFollow(FOLLOW_onestar_in_table_boldcontent2673);
 				onestar();
 				_fsp--;
 				if (failed) return items;
@@ -8024,9 +8033,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:467:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:478:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_table_boldcontent2666); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_table_boldcontent2681); if (failed) return items;
 
 			}
 			break;
@@ -8045,7 +8054,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_italcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:469:1: table_italcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (ti= table_italcontentpart onestar )+ | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:480:1: table_italcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (ti= table_italcontentpart onestar )+ | EOF );
 	public final CollectionNode table_italcontent() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -8053,7 +8062,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:470:2: ( onestar (ti= table_italcontentpart onestar )+ | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:481:2: ( onestar (ti= table_italcontentpart onestar )+ | EOF )
 		int alt100=2;
 		int LA100_0 = input.LA(1);
 
@@ -8066,19 +8075,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return items;}
 		NoViableAltException nvae =
-			new NoViableAltException("469:1: table_italcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (ti= table_italcontentpart onestar )+ | EOF );", 100, 0, input);
+			new NoViableAltException("480:1: table_italcontent returns [CollectionNode items = new CollectionNode()] : ( onestar (ti= table_italcontentpart onestar )+ | EOF );", 100, 0, input);
 
 		throw nvae;
 		}
 		switch (alt100) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:470:4: onestar (ti= table_italcontentpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:481:4: onestar (ti= table_italcontentpart onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_table_italcontent2680);
+			pushFollow(FOLLOW_onestar_in_table_italcontent2695);
 			onestar();
 			_fsp--;
 			if (failed) return items;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:470:13: (ti= table_italcontentpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:481:13: (ti= table_italcontentpart onestar )+
 			int cnt99=0;
 			loop99:
 			do {
@@ -8193,16 +8202,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt99) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:470:15: ti= table_italcontentpart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:481:15: ti= table_italcontentpart onestar
 				{
-				pushFollow(FOLLOW_table_italcontentpart_in_table_italcontent2689);
+				pushFollow(FOLLOW_table_italcontentpart_in_table_italcontent2704);
 				ti=table_italcontentpart();
 				_fsp--;
 				if (failed) return items;
 				if ( backtracking==0 ) {
 				   items.add(ti); 
 				}
-				pushFollow(FOLLOW_onestar_in_table_italcontent2694);
+				pushFollow(FOLLOW_onestar_in_table_italcontent2709);
 				onestar();
 				_fsp--;
 				if (failed) return items;
@@ -8224,9 +8233,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:471:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:482:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_table_italcontent2702); if (failed) return items;
+			match(input,EOF,FOLLOW_EOF_in_table_italcontent2717); if (failed) return items;
 
 			}
 			break;
@@ -8245,7 +8254,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_boldcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:473:1: table_boldcontentpart returns [ASTNode node = null] : (tf= table_formattedcontent | ital_markup tb= table_bolditalcontent ( ital_markup )? );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:484:1: table_boldcontentpart returns [ASTNode node = null] : (tf= table_formattedcontent | ital_markup tb= table_bolditalcontent ( ital_markup )? );
 	public final ASTNode table_boldcontentpart() throws RecognitionException {
 	ASTNode node =	null;
 
@@ -8255,7 +8264,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:2: (tf= table_formattedcontent | ital_markup tb= table_bolditalcontent ( ital_markup )? )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:485:2: (tf= table_formattedcontent | ital_markup tb= table_bolditalcontent ( ital_markup )? )
 		int alt102=2;
 		int LA102_0 = input.LA(1);
 
@@ -8268,15 +8277,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("473:1: table_boldcontentpart returns [ASTNode node = null] : (tf= table_formattedcontent | ital_markup tb= table_bolditalcontent ( ital_markup )? );", 102, 0, input);
+			new NoViableAltException("484:1: table_boldcontentpart returns [ASTNode node = null] : (tf= table_formattedcontent | ital_markup tb= table_bolditalcontent ( ital_markup )? );", 102, 0, input);
 
 		throw nvae;
 		}
 		switch (alt102) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:474:4: tf= table_formattedcontent
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:485:4: tf= table_formattedcontent
 			{
-			pushFollow(FOLLOW_table_formattedcontent_in_table_boldcontentpart2720);
+			pushFollow(FOLLOW_table_formattedcontent_in_table_boldcontentpart2735);
 			tf=table_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -8287,20 +8296,20 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:475:4: ital_markup tb= table_bolditalcontent ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:486:4: ital_markup tb= table_bolditalcontent ( ital_markup )?
 			{
-			pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2727);
+			pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2742);
 			ital_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_table_bolditalcontent_in_table_boldcontentpart2734);
+			pushFollow(FOLLOW_table_bolditalcontent_in_table_boldcontentpart2749);
 			tb=table_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
 			if ( backtracking==0 ) {
 			   node = new ItalicTextNode(tb);  
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:475:92: ( ital_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:486:92: ( ital_markup )?
 			int alt101=2;
 			int LA101_0 = input.LA(1);
 
@@ -8309,9 +8318,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt101) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:475:94: ital_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:486:94: ital_markup
 				{
-				pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2741);
+				pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2756);
 				ital_markup();
 				_fsp--;
 				if (failed) return node;
@@ -8339,7 +8348,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_italcontentpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:477:1: table_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= table_bolditalcontent ( bold_markup )? | tf= table_formattedcontent );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:488:1: table_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= table_bolditalcontent ( bold_markup )? | tf= table_formattedcontent );
 	public final ASTNode table_italcontentpart() throws RecognitionException {
 	ASTNode node =	null;
 
@@ -8349,7 +8358,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:478:2: ( bold_markup tb= table_bolditalcontent ( bold_markup )? | tf= table_formattedcontent )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:489:2: ( bold_markup tb= table_bolditalcontent ( bold_markup )? | tf= table_formattedcontent )
 		int alt104=2;
 		int LA104_0 = input.LA(1);
 
@@ -8362,26 +8371,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return node;}
 		NoViableAltException nvae =
-			new NoViableAltException("477:1: table_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= table_bolditalcontent ( bold_markup )? | tf= table_formattedcontent );", 104, 0, input);
+			new NoViableAltException("488:1: table_italcontentpart returns [ASTNode node = null] : ( bold_markup tb= table_bolditalcontent ( bold_markup )? | tf= table_formattedcontent );", 104, 0, input);
 
 		throw nvae;
 		}
 		switch (alt104) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:478:4: bold_markup tb= table_bolditalcontent ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:489:4: bold_markup tb= table_bolditalcontent ( bold_markup )?
 			{
-			pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2758);
+			pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2773);
 			bold_markup();
 			_fsp--;
 			if (failed) return node;
-			pushFollow(FOLLOW_table_bolditalcontent_in_table_italcontentpart2765);
+			pushFollow(FOLLOW_table_bolditalcontent_in_table_italcontentpart2780);
 			tb=table_bolditalcontent();
 			_fsp--;
 			if (failed) return node;
 			if ( backtracking==0 ) {
 			  node = new BoldTextNode(tb); 
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:478:88: ( bold_markup )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:489:88: ( bold_markup )?
 			int alt103=2;
 			int LA103_0 = input.LA(1);
 
@@ -8394,9 +8403,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt103) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:478:90: bold_markup
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:489:90: bold_markup
 				{
-				pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2772);
+				pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2787);
 				bold_markup();
 				_fsp--;
 				if (failed) return node;
@@ -8410,9 +8419,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:479:4: tf= table_formattedcontent
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:490:4: tf= table_formattedcontent
 			{
-			pushFollow(FOLLOW_table_formattedcontent_in_table_italcontentpart2784);
+			pushFollow(FOLLOW_table_formattedcontent_in_table_italcontentpart2799);
 			tf=table_formattedcontent();
 			_fsp--;
 			if (failed) return node;
@@ -8437,7 +8446,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_bolditalcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:481:1: table_bolditalcontent returns [CollectionNode elements = null] : ( onestar (tfc= table_formattedcontent onestar )? | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:492:1: table_bolditalcontent returns [CollectionNode elements = null] : ( onestar (tfc= table_formattedcontent onestar )? | EOF );
 	public final CollectionNode table_bolditalcontent() throws RecognitionException {
 	CollectionNode elements =  null;
 
@@ -8445,7 +8454,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:482:2: ( onestar (tfc= table_formattedcontent onestar )? | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:493:2: ( onestar (tfc= table_formattedcontent onestar )? | EOF )
 		int alt106=2;
 		int LA106_0 = input.LA(1);
 
@@ -8458,19 +8467,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return elements;}
 		NoViableAltException nvae =
-			new NoViableAltException("481:1: table_bolditalcontent returns [CollectionNode elements = null] : ( onestar (tfc= table_formattedcontent onestar )? | EOF );", 106, 0, input);
+			new NoViableAltException("492:1: table_bolditalcontent returns [CollectionNode elements = null] : ( onestar (tfc= table_formattedcontent onestar )? | EOF );", 106, 0, input);
 
 		throw nvae;
 		}
 		switch (alt106) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:482:4: onestar (tfc= table_formattedcontent onestar )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:493:4: onestar (tfc= table_formattedcontent onestar )?
 			{
-			pushFollow(FOLLOW_onestar_in_table_bolditalcontent2800);
+			pushFollow(FOLLOW_onestar_in_table_bolditalcontent2815);
 			onestar();
 			_fsp--;
 			if (failed) return elements;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:482:13: (tfc= table_formattedcontent onestar )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:493:13: (tfc= table_formattedcontent onestar )?
 			int alt105=2;
 			switch ( input.LA(1) ) {
 			case FORCED_END_OF_LINE:
@@ -8576,16 +8585,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt105) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:482:15: tfc= table_formattedcontent onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:493:15: tfc= table_formattedcontent onestar
 				{
-				pushFollow(FOLLOW_table_formattedcontent_in_table_bolditalcontent2809);
+				pushFollow(FOLLOW_table_formattedcontent_in_table_bolditalcontent2824);
 				tfc=table_formattedcontent();
 				_fsp--;
 				if (failed) return elements;
 				if ( backtracking==0 ) {
 				   elements = tfc; 
 				}
-				pushFollow(FOLLOW_onestar_in_table_bolditalcontent2814);
+				pushFollow(FOLLOW_onestar_in_table_bolditalcontent2829);
 				onestar();
 				_fsp--;
 				if (failed) return elements;
@@ -8599,9 +8608,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:483:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:494:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_table_bolditalcontent2822); if (failed) return elements;
+			match(input,EOF,FOLLOW_EOF_in_table_bolditalcontent2837); if (failed) return elements;
 
 			}
 			break;
@@ -8620,7 +8629,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_formattedcontent
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:485:1: table_formattedcontent returns [CollectionNode elements = new CollectionNode()] : (tu= table_unformattedelement )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:496:1: table_formattedcontent returns [CollectionNode elements = new CollectionNode()] : (tu= table_unformattedelement )+ ;
 	public final CollectionNode table_formattedcontent() throws RecognitionException {
 	CollectionNode elements =  new CollectionNode();
 
@@ -8628,10 +8637,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:486:2: ( (tu= table_unformattedelement )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:486:4: (tu= table_unformattedelement )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:497:2: ( (tu= table_unformattedelement )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:497:4: (tu= table_unformattedelement )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:486:4: (tu= table_unformattedelement )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:497:4: (tu= table_unformattedelement )+
 		int cnt107=0;
 		loop107:
 		do {
@@ -8741,9 +8750,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt107) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:486:6: tu= table_unformattedelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:497:6: tu= table_unformattedelement
 			{
-			pushFollow(FOLLOW_table_unformattedelement_in_table_formattedcontent2842);
+			pushFollow(FOLLOW_table_unformattedelement_in_table_formattedcontent2857);
 			tu=table_unformattedelement();
 			_fsp--;
 			if (failed) return elements;
@@ -8780,7 +8789,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_unformattedelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:488:1: table_unformattedelement returns [ASTNode content = null] : (tu= table_unformatted | ti= table_inlineelement );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:499:1: table_unformattedelement returns [ASTNode content = null] : (tu= table_unformatted | ti= table_inlineelement );
 	public final ASTNode table_unformattedelement() throws RecognitionException {
 	ASTNode content =  null;
 
@@ -8790,7 +8799,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:489:2: (tu= table_unformatted | ti= table_inlineelement )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:500:2: (tu= table_unformatted | ti= table_inlineelement )
 		int alt108=2;
 		int LA108_0 = input.LA(1);
 
@@ -8803,15 +8812,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return content;}
 		NoViableAltException nvae =
-			new NoViableAltException("488:1: table_unformattedelement returns [ASTNode content = null] : (tu= table_unformatted | ti= table_inlineelement );", 108, 0, input);
+			new NoViableAltException("499:1: table_unformattedelement returns [ASTNode content = null] : (tu= table_unformatted | ti= table_inlineelement );", 108, 0, input);
 
 		throw nvae;
 		}
 		switch (alt108) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:489:4: tu= table_unformatted
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:500:4: tu= table_unformatted
 			{
-			pushFollow(FOLLOW_table_unformatted_in_table_unformattedelement2865);
+			pushFollow(FOLLOW_table_unformatted_in_table_unformattedelement2880);
 			tu=table_unformatted();
 			_fsp--;
 			if (failed) return content;
@@ -8822,9 +8831,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:490:4: ti= table_inlineelement
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:501:4: ti= table_inlineelement
 			{
-			pushFollow(FOLLOW_table_inlineelement_in_table_unformattedelement2877);
+			pushFollow(FOLLOW_table_inlineelement_in_table_unformattedelement2892);
 			ti=table_inlineelement();
 			_fsp--;
 			if (failed) return content;
@@ -8849,7 +8858,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_inlineelement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:492:1: table_inlineelement returns [ASTNode element = null] : (l= link | i= image | e= extension | nw= nowiki_inline );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:503:1: table_inlineelement returns [ASTNode element = null] : (l= link | i= image | e= extension | nw= nowiki_inline );
 	public final ASTNode table_inlineelement() throws RecognitionException {
 	ASTNode element =  null;
 
@@ -8863,7 +8872,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:493:2: (l= link | i= image | e= extension | nw= nowiki_inline )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:504:2: (l= link | i= image | e= extension | nw= nowiki_inline )
 		int alt109=4;
 		switch ( input.LA(1) ) {
 		case LINK_OPEN:
@@ -8889,16 +8898,16 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return element;}
 		NoViableAltException nvae =
-			new NoViableAltException("492:1: table_inlineelement returns [ASTNode element = null] : (l= link | i= image | e= extension | nw= nowiki_inline );", 109, 0, input);
+			new NoViableAltException("503:1: table_inlineelement returns [ASTNode element = null] : (l= link | i= image | e= extension | nw= nowiki_inline );", 109, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt109) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:493:4: l= link
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:504:4: l= link
 			{
-			pushFollow(FOLLOW_link_in_table_inlineelement2898);
+			pushFollow(FOLLOW_link_in_table_inlineelement2913);
 			l=link();
 			_fsp--;
 			if (failed) return element;
@@ -8909,9 +8918,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:494:4: i= image
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:505:4: i= image
 			{
-			pushFollow(FOLLOW_image_in_table_inlineelement2908);
+			pushFollow(FOLLOW_image_in_table_inlineelement2923);
 			i=image();
 			_fsp--;
 			if (failed) return element;
@@ -8922,9 +8931,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 3 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:495:4: e= extension
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:506:4: e= extension
 			{
-			pushFollow(FOLLOW_extension_in_table_inlineelement2919);
+			pushFollow(FOLLOW_extension_in_table_inlineelement2934);
 			e=extension();
 			_fsp--;
 			if (failed) return element;
@@ -8935,9 +8944,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 4 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:496:4: nw= nowiki_inline
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:507:4: nw= nowiki_inline
 			{
-			pushFollow(FOLLOW_nowiki_inline_in_table_inlineelement2929);
+			pushFollow(FOLLOW_nowiki_inline_in_table_inlineelement2944);
 			nw=nowiki_inline();
 			_fsp--;
 			if (failed) return element;
@@ -8962,7 +8971,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_unformatted
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:498:1: table_unformatted returns [CollectionNode text = new CollectionNode()] : (t= table_unformatted_text | ( forced_linebreak | e= escaped )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:509:1: table_unformatted returns [CollectionNode text = new CollectionNode()] : (t= table_unformatted_text | ( forced_linebreak | e= escaped )+ );
 	public final CollectionNode table_unformatted() throws RecognitionException {
 	CollectionNode text =  new CollectionNode();
 
@@ -8972,7 +8981,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:499:2: (t= table_unformatted_text | ( forced_linebreak | e= escaped )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:510:2: (t= table_unformatted_text | ( forced_linebreak | e= escaped )+ )
 		int alt111=2;
 		int LA111_0 = input.LA(1);
 
@@ -8985,15 +8994,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return text;}
 		NoViableAltException nvae =
-			new NoViableAltException("498:1: table_unformatted returns [CollectionNode text = new CollectionNode()] : (t= table_unformatted_text | ( forced_linebreak | e= escaped )+ );", 111, 0, input);
+			new NoViableAltException("509:1: table_unformatted returns [CollectionNode text = new CollectionNode()] : (t= table_unformatted_text | ( forced_linebreak | e= escaped )+ );", 111, 0, input);
 
 		throw nvae;
 		}
 		switch (alt111) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:499:5: t= table_unformatted_text
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:510:5: t= table_unformatted_text
 			{
-			pushFollow(FOLLOW_table_unformatted_text_in_table_unformatted2951);
+			pushFollow(FOLLOW_table_unformatted_text_in_table_unformatted2966);
 			t=table_unformatted_text();
 			_fsp--;
 			if (failed) return text;
@@ -9004,9 +9013,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:500:5: ( forced_linebreak | e= escaped )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:511:5: ( forced_linebreak | e= escaped )+
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:500:5: ( forced_linebreak | e= escaped )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:511:5: ( forced_linebreak | e= escaped )+
 			int cnt110=0;
 			loop110:
 			do {
@@ -9023,9 +9032,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt110) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:500:6: forced_linebreak
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:511:6: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_table_unformatted2960);
+				pushFollow(FOLLOW_forced_linebreak_in_table_unformatted2975);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return text;
@@ -9036,9 +9045,9 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 2 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:501:5: e= escaped
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:512:5: e= escaped
 				{
-				pushFollow(FOLLOW_escaped_in_table_unformatted2973);
+				pushFollow(FOLLOW_escaped_in_table_unformatted2988);
 				e=escaped();
 				_fsp--;
 				if (failed) return text;
@@ -9077,17 +9086,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_unformatted_text
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:504:1: table_unformatted_text returns [StringBundler text = new StringBundler()] : (c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:515:1: table_unformatted_text returns [StringBundler text = new StringBundler()] : (c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ ;
 	public final StringBundler table_unformatted_text() throws RecognitionException {
 	StringBundler text =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:505:2: ( (c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:505:4: (c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:516:2: ( (c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:516:4: (c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:505:4: (c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:516:4: (c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
 		int cnt112=0;
 		loop112:
 		do {
@@ -9101,7 +9110,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt112) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:505:6: c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:516:6: c=~ ( PIPE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||input.LA(1)==EQUAL||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
@@ -9112,7 +9121,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_table_unformatted_text2999);	 throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_table_unformatted_text3014);	 throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -9148,7 +9157,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start nowiki_block
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:519:1: nowiki_block returns [NoWikiSectionNode nowikiNode] : nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:530:1: nowiki_block returns [NoWikiSectionNode nowikiNode] : nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator ;
 	public final NoWikiSectionNode nowiki_block() throws RecognitionException {
 	NoWikiSectionNode nowikiNode = null;
 
@@ -9156,25 +9165,25 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:520:2: ( nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:520:4: nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:531:2: ( nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:531:4: nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator
 		{
-		pushFollow(FOLLOW_nowikiblock_open_markup_in_nowiki_block3096);
+		pushFollow(FOLLOW_nowikiblock_open_markup_in_nowiki_block3111);
 		nowikiblock_open_markup();
 		_fsp--;
 		if (failed) return nowikiNode;
-		pushFollow(FOLLOW_nowiki_block_contents_in_nowiki_block3103);
+		pushFollow(FOLLOW_nowiki_block_contents_in_nowiki_block3118);
 		contents=nowiki_block_contents();
 		_fsp--;
 		if (failed) return nowikiNode;
 		if ( backtracking==0 ) {
 		  nowikiNode = new NoWikiSectionNode(input.toString(contents.start,contents.stop).toString());
 		}
-		pushFollow(FOLLOW_nowikiblock_close_markup_in_nowiki_block3109);
+		pushFollow(FOLLOW_nowikiblock_close_markup_in_nowiki_block3124);
 		nowikiblock_close_markup();
 		_fsp--;
 		if (failed) return nowikiNode;
-		pushFollow(FOLLOW_paragraph_separator_in_nowiki_block3112);
+		pushFollow(FOLLOW_paragraph_separator_in_nowiki_block3127);
 		paragraph_separator();
 		_fsp--;
 		if (failed) return nowikiNode;
@@ -9194,17 +9203,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start nowikiblock_open_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:524:1: nowikiblock_open_markup : nowiki_open_markup newline ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:535:1: nowikiblock_open_markup : nowiki_open_markup newline ;
 	public final void nowikiblock_open_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:525:2: ( nowiki_open_markup newline )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:525:4: nowiki_open_markup newline
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:536:2: ( nowiki_open_markup newline )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:536:4: nowiki_open_markup newline
 		{
-		pushFollow(FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3127);
+		pushFollow(FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3142);
 		nowiki_open_markup();
 		_fsp--;
 		if (failed) return ;
-		pushFollow(FOLLOW_newline_in_nowikiblock_open_markup3130);
+		pushFollow(FOLLOW_newline_in_nowikiblock_open_markup3145);
 		newline();
 		_fsp--;
 		if (failed) return ;
@@ -9224,13 +9233,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start nowikiblock_close_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:528:1: nowikiblock_close_markup : NOWIKI_BLOCK_CLOSE ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:539:1: nowikiblock_close_markup : NOWIKI_BLOCK_CLOSE ;
 	public final void nowikiblock_close_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:529:2: ( NOWIKI_BLOCK_CLOSE )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:529:4: NOWIKI_BLOCK_CLOSE
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:540:2: ( NOWIKI_BLOCK_CLOSE )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:540:4: NOWIKI_BLOCK_CLOSE
 		{
-		match(input,NOWIKI_BLOCK_CLOSE,FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3142); if (failed) return ;
+		match(input,NOWIKI_BLOCK_CLOSE,FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3157); if (failed) return ;
 
 		}
 
@@ -9247,7 +9256,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start nowiki_inline
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:532:1: nowiki_inline returns [NoWikiSectionNode nowiki = null] : nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:543:1: nowiki_inline returns [NoWikiSectionNode nowiki = null] : nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup ;
 	public final NoWikiSectionNode nowiki_inline() throws RecognitionException {
 	NoWikiSectionNode nowiki =  null;
 
@@ -9255,18 +9264,18 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:533:2: ( nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:533:4: nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:544:2: ( nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:544:4: nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup
 		{
-		pushFollow(FOLLOW_nowiki_open_markup_in_nowiki_inline3157);
+		pushFollow(FOLLOW_nowiki_open_markup_in_nowiki_inline3172);
 		nowiki_open_markup();
 		_fsp--;
 		if (failed) return nowiki;
-		pushFollow(FOLLOW_nowiki_inline_contents_in_nowiki_inline3164);
+		pushFollow(FOLLOW_nowiki_inline_contents_in_nowiki_inline3179);
 		t=nowiki_inline_contents();
 		_fsp--;
 		if (failed) return nowiki;
-		pushFollow(FOLLOW_nowiki_close_markup_in_nowiki_inline3169);
+		pushFollow(FOLLOW_nowiki_close_markup_in_nowiki_inline3184);
 		nowiki_close_markup();
 		_fsp--;
 		if (failed) return nowiki;
@@ -9292,7 +9301,7 @@ public class Creole10Parser extends Parser {
 	};
 
 	// $ANTLR start nowiki_block_contents
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:536:1: nowiki_block_contents returns [StringBundler contents = new StringBundler()] : (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )* ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:547:1: nowiki_block_contents returns [StringBundler contents = new StringBundler()] : (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )* ;
 	public final nowiki_block_contents_return nowiki_block_contents() throws RecognitionException {
 	nowiki_block_contents_return retval = new nowiki_block_contents_return();
 	retval.start = input.LT(1);
@@ -9300,10 +9309,10 @@ public class Creole10Parser extends Parser {
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:537:2: ( (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )* )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:537:4: (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:2: ( (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )* )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:4: (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )*
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:537:4: (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:4: (c=~ ( NOWIKI_BLOCK_CLOSE | EOF ) )*
 		loop113:
 		do {
 		int alt113=2;
@@ -9316,7 +9325,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt113) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:537:5: c=~ ( NOWIKI_BLOCK_CLOSE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:5: c=~ ( NOWIKI_BLOCK_CLOSE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=ESCAPE)||(input.LA(1)>=NOWIKI_CLOSE && input.LA(1)<=78) ) {
@@ -9327,7 +9336,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return retval;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_block_contents3189);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_block_contents3204);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -9360,17 +9369,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start nowiki_inline_contents
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:540:1: nowiki_inline_contents returns [StringBundler text = new StringBundler()] : (c=~ ( NOWIKI_CLOSE | NEWLINE | EOF ) )* ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:551:1: nowiki_inline_contents returns [StringBundler text = new StringBundler()] : (c=~ ( NOWIKI_CLOSE | NEWLINE | EOF ) )* ;
 	public final StringBundler nowiki_inline_contents() throws RecognitionException {
 	StringBundler text =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:541:2: ( (c=~ ( NOWIKI_CLOSE | NEWLINE | EOF ) )* )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:541:4: (c=~ ( NOWIKI_CLOSE | NEWLINE | EOF ) )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:552:2: ( (c=~ ( NOWIKI_CLOSE | NEWLINE | EOF ) )* )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:552:4: (c=~ ( NOWIKI_CLOSE | NEWLINE | EOF ) )*
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:541:4: (c=~ ( NOWIKI_CLOSE | NEWLINE | EOF ) )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:552:4: (c=~ ( NOWIKI_CLOSE | NEWLINE | EOF ) )*
 		loop114:
 		do {
 		int alt114=2;
@@ -9383,7 +9392,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt114) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:541:5: c=~ ( NOWIKI_CLOSE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:552:5: c=~ ( NOWIKI_CLOSE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=NOWIKI_BLOCK_CLOSE)||(input.LA(1)>=LINK_CLOSE && input.LA(1)<=78) ) {
@@ -9394,7 +9403,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_inline_contents3223);	 throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_inline_contents3238);	 throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -9425,19 +9434,19 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start horizontalrule
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:548:1: horizontalrule returns [ASTNode horizontal = null] : horizontalrule_markup ( blanks )? paragraph_separator ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:559:1: horizontalrule returns [ASTNode horizontal = null] : horizontalrule_markup ( blanks )? paragraph_separator ;
 	public final ASTNode horizontalrule() throws RecognitionException {
 	ASTNode horizontal =  null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:549:2: ( horizontalrule_markup ( blanks )? paragraph_separator )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:549:4: horizontalrule_markup ( blanks )? paragraph_separator
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:560:2: ( horizontalrule_markup ( blanks )? paragraph_separator )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:560:4: horizontalrule_markup ( blanks )? paragraph_separator
 		{
-		pushFollow(FOLLOW_horizontalrule_markup_in_horizontalrule3260);
+		pushFollow(FOLLOW_horizontalrule_markup_in_horizontalrule3275);
 		horizontalrule_markup();
 		_fsp--;
 		if (failed) return horizontal;
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:549:27: ( blanks )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:560:27: ( blanks )?
 		int alt115=2;
 		int LA115_0 = input.LA(1);
 
@@ -9446,9 +9455,9 @@ public class Creole10Parser extends Parser {
 		}
 		switch (alt115) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:549:29: blanks
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:560:29: blanks
 			{
-			pushFollow(FOLLOW_blanks_in_horizontalrule3265);
+			pushFollow(FOLLOW_blanks_in_horizontalrule3280);
 			blanks();
 			_fsp--;
 			if (failed) return horizontal;
@@ -9458,7 +9467,7 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		pushFollow(FOLLOW_paragraph_separator_in_horizontalrule3271);
+		pushFollow(FOLLOW_paragraph_separator_in_horizontalrule3286);
 		paragraph_separator();
 		_fsp--;
 		if (failed) return horizontal;
@@ -9481,7 +9490,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:556:1: link returns [LinkNode link = null] : link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:567:1: link returns [LinkNode link = null] : link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup ;
 	public final LinkNode link() throws RecognitionException {
 	LinkNode link =  null;
 
@@ -9491,21 +9500,21 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:557:2: ( link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:557:4: link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:568:2: ( link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:568:4: link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup
 		{
-		pushFollow(FOLLOW_link_open_markup_in_link3293);
+		pushFollow(FOLLOW_link_open_markup_in_link3308);
 		link_open_markup();
 		_fsp--;
 		if (failed) return link;
-		pushFollow(FOLLOW_link_address_in_link3299);
+		pushFollow(FOLLOW_link_address_in_link3314);
 		a=link_address();
 		_fsp--;
 		if (failed) return link;
 		if ( backtracking==0 ) {
 		  link = a; 
 		}
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:557:59: ( link_description_markup d= link_description )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:568:59: ( link_description_markup d= link_description )?
 		int alt116=2;
 		int LA116_0 = input.LA(1);
 
@@ -9514,13 +9523,13 @@ public class Creole10Parser extends Parser {
 		}
 		switch (alt116) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:557:60: link_description_markup d= link_description
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:568:60: link_description_markup d= link_description
 			{
-			pushFollow(FOLLOW_link_description_markup_in_link3305);
+			pushFollow(FOLLOW_link_description_markup_in_link3320);
 			link_description_markup();
 			_fsp--;
 			if (failed) return link;
-			pushFollow(FOLLOW_link_description_in_link3315);
+			pushFollow(FOLLOW_link_description_in_link3330);
 			d=link_description();
 			_fsp--;
 			if (failed) return link;
@@ -9539,7 +9548,7 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		pushFollow(FOLLOW_link_close_markup_in_link3323);
+		pushFollow(FOLLOW_link_close_markup_in_link3338);
 		link_close_markup();
 		_fsp--;
 		if (failed) return link;
@@ -9559,7 +9568,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_address
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );
 	public final LinkNode link_address() throws RecognitionException {
 	LinkNode link = null;
 
@@ -9571,7 +9580,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:568:2: (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:579:2: (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri )
 		int alt117=2;
 		switch ( input.LA(1) ) {
 		case 44:
@@ -9593,7 +9602,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 				throw nvae;
 			}
@@ -9604,7 +9613,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 16, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 16, input);
 
 			throw nvae;
 			}
@@ -9615,7 +9624,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 1, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 1, input);
 
 			throw nvae;
 		}
@@ -9658,7 +9667,7 @@ public class Creole10Parser extends Parser {
 						else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 							throw nvae;
 						}
@@ -9669,7 +9678,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 120, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 120, input);
 
 						throw nvae;
 						}
@@ -9680,7 +9689,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 109, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 109, input);
 
 						throw nvae;
 					}
@@ -9691,7 +9700,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 93, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 93, input);
 
 					throw nvae;
 					}
@@ -9702,7 +9711,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 74, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 74, input);
 
 					throw nvae;
 				}
@@ -9713,7 +9722,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 55, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 55, input);
 
 				throw nvae;
 				}
@@ -9724,7 +9733,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 35, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 35, input);
 
 				throw nvae;
 			}
@@ -9735,7 +9744,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 17, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 17, input);
 
 			throw nvae;
 			}
@@ -9746,7 +9755,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 2, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 2, input);
 
 			throw nvae;
 		}
@@ -9783,7 +9792,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 						throw nvae;
 					}
@@ -9794,7 +9803,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 94, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 94, input);
 
 					throw nvae;
 					}
@@ -9805,7 +9814,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 75, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 75, input);
 
 					throw nvae;
 				}
@@ -9816,7 +9825,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 56, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 56, input);
 
 				throw nvae;
 				}
@@ -9827,7 +9836,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 36, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 36, input);
 
 				throw nvae;
 			}
@@ -9838,7 +9847,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 18, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 18, input);
 
 			throw nvae;
 			}
@@ -9849,7 +9858,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 3, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 3, input);
 
 			throw nvae;
 		}
@@ -9886,7 +9895,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 						throw nvae;
 					}
@@ -9897,7 +9906,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 95, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 95, input);
 
 					throw nvae;
 					}
@@ -9908,7 +9917,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 76, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 76, input);
 
 					throw nvae;
 				}
@@ -9919,7 +9928,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 57, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 57, input);
 
 				throw nvae;
 				}
@@ -9930,7 +9939,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 37, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 37, input);
 
 				throw nvae;
 			}
@@ -9941,7 +9950,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 19, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 19, input);
 
 			throw nvae;
 			}
@@ -9952,7 +9961,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 4, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 4, input);
 
 			throw nvae;
 		}
@@ -9992,7 +10001,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 						throw nvae;
 						}
@@ -10003,7 +10012,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 110, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 110, input);
 
 						throw nvae;
 					}
@@ -10014,7 +10023,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 96, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 96, input);
 
 					throw nvae;
 					}
@@ -10025,7 +10034,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 77, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 77, input);
 
 					throw nvae;
 				}
@@ -10036,7 +10045,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 58, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 58, input);
 
 				throw nvae;
 				}
@@ -10047,7 +10056,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 38, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 38, input);
 
 				throw nvae;
 			}
@@ -10058,7 +10067,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 20, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 20, input);
 
 			throw nvae;
 			}
@@ -10069,7 +10078,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 5, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 5, input);
 
 			throw nvae;
 		}
@@ -10112,7 +10121,7 @@ public class Creole10Parser extends Parser {
 						else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 							throw nvae;
 						}
@@ -10123,7 +10132,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 121, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 121, input);
 
 						throw nvae;
 						}
@@ -10134,7 +10143,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 111, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 111, input);
 
 						throw nvae;
 					}
@@ -10145,7 +10154,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 97, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 97, input);
 
 					throw nvae;
 					}
@@ -10156,7 +10165,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 78, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 78, input);
 
 					throw nvae;
 				}
@@ -10167,7 +10176,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 59, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 59, input);
 
 				throw nvae;
 				}
@@ -10178,7 +10187,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 39, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 39, input);
 
 				throw nvae;
 			}
@@ -10218,7 +10227,7 @@ public class Creole10Parser extends Parser {
 							else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-								new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+								new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 							throw nvae;
 							}
@@ -10229,7 +10238,7 @@ public class Creole10Parser extends Parser {
 						else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 129, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 129, input);
 
 							throw nvae;
 						}
@@ -10240,7 +10249,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 122, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 122, input);
 
 						throw nvae;
 						}
@@ -10251,7 +10260,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 112, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 112, input);
 
 						throw nvae;
 					}
@@ -10262,7 +10271,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 98, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 98, input);
 
 					throw nvae;
 					}
@@ -10273,7 +10282,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 79, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 79, input);
 
 					throw nvae;
 				}
@@ -10284,7 +10293,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 60, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 60, input);
 
 				throw nvae;
 				}
@@ -10295,7 +10304,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 40, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 40, input);
 
 				throw nvae;
 			}
@@ -10380,7 +10389,7 @@ public class Creole10Parser extends Parser {
 			default:
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 21, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 21, input);
 
 			throw nvae;
 			}
@@ -10421,7 +10430,7 @@ public class Creole10Parser extends Parser {
 						else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 							throw nvae;
 						}
@@ -10432,7 +10441,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 123, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 123, input);
 
 						throw nvae;
 						}
@@ -10443,7 +10452,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 113, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 113, input);
 
 						throw nvae;
 					}
@@ -10454,7 +10463,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 99, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 99, input);
 
 					throw nvae;
 					}
@@ -10465,7 +10474,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 80, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 80, input);
 
 					throw nvae;
 				}
@@ -10476,7 +10485,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 61, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 61, input);
 
 				throw nvae;
 				}
@@ -10487,7 +10496,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 41, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 41, input);
 
 				throw nvae;
 			}
@@ -10498,7 +10507,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 22, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 22, input);
 
 			throw nvae;
 			}
@@ -10583,7 +10592,7 @@ public class Creole10Parser extends Parser {
 		default:
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 6, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 6, input);
 
 			throw nvae;
 		}
@@ -10618,7 +10627,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 					throw nvae;
 					}
@@ -10629,7 +10638,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 81, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 81, input);
 
 					throw nvae;
 				}
@@ -10640,7 +10649,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 62, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 62, input);
 
 				throw nvae;
 				}
@@ -10651,7 +10660,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 42, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 42, input);
 
 				throw nvae;
 			}
@@ -10662,7 +10671,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 23, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 23, input);
 
 			throw nvae;
 			}
@@ -10702,7 +10711,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 						throw nvae;
 						}
@@ -10710,7 +10719,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 114, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 114, input);
 
 						throw nvae;
 					}
@@ -10721,7 +10730,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 100, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 100, input);
 
 					throw nvae;
 					}
@@ -10732,7 +10741,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 82, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 82, input);
 
 					throw nvae;
 				}
@@ -10743,7 +10752,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 63, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 63, input);
 
 				throw nvae;
 				}
@@ -10754,7 +10763,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 43, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 43, input);
 
 				throw nvae;
 			}
@@ -10765,7 +10774,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 24, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 24, input);
 
 			throw nvae;
 			}
@@ -10850,7 +10859,7 @@ public class Creole10Parser extends Parser {
 		default:
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 7, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 7, input);
 
 			throw nvae;
 		}
@@ -10888,7 +10897,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 						throw nvae;
 					}
@@ -10899,7 +10908,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 101, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 101, input);
 
 					throw nvae;
 					}
@@ -10910,7 +10919,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 83, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 83, input);
 
 					throw nvae;
 				}
@@ -10921,7 +10930,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 64, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 64, input);
 
 				throw nvae;
 				}
@@ -10932,7 +10941,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 44, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 44, input);
 
 				throw nvae;
 			}
@@ -10943,7 +10952,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 25, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 25, input);
 
 			throw nvae;
 			}
@@ -10989,7 +10998,7 @@ public class Creole10Parser extends Parser {
 							else {
 								if (backtracking>0) {failed=true; return link;}
 								NoViableAltException nvae =
-								new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+								new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 								throw nvae;
 							}
@@ -11000,7 +11009,7 @@ public class Creole10Parser extends Parser {
 							else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-								new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 133, input);
+								new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 133, input);
 
 							throw nvae;
 							}
@@ -11011,7 +11020,7 @@ public class Creole10Parser extends Parser {
 						else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 130, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 130, input);
 
 							throw nvae;
 						}
@@ -11022,7 +11031,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 124, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 124, input);
 
 						throw nvae;
 						}
@@ -11033,7 +11042,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 115, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 115, input);
 
 						throw nvae;
 					}
@@ -11044,7 +11053,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 102, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 102, input);
 
 					throw nvae;
 					}
@@ -11055,7 +11064,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 84, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 84, input);
 
 					throw nvae;
 				}
@@ -11066,7 +11075,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 65, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 65, input);
 
 				throw nvae;
 				}
@@ -11077,7 +11086,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 45, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 45, input);
 
 				throw nvae;
 			}
@@ -11114,7 +11123,7 @@ public class Creole10Parser extends Parser {
 						else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 							throw nvae;
 						}
@@ -11125,7 +11134,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 125, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 125, input);
 
 						throw nvae;
 						}
@@ -11136,7 +11145,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 116, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 116, input);
 
 						throw nvae;
 					}
@@ -11147,7 +11156,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 103, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 103, input);
 
 					throw nvae;
 					}
@@ -11158,7 +11167,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 85, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 85, input);
 
 					throw nvae;
 				}
@@ -11169,7 +11178,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 66, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 66, input);
 
 				throw nvae;
 				}
@@ -11180,7 +11189,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 46, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 46, input);
 
 				throw nvae;
 			}
@@ -11265,7 +11274,7 @@ public class Creole10Parser extends Parser {
 			default:
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 26, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 26, input);
 
 			throw nvae;
 			}
@@ -11351,7 +11360,7 @@ public class Creole10Parser extends Parser {
 		default:
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 8, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 8, input);
 
 			throw nvae;
 		}
@@ -11389,7 +11398,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 						throw nvae;
 					}
@@ -11400,7 +11409,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 104, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 104, input);
 
 					throw nvae;
 					}
@@ -11411,7 +11420,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 86, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 86, input);
 
 					throw nvae;
 				}
@@ -11422,7 +11431,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 67, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 67, input);
 
 				throw nvae;
 				}
@@ -11433,7 +11442,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 47, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 47, input);
 
 				throw nvae;
 			}
@@ -11444,7 +11453,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 27, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 27, input);
 
 			throw nvae;
 			}
@@ -11455,7 +11464,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 9, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 9, input);
 
 			throw nvae;
 		}
@@ -11498,7 +11507,7 @@ public class Creole10Parser extends Parser {
 						else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 							throw nvae;
 						}
@@ -11509,7 +11518,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 126, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 126, input);
 
 						throw nvae;
 						}
@@ -11520,7 +11529,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 117, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 117, input);
 
 						throw nvae;
 					}
@@ -11531,7 +11540,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 105, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 105, input);
 
 					throw nvae;
 					}
@@ -11542,7 +11551,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 87, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 87, input);
 
 					throw nvae;
 				}
@@ -11553,7 +11562,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 68, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 68, input);
 
 				throw nvae;
 				}
@@ -11564,7 +11573,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 48, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 48, input);
 
 				throw nvae;
 			}
@@ -11575,7 +11584,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 28, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 28, input);
 
 			throw nvae;
 			}
@@ -11586,7 +11595,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 10, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 10, input);
 
 			throw nvae;
 		}
@@ -11620,7 +11629,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 					throw nvae;
 					}
@@ -11631,7 +11640,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 88, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 88, input);
 
 					throw nvae;
 				}
@@ -11642,7 +11651,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 69, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 69, input);
 
 				throw nvae;
 				}
@@ -11653,7 +11662,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 49, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 49, input);
 
 				throw nvae;
 			}
@@ -11664,7 +11673,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 29, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 29, input);
 
 			throw nvae;
 			}
@@ -11710,7 +11719,7 @@ public class Creole10Parser extends Parser {
 							else {
 								if (backtracking>0) {failed=true; return link;}
 								NoViableAltException nvae =
-								new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+								new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 								throw nvae;
 							}
@@ -11721,7 +11730,7 @@ public class Creole10Parser extends Parser {
 							else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-								new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 134, input);
+								new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 134, input);
 
 							throw nvae;
 							}
@@ -11732,7 +11741,7 @@ public class Creole10Parser extends Parser {
 						else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 131, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 131, input);
 
 							throw nvae;
 						}
@@ -11743,7 +11752,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 127, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 127, input);
 
 						throw nvae;
 						}
@@ -11754,7 +11763,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 118, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 118, input);
 
 						throw nvae;
 					}
@@ -11765,7 +11774,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 106, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 106, input);
 
 					throw nvae;
 					}
@@ -11776,7 +11785,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 89, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 89, input);
 
 					throw nvae;
 				}
@@ -11787,7 +11796,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 70, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 70, input);
 
 				throw nvae;
 				}
@@ -11798,7 +11807,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 50, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 50, input);
 
 				throw nvae;
 			}
@@ -11809,7 +11818,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 30, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 30, input);
 
 			throw nvae;
 			}
@@ -11894,7 +11903,7 @@ public class Creole10Parser extends Parser {
 		default:
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 11, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 11, input);
 
 			throw nvae;
 		}
@@ -11932,7 +11941,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 						throw nvae;
 					}
@@ -11943,7 +11952,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 107, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 107, input);
 
 					throw nvae;
 					}
@@ -11954,7 +11963,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 90, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 90, input);
 
 					throw nvae;
 				}
@@ -11965,7 +11974,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 71, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 71, input);
 
 				throw nvae;
 				}
@@ -11976,7 +11985,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 51, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 51, input);
 
 				throw nvae;
 			}
@@ -11987,7 +11996,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 31, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 31, input);
 
 			throw nvae;
 			}
@@ -11998,7 +12007,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 12, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 12, input);
 
 			throw nvae;
 		}
@@ -12044,7 +12053,7 @@ public class Creole10Parser extends Parser {
 							else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-								new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+								new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 							throw nvae;
 							}
@@ -12055,7 +12064,7 @@ public class Creole10Parser extends Parser {
 						else {
 							if (backtracking>0) {failed=true; return link;}
 							NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 132, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 132, input);
 
 							throw nvae;
 						}
@@ -12066,7 +12075,7 @@ public class Creole10Parser extends Parser {
 						else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-							new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 128, input);
+							new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 128, input);
 
 						throw nvae;
 						}
@@ -12077,7 +12086,7 @@ public class Creole10Parser extends Parser {
 					else {
 						if (backtracking>0) {failed=true; return link;}
 						NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 119, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 119, input);
 
 						throw nvae;
 					}
@@ -12088,7 +12097,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 108, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 108, input);
 
 					throw nvae;
 					}
@@ -12099,7 +12108,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 91, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 91, input);
 
 					throw nvae;
 				}
@@ -12110,7 +12119,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 72, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 72, input);
 
 				throw nvae;
 				}
@@ -12121,7 +12130,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 52, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 52, input);
 
 				throw nvae;
 			}
@@ -12132,7 +12141,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 32, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 32, input);
 
 			throw nvae;
 			}
@@ -12143,7 +12152,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 13, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 13, input);
 
 			throw nvae;
 		}
@@ -12177,7 +12186,7 @@ public class Creole10Parser extends Parser {
 					else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-						new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
+						new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 34, input);
 
 					throw nvae;
 					}
@@ -12188,7 +12197,7 @@ public class Creole10Parser extends Parser {
 				else {
 					if (backtracking>0) {failed=true; return link;}
 					NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 92, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 92, input);
 
 					throw nvae;
 				}
@@ -12199,7 +12208,7 @@ public class Creole10Parser extends Parser {
 				else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-					new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 73, input);
+					new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 73, input);
 
 				throw nvae;
 				}
@@ -12210,7 +12219,7 @@ public class Creole10Parser extends Parser {
 			else {
 				if (backtracking>0) {failed=true; return link;}
 				NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 53, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 53, input);
 
 				throw nvae;
 			}
@@ -12221,7 +12230,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-				new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 33, input);
+				new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 33, input);
 
 			throw nvae;
 			}
@@ -12232,7 +12241,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return link;}
 			NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 14, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 14, input);
 
 			throw nvae;
 		}
@@ -12303,21 +12312,21 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return link;}
 		NoViableAltException nvae =
-			new NoViableAltException("567:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 0, input);
+			new NoViableAltException("578:1: link_address returns [LinkNode link =null] : (li= link_interwiki_uri ':' p= link_interwiki_pagename | lu= link_uri );", 117, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt117) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:568:4: li= link_interwiki_uri ':' p= link_interwiki_pagename
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:579:4: li= link_interwiki_uri ':' p= link_interwiki_pagename
 			{
-			pushFollow(FOLLOW_link_interwiki_uri_in_link_address3342);
+			pushFollow(FOLLOW_link_interwiki_uri_in_link_address3357);
 			li=link_interwiki_uri();
 			_fsp--;
 			if (failed) return link;
-			match(input,43,FOLLOW_43_in_link_address3345); if (failed) return link;
-			pushFollow(FOLLOW_link_interwiki_pagename_in_link_address3352);
+			match(input,43,FOLLOW_43_in_link_address3360); if (failed) return link;
+			pushFollow(FOLLOW_link_interwiki_pagename_in_link_address3367);
 			p=link_interwiki_pagename();
 			_fsp--;
 			if (failed) return link;
@@ -12331,9 +12340,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:572:4: lu= link_uri
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:583:4: lu= link_uri
 			{
-			pushFollow(FOLLOW_link_uri_in_link_address3363);
+			pushFollow(FOLLOW_link_uri_in_link_address3378);
 			lu=link_uri();
 			_fsp--;
 			if (failed) return link;
@@ -12358,12 +12367,12 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_interwiki_uri
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:574:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:585:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );
 	public final InterwikiLinkNode link_interwiki_uri() throws RecognitionException {
 	InterwikiLinkNode interwiki =  null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:575:2: ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:586:2: ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' )
 		int alt118=20;
 		switch ( input.LA(1) ) {
 		case 44:
@@ -12407,7 +12416,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return interwiki;}
 			NoViableAltException nvae =
-				new NoViableAltException("574:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 15, input);
+				new NoViableAltException("585:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 15, input);
 
 			throw nvae;
 			}
@@ -12418,7 +12427,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return interwiki;}
 			NoViableAltException nvae =
-			new NoViableAltException("574:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 6, input);
+			new NoViableAltException("585:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 6, input);
 
 			throw nvae;
 		}
@@ -12437,7 +12446,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return interwiki;}
 			NoViableAltException nvae =
-			new NoViableAltException("574:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 7, input);
+			new NoViableAltException("585:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 7, input);
 
 			throw nvae;
 		}
@@ -12459,7 +12468,7 @@ public class Creole10Parser extends Parser {
 			else {
 			if (backtracking>0) {failed=true; return interwiki;}
 			NoViableAltException nvae =
-				new NoViableAltException("574:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 19, input);
+				new NoViableAltException("585:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 19, input);
 
 			throw nvae;
 			}
@@ -12470,7 +12479,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return interwiki;}
 			NoViableAltException nvae =
-			new NoViableAltException("574:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 8, input);
+			new NoViableAltException("585:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 8, input);
 
 			throw nvae;
 		}
@@ -12499,7 +12508,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return interwiki;}
 			NoViableAltException nvae =
-			new NoViableAltException("574:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 11, input);
+			new NoViableAltException("585:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 11, input);
 
 			throw nvae;
 		}
@@ -12523,268 +12532,268 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return interwiki;}
 		NoViableAltException nvae =
-			new NoViableAltException("574:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 0, input);
+			new NoViableAltException("585:1: link_interwiki_uri returns [InterwikiLinkNode interwiki = null] : ( 'C' '2' | 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i' | 'F' 'l' 'i' 'c' 'k' 'r' | 'G' 'o' 'o' 'g' 'l' 'e' | 'J' 'S' 'P' 'W' 'i' 'k' 'i' | 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l' | 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i' | 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n' | 'O' 'd' 'd' 'm' 'u' 's' 'e' | 'O' 'h' 'a' 'n' 'a' | 'P' 'm' 'W' 'i' 'k' 'i' | 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i' | 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i' | 'R' 'a' 'd' 'e' 'o' 'x' | 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p' | 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i' | 'T' 'W' 'i' 'k' 'i' | 'U' 's' 'e' 'm' 'o' 'd' | 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a' | 'X' 'W' 'i' 'k' 'i' );", 118, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt118) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:575:4: 'C' '2'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:586:4: 'C' '2'
 			{
-			match(input,44,FOLLOW_44_in_link_interwiki_uri3379); if (failed) return interwiki;
-			match(input,45,FOLLOW_45_in_link_interwiki_uri3381); if (failed) return interwiki;
+			match(input,44,FOLLOW_44_in_link_interwiki_uri3394); if (failed) return interwiki;
+			match(input,45,FOLLOW_45_in_link_interwiki_uri3396); if (failed) return interwiki;
 
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:576:4: 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:587:4: 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i'
 			{
-			match(input,46,FOLLOW_46_in_link_interwiki_uri3386); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3388); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3390); if (failed) return interwiki;
-			match(input,49,FOLLOW_49_in_link_interwiki_uri3392); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3394); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3396); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3398); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3400); if (failed) return interwiki;
+			match(input,46,FOLLOW_46_in_link_interwiki_uri3401); if (failed) return interwiki;
+			match(input,47,FOLLOW_47_in_link_interwiki_uri3403); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3405); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3407); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3409); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3411); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3413); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3415); if (failed) return interwiki;
 
 			}
 			break;
 		case 3 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:577:4: 'F' 'l' 'i' 'c' 'k' 'r'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:588:4: 'F' 'l' 'i' 'c' 'k' 'r'
 			{
-			match(input,52,FOLLOW_52_in_link_interwiki_uri3405); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3407); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3409); if (failed) return interwiki;
-			match(input,54,FOLLOW_54_in_link_interwiki_uri3411); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3413); if (failed) return interwiki;
-			match(input,55,FOLLOW_55_in_link_interwiki_uri3415); if (failed) return interwiki;
+			match(input,52,FOLLOW_52_in_link_interwiki_uri3420); if (failed) return interwiki;
+			match(input,53,FOLLOW_53_in_link_interwiki_uri3422); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3424); if (failed) return interwiki;
+			match(input,54,FOLLOW_54_in_link_interwiki_uri3426); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3428); if (failed) return interwiki;
+			match(input,55,FOLLOW_55_in_link_interwiki_uri3430); if (failed) return interwiki;
 
 			}
 			break;
 		case 4 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:578:4: 'G' 'o' 'o' 'g' 'l' 'e'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:589:4: 'G' 'o' 'o' 'g' 'l' 'e'
 			{
-			match(input,56,FOLLOW_56_in_link_interwiki_uri3420); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3422); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3424); if (failed) return interwiki;
-			match(input,57,FOLLOW_57_in_link_interwiki_uri3426); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3428); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3430); if (failed) return interwiki;
+			match(input,56,FOLLOW_56_in_link_interwiki_uri3435); if (failed) return interwiki;
+			match(input,47,FOLLOW_47_in_link_interwiki_uri3437); if (failed) return interwiki;
+			match(input,47,FOLLOW_47_in_link_interwiki_uri3439); if (failed) return interwiki;
+			match(input,57,FOLLOW_57_in_link_interwiki_uri3441); if (failed) return interwiki;
+			match(input,53,FOLLOW_53_in_link_interwiki_uri3443); if (failed) return interwiki;
+			match(input,58,FOLLOW_58_in_link_interwiki_uri3445); if (failed) return interwiki;
 
 			}
 			break;
 		case 5 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:579:4: 'J' 'S' 'P' 'W' 'i' 'k' 'i'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:590:4: 'J' 'S' 'P' 'W' 'i' 'k' 'i'
 			{
-			match(input,59,FOLLOW_59_in_link_interwiki_uri3435); if (failed) return interwiki;
-			match(input,60,FOLLOW_60_in_link_interwiki_uri3437); if (failed) return interwiki;
-			match(input,61,FOLLOW_61_in_link_interwiki_uri3439); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3441); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3443); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3445); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3447); if (failed) return interwiki;
+			match(input,59,FOLLOW_59_in_link_interwiki_uri3450); if (failed) return interwiki;
+			match(input,60,FOLLOW_60_in_link_interwiki_uri3452); if (failed) return interwiki;
+			match(input,61,FOLLOW_61_in_link_interwiki_uri3454); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3456); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3458); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3460); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3462); if (failed) return interwiki;
 
 			}
 			break;
 		case 6 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:580:4: 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:591:4: 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l'
 			{
-			match(input,62,FOLLOW_62_in_link_interwiki_uri3452); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3454); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3456); if (failed) return interwiki;
-			match(input,64,FOLLOW_64_in_link_interwiki_uri3458); if (failed) return interwiki;
-			match(input,65,FOLLOW_65_in_link_interwiki_uri3460); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3462); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3464); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3466); if (failed) return interwiki;
+			match(input,62,FOLLOW_62_in_link_interwiki_uri3467); if (failed) return interwiki;
+			match(input,58,FOLLOW_58_in_link_interwiki_uri3469); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3471); if (failed) return interwiki;
+			match(input,64,FOLLOW_64_in_link_interwiki_uri3473); if (failed) return interwiki;
+			match(input,65,FOLLOW_65_in_link_interwiki_uri3475); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3477); if (failed) return interwiki;
+			match(input,53,FOLLOW_53_in_link_interwiki_uri3479); if (failed) return interwiki;
+			match(input,53,FOLLOW_53_in_link_interwiki_uri3481); if (failed) return interwiki;
 
 			}
 			break;
 		case 7 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:581:4: 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:592:4: 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i'
 			{
-			match(input,62,FOLLOW_62_in_link_interwiki_uri3471); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3473); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3475); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3477); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3479); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3481); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3483); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3485); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3487); if (failed) return interwiki;
+			match(input,62,FOLLOW_62_in_link_interwiki_uri3486); if (failed) return interwiki;
+			match(input,58,FOLLOW_58_in_link_interwiki_uri3488); if (failed) return interwiki;
+			match(input,66,FOLLOW_66_in_link_interwiki_uri3490); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3492); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3494); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3496); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3498); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3500); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3502); if (failed) return interwiki;
 
 			}
 			break;
 		case 8 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:582:4: 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:593:4: 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n'
 			{
-			match(input,62,FOLLOW_62_in_link_interwiki_uri3492); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3494); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3496); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3498); if (failed) return interwiki;
-			match(input,62,FOLLOW_62_in_link_interwiki_uri3500); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3502); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3504); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3506); if (failed) return interwiki;
+			match(input,62,FOLLOW_62_in_link_interwiki_uri3507); if (failed) return interwiki;
+			match(input,47,FOLLOW_47_in_link_interwiki_uri3509); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3511); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3513); if (failed) return interwiki;
+			match(input,62,FOLLOW_62_in_link_interwiki_uri3515); if (failed) return interwiki;
+			match(input,47,FOLLOW_47_in_link_interwiki_uri3517); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3519); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3521); if (failed) return interwiki;
 
 			}
 			break;
 		case 9 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:583:4: 'O' 'd' 'd' 'm' 'u' 's' 'e'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:594:4: 'O' 'd' 'd' 'm' 'u' 's' 'e'
 			{
-			match(input,68,FOLLOW_68_in_link_interwiki_uri3511); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3513); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3515); if (failed) return interwiki;
-			match(input,69,FOLLOW_69_in_link_interwiki_uri3517); if (failed) return interwiki;
-			match(input,49,FOLLOW_49_in_link_interwiki_uri3519); if (failed) return interwiki;
-			match(input,70,FOLLOW_70_in_link_interwiki_uri3521); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3523); if (failed) return interwiki;
+			match(input,68,FOLLOW_68_in_link_interwiki_uri3526); if (failed) return interwiki;
+			match(input,66,FOLLOW_66_in_link_interwiki_uri3528); if (failed) return interwiki;
+			match(input,66,FOLLOW_66_in_link_interwiki_uri3530); if (failed) return interwiki;
+			match(input,69,FOLLOW_69_in_link_interwiki_uri3532); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3534); if (failed) return interwiki;
+			match(input,70,FOLLOW_70_in_link_interwiki_uri3536); if (failed) return interwiki;
+			match(input,58,FOLLOW_58_in_link_interwiki_uri3538); if (failed) return interwiki;
 
 			}
 			break;
 		case 10 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:584:4: 'O' 'h' 'a' 'n' 'a'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:595:4: 'O' 'h' 'a' 'n' 'a'
 			{
-			match(input,68,FOLLOW_68_in_link_interwiki_uri3528); if (failed) return interwiki;
-			match(input,71,FOLLOW_71_in_link_interwiki_uri3530); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3532); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3534); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3536); if (failed) return interwiki;
+			match(input,68,FOLLOW_68_in_link_interwiki_uri3543); if (failed) return interwiki;
+			match(input,71,FOLLOW_71_in_link_interwiki_uri3545); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3547); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3549); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3551); if (failed) return interwiki;
 
 			}
 			break;
 		case 11 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:585:4: 'P' 'm' 'W' 'i' 'k' 'i'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:596:4: 'P' 'm' 'W' 'i' 'k' 'i'
 			{
-			match(input,61,FOLLOW_61_in_link_interwiki_uri3541); if (failed) return interwiki;
-			match(input,69,FOLLOW_69_in_link_interwiki_uri3543); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3545); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3547); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3549); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3551); if (failed) return interwiki;
+			match(input,61,FOLLOW_61_in_link_interwiki_uri3556); if (failed) return interwiki;
+			match(input,69,FOLLOW_69_in_link_interwiki_uri3558); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3560); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3562); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3564); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3566); if (failed) return interwiki;
 
 			}
 			break;
 		case 12 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:586:4: 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:597:4: 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i'
 			{
-			match(input,61,FOLLOW_61_in_link_interwiki_uri3556); if (failed) return interwiki;
-			match(input,49,FOLLOW_49_in_link_interwiki_uri3558); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3560); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3562); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3564); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3566); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3568); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3570); if (failed) return interwiki;
+			match(input,61,FOLLOW_61_in_link_interwiki_uri3571); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3573); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3575); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3577); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3579); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3581); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3583); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3585); if (failed) return interwiki;
 
 			}
 			break;
 		case 13 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:587:4: 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:598:4: 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i'
 			{
-			match(input,61,FOLLOW_61_in_link_interwiki_uri3575); if (failed) return interwiki;
-			match(input,49,FOLLOW_49_in_link_interwiki_uri3577); if (failed) return interwiki;
-			match(input,55,FOLLOW_55_in_link_interwiki_uri3579); if (failed) return interwiki;
-			match(input,72,FOLLOW_72_in_link_interwiki_uri3581); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3583); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3585); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3587); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3589); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3591); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3593); if (failed) return interwiki;
+			match(input,61,FOLLOW_61_in_link_interwiki_uri3590); if (failed) return interwiki;
+			match(input,49,FOLLOW_49_in_link_interwiki_uri3592); if (failed) return interwiki;
+			match(input,55,FOLLOW_55_in_link_interwiki_uri3594); if (failed) return interwiki;
+			match(input,72,FOLLOW_72_in_link_interwiki_uri3596); if (failed) return interwiki;
+			match(input,53,FOLLOW_53_in_link_interwiki_uri3598); if (failed) return interwiki;
+			match(input,58,FOLLOW_58_in_link_interwiki_uri3600); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3602); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3604); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3606); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3608); if (failed) return interwiki;
 
 			}
 			break;
 		case 14 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:588:4: 'R' 'a' 'd' 'e' 'o' 'x'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:599:4: 'R' 'a' 'd' 'e' 'o' 'x'
 			{
-			match(input,73,FOLLOW_73_in_link_interwiki_uri3598); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3600); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3602); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3604); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3606); if (failed) return interwiki;
-			match(input,74,FOLLOW_74_in_link_interwiki_uri3608); if (failed) return interwiki;
+			match(input,73,FOLLOW_73_in_link_interwiki_uri3613); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3615); if (failed) return interwiki;
+			match(input,66,FOLLOW_66_in_link_interwiki_uri3617); if (failed) return interwiki;
+			match(input,58,FOLLOW_58_in_link_interwiki_uri3619); if (failed) return interwiki;
+			match(input,47,FOLLOW_47_in_link_interwiki_uri3621); if (failed) return interwiki;
+			match(input,74,FOLLOW_74_in_link_interwiki_uri3623); if (failed) return interwiki;
 
 			}
 			break;
 		case 15 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:589:4: 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:600:4: 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p'
 			{
-			match(input,60,FOLLOW_60_in_link_interwiki_uri3613); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3615); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3617); if (failed) return interwiki;
-			match(input,72,FOLLOW_72_in_link_interwiki_uri3619); if (failed) return interwiki;
-			match(input,60,FOLLOW_60_in_link_interwiki_uri3621); if (failed) return interwiki;
-			match(input,67,FOLLOW_67_in_link_interwiki_uri3623); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3625); if (failed) return interwiki;
-			match(input,72,FOLLOW_72_in_link_interwiki_uri3627); if (failed) return interwiki;
+			match(input,60,FOLLOW_60_in_link_interwiki_uri3628); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3630); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3632); if (failed) return interwiki;
+			match(input,72,FOLLOW_72_in_link_interwiki_uri3634); if (failed) return interwiki;
+			match(input,60,FOLLOW_60_in_link_interwiki_uri3636); if (failed) return interwiki;
+			match(input,67,FOLLOW_67_in_link_interwiki_uri3638); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3640); if (failed) return interwiki;
+			match(input,72,FOLLOW_72_in_link_interwiki_uri3642); if (failed) return interwiki;
 
 			}
 			break;
 		case 16 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:590:4: 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:601:4: 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i'
 			{
-			match(input,75,FOLLOW_75_in_link_interwiki_uri3632); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3634); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3636); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3638); if (failed) return interwiki;
-			match(input,53,FOLLOW_53_in_link_interwiki_uri3640); if (failed) return interwiki;
-			match(input,76,FOLLOW_76_in_link_interwiki_uri3642); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3644); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3646); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3648); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3650); if (failed) return interwiki;
+			match(input,75,FOLLOW_75_in_link_interwiki_uri3647); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3649); if (failed) return interwiki;
+			match(input,66,FOLLOW_66_in_link_interwiki_uri3651); if (failed) return interwiki;
+			match(input,66,FOLLOW_66_in_link_interwiki_uri3653); if (failed) return interwiki;
+			match(input,53,FOLLOW_53_in_link_interwiki_uri3655); if (failed) return interwiki;
+			match(input,76,FOLLOW_76_in_link_interwiki_uri3657); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3659); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3661); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3663); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3665); if (failed) return interwiki;
 
 			}
 			break;
 		case 17 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:591:4: 'T' 'W' 'i' 'k' 'i'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:602:4: 'T' 'W' 'i' 'k' 'i'
 			{
-			match(input,75,FOLLOW_75_in_link_interwiki_uri3655); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3657); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3659); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3661); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3663); if (failed) return interwiki;
+			match(input,75,FOLLOW_75_in_link_interwiki_uri3670); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3672); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3674); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3676); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3678); if (failed) return interwiki;
 
 			}
 			break;
 		case 18 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:592:4: 'U' 's' 'e' 'm' 'o' 'd'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:603:4: 'U' 's' 'e' 'm' 'o' 'd'
 			{
-			match(input,77,FOLLOW_77_in_link_interwiki_uri3668); if (failed) return interwiki;
-			match(input,70,FOLLOW_70_in_link_interwiki_uri3670); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3672); if (failed) return interwiki;
-			match(input,69,FOLLOW_69_in_link_interwiki_uri3674); if (failed) return interwiki;
-			match(input,47,FOLLOW_47_in_link_interwiki_uri3676); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3678); if (failed) return interwiki;
+			match(input,77,FOLLOW_77_in_link_interwiki_uri3683); if (failed) return interwiki;
+			match(input,70,FOLLOW_70_in_link_interwiki_uri3685); if (failed) return interwiki;
+			match(input,58,FOLLOW_58_in_link_interwiki_uri3687); if (failed) return interwiki;
+			match(input,69,FOLLOW_69_in_link_interwiki_uri3689); if (failed) return interwiki;
+			match(input,47,FOLLOW_47_in_link_interwiki_uri3691); if (failed) return interwiki;
+			match(input,66,FOLLOW_66_in_link_interwiki_uri3693); if (failed) return interwiki;
 
 			}
 			break;
 		case 19 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:593:4: 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:604:4: 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a'
 			{
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3683); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3685); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3687); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3689); if (failed) return interwiki;
-			match(input,72,FOLLOW_72_in_link_interwiki_uri3691); if (failed) return interwiki;
-			match(input,58,FOLLOW_58_in_link_interwiki_uri3693); if (failed) return interwiki;
-			match(input,66,FOLLOW_66_in_link_interwiki_uri3695); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3697); if (failed) return interwiki;
-			match(input,63,FOLLOW_63_in_link_interwiki_uri3699); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3698); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3700); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3702); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3704); if (failed) return interwiki;
+			match(input,72,FOLLOW_72_in_link_interwiki_uri3706); if (failed) return interwiki;
+			match(input,58,FOLLOW_58_in_link_interwiki_uri3708); if (failed) return interwiki;
+			match(input,66,FOLLOW_66_in_link_interwiki_uri3710); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3712); if (failed) return interwiki;
+			match(input,63,FOLLOW_63_in_link_interwiki_uri3714); if (failed) return interwiki;
 
 			}
 			break;
 		case 20 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:594:4: 'X' 'W' 'i' 'k' 'i'
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:605:4: 'X' 'W' 'i' 'k' 'i'
 			{
-			match(input,78,FOLLOW_78_in_link_interwiki_uri3704); if (failed) return interwiki;
-			match(input,50,FOLLOW_50_in_link_interwiki_uri3706); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3708); if (failed) return interwiki;
-			match(input,48,FOLLOW_48_in_link_interwiki_uri3710); if (failed) return interwiki;
-			match(input,51,FOLLOW_51_in_link_interwiki_uri3712); if (failed) return interwiki;
+			match(input,78,FOLLOW_78_in_link_interwiki_uri3719); if (failed) return interwiki;
+			match(input,50,FOLLOW_50_in_link_interwiki_uri3721); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3723); if (failed) return interwiki;
+			match(input,48,FOLLOW_48_in_link_interwiki_uri3725); if (failed) return interwiki;
+			match(input,51,FOLLOW_51_in_link_interwiki_uri3727); if (failed) return interwiki;
 
 			}
 			break;
@@ -12803,17 +12812,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_interwiki_pagename
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:596:1: link_interwiki_pagename returns [StringBundler text = new StringBundler()] : (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:607:1: link_interwiki_pagename returns [StringBundler text = new StringBundler()] : (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+ ;
 	public final StringBundler link_interwiki_pagename() throws RecognitionException {
 	StringBundler text =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:597:2: ( (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:597:4: (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:608:2: ( (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:608:4: (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:597:4: (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:608:4: (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+
 		int cnt119=0;
 		loop119:
 		do {
@@ -12827,7 +12836,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt119) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:597:6: c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:608:6: c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=EQUAL)||(input.LA(1)>=ITAL && input.LA(1)<=NOWIKI_CLOSE)||(input.LA(1)>=IMAGE_CLOSE && input.LA(1)<=78) ) {
@@ -12838,7 +12847,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_interwiki_pagename3732);	  throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_interwiki_pagename3747);	  throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -12874,7 +12883,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_description
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:599:1: link_description returns [CollectionNode node = new CollectionNode()] : (l= link_descriptionpart | i= image )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:610:1: link_description returns [CollectionNode node = new CollectionNode()] : (l= link_descriptionpart | i= image )+ ;
 	public final CollectionNode link_description() throws RecognitionException {
 	CollectionNode node =  new CollectionNode();
 
@@ -12884,10 +12893,10 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:600:2: ( (l= link_descriptionpart | i= image )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:600:4: (l= link_descriptionpart | i= image )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:611:2: ( (l= link_descriptionpart | i= image )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:611:4: (l= link_descriptionpart | i= image )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:600:4: (l= link_descriptionpart | i= image )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:611:4: (l= link_descriptionpart | i= image )+
 		int cnt120=0;
 		loop120:
 		do {
@@ -12904,9 +12913,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt120) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:600:6: l= link_descriptionpart
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:611:6: l= link_descriptionpart
 			{
-			pushFollow(FOLLOW_link_descriptionpart_in_link_description3775);
+			pushFollow(FOLLOW_link_descriptionpart_in_link_description3790);
 			l=link_descriptionpart();
 			_fsp--;
 			if (failed) return node;
@@ -12922,9 +12931,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:606:5: i= image
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:617:5: i= image
 			{
-			pushFollow(FOLLOW_image_in_link_description3787);
+			pushFollow(FOLLOW_image_in_link_description3802);
 			i=image();
 			_fsp--;
 			if (failed) return node;
@@ -12966,7 +12975,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_descriptionpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:608:1: link_descriptionpart returns [ASTNode text = null] : ( bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup | ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup | onestar (t= link_descriptiontext onestar )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:619:1: link_descriptionpart returns [ASTNode text = null] : ( bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup | ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup | onestar (t= link_descriptiontext onestar )+ );
 	public final ASTNode link_descriptionpart() throws RecognitionException {
 	link_descriptionpart_stack.push(new link_descriptionpart_scope());
 	ASTNode text =	null;
@@ -12982,7 +12991,7 @@ public class Creole10Parser extends Parser {
 		((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element = new CollectionNode();
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:615:2: ( bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup | ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup | onestar (t= link_descriptiontext onestar )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:626:2: ( bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup | ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup | onestar (t= link_descriptiontext onestar )+ )
 		int alt124=3;
 		switch ( input.LA(1) ) {
 		case STAR:
@@ -12998,7 +13007,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return text;}
 			NoViableAltException nvae =
-			new NoViableAltException("608:1: link_descriptionpart returns [ASTNode text = null] : ( bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup | ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup | onestar (t= link_descriptiontext onestar )+ );", 124, 1, input);
+			new NoViableAltException("619:1: link_descriptionpart returns [ASTNode text = null] : ( bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup | ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup | onestar (t= link_descriptiontext onestar )+ );", 124, 1, input);
 
 			throw nvae;
 		}
@@ -13083,24 +13092,24 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return text;}
 		NoViableAltException nvae =
-			new NoViableAltException("608:1: link_descriptionpart returns [ASTNode text = null] : ( bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup | ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup | onestar (t= link_descriptiontext onestar )+ );", 124, 0, input);
+			new NoViableAltException("619:1: link_descriptionpart returns [ASTNode text = null] : ( bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup | ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup | onestar (t= link_descriptiontext onestar )+ );", 124, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt124) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:615:4: bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:626:4: bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup
 			{
-			pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3812);
+			pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3827);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_onestar_in_link_descriptionpart3815);
+			pushFollow(FOLLOW_onestar_in_link_descriptionpart3830);
 			onestar();
 			_fsp--;
 			if (failed) return text;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:615:25: (lb= link_bold_descriptionpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:626:25: (lb= link_bold_descriptionpart onestar )+
 			int cnt121=0;
 			loop121:
 			do {
@@ -13114,16 +13123,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt121) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:615:27: lb= link_bold_descriptionpart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:626:27: lb= link_bold_descriptionpart onestar
 				{
-				pushFollow(FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3823);
+				pushFollow(FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3838);
 				lb=link_bold_descriptionpart();
 				_fsp--;
 				if (failed) return text;
 				if ( backtracking==0 ) {
 				  ((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element.add(lb);
 				}
-				pushFollow(FOLLOW_onestar_in_link_descriptionpart3828);
+				pushFollow(FOLLOW_onestar_in_link_descriptionpart3843);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -13144,7 +13153,7 @@ public class Creole10Parser extends Parser {
 			if ( backtracking==0 ) {
 			  text = new BoldTextNode(((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element);
 			}
-			pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3838);
+			pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3853);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
@@ -13152,17 +13161,17 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:617:4: ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:628:4: ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup
 			{
-			pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3843);
+			pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3858);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_onestar_in_link_descriptionpart3846);
+			pushFollow(FOLLOW_onestar_in_link_descriptionpart3861);
 			onestar();
 			_fsp--;
 			if (failed) return text;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:617:26: (li= link_ital_descriptionpart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:628:26: (li= link_ital_descriptionpart onestar )+
 			int cnt122=0;
 			loop122:
 			do {
@@ -13176,16 +13185,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt122) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:617:28: li= link_ital_descriptionpart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:628:28: li= link_ital_descriptionpart onestar
 				{
-				pushFollow(FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3855);
+				pushFollow(FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3870);
 				li=link_ital_descriptionpart();
 				_fsp--;
 				if (failed) return text;
 				if ( backtracking==0 ) {
 				  ((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element.add(li);
 				}
-				pushFollow(FOLLOW_onestar_in_link_descriptionpart3860);
+				pushFollow(FOLLOW_onestar_in_link_descriptionpart3875);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -13206,7 +13215,7 @@ public class Creole10Parser extends Parser {
 			if ( backtracking==0 ) {
 			  text = new ItalicTextNode(((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element);
 			}
-			pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3869);
+			pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3884);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
@@ -13214,13 +13223,13 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 3 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:619:4: onestar (t= link_descriptiontext onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:630:4: onestar (t= link_descriptiontext onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_link_descriptionpart3874);
+			pushFollow(FOLLOW_onestar_in_link_descriptionpart3889);
 			onestar();
 			_fsp--;
 			if (failed) return text;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:619:13: (t= link_descriptiontext onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:630:13: (t= link_descriptiontext onestar )+
 			int cnt123=0;
 			loop123:
 			do {
@@ -13310,13 +13319,13 @@ public class Creole10Parser extends Parser {
 
 			switch (alt123) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:619:15: t= link_descriptiontext onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:630:15: t= link_descriptiontext onestar
 				{
-				pushFollow(FOLLOW_link_descriptiontext_in_link_descriptionpart3883);
+				pushFollow(FOLLOW_link_descriptiontext_in_link_descriptionpart3898);
 				t=link_descriptiontext();
 				_fsp--;
 				if (failed) return text;
-				pushFollow(FOLLOW_onestar_in_link_descriptionpart3886);
+				pushFollow(FOLLOW_onestar_in_link_descriptionpart3901);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -13359,7 +13368,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_bold_descriptionpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:621:1: link_bold_descriptionpart returns [ASTNode text = null] : ( ital_markup t= link_boldital_description ital_markup | ld= link_descriptiontext );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:632:1: link_bold_descriptionpart returns [ASTNode text = null] : ( ital_markup t= link_boldital_description ital_markup | ld= link_descriptiontext );
 	public final ASTNode link_bold_descriptionpart() throws RecognitionException {
 	ASTNode text =	null;
 
@@ -13369,7 +13378,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:622:2: ( ital_markup t= link_boldital_description ital_markup | ld= link_descriptiontext )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:633:2: ( ital_markup t= link_boldital_description ital_markup | ld= link_descriptiontext )
 		int alt125=2;
 		int LA125_0 = input.LA(1);
 
@@ -13382,26 +13391,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return text;}
 		NoViableAltException nvae =
-			new NoViableAltException("621:1: link_bold_descriptionpart returns [ASTNode text = null] : ( ital_markup t= link_boldital_description ital_markup | ld= link_descriptiontext );", 125, 0, input);
+			new NoViableAltException("632:1: link_bold_descriptionpart returns [ASTNode text = null] : ( ital_markup t= link_boldital_description ital_markup | ld= link_descriptiontext );", 125, 0, input);
 
 		throw nvae;
 		}
 		switch (alt125) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:622:4: ital_markup t= link_boldital_description ital_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:633:4: ital_markup t= link_boldital_description ital_markup
 			{
-			pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3906);
+			pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3921);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_link_boldital_description_in_link_bold_descriptionpart3913);
+			pushFollow(FOLLOW_link_boldital_description_in_link_bold_descriptionpart3928);
 			t=link_boldital_description();
 			_fsp--;
 			if (failed) return text;
 			if ( backtracking==0 ) {
 			  text = new ItalicTextNode(t);
 			}
-			pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3918);
+			pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3933);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
@@ -13409,9 +13418,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:623:4: ld= link_descriptiontext
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:634:4: ld= link_descriptiontext
 			{
-			pushFollow(FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3927);
+			pushFollow(FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3942);
 			ld=link_descriptiontext();
 			_fsp--;
 			if (failed) return text;
@@ -13436,7 +13445,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_ital_descriptionpart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:625:1: link_ital_descriptionpart returns [ASTNode text = null] : ( bold_markup td= link_boldital_description bold_markup | t= link_descriptiontext );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:636:1: link_ital_descriptionpart returns [ASTNode text = null] : ( bold_markup td= link_boldital_description bold_markup | t= link_descriptiontext );
 	public final ASTNode link_ital_descriptionpart() throws RecognitionException {
 	ASTNode text =	null;
 
@@ -13446,7 +13455,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:626:2: ( bold_markup td= link_boldital_description bold_markup | t= link_descriptiontext )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:637:2: ( bold_markup td= link_boldital_description bold_markup | t= link_descriptiontext )
 		int alt126=2;
 		int LA126_0 = input.LA(1);
 
@@ -13459,23 +13468,23 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return text;}
 		NoViableAltException nvae =
-			new NoViableAltException("625:1: link_ital_descriptionpart returns [ASTNode text = null] : ( bold_markup td= link_boldital_description bold_markup | t= link_descriptiontext );", 126, 0, input);
+			new NoViableAltException("636:1: link_ital_descriptionpart returns [ASTNode text = null] : ( bold_markup td= link_boldital_description bold_markup | t= link_descriptiontext );", 126, 0, input);
 
 		throw nvae;
 		}
 		switch (alt126) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:626:4: bold_markup td= link_boldital_description bold_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:637:4: bold_markup td= link_boldital_description bold_markup
 			{
-			pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3943);
+			pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3958);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_link_boldital_description_in_link_ital_descriptionpart3950);
+			pushFollow(FOLLOW_link_boldital_description_in_link_ital_descriptionpart3965);
 			td=link_boldital_description();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3953);
+			pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3968);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
@@ -13486,9 +13495,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:627:4: t= link_descriptiontext
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:638:4: t= link_descriptiontext
 			{
-			pushFollow(FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3964);
+			pushFollow(FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3979);
 			t=link_descriptiontext();
 			_fsp--;
 			if (failed) return text;
@@ -13513,7 +13522,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_boldital_description
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:629:1: link_boldital_description returns [CollectionNode text = new CollectionNode()] : onestar (t= link_descriptiontext onestar )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:640:1: link_boldital_description returns [CollectionNode text = new CollectionNode()] : onestar (t= link_descriptiontext onestar )+ ;
 	public final CollectionNode link_boldital_description() throws RecognitionException {
 	CollectionNode text =  new CollectionNode();
 
@@ -13521,14 +13530,14 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:630:2: ( onestar (t= link_descriptiontext onestar )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:630:4: onestar (t= link_descriptiontext onestar )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:641:2: ( onestar (t= link_descriptiontext onestar )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:641:4: onestar (t= link_descriptiontext onestar )+
 		{
-		pushFollow(FOLLOW_onestar_in_link_boldital_description3980);
+		pushFollow(FOLLOW_onestar_in_link_boldital_description3995);
 		onestar();
 		_fsp--;
 		if (failed) return text;
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:630:13: (t= link_descriptiontext onestar )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:641:13: (t= link_descriptiontext onestar )+
 		int cnt127=0;
 		loop127:
 		do {
@@ -13542,13 +13551,13 @@ public class Creole10Parser extends Parser {
 
 		switch (alt127) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:630:15: t= link_descriptiontext onestar
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:641:15: t= link_descriptiontext onestar
 			{
-			pushFollow(FOLLOW_link_descriptiontext_in_link_boldital_description3989);
+			pushFollow(FOLLOW_link_descriptiontext_in_link_boldital_description4004);
 			t=link_descriptiontext();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_onestar_in_link_boldital_description3992);
+			pushFollow(FOLLOW_onestar_in_link_boldital_description4007);
 			onestar();
 			_fsp--;
 			if (failed) return text;
@@ -13589,7 +13598,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_descriptiontext
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:636:1: link_descriptiontext returns [CollectionNode text = new CollectionNode()] : (t= link_descriptiontext_simple | ( forced_linebreak | e= escaped )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:647:1: link_descriptiontext returns [CollectionNode text = new CollectionNode()] : (t= link_descriptiontext_simple | ( forced_linebreak | e= escaped )+ );
 	public final CollectionNode link_descriptiontext() throws RecognitionException {
 	CollectionNode text =  new CollectionNode();
 
@@ -13599,7 +13608,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:637:2: (t= link_descriptiontext_simple | ( forced_linebreak | e= escaped )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:648:2: (t= link_descriptiontext_simple | ( forced_linebreak | e= escaped )+ )
 		int alt129=2;
 		int LA129_0 = input.LA(1);
 
@@ -13612,15 +13621,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return text;}
 		NoViableAltException nvae =
-			new NoViableAltException("636:1: link_descriptiontext returns [CollectionNode text = new CollectionNode()] : (t= link_descriptiontext_simple | ( forced_linebreak | e= escaped )+ );", 129, 0, input);
+			new NoViableAltException("647:1: link_descriptiontext returns [CollectionNode text = new CollectionNode()] : (t= link_descriptiontext_simple | ( forced_linebreak | e= escaped )+ );", 129, 0, input);
 
 		throw nvae;
 		}
 		switch (alt129) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:637:5: t= link_descriptiontext_simple
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:648:5: t= link_descriptiontext_simple
 			{
-			pushFollow(FOLLOW_link_descriptiontext_simple_in_link_descriptiontext4015);
+			pushFollow(FOLLOW_link_descriptiontext_simple_in_link_descriptiontext4030);
 			t=link_descriptiontext_simple();
 			_fsp--;
 			if (failed) return text;
@@ -13631,9 +13640,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:638:5: ( forced_linebreak | e= escaped )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:649:5: ( forced_linebreak | e= escaped )+
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:638:5: ( forced_linebreak | e= escaped )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:649:5: ( forced_linebreak | e= escaped )+
 			int cnt128=0;
 			loop128:
 			do {
@@ -13650,9 +13659,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt128) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:638:7: forced_linebreak
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:649:7: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_link_descriptiontext4025);
+				pushFollow(FOLLOW_forced_linebreak_in_link_descriptiontext4040);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return text;
@@ -13663,9 +13672,9 @@ public class Creole10Parser extends Parser {
 				}
 				break;
 			case 2 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:639:5: e= escaped
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:650:5: e= escaped
 				{
-				pushFollow(FOLLOW_escaped_in_link_descriptiontext4037);
+				pushFollow(FOLLOW_escaped_in_link_descriptiontext4052);
 				e=escaped();
 				_fsp--;
 				if (failed) return text;
@@ -13704,17 +13713,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_descriptiontext_simple
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:641:1: link_descriptiontext_simple returns [StringBundler text = new StringBundler()] : (c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:652:1: link_descriptiontext_simple returns [StringBundler text = new StringBundler()] : (c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ ;
 	public final StringBundler link_descriptiontext_simple() throws RecognitionException {
 	StringBundler text =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:642:2: ( (c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:642:4: (c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:653:2: ( (c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:653:4: (c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:642:4: (c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:653:4: (c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF ) )+
 		int cnt130=0;
 		loop130:
 		do {
@@ -13728,7 +13737,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt130) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:642:6: c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:653:6: c=~ ( LINK_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | ESCAPE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||(input.LA(1)>=EQUAL && input.LA(1)<=PIPE)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=NOWIKI_CLOSE)||(input.LA(1)>=IMAGE_CLOSE && input.LA(1)<=78) ) {
@@ -13739,7 +13748,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_descriptiontext_simple4062);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_descriptiontext_simple4077);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -13775,17 +13784,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_uri
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:654:1: link_uri returns [StringBundler text = new StringBundler()] : (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:665:1: link_uri returns [StringBundler text = new StringBundler()] : (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+ ;
 	public final StringBundler link_uri() throws RecognitionException {
 	StringBundler text =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:655:2: ( (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:655:4: (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:666:2: ( (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:666:4: (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:655:4: (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:666:4: (c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF ) )+
 		int cnt131=0;
 		loop131:
 		do {
@@ -13799,7 +13808,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt131) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:655:6: c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:666:6: c=~ ( PIPE | LINK_CLOSE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=EQUAL)||(input.LA(1)>=ITAL && input.LA(1)<=NOWIKI_CLOSE)||(input.LA(1)>=IMAGE_CLOSE && input.LA(1)<=78) ) {
@@ -13810,7 +13819,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_uri4163);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_uri4178);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -13846,7 +13855,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:662:1: image returns [ImageNode image = new ImageNode()] : image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:673:1: image returns [ImageNode image = new ImageNode()] : image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup ;
 	public final ImageNode image() throws RecognitionException {
 	ImageNode image =  new ImageNode();
 
@@ -13856,21 +13865,21 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:663:2: ( image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:663:4: image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:674:2: ( image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:674:4: image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup
 		{
-		pushFollow(FOLLOW_image_open_markup_in_image4204);
+		pushFollow(FOLLOW_image_open_markup_in_image4219);
 		image_open_markup();
 		_fsp--;
 		if (failed) return image;
-		pushFollow(FOLLOW_image_uri_in_image4210);
+		pushFollow(FOLLOW_image_uri_in_image4225);
 		uri=image_uri();
 		_fsp--;
 		if (failed) return image;
 		if ( backtracking==0 ) {
 		  image.setLink(uri.toString());
 		}
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:663:79: (alt= image_alternative )?
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:674:79: (alt= image_alternative )?
 		int alt132=2;
 		int LA132_0 = input.LA(1);
 
@@ -13879,9 +13888,9 @@ public class Creole10Parser extends Parser {
 		}
 		switch (alt132) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:663:81: alt= image_alternative
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:674:81: alt= image_alternative
 			{
-			pushFollow(FOLLOW_image_alternative_in_image4220);
+			pushFollow(FOLLOW_image_alternative_in_image4235);
 			alt=image_alternative();
 			_fsp--;
 			if (failed) return image;
@@ -13894,7 +13903,7 @@ public class Creole10Parser extends Parser {
 
 		}
 
-		pushFollow(FOLLOW_image_close_markup_in_image4229);
+		pushFollow(FOLLOW_image_close_markup_in_image4244);
 		image_close_markup();
 		_fsp--;
 		if (failed) return image;
@@ -13914,17 +13923,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_uri
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:666:1: image_uri returns [StringBundler link = new StringBundler()] : (c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF ) )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:677:1: image_uri returns [StringBundler link = new StringBundler()] : (c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF ) )+ ;
 	public final StringBundler image_uri() throws RecognitionException {
 	StringBundler link =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:667:2: ( (c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF ) )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:667:4: (c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:678:2: ( (c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF ) )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:678:4: (c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF ) )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:667:4: (c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:678:4: (c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF ) )+
 		int cnt133=0;
 		loop133:
 		do {
@@ -13938,7 +13947,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt133) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:667:5: c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:678:5: c=~ ( PIPE | IMAGE_CLOSE | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=EQUAL)||(input.LA(1)>=ITAL && input.LA(1)<=LINK_CLOSE)||(input.LA(1)>=BLANKS && input.LA(1)<=78) ) {
@@ -13949,7 +13958,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return link;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_uri4248);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_uri4263);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -13985,7 +13994,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_alternative
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:669:1: image_alternative returns [CollectionNode alternative = new CollectionNode()] : image_alternative_markup (p= image_alternativepart )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:680:1: image_alternative returns [CollectionNode alternative = new CollectionNode()] : image_alternative_markup (p= image_alternativepart )+ ;
 	public final CollectionNode image_alternative() throws RecognitionException {
 	CollectionNode alternative =  new CollectionNode();
 
@@ -13993,14 +14002,14 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:670:2: ( image_alternative_markup (p= image_alternativepart )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:670:4: image_alternative_markup (p= image_alternativepart )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:2: ( image_alternative_markup (p= image_alternativepart )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:4: image_alternative_markup (p= image_alternativepart )+
 		{
-		pushFollow(FOLLOW_image_alternative_markup_in_image_alternative4283);
+		pushFollow(FOLLOW_image_alternative_markup_in_image_alternative4298);
 		image_alternative_markup();
 		_fsp--;
 		if (failed) return alternative;
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:670:30: (p= image_alternativepart )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:30: (p= image_alternativepart )+
 		int cnt134=0;
 		loop134:
 		do {
@@ -14014,9 +14023,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt134) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:670:32: p= image_alternativepart
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:32: p= image_alternativepart
 			{
-			pushFollow(FOLLOW_image_alternativepart_in_image_alternative4292);
+			pushFollow(FOLLOW_image_alternativepart_in_image_alternative4307);
 			p=image_alternativepart();
 			_fsp--;
 			if (failed) return alternative;
@@ -14058,7 +14067,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_alternativepart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:672:1: image_alternativepart returns [ASTNode item = null] : ( bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup | ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup | onestar (t3= image_alternativetext onestar )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:683:1: image_alternativepart returns [ASTNode item = null] : ( bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup | ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup | onestar (t3= image_alternativetext onestar )+ );
 	public final ASTNode image_alternativepart() throws RecognitionException {
 	image_alternativepart_stack.push(new image_alternativepart_scope());
 	ASTNode item =	null;
@@ -14074,7 +14083,7 @@ public class Creole10Parser extends Parser {
 	   ((image_alternativepart_scope)image_alternativepart_stack.peek()).elements = new CollectionNode();
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:679:2: ( bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup | ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup | onestar (t3= image_alternativetext onestar )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:690:2: ( bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup | ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup | onestar (t3= image_alternativetext onestar )+ )
 		int alt138=3;
 		switch ( input.LA(1) ) {
 		case STAR:
@@ -14090,7 +14099,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return item;}
 			NoViableAltException nvae =
-			new NoViableAltException("672:1: image_alternativepart returns [ASTNode item = null] : ( bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup | ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup | onestar (t3= image_alternativetext onestar )+ );", 138, 1, input);
+			new NoViableAltException("683:1: image_alternativepart returns [ASTNode item = null] : ( bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup | ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup | onestar (t3= image_alternativetext onestar )+ );", 138, 1, input);
 
 			throw nvae;
 		}
@@ -14175,24 +14184,24 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return item;}
 		NoViableAltException nvae =
-			new NoViableAltException("672:1: image_alternativepart returns [ASTNode item = null] : ( bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup | ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup | onestar (t3= image_alternativetext onestar )+ );", 138, 0, input);
+			new NoViableAltException("683:1: image_alternativepart returns [ASTNode item = null] : ( bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup | ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup | onestar (t3= image_alternativetext onestar )+ );", 138, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt138) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:679:4: bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:690:4: bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup
 			{
-			pushFollow(FOLLOW_bold_markup_in_image_alternativepart4318);
+			pushFollow(FOLLOW_bold_markup_in_image_alternativepart4333);
 			bold_markup();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_onestar_in_image_alternativepart4321);
+			pushFollow(FOLLOW_onestar_in_image_alternativepart4336);
 			onestar();
 			_fsp--;
 			if (failed) return item;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:679:26: (t1= image_bold_alternativepart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:690:26: (t1= image_bold_alternativepart onestar )+
 			int cnt135=0;
 			loop135:
 			do {
@@ -14215,16 +14224,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt135) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:679:28: t1= image_bold_alternativepart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:690:28: t1= image_bold_alternativepart onestar
 				{
-				pushFollow(FOLLOW_image_bold_alternativepart_in_image_alternativepart4330);
+				pushFollow(FOLLOW_image_bold_alternativepart_in_image_alternativepart4345);
 				t1=image_bold_alternativepart();
 				_fsp--;
 				if (failed) return item;
 				if ( backtracking==0 ) {
 				  ((image_alternativepart_scope)image_alternativepart_stack.peek()).elements.add(t1);
 				}
-				pushFollow(FOLLOW_onestar_in_image_alternativepart4335);
+				pushFollow(FOLLOW_onestar_in_image_alternativepart4350);
 				onestar();
 				_fsp--;
 				if (failed) return item;
@@ -14242,7 +14251,7 @@ public class Creole10Parser extends Parser {
 			cnt135++;
 			} while (true);
 
-			pushFollow(FOLLOW_bold_markup_in_image_alternativepart4342);
+			pushFollow(FOLLOW_bold_markup_in_image_alternativepart4357);
 			bold_markup();
 			_fsp--;
 			if (failed) return item;
@@ -14253,17 +14262,17 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:4: ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:692:4: ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup
 			{
-			pushFollow(FOLLOW_ital_markup_in_image_alternativepart4349);
+			pushFollow(FOLLOW_ital_markup_in_image_alternativepart4364);
 			ital_markup();
 			_fsp--;
 			if (failed) return item;
-			pushFollow(FOLLOW_onestar_in_image_alternativepart4352);
+			pushFollow(FOLLOW_onestar_in_image_alternativepart4367);
 			onestar();
 			_fsp--;
 			if (failed) return item;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:26: (t2= image_ital_alternativepart onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:692:26: (t2= image_ital_alternativepart onestar )+
 			int cnt136=0;
 			loop136:
 			do {
@@ -14277,16 +14286,16 @@ public class Creole10Parser extends Parser {
 
 			switch (alt136) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:681:29: t2= image_ital_alternativepart onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:692:29: t2= image_ital_alternativepart onestar
 				{
-				pushFollow(FOLLOW_image_ital_alternativepart_in_image_alternativepart4362);
+				pushFollow(FOLLOW_image_ital_alternativepart_in_image_alternativepart4377);
 				t2=image_ital_alternativepart();
 				_fsp--;
 				if (failed) return item;
 				if ( backtracking==0 ) {
 				  ((image_alternativepart_scope)image_alternativepart_stack.peek()).elements.add(t2);
 				}
-				pushFollow(FOLLOW_onestar_in_image_alternativepart4367);
+				pushFollow(FOLLOW_onestar_in_image_alternativepart4382);
 				onestar();
 				_fsp--;
 				if (failed) return item;
@@ -14304,7 +14313,7 @@ public class Creole10Parser extends Parser {
 			cnt136++;
 			} while (true);
 
-			pushFollow(FOLLOW_ital_markup_in_image_alternativepart4374);
+			pushFollow(FOLLOW_ital_markup_in_image_alternativepart4389);
 			ital_markup();
 			_fsp--;
 			if (failed) return item;
@@ -14315,13 +14324,13 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 3 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:683:4: onestar (t3= image_alternativetext onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:694:4: onestar (t3= image_alternativetext onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_image_alternativepart4381);
+			pushFollow(FOLLOW_onestar_in_image_alternativepart4396);
 			onestar();
 			_fsp--;
 			if (failed) return item;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:683:13: (t3= image_alternativetext onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:694:13: (t3= image_alternativetext onestar )+
 			int cnt137=0;
 			loop137:
 			do {
@@ -14338,9 +14347,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt137) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:683:15: t3= image_alternativetext onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:694:15: t3= image_alternativetext onestar
 				{
-				pushFollow(FOLLOW_image_alternativetext_in_image_alternativepart4388);
+				pushFollow(FOLLOW_image_alternativetext_in_image_alternativepart4403);
 				t3=image_alternativetext();
 				_fsp--;
 				if (failed) return item;
@@ -14351,7 +14360,7 @@ public class Creole10Parser extends Parser {
 								 }
 									  
 				}
-				pushFollow(FOLLOW_onestar_in_image_alternativepart4393);
+				pushFollow(FOLLOW_onestar_in_image_alternativepart4408);
 				onestar();
 				_fsp--;
 				if (failed) return item;
@@ -14396,7 +14405,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_bold_alternativepart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:689:1: image_bold_alternativepart returns [ASTNode text = null] : ( ital_markup t= link_boldital_description ital_markup | onestar (i= image_alternativetext onestar )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:700:1: image_bold_alternativepart returns [ASTNode text = null] : ( ital_markup t= link_boldital_description ital_markup | onestar (i= image_alternativetext onestar )+ );
 	public final ASTNode image_bold_alternativepart() throws RecognitionException {
 	image_bold_alternativepart_stack.push(new image_bold_alternativepart_scope());
 	ASTNode text =	null;
@@ -14410,7 +14419,7 @@ public class Creole10Parser extends Parser {
 	   ((image_bold_alternativepart_scope)image_bold_alternativepart_stack.peek()).elements = new CollectionNode();
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:696:2: ( ital_markup t= link_boldital_description ital_markup | onestar (i= image_alternativetext onestar )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:707:2: ( ital_markup t= link_boldital_description ital_markup | onestar (i= image_alternativetext onestar )+ )
 		int alt140=2;
 		int LA140_0 = input.LA(1);
 
@@ -14423,26 +14432,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return text;}
 		NoViableAltException nvae =
-			new NoViableAltException("689:1: image_bold_alternativepart returns [ASTNode text = null] : ( ital_markup t= link_boldital_description ital_markup | onestar (i= image_alternativetext onestar )+ );", 140, 0, input);
+			new NoViableAltException("700:1: image_bold_alternativepart returns [ASTNode text = null] : ( ital_markup t= link_boldital_description ital_markup | onestar (i= image_alternativetext onestar )+ );", 140, 0, input);
 
 		throw nvae;
 		}
 		switch (alt140) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:696:4: ital_markup t= link_boldital_description ital_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:707:4: ital_markup t= link_boldital_description ital_markup
 			{
-			pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4419);
+			pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4434);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_link_boldital_description_in_image_bold_alternativepart4426);
+			pushFollow(FOLLOW_link_boldital_description_in_image_bold_alternativepart4441);
 			t=link_boldital_description();
 			_fsp--;
 			if (failed) return text;
 			if ( backtracking==0 ) {
 			  text = new ItalicTextNode(t); 
 			}
-			pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4431);
+			pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4446);
 			ital_markup();
 			_fsp--;
 			if (failed) return text;
@@ -14450,13 +14459,13 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:697:4: onestar (i= image_alternativetext onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:708:4: onestar (i= image_alternativetext onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4436);
+			pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4451);
 			onestar();
 			_fsp--;
 			if (failed) return text;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:697:13: (i= image_alternativetext onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:708:13: (i= image_alternativetext onestar )+
 			int cnt139=0;
 			loop139:
 			do {
@@ -14473,13 +14482,13 @@ public class Creole10Parser extends Parser {
 
 			switch (alt139) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:697:15: i= image_alternativetext onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:708:15: i= image_alternativetext onestar
 				{
-				pushFollow(FOLLOW_image_alternativetext_in_image_bold_alternativepart4445);
+				pushFollow(FOLLOW_image_alternativetext_in_image_bold_alternativepart4460);
 				i=image_alternativetext();
 				_fsp--;
 				if (failed) return text;
-				pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4448);
+				pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4463);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -14531,7 +14540,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_ital_alternativepart
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:704:1: image_ital_alternativepart returns [ASTNode text = null] : ( bold_markup t= link_boldital_description bold_markup | onestar (i= image_alternativetext onestar )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:715:1: image_ital_alternativepart returns [ASTNode text = null] : ( bold_markup t= link_boldital_description bold_markup | onestar (i= image_alternativetext onestar )+ );
 	public final ASTNode image_ital_alternativepart() throws RecognitionException {
 	image_ital_alternativepart_stack.push(new image_ital_alternativepart_scope());
 	ASTNode text =	null;
@@ -14545,7 +14554,7 @@ public class Creole10Parser extends Parser {
 	   ((image_ital_alternativepart_scope)image_ital_alternativepart_stack.peek()).elements = new CollectionNode();
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:711:2: ( bold_markup t= link_boldital_description bold_markup | onestar (i= image_alternativetext onestar )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:722:2: ( bold_markup t= link_boldital_description bold_markup | onestar (i= image_alternativetext onestar )+ )
 		int alt142=2;
 		int LA142_0 = input.LA(1);
 
@@ -14561,7 +14570,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return text;}
 			NoViableAltException nvae =
-			new NoViableAltException("704:1: image_ital_alternativepart returns [ASTNode text = null] : ( bold_markup t= link_boldital_description bold_markup | onestar (i= image_alternativetext onestar )+ );", 142, 1, input);
+			new NoViableAltException("715:1: image_ital_alternativepart returns [ASTNode text = null] : ( bold_markup t= link_boldital_description bold_markup | onestar (i= image_alternativetext onestar )+ );", 142, 1, input);
 
 			throw nvae;
 		}
@@ -14572,26 +14581,26 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return text;}
 		NoViableAltException nvae =
-			new NoViableAltException("704:1: image_ital_alternativepart returns [ASTNode text = null] : ( bold_markup t= link_boldital_description bold_markup | onestar (i= image_alternativetext onestar )+ );", 142, 0, input);
+			new NoViableAltException("715:1: image_ital_alternativepart returns [ASTNode text = null] : ( bold_markup t= link_boldital_description bold_markup | onestar (i= image_alternativetext onestar )+ );", 142, 0, input);
 
 		throw nvae;
 		}
 		switch (alt142) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:711:4: bold_markup t= link_boldital_description bold_markup
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:722:4: bold_markup t= link_boldital_description bold_markup
 			{
-			pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4477);
+			pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4492);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_link_boldital_description_in_image_ital_alternativepart4484);
+			pushFollow(FOLLOW_link_boldital_description_in_image_ital_alternativepart4499);
 			t=link_boldital_description();
 			_fsp--;
 			if (failed) return text;
 			if ( backtracking==0 ) {
 			  text = new BoldTextNode(t); 
 			}
-			pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4489);
+			pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4504);
 			bold_markup();
 			_fsp--;
 			if (failed) return text;
@@ -14599,13 +14608,13 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:712:4: onestar (i= image_alternativetext onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:723:4: onestar (i= image_alternativetext onestar )+
 			{
-			pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4494);
+			pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4509);
 			onestar();
 			_fsp--;
 			if (failed) return text;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:712:13: (i= image_alternativetext onestar )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:723:13: (i= image_alternativetext onestar )+
 			int cnt141=0;
 			loop141:
 			do {
@@ -14622,13 +14631,13 @@ public class Creole10Parser extends Parser {
 
 			switch (alt141) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:712:14: i= image_alternativetext onestar
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:723:14: i= image_alternativetext onestar
 				{
-				pushFollow(FOLLOW_image_alternativetext_in_image_ital_alternativepart4503);
+				pushFollow(FOLLOW_image_alternativetext_in_image_ital_alternativepart4518);
 				i=image_alternativetext();
 				_fsp--;
 				if (failed) return text;
-				pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4506);
+				pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4521);
 				onestar();
 				_fsp--;
 				if (failed) return text;
@@ -14675,7 +14684,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_boldital_alternative
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:718:1: image_boldital_alternative returns [CollectionNode text = new CollectionNode()] : onestar (i= image_alternativetext onestar )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:729:1: image_boldital_alternative returns [CollectionNode text = new CollectionNode()] : onestar (i= image_alternativetext onestar )+ ;
 	public final CollectionNode image_boldital_alternative() throws RecognitionException {
 	CollectionNode text =  new CollectionNode();
 
@@ -14683,14 +14692,14 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:719:2: ( onestar (i= image_alternativetext onestar )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:719:4: onestar (i= image_alternativetext onestar )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:730:2: ( onestar (i= image_alternativetext onestar )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:730:4: onestar (i= image_alternativetext onestar )+
 		{
-		pushFollow(FOLLOW_onestar_in_image_boldital_alternative4527);
+		pushFollow(FOLLOW_onestar_in_image_boldital_alternative4542);
 		onestar();
 		_fsp--;
 		if (failed) return text;
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:719:13: (i= image_alternativetext onestar )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:730:13: (i= image_alternativetext onestar )+
 		int cnt143=0;
 		loop143:
 		do {
@@ -14704,13 +14713,13 @@ public class Creole10Parser extends Parser {
 
 		switch (alt143) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:719:15: i= image_alternativetext onestar
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:730:15: i= image_alternativetext onestar
 			{
-			pushFollow(FOLLOW_image_alternativetext_in_image_boldital_alternative4536);
+			pushFollow(FOLLOW_image_alternativetext_in_image_boldital_alternative4551);
 			i=image_alternativetext();
 			_fsp--;
 			if (failed) return text;
-			pushFollow(FOLLOW_onestar_in_image_boldital_alternative4539);
+			pushFollow(FOLLOW_onestar_in_image_boldital_alternative4554);
 			onestar();
 			_fsp--;
 			if (failed) return text;
@@ -14751,7 +14760,7 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_alternativetext
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:725:1: image_alternativetext returns [CollectionNode items = new CollectionNode()] : (contents= image_alternative_simple_text | ( forced_linebreak )+ );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:736:1: image_alternativetext returns [CollectionNode items = new CollectionNode()] : (contents= image_alternative_simple_text | ( forced_linebreak )+ );
 	public final CollectionNode image_alternativetext() throws RecognitionException {
 	CollectionNode items =	new CollectionNode();
 
@@ -14759,7 +14768,7 @@ public class Creole10Parser extends Parser {
 
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:726:2: (contents= image_alternative_simple_text | ( forced_linebreak )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:737:2: (contents= image_alternative_simple_text | ( forced_linebreak )+ )
 		int alt145=2;
 		int LA145_0 = input.LA(1);
 
@@ -14772,15 +14781,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return items;}
 		NoViableAltException nvae =
-			new NoViableAltException("725:1: image_alternativetext returns [CollectionNode items = new CollectionNode()] : (contents= image_alternative_simple_text | ( forced_linebreak )+ );", 145, 0, input);
+			new NoViableAltException("736:1: image_alternativetext returns [CollectionNode items = new CollectionNode()] : (contents= image_alternative_simple_text | ( forced_linebreak )+ );", 145, 0, input);
 
 		throw nvae;
 		}
 		switch (alt145) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:726:4: contents= image_alternative_simple_text
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:737:4: contents= image_alternative_simple_text
 			{
-			pushFollow(FOLLOW_image_alternative_simple_text_in_image_alternativetext4562);
+			pushFollow(FOLLOW_image_alternative_simple_text_in_image_alternativetext4577);
 			contents=image_alternative_simple_text();
 			_fsp--;
 			if (failed) return items;
@@ -14791,9 +14800,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:727:4: ( forced_linebreak )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:738:4: ( forced_linebreak )+
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:727:4: ( forced_linebreak )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:738:4: ( forced_linebreak )+
 			int cnt144=0;
 			loop144:
 			do {
@@ -14807,9 +14816,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt144) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:727:5: forced_linebreak
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:738:5: forced_linebreak
 				{
-				pushFollow(FOLLOW_forced_linebreak_in_image_alternativetext4570);
+				pushFollow(FOLLOW_forced_linebreak_in_image_alternativetext4585);
 				forced_linebreak();
 				_fsp--;
 				if (failed) return items;
@@ -14848,17 +14857,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_alternative_simple_text
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:730:1: image_alternative_simple_text returns [StringBundler text = new StringBundler()] : (c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF ) )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:741:1: image_alternative_simple_text returns [StringBundler text = new StringBundler()] : (c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF ) )+ ;
 	public final StringBundler image_alternative_simple_text() throws RecognitionException {
 	StringBundler text =  new StringBundler();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:731:2: ( (c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF ) )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:732:2: (c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:742:2: ( (c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF ) )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:743:2: (c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF ) )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:732:2: (c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF ) )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:743:2: (c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF ) )+
 		int cnt146=0;
 		loop146:
 		do {
@@ -14872,7 +14881,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt146) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:732:4: c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:743:4: c=~ ( IMAGE_CLOSE | ITAL | STAR | LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EXTENSION | FORCED_LINEBREAK | NEWLINE | EOF )
 			{
 			c=(Token)input.LT(1);
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||input.LA(1)==POUND||(input.LA(1)>=EQUAL && input.LA(1)<=PIPE)||(input.LA(1)>=ESCAPE && input.LA(1)<=LINK_CLOSE)||(input.LA(1)>=BLANKS && input.LA(1)<=78) ) {
@@ -14883,7 +14892,7 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return text;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_alternative_simple_text4597);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_alternative_simple_text4612);	throw mse;
 			}
 
 			if ( backtracking==0 ) {
@@ -14919,31 +14928,31 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start extension
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:746:1: extension returns [ASTNode node = null] : extension_markup extension_handler blanks extension_statement extension_markup ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:757:1: extension returns [ASTNode node = null] : extension_markup extension_handler blanks extension_statement extension_markup ;
 	public final ASTNode extension() throws RecognitionException {
 	ASTNode node =	null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:747:2: ( extension_markup extension_handler blanks extension_statement extension_markup )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:747:4: extension_markup extension_handler blanks extension_statement extension_markup
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:758:2: ( extension_markup extension_handler blanks extension_statement extension_markup )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:758:4: extension_markup extension_handler blanks extension_statement extension_markup
 		{
-		pushFollow(FOLLOW_extension_markup_in_extension4690);
+		pushFollow(FOLLOW_extension_markup_in_extension4705);
 		extension_markup();
 		_fsp--;
 		if (failed) return node;
-		pushFollow(FOLLOW_extension_handler_in_extension4693);
+		pushFollow(FOLLOW_extension_handler_in_extension4708);
 		extension_handler();
 		_fsp--;
 		if (failed) return node;
-		pushFollow(FOLLOW_blanks_in_extension4696);
+		pushFollow(FOLLOW_blanks_in_extension4711);
 		blanks();
 		_fsp--;
 		if (failed) return node;
-		pushFollow(FOLLOW_extension_statement_in_extension4699);
+		pushFollow(FOLLOW_extension_statement_in_extension4714);
 		extension_statement();
 		_fsp--;
 		if (failed) return node;
-		pushFollow(FOLLOW_extension_markup_in_extension4704);
+		pushFollow(FOLLOW_extension_markup_in_extension4719);
 		extension_markup();
 		_fsp--;
 		if (failed) return node;
@@ -14963,13 +14972,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start extension_handler
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:750:1: extension_handler : (~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF ) | escaped )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:761:1: extension_handler : (~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF ) | escaped )+ ;
 	public final void extension_handler() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:751:2: ( (~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF ) | escaped )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:751:4: (~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF ) | escaped )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:762:2: ( (~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF ) | escaped )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:762:4: (~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF ) | escaped )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:751:4: (~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF ) | escaped )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:762:4: (~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF ) | escaped )+
 		int cnt147=0;
 		loop147:
 		do {
@@ -14986,7 +14995,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt147) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:751:5: ~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:762:5: ~ ( EXTENSION | BLANKS | ESCAPE | NEWLINE | EOF )
 			{
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=NOWIKI_OPEN)||input.LA(1)==FORCED_LINEBREAK||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=IMAGE_CLOSE)||(input.LA(1)>=TABLE_OF_CONTENTS_TEXT && input.LA(1)<=78) ) {
 			input.consume();
@@ -14996,16 +15005,16 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return ;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_handler4716);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_handler4731);	throw mse;
 			}
 
 
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:751:64: escaped
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:762:64: escaped
 			{
-			pushFollow(FOLLOW_escaped_in_extension_handler4749);
+			pushFollow(FOLLOW_escaped_in_extension_handler4764);
 			escaped();
 			_fsp--;
 			if (failed) return ;
@@ -15039,13 +15048,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start extension_statement
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:753:1: extension_statement : (~ ( EXTENSION | ESCAPE | EOF ) | escaped )* ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:764:1: extension_statement : (~ ( EXTENSION | ESCAPE | EOF ) | escaped )* ;
 	public final void extension_statement() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:754:2: ( (~ ( EXTENSION | ESCAPE | EOF ) | escaped )* )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:754:4: (~ ( EXTENSION | ESCAPE | EOF ) | escaped )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:765:2: ( (~ ( EXTENSION | ESCAPE | EOF ) | escaped )* )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:765:4: (~ ( EXTENSION | ESCAPE | EOF ) | escaped )*
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:754:4: (~ ( EXTENSION | ESCAPE | EOF ) | escaped )*
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:765:4: (~ ( EXTENSION | ESCAPE | EOF ) | escaped )*
 		loop148:
 		do {
 		int alt148=3;
@@ -15061,7 +15070,7 @@ public class Creole10Parser extends Parser {
 
 		switch (alt148) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:754:5: ~ ( EXTENSION | ESCAPE | EOF )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:765:5: ~ ( EXTENSION | ESCAPE | EOF )
 			{
 			if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=NOWIKI_OPEN)||input.LA(1)==FORCED_LINEBREAK||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=78) ) {
 			input.consume();
@@ -15071,16 +15080,16 @@ public class Creole10Parser extends Parser {
 			if (backtracking>0) {failed=true; return ;}
 			MismatchedSetException mse =
 				new MismatchedSetException(null,input);
-			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_statement4763);	throw mse;
+			recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_statement4778);	throw mse;
 			}
 
 
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:754:41: escaped
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:765:41: escaped
 			{
-			pushFollow(FOLLOW_escaped_in_extension_statement4784);
+			pushFollow(FOLLOW_escaped_in_extension_statement4799);
 			escaped();
 			_fsp--;
 			if (failed) return ;
@@ -15109,15 +15118,15 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_of_contents
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:760:1: table_of_contents returns [ASTNode tableOfContents = new TableOfContentsNode()] : TABLE_OF_CONTENTS_TEXT ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:771:1: table_of_contents returns [ASTNode tableOfContents = new TableOfContentsNode()] : TABLE_OF_CONTENTS_TEXT ;
 	public final ASTNode table_of_contents() throws RecognitionException {
 	ASTNode tableOfContents =  new TableOfContentsNode();
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:761:2: ( TABLE_OF_CONTENTS_TEXT )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:761:38: TABLE_OF_CONTENTS_TEXT
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:772:2: ( TABLE_OF_CONTENTS_TEXT )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:772:38: TABLE_OF_CONTENTS_TEXT
 		{
-		match(input,TABLE_OF_CONTENTS_TEXT,FOLLOW_TABLE_OF_CONTENTS_TEXT_in_table_of_contents4807); if (failed) return tableOfContents;
+		match(input,TABLE_OF_CONTENTS_TEXT,FOLLOW_TABLE_OF_CONTENTS_TEXT_in_table_of_contents4822); if (failed) return tableOfContents;
 
 		}
 
@@ -15134,10 +15143,10 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start onestar
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:765:1: onestar : ( ({...}? ( STAR )? ) | );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:776:1: onestar : ( ({...}? ( STAR )? ) | );
 	public final void onestar() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:766:2: ( ({...}? ( STAR )? ) | )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:777:2: ( ({...}? ( STAR )? ) | )
 		int alt150=2;
 		switch ( input.LA(1) ) {
 		case STAR:
@@ -15153,7 +15162,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 1, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 1, input);
 
 			throw nvae;
 		}
@@ -15172,7 +15181,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 2, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 2, input);
 
 			throw nvae;
 		}
@@ -15191,7 +15200,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 3, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 3, input);
 
 			throw nvae;
 		}
@@ -15210,7 +15219,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 4, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 4, input);
 
 			throw nvae;
 		}
@@ -15229,7 +15238,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 5, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 5, input);
 
 			throw nvae;
 		}
@@ -15248,7 +15257,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 6, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 6, input);
 
 			throw nvae;
 		}
@@ -15267,7 +15276,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 7, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 7, input);
 
 			throw nvae;
 		}
@@ -15286,7 +15295,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 8, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 8, input);
 
 			throw nvae;
 		}
@@ -15306,7 +15315,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 9, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 9, input);
 
 			throw nvae;
 		}
@@ -15326,7 +15335,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 10, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 10, input);
 
 			throw nvae;
 		}
@@ -15345,7 +15354,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 11, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 11, input);
 
 			throw nvae;
 		}
@@ -15364,7 +15373,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 12, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 12, input);
 
 			throw nvae;
 		}
@@ -15443,7 +15452,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 13, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 13, input);
 
 			throw nvae;
 		}
@@ -15462,7 +15471,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 14, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 14, input);
 
 			throw nvae;
 		}
@@ -15481,7 +15490,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 15, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 15, input);
 
 			throw nvae;
 		}
@@ -15500,7 +15509,7 @@ public class Creole10Parser extends Parser {
 		else {
 			if (backtracking>0) {failed=true; return ;}
 			NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 16, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 16, input);
 
 			throw nvae;
 		}
@@ -15509,23 +15518,23 @@ public class Creole10Parser extends Parser {
 		default:
 		if (backtracking>0) {failed=true; return ;}
 		NoViableAltException nvae =
-			new NoViableAltException("765:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 0, input);
+			new NoViableAltException("776:1: onestar : ( ({...}? ( STAR )? ) | );", 150, 0, input);
 
 		throw nvae;
 		}
 
 		switch (alt150) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:766:4: ({...}? ( STAR )? )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:777:4: ({...}? ( STAR )? )
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:766:4: ({...}? ( STAR )? )
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:766:6: {...}? ( STAR )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:777:4: ({...}? ( STAR )? )
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:777:6: {...}? ( STAR )?
 			{
 			if ( !( input.LA(2) != STAR ) ) {
 			if (backtracking>0) {failed=true; return ;}
 			throw new FailedPredicateException(input, "onestar", " input.LA(2) != STAR ");
 			}
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:766:32: ( STAR )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:777:32: ( STAR )?
 			int alt149=2;
 			int LA149_0 = input.LA(1);
 
@@ -15534,9 +15543,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt149) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:766:34: STAR
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:777:34: STAR
 				{
-				match(input,STAR,FOLLOW_STAR_in_onestar4830); if (failed) return ;
+				match(input,STAR,FOLLOW_STAR_in_onestar4845); if (failed) return ;
 
 				}
 				break;
@@ -15550,7 +15559,7 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:768:2: 
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:779:2: 
 			{
 			}
 			break;
@@ -15569,17 +15578,17 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start escaped
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:769:1: escaped returns [ScapedNode scaped = new ScapedNode()] : ESCAPE c= . ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:780:1: escaped returns [ScapedNode scaped = new ScapedNode()] : ESCAPE c= . ;
 	public final ScapedNode escaped() throws RecognitionException {
 	ScapedNode scaped =  new ScapedNode();
 
 	Token c=null;
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:770:2: ( ESCAPE c= . )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:770:4: ESCAPE c= .
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:781:2: ( ESCAPE c= . )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:781:4: ESCAPE c= .
 		{
-		match(input,ESCAPE,FOLLOW_ESCAPE_in_escaped4852); if (failed) return scaped;
+		match(input,ESCAPE,FOLLOW_ESCAPE_in_escaped4867); if (failed) return scaped;
 		c=(Token)input.LT(1);
 		matchAny(input); if (failed) return scaped;
 		if ( backtracking==0 ) {
@@ -15601,10 +15610,10 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start paragraph_separator
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:773:1: paragraph_separator : ( ( newline )+ | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:784:1: paragraph_separator : ( ( newline )+ | EOF );
 	public final void paragraph_separator() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:774:2: ( ( newline )+ | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:785:2: ( ( newline )+ | EOF )
 		int alt152=2;
 		int LA152_0 = input.LA(1);
 
@@ -15617,15 +15626,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return ;}
 		NoViableAltException nvae =
-			new NoViableAltException("773:1: paragraph_separator : ( ( newline )+ | EOF );", 152, 0, input);
+			new NoViableAltException("784:1: paragraph_separator : ( ( newline )+ | EOF );", 152, 0, input);
 
 		throw nvae;
 		}
 		switch (alt152) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:774:4: ( newline )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:785:4: ( newline )+
 			{
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:774:4: ( newline )+
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:785:4: ( newline )+
 			int cnt151=0;
 			loop151:
 			do {
@@ -15639,9 +15648,9 @@ public class Creole10Parser extends Parser {
 
 			switch (alt151) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:774:6: newline
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:785:6: newline
 				{
-				pushFollow(FOLLOW_newline_in_paragraph_separator4876);
+				pushFollow(FOLLOW_newline_in_paragraph_separator4891);
 				newline();
 				_fsp--;
 				if (failed) return ;
@@ -15663,9 +15672,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:775:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:786:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_paragraph_separator4884); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_paragraph_separator4899); if (failed) return ;
 
 			}
 			break;
@@ -15684,13 +15693,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start whitespaces
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:777:1: whitespaces : ( blanks | newline )+ ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:788:1: whitespaces : ( blanks | newline )+ ;
 	public final void whitespaces() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:778:2: ( ( blanks | newline )+ )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:778:4: ( blanks | newline )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:789:2: ( ( blanks | newline )+ )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:789:4: ( blanks | newline )+
 		{
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:778:4: ( blanks | newline )+
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:789:4: ( blanks | newline )+
 		int cnt153=0;
 		loop153:
 		do {
@@ -15707,9 +15716,9 @@ public class Creole10Parser extends Parser {
 
 		switch (alt153) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:778:6: blanks
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:789:6: blanks
 			{
-			pushFollow(FOLLOW_blanks_in_whitespaces4896);
+			pushFollow(FOLLOW_blanks_in_whitespaces4911);
 			blanks();
 			_fsp--;
 			if (failed) return ;
@@ -15717,9 +15726,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:778:15: newline
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:789:15: newline
 			{
-			pushFollow(FOLLOW_newline_in_whitespaces4900);
+			pushFollow(FOLLOW_newline_in_whitespaces4915);
 			newline();
 			_fsp--;
 			if (failed) return ;
@@ -15753,13 +15762,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start blanks
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:780:1: blanks : BLANKS ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:791:1: blanks : BLANKS ;
 	public final void blanks() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:781:2: ( BLANKS )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:781:4: BLANKS
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:792:2: ( BLANKS )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:792:4: BLANKS
 		{
-		match(input,BLANKS,FOLLOW_BLANKS_in_blanks4913); if (failed) return ;
+		match(input,BLANKS,FOLLOW_BLANKS_in_blanks4928); if (failed) return ;
 
 		}
 
@@ -15776,10 +15785,10 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start text_lineseparator
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:783:1: text_lineseparator : ( newline ( blanks )? | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:794:1: text_lineseparator : ( newline ( blanks )? | EOF );
 	public final void text_lineseparator() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:784:2: ( newline ( blanks )? | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:795:2: ( newline ( blanks )? | EOF )
 		int alt155=2;
 		int LA155_0 = input.LA(1);
 
@@ -15792,19 +15801,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return ;}
 		NoViableAltException nvae =
-			new NoViableAltException("783:1: text_lineseparator : ( newline ( blanks )? | EOF );", 155, 0, input);
+			new NoViableAltException("794:1: text_lineseparator : ( newline ( blanks )? | EOF );", 155, 0, input);
 
 		throw nvae;
 		}
 		switch (alt155) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:784:4: newline ( blanks )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:795:4: newline ( blanks )?
 			{
-			pushFollow(FOLLOW_newline_in_text_lineseparator4923);
+			pushFollow(FOLLOW_newline_in_text_lineseparator4938);
 			newline();
 			_fsp--;
 			if (failed) return ;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:784:13: ( blanks )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:795:13: ( blanks )?
 			int alt154=2;
 			int LA154_0 = input.LA(1);
 
@@ -15813,9 +15822,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt154) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:784:15: blanks
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:795:15: blanks
 				{
-				pushFollow(FOLLOW_blanks_in_text_lineseparator4928);
+				pushFollow(FOLLOW_blanks_in_text_lineseparator4943);
 				blanks();
 				_fsp--;
 				if (failed) return ;
@@ -15829,9 +15838,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:785:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:796:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_text_lineseparator4936); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_text_lineseparator4951); if (failed) return ;
 
 			}
 			break;
@@ -15850,13 +15859,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start newline
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:787:1: newline : NEWLINE ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:798:1: newline : NEWLINE ;
 	public final void newline() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:788:2: ( NEWLINE )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:788:4: NEWLINE
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:799:2: ( NEWLINE )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:799:4: NEWLINE
 		{
-		match(input,NEWLINE,FOLLOW_NEWLINE_in_newline4946); if (failed) return ;
+		match(input,NEWLINE,FOLLOW_NEWLINE_in_newline4961); if (failed) return ;
 
 		}
 
@@ -15873,14 +15882,14 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start bold_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:790:1: bold_markup : STAR STAR ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:801:1: bold_markup : STAR STAR ;
 	public final void bold_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:791:2: ( STAR STAR )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:791:4: STAR STAR
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:802:2: ( STAR STAR )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:802:4: STAR STAR
 		{
-		match(input,STAR,FOLLOW_STAR_in_bold_markup4956); if (failed) return ;
-		match(input,STAR,FOLLOW_STAR_in_bold_markup4959); if (failed) return ;
+		match(input,STAR,FOLLOW_STAR_in_bold_markup4971); if (failed) return ;
+		match(input,STAR,FOLLOW_STAR_in_bold_markup4974); if (failed) return ;
 
 		}
 
@@ -15897,13 +15906,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start ital_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:793:1: ital_markup : ITAL ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:804:1: ital_markup : ITAL ;
 	public final void ital_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:794:2: ( ITAL )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:794:4: ITAL
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:805:2: ( ITAL )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:805:4: ITAL
 		{
-		match(input,ITAL,FOLLOW_ITAL_in_ital_markup4969); if (failed) return ;
+		match(input,ITAL,FOLLOW_ITAL_in_ital_markup4984); if (failed) return ;
 
 		}
 
@@ -15920,13 +15929,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start heading_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:796:1: heading_markup : EQUAL ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:807:1: heading_markup : EQUAL ;
 	public final void heading_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:797:2: ( EQUAL )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:797:4: EQUAL
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:808:2: ( EQUAL )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:808:4: EQUAL
 		{
-		match(input,EQUAL,FOLLOW_EQUAL_in_heading_markup4979); if (failed) return ;
+		match(input,EQUAL,FOLLOW_EQUAL_in_heading_markup4994); if (failed) return ;
 
 		}
 
@@ -15945,16 +15954,16 @@ public class Creole10Parser extends Parser {
 	};
 
 	// $ANTLR start list_ordelem_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:799:1: list_ordelem_markup : POUND ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:810:1: list_ordelem_markup : POUND ;
 	public final list_ordelem_markup_return list_ordelem_markup() throws RecognitionException {
 	list_ordelem_markup_return retval = new list_ordelem_markup_return();
 	retval.start = input.LT(1);
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:800:2: ( POUND )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:800:4: POUND
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:811:2: ( POUND )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:811:4: POUND
 		{
-		match(input,POUND,FOLLOW_POUND_in_list_ordelem_markup4989); if (failed) return retval;
+		match(input,POUND,FOLLOW_POUND_in_list_ordelem_markup5004); if (failed) return retval;
 
 		}
 
@@ -15975,16 +15984,16 @@ public class Creole10Parser extends Parser {
 	};
 
 	// $ANTLR start list_unordelem_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:802:1: list_unordelem_markup : STAR ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:813:1: list_unordelem_markup : STAR ;
 	public final list_unordelem_markup_return list_unordelem_markup() throws RecognitionException {
 	list_unordelem_markup_return retval = new list_unordelem_markup_return();
 	retval.start = input.LT(1);
 
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:803:2: ( STAR )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:803:4: STAR
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:814:2: ( STAR )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:814:4: STAR
 		{
-		match(input,STAR,FOLLOW_STAR_in_list_unordelem_markup4999); if (failed) return retval;
+		match(input,STAR,FOLLOW_STAR_in_list_unordelem_markup5014); if (failed) return retval;
 
 		}
 
@@ -16003,10 +16012,10 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start list_elemseparator
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:805:1: list_elemseparator : ( newline ( blanks )? | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:816:1: list_elemseparator : ( newline ( blanks )? | EOF );
 	public final void list_elemseparator() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:806:2: ( newline ( blanks )? | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:817:2: ( newline ( blanks )? | EOF )
 		int alt157=2;
 		int LA157_0 = input.LA(1);
 
@@ -16019,19 +16028,19 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return ;}
 		NoViableAltException nvae =
-			new NoViableAltException("805:1: list_elemseparator : ( newline ( blanks )? | EOF );", 157, 0, input);
+			new NoViableAltException("816:1: list_elemseparator : ( newline ( blanks )? | EOF );", 157, 0, input);
 
 		throw nvae;
 		}
 		switch (alt157) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:806:4: newline ( blanks )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:817:4: newline ( blanks )?
 			{
-			pushFollow(FOLLOW_newline_in_list_elemseparator5009);
+			pushFollow(FOLLOW_newline_in_list_elemseparator5024);
 			newline();
 			_fsp--;
 			if (failed) return ;
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:806:13: ( blanks )?
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:817:13: ( blanks )?
 			int alt156=2;
 			int LA156_0 = input.LA(1);
 
@@ -16040,9 +16049,9 @@ public class Creole10Parser extends Parser {
 			}
 			switch (alt156) {
 			case 1 :
-				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:806:15: blanks
+				// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:817:15: blanks
 				{
-				pushFollow(FOLLOW_blanks_in_list_elemseparator5014);
+				pushFollow(FOLLOW_blanks_in_list_elemseparator5029);
 				blanks();
 				_fsp--;
 				if (failed) return ;
@@ -16056,9 +16065,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:807:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:818:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_list_elemseparator5022); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_list_elemseparator5037); if (failed) return ;
 
 			}
 			break;
@@ -16077,10 +16086,10 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start end_of_list
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:809:1: end_of_list : ( newline | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:820:1: end_of_list : ( newline | EOF );
 	public final void end_of_list() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:810:2: ( newline | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:821:2: ( newline | EOF )
 		int alt158=2;
 		int LA158_0 = input.LA(1);
 
@@ -16093,15 +16102,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return ;}
 		NoViableAltException nvae =
-			new NoViableAltException("809:1: end_of_list : ( newline | EOF );", 158, 0, input);
+			new NoViableAltException("820:1: end_of_list : ( newline | EOF );", 158, 0, input);
 
 		throw nvae;
 		}
 		switch (alt158) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:810:4: newline
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:821:4: newline
 			{
-			pushFollow(FOLLOW_newline_in_end_of_list5032);
+			pushFollow(FOLLOW_newline_in_end_of_list5047);
 			newline();
 			_fsp--;
 			if (failed) return ;
@@ -16109,9 +16118,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:811:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:822:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_end_of_list5037); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_end_of_list5052); if (failed) return ;
 
 			}
 			break;
@@ -16130,13 +16139,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_cell_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:813:1: table_cell_markup : PIPE ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:824:1: table_cell_markup : PIPE ;
 	public final void table_cell_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:814:2: ( PIPE )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:814:4: PIPE
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:825:2: ( PIPE )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:825:4: PIPE
 		{
-		match(input,PIPE,FOLLOW_PIPE_in_table_cell_markup5047); if (failed) return ;
+		match(input,PIPE,FOLLOW_PIPE_in_table_cell_markup5062); if (failed) return ;
 
 		}
 
@@ -16153,14 +16162,14 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_headercell_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:816:1: table_headercell_markup : PIPE EQUAL ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:827:1: table_headercell_markup : PIPE EQUAL ;
 	public final void table_headercell_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:817:2: ( PIPE EQUAL )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:817:4: PIPE EQUAL
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:828:2: ( PIPE EQUAL )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:828:4: PIPE EQUAL
 		{
-		match(input,PIPE,FOLLOW_PIPE_in_table_headercell_markup5057); if (failed) return ;
-		match(input,EQUAL,FOLLOW_EQUAL_in_table_headercell_markup5060); if (failed) return ;
+		match(input,PIPE,FOLLOW_PIPE_in_table_headercell_markup5072); if (failed) return ;
+		match(input,EQUAL,FOLLOW_EQUAL_in_table_headercell_markup5075); if (failed) return ;
 
 		}
 
@@ -16177,10 +16186,10 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start table_rowseparator
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:819:1: table_rowseparator : ( newline | EOF );
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:830:1: table_rowseparator : ( newline | EOF );
 	public final void table_rowseparator() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:820:2: ( newline | EOF )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:831:2: ( newline | EOF )
 		int alt159=2;
 		int LA159_0 = input.LA(1);
 
@@ -16193,15 +16202,15 @@ public class Creole10Parser extends Parser {
 		else {
 		if (backtracking>0) {failed=true; return ;}
 		NoViableAltException nvae =
-			new NoViableAltException("819:1: table_rowseparator : ( newline | EOF );", 159, 0, input);
+			new NoViableAltException("830:1: table_rowseparator : ( newline | EOF );", 159, 0, input);
 
 		throw nvae;
 		}
 		switch (alt159) {
 		case 1 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:820:4: newline
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:831:4: newline
 			{
-			pushFollow(FOLLOW_newline_in_table_rowseparator5070);
+			pushFollow(FOLLOW_newline_in_table_rowseparator5085);
 			newline();
 			_fsp--;
 			if (failed) return ;
@@ -16209,9 +16218,9 @@ public class Creole10Parser extends Parser {
 			}
 			break;
 		case 2 :
-			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:821:4: EOF
+			// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:832:4: EOF
 			{
-			match(input,EOF,FOLLOW_EOF_in_table_rowseparator5075); if (failed) return ;
+			match(input,EOF,FOLLOW_EOF_in_table_rowseparator5090); if (failed) return ;
 
 			}
 			break;
@@ -16230,13 +16239,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start nowiki_open_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:823:1: nowiki_open_markup : NOWIKI_OPEN ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:834:1: nowiki_open_markup : NOWIKI_OPEN ;
 	public final void nowiki_open_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:824:2: ( NOWIKI_OPEN )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:824:4: NOWIKI_OPEN
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:835:2: ( NOWIKI_OPEN )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:835:4: NOWIKI_OPEN
 		{
-		match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5085); if (failed) return ;
+		match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5100); if (failed) return ;
 
 		}
 
@@ -16253,13 +16262,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start nowiki_close_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:826:1: nowiki_close_markup : NOWIKI_CLOSE ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:837:1: nowiki_close_markup : NOWIKI_CLOSE ;
 	public final void nowiki_close_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:827:2: ( NOWIKI_CLOSE )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:827:4: NOWIKI_CLOSE
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:838:2: ( NOWIKI_CLOSE )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:838:4: NOWIKI_CLOSE
 		{
-		match(input,NOWIKI_CLOSE,FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5095); if (failed) return ;
+		match(input,NOWIKI_CLOSE,FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5110); if (failed) return ;
 
 		}
 
@@ -16276,16 +16285,16 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start horizontalrule_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:829:1: horizontalrule_markup : DASH DASH DASH DASH ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:840:1: horizontalrule_markup : DASH DASH DASH DASH ;
 	public final void horizontalrule_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:830:2: ( DASH DASH DASH DASH )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:830:4: DASH DASH DASH DASH
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:841:2: ( DASH DASH DASH DASH )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:841:4: DASH DASH DASH DASH
 		{
-		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5105); if (failed) return ;
-		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5108); if (failed) return ;
-		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5111); if (failed) return ;
-		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5114); if (failed) return ;
+		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5120); if (failed) return ;
+		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5123); if (failed) return ;
+		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5126); if (failed) return ;
+		match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5129); if (failed) return ;
 
 		}
 
@@ -16302,13 +16311,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_open_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:832:1: link_open_markup : LINK_OPEN ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:843:1: link_open_markup : LINK_OPEN ;
 	public final void link_open_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:833:2: ( LINK_OPEN )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:833:4: LINK_OPEN
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:844:2: ( LINK_OPEN )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:844:4: LINK_OPEN
 		{
-		match(input,LINK_OPEN,FOLLOW_LINK_OPEN_in_link_open_markup5124); if (failed) return ;
+		match(input,LINK_OPEN,FOLLOW_LINK_OPEN_in_link_open_markup5139); if (failed) return ;
 
 		}
 
@@ -16325,13 +16334,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_close_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:835:1: link_close_markup : LINK_CLOSE ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:846:1: link_close_markup : LINK_CLOSE ;
 	public final void link_close_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:836:2: ( LINK_CLOSE )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:836:4: LINK_CLOSE
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:847:2: ( LINK_CLOSE )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:847:4: LINK_CLOSE
 		{
-		match(input,LINK_CLOSE,FOLLOW_LINK_CLOSE_in_link_close_markup5134); if (failed) return ;
+		match(input,LINK_CLOSE,FOLLOW_LINK_CLOSE_in_link_close_markup5149); if (failed) return ;
 
 		}
 
@@ -16348,13 +16357,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start link_description_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:838:1: link_description_markup : PIPE ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:849:1: link_description_markup : PIPE ;
 	public final void link_description_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:839:2: ( PIPE )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:839:4: PIPE
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:850:2: ( PIPE )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:850:4: PIPE
 		{
-		match(input,PIPE,FOLLOW_PIPE_in_link_description_markup5144); if (failed) return ;
+		match(input,PIPE,FOLLOW_PIPE_in_link_description_markup5159); if (failed) return ;
 
 		}
 
@@ -16371,13 +16380,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_open_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:841:1: image_open_markup : IMAGE_OPEN ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:852:1: image_open_markup : IMAGE_OPEN ;
 	public final void image_open_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:842:2: ( IMAGE_OPEN )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:842:4: IMAGE_OPEN
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:853:2: ( IMAGE_OPEN )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:853:4: IMAGE_OPEN
 		{
-		match(input,IMAGE_OPEN,FOLLOW_IMAGE_OPEN_in_image_open_markup5154); if (failed) return ;
+		match(input,IMAGE_OPEN,FOLLOW_IMAGE_OPEN_in_image_open_markup5169); if (failed) return ;
 
 		}
 
@@ -16394,13 +16403,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_close_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:844:1: image_close_markup : IMAGE_CLOSE ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:855:1: image_close_markup : IMAGE_CLOSE ;
 	public final void image_close_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:845:2: ( IMAGE_CLOSE )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:845:4: IMAGE_CLOSE
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:856:2: ( IMAGE_CLOSE )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:856:4: IMAGE_CLOSE
 		{
-		match(input,IMAGE_CLOSE,FOLLOW_IMAGE_CLOSE_in_image_close_markup5164); if (failed) return ;
+		match(input,IMAGE_CLOSE,FOLLOW_IMAGE_CLOSE_in_image_close_markup5179); if (failed) return ;
 
 		}
 
@@ -16417,13 +16426,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start image_alternative_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:847:1: image_alternative_markup : PIPE ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:858:1: image_alternative_markup : PIPE ;
 	public final void image_alternative_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:848:2: ( PIPE )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:848:4: PIPE
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:859:2: ( PIPE )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:859:4: PIPE
 		{
-		match(input,PIPE,FOLLOW_PIPE_in_image_alternative_markup5174); if (failed) return ;
+		match(input,PIPE,FOLLOW_PIPE_in_image_alternative_markup5189); if (failed) return ;
 
 		}
 
@@ -16440,13 +16449,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start extension_markup
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:850:1: extension_markup : EXTENSION ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:861:1: extension_markup : EXTENSION ;
 	public final void extension_markup() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:851:2: ( EXTENSION )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:851:4: EXTENSION
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:862:2: ( EXTENSION )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:862:4: EXTENSION
 		{
-		match(input,EXTENSION,FOLLOW_EXTENSION_in_extension_markup5184); if (failed) return ;
+		match(input,EXTENSION,FOLLOW_EXTENSION_in_extension_markup5199); if (failed) return ;
 
 		}
 
@@ -16463,13 +16472,13 @@ public class Creole10Parser extends Parser {
 
 
 	// $ANTLR start forced_linebreak
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:853:1: forced_linebreak : FORCED_LINEBREAK ;
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:864:1: forced_linebreak : FORCED_LINEBREAK ;
 	public final void forced_linebreak() throws RecognitionException {
 	try {
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:854:2: ( FORCED_LINEBREAK )
-		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:854:4: FORCED_LINEBREAK
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:865:2: ( FORCED_LINEBREAK )
+		// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:865:4: FORCED_LINEBREAK
 		{
-		match(input,FORCED_LINEBREAK,FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5194); if (failed) return ;
+		match(input,FORCED_LINEBREAK,FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5209); if (failed) return ;
 
 		}
 
@@ -16486,8 +16495,8 @@ public class Creole10Parser extends Parser {
 
 	// $ANTLR start synpred1
 	public final void synpred1_fragment() throws RecognitionException {   
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:144:5: ( NOWIKI_OPEN ~ ( NEWLINE ) )
-	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:144:7: NOWIKI_OPEN ~ ( NEWLINE )
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:5: ( NOWIKI_OPEN ~ ( NEWLINE ) )
+	// /home/migue/development/workspaces/workspace-liferayportal/Archive/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:143:7: NOWIKI_OPEN ~ ( NEWLINE )
 	{
 	match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_synpred1339); if (failed) return ;
 	if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=78) ) {
@@ -16545,482 +16554,482 @@ public class Creole10Parser extends Parser {
 	public static final BitSet FOLLOW_text_element_in_text_paragraph372 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
 	public static final BitSet FOLLOW_text_lineseparator_in_text_paragraph381 = new BitSet(new long[]{0xFFFFFFFFFFF27FF2L,0x0000000000007FFFL});
 	public static final BitSet FOLLOW_text_firstelement_in_text_line404 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_element_in_text_line415 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_lineseparator_in_text_line430 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_formattedelement_in_text_firstelement452 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_unformattedelement_in_text_firstelement463 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_text_formattedelement479 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_italcontent_in_text_formattedelement485 = new BitSet(new long[]{0x0000000000108002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_formattedelement494 = new BitSet(new long[]{0x0000000000100000L});
-	public static final BitSet FOLLOW_ital_markup_in_text_formattedelement500 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_text_formattedelement508 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_boldcontent_in_text_formattedelement515 = new BitSet(new long[]{0x0000000000028002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_formattedelement524 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_bold_markup_in_text_formattedelement530 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_boldcontent549 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_boldcontentpart_in_text_boldcontent561 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_text_boldcontent572 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_italcontent588 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_italcontentpart_in_text_italcontent600 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_text_italcontent611 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_text_element626 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformattedelement_in_text_element633 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_unformattedelement_in_text_element644 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_onestar_in_text_element647 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_formattedelement_in_text_element658 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_text_boldcontentpart675 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_bolditalcontent_in_text_boldcontentpart682 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_text_boldcontentpart689 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_formattedcontent_in_text_boldcontentpart701 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_text_italcontentpart717 = new BitSet(new long[]{0xFFFFFFFFFFEFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_bolditalcontent_in_text_italcontentpart724 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_text_italcontentpart730 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_formattedcontent_in_text_italcontentpart742 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_text_bolditalcontent760 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_formattedcontent_in_text_bolditalcontent771 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_text_bolditalcontent781 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_text_formattedcontent795 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformattedelement_in_text_formattedcontent804 = new BitSet(new long[]{0xFFFFFFFFFFEFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_text_formattedcontent809 = new BitSet(new long[]{0xFFFFFFFFFFEDFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_linebreak_in_text_formattedcontent814 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_lineseparator_in_text_linebreak834 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_inlineelement_in_text_inlineelement852 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_inline_in_text_inlineelement863 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_in_text_first_inlineelement886 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_image_in_text_first_inlineelement897 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_extension_in_text_first_inlineelement907 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_unformatted_in_text_first_unformattedelement927 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_inlineelement_in_text_first_unformattedelement938 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_first_unformmatted_text_in_text_first_unformatted960 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_text_first_unformatted969 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_escaped_in_text_first_unformatted981 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_set_in_text_first_unformmatted_text1010 = new BitSet(new long[]{0xFFFFFFFFF8007FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformatted_in_text_unformattedelement1125 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_inlineelement_in_text_unformattedelement1136 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_unformated_text_in_text_unformatted1158 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_text_unformatted1167 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_escaped_in_text_unformatted1179 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_set_in_text_unformated_text1206 = new BitSet(new long[]{0xFFFFFFFFF80D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_markup_in_heading1310 = new BitSet(new long[]{0xFFFFFFFFFBFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_content_in_heading1315 = new BitSet(new long[]{0x0000000080048000L});
-	public static final BitSet FOLLOW_heading_markup_in_heading1322 = new BitSet(new long[]{0x0000000080008000L});
-	public static final BitSet FOLLOW_blanks_in_heading1330 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_paragraph_separator_in_heading1337 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_markup_in_heading_content1347 = new BitSet(new long[]{0xFFFFFFFFFBFF7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_content_in_heading_content1352 = new BitSet(new long[]{0x0000000000040002L});
-	public static final BitSet FOLLOW_heading_markup_in_heading_content1357 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_text_in_heading_content1369 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_cellcontent_in_heading_text1390 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_heading_cellcontent1407 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_cellcontentpart_in_heading_cellcontent1416 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_heading_cellcontent1421 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_formattedelement_in_heading_cellcontentpart1442 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_unformattedelement_in_heading_cellcontentpart1453 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_heading_formattedelement1469 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_italcontent_in_heading_formattedelement1479 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_heading_formattedelement1488 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_heading_formattedelement1496 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_boldcontent_in_heading_formattedelement1503 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_heading_formattedelement1513 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_heading_boldcontent1530 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_boldcontentpart_in_heading_boldcontent1539 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_heading_boldcontent1544 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_heading_boldcontent1552 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_heading_italcontent1566 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_italcontentpart_in_heading_italcontent1575 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_heading_italcontent1580 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_heading_italcontent1588 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_boldcontentpart1606 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_heading_boldcontentpart1613 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_bolditalcontent_in_heading_boldcontentpart1620 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_heading_boldcontentpart1627 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_heading_italcontentpart1644 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_bolditalcontent_in_heading_italcontentpart1651 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_heading_italcontentpart1658 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_italcontentpart1670 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_heading_bolditalcontent1686 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_bolditalcontent1695 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_onestar_in_heading_bolditalcontent1700 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_heading_bolditalcontent1708 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_unformattedelement_in_heading_formattedcontent1728 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_heading_unformatted_text_in_heading_unformattedelement1751 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_heading_inlineelement_in_heading_unformattedelement1763 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_in_heading_inlineelement1784 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_image_in_heading_inlineelement1794 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_inline_in_heading_inlineelement1805 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_heading_unformatted_text1830 = new BitSet(new long[]{0xFFFFFFFFFB1B7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_ordelem_in_list_ord1889 = new BitSet(new long[]{0x0000000000018002L});
-	public static final BitSet FOLLOW_end_of_list_in_list_ord1899 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_ordelem_markup_in_list_ordelem1932 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_elem_in_list_ordelem1940 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_unordelem_in_list_unord1964 = new BitSet(new long[]{0x0000000000028002L});
-	public static final BitSet FOLLOW_end_of_list_in_list_unord1974 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_unordelem_markup_in_list_unordelem2007 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_elem_in_list_unordelem2014 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_elem_markup_in_list_elem2039 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_elemcontent_in_list_elem2050 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_list_elemseparator_in_list_elem2055 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_ordelem_markup_in_list_elem_markup2065 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_unordelem_markup_in_list_elem_markup2070 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_list_elemcontent2084 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_elemcontentpart_in_list_elemcontent2093 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_elemcontent2098 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformattedelement_in_list_elemcontentpart2119 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_formatted_elem_in_list_elemcontentpart2130 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_list_formatted_elem2147 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2150 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_boldcontentpart_in_list_formatted_elem2159 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2169 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_list_formatted_elem2178 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_list_formatted_elem2186 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2191 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_italcontentpart_in_list_formatted_elem2200 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2209 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_list_formatted_elem2218 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2244 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_bolditalcontent_in_list_boldcontentpart2251 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2258 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_unformattedelement_in_list_boldcontentpart2273 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_text_unformattedelement_in_list_bolditalcontent2305 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2335 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_list_bolditalcontent_in_list_italcontentpart2342 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2349 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_text_unformattedelement_in_list_italcontentpart2363 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_row_in_table2393 = new BitSet(new long[]{0x0000000000080002L});
-	public static final BitSet FOLLOW_table_cell_in_table_row2419 = new BitSet(new long[]{0x0000000000088000L});
-	public static final BitSet FOLLOW_table_rowseparator_in_table_row2427 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_headercell_in_table_cell2448 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_normalcell_in_table_cell2459 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_headercell_markup_in_table_headercell2475 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_cellcontent_in_table_headercell2482 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_cell_markup_in_table_normalcell2498 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_cellcontent_in_table_normalcell2505 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_table_cellcontent2521 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_cellcontentpart_in_table_cellcontent2530 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_table_cellcontent2535 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_formattedelement_in_table_cellcontentpart2556 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_unformattedelement_in_table_cellcontentpart2567 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2583 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_italcontent_in_table_formattedelement2593 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2602 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2610 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_boldcontent_in_table_formattedelement2617 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2627 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_table_boldcontent2644 = new BitSet(new long[]{0xFFFFFFFFFFF57FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_boldcontentpart_in_table_boldcontent2653 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_table_boldcontent2658 = new BitSet(new long[]{0xFFFFFFFFFFF57FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_table_boldcontent2666 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_table_italcontent2680 = new BitSet(new long[]{0xFFFFFFFFFFE77FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_italcontentpart_in_table_italcontent2689 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_table_italcontent2694 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_EOF_in_table_italcontent2702 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_formattedcontent_in_table_boldcontentpart2720 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2727 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_bolditalcontent_in_table_boldcontentpart2734 = new BitSet(new long[]{0x0000000000100002L});
-	public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2741 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2758 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_bolditalcontent_in_table_italcontentpart2765 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2772 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_formattedcontent_in_table_italcontentpart2784 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2800 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_formattedcontent_in_table_bolditalcontent2809 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2814 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_table_bolditalcontent2822 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_unformattedelement_in_table_formattedcontent2842 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_table_unformatted_in_table_unformattedelement2865 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_inlineelement_in_table_unformattedelement2877 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_in_table_inlineelement2898 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_image_in_table_inlineelement2908 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_extension_in_table_inlineelement2919 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_inline_in_table_inlineelement2929 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_table_unformatted_text_in_table_unformatted2951 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_table_unformatted2960 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_escaped_in_table_unformatted2973 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_set_in_table_unformatted_text2999 = new BitSet(new long[]{0xFFFFFFFFF8057FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_nowikiblock_open_markup_in_nowiki_block3096 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_nowiki_block_contents_in_nowiki_block3103 = new BitSet(new long[]{0x0000000008000000L});
-	public static final BitSet FOLLOW_nowikiblock_close_markup_in_nowiki_block3109 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_paragraph_separator_in_nowiki_block3112 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3127 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_newline_in_nowikiblock_open_markup3130 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3142 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nowiki_open_markup_in_nowiki_inline3157 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_nowiki_inline_contents_in_nowiki_inline3164 = new BitSet(new long[]{0x0000000010000000L});
-	public static final BitSet FOLLOW_nowiki_close_markup_in_nowiki_inline3169 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_nowiki_block_contents3189 = new BitSet(new long[]{0xFFFFFFFFF7FFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_set_in_nowiki_inline_contents3223 = new BitSet(new long[]{0xFFFFFFFFEFFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_horizontalrule_markup_in_horizontalrule3260 = new BitSet(new long[]{0x0000000080008000L});
-	public static final BitSet FOLLOW_blanks_in_horizontalrule3265 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_paragraph_separator_in_horizontalrule3271 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_open_markup_in_link3293 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_address_in_link3299 = new BitSet(new long[]{0x0000000020080000L});
-	public static final BitSet FOLLOW_link_description_markup_in_link3305 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_description_in_link3315 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_link_close_markup_in_link3323 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_interwiki_uri_in_link_address3342 = new BitSet(new long[]{0x0000080000000000L});
-	public static final BitSet FOLLOW_43_in_link_address3345 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_interwiki_pagename_in_link_address3352 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_uri_in_link_address3363 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_44_in_link_interwiki_uri3379 = new BitSet(new long[]{0x0000200000000000L});
-	public static final BitSet FOLLOW_45_in_link_interwiki_uri3381 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_46_in_link_interwiki_uri3386 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3388 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3390 = new BitSet(new long[]{0x0002000000000000L});
-	public static final BitSet FOLLOW_49_in_link_interwiki_uri3392 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3394 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3396 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3398 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3400 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_52_in_link_interwiki_uri3405 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3407 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3409 = new BitSet(new long[]{0x0040000000000000L});
-	public static final BitSet FOLLOW_54_in_link_interwiki_uri3411 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3413 = new BitSet(new long[]{0x0080000000000000L});
-	public static final BitSet FOLLOW_55_in_link_interwiki_uri3415 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_56_in_link_interwiki_uri3420 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3422 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3424 = new BitSet(new long[]{0x0200000000000000L});
-	public static final BitSet FOLLOW_57_in_link_interwiki_uri3426 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3428 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3430 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_59_in_link_interwiki_uri3435 = new BitSet(new long[]{0x1000000000000000L});
-	public static final BitSet FOLLOW_60_in_link_interwiki_uri3437 = new BitSet(new long[]{0x2000000000000000L});
-	public static final BitSet FOLLOW_61_in_link_interwiki_uri3439 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3441 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3443 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3445 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3447 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_62_in_link_interwiki_uri3452 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3454 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3456 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-	public static final BitSet FOLLOW_64_in_link_interwiki_uri3458 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
-	public static final BitSet FOLLOW_65_in_link_interwiki_uri3460 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3462 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3464 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3466 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_62_in_link_interwiki_uri3471 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3473 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3475 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3477 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3479 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3481 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3483 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3485 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3487 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_62_in_link_interwiki_uri3492 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3494 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3496 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3498 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_62_in_link_interwiki_uri3500 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3502 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3504 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3506 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_68_in_link_interwiki_uri3511 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3513 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3515 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-	public static final BitSet FOLLOW_69_in_link_interwiki_uri3517 = new BitSet(new long[]{0x0002000000000000L});
-	public static final BitSet FOLLOW_49_in_link_interwiki_uri3519 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-	public static final BitSet FOLLOW_70_in_link_interwiki_uri3521 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3523 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_68_in_link_interwiki_uri3528 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-	public static final BitSet FOLLOW_71_in_link_interwiki_uri3530 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3532 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3534 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3536 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_61_in_link_interwiki_uri3541 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-	public static final BitSet FOLLOW_69_in_link_interwiki_uri3543 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3545 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3547 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3549 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3551 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_61_in_link_interwiki_uri3556 = new BitSet(new long[]{0x0002000000000000L});
-	public static final BitSet FOLLOW_49_in_link_interwiki_uri3558 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3560 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3562 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3564 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3566 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3568 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3570 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_61_in_link_interwiki_uri3575 = new BitSet(new long[]{0x0002000000000000L});
-	public static final BitSet FOLLOW_49_in_link_interwiki_uri3577 = new BitSet(new long[]{0x0080000000000000L});
-	public static final BitSet FOLLOW_55_in_link_interwiki_uri3579 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-	public static final BitSet FOLLOW_72_in_link_interwiki_uri3581 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3583 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3585 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3587 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3589 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3591 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3593 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_73_in_link_interwiki_uri3598 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3600 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3602 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3604 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3606 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
-	public static final BitSet FOLLOW_74_in_link_interwiki_uri3608 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_60_in_link_interwiki_uri3613 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3615 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3617 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-	public static final BitSet FOLLOW_72_in_link_interwiki_uri3619 = new BitSet(new long[]{0x1000000000000000L});
-	public static final BitSet FOLLOW_60_in_link_interwiki_uri3621 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-	public static final BitSet FOLLOW_67_in_link_interwiki_uri3623 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3625 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-	public static final BitSet FOLLOW_72_in_link_interwiki_uri3627 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_75_in_link_interwiki_uri3632 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3634 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3636 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3638 = new BitSet(new long[]{0x0020000000000000L});
-	public static final BitSet FOLLOW_53_in_link_interwiki_uri3640 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
-	public static final BitSet FOLLOW_76_in_link_interwiki_uri3642 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3644 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3646 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3648 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3650 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_75_in_link_interwiki_uri3655 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3657 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3659 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3661 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3663 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_77_in_link_interwiki_uri3668 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-	public static final BitSet FOLLOW_70_in_link_interwiki_uri3670 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3672 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-	public static final BitSet FOLLOW_69_in_link_interwiki_uri3674 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_47_in_link_interwiki_uri3676 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3678 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3683 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3685 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3687 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3689 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-	public static final BitSet FOLLOW_72_in_link_interwiki_uri3691 = new BitSet(new long[]{0x0400000000000000L});
-	public static final BitSet FOLLOW_58_in_link_interwiki_uri3693 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_66_in_link_interwiki_uri3695 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3697 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_63_in_link_interwiki_uri3699 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_78_in_link_interwiki_uri3704 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_link_interwiki_uri3706 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3708 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_link_interwiki_uri3710 = new BitSet(new long[]{0x0008000000000000L});
-	public static final BitSet FOLLOW_51_in_link_interwiki_uri3712 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_link_interwiki_pagename3732 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_descriptionpart_in_link_description3775 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_in_link_description3787 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3812 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3815 = new BitSet(new long[]{0xFFFFFFFFDE1D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3823 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3828 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3838 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3843 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3846 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3855 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3860 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3869 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3874 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_descriptiontext_in_link_descriptionpart3883 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3886 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3906 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_boldital_description_in_link_bold_descriptionpart3913 = new BitSet(new long[]{0x0000000000100000L});
-	public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3918 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3927 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3943 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_boldital_description_in_link_ital_descriptionpart3950 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3953 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3964 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_link_boldital_description3980 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_descriptiontext_in_link_boldital_description3989 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_link_boldital_description3992 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_descriptiontext_simple_in_link_descriptiontext4015 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_link_descriptiontext4025 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_escaped_in_link_descriptiontext4037 = new BitSet(new long[]{0x0000000006000002L});
-	public static final BitSet FOLLOW_set_in_link_descriptiontext_simple4062 = new BitSet(new long[]{0xFFFFFFFFD80D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_set_in_link_uri4163 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_open_markup_in_image4204 = new BitSet(new long[]{0xFFFFFFFFBFF77FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_uri_in_image4210 = new BitSet(new long[]{0x0000000040080000L});
-	public static final BitSet FOLLOW_image_alternative_in_image4220 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_image_close_markup_in_image4229 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_image_uri4248 = new BitSet(new long[]{0xFFFFFFFFBFF77FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternative_markup_in_image_alternative4283 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativepart_in_image_alternative4292 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4318 = new BitSet(new long[]{0x0000000000120000L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4321 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_bold_alternativepart_in_image_alternativepart4330 = new BitSet(new long[]{0x0000000000120000L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4335 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4342 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4349 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4352 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_ital_alternativepart_in_image_alternativepart4362 = new BitSet(new long[]{0x0000000000120000L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4367 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4374 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4381 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativetext_in_image_alternativepart4388 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_alternativepart4393 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4419 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_boldital_description_in_image_bold_alternativepart4426 = new BitSet(new long[]{0x0000000000100000L});
-	public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4431 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4436 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativetext_in_image_bold_alternativepart4445 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4448 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4477 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_link_boldital_description_in_image_ital_alternativepart4484 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4489 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4494 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativetext_in_image_ital_alternativepart4503 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4506 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4527 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternativetext_in_image_boldital_alternative4536 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4539 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_image_alternative_simple_text_in_image_alternativetext4562 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_forced_linebreak_in_image_alternativetext4570 = new BitSet(new long[]{0x0000000002000002L});
-	public static final BitSet FOLLOW_set_in_image_alternative_simple_text4597 = new BitSet(new long[]{0xFFFFFFFFBC0D7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_extension_markup_in_extension4690 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_extension_handler_in_extension4693 = new BitSet(new long[]{0x0000000080000000L});
-	public static final BitSet FOLLOW_blanks_in_extension4696 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_extension_statement_in_extension4699 = new BitSet(new long[]{0x0000000001000000L});
-	public static final BitSet FOLLOW_extension_markup_in_extension4704 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_set_in_extension_handler4716 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_escaped_in_extension_handler4749 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_set_in_extension_statement4763 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_escaped_in_extension_statement4784 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_TABLE_OF_CONTENTS_TEXT_in_table_of_contents4807 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_onestar4830 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ESCAPE_in_escaped4852 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
-	public static final BitSet FOLLOW_newline_in_paragraph_separator4876 = new BitSet(new long[]{0x0000000000008002L});
-	public static final BitSet FOLLOW_EOF_in_paragraph_separator4884 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_blanks_in_whitespaces4896 = new BitSet(new long[]{0x0000000080008002L});
-	public static final BitSet FOLLOW_newline_in_whitespaces4900 = new BitSet(new long[]{0x0000000080008002L});
-	public static final BitSet FOLLOW_BLANKS_in_blanks4913 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_newline_in_text_lineseparator4923 = new BitSet(new long[]{0x0000000080000002L});
-	public static final BitSet FOLLOW_blanks_in_text_lineseparator4928 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_text_lineseparator4936 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_newline4946 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_bold_markup4956 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_STAR_in_bold_markup4959 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ITAL_in_ital_markup4969 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EQUAL_in_heading_markup4979 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_POUND_in_list_ordelem_markup4989 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_list_unordelem_markup4999 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_newline_in_list_elemseparator5009 = new BitSet(new long[]{0x0000000080000002L});
-	public static final BitSet FOLLOW_blanks_in_list_elemseparator5014 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_list_elemseparator5022 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_newline_in_end_of_list5032 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_end_of_list5037 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PIPE_in_table_cell_markup5047 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PIPE_in_table_headercell_markup5057 = new BitSet(new long[]{0x0000000000040000L});
-	public static final BitSet FOLLOW_EQUAL_in_table_headercell_markup5060 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_newline_in_table_rowseparator5070 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EOF_in_table_rowseparator5075 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5085 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5095 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5105 = new BitSet(new long[]{0x0000000200000000L});
-	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5108 = new BitSet(new long[]{0x0000000200000000L});
-	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5111 = new BitSet(new long[]{0x0000000200000000L});
-	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5114 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LINK_OPEN_in_link_open_markup5124 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LINK_CLOSE_in_link_close_markup5134 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PIPE_in_link_description_markup5144 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IMAGE_OPEN_in_image_open_markup5154 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IMAGE_CLOSE_in_image_close_markup5164 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PIPE_in_image_alternative_markup5174 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EXTENSION_in_extension_markup5184 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5194 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_element_in_text_line423 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_lineseparator_in_text_line438 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_formattedelement_in_text_firstelement460 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_unformattedelement_in_text_firstelement471 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_text_formattedelement487 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_italcontent_in_text_formattedelement493 = new BitSet(new long[]{0x0000000000108002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_formattedelement502 = new BitSet(new long[]{0x0000000000100000L});
+	public static final BitSet FOLLOW_ital_markup_in_text_formattedelement508 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_text_formattedelement516 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_boldcontent_in_text_formattedelement523 = new BitSet(new long[]{0x0000000000028002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_formattedelement532 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_bold_markup_in_text_formattedelement538 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_boldcontent557 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_boldcontentpart_in_text_boldcontent569 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_EOF_in_text_boldcontent580 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_italcontent596 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_italcontentpart_in_text_italcontent608 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_EOF_in_text_italcontent619 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_text_element634 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_unformattedelement_in_text_element641 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_unformattedelement_in_text_element652 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_onestar_in_text_element655 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_formattedelement_in_text_element666 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_text_boldcontentpart683 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_bolditalcontent_in_text_boldcontentpart690 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_text_boldcontentpart697 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_formattedcontent_in_text_boldcontentpart709 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_text_italcontentpart725 = new BitSet(new long[]{0xFFFFFFFFFFEFFFF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_bolditalcontent_in_text_italcontentpart732 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_text_italcontentpart738 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_formattedcontent_in_text_italcontentpart750 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_text_bolditalcontent768 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_formattedcontent_in_text_bolditalcontent779 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_text_bolditalcontent789 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_text_formattedcontent803 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_unformattedelement_in_text_formattedcontent812 = new BitSet(new long[]{0xFFFFFFFFFFEFFFF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_text_formattedcontent817 = new BitSet(new long[]{0xFFFFFFFFFFEDFFF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_linebreak_in_text_formattedcontent822 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_lineseparator_in_text_linebreak842 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_inlineelement_in_text_inlineelement860 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_inline_in_text_inlineelement871 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_in_text_first_inlineelement894 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_image_in_text_first_inlineelement905 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_extension_in_text_first_inlineelement915 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_unformatted_in_text_first_unformattedelement935 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_inlineelement_in_text_first_unformattedelement946 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_first_unformmatted_text_in_text_first_unformatted968 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_text_first_unformatted977 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_escaped_in_text_first_unformatted989 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_set_in_text_first_unformmatted_text1018 = new BitSet(new long[]{0xFFFFFFFFF8007FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_unformatted_in_text_unformattedelement1133 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_inlineelement_in_text_unformattedelement1144 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_unformated_text_in_text_unformatted1166 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_text_unformatted1175 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_escaped_in_text_unformatted1187 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_set_in_text_unformated_text1214 = new BitSet(new long[]{0xFFFFFFFFF80D7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_markup_in_heading1318 = new BitSet(new long[]{0xFFFFFFFFFBFFFFF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_content_in_heading1323 = new BitSet(new long[]{0x0000000080048000L});
+	public static final BitSet FOLLOW_heading_markup_in_heading1330 = new BitSet(new long[]{0x0000000080008000L});
+	public static final BitSet FOLLOW_blanks_in_heading1338 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_paragraph_separator_in_heading1345 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_markup_in_heading_content1355 = new BitSet(new long[]{0xFFFFFFFFFBFF7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_content_in_heading_content1360 = new BitSet(new long[]{0x0000000000040002L});
+	public static final BitSet FOLLOW_heading_markup_in_heading_content1365 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_text_in_heading_content1377 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_cellcontent_in_heading_text1398 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_heading_cellcontent1415 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_cellcontentpart_in_heading_cellcontent1424 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_heading_cellcontent1436 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_formattedelement_in_heading_cellcontentpart1457 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_unformattedelement_in_heading_cellcontentpart1468 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_heading_formattedelement1484 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_italcontent_in_heading_formattedelement1494 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_heading_formattedelement1503 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_heading_formattedelement1511 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_boldcontent_in_heading_formattedelement1518 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_heading_formattedelement1528 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_heading_boldcontent1545 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_boldcontentpart_in_heading_boldcontent1554 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_heading_boldcontent1559 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_EOF_in_heading_boldcontent1567 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_heading_italcontent1581 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_italcontentpart_in_heading_italcontent1590 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_heading_italcontent1595 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_EOF_in_heading_italcontent1603 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_boldcontentpart1621 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_heading_boldcontentpart1628 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_bolditalcontent_in_heading_boldcontentpart1635 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_heading_boldcontentpart1642 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_heading_italcontentpart1659 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_bolditalcontent_in_heading_italcontentpart1666 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_heading_italcontentpart1673 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_italcontentpart1685 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_heading_bolditalcontent1701 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_formattedcontent_in_heading_bolditalcontent1710 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_onestar_in_heading_bolditalcontent1715 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_heading_bolditalcontent1723 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_unformattedelement_in_heading_formattedcontent1743 = new BitSet(new long[]{0xFFFFFFFFFBFB7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_heading_unformatted_text_in_heading_unformattedelement1766 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_heading_inlineelement_in_heading_unformattedelement1778 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_in_heading_inlineelement1799 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_image_in_heading_inlineelement1809 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_inline_in_heading_inlineelement1820 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_heading_unformatted_text1845 = new BitSet(new long[]{0xFFFFFFFFFB1B7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_list_ordelem_in_list_ord1904 = new BitSet(new long[]{0x0000000000018002L});
+	public static final BitSet FOLLOW_end_of_list_in_list_ord1914 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_ordelem_markup_in_list_ordelem1947 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_list_elem_in_list_ordelem1955 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_unordelem_in_list_unord1979 = new BitSet(new long[]{0x0000000000028002L});
+	public static final BitSet FOLLOW_end_of_list_in_list_unord1989 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_unordelem_markup_in_list_unordelem2022 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_list_elem_in_list_unordelem2029 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_elem_markup_in_list_elem2054 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_list_elemcontent_in_list_elem2065 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_list_elemseparator_in_list_elem2070 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_ordelem_markup_in_list_elem_markup2080 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_unordelem_markup_in_list_elem_markup2085 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_list_elemcontent2099 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_list_elemcontentpart_in_list_elemcontent2108 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_list_elemcontent2113 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_unformattedelement_in_list_elemcontentpart2134 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_formatted_elem_in_list_elemcontentpart2145 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_list_formatted_elem2162 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2165 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_list_boldcontentpart_in_list_formatted_elem2174 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2184 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_bold_markup_in_list_formatted_elem2193 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_list_formatted_elem2201 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2206 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_list_italcontentpart_in_list_formatted_elem2215 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_list_formatted_elem2224 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_ital_markup_in_list_formatted_elem2233 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2259 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_list_bolditalcontent_in_list_boldcontentpart2266 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2273 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_unformattedelement_in_list_boldcontentpart2288 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_text_unformattedelement_in_list_bolditalcontent2320 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2350 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_list_bolditalcontent_in_list_italcontentpart2357 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2364 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_text_unformattedelement_in_list_italcontentpart2378 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_row_in_table2408 = new BitSet(new long[]{0x0000000000080002L});
+	public static final BitSet FOLLOW_table_cell_in_table_row2434 = new BitSet(new long[]{0x0000000000088000L});
+	public static final BitSet FOLLOW_table_rowseparator_in_table_row2442 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_headercell_in_table_cell2463 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_normalcell_in_table_cell2474 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_headercell_markup_in_table_headercell2490 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_cellcontent_in_table_headercell2497 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_cell_markup_in_table_normalcell2513 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_cellcontent_in_table_normalcell2520 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_table_cellcontent2536 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_cellcontentpart_in_table_cellcontent2545 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_table_cellcontent2550 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_formattedelement_in_table_cellcontentpart2571 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_unformattedelement_in_table_cellcontentpart2582 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2598 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_italcontent_in_table_formattedelement2608 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2617 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2625 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_boldcontent_in_table_formattedelement2632 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2642 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_table_boldcontent2659 = new BitSet(new long[]{0xFFFFFFFFFFF57FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_boldcontentpart_in_table_boldcontent2668 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_table_boldcontent2673 = new BitSet(new long[]{0xFFFFFFFFFFF57FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_EOF_in_table_boldcontent2681 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_table_italcontent2695 = new BitSet(new long[]{0xFFFFFFFFFFE77FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_italcontentpart_in_table_italcontent2704 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_table_italcontent2709 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_EOF_in_table_italcontent2717 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_formattedcontent_in_table_boldcontentpart2735 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2742 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_bolditalcontent_in_table_boldcontentpart2749 = new BitSet(new long[]{0x0000000000100002L});
+	public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2756 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2773 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_bolditalcontent_in_table_italcontentpart2780 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2787 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_formattedcontent_in_table_italcontentpart2799 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2815 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_formattedcontent_in_table_bolditalcontent2824 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2829 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_table_bolditalcontent2837 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_unformattedelement_in_table_formattedcontent2857 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_table_unformatted_in_table_unformattedelement2880 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_inlineelement_in_table_unformattedelement2892 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_in_table_inlineelement2913 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_image_in_table_inlineelement2923 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_extension_in_table_inlineelement2934 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_inline_in_table_inlineelement2944 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_table_unformatted_text_in_table_unformatted2966 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_table_unformatted2975 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_escaped_in_table_unformatted2988 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_set_in_table_unformatted_text3014 = new BitSet(new long[]{0xFFFFFFFFF8057FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_nowikiblock_open_markup_in_nowiki_block3111 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_nowiki_block_contents_in_nowiki_block3118 = new BitSet(new long[]{0x0000000008000000L});
+	public static final BitSet FOLLOW_nowikiblock_close_markup_in_nowiki_block3124 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_paragraph_separator_in_nowiki_block3127 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3142 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_newline_in_nowikiblock_open_markup3145 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3157 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nowiki_open_markup_in_nowiki_inline3172 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_nowiki_inline_contents_in_nowiki_inline3179 = new BitSet(new long[]{0x0000000010000000L});
+	public static final BitSet FOLLOW_nowiki_close_markup_in_nowiki_inline3184 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_nowiki_block_contents3204 = new BitSet(new long[]{0xFFFFFFFFF7FFFFF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_set_in_nowiki_inline_contents3238 = new BitSet(new long[]{0xFFFFFFFFEFFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_horizontalrule_markup_in_horizontalrule3275 = new BitSet(new long[]{0x0000000080008000L});
+	public static final BitSet FOLLOW_blanks_in_horizontalrule3280 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_paragraph_separator_in_horizontalrule3286 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_open_markup_in_link3308 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_address_in_link3314 = new BitSet(new long[]{0x0000000020080000L});
+	public static final BitSet FOLLOW_link_description_markup_in_link3320 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_description_in_link3330 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_link_close_markup_in_link3338 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_interwiki_uri_in_link_address3357 = new BitSet(new long[]{0x0000080000000000L});
+	public static final BitSet FOLLOW_43_in_link_address3360 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_interwiki_pagename_in_link_address3367 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_uri_in_link_address3378 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_44_in_link_interwiki_uri3394 = new BitSet(new long[]{0x0000200000000000L});
+	public static final BitSet FOLLOW_45_in_link_interwiki_uri3396 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_46_in_link_interwiki_uri3401 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_47_in_link_interwiki_uri3403 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3405 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3407 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3409 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3411 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3413 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3415 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_52_in_link_interwiki_uri3420 = new BitSet(new long[]{0x0020000000000000L});
+	public static final BitSet FOLLOW_53_in_link_interwiki_uri3422 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3424 = new BitSet(new long[]{0x0040000000000000L});
+	public static final BitSet FOLLOW_54_in_link_interwiki_uri3426 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3428 = new BitSet(new long[]{0x0080000000000000L});
+	public static final BitSet FOLLOW_55_in_link_interwiki_uri3430 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_56_in_link_interwiki_uri3435 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_47_in_link_interwiki_uri3437 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_47_in_link_interwiki_uri3439 = new BitSet(new long[]{0x0200000000000000L});
+	public static final BitSet FOLLOW_57_in_link_interwiki_uri3441 = new BitSet(new long[]{0x0020000000000000L});
+	public static final BitSet FOLLOW_53_in_link_interwiki_uri3443 = new BitSet(new long[]{0x0400000000000000L});
+	public static final BitSet FOLLOW_58_in_link_interwiki_uri3445 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_59_in_link_interwiki_uri3450 = new BitSet(new long[]{0x1000000000000000L});
+	public static final BitSet FOLLOW_60_in_link_interwiki_uri3452 = new BitSet(new long[]{0x2000000000000000L});
+	public static final BitSet FOLLOW_61_in_link_interwiki_uri3454 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3456 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3458 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3460 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3462 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_62_in_link_interwiki_uri3467 = new BitSet(new long[]{0x0400000000000000L});
+	public static final BitSet FOLLOW_58_in_link_interwiki_uri3469 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3471 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+	public static final BitSet FOLLOW_64_in_link_interwiki_uri3473 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+	public static final BitSet FOLLOW_65_in_link_interwiki_uri3475 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3477 = new BitSet(new long[]{0x0020000000000000L});
+	public static final BitSet FOLLOW_53_in_link_interwiki_uri3479 = new BitSet(new long[]{0x0020000000000000L});
+	public static final BitSet FOLLOW_53_in_link_interwiki_uri3481 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_62_in_link_interwiki_uri3486 = new BitSet(new long[]{0x0400000000000000L});
+	public static final BitSet FOLLOW_58_in_link_interwiki_uri3488 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_66_in_link_interwiki_uri3490 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3492 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3494 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3496 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3498 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3500 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3502 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_62_in_link_interwiki_uri3507 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_47_in_link_interwiki_uri3509 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3511 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3513 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_62_in_link_interwiki_uri3515 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_47_in_link_interwiki_uri3517 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3519 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3521 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_68_in_link_interwiki_uri3526 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_66_in_link_interwiki_uri3528 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_66_in_link_interwiki_uri3530 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_69_in_link_interwiki_uri3532 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3534 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_70_in_link_interwiki_uri3536 = new BitSet(new long[]{0x0400000000000000L});
+	public static final BitSet FOLLOW_58_in_link_interwiki_uri3538 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_68_in_link_interwiki_uri3543 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+	public static final BitSet FOLLOW_71_in_link_interwiki_uri3545 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3547 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3549 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3551 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_61_in_link_interwiki_uri3556 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_69_in_link_interwiki_uri3558 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3560 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3562 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3564 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3566 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_61_in_link_interwiki_uri3571 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3573 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3575 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3577 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3579 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3581 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3583 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3585 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_61_in_link_interwiki_uri3590 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_link_interwiki_uri3592 = new BitSet(new long[]{0x0080000000000000L});
+	public static final BitSet FOLLOW_55_in_link_interwiki_uri3594 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+	public static final BitSet FOLLOW_72_in_link_interwiki_uri3596 = new BitSet(new long[]{0x0020000000000000L});
+	public static final BitSet FOLLOW_53_in_link_interwiki_uri3598 = new BitSet(new long[]{0x0400000000000000L});
+	public static final BitSet FOLLOW_58_in_link_interwiki_uri3600 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3602 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3604 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3606 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3608 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_73_in_link_interwiki_uri3613 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3615 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_66_in_link_interwiki_uri3617 = new BitSet(new long[]{0x0400000000000000L});
+	public static final BitSet FOLLOW_58_in_link_interwiki_uri3619 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_47_in_link_interwiki_uri3621 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
+	public static final BitSet FOLLOW_74_in_link_interwiki_uri3623 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_60_in_link_interwiki_uri3628 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3630 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3632 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+	public static final BitSet FOLLOW_72_in_link_interwiki_uri3634 = new BitSet(new long[]{0x1000000000000000L});
+	public static final BitSet FOLLOW_60_in_link_interwiki_uri3636 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+	public static final BitSet FOLLOW_67_in_link_interwiki_uri3638 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3640 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+	public static final BitSet FOLLOW_72_in_link_interwiki_uri3642 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_75_in_link_interwiki_uri3647 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3649 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_66_in_link_interwiki_uri3651 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_66_in_link_interwiki_uri3653 = new BitSet(new long[]{0x0020000000000000L});
+	public static final BitSet FOLLOW_53_in_link_interwiki_uri3655 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
+	public static final BitSet FOLLOW_76_in_link_interwiki_uri3657 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3659 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3661 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3663 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3665 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_75_in_link_interwiki_uri3670 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3672 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3674 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3676 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3678 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_77_in_link_interwiki_uri3683 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+	public static final BitSet FOLLOW_70_in_link_interwiki_uri3685 = new BitSet(new long[]{0x0400000000000000L});
+	public static final BitSet FOLLOW_58_in_link_interwiki_uri3687 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_69_in_link_interwiki_uri3689 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_47_in_link_interwiki_uri3691 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_66_in_link_interwiki_uri3693 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3698 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3700 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3702 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3704 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+	public static final BitSet FOLLOW_72_in_link_interwiki_uri3706 = new BitSet(new long[]{0x0400000000000000L});
+	public static final BitSet FOLLOW_58_in_link_interwiki_uri3708 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_66_in_link_interwiki_uri3710 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3712 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_63_in_link_interwiki_uri3714 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_78_in_link_interwiki_uri3719 = new BitSet(new long[]{0x0004000000000000L});
+	public static final BitSet FOLLOW_50_in_link_interwiki_uri3721 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3723 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_48_in_link_interwiki_uri3725 = new BitSet(new long[]{0x0008000000000000L});
+	public static final BitSet FOLLOW_51_in_link_interwiki_uri3727 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_link_interwiki_pagename3747 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_descriptionpart_in_link_description3790 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_in_link_description3802 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3827 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3830 = new BitSet(new long[]{0xFFFFFFFFDE1D7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3838 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3843 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3853 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3858 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3861 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3870 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3875 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3884 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3889 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_descriptiontext_in_link_descriptionpart3898 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_link_descriptionpart3901 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3921 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_boldital_description_in_link_bold_descriptionpart3928 = new BitSet(new long[]{0x0000000000100000L});
+	public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3933 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3942 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3958 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_boldital_description_in_link_ital_descriptionpart3965 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3968 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3979 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_link_boldital_description3995 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_descriptiontext_in_link_boldital_description4004 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_link_boldital_description4007 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_descriptiontext_simple_in_link_descriptiontext4030 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_link_descriptiontext4040 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_escaped_in_link_descriptiontext4052 = new BitSet(new long[]{0x0000000006000002L});
+	public static final BitSet FOLLOW_set_in_link_descriptiontext_simple4077 = new BitSet(new long[]{0xFFFFFFFFD80D7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_set_in_link_uri4178 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_open_markup_in_image4219 = new BitSet(new long[]{0xFFFFFFFFBFF77FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_uri_in_image4225 = new BitSet(new long[]{0x0000000040080000L});
+	public static final BitSet FOLLOW_image_alternative_in_image4235 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_image_close_markup_in_image4244 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_image_uri4263 = new BitSet(new long[]{0xFFFFFFFFBFF77FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_alternative_markup_in_image_alternative4298 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_alternativepart_in_image_alternative4307 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4333 = new BitSet(new long[]{0x0000000000120000L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4336 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_bold_alternativepart_in_image_alternativepart4345 = new BitSet(new long[]{0x0000000000120000L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4350 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4357 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4364 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4367 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_ital_alternativepart_in_image_alternativepart4377 = new BitSet(new long[]{0x0000000000120000L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4382 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4389 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4396 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_alternativetext_in_image_alternativepart4403 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_image_alternativepart4408 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4434 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_boldital_description_in_image_bold_alternativepart4441 = new BitSet(new long[]{0x0000000000100000L});
+	public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4446 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4451 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_alternativetext_in_image_bold_alternativepart4460 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4463 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4492 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_link_boldital_description_in_image_ital_alternativepart4499 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4504 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4509 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_alternativetext_in_image_ital_alternativepart4518 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4521 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4542 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_alternativetext_in_image_boldital_alternative4551 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4554 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_image_alternative_simple_text_in_image_alternativetext4577 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_forced_linebreak_in_image_alternativetext4585 = new BitSet(new long[]{0x0000000002000002L});
+	public static final BitSet FOLLOW_set_in_image_alternative_simple_text4612 = new BitSet(new long[]{0xFFFFFFFFBC0D7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_extension_markup_in_extension4705 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_extension_handler_in_extension4708 = new BitSet(new long[]{0x0000000080000000L});
+	public static final BitSet FOLLOW_blanks_in_extension4711 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_extension_statement_in_extension4714 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_extension_markup_in_extension4719 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_set_in_extension_handler4731 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_escaped_in_extension_handler4764 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_set_in_extension_statement4778 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_escaped_in_extension_statement4799 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_TABLE_OF_CONTENTS_TEXT_in_table_of_contents4822 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_onestar4845 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ESCAPE_in_escaped4867 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x0000000000007FFFL});
+	public static final BitSet FOLLOW_newline_in_paragraph_separator4891 = new BitSet(new long[]{0x0000000000008002L});
+	public static final BitSet FOLLOW_EOF_in_paragraph_separator4899 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_blanks_in_whitespaces4911 = new BitSet(new long[]{0x0000000080008002L});
+	public static final BitSet FOLLOW_newline_in_whitespaces4915 = new BitSet(new long[]{0x0000000080008002L});
+	public static final BitSet FOLLOW_BLANKS_in_blanks4928 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_newline_in_text_lineseparator4938 = new BitSet(new long[]{0x0000000080000002L});
+	public static final BitSet FOLLOW_blanks_in_text_lineseparator4943 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_text_lineseparator4951 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_newline4961 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_bold_markup4971 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_STAR_in_bold_markup4974 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ITAL_in_ital_markup4984 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EQUAL_in_heading_markup4994 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_POUND_in_list_ordelem_markup5004 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_list_unordelem_markup5014 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_newline_in_list_elemseparator5024 = new BitSet(new long[]{0x0000000080000002L});
+	public static final BitSet FOLLOW_blanks_in_list_elemseparator5029 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_list_elemseparator5037 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_newline_in_end_of_list5047 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_end_of_list5052 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PIPE_in_table_cell_markup5062 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PIPE_in_table_headercell_markup5072 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_EQUAL_in_table_headercell_markup5075 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_newline_in_table_rowseparator5085 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EOF_in_table_rowseparator5090 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5100 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5110 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5120 = new BitSet(new long[]{0x0000000200000000L});
+	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5123 = new BitSet(new long[]{0x0000000200000000L});
+	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5126 = new BitSet(new long[]{0x0000000200000000L});
+	public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5129 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LINK_OPEN_in_link_open_markup5139 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LINK_CLOSE_in_link_close_markup5149 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PIPE_in_link_description_markup5159 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IMAGE_OPEN_in_image_open_markup5169 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IMAGE_CLOSE_in_image_close_markup5179 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PIPE_in_image_alternative_markup5189 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EXTENSION_in_extension_markup5199 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5209 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_NOWIKI_OPEN_in_synpred1339 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x0000000000007FFFL});
 	public static final BitSet FOLLOW_set_in_synpred1342 = new BitSet(new long[]{0x0000000000000002L});
 

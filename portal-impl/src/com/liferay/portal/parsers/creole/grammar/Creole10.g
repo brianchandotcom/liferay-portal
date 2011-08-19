@@ -64,7 +64,6 @@ import com.liferay.portal.parsers.creole.ast.table.TableCellNode;
 import com.liferay.portal.parsers.creole.ast.table.TableDataNode;
 import com.liferay.portal.parsers.creole.ast.table.TableHeaderNode;
 import com.liferay.portal.parsers.creole.ast.table.TableNode;
-import com.liferay.portal.parsers.creole.ast.TextNode;
 import com.liferay.portal.parsers.creole.ast.UnorderedListItemNode;
 import com.liferay.portal.parsers.creole.ast.UnorderedListNode;
 import com.liferay.portal.parsers.creole.ast.UnformattedTextNode;
@@ -146,7 +145,12 @@ text_paragraph returns [ ParagraphNode paragraph = new ParagraphNode() ]
 		)+
 	;
 text_line returns [LineNode line = new LineNode()]
-	:	first = text_firstelement  {$line.addChildASTNode($first.item); } ( element = text_element  {
+	:	first = text_firstelement  {
+										if ($first.item != null) { // recovering from errors
+											$line.addChildASTNode($first.item);
+										}
+									}
+								( element = text_element  {
 								if($element.item != null) // recovering from errors
 									$line.addChildASTNode($element.item);
 							} 
@@ -281,7 +285,14 @@ heading_text returns [CollectionNode items = null]
 	;
 
 heading_cellcontent returns [CollectionNode items = new CollectionNode()]
-	:	onestar  ( tcp = heading_cellcontentpart  {$items.add($tcp.node); } onestar )*
+	:	onestar  ( tcp = heading_cellcontentpart  {
+							
+							if($tcp.node != null) { // some AST Node could be NULL if bad CREOLE syntax is wrotten
+								$items.add($tcp.node); 
+							}
+							
+							} 
+						onestar )*
 	;
 heading_cellcontentpart returns [ASTNode node = null]
 	:	tf = heading_formattedelement {$node=$tf.content;}

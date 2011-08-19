@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddMBCategoryThreadTest extends BaseTestCase {
 	public void testAddMBCategoryThread() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/category-thread-mb-subscription-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class AddMBCategoryThreadTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Message Boards Page")) {
 					break;
 				}
 			}
@@ -41,37 +41,13 @@ public class AddMBCategoryThreadTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace(
-				"Category Thread MB Subscription Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Public Pages - Live (1)"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
-			RuntimeVariables.replace("Public Pages - Live (1)"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace("Message Boards Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Category Test"),
-			selenium.getText(
-				"//div[@id='messageBoardsCategoriesPanel']/div[2]/div/div[1]/table/tbody/tr[3]/td[1]/a/strong"));
-		selenium.clickAt("//div[@id='messageBoardsCategoriesPanel']/div[2]/div/div[1]/table/tbody/tr[3]/td[1]/a/strong",
-			RuntimeVariables.replace("Category Test"));
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Test"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Post New Thread']",
@@ -81,22 +57,38 @@ public class AddMBCategoryThreadTest extends BaseTestCase {
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("MB Category Subscription Thread"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@id='_19_textArea']",
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__19_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
+		selenium.type("//body",
 			RuntimeVariables.replace("This is to test the subscription table."));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("MB Category Subscription Thread"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
-			RuntimeVariables.replace("MB Category Subscription Thread"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("MB Category Subscription Thread"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(

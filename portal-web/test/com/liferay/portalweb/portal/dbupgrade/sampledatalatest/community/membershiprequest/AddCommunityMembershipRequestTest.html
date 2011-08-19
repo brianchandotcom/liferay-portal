@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -25,32 +25,47 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td>Communities</td>
+	<td>link=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
 	<td>Add</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Custom Site</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Custom Site</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Custom Site</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>_134_name</td>
+	<td>//input[@id='_134_name']</td>
 	<td>Membership Request Community Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_description</td>
+	<td>//textarea[@id='_134_description']</td>
 	<td>Community Description</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_description</td>
+	<td>//textarea[@id='_134_description']</td>
 	<td>Membership Request Community Description</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_134_type</td>
+	<td>//select[@id='_134_type']</td>
 	<td>label=Restricted</td>
 </tr>
 <tr>
@@ -61,7 +76,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request processed successfully.</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewCalendarEventTest extends BaseTestCase {
 	public void testViewCalendarEvent() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/calendar-event-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewCalendarEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Calendar Event Page")) {
 					break;
 				}
 			}
@@ -41,27 +41,11 @@ public class ViewCalendarEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Calendar Event Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Event Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Calendar Event Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("5/31/10"),
@@ -77,6 +61,6 @@ public class ViewCalendarEventTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("5/31/10"),
 			selenium.getText("//dd[1]"));
 		assertEquals(RuntimeVariables.replace("This is so much fun!"),
-			selenium.getText("//p"));
+			selenium.getText("//p[2]"));
 	}
 }

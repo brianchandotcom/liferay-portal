@@ -42,7 +42,7 @@ public class MR_LoginUserTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Sign In", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Sign In", RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -52,7 +52,7 @@ public class MR_LoginUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_58_login")) {
+				if (selenium.isVisible("//input[@id='_58_login']")) {
 					break;
 				}
 			}
@@ -63,10 +63,11 @@ public class MR_LoginUserTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_58_login",
+		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("requestmemberea@liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_58_password", RuntimeVariables.replace("test"));
+		selenium.type("//input[@id='_58_password']",
+			RuntimeVariables.replace("test"));
 		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
@@ -75,7 +76,7 @@ public class MR_LoginUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_58_rememberMeCheckbox")) {
+				if (selenium.isVisible("//input[@id='_58_rememberMeCheckbox']")) {
 					break;
 				}
 			}
@@ -86,7 +87,7 @@ public class MR_LoginUserTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click("_58_rememberMeCheckbox");
+		selenium.click("//input[@id='_58_rememberMeCheckbox']");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -106,7 +107,7 @@ public class MR_LoginUserTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -128,7 +129,17 @@ public class MR_LoginUserTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='I Agree']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("I Agree"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='password1']",
+			RuntimeVariables.replace("test"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='password2']",
+			RuntimeVariables.replace("test"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -151,25 +162,8 @@ public class MR_LoginUserTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.type("reminderQueryAnswer", RuntimeVariables.replace("Test"));
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Save']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

@@ -46,8 +46,7 @@ public class AssignMembersCommunityUserActionTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_134_name']",
@@ -60,8 +59,9 @@ public class AssignMembersCommunityUserActionTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("MB Ban Community"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+			selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -70,7 +70,7 @@ public class AssignMembersCommunityUserActionTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -81,41 +81,62 @@ public class AssignMembersCommunityUserActionTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Assign Members"),
+		assertEquals(RuntimeVariables.replace("Manage Memberships"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Users"),
-			selenium.getText("//li[@id='_134_tabs1usersTabsId']/span/span/a"));
-		selenium.clickAt("//li[@id='_134_tabs1usersTabsId']/span/span/a",
-			RuntimeVariables.replace("Users"));
+		assertEquals(RuntimeVariables.replace("Add Members"),
+			selenium.getText("//span[2]/ul/li/strong/a/span"));
+		selenium.clickAt("//span[2]/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add Members"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@name='_134_keywords']",
+		selenium.type("//input[@name='_174_keywords']",
 			RuntimeVariables.replace("mbbansn"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isChecked("//input[@name='_134_rowIds']"));
+		assertFalse(selenium.isChecked("//input[@name='_174_rowIds']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@name='_134_rowIds']",
+		selenium.clickAt("//input[@name='_174_rowIds']",
 			RuntimeVariables.replace("Checkbox"));
+		assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Update Associations']",
 			RuntimeVariables.replace("Update Associations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("//input[@name='_134_rowIds']"));
-		selenium.saveScreenShotAndSource();
 	}
 }

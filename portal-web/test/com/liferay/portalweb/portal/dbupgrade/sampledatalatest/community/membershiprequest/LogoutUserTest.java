@@ -49,7 +49,7 @@ public class LogoutUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_58_login")) {
+				if (selenium.isElementPresent("//input[@id='_58_login']")) {
 					break;
 				}
 			}

@@ -44,9 +44,29 @@
 	<td>MB Ban Thread</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//textarea[@id='_19_textArea']</td>
+	<td>//body</td>
 	<td>This is to test the mbban table.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -55,8 +75,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>MB Ban Thread</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/div[2]</td>
+	<td>This is to test the mbban table.</td>
 </tr>
 
 </tbody></table>

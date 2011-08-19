@@ -14,33 +14,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td></td>
+	<td>link=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name</td>
+	<td>//input[@id='_134_name']</td>
 	<td>Calendar Event Community</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -59,19 +59,24 @@
 	<td>Manage Pages</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div/span/button[1]</td>
+	<td>Add Page</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>_134_name_en_US</td>
+	<td>//input[@id='_156_name_en_US']</td>
 	<td>Calendar Event Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Page']</td>
-	<td></td>
+	<td>Add Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
-	<td>Your request processed successfully.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 
 </tbody></table>

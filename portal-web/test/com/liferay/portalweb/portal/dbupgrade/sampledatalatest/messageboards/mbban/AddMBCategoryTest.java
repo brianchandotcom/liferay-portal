@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddMBCategoryTest extends BaseTestCase {
 	public void testAddMBCategory() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/mb-ban-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class AddMBCategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -40,27 +40,6 @@ public class AddMBCategoryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("MB Ban Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Public Pages - Live (1)"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
-			RuntimeVariables.replace("Public Pages - Live (1)"));
-		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
@@ -78,7 +57,7 @@ public class AddMBCategoryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("MB Ban Category"),
 			selenium.getText("//a/strong"));

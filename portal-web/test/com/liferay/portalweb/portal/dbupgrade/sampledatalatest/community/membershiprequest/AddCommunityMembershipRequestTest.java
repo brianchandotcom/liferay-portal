@@ -30,7 +30,7 @@ public class AddCommunityMembershipRequestTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -45,29 +45,52 @@ public class AddCommunityMembershipRequestTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Custom Site"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Membership Request Community Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_134_description",
+		selenium.clickAt("//textarea[@id='_134_description']",
 			RuntimeVariables.replace("Community Description"));
-		selenium.type("_134_description",
+		selenium.type("//textarea[@id='_134_description']",
 			RuntimeVariables.replace("Membership Request Community Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_134_type",
+		selenium.select("//select[@id='_134_type']",
 			RuntimeVariables.replace("label=Restricted"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isTextPresent("Membership Request Community Name"));
 	}

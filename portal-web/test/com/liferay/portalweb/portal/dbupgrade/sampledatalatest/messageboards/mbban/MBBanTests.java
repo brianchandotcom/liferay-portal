@@ -29,7 +29,6 @@ public class MBBanTests extends BaseTests {
 
 		testSuite.addTestSuite(AddCommunityMBBanTest.class);
 		testSuite.addTestSuite(AddUserMBBanTest.class);
-		testSuite.addTestSuite(AddUserMBBanPasswordTest.class);
 		testSuite.addTestSuite(AssignMembersCommunityUserActionTest.class);
 		testSuite.addTestSuite(AddPageMBTest.class);
 		testSuite.addTestSuite(AddPortletMBTest.class);

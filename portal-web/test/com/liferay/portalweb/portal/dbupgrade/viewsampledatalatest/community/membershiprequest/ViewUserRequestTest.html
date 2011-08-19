@@ -25,43 +25,48 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td>Communities</td>
+	<td>link=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name</td>
+	<td>//input[@id='_134_name']</td>
 	<td>Membership Request Community Name</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>View Membership Requests</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>View Membership Requests</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>View Membership Requests</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[3]/a/span</td>
+	<td>There are 1 membership requests pending.</td>
 </tr>
 <tr>
 	<td>assertText</td>

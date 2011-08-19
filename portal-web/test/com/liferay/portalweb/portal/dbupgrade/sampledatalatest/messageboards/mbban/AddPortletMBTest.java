@@ -22,13 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPortletMBTest extends BaseTestCase {
 	public void testAddPortletMB() throws Exception {
+		selenium.open("/web/mb-ban-community/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -39,35 +41,14 @@ public class AddPortletMBTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("MB Ban Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Public Pages - Live (1)"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
-			RuntimeVariables.replace("Public Pages - Live (1)"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("More\u2026"),
-			selenium.getText("//a[@id='_145_addApplication']"));
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More\u2026"));
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

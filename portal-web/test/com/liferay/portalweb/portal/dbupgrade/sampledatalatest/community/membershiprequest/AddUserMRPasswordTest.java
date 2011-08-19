@@ -41,42 +41,28 @@ public class AddUserMRPasswordTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Users")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_keywords",
+		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("requestmembersn"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click("_125_screenName");
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("passwordLink", RuntimeVariables.replace(""));
+		assertTrue(selenium.isPartialText("//a[@id='_125_passwordLink']",
+				"Password"));
+		selenium.clickAt("//a[@id='_125_passwordLink']",
+			RuntimeVariables.replace("Password"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -84,7 +70,7 @@ public class AddUserMRPasswordTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_125_password1")) {
+				if (selenium.isVisible("//input[@id='_125_password1']")) {
 					break;
 				}
 			}
@@ -95,15 +81,18 @@ public class AddUserMRPasswordTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_password1", RuntimeVariables.replace("test"));
+		selenium.type("//input[@id='_125_password1']",
+			RuntimeVariables.replace("password"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_password2", RuntimeVariables.replace("test"));
+		selenium.type("//input[@id='_125_password2']",
+			RuntimeVariables.replace("password"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

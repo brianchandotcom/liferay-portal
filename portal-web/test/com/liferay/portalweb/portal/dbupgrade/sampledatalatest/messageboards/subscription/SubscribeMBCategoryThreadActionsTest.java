@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SubscribeMBCategoryThreadActionsTest extends BaseTestCase {
 	public void testSubscribeMBCategoryThreadActions()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/category-thread-mb-subscription-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,7 @@ public class SubscribeMBCategoryThreadActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Message Boards Page")) {
 					break;
 				}
 			}
@@ -41,28 +41,6 @@ public class SubscribeMBCategoryThreadActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace(
-				"Category Thread MB Subscription Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Public Pages - Live (1)"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
-			RuntimeVariables.replace("Public Pages - Live (1)"));
-		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace("Message Boards Page"));
@@ -74,8 +52,8 @@ public class SubscribeMBCategoryThreadActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[7]/ul/li/strong/a"));
-		selenium.clickAt("//td[7]/ul/li/strong/a",
+			selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -105,7 +83,7 @@ public class SubscribeMBCategoryThreadActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("MB Category Subscription Thread"),
 			selenium.getText("//td[1]/a"));

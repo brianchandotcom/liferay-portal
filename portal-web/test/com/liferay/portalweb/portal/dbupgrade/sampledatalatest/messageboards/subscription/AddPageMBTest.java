@@ -22,128 +22,82 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPageMBTest extends BaseTestCase {
 	public void testAddPageMB() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace("Control Panel"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Communities",
-					RuntimeVariables.replace("Communities"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@id='_134_name']",
-					RuntimeVariables.replace(
-						"Category Thread MB Subscription Community"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Category Thread MB Subscription Community"),
-					selenium.getText("//tr[3]/td[1]"));
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//strong/a"));
-				selenium.clickAt("//strong/a",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Manage Pages")
-												.equals(selenium.getText(
-										"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Manage Pages"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@name='_134_name_en_US']",
-					RuntimeVariables.replace("Message Boards Page"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Add Page']",
-					RuntimeVariables.replace("Add Page"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Your request processed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
-				boolean messageBoardsPagePresent = selenium.isElementPresent(
-						"//li/ul/li/div/div[3]/a");
-
-				if (messageBoardsPagePresent) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("//div[2]/ul/li/div/div[1]",
-					RuntimeVariables.replace("Drop Down Arrow"));
-
-			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("//li/ul/li/div/div[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Message Boards Page"),
-					selenium.getText("//li/ul/li/div/div[3]/a"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_134_name']",
+			RuntimeVariables.replace(
+				"Category Thread MB Subscription Community"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Manage Pages")
+										.equals(selenium.getText(
+								"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Manage Pages"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//div/span/button[1]",
+			RuntimeVariables.replace("Add Page"));
+		selenium.type("//input[@name='_156_name_en_US']",
+			RuntimeVariables.replace("Message Boards Page"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Add Page']",
+			RuntimeVariables.replace("Add Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

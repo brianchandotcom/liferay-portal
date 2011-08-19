@@ -58,14 +58,42 @@ public class MB_AddMBCategoryThreadTest extends BaseTestCase {
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("MB Ban Thread"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@id='_19_textArea']",
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__19_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
+		selenium.type("//body",
 			RuntimeVariables.replace("This is to test the mbban table."));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("MB Ban Thread"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace(
+				"This is to test the mbban table."),
+			selenium.getText("//td[2]/div[2]"));
 	}
 }

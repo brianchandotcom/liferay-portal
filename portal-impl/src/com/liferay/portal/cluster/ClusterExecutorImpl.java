@@ -217,6 +217,8 @@ public class ClusterExecutorImpl
 		_clusterNodeAddresses.put(
 			_localClusterNode.getClusterNodeId(), _localAddress);
 
+		_clusterInvokeReceiver.initialize();
+
 		_scheduledExecutorService = Executors.newScheduledThreadPool(
 			1,
 			new NamedThreadFactory(
@@ -315,12 +317,11 @@ public class ClusterExecutorImpl
 		String controlProperty = controlProperties.getProperty(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 
-		ClusterRequestReceiver clusterInvokeReceiver =
-			new ClusterRequestReceiver(this);
+		_clusterInvokeReceiver = new ClusterRequestReceiver(this);
 
 		try {
 			_controlChannel = createJChannel(
-				controlProperty, clusterInvokeReceiver, _DEFAULT_CLUSTER_NAME);
+				controlProperty, _clusterInvokeReceiver, _DEFAULT_CLUSTER_NAME);
 		}
 		catch (ChannelException ce) {
 			_log.error(ce, ce);
@@ -542,6 +543,7 @@ public class ClusterExecutorImpl
 	public ScheduledExecutorService _scheduledExecutorService;
 	private CopyOnWriteArrayList<ClusterEventListener> _clusterEventListeners =
 		new CopyOnWriteArrayList<ClusterEventListener>();
+	private ClusterRequestReceiver _clusterInvokeReceiver;
 	private Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<String, Address>();
 	private JChannel _controlChannel;

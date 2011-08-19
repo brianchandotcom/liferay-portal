@@ -207,6 +207,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="answer" type="boolean" />
 
 		<!-- Order -->
 
@@ -255,6 +256,10 @@
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+		</finder>
+		<finder name="T_A" return-type="Collection">
+			<finder-column name="threadId" />
+			<finder-column name="answer" />
 		</finder>
 		<finder name="T_P" return-type="Collection">
 			<finder-column name="threadId" />
@@ -330,7 +335,7 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.wiki" entity="WikiPage" />
 	</entity>
-	<entity name="MBMessageFlag" human-name="message boards message flag" local-service="true" remote-service="true">
+	<entity name="MBMessageFlag" human-name="message boards message flag" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -447,6 +452,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="question" type="boolean" />
 
 		<!-- Order -->
 

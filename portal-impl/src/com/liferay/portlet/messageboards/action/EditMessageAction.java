@@ -49,9 +49,9 @@ import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
-import com.liferay.portlet.messageboards.service.MBMessageFlagLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
@@ -75,6 +75,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Sanz
+ * @author Shuyang Zhou
  */
 public class EditMessageAction extends PortletAction {
 
@@ -371,8 +372,8 @@ public class EditMessageAction extends PortletAction {
 					anonymous, priority, allowPingbacks, serviceContext);
 
 				if (question) {
-					MBMessageFlagLocalServiceUtil.addQuestionFlag(
-						message.getMessageId());
+					MBThreadLocalServiceUtil.setQuestionFlag(
+						message.getThreadId(), true);
 				}
 			}
 			else {
@@ -404,13 +405,8 @@ public class EditMessageAction extends PortletAction {
 				allowPingbacks, serviceContext);
 
 			if (message.isRoot()) {
-				if (question) {
-					MBMessageFlagLocalServiceUtil.addQuestionFlag(messageId);
-				}
-				else {
-					MBMessageFlagLocalServiceUtil.deleteQuestionAndAnswerFlags(
-						message.getThreadId());
-				}
+				MBThreadLocalServiceUtil.setQuestionFlag(
+					message.getThreadId(), question);
 			}
 		}
 

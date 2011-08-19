@@ -20,13 +20,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageFlag;
 import com.liferay.portlet.messageboards.model.MBMessageFlagConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.base.MBMessageFlagLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,41 +32,6 @@ import java.util.List;
  */
 public class MBMessageFlagLocalServiceImpl
 	extends MBMessageFlagLocalServiceBaseImpl {
-
-	public void addQuestionFlag(long messageId)
-		throws PortalException, SystemException {
-
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		if (!message.isRoot()) {
-			return;
-		}
-
-		MBMessageFlag questionMessageFlag =
-			mbMessageFlagPersistence.fetchByU_M_F(
-				message.getUserId(), message.getMessageId(),
-				MBMessageFlagConstants.QUESTION_FLAG);
-
-		MBMessageFlag answerMessageFlag =
-			mbMessageFlagPersistence.fetchByU_M_F(
-				message.getUserId(), message.getMessageId(),
-				MBMessageFlagConstants.ANSWER_FLAG);
-
-		if ((questionMessageFlag == null) && (answerMessageFlag == null)) {
-			long messageFlagId = counterLocalService.increment();
-
-			questionMessageFlag = mbMessageFlagPersistence.create(
-				messageFlagId);
-
-			questionMessageFlag.setUserId(message.getUserId());
-			questionMessageFlag.setModifiedDate(new Date());
-			questionMessageFlag.setThreadId(message.getThreadId());
-			questionMessageFlag.setMessageId(message.getMessageId());
-			questionMessageFlag.setFlag(MBMessageFlagConstants.QUESTION_FLAG);
-
-			mbMessageFlagPersistence.update(questionMessageFlag, false);
-		}
-	}
 
 	public void addReadFlags(long userId, MBThread thread)
 		throws PortalException, SystemException {
@@ -125,24 +88,6 @@ public class MBMessageFlagLocalServiceImpl
 		}
 	}
 
-	public void deleteAnswerFlags(long threadId, long messageId)
-		throws SystemException {
-
-		List<MBMessageFlag> messageFlags = mbMessageFlagPersistence.findByM_F(
-			messageId, MBMessageFlagConstants.ANSWER_FLAG);
-
-		for (MBMessageFlag messageFlag : messageFlags) {
-			deleteFlag(messageFlag);
-		}
-
-		List<MBMessage> messages = mbMessagePersistence.findByT_P(
-			threadId, messageId);
-
-		for (MBMessage message : messages) {
-			deleteAnswerFlags(threadId, message.getMessageId());
-		}
-	}
-
 	public void deleteFlag(long messageFlagId)
 		throws PortalException,	SystemException {
 
@@ -174,34 +119,6 @@ public class MBMessageFlagLocalServiceImpl
 		}
 	}
 
-	public void deleteQuestionAndAnswerFlags(long threadId)
-		throws SystemException {
-
-		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
-			threadId);
-
-		for (MBMessage message : messages) {
-			if (message.isRoot()) {
-				List<MBMessageFlag> messageFlags =
-					mbMessageFlagPersistence.findByM_F(
-						message.getMessageId(),
-						MBMessageFlagConstants.QUESTION_FLAG);
-
-				for (MBMessageFlag messageFlag : messageFlags) {
-					deleteFlag(messageFlag);
-				}
-			}
-
-			List<MBMessageFlag> messageFlags =
-				mbMessageFlagPersistence.findByM_F(
-					message.getMessageId(), MBMessageFlagConstants.ANSWER_FLAG);
-
-			for (MBMessageFlag messageFlag : messageFlags) {
-				deleteFlag(messageFlag);
-			}
-		}
-	}
-
 	public void deleteThreadFlags(long threadId) throws SystemException {
 		List<MBMessageFlag> messageFlags =
 			mbMessageFlagPersistence.findByThreadId(threadId);
@@ -223,30 +140,6 @@ public class MBMessageFlagLocalServiceImpl
 		return mbMessageFlagPersistence.fetchByU_M_F(
 			userId, thread.getRootMessageId(),
 			MBMessageFlagConstants.READ_FLAG);
-	}
-
-	public boolean hasAnswerFlag(long messageId) throws SystemException {
-		int count = mbMessageFlagPersistence.countByM_F(
-			messageId, MBMessageFlagConstants.ANSWER_FLAG);
-
-		if (count > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	public boolean hasQuestionFlag(long messageId) throws SystemException {
-		int count = mbMessageFlagPersistence.countByM_F(
-			messageId, MBMessageFlagConstants.QUESTION_FLAG);
-
-		if (count > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	public boolean hasReadFlag(long userId, MBThread thread)

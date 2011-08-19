@@ -127,7 +127,7 @@
 						/>
 					</div>
 
-					<div class="answer <%= !message.isRoot() && MBMessageFlagLocalServiceUtil.hasAnswerFlag(message.getMessageId()) ? "" : "aui-helper-hidden" %>" id="<portlet:namespace />deleteAnswerFlag_<%= message.getMessageId() %>">
+					<div class="answer <%= !message.isRoot() && message.isAnswer() ? "" : "aui-helper-hidden" %>" id="<portlet:namespace />deleteAnswerFlag_<%= message.getMessageId() %>">
 						<liferay-ui:icon
 							image="checked"
 							label="<%= true %>"
@@ -180,7 +180,7 @@
 					if (!message.isRoot()) {
 						MBMessage rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
 
-						showAnswerFlag = MBMessagePermission.contains(permissionChecker, rootMessage, ActionKeys.UPDATE) && !MBMessageFlagLocalServiceUtil.hasAnswerFlag(message.getMessageId()) && (MBMessageFlagLocalServiceUtil.hasQuestionFlag(rootMessage.getMessageId()) || MBMessageFlagLocalServiceUtil.hasAnswerFlag(rootMessage.getMessageId()));
+						showAnswerFlag = MBMessagePermission.contains(permissionChecker, rootMessage, ActionKeys.UPDATE) && !message.isAnswer() && (thread.isQuestion() || MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()));
 					}
 					%>
 

@@ -106,9 +106,10 @@ MBThread thread = messageDisplay.getThread();
 		function(messageId) {
 			var A = AUI();
 
-			Liferay.Service.MB.MBMessageFlag.addAnswerFlag(
+			Liferay.Service.MB.MBMessage.setAnswerFlag(
 				{
-					messageId: messageId
+					messageId: messageId,
+					answer: true
 				}
 			);
 
@@ -157,9 +158,10 @@ MBThread thread = messageDisplay.getThread();
 		function(messageId) {
 			var A = AUI();
 
-			Liferay.Service.MB.MBMessageFlag.deleteAnswerFlag(
+			Liferay.Service.MB.MBMessage.setAnswerFlag(
 				{
-					messageId: messageId
+					messageId: messageId,
+					answer: false
 				}
 			);
 

@@ -157,13 +157,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
 
 		try {
-			super.contextDestroyed(event);
-		}
-		finally {
-			PortalContextLoaderLifecycleThreadLocal.setDestroying(false);
-		}
-
-		try {
 			AdaptorUtil.stop();
 		}
 		catch (Exception e) {
@@ -191,6 +184,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+
+		try {
+			super.contextDestroyed(event);
+		}
+		finally {
+			PortalContextLoaderLifecycleThreadLocal.setDestroying(false);
 		}
 	}
 

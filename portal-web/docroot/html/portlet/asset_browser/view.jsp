@@ -78,7 +78,14 @@ portletURL.setParameter("typeSelection", typeSelection);
 				assetEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 			}
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(typeSelection, assetEntryId);
+			AssetEntry assetEntry = null;
+
+			try {
+				assetEntry = AssetEntryLocalServiceUtil.getEntry(typeSelection, assetEntryId);
+			}
+			catch (NoSuchEntryException nsee) {
+				continue;
+			}
 
 			if ((assetEntry.getEntryId() == refererAssetEntryId) || !assetEntry.isVisible()) {
 				continue;

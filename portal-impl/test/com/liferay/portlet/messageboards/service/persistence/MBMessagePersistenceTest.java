@@ -118,6 +118,8 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 
 		newMBMessage.setStatusDate(nextDate());
 
+		newMBMessage.setAnswer(randomBoolean());
+
 		_persistence.update(newMBMessage, false);
 
 		MBMessage existingMBMessage = _persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
@@ -161,6 +163,7 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 			newMBMessage.getStatusByUserName());
 		assertEquals(Time.getShortTimestamp(existingMBMessage.getStatusDate()),
 			Time.getShortTimestamp(newMBMessage.getStatusDate()));
+		assertEquals(existingMBMessage.getAnswer(), newMBMessage.getAnswer());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -335,6 +338,8 @@ public class MBMessagePersistenceTest extends BasePersistenceTestCase {
 		mbMessage.setStatusByUserName(randomString());
 
 		mbMessage.setStatusDate(nextDate());
+
+		mbMessage.setAnswer(randomBoolean());
 
 		_persistence.update(mbMessage, false);
 

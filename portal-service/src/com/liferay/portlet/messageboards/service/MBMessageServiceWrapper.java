@@ -188,6 +188,12 @@ public class MBMessageServiceWrapper implements MBMessageService {
 			type, version, displayStyle, feedURL, entryURL, themeDisplay);
 	}
 
+	public void setAnswerFlag(long messageId, boolean answer)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbMessageService.setAnswerFlag(messageId, answer);
+	}
+
 	public void subscribeMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

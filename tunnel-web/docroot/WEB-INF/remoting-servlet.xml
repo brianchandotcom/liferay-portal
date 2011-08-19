@@ -901,18 +901,6 @@
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBMessageService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBMessageService" />
 	</bean>
-	<bean name="/com_liferay_portlet_messageboards_service_spring_MBMessageFlagService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.messageboards.service.MBMessageFlagService" />
-		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBMessageFlagService" />
-	</bean>
-	<bean name="/com_liferay_portlet_messageboards_service_spring_MBMessageFlagService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.messageboards.service.MBMessageFlagService" />
-		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBMessageFlagService" />
-	</bean>
-	<bean name="/com_liferay_portlet_messageboards_service_spring_MBMessageFlagService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.messageboards.service.MBMessageFlagService" />
-		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBMessageFlagService" />
-	</bean>
 	<bean name="/com_liferay_portlet_messageboards_service_spring_MBThreadService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBThreadService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBThreadService" />

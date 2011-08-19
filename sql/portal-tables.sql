@@ -1132,7 +1132,8 @@ create table MBMessage (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	answer BOOLEAN
 );
 
 create table MBMessageFlag (
@@ -1167,7 +1168,8 @@ create table MBThread (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	question BOOLEAN
 );
 
 create table MDRAction (

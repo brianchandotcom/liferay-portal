@@ -991,18 +991,11 @@ Liferay.Service.registerClass(
 		getMessageDisplay: true,
 		getThreadMessages: true,
 		getThreadMessagesCount: true,
+		setAnswerFlag: true,
 		subscribeMessage: true,
 		unsubscribeMessage: true,
 		updateDiscussionMessage: true,
 		updateMessage: true
-	}
-);
-
-Liferay.Service.registerClass(
-	Liferay.Service.MB, "MBMessageFlag",
-	{
-		addAnswerFlag: true,
-		deleteAnswerFlag: true
 	}
 );
 

@@ -90,9 +90,10 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "answer", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,attachments BOOLEAN,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,attachments BOOLEAN,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,answer BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table MBMessage";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbMessage.createDate ASC, mbMessage.messageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBMessage.createDate ASC, MBMessage.messageId ASC";
@@ -140,6 +141,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setAnswer(soapModel.getAnswer());
 
 		return model;
 	}
@@ -500,6 +502,19 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_statusDate = statusDate;
 	}
 
+	@JSON
+	public boolean getAnswer() {
+		return _answer;
+	}
+
+	public boolean isAnswer() {
+		return _answer;
+	}
+
+	public void setAnswer(boolean answer) {
+		_answer = answer;
+	}
+
 	/**
 	 * @deprecated {@link #isApproved}
 	 */
@@ -603,6 +618,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		mbMessageImpl.setStatusByUserId(getStatusByUserId());
 		mbMessageImpl.setStatusByUserName(getStatusByUserName());
 		mbMessageImpl.setStatusDate(getStatusDate());
+		mbMessageImpl.setAnswer(getAnswer());
 
 		mbMessageImpl.resetOriginalValues();
 
@@ -787,12 +803,14 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 			mbMessageCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		mbMessageCacheModel.answer = getAnswer();
+
 		return mbMessageCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -844,13 +862,15 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", answer=");
+		sb.append(getAnswer());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(82);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBMessage");
@@ -956,6 +976,10 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>answer</column-name><column-value><![CDATA[");
+		sb.append(getAnswer());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -996,6 +1020,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	private String _statusByUserUuid;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private boolean _answer;
 	private transient ExpandoBridge _expandoBridge;
 	private MBMessage _escapedModelProxy;
 }

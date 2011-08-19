@@ -248,22 +248,11 @@ public class MBMessageFlagLocalServiceWrapper
 		_mbMessageFlagLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	public void addQuestionFlag(long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.addQuestionFlag(messageId);
-	}
-
 	public void addReadFlags(long userId,
 		com.liferay.portlet.messageboards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_mbMessageFlagLocalService.addReadFlags(userId, thread);
-	}
-
-	public void deleteAnswerFlags(long threadId, long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.deleteAnswerFlags(threadId, messageId);
 	}
 
 	public void deleteFlag(long messageFlagId)
@@ -288,11 +277,6 @@ public class MBMessageFlagLocalServiceWrapper
 		_mbMessageFlagLocalService.deleteFlags(messageId, flag);
 	}
 
-	public void deleteQuestionAndAnswerFlags(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.deleteQuestionAndAnswerFlags(threadId);
-	}
-
 	public void deleteThreadFlags(long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mbMessageFlagLocalService.deleteThreadFlags(threadId);
@@ -303,16 +287,6 @@ public class MBMessageFlagLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessageFlagLocalService.getReadFlag(userId, thread);
-	}
-
-	public boolean hasAnswerFlag(long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.hasAnswerFlag(messageId);
-	}
-
-	public boolean hasQuestionFlag(long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.hasQuestionFlag(messageId);
 	}
 
 	public boolean hasReadFlag(long userId,

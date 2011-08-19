@@ -80,9 +80,10 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "question", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MBThread (threadId LONG not null primary key,groupId LONG,companyId LONG,categoryId LONG,rootMessageId LONG,rootMessageUserId LONG,messageCount INTEGER,viewCount INTEGER,lastPostByUserId LONG,lastPostDate DATE null,priority DOUBLE,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBThread (threadId LONG not null primary key,groupId LONG,companyId LONG,categoryId LONG,rootMessageId LONG,rootMessageUserId LONG,messageCount INTEGER,viewCount INTEGER,lastPostByUserId LONG,lastPostDate DATE null,priority DOUBLE,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,question BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table MBThread";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbThread.priority DESC, mbThread.lastPostDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBThread.priority DESC, MBThread.lastPostDate DESC";
@@ -120,6 +121,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setQuestion(soapModel.getQuestion());
 
 		return model;
 	}
@@ -347,6 +349,19 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		_statusDate = statusDate;
 	}
 
+	@JSON
+	public boolean getQuestion() {
+		return _question;
+	}
+
+	public boolean isQuestion() {
+		return _question;
+	}
+
+	public void setQuestion(boolean question) {
+		_question = question;
+	}
+
 	/**
 	 * @deprecated {@link #isApproved}
 	 */
@@ -440,6 +455,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		mbThreadImpl.setStatusByUserId(getStatusByUserId());
 		mbThreadImpl.setStatusByUserName(getStatusByUserName());
 		mbThreadImpl.setStatusDate(getStatusDate());
+		mbThreadImpl.setQuestion(getQuestion());
 
 		mbThreadImpl.resetOriginalValues();
 
@@ -569,12 +585,14 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 			mbThreadCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		mbThreadCacheModel.question = getQuestion();
+
 		return mbThreadCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{threadId=");
 		sb.append(getThreadId());
@@ -606,13 +624,15 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", question=");
+		sb.append(getQuestion());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBThread");
@@ -678,6 +698,10 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>question</column-name><column-value><![CDATA[");
+		sb.append(getQuestion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -708,6 +732,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	private String _statusByUserUuid;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private boolean _question;
 	private transient ExpandoBridge _expandoBridge;
 	private MBThread _escapedModelProxy;
 }

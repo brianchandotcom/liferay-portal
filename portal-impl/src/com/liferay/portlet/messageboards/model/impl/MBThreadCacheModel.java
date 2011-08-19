@@ -32,7 +32,7 @@ import java.util.Date;
 public class MBThreadCacheModel implements CacheModel<MBThread> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{threadId=");
 		sb.append(threadId);
@@ -64,6 +64,8 @@ public class MBThreadCacheModel implements CacheModel<MBThread> {
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", question=");
+		sb.append(question);
 		sb.append("}");
 
 		return sb.toString();
@@ -107,6 +109,8 @@ public class MBThreadCacheModel implements CacheModel<MBThread> {
 			mbThreadImpl.setStatusDate(new Date(statusDate));
 		}
 
+		mbThreadImpl.setQuestion(question);
+
 		mbThreadImpl.resetOriginalValues();
 
 		return mbThreadImpl;
@@ -127,4 +131,5 @@ public class MBThreadCacheModel implements CacheModel<MBThread> {
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public boolean question;
 }

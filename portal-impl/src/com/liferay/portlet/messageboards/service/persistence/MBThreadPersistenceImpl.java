@@ -472,6 +472,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		mbThreadImpl.setStatusByUserId(mbThread.getStatusByUserId());
 		mbThreadImpl.setStatusByUserName(mbThread.getStatusByUserName());
 		mbThreadImpl.setStatusDate(mbThread.getStatusDate());
+		mbThreadImpl.setQuestion(mbThread.isQuestion());
 
 		return mbThreadImpl;
 	}

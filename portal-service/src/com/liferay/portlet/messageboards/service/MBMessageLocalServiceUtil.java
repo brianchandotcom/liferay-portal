@@ -359,6 +359,13 @@ public class MBMessageLocalServiceUtil {
 			.addMessageResources(message, groupPermissions, guestPermissions);
 	}
 
+	public static void deleteAnswerFlags(
+		com.liferay.portlet.messageboards.model.MBMessage message)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteAnswerFlags(message);
+	}
+
 	public static void deleteDiscussionMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

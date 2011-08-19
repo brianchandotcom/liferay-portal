@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
@@ -28,7 +27,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBMessageFlag;
 import com.liferay.portlet.messageboards.model.MBMessageFlagModel;
-import com.liferay.portlet.messageboards.model.MBMessageFlagSoap;
 
 import java.io.Serializable;
 
@@ -36,9 +34,7 @@ import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * The base model implementation for the MBMessageFlag service. Represents a row in the &quot;MBMessageFlag&quot; database table, with each column mapped to a property of this class.
@@ -53,7 +49,6 @@ import java.util.List;
  * @see com.liferay.portlet.messageboards.model.MBMessageFlagModel
  * @generated
  */
-@JSON(strict = true)
 public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 	implements MBMessageFlagModel {
 	/*
@@ -81,41 +76,6 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBMessageFlag"),
 			true);
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static MBMessageFlag toModel(MBMessageFlagSoap soapModel) {
-		MBMessageFlag model = new MBMessageFlagImpl();
-
-		model.setMessageFlagId(soapModel.getMessageFlagId());
-		model.setUserId(soapModel.getUserId());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setThreadId(soapModel.getThreadId());
-		model.setMessageId(soapModel.getMessageId());
-		model.setFlag(soapModel.getFlag());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<MBMessageFlag> toModels(MBMessageFlagSoap[] soapModels) {
-		List<MBMessageFlag> models = new ArrayList<MBMessageFlag>(soapModels.length);
-
-		for (MBMessageFlagSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public Class<?> getModelClass() {
 		return MBMessageFlag.class;
@@ -147,7 +107,6 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
-	@JSON
 	public long getMessageFlagId() {
 		return _messageFlagId;
 	}
@@ -156,7 +115,6 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		_messageFlagId = messageFlagId;
 	}
 
-	@JSON
 	public long getUserId() {
 		return _userId;
 	}
@@ -183,7 +141,6 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		return _originalUserId;
 	}
 
-	@JSON
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -192,7 +149,6 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	public long getThreadId() {
 		return _threadId;
 	}
@@ -201,7 +157,6 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		_threadId = threadId;
 	}
 
-	@JSON
 	public long getMessageId() {
 		return _messageId;
 	}
@@ -220,7 +175,6 @@ public class MBMessageFlagModelImpl extends BaseModelImpl<MBMessageFlag>
 		return _originalMessageId;
 	}
 
-	@JSON
 	public int getFlag() {
 		return _flag;
 	}

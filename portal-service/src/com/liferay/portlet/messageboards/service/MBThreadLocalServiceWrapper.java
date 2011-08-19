@@ -361,6 +361,17 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 		return _mbThreadLocalService.getThreadsCount(groupId, categoryId, status);
 	}
 
+	public boolean hasAnswerMessage(long threadId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.hasAnswerMessage(threadId);
+	}
+
+	public boolean hasQuestionFlag(long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.hasQuestionFlag(threadId);
+	}
+
 	public void incrementViewCounter(long threadId, int increment)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -372,6 +383,12 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mbThreadLocalService.moveThread(groupId, categoryId, threadId);
+	}
+
+	public void setQuestionFlag(long threadId, boolean question)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbThreadLocalService.setQuestionFlag(threadId, question);
 	}
 
 	public com.liferay.portlet.messageboards.model.MBThread splitThread(

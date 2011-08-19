@@ -231,17 +231,10 @@ public interface MBMessageFlagLocalService extends PersistedModelLocalService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void addQuestionFlag(long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	public void addReadFlags(long userId,
 		com.liferay.portlet.messageboards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
-
-	public void deleteAnswerFlags(long threadId, long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteFlag(long messageFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -257,9 +250,6 @@ public interface MBMessageFlagLocalService extends PersistedModelLocalService {
 	public void deleteFlags(long messageId, int flag)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteQuestionAndAnswerFlags(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public void deleteThreadFlags(long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -268,14 +258,6 @@ public interface MBMessageFlagLocalService extends PersistedModelLocalService {
 		long userId, com.liferay.portlet.messageboards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasAnswerFlag(long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasQuestionFlag(long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasReadFlag(long userId,

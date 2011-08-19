@@ -118,7 +118,7 @@ public class MethodKey implements Serializable {
 				_toString = sb.toString();
 			}
 			else {
-				_toString = _className + _methodName;
+				_toString = _className.concat(_methodName);
 			}
 		}
 

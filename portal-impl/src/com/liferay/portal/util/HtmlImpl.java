@@ -103,7 +103,7 @@ public class HtmlImpl implements Html {
 
 			if (replacement != null) {
 				if (sb == null) {
-					sb = new StringBundler(2 * text.length() + 1);
+					sb = new StringBundler();
 				}
 
 				if (i > lastReplacementIndex) {

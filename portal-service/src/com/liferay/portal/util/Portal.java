@@ -328,10 +328,34 @@ public interface Portal {
 	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns the alternate URL of the page, to distinguish it from its
+	 * canonical URL.
+	 *
+	 * @param   request the servlet request to retrieve its parameters and
+	 * 		    remove those which are not relevant
+	 * @param   url the canonical URL previously obtained
+	 * @param   locale the locale of the translated page
+	 * @return  the alternate URL
+	 * @throws  PortalException if a friendly URL or the group could not be
+	 *          retrieved
+	 * @throws  SystemException if a system exception occurred
+	 */
 	public String getCanonicalAlternateURL(
 			HttpServletRequest request, String url, Locale locale)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns the canonical URL of the page, to distinguish it among its
+	 * translations.
+	 *
+	 * @param   request the servlet request to retrieve its parameters and
+	 * 		    remove those which are not relevant
+	 * @return  the canonical URL
+	 * @throws  PortalException if a friendly URL or the group could not be
+	 *          retrieved
+	 * @throws  SystemException if a system exception occurred
+	 */
 	public String getCanonicalURL(HttpServletRequest request)
 		throws PortalException, SystemException;
 
@@ -1030,24 +1054,24 @@ public interface Portal {
 		throws IOException, ServletException;
 
 	/**
-	 * Sets the description for a page. This overrides the existing page
+	 * Sets the description for the page. This overrides the existing page
 	 * description.
 	 */
 	public void setPageDescription(
 		String description, HttpServletRequest request);
 
 	/**
-	 * Sets the keywords for a page. This overrides the existing page keywords.
+	 * Sets the keywords for the page. This overrides the existing page keywords.
 	 */
 	public void setPageKeywords(String keywords, HttpServletRequest request);
 
 	/**
-	 * Sets the subtitle for a page. This overrides the existing page subtitle.
+	 * Sets the subtitle for the page. This overrides the existing page subtitle.
 	 */
 	public void setPageSubtitle(String subtitle, HttpServletRequest request);
 
 	/**
-	 * Sets the whole title for a page. This overrides the existing page whole
+	 * Sets the whole title for the page. This overrides the existing page whole
 	 * title.
 	 */
 	public void setPageTitle(String title, HttpServletRequest request);

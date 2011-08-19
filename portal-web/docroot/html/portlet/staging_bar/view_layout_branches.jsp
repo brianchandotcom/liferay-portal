@@ -125,6 +125,8 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 	);
 
 	<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequest, portletName + ".doConfigure") %>'>
+		var stagingBarPortletBoundaryId = '#p_p_id_<%= PortletKeys.STAGING_BAR %>_';
+
 		var data = null;
 
 		<c:if test='<%= SessionMessages.contains(renderRequest, portletName + ".notAjaxable") %>'>

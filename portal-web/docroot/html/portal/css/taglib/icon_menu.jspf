@@ -166,6 +166,7 @@
 
 .lfr-actions li .taglib-text {
 	color: #34404F;
+	display: inline-block;
 }
 
 .lfr-menu-list li .taglib-icon img {

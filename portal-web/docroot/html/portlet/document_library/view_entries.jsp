@@ -245,15 +245,10 @@ for (int i = 0; i < results.size(); i++) {
 					rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 					row.addText(fileEntryTitle, rowURL);
-
 					row.addText(fileEntry.getDescription(), rowURL);
-
 					row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
-
 					row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
-
 					row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
-
 					row.addText(String.valueOf(fileEntry.getReadCount()));
 
 					row.addJSP("/html/portlet/document_library/file_entry_action.jsp");

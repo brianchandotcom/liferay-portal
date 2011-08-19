@@ -132,9 +132,6 @@ int total = 0;
 
 			searchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
 
-			List results = null;
-			Hits hits = null;
-
 			try {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
 
@@ -146,8 +143,9 @@ int total = 0;
 				searchContext.setKeywords(keywords);
 				searchContext.setStart(entryStart);
 
-				hits = indexer.search(searchContext);
-				results = new ArrayList();
+				Hits hits = indexer.search(searchContext);
+
+				List results = new ArrayList();
 
 				List resultRows = searchContainer.getResultRows();
 
@@ -175,13 +173,14 @@ int total = 0;
 				}
 
 				total = results.size();
+
 				searchContainer.setResults(results);
 				searchContainer.setTotal(total);
-				%>
 
-				<%for (int i = 0; i < results.size(); i++) {
+				for (int i = 0; i < results.size(); i++) {
 					Object result = results.get(i);
 				%>
+
 					<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
 
 					<c:choose>
@@ -234,7 +233,6 @@ int total = 0;
 							rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 							row.addText(fileEntry.getTitle(), rowURL);
-
 							row.addText(fileEntry.getDescription(), rowURL);
 							row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
 							row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));

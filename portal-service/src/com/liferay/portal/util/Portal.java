@@ -98,7 +98,7 @@ public interface Portal {
 		String description, HttpServletRequest request);
 
 	/**
-	 * Adds the keywords to the current meta keywords of the page.
+	 * Appends the keywords to the current meta keywords of the page.
 	 *
 	 * @param keywords the keywords to add to the current meta keywords
 	 *        (comma-separated)
@@ -736,7 +736,7 @@ public interface Portal {
 	public String getPortalLibDir();
 
 	/**
-	 * @deprecated {@link #getPortalPort(boolean)}
+	 * @deprecated Replaced by the more general {@link #getPortalPort(boolean)}
 	 */
 	public int getPortalPort();
 
@@ -763,7 +763,7 @@ public interface Portal {
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist();
 
 	/**
-	 * @deprecated {@link #getPortletBreadcrumbs(HttpServletRequest)}
+	 * @deprecated Renamed to {@link #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
 	public List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request);

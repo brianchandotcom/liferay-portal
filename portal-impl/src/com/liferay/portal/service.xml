@@ -563,6 +563,9 @@
 
 		<!-- Finder methods -->
 
+        <finder name="LayoutSetBranchId" return-type="Collection">
+			<finder-column name="layoutSetBranchId" />
+		</finder>
 		<finder name="L_P" return-type="Collection">
 			<finder-column name="layoutSetBranchId" />
 			<finder-column name="plid" />

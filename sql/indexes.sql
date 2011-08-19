@@ -350,6 +350,7 @@ create index IX_23922F7D on Layout (iconImageId);
 create index IX_D0822724 on Layout (uuid_);
 create unique index IX_CED31606 on Layout (uuid_, groupId);
 
+create index IX_6C226433 on LayoutBranch (layoutSetBranchId);
 create index IX_2C42603E on LayoutBranch (layoutSetBranchId, plid);
 create index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);
 

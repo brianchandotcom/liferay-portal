@@ -123,14 +123,6 @@ public class LayoutBranchLocalServiceImpl
 		return layoutBranchPersistence.findByPrimaryKey(layoutBranchId);
 	}
 
-	public List<LayoutBranch> getLayoutSetBranchLayoutBranches(
-			long layoutSetBranchId)
-		throws SystemException {
-
-		return layoutBranchPersistence.findByLayoutSetBranchId(
-			layoutSetBranchId);
-	}
-
 	public List<LayoutBranch> getLayoutBranches(
 			long layoutSetBranchId, long plid, int start, int end,
 			OrderByComparator orderByComparator)
@@ -138,6 +130,14 @@ public class LayoutBranchLocalServiceImpl
 
 		return layoutBranchPersistence.findByL_P(
 			layoutSetBranchId, plid, start, end, orderByComparator);
+	}
+
+	public List<LayoutBranch> getLayoutSetBranchLayoutBranches(
+			long layoutSetBranchId)
+		throws SystemException {
+
+		return layoutBranchPersistence.findByLayoutSetBranchId(
+			layoutSetBranchId);
 	}
 
 	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId, long plid)

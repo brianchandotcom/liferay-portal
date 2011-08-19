@@ -749,7 +749,7 @@ public class PortletURLImpl
 	}
 
 	protected String generateToString() {
-		StringBundler sb = new StringBundler(32);
+		StringBundler sb = new StringBundler(64);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);

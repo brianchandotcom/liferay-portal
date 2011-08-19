@@ -103,20 +103,23 @@ public class MethodKey implements Serializable {
 
 	private String _toString() {
 		if (_toString == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_className);
-			sb.append(_methodName);
-
 			if ((_parameterTypes != null) && (_parameterTypes.length > 0)) {
+				StringBundler sb = new StringBundler(
+					3 + _parameterTypes.length);
+
+				sb.append(_className);
+				sb.append(_methodName);
 				sb.append(StringPool.DASH);
 
 				for (Class<?> parameterType : _parameterTypes) {
 					sb.append(parameterType.getName());
 				}
-			}
 
-			_toString = sb.toString();
+				_toString = sb.toString();
+			}
+			else {
+				_toString = _className.concat(_methodName);
+			}
 		}
 
 		return _toString;

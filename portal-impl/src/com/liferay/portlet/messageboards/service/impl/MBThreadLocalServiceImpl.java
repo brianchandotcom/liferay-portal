@@ -39,8 +39,6 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBMessageFlag;
-import com.liferay.portlet.messageboards.model.MBMessageFlagConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
@@ -55,6 +53,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
@@ -392,6 +391,25 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	public boolean hasAnswerMessage(long threadId) throws SystemException {
+		int count = mbMessagePersistence.countByT_A(threadId, true);
+
+		if (count > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean hasQuestionFlag(long threadId)
+		throws PortalException, SystemException {
+
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+		return thread.isQuestion();
+	}
+
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	public void incrementViewCounter(long threadId, int increment)
 		throws PortalException, SystemException {
@@ -472,6 +490,27 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	public void setQuestionFlag(long threadId, boolean question)
+		throws PortalException, SystemException {
+
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+		if (thread.isQuestion() == question) {
+			return;
+		}
+
+		thread.setQuestion(question);
+
+		mbThreadPersistence.update(thread, false);
+
+		if (!question) {
+			MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
+				thread.getRootMessageId());
+
+			mbMessageLocalService.deleteAnswerFlags(rootMessage);
+		}
+	}
+
 	public MBThread splitThread(
 			long messageId, String subject, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -490,21 +529,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Message flags
 
-		mbMessageFlagLocalService.deleteAnswerFlags(
-			oldThread.getThreadId(), message.getMessageId());
-
-		int count = mbMessageFlagPersistence.countByT_F(
-			oldThread.getThreadId(), MBMessageFlagConstants.ANSWER_FLAG);
-
-		if (count == 1) {
-			MBMessageFlag messageFlag = mbMessageFlagPersistence.fetchByU_M_F(
-				rootMessage.getUserId(), rootMessage.getMessageId(),
-				MBMessageFlagConstants.ANSWER_FLAG);
-
-			messageFlag.setFlag(MBMessageFlagConstants.QUESTION_FLAG);
-
-			mbMessageFlagPersistence.update(messageFlag, false);
-		}
+		mbMessageLocalService.deleteAnswerFlags(message);
 
 		// Create new thread
 

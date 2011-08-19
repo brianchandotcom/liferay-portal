@@ -32,7 +32,7 @@ import java.util.Date;
 public class MBMessageCacheModel implements CacheModel<MBMessage> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,6 +84,8 @@ public class MBMessageCacheModel implements CacheModel<MBMessage> {
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", answer=");
+		sb.append(answer);
 		sb.append("}");
 
 		return sb.toString();
@@ -174,6 +176,8 @@ public class MBMessageCacheModel implements CacheModel<MBMessage> {
 			mbMessageImpl.setStatusDate(new Date(statusDate));
 		}
 
+		mbMessageImpl.setAnswer(answer);
+
 		mbMessageImpl.resetOriginalValues();
 
 		return mbMessageImpl;
@@ -204,4 +208,5 @@ public class MBMessageCacheModel implements CacheModel<MBMessage> {
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public boolean answer;
 }

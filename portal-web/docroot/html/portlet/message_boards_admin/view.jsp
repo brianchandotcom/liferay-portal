@@ -299,10 +299,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 							>
 
 								<%
-								if (MBMessageFlagLocalServiceUtil.hasAnswerFlag(message.getMessageId())) {
+								if (MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId())) {
 									buffer.append(LanguageUtil.get(pageContext, "resolved"));
 								}
-								else if (MBMessageFlagLocalServiceUtil.hasQuestionFlag(message.getMessageId())) {
+								else if (thread.isQuestion()) {
 									buffer.append(LanguageUtil.get(pageContext, "waiting-for-an-answer"));
 								}
 								%>

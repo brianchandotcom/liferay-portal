@@ -349,7 +349,6 @@
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence" class="com.liferay.portlet.messageboards.service.persistence.MBMessagePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder" class="com.liferay.portlet.messageboards.service.persistence.MBMessageFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.MBMessageFlagLocalService" class="com.liferay.portlet.messageboards.service.impl.MBMessageFlagLocalServiceImpl" />
-	<bean id="com.liferay.portlet.messageboards.service.MBMessageFlagService" class="com.liferay.portlet.messageboards.service.impl.MBMessageFlagServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBMessageFlagPersistence" class="com.liferay.portlet.messageboards.service.persistence.MBMessageFlagPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.MBStatsUserLocalService" class="com.liferay.portlet.messageboards.service.impl.MBStatsUserLocalServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence" class="com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistenceImpl" parent="basePersistence" />

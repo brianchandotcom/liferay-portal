@@ -65,6 +65,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
+ * @author Shuyang Zhou
  */
 public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
@@ -529,6 +530,20 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		return exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
 			messages, themeDisplay);
+	}
+
+	public void setAnswerFlag(long messageId, boolean answer)
+		throws PortalException, SystemException {
+
+		MBMessage message= mbMessagePersistence.findByPrimaryKey(messageId);
+
+		if (message.isAnswer() == answer) {
+			return;
+		}
+
+		message.setAnswer(answer);
+
+		mbMessagePersistence.update(message, false);
 	}
 
 	public void subscribeMessage(long messageId)

@@ -111,6 +111,7 @@ import net.htmlparser.jericho.StartTag;
  * @author Mika Koivisto
  * @author Jorge Ferrer
  * @author Juan Fernández
+ * @author Shuyang Zhou
  */
 public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
@@ -463,6 +464,25 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			guestPermissions);
 	}
 
+	public void deleteAnswerFlags(MBMessage message)
+		throws PortalException, SystemException {
+
+		if (message.isAnswer()) {
+			message.setAnswer(false);
+
+			mbMessagePersistence.update(message, false);
+		}
+
+		long threadId = message.getThreadId();
+
+		List<MBMessage> childMessages = mbMessagePersistence.findByT_P(
+			threadId, message.getMessageId());
+
+		for (MBMessage childMessage : childMessages) {
+			deleteAnswerFlags(childMessage);
+		}
+	}
+
 	public void deleteDiscussionMessage(long messageId)
 		throws PortalException, SystemException {
 
@@ -546,18 +566,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		int count = mbMessagePersistence.countByT_S(
 			message.getThreadId(), WorkflowConstants.STATUS_APPROVED);
-
-		// Message flags
-
-		if (message.isRoot()) {
-			mbMessageFlagLocalService.deleteQuestionAndAnswerFlags(
-				message.getThreadId());
-		}
-		else if (mbMessageFlagLocalService.hasAnswerFlag(
-					message.getMessageId())) {
-
-			mbMessageFlagService.deleteAnswerFlag(message.getMessageId());
-		}
 
 		if ((count == 1) && !message.isDraft()) {
 
@@ -717,10 +725,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		ratingsStatsLocalService.deleteStats(
 			MBMessage.class.getName(), message.getMessageId());
-
-		// Message flags
-
-		mbMessageFlagPersistence.removeByMessageId(message.getMessageId());
 
 		// Resources
 

@@ -2505,6 +2505,7 @@
 			<basic name="statusDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="answer" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="statusByUserUuid" />
@@ -2562,6 +2563,7 @@
 			<basic name="statusDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="question" />
 			<transient name="lastPostByUserUuid" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

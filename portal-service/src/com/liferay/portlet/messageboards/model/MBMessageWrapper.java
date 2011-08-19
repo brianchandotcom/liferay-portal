@@ -581,6 +581,33 @@ public class MBMessageWrapper implements MBMessage {
 	}
 
 	/**
+	* Returns the answer of this message-boards message.
+	*
+	* @return the answer of this message-boards message
+	*/
+	public boolean getAnswer() {
+		return _mbMessage.getAnswer();
+	}
+
+	/**
+	* Returns <code>true</code> if this message-boards message is answer.
+	*
+	* @return <code>true</code> if this message-boards message is answer; <code>false</code> otherwise
+	*/
+	public boolean isAnswer() {
+		return _mbMessage.isAnswer();
+	}
+
+	/**
+	* Sets whether this message-boards message is answer.
+	*
+	* @param answer the answer of this message-boards message
+	*/
+	public void setAnswer(boolean answer) {
+		_mbMessage.setAnswer(answer);
+	}
+
+	/**
 	* @deprecated Renamed to {@link #isApproved()}
 	*/
 	public boolean getApproved() {

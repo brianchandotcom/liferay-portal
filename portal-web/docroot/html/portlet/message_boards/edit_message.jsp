@@ -270,10 +270,9 @@ if (Validator.isNull(redirect)) {
 			boolean question = threadAsQuestionByDefault;
 
 			if (message != null) {
-				boolean questionFlag = MBMessageFlagLocalServiceUtil.hasQuestionFlag(messageId);
-				boolean answerFlag = MBMessageFlagLocalServiceUtil.hasAnswerFlag(messageId);
+				boolean questionFlag = MBThreadLocalServiceUtil.hasQuestionFlag(threadId);
 
-				if (questionFlag || answerFlag) {
+				if (questionFlag || message.isAnswer()) {
 					question = true;
 				}
 			}

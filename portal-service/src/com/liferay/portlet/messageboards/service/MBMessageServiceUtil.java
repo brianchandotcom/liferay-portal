@@ -206,6 +206,12 @@ public class MBMessageServiceUtil {
 			displayStyle, feedURL, entryURL, themeDisplay);
 	}
 
+	public static void setAnswerFlag(long messageId, boolean answer)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().setAnswerFlag(messageId, answer);
+	}
+
 	public static void subscribeMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

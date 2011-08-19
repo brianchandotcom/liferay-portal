@@ -345,6 +345,13 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService {
 			guestPermissions);
 	}
 
+	public void deleteAnswerFlags(
+		com.liferay.portlet.messageboards.model.MBMessage message)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbMessageLocalService.deleteAnswerFlags(message);
+	}
+
 	public void deleteDiscussionMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

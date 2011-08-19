@@ -1909,6 +1909,7 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="answer" type="boolean" />
 	</model>
 	<model name="com.liferay.portlet.messageboards.model.MBMessageFlag">
 		<field name="messageFlagId" type="long" />
@@ -1941,6 +1942,7 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="question" type="boolean" />
 	</model>
 	<model name="com.liferay.portlet.mobiledevicerules.model.MDRAction">
 		<field name="uuid" type="String" />

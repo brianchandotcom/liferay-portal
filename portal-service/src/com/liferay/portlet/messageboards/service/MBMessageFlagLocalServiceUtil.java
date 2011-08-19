@@ -255,22 +255,11 @@ public class MBMessageFlagLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void addQuestionFlag(long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().addQuestionFlag(messageId);
-	}
-
 	public static void addReadFlags(long userId,
 		com.liferay.portlet.messageboards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().addReadFlags(userId, thread);
-	}
-
-	public static void deleteAnswerFlags(long threadId, long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteAnswerFlags(threadId, messageId);
 	}
 
 	public static void deleteFlag(long messageFlagId)
@@ -295,11 +284,6 @@ public class MBMessageFlagLocalServiceUtil {
 		getService().deleteFlags(messageId, flag);
 	}
 
-	public static void deleteQuestionAndAnswerFlags(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteQuestionAndAnswerFlags(threadId);
-	}
-
 	public static void deleteThreadFlags(long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteThreadFlags(threadId);
@@ -310,16 +294,6 @@ public class MBMessageFlagLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getReadFlag(userId, thread);
-	}
-
-	public static boolean hasAnswerFlag(long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().hasAnswerFlag(messageId);
-	}
-
-	public static boolean hasQuestionFlag(long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().hasQuestionFlag(messageId);
 	}
 
 	public static boolean hasReadFlag(long userId,

@@ -251,6 +251,18 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static void setAnswerFlag(long messageId, boolean answer)
+		throws RemoteException {
+		try {
+			MBMessageServiceUtil.setAnswerFlag(messageId, answer);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void subscribeMessage(long messageId)
 		throws RemoteException {
 		try {

@@ -73,7 +73,14 @@ portletURL.setParameter("typeSelection", typeSelection);
 
 			long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-			AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(typeSelection, entryId);
+			AssetEntry entry = null;
+
+			try {
+				entry = AssetEntryLocalServiceUtil.getEntry(typeSelection, entryId);
+			}
+			catch (NoSuchEntryException nsee) {
+				continue;
+			}
 
 			entry = entry.toEscapedModel();
 

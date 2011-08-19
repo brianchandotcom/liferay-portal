@@ -119,8 +119,7 @@ public class CreateAnonymousAccountAction extends PortletAction {
 	
 				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
-
-			if (e instanceof DuplicateUserEmailAddressException) {
+			else if (e instanceof DuplicateUserEmailAddressException) {
 				User user = UserLocalServiceUtil.getUserByEmailAddress(
 					themeDisplay.getCompanyId(), emailAddress);
 

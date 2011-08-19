@@ -483,7 +483,7 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * Adds the description for a page. This appends to the existing page
+	 * Adds the description for the page, appending to the existing page
 	 * description.
 	 */
 	public void addPageDescription(
@@ -500,7 +500,7 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * Adds the keywords for a page. This appends to the existing page keywords.
+	 * Adds the keywords for the page, appending to the existing page keywords.
 	 */
 	public void addPageKeywords(String keywords, HttpServletRequest request) {
 		List<String> requestKeywords = (List<String>)request.getAttribute(
@@ -522,7 +522,7 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * Adds the subtitle for a page. This appends to the existing page subtitle.
+	 * Adds the subtitle for the page, appending to the existing page subtitle.
 	 */
 	public void addPageSubtitle(String subtitle, HttpServletRequest request) {
 		String requestSubtitle = (String)request.getAttribute(
@@ -536,7 +536,7 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * Adds the whole title for a page. This appends to the existing page whole
+	 * Adds the whole title for the page, appending to the existing page whole
 	 * title.
 	 */
 	public void addPageTitle(String title, HttpServletRequest request) {
@@ -971,6 +971,19 @@ public class PortalImpl implements Portal {
 		return userId;
 	}
 
+	/**
+	 * Returns the alternate URL of the page, to distinguish it from its
+	 * canonical URL.
+	 *
+	 * @param   request the servlet request to retrieve its parameters and
+	 * 		    remove those which are not relevant
+	 * @param   url the canonical URL previously obtained
+	 * @param   locale the locale of the translated page
+	 * @return  the alternate URL
+	 * @throws  PortalException if a friendly URL or the group could not be
+	 *          retrieved
+	 * @throws  SystemException if a system exception occurred
+	 */
 	public String getCanonicalAlternateURL(
 			HttpServletRequest request, String url, Locale locale)
 		throws PortalException, SystemException {
@@ -1021,6 +1034,17 @@ public class PortalImpl implements Portal {
 		return url;
 	}
 
+	/**
+	 * Returns the canonical URL of the page, to distinguish it among its
+	 * translations.
+	 *
+	 * @param   request the servlet request to retrieve its parameters and
+	 * 		    remove those which are not relevant
+	 * @return  the canonical URL
+	 * @throws  PortalException if a friendly URL or the group could not be
+	 *          retrieved
+	 * @throws  SystemException if a system exception occurred
+	 */
 	public String getCanonicalURL(HttpServletRequest request)
 		throws PortalException, SystemException {
 
@@ -4739,7 +4763,7 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * Sets the description for a page. This overrides the existing page
+	 * Sets the description for the page, overriding the existing page
 	 * description.
 	 */
 	public void setPageDescription(
@@ -4749,7 +4773,7 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * Sets the keywords for a page. This overrides the existing page keywords.
+	 * Sets the keywords for the page, overriding the existing page keywords.
 	 */
 	public void setPageKeywords(String keywords, HttpServletRequest request) {
 		request.removeAttribute(WebKeys.PAGE_KEYWORDS);
@@ -4758,14 +4782,14 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * Sets the subtitle for a page. This overrides the existing page subtitle.
+	 * Sets the subtitle for the page, overriding the existing page subtitle.
 	 */
 	public void setPageSubtitle(String subtitle, HttpServletRequest request) {
 		request.setAttribute(WebKeys.PAGE_SUBTITLE, subtitle);
 	}
 
 	/**
-	 * Sets the whole title for a page. This overrides the existing page whole
+	 * Sets the whole title for the page, overriding the existing page whole
 	 * title.
 	 */
 	public void setPageTitle(String title, HttpServletRequest request) {

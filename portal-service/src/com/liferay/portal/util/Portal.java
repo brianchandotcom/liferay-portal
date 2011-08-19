@@ -157,8 +157,9 @@ public interface Portal {
 	 * Adds the default resource permissions for the portlet to the page.
 	 *
 	 * @param  request the servlet request for the page
-	 * @param  portlet the portlet to add the default resource permissions for
-	 * @throws PortalException if adding the default resource permissions failed
+	 * @param  portlet the portlet
+	 * @throws PortalException if adding the default resource permissions
+	 *         failed
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void addPortletDefaultResource(
@@ -176,7 +177,7 @@ public interface Portal {
 	 *
 	 * @param  themeDisplay the current theme display
 	 * @param  layout the current layout
-	 * @param  url the URL to add the preserved parameters to
+	 * @param  url the URL
 	 * @param  doAsUser whether to include doAsUserId and doAsLanguageId in the
 	 *         URL if they are available. If <code>false</code>, doAsUserId and
 	 *         doAsUserLanguageId will never be added.
@@ -190,7 +191,7 @@ public interface Portal {
 	 * doAsGroupId, refererPlid, and controlPanelCategory to the URL.
 	 *
 	 * @param  themeDisplay the current theme display
-	 * @param  url the URL to add the preserved parameters to
+	 * @param  url the URL
 	 * @return the URL with the preserved parameters added
 	 */
 	public String addPreservedParameters(
@@ -200,7 +201,7 @@ public interface Portal {
 	 * Clears the render parameters in the request if the portlet is in the
 	 * action phase.
 	 *
-	 * @param renderRequest the render request to clear the render parameters of
+	 * @param renderRequest the render request
 	 */
 	public void clearRequestParameters(RenderRequest renderRequest);
 
@@ -208,15 +209,16 @@ public interface Portal {
 	 * Copies the request parameters to the render parameters, unless a
 	 * parameter with that name already exists in the render parameters.
 	 *
-	 * @param actionRequest the request to get the request parameters from
-	 * @param actionResponse the response to put the render parameters in
+	 * @param actionRequest the request from which to get the request
+	 *        parameters
+	 * @param actionResponse the response to receive the render parameters
 	 */
 	public void copyRequestParameters(
 		ActionRequest actionRequest, ActionResponse actionResponse);
 
 	/**
 	 * Escapes the URL for use in a redirect and checks that security settings
-	 * allow the URL to be redirected to.
+	 * allow the URL is allowed for redirects.
 	 *
 	 * @param  url the URL to escape
 	 * @return the escaped URL, or <code>null</code> if the URL is not an
@@ -225,10 +227,11 @@ public interface Portal {
 	public String escapeRedirect(String url);
 
 	/**
-	 * Generates a random key to identify the request based on the input string.
+	 * Generates a random key to identify the request based on the input
+	 * string.
 	 *
 	 * @param  request the servlet request for the page
-	 * @param  input the input to generate the key from
+	 * @param  input the input string
 	 * @return the generated key
 	 */
 	public String generateRandomKey(HttpServletRequest request, String input);
@@ -260,7 +263,7 @@ public interface Portal {
 	/**
 	 * Returns the base model instance for the resource.
 	 *
-	 * @param  resource the resource to get the base model instance for
+	 * @param  resource the resource
 	 * @return the base model instance, or <code>null</code> if the resource
 	 *         does not have a base model instance (such as if its a portlet)
 	 * @throws PortalException if a base model instance for the resource could
@@ -273,8 +276,7 @@ public interface Portal {
 	/**
 	 * Returns the base model instance for the resource permission.
 	 *
-	 * @param  resourcePermission the resource permission to get the base model
-	 *         instance for
+	 * @param  resourcePermission the resource permission
 	 * @return the base model instance, or <code>null</code> if the resource
 	 *         permission does not have a base model instance (such as if its a
 	 *         portlet)
@@ -303,8 +305,8 @@ public interface Portal {
 	 * Returns the user's ID from the HTTP authentication headers after
 	 * validating their credentials.
 	 *
-	 * @param  request the servlet request to retrieve the HTTP authentication
-	 *         headers from
+	 * @param  request the servlet request from which to retrieve the HTTP
+	 *         authentication headers
 	 * @return the user's ID if HTTP authentication headers are present and
 	 *         their credentials are valid; 0 otherwise
 	 * @throws PortalException if an authentication exception occurred
@@ -328,10 +330,34 @@ public interface Portal {
 	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns the alternate URL of the page, to distinguish it from its
+	 * canonical URL.
+	 *
+	 * @param   request the servlet request to retrieve its parameters and
+	 * 		    remove those which are not relevant
+	 * @param   url the canonical URL previously obtained
+	 * @param   locale the locale of the translated page
+	 * @return  the alternate URL
+	 * @throws  PortalException if a friendly URL or the group could not be
+	 *          retrieved
+	 * @throws  SystemException if a system exception occurred
+	 */
 	public String getCanonicalAlternateURL(
 			HttpServletRequest request, String url, Locale locale)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns the canonical URL of the page, to distinguish it among its
+	 * translations.
+	 *
+	 * @param   request the servlet request to retrieve its parameters and
+	 * 		    remove those which are not relevant
+	 * @return  the canonical URL
+	 * @throws  PortalException if a friendly URL or the group could not be
+	 *          retrieved
+	 * @throws  SystemException if a system exception occurred
+	 */
 	public String getCanonicalURL(HttpServletRequest request)
 		throws PortalException, SystemException;
 
@@ -474,8 +500,9 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * Returns the date object for the specified month, day, year, hour, minute,
-	 * and time zone, optionally throwing an exception if the date is invalid.
+	 * Returns the date object for the specified month, day, year, hour,
+	 * minute, and time zone, optionally throwing an exception if the date is
+	 * invalid.
 	 *
 	 * @param  month the month (0-based, meaning 0 for January)
 	 * @param  day the day of the month
@@ -1030,24 +1057,24 @@ public interface Portal {
 		throws IOException, ServletException;
 
 	/**
-	 * Sets the description for a page. This overrides the existing page
+	 * Sets the description for the page, overriding the existing page
 	 * description.
 	 */
 	public void setPageDescription(
 		String description, HttpServletRequest request);
 
 	/**
-	 * Sets the keywords for a page. This overrides the existing page keywords.
+	 * Sets the keywords for the page, overriding the existing page keywords.
 	 */
 	public void setPageKeywords(String keywords, HttpServletRequest request);
 
 	/**
-	 * Sets the subtitle for a page. This overrides the existing page subtitle.
+	 * Sets the subtitle for the page, overriding the existing page subtitle.
 	 */
 	public void setPageSubtitle(String subtitle, HttpServletRequest request);
 
 	/**
-	 * Sets the whole title for a page. This overrides the existing page whole
+	 * Sets the whole title for the page, overriding the existing page whole
 	 * title.
 	 */
 	public void setPageTitle(String title, HttpServletRequest request);

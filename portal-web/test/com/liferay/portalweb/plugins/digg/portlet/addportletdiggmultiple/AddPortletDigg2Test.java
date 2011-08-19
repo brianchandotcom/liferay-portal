@@ -87,6 +87,6 @@ public class AddPortletDigg2Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//section"));
-		assertTrue(selenium.isVisible("//div[2]/section"));
+		assertTrue(selenium.isVisible("//div[2]/div/section"));
 	}
 }

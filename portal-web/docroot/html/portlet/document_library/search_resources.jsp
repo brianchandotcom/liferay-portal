@@ -130,9 +130,7 @@ int total = 0;
 
 			searchContainer.setOrderByComparator(orderByComparator);
 
-			searchContainer.setRowChecker(new RowChecker(liferayPortletResponse));
-
-			Hits results = null;
+			searchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
 
 			try {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
@@ -145,16 +143,14 @@ int total = 0;
 				searchContext.setKeywords(keywords);
 				searchContext.setStart(entryStart);
 
-				results = indexer.search(searchContext);
+				Hits hits = indexer.search(searchContext);
 
-				total = results.getLength();
-
-				searchContainer.setTotal(total);
+				List results = new ArrayList();
 
 				List resultRows = searchContainer.getResultRows();
 
-				for (int i = 0; i < results.getDocs().length; i++) {
-					Document doc = results.doc(i);
+				for (int i = 0; i < hits.getDocs().length; i++) {
+					Document doc = hits.doc(i);
 
 					// Folder and document
 
@@ -172,7 +168,20 @@ int total = 0;
 
 						continue;
 					}
-					%>
+
+					results.add(fileEntry);
+				}
+
+				total = results.size();
+
+				searchContainer.setResults(results);
+				searchContainer.setTotal(total);
+
+				for (int i = 0; i < results.size(); i++) {
+					Object result = results.get(i);
+				%>
+
+					<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
 
 					<c:choose>
 						<c:when test='<%= !displayStyle.equals("list") %>'>
@@ -212,11 +221,10 @@ int total = 0;
 						<c:otherwise>
 
 							<%
-							ResultRow row = new ResultRow(doc, i, i);
+							resultRows = searchContainer.getResultRows();
+							ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
 
 							// Position
-
-							row.setObject(fileEntry);
 
 							PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
@@ -224,11 +232,8 @@ int total = 0;
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
-							String rowHREF = rowURL.toString();
-
-							row.addText(fileEntry.getTitle(), rowHREF);
-
-							row.addText(fileEntry.getDescription(), rowHREF);
+							row.addText(fileEntry.getTitle(), rowURL);
+							row.addText(fileEntry.getDescription(), rowURL);
 							row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
 							row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
 							row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));

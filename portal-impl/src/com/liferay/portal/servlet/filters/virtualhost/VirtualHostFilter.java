@@ -170,21 +170,22 @@ public class VirtualHostFilter extends BasePortalFilter {
 		Set<String> languageIds = I18nServlet.getLanguageIds();
 
 		for (String languageId : languageIds) {
-			if (friendlyURL.startsWith(languageId)) {
+			if (StringUtil.startsWith(friendlyURL, languageId)) {
 				int pos = friendlyURL.indexOf(CharPool.SLASH, 1);
 
 				if (((pos != -1) && (pos != languageId.length())) ||
-					((pos == -1) && !friendlyURL.equals(languageId))) {
+					((pos == -1) &&
+					 !friendlyURL.equalsIgnoreCase(languageId))) {
 
 					continue;
 				}
 
 				if (pos == -1) {
-					i18nLanguageId = friendlyURL;
+					i18nLanguageId = languageId;
 					friendlyURL = StringPool.SLASH;
 				}
 				else {
-					i18nLanguageId = friendlyURL.substring(0, pos);
+					i18nLanguageId = languageId.substring(0, pos);
 					friendlyURL = friendlyURL.substring(pos);
 				}
 

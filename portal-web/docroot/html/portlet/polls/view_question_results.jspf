@@ -183,7 +183,7 @@ for (int i = 0; i < choices.size(); i++) {
 
 			PollsChoice choice = vote.getChoice();
 
-			row.addText(choice.getName() + ". " + choice.getDescription());
+			row.addText(choice.getName() + ". " + choice.getDescription(locale));
 
 			// Vote date
 

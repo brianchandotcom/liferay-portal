@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,6 +54,7 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.model.ThemeSetting;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
@@ -869,15 +871,37 @@ public class EditLayoutsAction extends PortletAction {
 					colorSchemeId = colorScheme.getColorSchemeId();
 				}
 
-				UnicodeProperties themeSettingsProperties =
-					PropertiesParamUtil.getProperties(
-						actionRequest, device + "ThemeSettingsProperties--");
+				deleteThemeSettings(typeSettingsProperties, device);
 
-				for (String key : themeSettingsProperties.keySet()) {
-					String value = themeSettingsProperties.get(key);
+				Map<String, ThemeSetting> configurableSettings =
+					theme.getConfigurableSettings();
 
-					typeSettingsProperties.setProperty(
-						ThemeSettingImpl.namespaceProperty(device, key), value);
+				if (configurableSettings.isEmpty()) {
+					continue;
+				}
+
+				for (String key : configurableSettings.keySet()) {
+					ThemeSetting themeSetting = configurableSettings.get(key);
+
+					String type = GetterUtil.getString(
+						themeSetting.getType(), "text");
+
+					String property =
+						device + "ThemeSettingsProperties--" + key +
+							StringPool.DOUBLE_DASH;
+
+					String value = ParamUtil.getString(
+						actionRequest, property);
+
+					if (type.equals("checkbox")) {
+						value = String.valueOf(GetterUtil.getBoolean(value));
+					}
+
+					if (!value.equals(themeSetting.getValue())) {
+						typeSettingsProperties.setProperty(
+							ThemeSettingImpl.namespaceProperty(device, key),
+							value);
+					}
 				}
 			}
 

@@ -150,7 +150,8 @@ public class AssetEntryFinderImpl
 		StringBundler sb = new StringBundler();
 
 		if (count) {
-			sb.append("SELECT COUNT(AssetEntry.entryId) AS COUNT_VALUE ");
+			sb.append(
+				"SELECT COUNT(DISTINCT AssetEntry.entryId) AS COUNT_VALUE ");
 		}
 		else {
 			sb.append("SELECT DISTINCT {AssetEntry.*} ");

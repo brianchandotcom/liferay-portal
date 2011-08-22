@@ -382,7 +382,10 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		DLFileRank fileRank =
 			(DLFileRank)portletDataContext.getZipEntryAsObject(path);
 
-		importFileRank(portletDataContext, fileRank);
+		String fileEntryUuid = fileRankElement.attributeValue(
+			"file-entry-uuid");
+
+		importFileRank(portletDataContext, fileRank, fileEntryUuid);
 	}
 
 	public static void importFolder(
@@ -438,6 +441,11 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		Element fileRankElement = fileRanksElement.addElement("file-rank");
+		FileEntry fileEntry = FileEntryUtil.fetchByPrimaryKey(
+			fileRank.getFileEntryId());
+
+		String fileEntryUuid = fileEntry.getUuid();
+		fileRankElement.addAttribute("file-entry-uuid", fileEntryUuid);
 
 		portletDataContext.addClassedModel(
 			fileRankElement, path, fileRank, _NAMESPACE);
@@ -448,6 +456,12 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			Element fileShortcutsElement, DLFileShortcut fileShortcut)
 		throws Exception {
 
+		if (!portletDataContext.isWithinDateRange(
+				fileShortcut.getModifiedDate())) {
+
+			return;
+		}
+
 		exportParentFolder(
 			portletDataContext, foldersElement, fileShortcut.getFolderId());
 
@@ -456,6 +470,12 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		if (portletDataContext.isPathNotProcessed(path)) {
 			Element fileShortcutElement = fileShortcutsElement.addElement(
 				"file-shortcut");
+
+			FileEntry fileEntry = FileEntryUtil.fetchByPrimaryKey(
+				fileShortcut.getToFileEntryId());
+
+			String fileEntryUuid = fileEntry.getUuid();
+			fileShortcutElement.addAttribute("file-entry-uuid", fileEntryUuid);
 
 			portletDataContext.addClassedModel(
 				fileShortcutElement, path, fileShortcut, _NAMESPACE);
@@ -646,17 +666,28 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	protected static void importFileRank(
-			PortletDataContext portletDataContext, DLFileRank fileRank)
+			PortletDataContext portletDataContext, DLFileRank fileRank,
+			String fileEntryUuid)
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(fileRank.getUserUuid());
 
-		Map<Long, Long> fileEntryPKs =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFileEntry.class);
+		long groupId = portletDataContext.getScopeGroupId();
 
-		long fileEntryId = MapUtil.getLong(
-			fileEntryPKs, fileRank.getFileEntryId(), fileRank.getFileEntryId());
+		FileEntry fileEntry = FileEntryUtil.fetchByUUID_R(
+			fileEntryUuid, groupId);
+
+		if (fileEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to retrieve file: " + fileEntryUuid +
+					" to import file rank.");
+			}
+
+			return;
+		}
+
+		long fileEntryId = fileEntry.getFileEntryId();
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -690,13 +721,23 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			groupId = folder.getRepositoryId();
 		}
 
-		Map<Long, Long> fileEntryPKs =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFileEntry.class);
+		String fileEntryUuid = fileShortcutElement.attributeValue(
+			"file-entry-uuid");
 
-		long fileEntryId = MapUtil.getLong(
-			fileEntryPKs, fileShortcut.getToFileEntryId(),
-			fileShortcut.getToFileEntryId());
+		FileEntry fileEntry = FileEntryUtil.fetchByUUID_R(
+			fileEntryUuid, groupId);
+
+		if (fileEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to retrieve file: " + fileEntryUuid +
+					" to import file rank.");
+			}
+
+			return;
+		}
+
+		long fileEntryId = fileEntry.getFileEntryId();
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			fileShortcutElement, fileShortcut, _NAMESPACE);

@@ -34,6 +34,20 @@ import java.util.List;
  */
 public class FileEntryUtil extends LiferayBase {
 
+	public static FileEntry fetchByPrimaryKey(
+			long fileEntryId)
+		throws NoSuchFileEntryException, SystemException {
+
+		DLFileEntry dlFileEntry = DLFileEntryUtil.fetchByPrimaryKey(
+			fileEntryId);
+
+		if (dlFileEntry == null) {
+			return null;
+		}
+
+		return new LiferayFileEntry(dlFileEntry);
+	}
+
 	public static FileEntry fetchByR_F_T(
 			long repositoryId, long folderId, String title)
 		throws SystemException {

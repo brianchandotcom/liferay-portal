@@ -14,49 +14,15 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.UserConstants;
 
 /**
- * @author Michael C. Han
+ * @author Hugo Huijser
  */
-public class DefaultFullNameGenerator implements FullNameGenerator {
-
-	public String getFullName(
-		String firstName, String middleName, String lastName) {
-
-		String fullName = buildFullName(firstName, middleName, lastName, false);
-
-		if (fullName.length() <= UserConstants.FULL_NAME_MAX_LENGTH) {
-			return fullName;
-		}
-
-		if (_log.isInfoEnabled()) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("Full name exceeds ");
-			sb.append(UserConstants.FULL_NAME_MAX_LENGTH);
-			sb.append(" characters for user ");
-			sb.append(fullName);
-			sb.append(". Full name has been shortened.");
-
-			_log.info(sb.toString());
-		}
-
-		fullName = buildFullName(firstName, middleName, lastName, true);
-
-		if (fullName.length() <= UserConstants.FULL_NAME_MAX_LENGTH) {
-			return fullName;
-		}
-
-		return fullName.substring(0, UserConstants.FULL_NAME_MAX_LENGTH);
-	}
+public class FamilyNameFirstFullNameGenerator extends DefaultFullNameGenerator {
 
 	public String[] splitFullName(String fullName) {
 		String firstName = StringPool.BLANK;
@@ -64,19 +30,24 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		String lastName = StringPool.BLANK;
 
 		if (Validator.isNotNull(fullName)) {
-			String[] name = StringUtil.split(fullName, CharPool.SPACE);
+			String[] name = StringUtil.split(fullName, StringPool.SPACE);
 
-			firstName = name[0];
-			middleName = StringPool.BLANK;
-			lastName = name[name.length - 1];
+			if (name.length == 1) {
+				firstName = name[0];
+
+				return new String[] {firstName, middleName, lastName};
+			}
+
+			lastName = name[0];
+			firstName = name[1];
 
 			if (name.length > 2) {
-				for (int i = 1; i < name.length - 1; i++) {
+				for (int i = 2; i < name.length; i++) {
 					if (Validator.isNull(name[i].trim())) {
 						continue;
 					}
 
-					if (i != 1) {
+					if (i != 2) {
 						middleName += StringPool.SPACE;
 					}
 
@@ -94,6 +65,11 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		StringBundler sb = new StringBundler(5);
 
+		if (Validator.isNotNull(lastName)) {
+			sb.append(lastName);
+			sb.append(StringPool.SPACE);
+		}
+
 		if (useInitials) {
 			firstName = firstName.substring(0, 1);
 		}
@@ -109,15 +85,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 			sb.append(middleName);
 		}
 
-		if (Validator.isNotNull(lastName)) {
-			sb.append(StringPool.SPACE);
-			sb.append(lastName);
-		}
-
 		return sb.toString();
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		DefaultFullNameGenerator.class);
 
 }

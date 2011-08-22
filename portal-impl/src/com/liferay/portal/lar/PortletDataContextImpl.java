@@ -89,8 +89,8 @@ import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBBanImpl;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
-import com.liferay.portlet.messageboards.model.impl.MBMessageFlagImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
+import com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
@@ -1405,7 +1405,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream.alias("Lock", LockImpl.class);
 		_xStream.alias("MBCategory", MBCategoryImpl.class);
 		_xStream.alias("MBMessage", MBMessageImpl.class);
-		_xStream.alias("MBMessageFlag", MBMessageFlagImpl.class);
+		_xStream.alias("MBThreadFlag", MBThreadFlagImpl.class);
 		_xStream.alias("MBBan", MBBanImpl.class);
 		_xStream.alias("PollsQuestion", PollsQuestionImpl.class);
 		_xStream.alias("PollsChoice", PollsChoiceImpl.class);

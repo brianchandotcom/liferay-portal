@@ -26,22 +26,20 @@ import java.util.List;
  * @author    Brian Wing Shun Chan
  * @generated
  */
-public class MBMessageFlagSoap implements Serializable {
-	public static MBMessageFlagSoap toSoapModel(MBMessageFlag model) {
-		MBMessageFlagSoap soapModel = new MBMessageFlagSoap();
+public class MBThreadFlagSoap implements Serializable {
+	public static MBThreadFlagSoap toSoapModel(MBThreadFlag model) {
+		MBThreadFlagSoap soapModel = new MBThreadFlagSoap();
 
-		soapModel.setMessageFlagId(model.getMessageFlagId());
+		soapModel.setThreadFlagId(model.getThreadFlagId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setThreadId(model.getThreadId());
-		soapModel.setMessageId(model.getMessageId());
-		soapModel.setFlag(model.getFlag());
 
 		return soapModel;
 	}
 
-	public static MBMessageFlagSoap[] toSoapModels(MBMessageFlag[] models) {
-		MBMessageFlagSoap[] soapModels = new MBMessageFlagSoap[models.length];
+	public static MBThreadFlagSoap[] toSoapModels(MBThreadFlag[] models) {
+		MBThreadFlagSoap[] soapModels = new MBThreadFlagSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -50,14 +48,14 @@ public class MBMessageFlagSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static MBMessageFlagSoap[][] toSoapModels(MBMessageFlag[][] models) {
-		MBMessageFlagSoap[][] soapModels = null;
+	public static MBThreadFlagSoap[][] toSoapModels(MBThreadFlag[][] models) {
+		MBThreadFlagSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new MBMessageFlagSoap[models.length][models[0].length];
+			soapModels = new MBThreadFlagSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new MBMessageFlagSoap[0][0];
+			soapModels = new MBThreadFlagSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -67,33 +65,33 @@ public class MBMessageFlagSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static MBMessageFlagSoap[] toSoapModels(List<MBMessageFlag> models) {
-		List<MBMessageFlagSoap> soapModels = new ArrayList<MBMessageFlagSoap>(models.size());
+	public static MBThreadFlagSoap[] toSoapModels(List<MBThreadFlag> models) {
+		List<MBThreadFlagSoap> soapModels = new ArrayList<MBThreadFlagSoap>(models.size());
 
-		for (MBMessageFlag model : models) {
+		for (MBThreadFlag model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new MBMessageFlagSoap[soapModels.size()]);
+		return soapModels.toArray(new MBThreadFlagSoap[soapModels.size()]);
 	}
 
-	public MBMessageFlagSoap() {
+	public MBThreadFlagSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _messageFlagId;
+		return _threadFlagId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setMessageFlagId(pk);
+		setThreadFlagId(pk);
 	}
 
-	public long getMessageFlagId() {
-		return _messageFlagId;
+	public long getThreadFlagId() {
+		return _threadFlagId;
 	}
 
-	public void setMessageFlagId(long messageFlagId) {
-		_messageFlagId = messageFlagId;
+	public void setThreadFlagId(long threadFlagId) {
+		_threadFlagId = threadFlagId;
 	}
 
 	public long getUserId() {
@@ -120,26 +118,8 @@ public class MBMessageFlagSoap implements Serializable {
 		_threadId = threadId;
 	}
 
-	public long getMessageId() {
-		return _messageId;
-	}
-
-	public void setMessageId(long messageId) {
-		_messageId = messageId;
-	}
-
-	public int getFlag() {
-		return _flag;
-	}
-
-	public void setFlag(int flag) {
-		_flag = flag;
-	}
-
-	private long _messageFlagId;
+	private long _threadFlagId;
 	private long _userId;
 	private Date _modifiedDate;
 	private long _threadId;
-	private long _messageId;
-	private int _flag;
 }

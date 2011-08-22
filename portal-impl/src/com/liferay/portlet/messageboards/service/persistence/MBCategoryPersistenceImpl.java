@@ -3862,12 +3862,12 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	protected MBMailingListPersistence mbMailingListPersistence;
 	@BeanReference(type = MBMessagePersistence.class)
 	protected MBMessagePersistence mbMessagePersistence;
-	@BeanReference(type = MBMessageFlagPersistence.class)
-	protected MBMessageFlagPersistence mbMessageFlagPersistence;
 	@BeanReference(type = MBStatsUserPersistence.class)
 	protected MBStatsUserPersistence mbStatsUserPersistence;
 	@BeanReference(type = MBThreadPersistence.class)
 	protected MBThreadPersistence mbThreadPersistence;
+	@BeanReference(type = MBThreadFlagPersistence.class)
+	protected MBThreadFlagPersistence mbThreadFlagPersistence;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
 	@BeanReference(type = ResourcePersistence.class)

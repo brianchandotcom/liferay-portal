@@ -348,14 +348,14 @@
 	<bean id="com.liferay.portlet.messageboards.service.MBMessageService" class="com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence" class="com.liferay.portlet.messageboards.service.persistence.MBMessagePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder" class="com.liferay.portlet.messageboards.service.persistence.MBMessageFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.messageboards.service.MBMessageFlagLocalService" class="com.liferay.portlet.messageboards.service.impl.MBMessageFlagLocalServiceImpl" />
-	<bean id="com.liferay.portlet.messageboards.service.persistence.MBMessageFlagPersistence" class="com.liferay.portlet.messageboards.service.persistence.MBMessageFlagPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.MBStatsUserLocalService" class="com.liferay.portlet.messageboards.service.impl.MBStatsUserLocalServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence" class="com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.MBThreadLocalService" class="com.liferay.portlet.messageboards.service.impl.MBThreadLocalServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.MBThreadService" class="com.liferay.portlet.messageboards.service.impl.MBThreadServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence" class="com.liferay.portlet.messageboards.service.persistence.MBThreadPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder" class="com.liferay.portlet.messageboards.service.persistence.MBThreadFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.messageboards.service.MBThreadFlagLocalService" class="com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl" />
+	<bean id="com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistence" class="com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRActionLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRActionLocalServiceImpl" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRActionService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRActionServiceImpl" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistenceImpl" parent="basePersistence" />

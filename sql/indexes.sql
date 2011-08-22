@@ -430,14 +430,6 @@ create index IX_3321F142 on MBMessage (userId, classNameId, status);
 create index IX_C57B16BC on MBMessage (uuid_);
 create unique index IX_8D12316E on MBMessage (uuid_, groupId);
 
-create index IX_D180D4AE on MBMessageFlag (messageId);
-create index IX_A6973A8E on MBMessageFlag (messageId, flag);
-create index IX_C1C9A8FD on MBMessageFlag (threadId);
-create index IX_3CFD579D on MBMessageFlag (threadId, flag);
-create index IX_7B2917BE on MBMessageFlag (userId);
-create unique index IX_E9EB6194 on MBMessageFlag (userId, messageId, flag);
-create index IX_2EA537D7 on MBMessageFlag (userId, threadId, flag);
-
 create index IX_A00A898F on MBStatsUser (groupId);
 create index IX_FAB5A88B on MBStatsUser (groupId, messageCount);
 create unique index IX_9168E2C9 on MBStatsUser (groupId, userId);
@@ -451,6 +443,10 @@ create index IX_485F7E98 on MBThread (groupId, categoryId, status);
 create index IX_E1E7142B on MBThread (groupId, status);
 create index IX_AEDD9CB5 on MBThread (lastPostDate, priority);
 create index IX_CC993ECB on MBThread (rootMessageId);
+
+create index IX_8CB0A24A on MBThreadFlag (threadId);
+create index IX_A28004B on MBThreadFlag (userId);
+create index IX_33781904 on MBThreadFlag (userId, threadId);
 
 create index IX_4D306B22 on MDRAction (ruleId);
 create index IX_77BB5E9D on MDRAction (uuid_);

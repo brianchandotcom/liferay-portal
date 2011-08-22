@@ -17,65 +17,57 @@ package com.liferay.portlet.messageboards.model.impl;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
-import com.liferay.portlet.messageboards.model.MBMessageFlag;
+import com.liferay.portlet.messageboards.model.MBThreadFlag;
 
 import java.util.Date;
 
 /**
- * The cache model class for representing MBMessageFlag in entity cache.
+ * The cache model class for representing MBThreadFlag in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see MBMessageFlag
+ * @see MBThreadFlag
  * @generated
  */
-public class MBMessageFlagCacheModel implements CacheModel<MBMessageFlag> {
+public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{messageFlagId=");
-		sb.append(messageFlagId);
+		sb.append("{threadFlagId=");
+		sb.append(threadFlagId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
 		sb.append(", threadId=");
 		sb.append(threadId);
-		sb.append(", messageId=");
-		sb.append(messageId);
-		sb.append(", flag=");
-		sb.append(flag);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	public MBMessageFlag toEntityModel() {
-		MBMessageFlagImpl mbMessageFlagImpl = new MBMessageFlagImpl();
+	public MBThreadFlag toEntityModel() {
+		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
 
-		mbMessageFlagImpl.setMessageFlagId(messageFlagId);
-		mbMessageFlagImpl.setUserId(userId);
+		mbThreadFlagImpl.setThreadFlagId(threadFlagId);
+		mbThreadFlagImpl.setUserId(userId);
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			mbMessageFlagImpl.setModifiedDate(null);
+			mbThreadFlagImpl.setModifiedDate(null);
 		}
 		else {
-			mbMessageFlagImpl.setModifiedDate(new Date(modifiedDate));
+			mbThreadFlagImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		mbMessageFlagImpl.setThreadId(threadId);
-		mbMessageFlagImpl.setMessageId(messageId);
-		mbMessageFlagImpl.setFlag(flag);
+		mbThreadFlagImpl.setThreadId(threadId);
 
-		mbMessageFlagImpl.resetOriginalValues();
+		mbThreadFlagImpl.resetOriginalValues();
 
-		return mbMessageFlagImpl;
+		return mbThreadFlagImpl;
 	}
 
-	public long messageFlagId;
+	public long threadFlagId;
 	public long userId;
 	public long modifiedDate;
 	public long threadId;
-	public long messageId;
-	public int flag;
 }

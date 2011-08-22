@@ -47,10 +47,10 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
 import com.liferay.portlet.messageboards.service.MBCategoryService;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 import com.liferay.portlet.messageboards.service.MBMailingListLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageFlagLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageService;
 import com.liferay.portlet.messageboards.service.MBStatsUserLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadFlagLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadService;
 import com.liferay.portlet.messageboards.service.persistence.MBBanPersistence;
@@ -59,10 +59,10 @@ import com.liferay.portlet.messageboards.service.persistence.MBCategoryPersisten
 import com.liferay.portlet.messageboards.service.persistence.MBDiscussionPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBMailingListPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBMessageFinder;
-import com.liferay.portlet.messageboards.service.persistence.MBMessageFlagPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadFinder;
+import com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence;
 
 import java.io.Serializable;
@@ -611,44 +611,6 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the message boards message flag local service.
-	 *
-	 * @return the message boards message flag local service
-	 */
-	public MBMessageFlagLocalService getMBMessageFlagLocalService() {
-		return mbMessageFlagLocalService;
-	}
-
-	/**
-	 * Sets the message boards message flag local service.
-	 *
-	 * @param mbMessageFlagLocalService the message boards message flag local service
-	 */
-	public void setMBMessageFlagLocalService(
-		MBMessageFlagLocalService mbMessageFlagLocalService) {
-		this.mbMessageFlagLocalService = mbMessageFlagLocalService;
-	}
-
-	/**
-	 * Returns the message boards message flag persistence.
-	 *
-	 * @return the message boards message flag persistence
-	 */
-	public MBMessageFlagPersistence getMBMessageFlagPersistence() {
-		return mbMessageFlagPersistence;
-	}
-
-	/**
-	 * Sets the message boards message flag persistence.
-	 *
-	 * @param mbMessageFlagPersistence the message boards message flag persistence
-	 */
-	public void setMBMessageFlagPersistence(
-		MBMessageFlagPersistence mbMessageFlagPersistence) {
-		this.mbMessageFlagPersistence = mbMessageFlagPersistence;
-	}
-
-	/**
 	 * Returns the message boards stats user local service.
 	 *
 	 * @return the message boards stats user local service
@@ -757,6 +719,44 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	 */
 	public void setMBThreadFinder(MBThreadFinder mbThreadFinder) {
 		this.mbThreadFinder = mbThreadFinder;
+	}
+
+	/**
+	 * Returns the message boards thread flag local service.
+	 *
+	 * @return the message boards thread flag local service
+	 */
+	public MBThreadFlagLocalService getMBThreadFlagLocalService() {
+		return mbThreadFlagLocalService;
+	}
+
+	/**
+	 * Sets the message boards thread flag local service.
+	 *
+	 * @param mbThreadFlagLocalService the message boards thread flag local service
+	 */
+	public void setMBThreadFlagLocalService(
+		MBThreadFlagLocalService mbThreadFlagLocalService) {
+		this.mbThreadFlagLocalService = mbThreadFlagLocalService;
+	}
+
+	/**
+	 * Returns the message boards thread flag persistence.
+	 *
+	 * @return the message boards thread flag persistence
+	 */
+	public MBThreadFlagPersistence getMBThreadFlagPersistence() {
+		return mbThreadFlagPersistence;
+	}
+
+	/**
+	 * Sets the message boards thread flag persistence.
+	 *
+	 * @param mbThreadFlagPersistence the message boards thread flag persistence
+	 */
+	public void setMBThreadFlagPersistence(
+		MBThreadFlagPersistence mbThreadFlagPersistence) {
+		this.mbThreadFlagPersistence = mbThreadFlagPersistence;
 	}
 
 	/**
@@ -1007,10 +1007,6 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	protected MBMessagePersistence mbMessagePersistence;
 	@BeanReference(type = MBMessageFinder.class)
 	protected MBMessageFinder mbMessageFinder;
-	@BeanReference(type = MBMessageFlagLocalService.class)
-	protected MBMessageFlagLocalService mbMessageFlagLocalService;
-	@BeanReference(type = MBMessageFlagPersistence.class)
-	protected MBMessageFlagPersistence mbMessageFlagPersistence;
 	@BeanReference(type = MBStatsUserLocalService.class)
 	protected MBStatsUserLocalService mbStatsUserLocalService;
 	@BeanReference(type = MBStatsUserPersistence.class)
@@ -1023,6 +1019,10 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	protected MBThreadPersistence mbThreadPersistence;
 	@BeanReference(type = MBThreadFinder.class)
 	protected MBThreadFinder mbThreadFinder;
+	@BeanReference(type = MBThreadFlagLocalService.class)
+	protected MBThreadFlagLocalService mbThreadFlagLocalService;
+	@BeanReference(type = MBThreadFlagPersistence.class)
+	protected MBThreadFlagPersistence mbThreadFlagPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

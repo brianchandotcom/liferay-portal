@@ -2512,21 +2512,6 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.messageboards.model.impl.MBMessageFlagModelImpl">
-		<attributes>
-			<id name="messageFlagId" />
-			<basic name="userId" />
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="threadId" />
-			<basic name="messageId" />
-			<basic name="flag" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.messageboards.model.impl.MBStatsUserModelImpl">
 		<attributes>
 			<id name="statsUserId" />
@@ -2569,6 +2554,19 @@
 			<transient name="primaryKeyObj" />
 			<transient name="rootMessageUserUuid" />
 			<transient name="statusByUserUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl">
+		<attributes>
+			<id name="threadFlagId" />
+			<basic name="userId" />
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="threadId" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.mobiledevicerules.model.impl.MDRActionModelImpl">
@@ -3960,16 +3958,16 @@
 			<transient name="attachmentsDir" />
 		</attributes>
 	</entity>
-	<entity class="com.liferay.portlet.messageboards.model.impl.MBMessageFlagImpl" name="MBMessageFlag">
-		<table name="MBMessageFlag" />
-		<attributes />
-	</entity>
 	<entity class="com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl" name="MBStatsUser">
 		<table name="MBStatsUser" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.messageboards.model.impl.MBThreadImpl" name="MBThread">
 		<table name="MBThread" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl" name="MBThreadFlag">
+		<table name="MBThreadFlag" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.mobiledevicerules.model.impl.MDRActionImpl" name="MDRAction">

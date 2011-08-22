@@ -19,21 +19,21 @@ import com.liferay.portal.NoSuchModelException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchMessageFlagException extends NoSuchModelException {
+public class NoSuchThreadFlagException extends NoSuchModelException {
 
-	public NoSuchMessageFlagException() {
+	public NoSuchThreadFlagException() {
 		super();
 	}
 
-	public NoSuchMessageFlagException(String msg) {
+	public NoSuchThreadFlagException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchMessageFlagException(String msg, Throwable cause) {
+	public NoSuchThreadFlagException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchMessageFlagException(Throwable cause) {
+	public NoSuchThreadFlagException(Throwable cause) {
 		super(cause);
 	}
 

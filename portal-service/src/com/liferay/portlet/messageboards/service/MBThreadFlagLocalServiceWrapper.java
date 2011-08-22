@@ -16,67 +16,66 @@ package com.liferay.portlet.messageboards.service;
 
 /**
  * <p>
- * This class is a wrapper for {@link MBMessageFlagLocalService}.
+ * This class is a wrapper for {@link MBThreadFlagLocalService}.
  * </p>
  *
  * @author    Brian Wing Shun Chan
- * @see       MBMessageFlagLocalService
+ * @see       MBThreadFlagLocalService
  * @generated
  */
-public class MBMessageFlagLocalServiceWrapper
-	implements MBMessageFlagLocalService {
-	public MBMessageFlagLocalServiceWrapper(
-		MBMessageFlagLocalService mbMessageFlagLocalService) {
-		_mbMessageFlagLocalService = mbMessageFlagLocalService;
+public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService {
+	public MBThreadFlagLocalServiceWrapper(
+		MBThreadFlagLocalService mbThreadFlagLocalService) {
+		_mbThreadFlagLocalService = mbThreadFlagLocalService;
 	}
 
 	/**
-	* Adds the message boards message flag to the database. Also notifies the appropriate model listeners.
+	* Adds the message boards thread flag to the database. Also notifies the appropriate model listeners.
 	*
-	* @param mbMessageFlag the message boards message flag
-	* @return the message boards message flag that was added
+	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.messageboards.model.MBMessageFlag addMBMessageFlag(
-		com.liferay.portlet.messageboards.model.MBMessageFlag mbMessageFlag)
+	public com.liferay.portlet.messageboards.model.MBThreadFlag addMBThreadFlag(
+		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.addMBMessageFlag(mbMessageFlag);
+		return _mbThreadFlagLocalService.addMBThreadFlag(mbThreadFlag);
 	}
 
 	/**
-	* Creates a new message boards message flag with the primary key. Does not add the message boards message flag to the database.
+	* Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
 	*
-	* @param messageFlagId the primary key for the new message boards message flag
-	* @return the new message boards message flag
+	* @param threadFlagId the primary key for the new message boards thread flag
+	* @return the new message boards thread flag
 	*/
-	public com.liferay.portlet.messageboards.model.MBMessageFlag createMBMessageFlag(
-		long messageFlagId) {
-		return _mbMessageFlagLocalService.createMBMessageFlag(messageFlagId);
+	public com.liferay.portlet.messageboards.model.MBThreadFlag createMBThreadFlag(
+		long threadFlagId) {
+		return _mbThreadFlagLocalService.createMBThreadFlag(threadFlagId);
 	}
 
 	/**
-	* Deletes the message boards message flag with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param messageFlagId the primary key of the message boards message flag
-	* @throws PortalException if a message boards message flag with the primary key could not be found
+	* @param threadFlagId the primary key of the message boards thread flag
+	* @throws PortalException if a message boards thread flag with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBMessageFlag(long messageFlagId)
+	public void deleteMBThreadFlag(long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.deleteMBMessageFlag(messageFlagId);
+		_mbThreadFlagLocalService.deleteMBThreadFlag(threadFlagId);
 	}
 
 	/**
-	* Deletes the message boards message flag from the database. Also notifies the appropriate model listeners.
+	* Deletes the message boards thread flag from the database. Also notifies the appropriate model listeners.
 	*
-	* @param mbMessageFlag the message boards message flag
+	* @param mbThreadFlag the message boards thread flag
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteMBMessageFlag(
-		com.liferay.portlet.messageboards.model.MBMessageFlag mbMessageFlag)
+	public void deleteMBThreadFlag(
+		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.deleteMBMessageFlag(mbMessageFlag);
+		_mbThreadFlagLocalService.deleteMBThreadFlag(mbThreadFlag);
 	}
 
 	/**
@@ -90,7 +89,7 @@ public class MBMessageFlagLocalServiceWrapper
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.dynamicQuery(dynamicQuery);
+		return _mbThreadFlagLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -110,7 +109,7 @@ public class MBMessageFlagLocalServiceWrapper
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.dynamicQuery(dynamicQuery, start, end);
+		return _mbThreadFlagLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
@@ -133,8 +132,8 @@ public class MBMessageFlagLocalServiceWrapper
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.dynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
+		return _mbThreadFlagLocalService.dynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -147,87 +146,86 @@ public class MBMessageFlagLocalServiceWrapper
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.dynamicQueryCount(dynamicQuery);
+		return _mbThreadFlagLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the message boards message flag with the primary key.
+	* Returns the message boards thread flag with the primary key.
 	*
-	* @param messageFlagId the primary key of the message boards message flag
-	* @return the message boards message flag
-	* @throws PortalException if a message boards message flag with the primary key could not be found
+	* @param threadFlagId the primary key of the message boards thread flag
+	* @return the message boards thread flag
+	* @throws PortalException if a message boards thread flag with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.messageboards.model.MBMessageFlag getMBMessageFlag(
-		long messageFlagId)
+	public com.liferay.portlet.messageboards.model.MBThreadFlag getMBThreadFlag(
+		long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.getMBMessageFlag(messageFlagId);
+		return _mbThreadFlagLocalService.getMBThreadFlag(threadFlagId);
 	}
 
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.getPersistedModel(primaryKeyObj);
+		return _mbThreadFlagLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	* Returns a range of all the message boards message flags.
+	* Returns a range of all the message boards thread flags.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param start the lower bound of the range of message boards message flags
-	* @param end the upper bound of the range of message boards message flags (not inclusive)
-	* @return the range of message boards message flags
+	* @param start the lower bound of the range of message boards thread flags
+	* @param end the upper bound of the range of message boards thread flags (not inclusive)
+	* @return the range of message boards thread flags
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMessageFlag> getMBMessageFlags(
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThreadFlag> getMBThreadFlags(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.getMBMessageFlags(start, end);
+		return _mbThreadFlagLocalService.getMBThreadFlags(start, end);
 	}
 
 	/**
-	* Returns the number of message boards message flags.
+	* Returns the number of message boards thread flags.
 	*
-	* @return the number of message boards message flags
+	* @return the number of message boards thread flags
 	* @throws SystemException if a system exception occurred
 	*/
-	public int getMBMessageFlagsCount()
+	public int getMBThreadFlagsCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.getMBMessageFlagsCount();
+		return _mbThreadFlagLocalService.getMBThreadFlagsCount();
 	}
 
 	/**
-	* Updates the message boards message flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the message boards thread flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param mbMessageFlag the message boards message flag
-	* @return the message boards message flag that was updated
+	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.messageboards.model.MBMessageFlag updateMBMessageFlag(
-		com.liferay.portlet.messageboards.model.MBMessageFlag mbMessageFlag)
+	public com.liferay.portlet.messageboards.model.MBThreadFlag updateMBThreadFlag(
+		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.updateMBMessageFlag(mbMessageFlag);
+		return _mbThreadFlagLocalService.updateMBThreadFlag(mbThreadFlag);
 	}
 
 	/**
-	* Updates the message boards message flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the message boards thread flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param mbMessageFlag the message boards message flag
-	* @param merge whether to merge the message boards message flag with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the message boards message flag that was updated
+	* @param mbThreadFlag the message boards thread flag
+	* @param merge whether to merge the message boards thread flag with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	* @return the message boards thread flag that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.messageboards.model.MBMessageFlag updateMBMessageFlag(
-		com.liferay.portlet.messageboards.model.MBMessageFlag mbMessageFlag,
+	public com.liferay.portlet.messageboards.model.MBThreadFlag updateMBThreadFlag(
+		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag,
 		boolean merge)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.updateMBMessageFlag(mbMessageFlag,
-			merge);
+		return _mbThreadFlagLocalService.updateMBThreadFlag(mbThreadFlag, merge);
 	}
 
 	/**
@@ -236,7 +234,7 @@ public class MBMessageFlagLocalServiceWrapper
 	* @return the Spring bean ID for this bean
 	*/
 	public java.lang.String getBeanIdentifier() {
-		return _mbMessageFlagLocalService.getBeanIdentifier();
+		return _mbThreadFlagLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -245,65 +243,60 @@ public class MBMessageFlagLocalServiceWrapper
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbMessageFlagLocalService.setBeanIdentifier(beanIdentifier);
+		_mbThreadFlagLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	public void addReadFlags(long userId,
+	public void addFlag(long userId,
 		com.liferay.portlet.messageboards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.addReadFlags(userId, thread);
+		_mbThreadFlagLocalService.addFlag(userId, thread);
 	}
 
-	public void deleteFlag(long messageFlagId)
+	public void deleteFlag(long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.deleteFlag(messageFlagId);
+		_mbThreadFlagLocalService.deleteFlag(threadFlagId);
 	}
 
 	public void deleteFlag(
-		com.liferay.portlet.messageboards.model.MBMessageFlag messageFlag)
+		com.liferay.portlet.messageboards.model.MBThreadFlag threadFlag)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.deleteFlag(messageFlag);
+		_mbThreadFlagLocalService.deleteFlag(threadFlag);
 	}
 
-	public void deleteFlags(long userId)
+	public void deleteFlagsByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.deleteFlags(userId);
+		_mbThreadFlagLocalService.deleteFlagsByUserId(userId);
 	}
 
-	public void deleteFlags(long messageId, int flag)
+	public void deleteFlagsByThreadId(long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.deleteFlags(messageId, flag);
+		_mbThreadFlagLocalService.deleteFlagsByThreadId(threadId);
 	}
 
-	public void deleteThreadFlags(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageFlagLocalService.deleteThreadFlags(threadId);
-	}
-
-	public com.liferay.portlet.messageboards.model.MBMessageFlag getReadFlag(
+	public com.liferay.portlet.messageboards.model.MBThreadFlag getFlag(
 		long userId, com.liferay.portlet.messageboards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.getReadFlag(userId, thread);
+		return _mbThreadFlagLocalService.getFlag(userId, thread);
 	}
 
-	public boolean hasReadFlag(long userId,
+	public boolean hasFlag(long userId,
 		com.liferay.portlet.messageboards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageFlagLocalService.hasReadFlag(userId, thread);
+		return _mbThreadFlagLocalService.hasFlag(userId, thread);
 	}
 
-	public MBMessageFlagLocalService getWrappedMBMessageFlagLocalService() {
-		return _mbMessageFlagLocalService;
+	public MBThreadFlagLocalService getWrappedMBThreadFlagLocalService() {
+		return _mbThreadFlagLocalService;
 	}
 
-	public void setWrappedMBMessageFlagLocalService(
-		MBMessageFlagLocalService mbMessageFlagLocalService) {
-		_mbMessageFlagLocalService = mbMessageFlagLocalService;
+	public void setWrappedMBThreadFlagLocalService(
+		MBThreadFlagLocalService mbThreadFlagLocalService) {
+		_mbThreadFlagLocalService = mbThreadFlagLocalService;
 	}
 
-	private MBMessageFlagLocalService _mbMessageFlagLocalService;
+	private MBThreadFlagLocalService _mbThreadFlagLocalService;
 }

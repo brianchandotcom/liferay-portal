@@ -63,9 +63,9 @@ import com.liferay.portlet.messageboards.service.persistence.MBBanPersistenceTes
 import com.liferay.portlet.messageboards.service.persistence.MBCategoryPersistenceTest;
 import com.liferay.portlet.messageboards.service.persistence.MBDiscussionPersistenceTest;
 import com.liferay.portlet.messageboards.service.persistence.MBMailingListPersistenceTest;
-import com.liferay.portlet.messageboards.service.persistence.MBMessageFlagPersistenceTest;
 import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistenceTest;
 import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistenceTest;
+import com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistenceTest;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistenceTest;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistenceTest;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistenceTest;
@@ -238,10 +238,10 @@ public class PersistenceTestSuite extends TestSuite {
 		testSuite.addTestSuite(MBCategoryPersistenceTest.class);
 		testSuite.addTestSuite(MBDiscussionPersistenceTest.class);
 		testSuite.addTestSuite(MBMailingListPersistenceTest.class);
-		testSuite.addTestSuite(MBMessageFlagPersistenceTest.class);
 		testSuite.addTestSuite(MBMessagePersistenceTest.class);
 		testSuite.addTestSuite(MBStatsUserPersistenceTest.class);
 		testSuite.addTestSuite(MBThreadPersistenceTest.class);
+		testSuite.addTestSuite(MBThreadFlagPersistenceTest.class);
 
 		testSuite.addTestSuite(MDRActionPersistenceTest.class);
 		testSuite.addTestSuite(MDRRuleGroupPersistenceTest.class);

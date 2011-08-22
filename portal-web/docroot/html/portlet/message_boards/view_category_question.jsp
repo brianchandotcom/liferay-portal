@@ -109,7 +109,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 		message = message.toEscapedModel();
 
-		boolean readThread = MBMessageFlagLocalServiceUtil.hasReadFlag(themeDisplay.getUserId(), thread);
+		boolean readThread = MBThreadFlagLocalServiceUtil.hasFlag(themeDisplay.getUserId(), thread);
 
 		row.setBold(!readThread);
 		row.setObject(new Object[] {message, threadSubscriptionClassPKs});

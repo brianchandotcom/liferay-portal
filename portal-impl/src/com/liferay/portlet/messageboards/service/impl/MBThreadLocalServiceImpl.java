@@ -89,6 +89,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		catch (NoSuchDirectoryException nsde) {
 		}
 
+		// Flag
+
+		mbThreadFlagPersistence.removeByThreadId(thread.getThreadId());
+
 		// Messages
 
 		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
@@ -110,10 +114,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			assetEntryLocalService.deleteEntry(
 				MBMessage.class.getName(), message.getMessageId());
-
-			// Message flags
-
-			mbMessageFlagPersistence.removeByMessageId(message.getMessageId());
 
 			// Resources
 

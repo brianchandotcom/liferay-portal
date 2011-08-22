@@ -14,108 +14,62 @@
  */
 --%>
 
-<%@ include file="/html/portlet/search/init.jsp" %>
+<aui:button-row>
+	<aui:button onClick='<%= renderResponse.getNamespace() + "addSearchProvider();" %>' value='<%= LanguageUtil.format(pageContext, "add-x-as-a-search-provider", company.getName(), false) %>' />
+</aui:button-row>
 
-<%
-String primarySearch = ParamUtil.getString(request, "primarySearch");
+	<%
+	List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(company.getCompanyId(), includeSystemPortlets, false);
 
-if (Validator.isNotNull(primarySearch)) {
-	portalPreferences.setValue(PortletKeys.SEARCH, "primary-search", primarySearch);
-}
-else {
-	primarySearch = portalPreferences.getValue(PortletKeys.SEARCH, "primary-search", StringPool.BLANK);
-}
+	portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
 
-long groupId = ParamUtil.getLong(request, "groupId");
+	Iterator itr = portlets.iterator();
 
-Group group = themeDisplay.getScopeGroup();
+	while (itr.hasNext()) {
+		Portlet portlet = (Portlet)itr.next();
 
-String keywords = ParamUtil.getString(request, "keywords");
-
-String format = ParamUtil.getString(request, "format");
-
-List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(company.getCompanyId(), includeSystemPortlets, false);
-
-portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
-
-Iterator itr = portlets.iterator();
-
-List<String> portletTitles = new ArrayList<String>();
-
-while (itr.hasNext()) {
-	Portlet portlet = (Portlet)itr.next();
-
-	if (Validator.isNull(portlet.getOpenSearchClass())) {
-		itr.remove();
-
-		continue;
-	}
-
-	OpenSearch openSearch = portlet.getOpenSearchInstance();
-
-	if (!openSearch.isEnabled()) {
-		itr.remove();
-
-		continue;
-	}
-
-	if (groupId != 0) {
-		long curPlid = PortalUtil.getPlidFromPortletId(groupId, portlet.getPortletId());
-
-		if (!PortletPermissionUtil.contains(permissionChecker, curPlid, portlet, ActionKeys.VIEW)) {
+		if (Validator.isNull(portlet.getOpenSearchClass()) || portlet.getOpenSearchClass().startsWith("com.liferay")) {
 			itr.remove();
 
 			continue;
 		}
+
+		OpenSearch openSearch = portlet.getOpenSearchInstance();
+
+		if (!openSearch.isEnabled()) {
+			itr.remove();
+
+			continue;
+		}
+
+		if (groupId != 0) {
+			long curPlid = PortalUtil.getPlidFromPortletId(groupId, portlet.getPortletId());
+
+			if (!PortletPermissionUtil.contains(permissionChecker, curPlid, portlet, ActionKeys.VIEW)) {
+				itr.remove();
+
+				continue;
+			}
+		}
+
+		portletTitles.add(PortalUtil.getPortletTitle(portlet, application, locale));
 	}
 
-	portletTitles.add(PortalUtil.getPortletTitle(portlet, application, locale));
-}
+	if (Validator.isNotNull(primarySearch)) {
+		for (int i = 0; i < portlets.size(); i++) {
+			Portlet portlet = (Portlet)portlets.get(i);
 
-if (Validator.isNotNull(primarySearch)) {
-	for (int i = 0; i < portlets.size(); i++) {
-		Portlet portlet = (Portlet)portlets.get(i);
+			if (portlet.getOpenSearchClass().equals(primarySearch)) {
+				if (i != 0) {
+					portlets.remove(i);
+					portlets.add(0, portlet);
+				}
 
-		if (portlet.getOpenSearchClass().equals(primarySearch)) {
-			if (i != 0) {
-				portlets.remove(i);
-				portlets.add(0, portlet);
+				break;
 			}
-
-			break;
 		}
 	}
-}
-
-LinkedHashMap groupParams = new LinkedHashMap();
-
-groupParams.put("active", Boolean.FALSE);
-
-int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getCompanyId(), null, null, groupParams);
-%>
-
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/search/search" />
-</liferay-portlet:renderURL>
-
-<aui:form action="<%= searchURL %>" method="get" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search();" %>'>
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="format" type="hidden" value="<%= format %>" />
-
-	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" value="<%= keywords %>" />
-
-		<aui:select inlineField="<%= true %>" label="" name="groupId">
-			<aui:option label="everything" selected="<%= groupId == 0 %>" value="0" />
-			<aui:option label='<%= "this-" + (group.isOrganization() ? "organization" : "site") %>' selected="<%= groupId != 0 %>" value="<%= group.getGroupId() %>" />
-		</aui:select>
-
-		<aui:input align="absmiddle" border="0" inlineField="<%= true %>" label="" name="search" src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
-	</aui:fieldset>
-
-	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "addSearchProvider();" %>' value='<%= LanguageUtil.format(pageContext, "add-x-as-a-search-provider", company.getName(), false) %>' />
-	</aui:button-row>
+	%>
 
 	<div class="search-msg">
 		<c:choose>
@@ -136,12 +90,6 @@ int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getComp
 
 		OpenSearch openSearch = portlet.getOpenSearchInstance();
 
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("struts_action", "/search/search");
-		portletURL.setParameter("keywords", keywords);
-		portletURL.setParameter("format", format);
-
 		//List<String> headerNames = new ArrayList<String>();
 
 		//headerNames.add("#");
@@ -149,7 +97,7 @@ int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getComp
 		//headerNames.add("tags");
 		//headerNames.add("score");
 
-		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM + i, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
+		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM + i, 5, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
 		if (Validator.isNotNull(primarySearch) && primarySearch.equals(portlet.getOpenSearchClass())) {
 			int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM + i);
@@ -171,13 +119,13 @@ int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getComp
 
 			xml = XMLFormatter.stripInvalidChars(xml);
 
-			Document doc = SAXReaderUtil.read(xml);
+			com.liferay.portal.kernel.xml.Document doc = SAXReaderUtil.read(xml);
 
 			Element root = doc.getRootElement();
 
 			//portletTitle = root.elementText("title");
 
-			String[] queryTerms = StringUtil.split(root.elementText("queryTerms"), StringPool.COMMA_AND_SPACE);
+			queryTerms = StringUtil.split(root.elementText("queryTerms"), StringPool.COMMA_AND_SPACE);
 
 			List<Element> entries = root.elements("entry");
 
@@ -361,7 +309,7 @@ int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getComp
 						<portlet:renderURL var="moreResultsURL">
 							<portlet:param name="struts_action" value="/search/search" />
 							<portlet:param name="primarySearch" value="<%= portlet.getOpenSearchClass() %>" />
-							<portlet:param name="keywords" value="<%= HtmlUtil.escapeHREF(keywords) %>" />
+							<portlet:param name="keywords" value="<%= HtmlUtil.escape(keywords) %>" />
 							<portlet:param name="format" value="<%= format %>" />
 						</portlet:renderURL>
 
@@ -380,50 +328,3 @@ int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getComp
 			<%= LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>
 		</div>
 	</c:if>
-</aui:form>
-
-<aui:script>
-	function <portlet:namespace />addSearchProvider() {
-		window.external.AddSearchProvider("<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search_description.xml?p_l_id=<%= themeDisplay.getPlid() %>&groupId=<%= groupId %>");
-	}
-
-	function <portlet:namespace />search() {
-		var keywords = document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
-
-		keywords = keywords.replace(/^\s+|\s+$/, '');
-
-		if (keywords != '') {
-			document.<portlet:namespace />fm.submit();
-		}
-	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keywords);
-	</c:if>
-</aui:script>
-
-<%
-String pageSubtitle = LanguageUtil.get(pageContext, "search-results");
-String pageDescription = LanguageUtil.get(pageContext, "search-results");
-String pageKeywords = LanguageUtil.get(pageContext, "search");
-
-if (!portletTitles.isEmpty()) {
-	pageDescription = LanguageUtil.get(pageContext, "searched") + StringPool.SPACE + StringUtil.merge(portletTitles, StringPool.COMMA_AND_SPACE);
-}
-
-if (Validator.isNotNull(keywords)) {
-	pageKeywords = keywords;
-
-	if (StringUtil.startsWith(pageKeywords, Field.ASSET_TAG_NAMES + StringPool.COLON)) {
-		pageKeywords = StringUtil.replace(pageKeywords, Field.ASSET_TAG_NAMES + StringPool.COLON, StringPool.BLANK);
-	}
-}
-
-PortalUtil.setPageSubtitle(pageSubtitle, request);
-PortalUtil.setPageDescription(pageDescription, request);
-PortalUtil.setPageKeywords(pageKeywords, request);
-%>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.search.search_jsp");
-%>

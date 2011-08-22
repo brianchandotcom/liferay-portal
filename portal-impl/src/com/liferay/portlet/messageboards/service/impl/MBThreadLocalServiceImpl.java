@@ -500,7 +500,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Message flags
 
-		mbMessageLocalService.updateAnswer(message.getMessageId(), false, true);
+		mbMessageLocalService.updateAnswer(message, false, true);
 
 		// Create new thread
 
@@ -613,8 +613,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			MBMessage message = mbMessagePersistence.findByPrimaryKey(
 				thread.getRootMessageId());
 
-			mbMessageLocalService.updateAnswer(
-				message.getMessageId(), false, true);
+			mbMessageLocalService.updateAnswer(message, false, true);
 		}
 	}
 

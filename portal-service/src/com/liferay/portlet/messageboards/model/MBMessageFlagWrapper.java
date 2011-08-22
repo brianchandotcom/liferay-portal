@@ -228,8 +228,7 @@ public class MBMessageFlagWrapper implements MBMessageFlag {
 		return new MBMessageFlagWrapper((MBMessageFlag)_mbMessageFlag.clone());
 	}
 
-	public int compareTo(
-		com.liferay.portlet.messageboards.model.MBMessageFlag mbMessageFlag) {
+	public int compareTo(MBMessageFlag mbMessageFlag) {
 		return _mbMessageFlag.compareTo(mbMessageFlag);
 	}
 
@@ -238,11 +237,11 @@ public class MBMessageFlagWrapper implements MBMessageFlag {
 		return _mbMessageFlag.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.messageboards.model.MBMessageFlag> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<MBMessageFlag> toCacheModel() {
 		return _mbMessageFlag.toCacheModel();
 	}
 
-	public com.liferay.portlet.messageboards.model.MBMessageFlag toEscapedModel() {
+	public MBMessageFlag toEscapedModel() {
 		return new MBMessageFlagWrapper(_mbMessageFlag.toEscapedModel());
 	}
 

@@ -627,6 +627,14 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService {
 		_mbMessageLocalService.updateAnswer(messageId, answer, cascade);
 	}
 
+	public void updateAnswer(
+		com.liferay.portlet.messageboards.model.MBMessage message,
+		boolean answer, boolean cascade)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbMessageLocalService.updateAnswer(message, answer, cascade);
+	}
+
 	public void updateAsset(long userId,
 		com.liferay.portlet.messageboards.model.MBMessage message,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,

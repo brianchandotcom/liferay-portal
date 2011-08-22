@@ -1277,6 +1277,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
+		updateAnswer(message, answer, cascade);
+	}
+
+	public void updateAnswer(MBMessage message, boolean answer, boolean cascade)
+		throws PortalException, SystemException {
+
 		if (message.isAnswer() != answer) {
 			message.setAnswer(answer);
 
@@ -1288,7 +1294,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getThreadId(), message.getMessageId());
 
 			for (MBMessage curMessage : messages) {
-				updateAnswer(curMessage.getMessageId(), answer, cascade);
+				updateAnswer(curMessage, answer, cascade);
 			}
 		}
 	}

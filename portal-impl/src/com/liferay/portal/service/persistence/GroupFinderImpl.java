@@ -763,15 +763,7 @@ public class GroupFinderImpl
 				});
 		}
 
-		StringBundler sb = new StringBundler(params.size() + 1);
-
-		sb.append(sql);
-
-		for (String key : params.keySet()) {
-			sb.append(key);
-		}
-
-		String cacheKey = sb.toString();
+		String cacheKey = _getCacheKey(sql, params);
 
 		String resultSQL = _replaceJoinAndWhereSQLCache.get(cacheKey);
 
@@ -912,6 +904,37 @@ public class GroupFinderImpl
 		}
 
 		sb.append(obc.getOrderBy());
+
+		return sb.toString();
+	}
+
+	private String _getCacheKey(
+		String sql, LinkedHashMap<String, Object> params) {
+
+		StringBundler sb = new StringBundler(params.size() + 1);
+
+		sb.append(sql);
+
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.equals("rolePermissions") &&
+				(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6)) {
+
+				List<Object> values = (List<Object>)entry.getValue();
+
+				String name = (String)values.get(0);
+
+				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
+					key = "rolePermissions_6_block";
+				}
+				else {
+					key = "rolePermissions_6";
+				}
+			}
+
+			sb.append(key);
+		}
 
 		return sb.toString();
 	}

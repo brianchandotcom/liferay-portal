@@ -93,6 +93,8 @@ public class ClusterExecutorImpl
 
 		_scheduledExecutorService.shutdownNow();
 
+		_clusterInvokeReceiver.destroy();
+
 		_controlChannel.close();
 	}
 

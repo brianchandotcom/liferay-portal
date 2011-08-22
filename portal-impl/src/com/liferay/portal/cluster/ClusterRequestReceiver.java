@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,7 +33,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.jgroups.Channel;
 import org.jgroups.ChannelException;
@@ -50,20 +51,22 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		_clusterExecutorImpl = clusterExecutorImpl;
 	}
 
+	public void destroy() {
+		_parallelExecutorService.shutdownNow();
+		_serialExecutorService.shutdownNow();
+	}
+
 	public void initialize() {
 		String className = ClusterRequestReceiver.class.getName();
 
-		_parallelThreadPoolExecutor = 
+		_parallelExecutorService =
 			PortalExecutorManagerUtil.getPortalExecutor(
 				className + "_parallel");
 
-		_serialThreadPoolExecutor = new ThreadPoolExecutor(
-				1, 1, 60L, TimeUnit.SECONDS, false, Integer.MAX_VALUE, 
-				_parallelThreadPoolExecutor.getRejectedExecutionHandler(),
-				new NamedThreadFactory(
-					className + "_serial", Thread.NORM_PRIORITY, 
-					PortalClassLoaderUtil.getClassLoader()),
-				_parallelThreadPoolExecutor.getThreadPoolHandler());
+		_serialExecutorService = Executors.newSingleThreadExecutor(
+			new NamedThreadFactory(
+				className + "_serial", Thread.NORM_PRIORITY,
+				PortalClassLoaderUtil.getClassLoader()));
 	}
 
 	@Override
@@ -92,16 +95,28 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			}
 		}
 
-		JGroupsTask jgroupsTask = new JGroupsTask(
-			obj, sourceAddress, localAddress);
+		if (obj instanceof ClusterRequest) {
+			ClusterRequest clusterRequest = (ClusterRequest)obj;
 
-		if (obj instanceof ClusterRequest && 
-			((ClusterRequest)obj).isParallelized()) {
+			RequestTask requestTask = new RequestTask(clusterRequest,
+				sourceAddress, localAddress);
 
-			_parallelThreadPoolExecutor.execute(jgroupsTask);
+			if (clusterRequest.isParallelized()) {
+				_parallelExecutorService.execute(requestTask);
+			}
+			else {
+				_serialExecutorService.execute(requestTask);
+			}
 		}
-		else {
-			_serialThreadPoolExecutor.execute(jgroupsTask);
+		else if (obj instanceof ClusterNodeResponse) {
+			ClusterNodeResponse clusterNodeResponse = (ClusterNodeResponse)obj;
+
+			processClusterResponse(clusterNodeResponse, sourceAddress,
+				localAddress);
+		}
+		else if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Unable to process message content of type " + obj.getClass());
 		}
 	}
 
@@ -302,43 +317,28 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		ClusterRequestReceiver.class);
 
 	private ClusterExecutorImpl _clusterExecutorImpl;
-	private ThreadPoolExecutor _parallelThreadPoolExecutor;
-	private ThreadPoolExecutor _serialThreadPoolExecutor;
+	private ExecutorService _parallelExecutorService;
+	private ExecutorService _serialExecutorService;
 
-	private class JGroupsTask implements Runnable {
+	private class RequestTask implements Runnable {
 
-		public JGroupsTask(
-			Object taskContent, org.jgroups.Address sourceAddress,
+		public RequestTask(
+			ClusterRequest clusterRequest, org.jgroups.Address sourceAddress,
 			org.jgroups.Address localAddress) {
 
-			_taskContent = taskContent;
+			_clusterRequest = clusterRequest;
 			_sourceAddress = sourceAddress;
 			_localAddress = localAddress;
 		}
 
 		public void run() {
-			if (_taskContent instanceof ClusterRequest) {
-				processClusterRequest(
-					(ClusterRequest)_taskContent, _sourceAddress, 
-					_localAddress);
-			}	
-			else if (_taskContent instanceof ClusterNodeResponse) {
-				processClusterResponse(
-					(ClusterNodeResponse)_taskContent, _sourceAddress, 
-					_localAddress);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to process message content of type " +
-							_taskContent.getClass().getName());
-				}
-			}
+			processClusterRequest(_clusterRequest, _sourceAddress,
+				_localAddress);
 		}
 
+		private ClusterRequest _clusterRequest;
 		private org.jgroups.Address _localAddress;
 		private org.jgroups.Address _sourceAddress;
-		private Object _taskContent;
 
 	}
 

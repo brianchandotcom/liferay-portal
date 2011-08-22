@@ -50,12 +50,61 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/ul/li[3]/a",
+				selenium.clickAt("link=Sites",
 					RuntimeVariables.replace("Site Memberships"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Manage Memberships"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
+					RuntimeVariables.replace("Manage Memberships"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Add Members",
 					RuntimeVariables.replace("Add Members"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("User"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
@@ -82,8 +131,8 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 				selenium.type("//input[@name='_174_keywords']",
 					RuntimeVariables.replace("usersn"));
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@type='submit']",
-					RuntimeVariables.replace("Submit"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("usersn"),

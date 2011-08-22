@@ -25,13 +25,43 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[3]/a</td>
+	<td>link=Sites</td>
 	<td>Site Memberships</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=Add Members</td>
 	<td>Add Members</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,8 +85,8 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@type='submit']</td>
-	<td>Submit</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertText</td>

@@ -50,15 +50,41 @@ public class AddPageMBSiteTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li",
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Manage Pages"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Manage Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Add Page"),
+			selenium.getText("//div/span/button[1]"));
 		selenium.clickAt("//div/span/button[1]",
 			RuntimeVariables.replace("Add Page"));
-		selenium.type("//span/input",
+		selenium.type("//input[@id='_156_name_en_US']",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Page']",

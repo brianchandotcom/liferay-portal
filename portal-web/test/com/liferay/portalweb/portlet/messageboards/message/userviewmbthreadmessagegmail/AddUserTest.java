@@ -69,6 +69,9 @@ public class AddUserTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
 			RuntimeVariables.replace("User"));
 		selenium.waitForPageToLoad("30000");

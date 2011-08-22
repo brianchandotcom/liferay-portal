@@ -14,9 +14,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Site Name</td>
-	<td></td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -40,7 +45,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/h1/span</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>New Message</td>
 </tr>
 <tr>
@@ -89,9 +94,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Site Name</td>
-	<td></td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -131,7 +141,7 @@
 <tr>
 	<td>assertPartialText</td>
 	<td>//td[6]/a</td>
-	<td>By: Joe Bloggs</td>
+	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -140,17 +150,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
+	<td>//div[@class='subject']/a/strong</td>
 	<td>MB Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/div[2]</td>
+	<td>//div[@class='thread-body']</td>
 	<td>MB Message Body</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a/span[2]</td>
+	<td>//span[@class='user-name']</td>
 	<td>Joe Bloggs</td>
 </tr>
 

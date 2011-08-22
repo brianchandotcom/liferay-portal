@@ -34,14 +34,34 @@
 	<td>Site Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/span/button[1]</td>
+	<td>Add Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -50,7 +70,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//span/input</td>
+	<td>//input[@id='_156_name_en_US']</td>
 	<td>Message Boards Test Page</td>
 </tr>
 <tr>
@@ -71,7 +91,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//li/ul/li/div/div[3]/a</td>
-	<td>Staging Site Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>

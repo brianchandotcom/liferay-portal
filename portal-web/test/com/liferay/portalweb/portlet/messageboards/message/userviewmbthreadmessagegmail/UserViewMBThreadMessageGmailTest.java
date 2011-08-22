@@ -23,7 +23,25 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class UserViewMBThreadMessageGmailTest extends BaseTestCase {
 	public void testUserViewMBThreadMessageGmail() throws Exception {
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace(""));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("link=Site Name")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(60000);

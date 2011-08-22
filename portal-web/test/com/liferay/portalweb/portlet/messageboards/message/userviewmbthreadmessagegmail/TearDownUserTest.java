@@ -103,7 +103,7 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 				boolean user1Deactivated = selenium.isElementPresent(
-						"_125_rowIds");
+						"//input[@name='_125_rowIds']");
 
 				if (!user1Deactivated) {
 					label = 3;
@@ -112,7 +112,7 @@ public class TearDownUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -123,7 +123,7 @@ public class TearDownUserTest extends BaseTestCase {
 			case 3:
 
 				boolean user2Deactivated = selenium.isElementPresent(
-						"_125_rowIds");
+						"//input[@name='_125_rowIds']");
 
 				if (!user2Deactivated) {
 					label = 4;
@@ -132,7 +132,7 @@ public class TearDownUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -143,7 +143,7 @@ public class TearDownUserTest extends BaseTestCase {
 			case 4:
 
 				boolean user3Deactivated = selenium.isElementPresent(
-						"_125_rowIds");
+						"//input[@name='_125_rowIds']");
 
 				if (!user3Deactivated) {
 					label = 5;
@@ -152,7 +152,7 @@ public class TearDownUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -163,7 +163,7 @@ public class TearDownUserTest extends BaseTestCase {
 			case 5:
 
 				boolean user4Deactivated = selenium.isElementPresent(
-						"_125_rowIds");
+						"//input[@name='_125_rowIds']");
 
 				if (!user4Deactivated) {
 					label = 6;
@@ -172,7 +172,7 @@ public class TearDownUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -183,7 +183,7 @@ public class TearDownUserTest extends BaseTestCase {
 			case 6:
 
 				boolean user5Deactivated = selenium.isElementPresent(
-						"_125_rowIds");
+						"//input[@name='_125_rowIds']");
 
 				if (!user5Deactivated) {
 					label = 7;
@@ -192,7 +192,7 @@ public class TearDownUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -273,8 +273,6 @@ public class TearDownUserTest extends BaseTestCase {
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 8:
-
 				boolean user2Deleted = selenium.isElementPresent(
 						"xPath=(//input[@name='_125_rowIds'])[2]");
 
@@ -292,8 +290,6 @@ public class TearDownUserTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
-
-			case 9:
 
 				boolean user3Deleted = selenium.isElementPresent(
 						"xPath=(//input[@name='_125_rowIds'])[2]");
@@ -313,8 +309,6 @@ public class TearDownUserTest extends BaseTestCase {
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 10:
-
 				boolean user4Deleted = selenium.isElementPresent(
 						"xPath=(//input[@name='_125_rowIds'])[2]");
 
@@ -332,8 +326,6 @@ public class TearDownUserTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
-
-			case 11:
 
 				boolean user5Deleted = selenium.isElementPresent(
 						"xPath=(//input[@name='_125_rowIds'])[2]");
@@ -353,6 +345,10 @@ public class TearDownUserTest extends BaseTestCase {
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
+			case 8:
+			case 9:
+			case 10:
+			case 11:
 			case 12:
 				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 

@@ -14,9 +14,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Site Name</td>
-	<td></td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -44,24 +54,14 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertNotChecked</td>
 	<td>//input[@id='_19_mailingListActiveCheckbox']</td>
 	<td>Active</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_19_mailingListActiveCheckbox'))</td>
-	<td>MailingListActiveChecked</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${MailingListActiveChecked}</td>
-	<td>MailingListActiveIsChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -69,9 +69,9 @@
 	<td>Active</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>MailingListActiveIsChecked</td>
-	<td></td>
+	<td>assertChecked</td>
+	<td>//input[@id='_19_mailingListActiveCheckbox']</td>
+	<td>Active</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -84,24 +84,14 @@
 	<td>liferay-mailinglist@googlegroups.com</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_19_inProtocol'))</td>
-	<td>ProtocolPopChecked</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${ProtocolPopChecked}</td>
-	<td>ProtocolPopIsChecked</td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//input[@name='_19_inProtocol']</td>
 	<td>POP</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>ProtocolPopIsChecked</td>
-	<td></td>
+	<td>assertChecked</td>
+	<td>//input[@name='_19_inProtocol']</td>
+	<td>POP</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -114,14 +104,9 @@
 	<td>995</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_19_inUseSSLCheckbox'))</td>
-	<td>SecureNetworkConnectionChecked</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${SecureNetworkConnectionChecked}</td>
-	<td>SecureNetworkConnectionIsChecked</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_19_inUseSSLCheckbox']</td>
+	<td>Use a Secure Network Connection</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -129,9 +114,9 @@
 	<td>Use a Secure Network Connection</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>SecureNetworkConnectionIsChecked</td>
-	<td></td>
+	<td>assertChecked</td>
+	<td>//input[@id='_19_inUseSSLCheckbox']</td>
+	<td>Use a Secure Network Connection</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -154,14 +139,9 @@
 	<td>liferay.qa.server.trunk@gmail.com</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_19_outCustomCheckbox'))</td>
-	<td>UseCustomOutgoingServerChecked</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${UseCustomOutgoingServerChecked}</td>
-	<td>UseCustomOutgoingServerISChecked</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_19_outCustomCheckbox']</td>
+	<td>Use Customer Outgoing Server</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -169,9 +149,9 @@
 	<td>Use Customer Outgoing Server</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>UseCustomOutgoingServerISChecked</td>
-	<td></td>
+	<td>assertChecked</td>
+	<td>//input[@id='_19_outCustomCheckbox']</td>
+	<td>Use Customer Outgoing Server</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -194,14 +174,9 @@
 	<td>465</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_19_outUseSSLCheckbox'))</td>
-	<td>OutgoingSecureNetworkConnectionChecked</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${OutgoingSecureNetworkConnectionChecked}</td>
-	<td>OutgoingSecureNetworkConnectionIsChecked</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_19_outUseSSLCheckbox']</td>
+	<td>Use a Secure Network Connection</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -209,9 +184,9 @@
 	<td>Use a Secure Network Connection</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>OutgoingSecureNetworkConnectionIsChecked</td>
-	<td></td>
+	<td>assertChecked</td>
+	<td>//input[@id='_19_outUseSSLCheckbox']</td>
+	<td>Use a Secure Network Connection</td>
 </tr>
 <tr>
 	<td>type</td>

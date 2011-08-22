@@ -49,6 +49,22 @@ public class GmailTearDownEmailTest extends BaseTestCase {
 
 			case 2:
 
+				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
+						"link=Sign in as a different user");
+
+				if (!signInAsADifferentUserPresent) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("link=Sign in as a different user",
+					RuntimeVariables.replace("Sign in as a different user"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+
+			case 3:
+
 				for (int second = 0;; second++) {
 					if (second >= 60) {
 						fail("timeout");
@@ -78,7 +94,7 @@ public class GmailTearDownEmailTest extends BaseTestCase {
 						"PersistentCookie");
 
 				if (staySignedInChecked) {
-					label = 3;
+					label = 4;
 
 					continue;
 				}
@@ -89,7 +105,7 @@ public class GmailTearDownEmailTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
 
-			case 3:
+			case 4:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='signIn']",
@@ -148,7 +164,7 @@ public class GmailTearDownEmailTest extends BaseTestCase {
 				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
 
 				if (!signedIn2) {
-					label = 4;
+					label = 5;
 
 					continue;
 				}
@@ -157,7 +173,7 @@ public class GmailTearDownEmailTest extends BaseTestCase {
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
-			case 4:
+			case 5:
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 				selenium.close();

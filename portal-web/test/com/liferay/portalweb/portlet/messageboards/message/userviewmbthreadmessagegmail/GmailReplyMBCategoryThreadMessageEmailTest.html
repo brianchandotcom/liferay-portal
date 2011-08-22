@@ -59,6 +59,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>link=Sign in as a different user</td>
+	<td>signInAsADifferentUserPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signInAsADifferentUserPresent}</td>
+	<td>SignInAsADifferentUserNotPresent</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Sign in as a different user</td>
+	<td>Sign in as a different user</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SignInAsADifferentUserNotPresent</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='Email']</td>
 	<td>Username:</td>

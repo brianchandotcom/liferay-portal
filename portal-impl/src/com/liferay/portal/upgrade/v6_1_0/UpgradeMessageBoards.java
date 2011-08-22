@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 /**
  * @author Shuyang Zhou
@@ -31,6 +32,36 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		updateMessage();
 		updateThread();
+		updateThreadFlag();
+
+		runSQL("drop table MBMessageFlag");
+	}
+
+	protected void insertThreadFlag(
+			long userId, long threadId, Timestamp modifiedDate)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"insert into MBThreadFlag (threadFlagId, userId, " +
+					"modifiedDate, threadId) values (?, ? ,? ,?)");
+
+			ps.setLong(1, increment());
+			ps.setLong(2, userId);
+			ps.setTimestamp(3, modifiedDate);
+			ps.setLong(4, threadId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected void updateMessage() throws Exception {
@@ -61,6 +92,48 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select flag.messageId from MBMessageFlag flag inner join " +
+					"MBMessage message on flag.messageId = message.messageId " +
+						"where message.parentMessageId != 0 and flag = 3");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long messageId = rs.getLong("flag.messageId");
+
+				updateMessage(messageId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateMessage(long messageId)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update MBMessage set answer = ? where messageId = " +
+					messageId);
+
+			ps.setBoolean(1, true);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 
@@ -109,6 +182,86 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 					"update MBThread set companyId = " + companyId +
 						", rootMessageUserId = " + userId +
 							" where threadId = " + threadId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select threadId from MBMessageFlag where flag = 2");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long threadId = rs.getLong("threadId");
+
+				updateThread(threadId);
+			}
+
+			ps = con.prepareStatement(
+				"select flag.threadId from MBMessageFlag flag inner join " +
+					"MBMessage message on flag.messageId = message.messageId " +
+						"where message.parentMessageId = 0 and flag = 3");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long threadId = rs.getLong("flag.threadId");
+
+				updateThread(threadId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateThread(long threadId)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update MBThread set question = ? where threadId =" +
+					threadId);
+
+			ps.setBoolean(1, true);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void updateThreadFlag() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select userId, threadId, modifiedDate from MBMessageFlag " +
+					"where flag = 1");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long userId = rs.getLong("userId");
+				long threadId = rs.getLong("threadId");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+
+				insertThreadFlag(userId, threadId, modifiedDate);
 			}
 		}
 		finally {

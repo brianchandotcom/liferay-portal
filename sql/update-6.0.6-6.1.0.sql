@@ -362,6 +362,13 @@ alter table MBThread add companyId LONG;
 alter table MBThread add rootMessageUserId LONG;
 alter table MBThread add question BOOLEAN;
 
+create table MBThreadFlag (
+	threadFlagId LONG not null primary key,
+	userId LONG,
+	modifiedDate DATE null,
+	threadId LONG
+);
+
 create table MDRAction (
 	uuid_ VARCHAR(75) null,
 	actionId LONG not null primary key,

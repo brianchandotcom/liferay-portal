@@ -98,6 +98,13 @@ public class AssetTagStatsLocalServiceImpl
 		}
 	}
 
+	public List<AssetTagStats> getTagStats(long classNameId, int start, int end)
+		throws SystemException {
+
+		return assetTagStatsPersistence.findByClassNameId(
+			classNameId, start, end);
+	}
+
 	public AssetTagStats getTagStats(long tagId, long classNameId)
 		throws SystemException {
 

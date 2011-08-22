@@ -35,11 +35,15 @@ portletURL.setParameter("struts_action", "/dynamic_data_mapping/view_template");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("structureId", String.valueOf(structureId));
+
+if (Validator.isNull(templateHeaderTitle)) {
+	templateHeaderTitle = "templates-for-structure-x";
+}
 %>
 
 <c:if test="<%= (structure != null) %>">
 	<liferay-ui:header
-		title='<%= LanguageUtil.format(pageContext, "templates-for-structure-x", structure.getName(locale), false) %>'
+		title='<%= LanguageUtil.format(pageContext, templateHeaderTitle, structure.getName(locale), false) %>'
 		backURL="<%= backURL %>"
 	/>
 </c:if>
@@ -100,11 +104,13 @@ portletURL.setParameter("structureId", String.valueOf(structureId));
 			value="<%= LanguageUtil.get(pageContext, template.getName(locale)) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="type"
-			value="<%= LanguageUtil.get(pageContext, template.getType()) %>"
-		/>
+		<c:if test="<%= Validator.isNull(templateTypeValue) %>">
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="type"
+				value="<%= LanguageUtil.get(pageContext, template.getType()) %>"
+			/>
+		</c:if>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowHREF %>"

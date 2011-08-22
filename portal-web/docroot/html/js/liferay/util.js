@@ -1059,6 +1059,7 @@
 			ddmURL.setParameter('scopeStorageType', config.storageType);
 			ddmURL.setParameter('scopeStructureName', config.structureName);
 			ddmURL.setParameter('scopeStructureType', config.structureType);
+			ddmURL.setParameter('scopeTemplateType', config.templateType);
 
 			if (config.showManageTemplates) {
 				ddmURL.setParameter('showManageTemplates', config.showManageTemplates);
@@ -1077,6 +1078,7 @@
 				ddmURL.setParameter('struts_action', '/dynamic_data_mapping/view');
 			}
 
+			ddmURL.setParameter('templateHeaderTitle', config.templateHeaderTitle);
 			ddmURL.setParameter('templateId', config.templateId);
 
 			ddmURL.setPortletId(166);

@@ -35,7 +35,11 @@ long structureId = ParamUtil.getLong(request, "structureId");
 		<a href="<%= viewEntriesURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_STRUCTURE) %>">
+	<%
+	String message = "add";
+	%>
+
+	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL)) %>">
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -45,10 +49,16 @@ long structureId = ParamUtil.getLong(request, "structureId");
 			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
 		</portlet:renderURL>
 
-		<span class="lfr-toolbar-button add-template <%= toolbarItem.equals("add-detail-template") ? "current" : StringPool.BLANK %>"><a href="<%= addEntryURL %>"><liferay-ui:message key="add-detail-template" /></a></span>
+		<%
+		if (Validator.isNull(templateTypeValue)) {
+			message = "add-detail-template";
+		}
+		%>
+
+		<span class="lfr-toolbar-button add-template <%= toolbarItem.equals("add-detail-template") ? "current" : StringPool.BLANK %>"><a href="<%= addEntryURL %>"><liferay-ui:message key="<%= message %>" /></a></span>
 	</c:if>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_STRUCTURE) %>">
+	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_LIST)) %>">
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -58,6 +68,12 @@ long structureId = ParamUtil.getLong(request, "structureId");
 			<portlet:param name="type" value="list" />
 		</portlet:renderURL>
 
-		<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>"><a href="<%= addEntryURL %>"><liferay-ui:message key="add-list-template" /></a></span>
+		<%
+		if (Validator.isNull(templateTypeValue)) {
+			message = "add-list-template";
+		}
+		%>
+
+		<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>"><a href="<%= addEntryURL %>"><liferay-ui:message key="<%= message %>" /></a></span>
 	</c:if>
 </div>

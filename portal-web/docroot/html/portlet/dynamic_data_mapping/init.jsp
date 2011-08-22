@@ -52,6 +52,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 String scopeStorageType = ParamUtil.getString(request, "scopeStorageType");
 String scopeStructureName = ParamUtil.getString(request, "scopeStructureName");
 String scopeStructureType = ParamUtil.getString(request, "scopeStructureType");
+String scopeTemplateType = ParamUtil.getString(request, "scopeTemplateType");
 
 String chooseCallback = ParamUtil.getString(request, "chooseCallback");
 String saveCallback = ParamUtil.getString(request, "saveCallback");
@@ -65,6 +66,17 @@ if (scopeStorageType.equals("expando")) {
 }
 else if (scopeStorageType.equals("xml")) {
 	storageTypeValue = StorageType.XML.getValue();
+}
+
+String templateHeaderTitle = ParamUtil.getString(request, "templateHeaderTitle");
+
+String templateTypeValue = StringPool.BLANK;
+
+if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL)) {
+	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_DETAIL;
+}
+else if (scopeStorageType.equals(DDMTemplateConstants.TEMPLATE_TYPE_LIST)) {
+	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_LIST;
 }
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

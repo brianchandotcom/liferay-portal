@@ -56,7 +56,7 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 	}
 
 	public String getSummary(Locale locale) {
-		return _user.getFullName();
+		return _user.getComments();
 	}
 
 	public String getTitle(Locale locale) {

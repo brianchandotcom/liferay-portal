@@ -19,7 +19,7 @@ package com.liferay.portlet.dynamicdatamapping.service.persistence;
  */
 public interface DDMTemplateFinder {
 	public int countByKeywords(long companyId, long groupId, long structureId,
-		java.lang.String keywords)
+		java.lang.String keywords, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public int countByC_G_S_N_D_T_L(long companyId, long groupId,
@@ -35,7 +35,7 @@ public interface DDMTemplateFinder {
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByKeywords(
 		long companyId, long groupId, long structureId,
-		java.lang.String keywords, int start, int end,
+		java.lang.String keywords, java.lang.String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

@@ -335,11 +335,11 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService {
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		long companyId, long groupId, long structureId,
-		java.lang.String keywords, int start, int end,
+		java.lang.String keywords, java.lang.String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.search(companyId, groupId, structureId,
-			keywords, start, end, orderByComparator);
+			keywords, type, start, end, orderByComparator);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
@@ -354,10 +354,10 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService {
 	}
 
 	public int searchCount(long companyId, long groupId, long structureId,
-		java.lang.String keywords)
+		java.lang.String keywords, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.searchCount(companyId, groupId,
-			structureId, keywords);
+			structureId, keywords, type);
 	}
 
 	public int searchCount(long companyId, long groupId, long structureId,

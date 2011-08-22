@@ -22,10 +22,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 public class DDMTemplateFinderUtil {
 	public static int countByKeywords(long companyId, long groupId,
-		long structureId, java.lang.String keywords)
+		long structureId, java.lang.String keywords, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .countByKeywords(companyId, groupId, structureId, keywords);
+				   .countByKeywords(companyId, groupId, structureId, keywords,
+			type);
 	}
 
 	public static int countByC_G_S_N_D_T_L(long companyId, long groupId,
@@ -49,12 +50,12 @@ public class DDMTemplateFinderUtil {
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByKeywords(
 		long companyId, long groupId, long structureId,
-		java.lang.String keywords, int start, int end,
+		java.lang.String keywords, java.lang.String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByKeywords(companyId, groupId, structureId, keywords,
-			start, end, orderByComparator);
+			type, start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_S_N_D_T_L(

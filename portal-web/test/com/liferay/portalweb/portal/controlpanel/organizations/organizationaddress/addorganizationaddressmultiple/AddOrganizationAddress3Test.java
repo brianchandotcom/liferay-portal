@@ -197,6 +197,10 @@ public class AddOrganizationAddress3Test extends BaseTestCase {
 			RuntimeVariables.replace("label=California"));
 		selenium.select("//select[@id='_125_addressTypeId3']",
 			RuntimeVariables.replace("label=Billing"));
+		selenium.clickAt("//input[@id='_125_addressMailing1Checkbox3']",
+			RuntimeVariables.replace("Mailing Checkbox"));
+		selenium.clickAt("//input[@id='_125_addressPrimary3']",
+			RuntimeVariables.replace("Primary Button"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

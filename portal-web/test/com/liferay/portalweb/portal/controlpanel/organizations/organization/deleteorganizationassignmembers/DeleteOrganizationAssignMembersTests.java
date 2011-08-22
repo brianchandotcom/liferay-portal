@@ -33,6 +33,7 @@ public class DeleteOrganizationAssignMembersTests extends BaseTests {
 		testSuite.addTestSuite(AssertAssignMembersOrganizationTest.class);
 		testSuite.addTestSuite(DeleteOrganizationAssignMembersTest.class);
 		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

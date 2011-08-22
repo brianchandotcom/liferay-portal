@@ -34,6 +34,7 @@ public class RemoveMembersOrganizationTests extends BaseTests {
 		testSuite.addTestSuite(RemoveMembersOrganizationTest.class);
 		testSuite.addTestSuite(AssertRemoveMembersOrganizationTest.class);
 		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

@@ -46,19 +46,19 @@ public class DDMTemplateFinderImpl
 		DDMTemplateFinder.class.getName() + ".findByC_G_S_N_D_T_L";
 
 	public int countByKeywords(
-			long companyId, long groupId, long structureId, String keywords)
+			long companyId, long groupId, long structureId, String keywords,
+			String type)
 		throws SystemException {
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = null;
+		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
-			types = CustomSQLUtil.keywords(keywords, false);
 			languages = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
@@ -165,19 +165,19 @@ public class DDMTemplateFinderImpl
 
 	public List<DDMTemplate> findByKeywords(
 			long companyId, long groupId, long structureId, String keywords,
-			int start, int end, OrderByComparator orderByComparator)
+			String type, int start, int end,
+			OrderByComparator orderByComparator)
 		throws SystemException {
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = null;
+		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
-			types = CustomSQLUtil.keywords(types, false);
 			languages = CustomSQLUtil.keywords(languages, false);
 		}
 		else {

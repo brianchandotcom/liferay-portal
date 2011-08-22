@@ -168,11 +168,12 @@ public class DDMTemplateLocalServiceImpl
 
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long structureId, String keywords,
-			int start, int end, OrderByComparator orderByComparator)
+			String type, int start, int end,
+			OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmTemplateFinder.findByKeywords(
-			companyId, groupId, structureId, keywords, start, end,
+			companyId, groupId, structureId, keywords, type, start, end,
 			orderByComparator);
 	}
 
@@ -189,11 +190,12 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public int searchCount(
-			long companyId, long groupId, long structureId, String keywords)
+			long companyId, long groupId, long structureId, String keywords,
+			String type)
 		throws SystemException {
 
 		return ddmTemplateFinder.countByKeywords(
-			companyId, groupId, structureId, keywords);
+			companyId, groupId, structureId, keywords, type);
 	}
 
 	public int searchCount(

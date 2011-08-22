@@ -21,34 +21,37 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Shinn Lok
+ */
 public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 	@Override
 	public String buildPath(LiferayPortletURL liferayPortletURL) {
-	Map<String, String> routeParameters = new HashMap<String, String>();
+		Map<String, String> routeParameters = new HashMap<String, String>();
 
-	buildRouteParameters(liferayPortletURL, routeParameters);
+		buildRouteParameters(liferayPortletURL, routeParameters);
 
-	if (routeParameters.containsKey("title")) {
-		String title = routeParameters.get("title");
+		if (routeParameters.containsKey("title")) {
+			String title = routeParameters.get("title");
 
-		title = title.replaceAll(StringPool.SLASH, "%2f");
+			title = title.replaceAll(StringPool.SLASH, "%2F");
 
-		routeParameters.put("title", title);
-	}
+			routeParameters.put("title", title);
+		}
 
-	String friendlyURLPath = router.parametersToUrl(routeParameters);
+		String friendlyURLPath = router.parametersToUrl(routeParameters);
 
-	if (friendlyURLPath == null) {
-		return null;
-	}
+		if (friendlyURLPath == null) {
+			return null;
+		}
 
-	addParametersIncludedInPath(liferayPortletURL, routeParameters);
+		addParametersIncludedInPath(liferayPortletURL, routeParameters);
 
-	friendlyURLPath = StringPool.SLASH.concat(getMapping()).concat(
-		friendlyURLPath);
+		friendlyURLPath = StringPool.SLASH.concat(getMapping()).concat(
+			friendlyURLPath);
 
-	return friendlyURLPath;
+		return friendlyURLPath;
 	}
 
 }

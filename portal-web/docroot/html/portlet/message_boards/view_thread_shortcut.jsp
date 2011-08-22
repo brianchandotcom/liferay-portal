@@ -22,16 +22,16 @@ boolean editable = true;
 MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
 MBMessage selMessage = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE);
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
-MBMessageFlag messageFlag = (MBMessageFlag)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_MESSAGE_FLAG);
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY);
 MBThread thread = (MBThread)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD);
+MBThreadFlag threadFlag = (MBThreadFlag)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD_FLAG);
 boolean lastNode = ((Boolean)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE)).booleanValue();
 int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH)).intValue();
 
 long lastReadTime = 0;
 
-if (messageFlag != null) {
-	lastReadTime = messageFlag.getModifiedDate().getTime();
+if (threadFlag != null) {
+	lastReadTime = threadFlag.getModifiedDate().getTime();
 }
 
 String className = "portlet-section-alternate results-row alt";
@@ -137,9 +137,9 @@ for (int i = range[0]; i < range[1]; i++) {
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_MESSAGE_FLAG, messageFlag);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD_FLAG, threadFlag);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(depth));
 %>

@@ -72,12 +72,12 @@ List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 
 						var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-						var currentTerms = A.all('.portlet-search .menu .search-range .<%= randomNamespace %>range .entry.current-term a');
+						var currentTerms = A.all('.portlet-search .menu .search-range .<%= randomNamespace %>range .facet-value.current-term a');
 
 						if (currentTerms) {
 							currentTerms.each(
 								function(item, index, collection) {
-									item.ancestor('.entry').removeClass('current-term');
+									item.ancestor('.facet-value').removeClass('current-term');
 
 									if (item == term) {
 										wasSelfSelected = true;
@@ -89,14 +89,14 @@ List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 						}
 
 						if (!wasSelfSelected) {
-							term.ancestor('.entry').addClass('current-term');
+							term.ancestor('.facet-value').addClass('current-term');
 
 							field.value = term.attr('data-value');
 						}
 
 						submitForm(document.<portlet:namespace />fm);
 					},
-					'.entry a'
+					'.facet-value a'
 				);
 			}
 
@@ -120,7 +120,7 @@ private String _buildRangeNavigation(ThemeDisplay themeDisplay, String selectedT
 
 	sb.append("<ul class=\"range\">");
 
-	sb.append("<li class=\"entry default");
+	sb.append("<li class=\"facet-value default");
 
 	if (Validator.isNull(selectedTerm)) {
 		sb.append(" current-term");
@@ -148,7 +148,7 @@ private String _buildRangeNavigation(ThemeDisplay themeDisplay, String selectedT
 			continue;
 		}
 
-		sb.append("<li class=\"entry");
+		sb.append("<li class=\"facet-value");
 
 		if (range.equals(selectedTerm)) {
 			sb.append(" current-term");

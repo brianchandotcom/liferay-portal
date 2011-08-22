@@ -88,12 +88,12 @@ FacetCollector facetCollector = facet.getFacetCollector();
 
 						var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-						var currentTerms = A.all('.portlet-search .menu .search-vocabulary .<%= randomNamespace %>vocabulary .entry.current-term a');
+						var currentTerms = A.all('.portlet-search .menu .search-vocabulary .<%= randomNamespace %>vocabulary .facet-value.current-term a');
 
 						if (currentTerms) {
 							currentTerms.each(
 								function(item, index, collection) {
-									item.ancestor('.entry').removeClass('current-term');
+									item.ancestor('.facet-value').removeClass('current-term');
 
 									if (item == term) {
 										wasSelfSelected = true;
@@ -105,14 +105,14 @@ FacetCollector facetCollector = facet.getFacetCollector();
 						}
 
 						if (!wasSelfSelected) {
-							term.ancestor('.entry').addClass('current-term');
+							term.ancestor('.facet-value').addClass('current-term');
 
 							field.value = term.attr('data-value');
 						}
 
 						submitForm(document.<portlet:namespace />fm);
 					},
-					'.entry a'
+					'.facet-value a'
 				);
 			}
 
@@ -148,7 +148,7 @@ private void _buildCategoriesNavigation(List<AssetCategory> assetCategories, Str
 			frequency = termCollector.getFrequency();
 		}
 
-		sb.append("<li class=\"entry");
+		sb.append("<li class=\"facet-value");
 
 		if (ArrayUtil.contains(assetCategoryIds, term)) {
 			sb.append(" current-term");

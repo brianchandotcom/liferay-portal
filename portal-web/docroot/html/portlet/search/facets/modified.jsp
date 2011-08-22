@@ -81,12 +81,12 @@ String nowFormatted = dateFormat.format(cal.getTime());
 
 	<aui:field-wrapper cssClass='<%= randomNamespace + "calendar calendar_" %>' label="" name="<%= facet.getFieldName() %>">
 		<ul class="modified">
-			<li class="entry default<%= (fieldParamSelection.equals("0") ? " current-term" : "" ) %>">
+			<li class="facet-value default<%= (fieldParamSelection.equals("0") ? " current-term" : "" ) %>">
 				<aui:a href='<%= "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "clearFacet(0);" %>'>
 					<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/time.png" %>' /> <liferay-ui:message key="any-time" />
 				</aui:a>
 			</li>
-			<li class="entry<%= (fieldParamSelection.equals("1") ? " current-term" : "" ) %>">
+			<li class="facet-value<%= (fieldParamSelection.equals("1") ? " current-term" : "" ) %>">
 
 				<%
 				cal.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY) - 1);
@@ -98,7 +98,7 @@ String nowFormatted = dateFormat.format(cal.getTime());
 					<liferay-ui:message key="past-hour" />
 				</aui:a>
 			</li>
-			<li class="entry<%= (fieldParamSelection.equals("2") ? " current-term" : "" ) %>">
+			<li class="facet-value<%= (fieldParamSelection.equals("2") ? " current-term" : "" ) %>">
 
 				<%
 				cal.setTime(now);
@@ -111,7 +111,7 @@ String nowFormatted = dateFormat.format(cal.getTime());
 					<liferay-ui:message key="past-24-hours" />
 				</aui:a>
 			</li>
-			<li class="entry<%= (fieldParamSelection.equals("3") ? " current-term" : "" ) %>">
+			<li class="facet-value<%= (fieldParamSelection.equals("3") ? " current-term" : "" ) %>">
 
 				<%
 				cal.setTime(now);
@@ -124,7 +124,7 @@ String nowFormatted = dateFormat.format(cal.getTime());
 					<liferay-ui:message key="past-week" />
 				</aui:a>
 			</li>
-			<li class="entry<%= (fieldParamSelection.equals("4") ? " current-term" : "" ) %>">
+			<li class="facet-value<%= (fieldParamSelection.equals("4") ? " current-term" : "" ) %>">
 
 				<%
 				cal.setTime(now);
@@ -137,7 +137,7 @@ String nowFormatted = dateFormat.format(cal.getTime());
 					<liferay-ui:message key="past-month" />
 				</aui:a>
 			</li>
-			<li class="entry<%= (fieldParamSelection.equals("5") ? " current-term" : "" ) %>">
+			<li class="facet-value<%= (fieldParamSelection.equals("5") ? " current-term" : "" ) %>">
 
 				<%
 				cal.setTime(now);
@@ -150,7 +150,7 @@ String nowFormatted = dateFormat.format(cal.getTime());
 					<liferay-ui:message key="past-year" />
 				</aui:a>
 			</li>
-			<li class="entry<%= (fieldParamSelection.equals("6") ? " current-term" : "" ) %>">
+			<li class="facet-value<%= (fieldParamSelection.equals("6") ? " current-term" : "" ) %>">
 				<aui:a href='<%= "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "customRange();" %>'>
 					<liferay-ui:message key="custom-range" /> ..
 				</aui:a>

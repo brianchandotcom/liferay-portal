@@ -65,7 +65,7 @@
 					margin: 0 0 1em;
 				}
 
-				.entry {
+				.facet-value {
 					font-size: 1.2em;
 
 					a {

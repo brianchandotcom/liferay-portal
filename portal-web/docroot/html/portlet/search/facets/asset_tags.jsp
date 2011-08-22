@@ -72,12 +72,12 @@ List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 
 						var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-						var currentTerms = A.all('.portlet-search .menu .search-asset_tags .<%= randomNamespace %>asset_tags .entry.current-term a');
+						var currentTerms = A.all('.portlet-search .menu .search-asset_tags .<%= randomNamespace %>asset_tags .facet-value.current-term a');
 
 						if (currentTerms) {
 							currentTerms.each(
 								function(item, index, collection) {
-									item.ancestor('.entry').removeClass('current-term');
+									item.ancestor('.facet-value').removeClass('current-term');
 
 									if (item == term) {
 										wasSelfSelected = true;
@@ -89,14 +89,14 @@ List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 						}
 
 						if (!wasSelfSelected) {
-							term.ancestor('.entry').addClass('current-term');
+							term.ancestor('.facet-value').addClass('current-term');
 
 							field.value = term.attr('data-value');
 						}
 
 						submitForm(document.<portlet:namespace />fm);
 					},
-					'.entry a'
+					'.facet-value a'
 				);
 			}
 
@@ -129,7 +129,7 @@ private String _buildTagsNavigation(ThemeDisplay themeDisplay, String selectedTe
 
 	sb.append("\">");
 
-	sb.append("<li class=\"entry default");
+	sb.append("<li class=\"facet-value default");
 
 	if (Validator.isNull(selectedTerm)) {
 		sb.append(" current-term");
@@ -190,7 +190,7 @@ private String _buildTagsNavigation(ThemeDisplay themeDisplay, String selectedTe
 			continue;
 		}
 
-		sb.append("<li class=\"entry tag-popularity-");
+		sb.append("<li class=\"facet-value tag-popularity-");
 		sb.append(popularity);
 
 		if (term.equals(selectedTerm)) {

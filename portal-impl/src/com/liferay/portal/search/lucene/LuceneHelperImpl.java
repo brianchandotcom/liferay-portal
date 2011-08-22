@@ -476,8 +476,11 @@ public class LuceneHelperImpl implements LuceneHelper {
 			new MethodHandler(_getLastGenerationMethodKey, companyId),
 			true);
 
+		FutureClusterResponses futureClusterResponses =
+			ClusterExecutorUtil.execute(clusterRequest);
+
 		BlockingQueue<ClusterNodeResponse> clusterNodeResponses =
-			ClusterExecutorUtil.execute(clusterRequest).getPartialResults();
+			futureClusterResponses.getPartialResults();
 
 		Address bootupAddress = null;
 

@@ -283,6 +283,12 @@ public class AssetTagStatsLocalServiceUtil {
 		getService().deleteTagStatsByTagId(tagId);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTagStats> getTagStats(
+		long classNameId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTagStats(classNameId, start, end);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetTagStats getTagStats(
 		long tagId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {

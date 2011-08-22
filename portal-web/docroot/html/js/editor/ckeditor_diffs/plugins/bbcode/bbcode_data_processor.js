@@ -1,15 +1,13 @@
 (function() {
 	var NEW_LINE = '\n';
 
-	var REGEX_BR = /<br>(<\/?(?:li|ol|ul|tr|td|th|table)(?: |>))/gi;
-
 	var REGEX_COLOR_RGB = /^rgb\s*\(\s*([01]?\d\d?|2[0-4]\d|25[0-5])\,\s*([01]?\d\d?|2[0-4]\d|25[0-5])\,\s*([01]?\d\d?|2[0-4]\d|25[0-5])\s*\)$/;
 
 	var REGEX_EM = /em$/i;
 
 	var REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
-	var REGEX_LASTCHAR_NEWLINE = /(\r?\n\s*)$/;
+	var REGEX_LASTCHAR_NEWLINE_WHITESPACE = /(\r?\n\s*)$/;
 
 	var REGEX_LIST_ALPHA = /(upper|lower)-alpha/i;
 
@@ -19,9 +17,13 @@
 
 	var REGEX_PERCENT = /%$/i;
 
+	var REGEX_PRE = /<pre>/ig;
+
 	var REGEX_PX = /px$/i;
 
 	var TAG_BLOCKQUOTE = 'blockquote';
+
+	var TAG_BR = 'br';
 
 	var TAG_CODE = 'code';
 
@@ -37,6 +39,8 @@
 
 	var TAG_TABLE = 'table';
 
+	var TAG_TD = 'td';
+
 	var TEMPLATE_IMAGE = '<img src="{image}">';
 
 	CKEDITOR.plugins.add(
@@ -46,15 +50,6 @@
 
 			init: function(editor) {
 				editor.dataProcessor = new CKEDITOR.htmlDataProcessor(editor);
-
-				var writer = editor.dataProcessor.writer;
-
-				writer.setRules(
-					TAG_PARAGRAPH,
-					{
-						breakBeforeClose: false
-					}
-				);
 
 				editor.on(
 					'paste',
@@ -79,6 +74,8 @@
 		toDataFormat: function(html, fixForBody ) {
 			var instance = this;
 
+			html = html.replace(REGEX_PRE, '$&\n');
+
 			var data = instance._convert(html);
 
 			return data;
@@ -87,12 +84,11 @@
 		toHtml: function(data, fixForBody) {
 			var instance = this;
 
-			if (!instance._bbcodeParser) {
-				instance._bbcodeParser = new CKEDITOR.BBCodeParser();
+			if (!instance._bbcodeConverter) {
+				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML();
 			}
 
-			data = instance._bbcodeParser.parse(data);
-			data = data.replace(REGEX_BR, '$1');
+			data = instance._bbcodeConverter.convert(data);
 
 			var emoticonImages = CKEDITOR.config.smiley_images;
 			var emoticonSymbols = CKEDITOR.config.smiley_symbols;
@@ -125,7 +121,9 @@
 					if (parentTagName) {
 						parentTagName = parentTagName.toLowerCase();
 
-						if (parentTagName == TAG_PARAGRAPH && parentNode.style.cssText ) {
+						if ((parentTagName == TAG_PARAGRAPH && parentNode.style.cssText) ||
+							(CKEDITOR.env.gecko && element.tagName && element.tagName.toLowerCase() == TAG_BR && parentTagName == TAG_TD && !element.nextSibling)) {
+
 							allowNewLine = false;
 						}
 					}
@@ -298,7 +296,7 @@
 
 			var endResult = instance._endResult;
 
-			return (endResult && REGEX_LASTCHAR_NEWLINE.test(endResult.slice(-1)));
+			return (endResult && REGEX_LASTCHAR_NEWLINE_WHITESPACE.test(endResult.slice(-1)));
 		},
 
 		_handle: function(node) {
@@ -360,7 +358,7 @@
 
 			var parentNode = element.parentNode;
 
-			if (parentNode && (parentNode.tagName.toLowerCase() === TAG_BLOCKQUOTE)) {
+			if (parentNode && parentNode.tagName && parentNode.tagName.toLowerCase() == TAG_BLOCKQUOTE) {
 				if (!parentNode.getAttribute(TAG_CITE)) {
 					var endResult = instance._endResult;
 
@@ -416,10 +414,7 @@
 			if (tagName) {
 				tagName = tagName.toLowerCase();
 
-				if (tagName == TAG_PARAGRAPH) {
-					instance._handleParagraph(element, listTagsIn, listTagsOut);
-				}
-				else if (tagName == 'br') {
+				if (tagName == TAG_BR) {
 					instance._handleBreak(element, listTagsIn, listTagsOut);
 				}
 				else if (tagName == 'strong' || tagName == 'b') {
@@ -470,7 +465,7 @@
 				else if (tagName == 'tr') {
 					instance._handleTableRow(element, listTagsIn, listTagsOut);
 				}
-				else if (tagName == 'td') {
+				else if (tagName == TAG_TD) {
 					instance._handleTableCell(element, listTagsIn, listTagsOut);
 				}
 				else if (tagName == 'caption') {
@@ -559,10 +554,6 @@
 		_handleOrderedList: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			if (!instance._isLastItemNewLine()) {
-				listTagsIn.push(NEW_LINE);
-			}
-
 			listTagsIn.push('[list=');
 
 			var listStyleType = element.style.listStyleType;
@@ -575,17 +566,6 @@
 			}
 
 			listTagsOut.push('[/list]');
-		},
-
-		_handleParagraph: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
-			var newLinesAtEnd = REGEX_LASTCHAR_NEWLINE.exec(instance._endResult.slice(-2).join(''));
-			var count = newLinesAtEnd ? newLinesAtEnd[1].length : 0;
-
-			while (count++ < 2) {
-				listTagsIn.push(NEW_LINE);
-			}
 		},
 
 		_handlePre: function(element, listTagsIn, listTagsOut) {
@@ -773,14 +753,14 @@
 		},
 
 		_handleTable: function(element, listTagsIn, listTagsOut) {
-			listTagsIn.push(NEW_LINE, '[table]', NEW_LINE);
-			listTagsOut.push('[/table]', NEW_LINE);
+			listTagsIn.push('[table]', NEW_LINE);
+			listTagsOut.push('[/table]');
 		},
 
 		_handleTableCaption: function(element, listTagsIn, listTagsOut) {
 			var parentNode = element.parentNode;
 
-			if (parentNode && parentNode.tagName === TAG_TABLE) {
+			if (parentNode && parentNode.tagName && parentNode.tagName.toLowerCase() == TAG_TABLE) {
 				listTagsIn.push('[tr]', NEW_LINE, '[th]');
 				listTagsOut.push('[/th]', NEW_LINE, '[/tr]', NEW_LINE);
 			}
@@ -808,10 +788,6 @@
 
 		_handleUnorderedList: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
-
-			if (!instance._isLastItemNewLine()) {
-				listTagsIn.push(NEW_LINE);
-			}
 
 			listTagsIn.push('[list]');
 			listTagsOut.push('[/list]');

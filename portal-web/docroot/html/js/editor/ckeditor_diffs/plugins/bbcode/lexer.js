@@ -1,0 +1,25 @@
+(function() {
+	var REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:=([^\x00-\x1F"'\(\)<>\[\]]{1,256}))?\])|(?:\[\/([a-z]{1,16})\])/ig;
+
+	var Lexer = function(data) {
+		var instance = this;
+
+		instance._data = data;
+	};
+
+	Lexer.prototype = {
+		constructor: Lexer,
+
+		getNextToken: function() {
+			var instance = this;
+
+			return REGEX_BBCODE.exec(instance._data);
+		},
+
+		getLastIndex: function() {
+			return REGEX_BBCODE.lastIndex;
+		}
+	};
+
+	Liferay.BBCodeLexer = Lexer;
+})();

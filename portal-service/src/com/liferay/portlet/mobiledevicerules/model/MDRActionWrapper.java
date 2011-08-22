@@ -598,6 +598,15 @@ public class MDRActionWrapper implements MDRAction {
 		_mdrAction.persist();
 	}
 
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _mdrAction.getTypeSettingsProperties();
+	}
+
+	public void setTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		_mdrAction.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
 	public MDRAction getWrappedMDRAction() {
 		return _mdrAction;
 	}

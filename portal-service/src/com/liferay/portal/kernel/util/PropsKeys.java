@@ -1303,6 +1303,8 @@ public interface PropsKeys {
 
 	public static final String MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT = "minifier.inline.content.cache.skip.javascript";
 
+    public static final String MOBILE_DEVICE_RULE_GROUP_CLONE_POSTFIX = "mobile.device.rule.group.clone.postfix";
+
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";
 
 	public static final String MONITORING_DATA_SAMPLE_THREAD_LOCAL = "monitoring.data.sample.thread.local";

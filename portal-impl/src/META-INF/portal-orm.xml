@@ -3972,11 +3972,15 @@
 	</entity>
 	<entity class="com.liferay.portlet.mobiledevicerules.model.impl.MDRActionImpl" name="MDRAction">
 		<table name="MDRAction" />
-		<attributes />
+		<attributes>
+			<transient name="typeSettingsProperties" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleImpl" name="MDRRule">
 		<table name="MDRRule" />
-		<attributes />
+		<attributes>
+			<transient name="typeSettingsProperties" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupImpl" name="MDRRuleGroup">
 		<table name="MDRRuleGroup" />

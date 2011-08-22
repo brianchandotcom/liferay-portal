@@ -883,6 +883,8 @@ public class PropsValues {
 
 	public static final String[] MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT = PropsUtil.getArray(PropsKeys.MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT);
 
+	public static final String MOBILE_DEVICE_RULE_GROUP_CLONE_POSTFIX = PropsUtil.get(PropsKeys.MOBILE_DEVICE_RULE_GROUP_CLONE_POSTFIX);
+
 	public static final boolean MONITORING_DATA_SAMPLE_THREAD_LOCAL = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MONITORING_DATA_SAMPLE_THREAD_LOCAL));
 
 	public static boolean MONITORING_PORTAL_REQUEST = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MONITORING_PORTAL_REQUEST));

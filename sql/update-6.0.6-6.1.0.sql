@@ -382,8 +382,8 @@ create table MDRAction (
 	ruleId LONG,
 	name STRING null,
 	description STRING null,
-	type_ VARCHAR(75) null,
-	typeSettings VARCHAR(75) null
+	type_ VARCHAR(255) null,
+	typeSettings TEXT null
 );
 
 create table MDRRule (
@@ -398,8 +398,8 @@ create table MDRRule (
 	ruleGroupId LONG,
 	name STRING null,
 	description STRING null,
-	type_ VARCHAR(75) null,
-	typeSettings VARCHAR(75) null
+	type_ VARCHAR(255) null,
+	typeSettings TEXT null
 );
 
 create table MDRRuleGroup (

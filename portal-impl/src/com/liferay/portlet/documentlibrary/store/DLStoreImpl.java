@@ -528,7 +528,8 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 			if ((is == null) ||
 				(is.available() == 0) ||
 				((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-				(is.available() > PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
+					(is.available() > PrefsPropsUtil.getLong(
+						PropsKeys.DL_FILE_MAX_SIZE)))) {
 				throw new FileSizeException(fileName);
 			}
 		}

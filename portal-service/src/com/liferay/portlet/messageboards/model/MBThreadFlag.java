@@ -17,18 +17,18 @@ package com.liferay.portlet.messageboards.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the MBMessageFlag service. Represents a row in the &quot;MBMessageFlag&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the MBThreadFlag service. Represents a row in the &quot;MBThreadFlag&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see MBMessageFlagModel
- * @see com.liferay.portlet.messageboards.model.impl.MBMessageFlagImpl
- * @see com.liferay.portlet.messageboards.model.impl.MBMessageFlagModelImpl
+ * @see MBThreadFlagModel
+ * @see com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl
+ * @see com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl
  * @generated
  */
-public interface MBMessageFlag extends MBMessageFlagModel, PersistedModel {
+public interface MBThreadFlag extends MBThreadFlagModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.messageboards.model.impl.MBMessageFlagImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 }

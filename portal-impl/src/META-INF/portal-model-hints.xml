@@ -1911,14 +1911,6 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.messageboards.model.MBMessageFlag">
-		<field name="messageFlagId" type="long" />
-		<field name="userId" type="long" />
-		<field name="modifiedDate" type="Date" />
-		<field name="threadId" type="long" />
-		<field name="messageId" type="long" />
-		<field name="flag" type="int" />
-	</model>
 	<model name="com.liferay.portlet.messageboards.model.MBStatsUser">
 		<field name="statsUserId" type="long" />
 		<field name="groupId" type="long" />
@@ -1943,6 +1935,12 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.messageboards.model.MBThreadFlag">
+		<field name="threadFlagId" type="long" />
+		<field name="userId" type="long" />
+		<field name="modifiedDate" type="Date" />
+		<field name="threadId" type="long" />
 	</model>
 	<model name="com.liferay.portlet.mobiledevicerules.model.MDRAction">
 		<field name="uuid" type="String" />

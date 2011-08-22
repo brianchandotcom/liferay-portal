@@ -2143,12 +2143,12 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	protected MBMailingListPersistence mbMailingListPersistence;
 	@BeanReference(type = MBMessagePersistence.class)
 	protected MBMessagePersistence mbMessagePersistence;
-	@BeanReference(type = MBMessageFlagPersistence.class)
-	protected MBMessageFlagPersistence mbMessageFlagPersistence;
 	@BeanReference(type = MBStatsUserPersistence.class)
 	protected MBStatsUserPersistence mbStatsUserPersistence;
 	@BeanReference(type = MBThreadPersistence.class)
 	protected MBThreadPersistence mbThreadPersistence;
+	@BeanReference(type = MBThreadFlagPersistence.class)
+	protected MBThreadFlagPersistence mbThreadFlagPersistence;
 	@BeanReference(type = ResourcePersistence.class)
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)

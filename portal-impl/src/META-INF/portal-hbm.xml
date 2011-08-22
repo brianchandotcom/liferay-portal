@@ -127,9 +127,9 @@
 	<import class="com.liferay.portlet.messageboards.model.MBDiscussion" />
 	<import class="com.liferay.portlet.messageboards.model.MBMailingList" />
 	<import class="com.liferay.portlet.messageboards.model.MBMessage" />
-	<import class="com.liferay.portlet.messageboards.model.MBMessageFlag" />
 	<import class="com.liferay.portlet.messageboards.model.MBStatsUser" />
 	<import class="com.liferay.portlet.messageboards.model.MBThread" />
+	<import class="com.liferay.portlet.messageboards.model.MBThreadFlag" />
 	<import class="com.liferay.portlet.mobiledevicerules.model.MDRAction" />
 	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRule" />
 	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" />
@@ -1980,17 +1980,6 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.messageboards.model.impl.MBMessageFlagImpl" table="MBMessageFlag">
-		<cache usage="read-write" />
-		<id name="messageFlagId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="threadId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="messageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="flag" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl" table="MBStatsUser">
 		<cache usage="read-write" />
 		<id name="statsUserId" type="long">
@@ -2021,6 +2010,15 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl" table="MBThreadFlag">
+		<cache usage="read-write" />
+		<id name="threadFlagId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="threadId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRActionImpl" table="MDRAction">
 		<cache usage="read-write" />

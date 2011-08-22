@@ -239,15 +239,15 @@ import com.liferay.portlet.expando.service.ExpandoValueService;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
 import com.liferay.portlet.messageboards.service.MBBanLocalService;
 import com.liferay.portlet.messageboards.service.MBBanService;
-import com.liferay.portlet.messageboards.service.MBMessageFlagLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageService;
 import com.liferay.portlet.messageboards.service.MBStatsUserLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadFlagLocalService;
 import com.liferay.portlet.messageboards.service.persistence.MBBanPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBMessageFinder;
-import com.liferay.portlet.messageboards.service.persistence.MBMessageFlagPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence;
+import com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistence;
 import com.liferay.portlet.shopping.service.ShoppingCartLocalService;
 import com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
@@ -4438,44 +4438,6 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	}
 
 	/**
-	 * Returns the message boards message flag local service.
-	 *
-	 * @return the message boards message flag local service
-	 */
-	public MBMessageFlagLocalService getMBMessageFlagLocalService() {
-		return mbMessageFlagLocalService;
-	}
-
-	/**
-	 * Sets the message boards message flag local service.
-	 *
-	 * @param mbMessageFlagLocalService the message boards message flag local service
-	 */
-	public void setMBMessageFlagLocalService(
-		MBMessageFlagLocalService mbMessageFlagLocalService) {
-		this.mbMessageFlagLocalService = mbMessageFlagLocalService;
-	}
-
-	/**
-	 * Returns the message boards message flag persistence.
-	 *
-	 * @return the message boards message flag persistence
-	 */
-	public MBMessageFlagPersistence getMBMessageFlagPersistence() {
-		return mbMessageFlagPersistence;
-	}
-
-	/**
-	 * Sets the message boards message flag persistence.
-	 *
-	 * @param mbMessageFlagPersistence the message boards message flag persistence
-	 */
-	public void setMBMessageFlagPersistence(
-		MBMessageFlagPersistence mbMessageFlagPersistence) {
-		this.mbMessageFlagPersistence = mbMessageFlagPersistence;
-	}
-
-	/**
 	 * Returns the message boards stats user local service.
 	 *
 	 * @return the message boards stats user local service
@@ -4511,6 +4473,44 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	public void setMBStatsUserPersistence(
 		MBStatsUserPersistence mbStatsUserPersistence) {
 		this.mbStatsUserPersistence = mbStatsUserPersistence;
+	}
+
+	/**
+	 * Returns the message boards thread flag local service.
+	 *
+	 * @return the message boards thread flag local service
+	 */
+	public MBThreadFlagLocalService getMBThreadFlagLocalService() {
+		return mbThreadFlagLocalService;
+	}
+
+	/**
+	 * Sets the message boards thread flag local service.
+	 *
+	 * @param mbThreadFlagLocalService the message boards thread flag local service
+	 */
+	public void setMBThreadFlagLocalService(
+		MBThreadFlagLocalService mbThreadFlagLocalService) {
+		this.mbThreadFlagLocalService = mbThreadFlagLocalService;
+	}
+
+	/**
+	 * Returns the message boards thread flag persistence.
+	 *
+	 * @return the message boards thread flag persistence
+	 */
+	public MBThreadFlagPersistence getMBThreadFlagPersistence() {
+		return mbThreadFlagPersistence;
+	}
+
+	/**
+	 * Sets the message boards thread flag persistence.
+	 *
+	 * @param mbThreadFlagPersistence the message boards thread flag persistence
+	 */
+	public void setMBThreadFlagPersistence(
+		MBThreadFlagPersistence mbThreadFlagPersistence) {
+		this.mbThreadFlagPersistence = mbThreadFlagPersistence;
 	}
 
 	/**
@@ -5199,14 +5199,14 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 	protected MBMessagePersistence mbMessagePersistence;
 	@BeanReference(type = MBMessageFinder.class)
 	protected MBMessageFinder mbMessageFinder;
-	@BeanReference(type = MBMessageFlagLocalService.class)
-	protected MBMessageFlagLocalService mbMessageFlagLocalService;
-	@BeanReference(type = MBMessageFlagPersistence.class)
-	protected MBMessageFlagPersistence mbMessageFlagPersistence;
 	@BeanReference(type = MBStatsUserLocalService.class)
 	protected MBStatsUserLocalService mbStatsUserLocalService;
 	@BeanReference(type = MBStatsUserPersistence.class)
 	protected MBStatsUserPersistence mbStatsUserPersistence;
+	@BeanReference(type = MBThreadFlagLocalService.class)
+	protected MBThreadFlagLocalService mbThreadFlagLocalService;
+	@BeanReference(type = MBThreadFlagPersistence.class)
+	protected MBThreadFlagPersistence mbThreadFlagPersistence;
 	@BeanReference(type = ShoppingCartLocalService.class)
 	protected ShoppingCartLocalService shoppingCartLocalService;
 	@BeanReference(type = ShoppingCartPersistence.class)

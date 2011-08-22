@@ -1136,15 +1136,6 @@ create table MBMessage (
 	statusDate DATE null
 );
 
-create table MBMessageFlag (
-	messageFlagId LONG not null primary key,
-	userId LONG,
-	modifiedDate DATE null,
-	threadId LONG,
-	messageId LONG,
-	flag INTEGER
-);
-
 create table MBStatsUser (
 	statsUserId LONG not null primary key,
 	groupId LONG,
@@ -1170,6 +1161,13 @@ create table MBThread (
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
 	statusDate DATE null
+);
+
+create table MBThreadFlag (
+	threadFlagId LONG not null primary key,
+	userId LONG,
+	modifiedDate DATE null,
+	threadId LONG
 );
 
 create table MDRAction (

@@ -56,9 +56,9 @@ import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBBanPersistence;
-import com.liferay.portlet.messageboards.service.persistence.MBMessageFlagPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence;
+import com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistence;
 import com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistence;
@@ -7506,10 +7506,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	protected MBBanPersistence mbBanPersistence;
 	@BeanReference(type = MBMessagePersistence.class)
 	protected MBMessagePersistence mbMessagePersistence;
-	@BeanReference(type = MBMessageFlagPersistence.class)
-	protected MBMessageFlagPersistence mbMessageFlagPersistence;
 	@BeanReference(type = MBStatsUserPersistence.class)
 	protected MBStatsUserPersistence mbStatsUserPersistence;
+	@BeanReference(type = MBThreadFlagPersistence.class)
+	protected MBThreadFlagPersistence mbThreadFlagPersistence;
 	@BeanReference(type = ShoppingCartPersistence.class)
 	protected ShoppingCartPersistence shoppingCartPersistence;
 	@BeanReference(type = SocialActivityPersistence.class)

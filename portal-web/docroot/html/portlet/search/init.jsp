@@ -50,8 +50,10 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetRendererFactory" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %>
 <%@ page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil" %>
 <%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %>
 <%@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %>
 <%@ page import="com.liferay.util.PropertyComparator" %>
@@ -167,8 +169,7 @@ private PortletURL _getURL(HttpServletRequest request, ThemeDisplay themeDisplay
 		}
 	}
 
-	PortletURL portletURL = PortletURLFactoryUtil.create(
-		request, portletId, plid, PortletRequest.RENDER_PHASE);
+	PortletURL portletURL = PortletURLFactoryUtil.create(request, portletId, plid, PortletRequest.RENDER_PHASE);
 
 	portletURL.setWindowState(WindowState.MAXIMIZED);
 	portletURL.setPortletMode(PortletMode.VIEW);

@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/search/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_asset_entries") + StringPool.UNDERLINE;
+
 Facet facet = (Facet)request.getAttribute("view.jsp-facet");
 
 FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
@@ -25,17 +27,11 @@ String panelLabel = facetConfiguration.getLabel();
 String facetDisplayStyle = facetConfiguration.getDisplayStyle();
 String cssClass = "search-facet search-".concat(facetDisplayStyle);
 
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_asset_entries") + StringPool.UNDERLINE;
-
 String fieldParam = ParamUtil.getString(request, facet.getFieldName());
 
 JSONObject dataJSONObject = facetConfiguration.getData();
 
-int frequencyThreshold = 0;
-
-if (dataJSONObject.has("frequencyThreshold")) {
-	frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-}
+int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 
 String[] values = new String[0];
 
@@ -50,6 +46,7 @@ if (dataJSONObject.has("values")) {
 }
 
 FacetCollector facetCollector = facet.getFacetCollector();
+
 List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 %>
 
@@ -141,7 +138,6 @@ private String _buildAssetEntriesNavigation(RenderRequest renderRequest, ThemeDi
 	StringBundler sb = new StringBundler();
 
 	sb.append("<ul class=\"asset-type\">");
-
 	sb.append("<li class=\"entry default");
 
 	if (Validator.isNull(selectedTerm)) {
@@ -151,7 +147,6 @@ private String _buildAssetEntriesNavigation(RenderRequest renderRequest, ThemeDi
 	sb.append("\"><a href=\"#\" data-value=\"\"><img alt=\"\" src=\"");
 	sb.append(themeDisplay.getPathThemeImages());
 	sb.append("/common/search.png\" /> ");
-
 	sb.append(LanguageUtil.get(themeDisplay.getLocale(), "everything"));
 	sb.append("</a></li>");
 
@@ -188,7 +183,7 @@ private String _buildAssetEntriesNavigation(RenderRequest renderRequest, ThemeDi
 			sb.append("\" /> ");
 		}
 
-		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "model.resource." + assetType));
+		sb.append(ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), assetType));
 		sb.append("</a> <span class=\"frequency\">(");
 		sb.append(frequency);
 		sb.append(")</span></li>");

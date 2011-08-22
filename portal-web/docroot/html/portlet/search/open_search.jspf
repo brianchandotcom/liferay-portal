@@ -97,16 +97,16 @@ for (int i = 0; i < portlets.size(); i++) {
 	//headerNames.add("tags");
 	//headerNames.add("score");
 
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM + i, 5, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
+	SearchContainer openSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM + i, 5, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
 	if (Validator.isNotNull(primarySearch) && primarySearch.equals(portlet.getOpenSearchClass())) {
 		int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM + i);
 
 		if (delta > 0) {
-			searchContainer.setDelta(delta);
+			openSearchSearchContainer.setDelta(delta);
 		}
 		else {
-			searchContainer.setDelta(SearchContainer.DEFAULT_DELTA);
+			openSearchSearchContainer.setDelta(SearchContainer.DEFAULT_DELTA);
 		}
 	}
 
@@ -115,7 +115,7 @@ for (int i = 0; i < portlets.size(); i++) {
 	List resultRows = new ArrayList();
 
 	try {
-		String xml = openSearch.search(request, groupId, themeDisplay.getUserId(), keywords, searchContainer.getCur(), searchContainer.getDelta(), format);
+		String xml = openSearch.search(request, groupId, themeDisplay.getUserId(), keywords, openSearchSearchContainer.getCur(), openSearchSearchContainer.getDelta(), format);
 
 		xml = XMLFormatter.stripInvalidChars(xml);
 
@@ -131,7 +131,7 @@ for (int i = 0; i < portlets.size(); i++) {
 
 		int total = GetterUtil.getInteger(root.elementText(OpenSearchUtil.getQName("totalResults", OpenSearchUtil.OS_NAMESPACE)));
 
-		resultRows = searchContainer.getResultRows();
+		resultRows = openSearchSearchContainer.getResultRows();
 
 		for (int j = 0; j < entries.size(); j++) {
 			try {
@@ -141,7 +141,7 @@ for (int i = 0; i < portlets.size(); i++) {
 
 				// Position
 
-				//row.addText(SearchEntry.DEFAULT_ALIGN, "top", searchContainer.getStart() + j + 1 + StringPool.PERIOD);
+				//row.addText(SearchEntry.DEFAULT_ALIGN, "top", openSearchSearchContainer.getStart() + j + 1 + StringPool.PERIOD);
 
 				// Summary
 
@@ -279,7 +279,7 @@ for (int i = 0; i < portlets.size(); i++) {
 			}
 		}
 
-		searchContainer.setTotal(total);
+		openSearchSearchContainer.setTotal(total);
 	}
 	catch (Exception e) {
 		_log.error("Error displaying content of type " + portlet.getOpenSearchClass(), e);
@@ -289,19 +289,19 @@ for (int i = 0; i < portlets.size(); i++) {
 	<c:if test="<%= !resultRows.isEmpty() %>">
 
 		<%
-		totalResults = totalResults + searchContainer.getTotal();
+		totalResults = totalResults + openSearchSearchContainer.getTotal();
 		%>
 
 		<div class="section-title">
-			<%= portletTitle %> (<%= searchContainer.getTotal() %>)
+			<%= portletTitle %> (<%= openSearchSearchContainer.getTotal() %>)
 		</div>
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />
+		<liferay-ui:search-iterator searchContainer="<%= openSearchSearchContainer %>" paginate="<%= false %>" />
 
 		<c:choose>
-			<c:when test="<%= (searchContainer.getTotal() == resultRows.size()) || (Validator.isNotNull(primarySearch) && portlet.getOpenSearchClass().equals(primarySearch)) %>">
+			<c:when test="<%= (openSearchSearchContainer.getTotal() == resultRows.size()) || (Validator.isNotNull(primarySearch) && portlet.getOpenSearchClass().equals(primarySearch)) %>">
 				<div class="search-paginator-container">
-					<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="more" />
+					<liferay-ui:search-paginator searchContainer="<%= openSearchSearchContainer %>" type="more" />
 				</div>
 			</c:when>
 			<c:otherwise>

@@ -15,13 +15,13 @@
 --%>
 
 <%
-SearchContainer sc = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
+SearchContainer mainSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
 SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-searchContext.setStart(sc.getStart());
-searchContext.setEnd(sc.getEnd());
 searchContext.setAttribute("paginationType", "more");
+searchContext.setEnd(mainSearchSearchContainer.getEnd());
+searchContext.setStart(mainSearchSearchContainer.getStart());
 
 Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
 
@@ -45,18 +45,10 @@ for (FacetConfiguration facetConfiguration : facetConfigurations) {
 
 Hits hits = FacetedSearcher.getInstance().search(searchContext);
 
-queryTerms = hits.getQueryTerms();
-
 boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAssetCategoriesFacet || displayModifiedRangeFacet;
-
-String menuColumnCss = "search-layout";
-
-if (showMenu) {
-	menuColumnCss += " menu-column";
-}
 %>
 
-<aui:layout cssClass="<%= menuColumnCss %>">
+<aui:layout cssClass='<%= "search-layout" + (showMenu ? " menu-column" : StringPool.BLANK) %>'>
 	<c:if test="<%= showMenu %>">
 		<aui:column cssClass="menu" first="<%= true %>">
 
@@ -65,18 +57,19 @@ if (showMenu) {
 
 			facets = ListUtil.sort(facets, new PropertyComparator("facetConfiguration.weight", false, false));
 
-			for (Facet curFacet : facets) {
-				if (!curFacet.isStatic()) {
-					String facetDisplayStyle = curFacet.getFacetConfiguration().getDisplayStyle();
-					String includePage = "/html/portlet/search/facets/" + facetDisplayStyle + ".jsp";
+			for (Facet facet : facets) {
+				if (facet.isStatic()) {
+					continue;
+				}
 
-					request.setAttribute("view.jsp-facet", curFacet);
+				FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+
+				request.setAttribute("view.jsp-facet", facet);
 			%>
 
-					<liferay-util:include page="<%= includePage %>" />
+				<liferay-util:include page='<%= "/html/portlet/search/facets/" + facetConfiguration.getDisplayStyle() + ".jsp" %>' />
 
 			<%
-				}
 			}
 			%>
 
@@ -86,7 +79,7 @@ if (showMenu) {
 	<aui:column cssClass="result" first="<%= !showMenu %>" last="<%= showMenu %>">
 		<c:if test="<%= (hits != null) && (hits.getLength() > 0) %>">
 			<liferay-ui:search-container
-				searchContainer="<%= sc %>"
+				searchContainer="<%= mainSearchSearchContainer %>"
 			>
 				<liferay-ui:search-container-results
 					results="<%= hits.toList() %>"
@@ -100,7 +93,6 @@ if (showMenu) {
 					keyProperty="uID"
 					stringKey="<%= true %>"
 				>
-
 					<liferay-ui:search-container-column-text>
 						<c:choose>
 							<c:when test="<%= displayResultsInDocumentForm %>">
@@ -111,13 +103,12 @@ if (showMenu) {
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>
-
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator paginate="<%= false %>" />
 
 				<div class="search-paginator-container">
-					<liferay-ui:search-paginator searchContainer="<%= sc %>" type="more" />
+					<liferay-ui:search-paginator searchContainer="<%= mainSearchSearchContainer %>" type="more" />
 				</div>
 
 				<c:if test="<%= (hits != null) %>">

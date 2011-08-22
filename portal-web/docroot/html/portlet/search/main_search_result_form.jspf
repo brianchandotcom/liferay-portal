@@ -105,7 +105,7 @@ rowSB.append(StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms));
 rowSB.append("</a>");
 
 rowSB.append("<br /><span class=\"entry-type\">");
-rowSB.append(LanguageUtil.get(themeDisplay.getLocale(), "model.resource." + entryClassName));
+rowSB.append(ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), entryClassName));
 rowSB.append("</span>");
 
 if (Validator.isNotNull(entrySummary)) {

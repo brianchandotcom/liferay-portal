@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/search/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_term_list") + StringPool.UNDERLINE;
+
 Facet facet = (Facet)request.getAttribute("view.jsp-facet");
 
 FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
@@ -25,25 +27,15 @@ String panelLabel = facetConfiguration.getLabel();
 String facetDisplayStyle = facetConfiguration.getDisplayStyle();
 String cssClass = "search-facet search-".concat(facetDisplayStyle);
 
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_term_list") + StringPool.UNDERLINE;
-
 String fieldParam = ParamUtil.getString(request, facet.getFieldName());
 
 JSONObject dataJSONObject = facetConfiguration.getData();
 
-int frequencyThreshold = 0;
-
-if (dataJSONObject.has("frequencyThreshold")) {
-	frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-}
-
-int maxTerms = 0;
-
-if (dataJSONObject.has("maxTerms")) {
-	maxTerms = dataJSONObject.getInt("maxTerms");
-}
+int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
+int maxTerms = dataJSONObject.getInt("maxTerms");
 
 FacetCollector facetCollector = facet.getFacetCollector();
+
 List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 %>
 
@@ -127,7 +119,6 @@ private String _buildTermListNavigation(ThemeDisplay themeDisplay, String select
 	StringBundler sb = new StringBundler();
 
 	sb.append("<ul class=\"term-list\">");
-
 	sb.append("<li class=\"entry default");
 
 	if (Validator.isNull(selectedTerm)) {

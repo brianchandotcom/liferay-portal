@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/search/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_calendar") + StringPool.UNDERLINE;
+
 Facet facet = (Facet)request.getAttribute("view.jsp-facet");
 
 FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
@@ -24,8 +26,6 @@ FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 String panelLabel = facetConfiguration.getLabel();
 String facetDisplayStyle = facetConfiguration.getDisplayStyle();
 String cssClass = "search-facet search-".concat(facetDisplayStyle);
-
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_calendar") + StringPool.UNDERLINE;
 
 String fieldParam = ParamUtil.getString(request, facet.getFieldName());
 
@@ -52,6 +52,7 @@ if (Validator.isNotNull(fieldParam)) {
 	}
 
 	Calendar calEnd = Calendar.getInstance();
+
 	calEnd.setTime(date);
 
 	if ((cal.get(Calendar.YEAR) == calEnd.get(Calendar.YEAR)) &&

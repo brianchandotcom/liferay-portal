@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/search/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_asset_tags") + StringPool.UNDERLINE;
+
 Facet facet = (Facet)request.getAttribute("view.jsp-facet");
 
 FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
@@ -25,37 +27,17 @@ String panelLabel = facetConfiguration.getLabel();
 String facetDisplayStyle = facetConfiguration.getDisplayStyle();
 String cssClass = "search-facet search-".concat(facetDisplayStyle);
 
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_asset_tags") + StringPool.UNDERLINE;
-
 String fieldParam = ParamUtil.getString(request, facet.getFieldName());
 
 JSONObject dataJSONObject = facetConfiguration.getData();
 
-String tagDisplayStyle = "cloud";
-
-if (dataJSONObject.has("displayStyle")) {
-	tagDisplayStyle = dataJSONObject.getString("displayStyle");
-}
-
-int frequencyThreshold = 0;
-
-if (dataJSONObject.has("frequencyThreshold")) {
-	frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-}
-
-int maxTerms = 10;
-
-if (dataJSONObject.has("maxTerms")) {
-	maxTerms = dataJSONObject.getInt("maxTerms");
-}
-
-boolean showAssetCount = true;
-
-if (dataJSONObject.has("showAssetCount")) {
-	showAssetCount = dataJSONObject.getBoolean("showAssetCount");
-}
+String displayStyle = dataJSONObject.getString("displayStyle", "cloud");
+int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
+int maxTerms = dataJSONObject.getInt("maxTerms", 10);
+boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 FacetCollector facetCollector = facet.getFacetCollector();
+
 List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 %>
 
@@ -64,7 +46,7 @@ List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 		<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 
 		<%
-		String tagsNavigation = _buildTagsNavigation(themeDisplay, fieldParam, panelLabel, tagDisplayStyle, frequencyThreshold, maxTerms, showAssetCount, facetCollector, termCollectors);
+		String tagsNavigation = _buildTagsNavigation(themeDisplay, fieldParam, panelLabel, displayStyle, frequencyThreshold, maxTerms, showAssetCount, facetCollector, termCollectors);
 
 		if (Validator.isNotNull(tagsNavigation)) {
 		%>

@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/search/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_vocabulary") + StringPool.UNDERLINE;
+
 Facet facet = (Facet)request.getAttribute("view.jsp-facet");
 
 FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
@@ -25,23 +27,12 @@ String panelLabel = facetConfiguration.getLabel();
 String facetDisplayStyle = facetConfiguration.getDisplayStyle();
 String cssClass = "search-facet search-".concat(facetDisplayStyle);
 
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_vocabulary") + StringPool.UNDERLINE;
-
 String[] assetCategoryIds = StringUtil.split(ParamUtil.getString(request, facet.getFieldName()));
 
 JSONObject dataJSONObject = facetConfiguration.getData();
 
-boolean matchByName = false;
-
-if (dataJSONObject.has("matchByName")) {
-	matchByName = dataJSONObject.getBoolean("matchByName");
-}
-
-long vocabularyId = 0;
-
-if (dataJSONObject.has("vocabularyId")) {
-	vocabularyId = dataJSONObject.getLong("vocabularyId");
-}
+boolean matchByName = dataJSONObject.getBoolean("matchByName");
+long vocabularyId = dataJSONObject.getLong("vocabularyId");
 
 List<AssetVocabulary> assetVocabularies = new ArrayList<AssetVocabulary>();
 

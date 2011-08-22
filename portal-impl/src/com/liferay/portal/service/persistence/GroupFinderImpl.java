@@ -763,11 +763,7 @@ public class GroupFinderImpl
 				});
 		}
 
-		StringBundler sb = new StringBundler(params.size() + 1);
-
-		sb.append(sql);
-
-		String cacheKey = _getCacheKey(params);
+		String cacheKey = _getCacheKey(sql, params);
 
 		String resultSQL = _replaceJoinAndWhereSQLCache.get(cacheKey);
 
@@ -912,8 +908,12 @@ public class GroupFinderImpl
 		return sb.toString();
 	}
 
-	private String _getCacheKey(LinkedHashMap<String, Object> params) {
-		StringBundler sb = new StringBundler(params.size());
+	private String _getCacheKey(
+		String sql, LinkedHashMap<String, Object> params) {
+
+		StringBundler sb = new StringBundler(params.size() + 1);
+
+		sb.append(sql);
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
@@ -938,7 +938,6 @@ public class GroupFinderImpl
 
 		return sb.toString();
 	}
-
 
 	private String _getCondition(String join) {
 		if (Validator.isNotNull(join)) {

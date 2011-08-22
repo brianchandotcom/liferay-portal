@@ -646,6 +646,14 @@ public class MBMessageLocalServiceUtil {
 		getService().updateAnswer(messageId, answer, cascade);
 	}
 
+	public static void updateAnswer(
+		com.liferay.portlet.messageboards.model.MBMessage message,
+		boolean answer, boolean cascade)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateAnswer(message, answer, cascade);
+	}
+
 	public static void updateAsset(long userId,
 		com.liferay.portlet.messageboards.model.MBMessage message,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,

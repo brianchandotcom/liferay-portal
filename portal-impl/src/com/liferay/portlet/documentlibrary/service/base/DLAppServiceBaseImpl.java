@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.service.LockLocalService;
+import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
@@ -780,6 +781,25 @@ public abstract class DLAppServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the repository entry local service.
+	 *
+	 * @return the repository entry local service
+	 */
+	public RepositoryEntryLocalService getRepositoryEntryLocalService() {
+		return repositoryEntryLocalService;
+	}
+
+	/**
+	 * Sets the repository entry local service.
+	 *
+	 * @param repositoryEntryLocalService the repository entry local service
+	 */
+	public void setRepositoryEntryLocalService(
+		RepositoryEntryLocalService repositoryEntryLocalService) {
+		this.repositoryEntryLocalService = repositoryEntryLocalService;
+	}
+
+	/**
 	 * Returns the repository entry persistence.
 	 *
 	 * @return the repository entry persistence
@@ -1060,6 +1080,8 @@ public abstract class DLAppServiceBaseImpl extends PrincipalBean
 	protected RepositoryService repositoryService;
 	@BeanReference(type = RepositoryPersistence.class)
 	protected RepositoryPersistence repositoryPersistence;
+	@BeanReference(type = RepositoryEntryLocalService.class)
+	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
 	@BeanReference(type = ResourceLocalService.class)

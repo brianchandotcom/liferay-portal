@@ -117,7 +117,7 @@
 					padding: 0;
 				}
 
-				&.search-vocabulary {
+				&.search-asset-vocabulary {
 					li {
 						list-style-type: none;
 						margin: 0;
@@ -136,6 +136,80 @@
 		.result {
 			width: 100%;
 
+			.asset-entry {
+				.asset-entry-categories, .asset-entry-tags {
+					float: left;
+					padding-right: 6px;
+				}
+
+				.asset-entry-fields {
+					table-layout: fixed;
+					width: 100%;
+
+					th {
+						background-color: #CCC;
+						padding: 2px;
+
+						&.key {
+							width: 240px;
+						}
+					}
+
+					td {
+						border-bottom: 1px solid #CCC;
+						padding: 2px;
+
+						&.key {
+						}
+
+						&.value {
+							.container {
+								max-height: 100px;
+								overflow: auto;
+
+								code {
+									word-wrap: break-word;
+								}
+							}
+						}
+					}
+				}
+
+				.asset-entry-summary {
+					display: block;
+				}
+
+				.asset-entry-title {
+					color: #5B677D;
+					display: block;
+					font-size: 1.5em;
+					font-weight: bolder;
+
+					a {
+						text-decoration: none;
+
+						img {
+							position: relative;
+							top: 0.1em;
+						}
+					}
+				}
+
+				.asset-entry-type {
+					/*display: block;*/
+					float: right;
+					font-size: 0.8em;
+					color: #5B677D;
+				}
+
+				.toggle-details {
+					cursor: pointer;
+					float: left;
+					font-family: monospace;
+					font-weight: bold;
+				}
+			}
+
 			.full-query {
 				border: 1px solid #CCC;
 				table-layout: fixed;
@@ -147,70 +221,6 @@
 
 					code {
 						word-wrap: break-word;
-					}
-				}
-			}
-
-			.results-row td {
-				.document {
-					.document-fields {
-						table-layout: fixed;
-						width: 100%;
-
-						th {
-							background-color: #CCC;
-							padding: 2px;
-
-							&.key {
-								width: 240px;
-							}
-						}
-
-						td {
-							border-bottom: 1px solid #CCC;
-							padding: 2px;
-
-							&.key {
-							}
-
-							&.value {
-								.container {
-									max-height: 100px;
-									overflow: auto;
-
-									code {
-										word-wrap: break-word;
-									}
-								}
-							}
-						}
-					}
-
-					.entry-categories, .entry-tags, .document-type {
-						float: left;
-						padding-right: 6px;
-					}
-
-					.entry-title {
-						font-size: 1.5em;
-						font-weight: bolder;
-						text-decoration: none;
-
-						img {
-							position: relative;
-							top: 0.1em;
-						}
-					}
-
-					.entry-type {
-						font-size: 0.8em;
-						color: #5B677D;
-					}
-
-					.toggle-details {
-						cursor: pointer;
-						font-family: monospace;
-						font-weight: bold;
 					}
 				}
 			}

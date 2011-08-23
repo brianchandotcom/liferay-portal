@@ -133,7 +133,7 @@ int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getComp
 				var handle = event.currentTarget;
 				var rowTD = handle.ancestor('.results-row td');
 
-				var documentFields = rowTD.one('.document .document-fields');
+				var documentFields = rowTD.one('.asset-entry .asset-entry-fields');
 
 				if (handle.text() == '[+]') {
 					documentFields.show();
@@ -144,7 +144,7 @@ int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getComp
 					handle.text('[+]');
 				}
 			},
-			'.results-row td .document .toggle-details'
+			'.results-row td .asset-entry .toggle-details'
 		);
 	}
 

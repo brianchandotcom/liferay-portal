@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/search/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_vocabulary") + StringPool.UNDERLINE;
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_search_facets_asset_vocabulary") + StringPool.UNDERLINE;
 
 Facet facet = (Facet)request.getAttribute("view.jsp-facet");
 
@@ -32,12 +32,12 @@ String[] assetCategoryIds = StringUtil.split(ParamUtil.getString(request, facet.
 JSONObject dataJSONObject = facetConfiguration.getData();
 
 boolean matchByName = dataJSONObject.getBoolean("matchByName");
-long vocabularyId = dataJSONObject.getLong("vocabularyId");
+long assetVocabularyId = dataJSONObject.getLong("assetVocabularyId");
 
 List<AssetVocabulary> assetVocabularies = new ArrayList<AssetVocabulary>();
 
-if (vocabularyId > 0) {
-	assetVocabularies.add(AssetVocabularyServiceUtil.getVocabulary(vocabularyId));
+if (assetVocabularyId > 0) {
+	assetVocabularies.add(AssetVocabularyServiceUtil.getVocabulary(assetVocabularyId));
 }
 else {
 	assetVocabularies = AssetVocabularyServiceUtil.getGroupsVocabularies(new long[] {themeDisplay.getScopeGroupId(), themeDisplay.getParentGroupId()});
@@ -50,16 +50,10 @@ FacetCollector facetCollector = facet.getFacetCollector();
 	<div class="<%= cssClass %>" id='<%= randomNamespace + "facet" %>'>
 		<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= StringUtil.merge(assetCategoryIds) %>" />
 
-		<aui:field-wrapper cssClass='<%= randomNamespace + "vocabulary vocabulary" %>' label="" name="<%= facet.getFieldName() %>">
+		<aui:field-wrapper cssClass='<%= randomNamespace + "asset-vocabulary asset-vocabulary" %>' label="" name="<%= facet.getFieldName() %>">
 
 			<%
 			for (AssetVocabulary assetVocabulary : assetVocabularies) {
-				String name = HtmlUtil.escape(assetVocabulary.getName());
-
-				if (vocabularyId > 0) {
-					name = StringPool.BLANK;
-				}
-
 				String vocabularyNavigation = _buildVocabularyNavigation(assetVocabulary, assetCategoryIds, matchByName, facetCollector);
 			%>
 
@@ -76,7 +70,7 @@ FacetCollector facetCollector = facet.getFacetCollector();
 		<liferay-ui:message key="<%= panelLabel %>" />: <aui:a href='<%= "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "clearFacet();" %>'><liferay-ui:message key="clear" /></aui:a>
 
 		<aui:script position="inline" use="aui-base">
-			var container = A.one('.portlet-search .menu .search-vocabulary .<%= randomNamespace %>vocabulary');
+			var container = A.one('.portlet-search .menu .search-asset-vocabulary .<%= randomNamespace %>asset-vocabulary');
 
 			if (container) {
 				container.delegate(
@@ -88,7 +82,7 @@ FacetCollector facetCollector = facet.getFacetCollector();
 
 						var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-						var currentTerms = A.all('.portlet-search .menu .search-vocabulary .<%= randomNamespace %>vocabulary .facet-value.current-term a');
+						var currentTerms = A.all('.portlet-search .menu .search-asset-vocabulary .<%= randomNamespace %>asset-vocabulary .facet-value.current-term a');
 
 						if (currentTerms) {
 							currentTerms.each(
@@ -185,7 +179,7 @@ private String _buildVocabularyNavigation(AssetVocabulary assetVocabulary, Strin
 
 	StringBundler sb = new StringBundler();
 
-	sb.append("<div class=\"search-vocabulary-list-container\"><ul class=\"search-vocabulary-list\">");
+	sb.append("<div class=\"search-asset-vocabulary-list-container\"><ul class=\"search-asset-vocabulary-list\">");
 
 	_buildCategoriesNavigation(assetCategories, assetCategoryIds, matchByName, sb, facetCollector);
 

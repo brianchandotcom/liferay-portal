@@ -14,7 +14,16 @@
  */
 --%>
 
+<%@ include file="/html/portlet/search/init.jsp" %>
+
 <%
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+Document document = (Document)row.getObject();
+
+PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+String[] queryTerms = (String[])request.getAttribute("view.jsp-queryTerms");
+
 String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
 long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 long resourcePrimKey = GetterUtil.getLong(document.get(Field.ROOT_ENTRY_CLASS_PK));
@@ -88,115 +97,114 @@ else {
 	entryTitle = summaryObj.getTitle();
 	entrySummary = StringUtil.shorten(summaryObj.getContent(), 200);
 }
-
-StringBundler rowSB = new StringBundler();
-
-rowSB.append("<a class=\"entry-title\" href=\"");
-rowSB.append(viewURL);
-rowSB.append("\">");
-
-if (assetRendererFactory != null) {
-	rowSB.append("<img alt=\"\" src=\"");
-	rowSB.append(assetRendererFactory.getIconPath(renderRequest));
-	rowSB.append("\" /> ");
-}
-
-rowSB.append(StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms));
-rowSB.append("</a>");
-
-rowSB.append("<br /><span class=\"entry-type\">");
-rowSB.append(ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), entryClassName));
-rowSB.append("</span>");
-
-if (Validator.isNotNull(entrySummary)) {
-	rowSB.append("<br />");
-	rowSB.append(StringUtil.highlight(HtmlUtil.escape(entrySummary), queryTerms));
-}
-
-// Tags
-
-String[] tags = document.getValues(Field.ASSET_TAG_NAMES);
-
-if (Validator.isNotNull(tags[0])) {
-	rowSB.append("<br />");
-
-	for (int k = 0; k < tags.length; k++) {
-		String tag = tags[k];
-
-		String newKeywords = tag.trim();
-
-		PortletURL tagURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		tagURL.setParameter(Field.ASSET_TAG_NAMES, newKeywords);
-
-		if (k == 0) {
-			rowSB.append("<div class=\"entry-tags\">");
-			rowSB.append("<div class=\"taglib-asset-tags-summary\">");
-		}
-
-		rowSB.append("<a class=\"tag\" href=\"");
-		rowSB.append(tagURL.toString());
-		rowSB.append("\">");
-		rowSB.append(tag);
-		rowSB.append("</a>");
-
-		if ((k + 1) == tags.length) {
-			rowSB.append("</div>");
-			rowSB.append("</div>");
-		}
-	}
-}
-
-// Categories
-
-String[] categoryIds = document.getValues(Field.ASSET_CATEGORY_IDS);
-
-if (Validator.isNotNull(categoryIds[0])) {
-	if (Validator.isNotNull(tags[0])) {
-		rowSB.append("<br />");
-	}
-
-	for (int k = 0; k < categoryIds.length; k++) {
-
-		String categoryId = categoryIds[k];
-
-		AssetCategory category = null;
-
-		try {
-			category = AssetCategoryLocalServiceUtil.getCategory(GetterUtil.getLong(categoryId));
-		}
-		catch (NoSuchCategoryException nsce) {
-			continue;
-		}
-
-		AssetVocabulary vocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(category.getVocabularyId());
-
-		PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		categoryURL.setParameter(Field.ASSET_CATEGORY_NAMES, category.getName());
-
-		if (k == 0) {
-			rowSB.append("<div class=\"entry-categories\">");
-			rowSB.append("<div class=\"taglib-asset-categories-summary\">");
-			rowSB.append("<span class=\"asset-vocabulary\">");
-			rowSB.append(HtmlUtil.escape(vocabulary.getTitle(locale)));
-			rowSB.append(":</span> ");
-		}
-
-		rowSB.append("<a class=\"asset-category\" href=\"");
-		rowSB.append(categoryURL.toString());
-		rowSB.append("\">");
-		rowSB.append(_buildCategoryPath(category, locale));
-		rowSB.append("</a>");
-
-		if ((k + 1) == categoryIds.length) {
-			rowSB.append("</div>");
-			rowSB.append("</div>");
-		}
-	}
-}
 %>
 
-<span class="document">
-	<%= rowSB.toString() %>
+<span class="asset-entry">
+	<span class="asset-entry-type">
+		<%= ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), entryClassName) %>
+	</span>
+
+	<span class="asset-entry-title">
+		<a href="<%= viewURL %>">
+			<c:if test="<%= assetRendererFactory != null %>">
+				<img alt="\" src="<%= assetRendererFactory.getIconPath(renderRequest) %>" />
+			</c:if>
+
+			<%= StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
+		</a>
+	</span>
+
+	<c:if test="<%= Validator.isNotNull(entrySummary) %>" >
+		<span class="asset-entry-summary">
+			<%= StringUtil.highlight(HtmlUtil.escape(entrySummary), queryTerms) %>
+		</span>
+	</c:if>
+
+	<%
+	String[] tags = document.getValues(Field.ASSET_TAG_NAMES);
+	%>
+
+	<c:if test="<%= Validator.isNotNull(tags[0]) %>">
+		<div class="asset-entry-tags">
+
+			<%
+			for (int k = 0; k < tags.length; k++) {
+				String tag = tags[k];
+
+				String newKeywords = tag.trim();
+
+				PortletURL tagURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+				tagURL.setParameter(Field.ASSET_TAG_NAMES, newKeywords);
+			%>
+
+				<c:if test="<%= k == 0 %>">
+					<div class="taglib-asset-tags-summary">
+				</c:if>
+
+				<a class="tag" href="<%= tagURL.toString() %>"><%= tag %></a>
+
+				<c:if test="<%= (k + 1) == tags.length %>">
+					</div>
+				</c:if>
+
+			<%
+			}
+			%>
+
+		</div>
+	</c:if>
+
+	<%
+	String[] categoryIds = document.getValues(Field.ASSET_CATEGORY_IDS);
+	%>
+
+	<c:if test="<%= Validator.isNotNull(categoryIds[0]) %>">
+		<div class="asset-entry-categories">
+
+			<%
+			for (int k = 0; k < categoryIds.length; k++) {
+
+				String categoryId = categoryIds[k];
+
+				AssetCategory assetCategory = null;
+
+				try {
+					assetCategory = AssetCategoryLocalServiceUtil.getCategory(GetterUtil.getLong(categoryId));
+				}
+				catch (NoSuchCategoryException nsce) {
+				}
+
+				if (assetCategory == null) {
+					continue;
+				}
+
+				AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetCategory.getVocabularyId());
+
+				PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+				categoryURL.setParameter(Field.ASSET_CATEGORY_NAMES, assetCategory.getName());
+			%>
+
+				<c:if test="<%= k == 0 %>">
+					<div class="taglib-asset-categories-summary">
+						<span class="asset-vocabulary">
+							<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>:
+						</span>
+				</c:if>
+
+				<a class="asset-category" href="<%= categoryURL.toString() %>">
+					<%= _buildCategoryPath(assetCategory, locale) %>
+				</a>
+
+				<c:if test="<%= (k + 1) == categoryIds.length %>">
+					</div>
+				</c:if>
+
+			<%
+			}
+			%>
+
+		</div>
+	</c:if>
 </span>

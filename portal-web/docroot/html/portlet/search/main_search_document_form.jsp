@@ -14,16 +14,32 @@
  */
 --%>
 
-<span class="document">
+<%@ include file="/html/portlet/search/init.jsp" %>
 
-	<%
-	String className = document.get(Field.ENTRY_CLASS_NAME);
-	long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
-	%>
+<%
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+Document document = (Document)row.getObject();
+
+PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+String[] queryTerms = (String[])request.getAttribute("view.jsp-queryTerms");
+
+String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
+
+AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(entryClassName);
+%>
+
+<span class="asset-entry">
+	<span class="asset-entry-type">
+		<%= ResourceActionsUtil.getModelResource(locale, entryClassName) %>
+	</span>
 
 	<span class="toggle-details">[+]</span>
 
-	<span class="entry-title">
+	<span class="asset-entry-title">
+		<c:if test="<%= assetRendererFactory != null %>">
+			<img alt="\" src="<%= assetRendererFactory.getIconPath(renderRequest) %>" />
+		</c:if>
 
 		<%
 		String name = document.get(locale, Field.NAME);
@@ -40,101 +56,95 @@
 		<%= name %>
 	</span>
 
-	<br />
-
-	<span class="entry-type"><%= ResourceActionsUtil.getModelResource(locale, className) %></span>
-
-	<br />
-
 	<%
 	String[] tags = document.getValues(Field.ASSET_TAG_NAMES);
-
-	if (Validator.isNotNull(tags[0])) {
-		StringBundler sb = new StringBundler();
-
-		for (int k = 0; k < tags.length; k++) {
-			String tag = tags[k];
-
-			String newKeywords = tag.trim();
-
-			PortletURL tagURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-			tagURL.setParameter(Field.ASSET_TAG_NAMES, newKeywords);
-
-			if (k == 0) {
-				sb.append("<div class=\"entry-tags\">");
-				sb.append("<div class=\"taglib-asset-tags-summary\">");
-			}
-
-			sb.append("<a class=\"tag\" href=\"");
-			sb.append(tagURL.toString());
-			sb.append("\">");
-			sb.append(tag);
-			sb.append("</a>");
-
-			if ((k + 1) == tags.length) {
-				sb.append("</div>");
-				sb.append("</div>");
-			}
-		}
 	%>
 
-		<%= sb.toString() %>
+	<c:if test="<%= Validator.isNotNull(tags[0]) %>">
+		<div class="asset-entry-tags">
+
+			<%
+			for (int k = 0; k < tags.length; k++) {
+				String tag = tags[k];
+
+				String newKeywords = tag.trim();
+
+				PortletURL tagURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+				tagURL.setParameter(Field.ASSET_TAG_NAMES, newKeywords);
+			%>
+
+				<c:if test="<%= k == 0 %>">
+					<div class="taglib-asset-tags-summary">
+				</c:if>
+
+				<a class="tag" href="<%= tagURL.toString() %>"><%= tag %></a>
+
+				<c:if test="<%= (k + 1) == tags.length %>">
+					</div>
+				</c:if>
+
+			<%
+			}
+			%>
+
+		</div>
+	</c:if>
 
 	<%
-	}
-
 	String[] categoryIds = document.getValues(Field.ASSET_CATEGORY_IDS);
-
-	if (Validator.isNotNull(categoryIds[0])) {
-		StringBundler sb = new StringBundler();
-
-		for (int k = 0; k < categoryIds.length; k++) {
-			String categoryId = categoryIds[k];
-
-			AssetCategory category = null;
-
-			try {
-				category = AssetCategoryLocalServiceUtil.getCategory(GetterUtil.getLong(categoryId));
-			}
-			catch (NoSuchCategoryException nsce) {
-				continue;
-			}
-
-			AssetVocabulary vocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(category.getVocabularyId());
-
-			PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-			categoryURL.setParameter(Field.ASSET_CATEGORY_NAMES, category.getName());
-
-			if (k == 0) {
-				sb.append("<div class=\"entry-categories\">");
-				sb.append("<div class=\"taglib-asset-categories-summary\">");
-				sb.append("<span class=\"asset-vocabulary\">");
-				sb.append(HtmlUtil.escape(vocabulary.getTitle(locale)));
-				sb.append(":</span> ");
-			}
-
-			sb.append("<a class=\"asset-category\" href=\"");
-			sb.append(categoryURL.toString());
-			sb.append("\">");
-			sb.append(_buildCategoryPath(category, locale));
-			sb.append("</a>");
-
-			if ((k + 1) == categoryIds.length) {
-				sb.append("</div>");
-				sb.append("</div>");
-			}
-		}
 	%>
 
-		<%= sb.toString() %>
+	<c:if test="<%= Validator.isNotNull(categoryIds[0]) %>">
+		<div class="asset-entry-categories">
 
-	<%
-	}
-	%>
+			<%
+			for (int k = 0; k < categoryIds.length; k++) {
 
-	<table class="lfr-table document-fields aui-helper-hidden">
+				String categoryId = categoryIds[k];
+
+				AssetCategory assetCategory = null;
+
+				try {
+					assetCategory = AssetCategoryLocalServiceUtil.getCategory(GetterUtil.getLong(categoryId));
+				}
+				catch (NoSuchCategoryException nsce) {
+				}
+
+				if (assetCategory == null) {
+					continue;
+				}
+
+				AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetCategory.getVocabularyId());
+
+				PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+				categoryURL.setParameter(Field.ASSET_CATEGORY_NAMES, assetCategory.getName());
+			%>
+
+				<c:if test="<%= k == 0 %>">
+					<div class="taglib-asset-categories-summary">
+						<span class="asset-vocabulary">
+							<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>:
+						</span>
+				</c:if>
+
+				<a class="asset-category" href="<%= categoryURL.toString() %>">
+					<%= _buildCategoryPath(assetCategory, locale) %>
+				</a>
+
+				<c:if test="<%= (k + 1) == categoryIds.length %>">
+					</div>
+				</c:if>
+
+			<%
+			}
+			%>
+
+		</div>
+	</c:if>
+
+	<table class="lfr-table asset-entry-fields aui-helper-hidden">
 		<thead>
 			<tr>
 				<th class="key"><liferay-ui:message key="key" /></th>

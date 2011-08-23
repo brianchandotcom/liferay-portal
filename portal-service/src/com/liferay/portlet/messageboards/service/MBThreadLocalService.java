@@ -230,6 +230,12 @@ public interface MBThreadLocalService extends PersistedModelLocalService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	public com.liferay.portlet.messageboards.model.MBThread addThread(
+		long categoryId,
+		com.liferay.portlet.messageboards.model.MBMessage message)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

@@ -245,6 +245,14 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 		_mbThreadLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public com.liferay.portlet.messageboards.model.MBThread addThread(
+		long categoryId,
+		com.liferay.portlet.messageboards.model.MBMessage message)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.addThread(categoryId, message);
+	}
+
 	public void deleteThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

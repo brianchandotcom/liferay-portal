@@ -274,7 +274,7 @@ else if (dlFileEntryType != null) {
 				%>
 
 				<c:choose>
-					<c:when test="<%= !cmd.equals(Constants.ADD) %>">
+					<c:when test="<%= ((!cmd.equals(Constants.ADD)) && (dlFileEntryTypes.size() > 1)) %>">
 						<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= renderResponse.getNamespace() + "changeFileEntryType();" %>'>
 
 							<%

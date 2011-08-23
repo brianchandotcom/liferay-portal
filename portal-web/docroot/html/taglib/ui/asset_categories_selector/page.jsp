@@ -32,7 +32,12 @@ if (Validator.isNotNull(className)) {
 
 	List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 
-	vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false));
+	if (themeDisplay.getScopeGroup().getClassName().equals("com.liferay.portal.model.Layout")) {
+		vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(themeDisplay.getScopeGroup().getParentGroupId(), false));
+	}
+	else {
+		vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false));
+	}
 
 	if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 		vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId(), false));

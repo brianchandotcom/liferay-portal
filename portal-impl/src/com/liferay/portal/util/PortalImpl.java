@@ -2146,7 +2146,7 @@ public class PortalImpl implements Portal {
 		throws PortalException, SystemException {
 
 		String layoutURL = getLayoutURL(layout, themeDisplay, doAsUser);
-		String portalURL = themeDisplay.getPortalURL();
+		String portalURL = getPortalURL(themeDisplay, layout);
 
 		if (StringUtil.startsWith(layoutURL, portalURL)) {
 			return layoutURL;
@@ -2800,22 +2800,28 @@ public class PortalImpl implements Portal {
 	public String getPortalURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
+		return getPortalURL(themeDisplay, null);
+	}
+
+	public String getPortalURL(ThemeDisplay themeDisplay, Layout layout)
+		throws PortalException, SystemException {
+
 		String serverName = themeDisplay.getServerName();
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout != null) {
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			String virtualHostname = layoutSet.getVirtualHostname();
-
-			if (Validator.isNotNull(virtualHostname)) {
-				serverName = virtualHostname;
-			}
+		if (layout == null) {
+			layout = themeDisplay.getLayout();
 		}
 
-		return getPortalURL(
-			serverName, themeDisplay.getServerPort(), themeDisplay.isSecure());
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		String virtualHostname = layoutSet.getVirtualHostname();
+
+		if (Validator.isNotNull(virtualHostname)) {
+			serverName = virtualHostname;
+		}
+
+		return getPortalURL( serverName, themeDisplay.getServerPort(),
+				themeDisplay.isSecure());
 	}
 
 	public String getPortalWebDir() {

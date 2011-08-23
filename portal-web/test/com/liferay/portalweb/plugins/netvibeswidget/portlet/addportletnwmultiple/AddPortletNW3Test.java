@@ -89,7 +89,7 @@ public class AddPortletNW3Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//section"));
-		assertTrue(selenium.isVisible("//div[2]/section"));
-		assertTrue(selenium.isVisible("//div[3]/section"));
+		assertTrue(selenium.isVisible("//div[2]/div/section"));
+		assertTrue(selenium.isVisible("//div[3]/div/section"));
 	}
 }

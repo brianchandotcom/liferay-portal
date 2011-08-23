@@ -18,15 +18,19 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.InputStream;
 import java.io.Serializable;
-
 import java.util.Map;
 
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
+ * @author Eduardo Lundgren
  */
 public class DefaultWorkflowDefinition
 	implements Serializable, WorkflowDefinition {
+
+	public String getContent() {
+		return _content;
+	}
 
 	public InputStream getInputStream() {
 		return _inputStream;
@@ -65,6 +69,10 @@ public class DefaultWorkflowDefinition
 		_active = active;
 	}
 
+	public void setContent(String content) {
+		_content = content;
+	}
+
 	public void setInputStream(InputStream inputStream) {
 		_inputStream = inputStream;
 	}
@@ -86,6 +94,7 @@ public class DefaultWorkflowDefinition
 	}
 
 	private boolean _active;
+	private String _content;
 	private InputStream _inputStream;
 	private String _name;
 	private Map<String, Object> _optionalAttributes;

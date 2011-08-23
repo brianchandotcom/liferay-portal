@@ -30,8 +30,7 @@ public class ViewCategoryMessageMyPostsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,14 +41,21 @@ public class ViewCategoryMessageMyPostsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Posts", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Posts", RuntimeVariables.replace("My Posts"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//td[3]/a"));
+		assertTrue(selenium.isVisible("//td[4]/a"));
+		assertTrue(selenium.isPartialText("//td[5]/a", "By: Joe Bloggs"));
 	}
 }

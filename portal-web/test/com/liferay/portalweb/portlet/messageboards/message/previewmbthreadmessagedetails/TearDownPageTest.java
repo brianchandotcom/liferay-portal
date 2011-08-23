@@ -161,28 +161,10 @@ public class TearDownPageTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
+
+			case 3:
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean page2Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -195,26 +177,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
@@ -223,7 +185,9 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//button[3]")) {
+						if (RuntimeVariables.replace("Delete")
+												.equals(selenium.getText(
+										"//button[3]"))) {
 							break;
 						}
 					}
@@ -241,28 +205,10 @@ public class TearDownPageTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
+
+			case 4:
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean page3Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -275,26 +221,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
@@ -303,7 +229,9 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//button[3]")) {
+						if (RuntimeVariables.replace("Delete")
+												.equals(selenium.getText(
+										"//button[3]"))) {
 							break;
 						}
 					}
@@ -321,28 +249,10 @@ public class TearDownPageTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
+
+			case 5:
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean page4Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -355,26 +265,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
@@ -383,7 +273,9 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//button[3]")) {
+						if (RuntimeVariables.replace("Delete")
+												.equals(selenium.getText(
+										"//button[3]"))) {
 							break;
 						}
 					}
@@ -401,28 +293,10 @@ public class TearDownPageTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
+
+			case 6:
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean page5Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -435,26 +309,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
@@ -463,7 +317,9 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//button[3]")) {
+						if (RuntimeVariables.replace("Delete")
+												.equals(selenium.getText(
+										"//button[3]"))) {
 							break;
 						}
 					}
@@ -482,10 +338,6 @@ public class TearDownPageTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 3:
-			case 4:
-			case 5:
-			case 6:
 			case 7:
 			case 100:
 				label = -1;

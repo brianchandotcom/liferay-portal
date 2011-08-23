@@ -30,8 +30,7 @@ public class SearchCategoryMessageQuotesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,19 +41,19 @@ public class SearchCategoryMessageQuotesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(
-				"M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_19_keywords1']",
-			RuntimeVariables.replace("\"T\u00e9st M\u00e9ssag\u00e9\""));
+			RuntimeVariables.replace("\"MB Category Thread Message Subject\""));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
 			selenium.getText("//td[3]/a"));
 		selenium.open("/web/guest/home/");
 
@@ -64,8 +63,7 @@ public class SearchCategoryMessageQuotesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -76,19 +74,18 @@ public class SearchCategoryMessageQuotesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(
-				"M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_19_keywords1']",
-			RuntimeVariables.replace("\"T\u00e9st1 M\u00e9ssag\u00e91\""));
+			RuntimeVariables.replace(
+				"\"MB1 Category1 Thread1 Message1 Subject1\""));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent(
-				"link=T\u00e9st M\u00e9ssag\u00e9"));
+		assertFalse(selenium.isTextPresent("MB Category Thread Message Subject"));
 	}
 }

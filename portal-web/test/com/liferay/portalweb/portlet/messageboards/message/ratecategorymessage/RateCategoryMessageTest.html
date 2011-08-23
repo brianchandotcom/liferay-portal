@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RateCategoryMessageTest</title>
 </head>
 <body>
@@ -17,54 +14,64 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Tést Méssagé</td>
-	<td></td>
+	<td>//td[1]/a</td>
+	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>assertText</td>
 	<td>//div[@class='taglib-ratings thumbs']/div/div/div</td>
-	<td>0 Votes</td>
+	<td>0 (0 Votes)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
-	<td></td>
+	<td>Thumb Up (Unchecked)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']</td>
-	<td></td>
+	<td>Thumb Down (Unchecked)</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']</td>
-	<td></td>
+	<td>Thumb Up (Checked)</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']</td>
-	<td></td>
+	<td>Thumb Down (Checked)</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//div[@class='taglib-ratings thumbs']/div/div/a[1]</td>
-	<td></td>
+	<td>Thumb Up</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -79,27 +86,27 @@
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
-	<td></td>
+	<td>Thumb Up (Unchecked)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']</td>
-	<td></td>
+	<td>Thumb Down (Unchecked)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']</td>
-	<td></td>
+	<td>Thumb Up (Checked)</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']</td>
-	<td></td>
+	<td>Thumb Down (Checked)</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//div[@class='taglib-ratings thumbs']/div/div/a[2]</td>
-	<td></td>
+	<td>Thumb Down</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -112,29 +119,29 @@
 	<td>-1 (1 Vote)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
-	<td></td>
+	<td>Thumb Up (Unchecked)</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']</td>
-	<td></td>
+	<td>Thumb Down (Unchecked)</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']</td>
-	<td></td>
+	<td>Thumb Up (Checked)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']</td>
-	<td></td>
+	<td>Thumb Down (Checked)</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//div[@class='taglib-ratings thumbs']/div/div/a[2]</td>
-	<td></td>
+	<td>Thumb Down</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -147,24 +154,24 @@
 	<td>0 (0 Votes)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
-	<td></td>
+	<td>Thumb Up (Unchecked)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']</td>
-	<td></td>
+	<td>Thumb Down (Unchecked)</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']</td>
-	<td></td>
+	<td>Thumb Up (Checked)</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']</td>
-	<td></td>
+	<td>Thumb Down (Checked)</td>
 </tr>
 
 </tbody></table>

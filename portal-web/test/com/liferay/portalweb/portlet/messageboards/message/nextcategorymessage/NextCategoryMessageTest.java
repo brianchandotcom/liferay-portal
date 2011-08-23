@@ -30,8 +30,7 @@ public class NextCategoryMessageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,29 +41,43 @@ public class NextCategoryMessageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread3 Message Subject"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("MB Category Thread3 Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st3 M\u00e9ssag\u00e93"),
-			selenium.getText("//div[1]/h1/span"));
-		selenium.clickAt("//form/div[2]/div[1]/a",
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread3 Message Subject"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Next"),
+			selenium.getText("//div[@class='thread-navigation']/a"));
+		selenium.clickAt("//div[@class='thread-navigation']/a",
 			RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st2 M\u00e9ssag\u00e92"),
-			selenium.getText("//div[1]/h1/span"));
-		selenium.clickAt("//form/div[2]/div[1]/a[2]",
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread2 Message Subject"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Next"),
+			selenium.getText("//div[@class='thread-navigation']/a[2]"));
+		selenium.clickAt("//div[@class='thread-navigation']/a[2]",
 			RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st1 M\u00e9ssag\u00e91"),
-			selenium.getText("//div[1]/h1/span"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread1 Message Subject"),
+			selenium.getText("//h1[@class='header-title']"));
 	}
 }

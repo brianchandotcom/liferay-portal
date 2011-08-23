@@ -438,6 +438,10 @@ public class WebServerServlet extends HttpServlet {
 
 				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
+				if ("language".equals(pathArray[0])) {
+					return -1;
+				}
+
 				FileEntry fileEntry = getFileEntry(pathArray);
 
 				if (fileEntry == null) {

@@ -82,7 +82,7 @@ long assetClassPK = 0;
 		<liferay-ui:panel cssClass="document-type" collapsible="<%= true %>" id="documentTypePanel" persistState="<%= true %>" title="document-type">
 			<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
 
-			<div class="document-type-selector" id="<portlet:namespace />documentTypeSelector">
+			<div class="document-type-selector">
 				<liferay-ui:icon-menu align="left" direction="down" id="groupSelector" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName()) : "basic-document" %>'>
 					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewBasicFileEntryTypeURL">
 						<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
@@ -91,7 +91,7 @@ long assetClassPK = 0;
 						<portlet:param name="fileEntryTypeId" value="0" />
 					</liferay-portlet:resourceURL>
 
-					<liferay-ui:icon cssClass="upload-multiple-document-types" image="copy" message="basic-document" method="get" url="<%= viewBasicFileEntryTypeURL %>" />
+					<liferay-ui:icon id='<%= "fileEntryType_0" %>' cssClass="upload-multiple-document-types" image="copy" message="basic-document" method="get" url="<%= viewBasicFileEntryTypeURL %>" />
 
 					<%
 					for (DLFileEntryType curFileEntryType : fileEntryTypes) {
@@ -104,7 +104,7 @@ long assetClassPK = 0;
 							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(curFileEntryType.getFileEntryTypeId()) %>" />
 						</liferay-portlet:resourceURL>
 
-						<liferay-ui:icon cssClass="upload-multiple-document-types" image="copy" message="<%= curFileEntryType.getName() %>" method="get" url="<%= viewFileEntryTypeURL %>" />
+						<liferay-ui:icon id='<%= "fileEntryType_" + String.valueOf(curFileEntryType.getFileEntryTypeId()) %>' cssClass="upload-multiple-document-types" image="copy" message="<%= curFileEntryType.getName() %>" method="get" url="<%= viewFileEntryTypeURL %>" />
 
 					<%
 					}
@@ -145,9 +145,9 @@ long assetClassPK = 0;
 			<aui:script use="aui-base">
 				var commonFileMetadataContainer = A.one('#<portlet:namespace />commonFileMetadataContainer');
 
-				var documentTypeSelector = A.one('#<portlet:namespace />documentTypeSelector');
+				var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector ul');
 
-				documentTypeSelector.delegate(
+				groupSelectorMenu.delegate(
 					'click',
 					function(event) {
 						event.preventDefault();
@@ -161,7 +161,7 @@ long assetClassPK = 0;
 							}
 						);
 					},
-					'.upload-multiple-document-types a'
+					'li a'
 				);
 			</aui:script>
 		</liferay-ui:panel>

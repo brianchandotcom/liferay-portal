@@ -41,25 +41,45 @@ public class AddWikiNodeNameNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Wiki"),
+			selenium.getText("//li[9]/a"));
+		selenium.clickAt("//li[9]/a", RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Wiki']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Wiki"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_154_name", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_154_name']", RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_154_description",
-			RuntimeVariables.replace("This is a wiki node test."));
+		selenium.type("//textarea[@id='_154_description']",
+			RuntimeVariables.replace("Wiki Node Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//fieldset/div/span[1]/span/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid name."));
+		assertEquals(RuntimeVariables.replace("This field is required."),
+			selenium.getText("//fieldset/div/span[1]/span/span"));
 	}
 }

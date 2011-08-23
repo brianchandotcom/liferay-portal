@@ -30,7 +30,7 @@ public class AddFrontPageChildPageNameSymbolTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,158 +41,376 @@ public class AddFrontPageChildPageNameSymbolTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Test%"));
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace(
+				"Wiki\\ Front\\ Page\\ Child\\ Page\\ Title\\"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki page test."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace(
+				"Wiki\\ Front\\ Page\\ Child\\ Page\\ Content\\"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid title."));
-		selenium.clickAt("link=FrontPage", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Test\\"));
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki] Front] Page] Child] Page] Title]"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki page test."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki] Front] Page] Child] Page] Content]"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid title."));
-		selenium.clickAt("link=FrontPage", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Test]"));
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki[ Front[ Page[ Child[ Page[ Title["));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki page test."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki[ Front[ Page[ Child[ Page[ Content["));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid title."));
-		selenium.clickAt("link=FrontPage", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Test["));
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki; Front; Page; Child; Page; Title;"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki page test."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki; Front; Page; Child; Page; Content;"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid title."));
-		selenium.clickAt("link=FrontPage", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Test;"));
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki: Front: Page: Child: Page: Title:"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki page test."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki: Front: Page: Child: Page: Content:"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid title."));
-		selenium.clickAt("link=FrontPage", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Test:"));
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki| Front| Page| Child| Page| Title|"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki page test."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki| Front| Page| Child| Page| Content|"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid title."));
-		selenium.clickAt("link=FrontPage", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Test|"));
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki< Front< Page< Child< Page< Title<"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki page test."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki< Front< Page< Child< Page< Content<"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid title."));
-		selenium.clickAt("link=FrontPage", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Test<"));
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki> Front> Page> Child> Page> Title>"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki page test."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki> Front> Page> Child> Page> Content>"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid title."));
-		selenium.clickAt("link=FrontPage", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Test>"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki page test."));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid title."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

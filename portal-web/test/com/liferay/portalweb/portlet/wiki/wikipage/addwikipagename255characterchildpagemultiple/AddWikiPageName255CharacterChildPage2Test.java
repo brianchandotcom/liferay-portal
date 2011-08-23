@@ -31,7 +31,7 @@ public class AddWikiPageName255CharacterChildPage2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -42,42 +42,73 @@ public class AddWikiPageName255CharacterChildPage2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace(""));
+		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title",
-			RuntimeVariables.replace("Front2 Page2 Child2 Page2 Test2"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
+		assertEquals(RuntimeVariables.replace(
+				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace(
-				"This is a front2 page2 child2 page2 test2."));
+				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[7]/div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[7]/div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki Page Child Page2 Title"));
+		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki Page Child Page2 Content"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertEquals(RuntimeVariables.replace("Front2 Page2 Child2 Page2 Test2"),
-			selenium.getText("//div[@class='child-pages']/ul/li[2]/a"));
-		selenium.clickAt("link=Front2 Page2 Child2 Page2 Test2",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//div[2]/h1/span",
-				"Front2 Page2 Child2 Page2 Test2"));
 		assertEquals(RuntimeVariables.replace(
-				"This is a front2 page2 child2 page2 test2."),
-			selenium.getText("//div/div[5]/div"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Child Page1 Title"),
+			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Child Page2 Title"),
+			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
+		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
+			RuntimeVariables.replace("Wiki Page Child Page2 Title"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Wiki Page Child Page2 Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Child Page2 Content"),
+			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

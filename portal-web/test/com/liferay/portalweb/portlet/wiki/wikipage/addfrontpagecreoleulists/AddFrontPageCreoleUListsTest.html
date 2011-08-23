@@ -14,79 +14,139 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/div/a</td>
+	<td>This page is empty. Edit it to add some text.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=This page is empty. Edit it to add some text.</td>
+	<td>//div[@class='wiki-body']/div/a</td>
+	<td>This page is empty. Edit it to add some text.</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[@id='cke_34_label']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@id='cke_34_label']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_content</td>
-	<td>* Item<br />** Subitem<br />* Item<br />** Subitem<br />** Subitem<br />* Item<br />** Subitem<br />** Subitem<br />** Subitem</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>* Item1<br />** Subitem1a<br />* Item2<br />** Subitem2a<br />** Subitem2b<br />* Item3<br />** Subitem3a<br />** Subitem3b<br />** Subitem3c</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@id='cke_34_label']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li[1]</td>
-	<td>Item Subitem</td>
+	<td>//div[@class='wiki-body']/ul</td>
+	<td>Item1 Subitem1a Item2 Subitem2a Subitem2b Item3 Subitem3a Subitem3b Subitem3c</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li[1]/ul/li</td>
-	<td>Subitem</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/li)[1]</td>
+	<td>Item1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li[2]</td>
-	<td>Item Subitem Subitem</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/ul)[1]</td>
+	<td>Subitem1a</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li[2]//li[1]</td>
-	<td>Subitem</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/ul/li)[1]</td>
+	<td>Subitem1a</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li[2]//li[2]</td>
-	<td>Subitem</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/li)[2]</td>
+	<td>Item2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li[3]</td>
-	<td>Item Subitem Subitem Subitem</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/ul)[2]</td>
+	<td>Subitem2a Subitem2b</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li[3]//li[1]</td>
-	<td>Subitem</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/ul/li)[2]</td>
+	<td>Subitem2a</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li[3]//li[2]</td>
-	<td>Subitem</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/ul/li)[3]</td>
+	<td>Subitem2b</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li[3]//li[3]</td>
-	<td>Subitem</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/li)[3]</td>
+	<td>Item3</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/ul)[3]</td>
+	<td>Subitem3a Subitem3b Subitem3c</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/ul/li)[4]</td>
+	<td>Subitem3a</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/ul/li)[5]</td>
+	<td>Subitem3b</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/ul/li)[6]</td>
+	<td>Subitem3c</td>
 </tr>
 
 </tbody></table>

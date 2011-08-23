@@ -30,7 +30,7 @@ public class AddFrontPageCreolePreformattedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,25 +41,44 @@ public class AddFrontPageCreolePreformattedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=This page is empty. Edit it to add some text.",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace(
-				"{{{//This// does **not** get [[formatted]]}}}"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
 		assertEquals(RuntimeVariables.replace(
-				"//This// does **not** get [[formatted]]"),
-			selenium.getText("//pre"));
+				"This page is empty. Edit it to add some text."),
+			selenium.getText("//div[@class='wiki-body']/div/a"));
+		selenium.clickAt("//div[@class='wiki-body']/div/a",
+			RuntimeVariables.replace(
+				"This page is empty. Edit it to add some text."));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isVisible("//span[@id='cke_34_label']"));
+		Thread.sleep(5000);
+		selenium.clickAt("//span[@id='cke_34_label']",
+			RuntimeVariables.replace("Source"));
+		assertTrue(selenium.isVisible(
+				"//td[@id='cke_contents__36_editor']/textarea"));
+		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+			RuntimeVariables.replace(
+				"{{{//Wiki// Front **Page** Content [[formatted]]}}}"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//span[@id='cke_34_label']",
+			RuntimeVariables.replace("Source"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isElementPresent(
+				"//td[@id='cke_contents__36_editor']/iframe"));
+		Thread.sleep(5000);
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"//Wiki// Front **Page** Content [[formatted]]"),
+			selenium.getText("//div[@class='wiki-body']/pre"));
 	}
 }

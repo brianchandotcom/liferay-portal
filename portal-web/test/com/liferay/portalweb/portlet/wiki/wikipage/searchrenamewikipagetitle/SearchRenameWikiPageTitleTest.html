@@ -14,33 +14,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_keywords</td>
-	<td>Wiki Page Test</td>
+	<td>//input[@id='_36_keywords']</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki Page Test Renamed</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Wiki2 Page2 Title2</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Wiki Page Test</td>
+	<td>assertTextNotPresent</td>
+	<td>Wiki Page Title</td>
 	<td></td>
 </tr>
 

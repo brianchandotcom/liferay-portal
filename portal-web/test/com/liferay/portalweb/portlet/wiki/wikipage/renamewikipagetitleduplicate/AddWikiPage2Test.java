@@ -30,7 +30,7 @@ public class AddWikiPage2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,33 +41,65 @@ public class AddWikiPage2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace(""));
+		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Page']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title", RuntimeVariables.replace("Wiki2 Page2 Test2"));
+		assertEquals(RuntimeVariables.replace(
+				"This page does not exist yet. Use the form below to create it."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		Thread.sleep(5000);
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki2 Page2 Title2"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki2 page2 test2."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body", RuntimeVariables.replace("Wiki2 Page2 Content2"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		selenium.clickAt("link=Wiki2 Page2 Test2", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
+			selenium.getText("//tr[5]/td[1]/a"));
+		selenium.clickAt("//tr[5]/td[1]/a",
+			RuntimeVariables.replace("Wiki2 Page2 Title2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//div[2]/h1/span",
-				"Wiki2 Page2 Test2"));
-		assertEquals(RuntimeVariables.replace("This is a wiki2 page2 test2."),
-			selenium.getText("//div/div[5]/div"));
+		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Content2"),
+			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

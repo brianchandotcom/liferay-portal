@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CompareVersionEditFrontPageTest</title>
 </head>
 <body>
@@ -17,94 +14,104 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Details</td>
-	<td></td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=History</td>
-	<td></td>
+	<td>History</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=1.2</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>1.2</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=1.1</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/a</td>
+	<td>1.1</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=1.0 (Minor Edit)</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[5]/td[4]/a</td>
+	<td>1.0 (Minor Edit)</td>
 </tr>
 <tr>
 	<td>check</td>
 	<td>//input[@name='_36_rowIds' and @value='1.2']</td>
-	<td></td>
+	<td>1.2</td>
 </tr>
 <tr>
 	<td>check</td>
 	<td>//input[@name='_36_rowIds' and @value='1.1']</td>
-	<td></td>
+	<td>1.1</td>
 </tr>
 <tr>
 	<td>uncheck</td>
 	<td>//input[@name='_36_rowIds' and @value='1.0']</td>
-	<td></td>
+	<td>1.1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Compare Versions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Comparing Versions 1.1 and 1.2 (Last Version)</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>This is a wiki edited frontpage test. </td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Text Mode</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Text Mode</td>
-	<td></td>
+	<td>Compare Versions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table[@id='taglib-diff-results']/tbody/tr[1]/td[1]</td>
+	<td>//span[@class='central-title']/span</td>
+	<td>Comparing Versions 1.1 and 1.2 (Last Version)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//p</td>
+	<td>Wiki Front Page Content Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/a</td>
+	<td>Text Mode</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[3]/div/a</td>
+	<td>Text Mode</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[1]</td>
 	<td>FrontPage 1.1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table[@id='taglib-diff-results']/tbody/tr[1]/td[2]</td>
+	<td>xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[2]</td>
 	<td>FrontPage 1.2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table[@id='taglib-diff-results']/tbody/tr[3]/td[2]/table/tbody/tr/td</td>
-	<td>This is a wiki edited frontpage test.</td>
+	<td>xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[1]</td>
+	<td>Wiki Front Page Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[2]</td>
+	<td>Wiki Front Page Content Edit</td>
 </tr>
 
 </tbody></table>

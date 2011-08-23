@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>EditFrontPageCommentBodyTest</title>
 </head>
 <body>
@@ -17,64 +14,59 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div/div[3]/div/div[1]</td>
-	<td>This is a wiki page test comment.</td>
+	<td>Wiki Front Page Comment Body</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[4]/div/span/a/span</td>
+	<td>//li[3]/span/a/span</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[4]/div/span/a/span</td>
+	<td>//li[3]/span/a/span</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_editReplyBody1</td>
-	<td>This is a wiki page test comment. Edited.</td>
+	<td>//textarea[@name='_36_editReplyBody1']</td>
+	<td>Wiki Front Page Comment Body Edit</td>
 </tr>
 <tr>
-	<td>keyPress</td>
-	<td>_36_editReplyBody1</td>
-	<td>\48</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>_36_editReplyBody1</td>
-	<td>\8</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div/div[3]/div/div[1]</td>
-	<td>This is a wiki page test comment. Edited.</td>
+	<td>Wiki Front Page Comment Body Edit</td>
 </tr>
 <tr>
 	<td>assertNotText</td>
 	<td>//div/div[3]/div/div[1]</td>
-	<td>This is a wiki page test comment.</td>
+	<td>Wiki Front Page Comment Body</td>
 </tr>
 
 </tbody></table>

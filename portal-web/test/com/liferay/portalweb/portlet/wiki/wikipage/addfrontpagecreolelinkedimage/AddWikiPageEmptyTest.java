@@ -30,7 +30,7 @@ public class AddWikiPageEmptyTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,42 +41,35 @@ public class AddWikiPageEmptyTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace(""));
+		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Page']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"This page does not exist yet. Use the form below to create it."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.type("_36_title", RuntimeVariables.replace("Wiki Page Test"));
+		Thread.sleep(5000);
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("link=Wiki Page Test"));
-		selenium.clickAt("link=Wiki Page Test", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		selenium.clickAt("//tr[4]/td[1]/a",
+			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Wiki Page Test"),
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
 			selenium.getText("//div[2]/h1/span"));
-		assertEquals(RuntimeVariables.replace(
-				"This page is empty. Edit it to add some text."),
-			selenium.getText("//div[@class='portlet-msg-info']/a"));
-		selenium.clickAt("//div[@class='portlet-msg-info']/a",
-			RuntimeVariables.replace(
-				"This page is empty. Edit it to add some text."));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals("", selenium.getValue("_36_content"));
 	}
 }

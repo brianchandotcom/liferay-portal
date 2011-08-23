@@ -30,7 +30,7 @@ public class AddWikiPageSearchTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,36 +41,64 @@ public class AddWikiPageSearchTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_keywords",
-			RuntimeVariables.replace("Wiki Page Name Search"));
+		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Add Page']",
+			RuntimeVariables.replace("Add Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Create a new page on this topic."),
-			selenium.getText("//form/strong/a"));
-		selenium.clickAt("//form/strong/a",
-			RuntimeVariables.replace("Create a new page on this topic."));
-		selenium.waitForPageToLoad("30000");
+				"This page does not exist yet. Use the form below to create it."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		Thread.sleep(5000);
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("Wiki Page Content Search"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body", RuntimeVariables.replace("Wiki Page Content"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
-		assertTrue(selenium.isPartialText("//div/h1", "Wiki Page Name Search"));
-		assertEquals(RuntimeVariables.replace("Wiki Page Content Search"),
-			selenium.getText("//div[6]/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		selenium.clickAt("//tr[4]/td[1]/a",
+			RuntimeVariables.replace("Wiki Page Title"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Content"),
+			selenium.getText("//div[@class='wiki-body']/p"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -79,7 +107,7 @@ public class AddWikiPageSearchTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -90,24 +118,25 @@ public class AddWikiPageSearchTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_keywords",
-			RuntimeVariables.replace("Wiki Page Name Search"));
+		selenium.type("//input[@id='_36_keywords']",
+			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent(
-				"link=Create a new page on this topic."));
+		assertFalse(selenium.isTextPresent("Create a new page on this topic."));
 		selenium.clickAt("//td[3]/a",
-			RuntimeVariables.replace("Wiki Page Name Search"));
+			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//div/h1", "Wiki Page Name Search"));
-		assertEquals(RuntimeVariables.replace("Wiki Page Content Search"),
-			selenium.getText("//div[5]/div"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Content"),
+			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

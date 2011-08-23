@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>DeleteWikiPageTest</title>
 </head>
 <body>
@@ -17,39 +14,49 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=All Pages</td>
-	<td></td>
+	<td>All Pages</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Wiki Page Test</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[6]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[4]/td[6]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>//tr[4]/td[6]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td></td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -57,14 +64,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Wiki Page Test</td>
-	<td></td>
+	<td>assertElementNotPresent</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 
 </tbody></table>

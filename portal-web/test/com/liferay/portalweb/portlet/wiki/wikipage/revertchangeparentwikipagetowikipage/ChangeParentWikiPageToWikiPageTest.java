@@ -30,7 +30,7 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,25 +41,37 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("link=All Pages"));
+		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki1 Page1 Test1", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
+			selenium.getText("//tr[5]/td[1]/a"));
+		selenium.clickAt("//tr[5]/td[1]/a",
+			RuntimeVariables.replace("Wiki2 Page2 Title2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Wiki1 Page1 Test1"),
-			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-style-1 lfr-component']/li[3]/span/a"));
-		selenium.clickAt("link=Details", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Content2"),
+			selenium.getText("//div[@class='wiki-body']/p"));
+		assertEquals(RuntimeVariables.replace("Details"),
+			selenium.getText("//div[3]/span[2]/a/span"));
+		selenium.clickAt("//div[3]/span[2]/a/span",
+			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Move", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Move"),
+			selenium.getText("//tr[9]/td/ul/li[3]/a/span"));
+		selenium.clickAt("//tr[9]/td/ul/li[3]/a/span",
+			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Change Parent", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Change Parent",
+			RuntimeVariables.replace("Change Parent"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -67,7 +79,7 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_36_newParentTitle")) {
+				if (selenium.isVisible("//select[@id='_36_newParentTitle']")) {
 					break;
 				}
 			}
@@ -78,14 +90,15 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_36_newParentTitle",
-			RuntimeVariables.replace("label=- Wiki2 Page2 Test2"));
+		selenium.select("//select[@id='_36_newParentTitle']",
+			RuntimeVariables.replace("- Wiki Page Title"));
 		selenium.clickAt("//input[@value='Change Parent']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Change Parent"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -94,7 +107,7 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -105,24 +118,28 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace(""));
+		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki2 Page2 Test2", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		selenium.clickAt("//tr[4]/td[1]/a",
+			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Wiki1 Page1 Test1"));
-		selenium.clickAt("link=Wiki1 Page1 Test1", RuntimeVariables.replace(""));
+		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
+			RuntimeVariables.replace("Wiki2 Page2 Title2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Test2"),
-			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-style-1 lfr-component']/li[3]/span/a"));
-		assertEquals(RuntimeVariables.replace("Wiki1 Page1 Test1"),
-			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-style-1 lfr-component']/li[4]/span/a"));
+		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back to Wiki Page Title"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Content2"),
+			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

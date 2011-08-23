@@ -16,47 +16,77 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[9]/a</td>
+	<td>Wiki</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki</td>
-	<td></td>
+	<td>//li[9]/a</td>
+	<td>Wiki</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Wiki']</td>
-	<td></td>
+	<td>Add Wiki</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_154_name</td>
-	<td>WikiB NodeB TestB</td>
+	<td>//input[@id='_154_name']</td>
+	<td>Wiki Node2 Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_154_description</td>
-	<td>This is a wikiB nodeB testB.</td>
+	<td>//textarea[@id='_154_description']</td>
+	<td>Wiki Node2 Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>WikiB NodeB TestB</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Node1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[2]/a</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[3]/a</td>
+	<td>Never</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[1]/a</td>
+	<td>Wiki Node2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[2]/a</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[3]/a</td>
+	<td>Never</td>
 </tr>
 
 </tbody></table>

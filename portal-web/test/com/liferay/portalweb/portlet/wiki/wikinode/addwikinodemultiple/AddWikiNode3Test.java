@@ -41,26 +41,49 @@ public class AddWikiNode3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Wiki"),
+			selenium.getText("//li[9]/a"));
+		selenium.clickAt("//li[9]/a", RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Wiki']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Wiki"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_154_name", RuntimeVariables.replace("WikiC NodeC TestC"));
+		selenium.type("//input[@id='_154_name']",
+			RuntimeVariables.replace("Wiki Node3 Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_154_description",
-			RuntimeVariables.replace("This is a wikiC nodeC testC."));
+		selenium.type("//textarea[@id='_154_description']",
+			RuntimeVariables.replace("Wiki Node3 Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isTextPresent("WikiC NodeC TestC"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki Node1 Name"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[4]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//tr[4]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Wiki Node2 Name"),
+			selenium.getText("//tr[5]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[5]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//tr[5]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Wiki Node3 Name"),
+			selenium.getText("//tr[6]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[6]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//tr[6]/td[3]/a"));
 	}
 }

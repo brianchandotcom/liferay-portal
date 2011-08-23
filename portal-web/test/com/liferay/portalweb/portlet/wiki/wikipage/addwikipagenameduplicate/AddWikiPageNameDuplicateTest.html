@@ -14,49 +14,74 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=All Pages</td>
-	<td></td>
+	<td>All Pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Page']</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>This page does not exist yet. Use the form below to create it.</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_title</td>
-	<td>Wiki Page Test</td>
+	<td>//input[@id='_36_title']</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_content</td>
-	<td>This is a wiki page test.</td>
+	<td>//body</td>
+	<td>Wiki Page Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
 	<td>Your request failed to complete.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>There is already a page with the specified title.</td>
-	<td></td>
 </tr>
 
 </tbody></table>

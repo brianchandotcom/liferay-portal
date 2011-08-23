@@ -41,15 +41,23 @@ public class DeleteWikiNodeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Wiki"),
+			selenium.getText("//li[9]/a"));
+		selenium.clickAt("//li[9]/a", RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Wiki Node Test"));
+		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[4]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//tr[4]/td[3]/a"));
 		selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -69,6 +77,9 @@ public class DeleteWikiNodeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 		selenium.waitForPageToLoad("30000");

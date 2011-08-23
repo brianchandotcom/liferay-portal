@@ -14,64 +14,89 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=All Pages</td>
-	<td></td>
+	<td>All Pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Page']</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>This page does not exist yet. Use the form below to create it.</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_title</td>
-	<td>Wiki Page Test</td>
+	<td>//input[@id='_36_title']</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_content</td>
-	<td>This is a wiki page test.</td>
+	<td>//body</td>
+	<td>Wiki Page Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki Page Test</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Wiki Page Test</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//div[2]/h1/span</td>
-	<td>Wiki Page Test</td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[5]/div</td>
-	<td>This is a wiki page test.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[1]/a</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[5]/td[1]/a</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Page Content</td>
 </tr>
 
 </tbody></table>

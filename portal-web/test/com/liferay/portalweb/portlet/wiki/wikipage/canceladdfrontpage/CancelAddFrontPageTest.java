@@ -30,7 +30,7 @@ public class CancelAddFrontPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,24 +41,35 @@ public class CancelAddFrontPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=This page is empty. Edit it to add some text.",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"This page is empty. Edit it to add some text."),
+			selenium.getText("//div[@class='wiki-body']/div/a"));
+		selenium.clickAt("//div[@class='wiki-body']/div/a",
+			RuntimeVariables.replace(
+				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("This is a wiki frontpage test."));
+		assertTrue(selenium.isVisible(
+				"//td[@id='cke_contents__36_editor']/iframe"));
+		Thread.sleep(5000);
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki Front Page Content"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Cancel']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Cancel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent(
-				"link=This page is empty. Edit it to add some text."));
+		assertEquals(RuntimeVariables.replace(
+				"This page is empty. Edit it to add some text."),
+			selenium.getText("//div[@class='wiki-body']/div/a"));
 		assertFalse(selenium.isTextPresent(
 				"Your request completed successfully."));
-		assertFalse(selenium.isTextPresent("//div[6]/div"));
+		assertFalse(selenium.isTextPresent("Wiki Front Page Content"));
 	}
 }

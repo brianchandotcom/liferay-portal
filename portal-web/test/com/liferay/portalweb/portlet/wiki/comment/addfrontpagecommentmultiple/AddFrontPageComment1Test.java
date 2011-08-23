@@ -30,7 +30,7 @@ public class AddFrontPageComment1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,10 +41,14 @@ public class AddFrontPageComment1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Be the first.", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Be the first."),
+			selenium.getText("//fieldset/div/a"));
+		selenium.clickAt("//fieldset/div/a",
+			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -52,7 +56,7 @@ public class AddFrontPageComment1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_36_postReplyBody0")) {
+				if (selenium.isVisible("//textarea[@name='_36_postReplyBody0']")) {
 					break;
 				}
 			}
@@ -63,18 +67,34 @@ public class AddFrontPageComment1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_postReplyBody0",
-			RuntimeVariables.replace("This is a wiki page test1 comment1."));
+		selenium.type("//textarea[@name='_36_postReplyBody0']",
+			RuntimeVariables.replace("Wiki Front Page Comment1 Body"));
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_36_postReplyBody0", RuntimeVariables.replace("\\48"));
-		selenium.keyPress("_36_postReplyBody0", RuntimeVariables.replace("\\8"));
-		selenium.clickAt("//input[@value='Reply']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		selenium.click("//input[@value='Reply']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-message-response portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
 		assertEquals(RuntimeVariables.replace(
-				"This is a wiki page test1 comment1."),
+				"Your request processed successfully."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment1 Body"),
 			selenium.getText("//div/div[3]/div/div[1]"));
 	}
 }

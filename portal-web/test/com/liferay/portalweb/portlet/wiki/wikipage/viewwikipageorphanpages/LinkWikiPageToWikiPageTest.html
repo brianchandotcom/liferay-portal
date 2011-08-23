@@ -14,54 +14,84 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=All Pages</td>
-	<td></td>
+	<td>All Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki1 Page1 Test1</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page1 Title</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Wiki Page2 Test</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Wiki2 Page2 Test2</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[3]/span[1]/a/span</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Edit</td>
+	<td>//div[3]/span[1]/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_content</td>
-	<td>This is a wiki1 page1 test1.<br /><br />[[Wiki2 Page2 Test2]]</td>
+	<td>//body</td>
+	<td>Wiki Page1 Content<br /><br />[[Wiki Page2 Title]]</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki2 Page2 Test2</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/p/a</td>
+	<td>Wiki Page2 Title</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -69,34 +99,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=All Pages</td>
-	<td></td>
+	<td>All Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki1 Page1 Test1</td>
-	<td></td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki2 Page2 Test2</td>
-	<td></td>
+	<td>//div[@class='wiki-body']/p/a</td>
+	<td>Wiki Page2 Title</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[2]/h1/span</td>
-	<td>Wiki2 Page2 Test2</td>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Wiki Page2 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Page2 Content</td>
 </tr>
 
 </tbody></table>

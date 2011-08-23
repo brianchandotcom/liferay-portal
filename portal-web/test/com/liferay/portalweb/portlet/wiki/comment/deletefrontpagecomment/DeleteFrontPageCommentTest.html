@@ -14,33 +14,48 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>This is a wiki page test comment.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div/div[3]/div/div[1]</td>
+	<td>Wiki Front Page Comment Body</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//li[4]/span/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>click</td>
+	<td>//li[4]/span/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
 	<td>assertTextNotPresent</td>
-	<td>This is a wiki page test comment.</td>
+	<td>Wiki Front Page Comment Body</td>
 	<td></td>
 </tr>
 

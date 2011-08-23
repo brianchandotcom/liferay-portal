@@ -31,7 +31,7 @@ public class AddFrontPageCreolePartialBoldItalicsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -42,25 +42,44 @@ public class AddFrontPageCreolePartialBoldItalicsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=This page is empty. Edit it to add some text.",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"This page is empty. Edit it to add some text."),
+			selenium.getText("//div[@class='wiki-body']/div/a"));
+		selenium.clickAt("//div[@class='wiki-body']/div/a",
+			RuntimeVariables.replace(
+				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace("//this is **bold** inside italics//"));
+		assertTrue(selenium.isVisible("//span[@id='cke_34_label']"));
+		Thread.sleep(5000);
+		selenium.clickAt("//span[@id='cke_34_label']",
+			RuntimeVariables.replace("Source"));
+		assertTrue(selenium.isVisible(
+				"//td[@id='cke_contents__36_editor']/textarea"));
+		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+			RuntimeVariables.replace("//Wiki **Front Page** Content//"));
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//span[@id='cke_34_label']",
+			RuntimeVariables.replace("Source"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isElementPresent(
+				"//td[@id='cke_contents__36_editor']/iframe"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertEquals(RuntimeVariables.replace("this is bold inside italics"),
-			selenium.getText("//div[@class='wiki-body']/i"));
-		assertEquals(RuntimeVariables.replace("bold"),
-			selenium.getText("//div[@class='wiki-body']/i/b"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+			selenium.getText("//div[@class='wiki-body']/p/em"));
+		assertEquals(RuntimeVariables.replace("Front Page"),
+			selenium.getText("//div[@class='wiki-body']/p/em/strong"));
 	}
 }

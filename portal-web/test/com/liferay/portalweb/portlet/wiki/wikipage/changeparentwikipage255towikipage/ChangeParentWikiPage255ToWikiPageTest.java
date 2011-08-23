@@ -31,7 +31,7 @@ public class ChangeParentWikiPage255ToWikiPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -42,27 +42,40 @@ public class ChangeParentWikiPage255ToWikiPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("link=All Pages"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"),
-			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-style-1 lfr-component']/li[3]/span/a"));
-		selenium.clickAt("link=Details", RuntimeVariables.replace(""));
+			selenium.getText("//tr[4]/td[1]/a"));
+		selenium.clickAt("//tr[4]/td[1]/a",
+			RuntimeVariables.replace(
+				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Move", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Content"),
+			selenium.getText("//div[@class='wiki-body']/p"));
+		assertEquals(RuntimeVariables.replace("Details"),
+			selenium.getText("//div[3]/span[2]/a/span"));
+		selenium.clickAt("//div[3]/span[2]/a/span",
+			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Change Parent", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Move"),
+			selenium.getText("//tr[9]/td/ul/li[3]/a/span"));
+		selenium.clickAt("//tr[9]/td/ul/li[3]/a/span",
+			RuntimeVariables.replace("Move"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Change Parent",
+			RuntimeVariables.replace("Change Parent"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -70,7 +83,7 @@ public class ChangeParentWikiPage255ToWikiPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_36_newParentTitle")) {
+				if (selenium.isVisible("//select[@id='_36_newParentTitle']")) {
 					break;
 				}
 			}
@@ -81,14 +94,15 @@ public class ChangeParentWikiPage255ToWikiPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_36_newParentTitle",
-			RuntimeVariables.replace("label=- Wiki Page Test"));
+		selenium.select("//select[@id='_36_newParentTitle']",
+			RuntimeVariables.replace("- Wiki Page Title"));
 		selenium.clickAt("//input[@value='Change Parent']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Change Parent"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -97,7 +111,7 @@ public class ChangeParentWikiPage255ToWikiPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -108,27 +122,33 @@ public class ChangeParentWikiPage255ToWikiPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace(""));
+		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Page Test", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//tr[5]/td[1]/a"));
+		selenium.clickAt("//tr[5]/td[1]/a",
+			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent(
-				"link=lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"));
-		selenium.clickAt("link=lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Wiki Page Test"),
-			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-style-1 lfr-component']/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace(
 				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"),
-			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-style-1 lfr-component']/li[4]/span/a"));
+			selenium.getText("//div[@class='child-pages']/ul/li/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
+			RuntimeVariables.replace(
+				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Content"),
+			selenium.getText("//div[@class='wiki-body']/p"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back to Wiki Page Title"),
+			selenium.getText("//span[@class='header-back-to']/a"));
 	}
 }

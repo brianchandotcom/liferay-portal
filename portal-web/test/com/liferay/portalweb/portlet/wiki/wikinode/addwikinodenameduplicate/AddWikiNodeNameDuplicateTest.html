@@ -16,47 +16,52 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[9]/a</td>
+	<td>Wiki</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki</td>
-	<td></td>
+	<td>//li[9]/a</td>
+	<td>Wiki</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Wiki']</td>
-	<td></td>
+	<td>Add Wiki</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_154_name</td>
-	<td>Wiki Node Test</td>
+	<td>//input[@id='_154_name']</td>
+	<td>Wiki Node Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_154_description</td>
-	<td>This is a wiki node test.</td>
+	<td>//textarea[@id='_154_description']</td>
+	<td>Wiki Node Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
 	<td>Your request failed to complete.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>Please enter a unique node name.</td>
-	<td></td>
 </tr>
 
 </tbody></table>

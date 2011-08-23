@@ -23,6 +23,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1854,6 +1858,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(0, fileEntryId, 0);
 
 		repository.revertFileEntry(fileEntryId, version, serviceContext);
+	}
+
+	public Hits search(
+			long repositoryId, SearchContext searchContext, Query query)
+		throws SearchException {
+
+		try {
+			Repository repository = getRepository(repositoryId);
+
+			return repository.search(searchContext, query);
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
 	}
 
 	/**

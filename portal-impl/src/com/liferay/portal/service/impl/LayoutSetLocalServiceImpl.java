@@ -80,6 +80,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
 
@@ -102,7 +104,14 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		// Layout set
 
-		layoutSetPersistence.removeByG_P(groupId, privateLayout);
+		if (group.isOrganization() && group.isSite()) {
+			layoutSet.setPageCount(0);
+
+			layoutSetPersistence.update(layoutSet, false);
+		}
+		else {
+			layoutSetPersistence.removeByG_P(groupId, privateLayout);
+		}
 
 		// Counter
 

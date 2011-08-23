@@ -386,6 +386,12 @@ public class OrganizationLocalServiceImpl
 
 		Group group = organization.getGroup();
 
+		if (group.isSite()) {
+			group.setSite(false);
+
+			groupPersistence.update(group, false);
+		}
+
 		groupLocalService.deleteGroup(group);
 
 		// Resources

@@ -54,7 +54,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 			selenium.getText("//p[4]/a[2]"));
 		selenium.clickAt("//p[4]/a[2]",
 			RuntimeVariables.replace("Download File"));
-		selenium.downloadFile("Portlet_Response.png");
+		selenium.downloadFile("Portlet_Response_Resource_Response.png");
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -78,6 +78,8 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[3]/span/ul/li/strong/a/span"));
 		selenium.clickAt("//span[3]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
@@ -107,7 +109,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.uploadFile("//input[@id='_20_file']",
-			RuntimeVariables.replace("Portlet_Response.png"));
+			RuntimeVariables.replace("Portlet_Response_Resource_Response.png"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Portlet Response (ResourceResponse)"));
 		selenium.saveScreenShotAndSource();
@@ -117,6 +119,27 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Your request completed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-success']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
@@ -129,6 +152,6 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 				"Portlet Response (ResourceResponse)"),
 			selenium.getText("//div[1]/h2"));
 		assertEquals(RuntimeVariables.replace("2.0k"),
-			selenium.getText("//a[contains(text(),'2.0k')]"));
+			selenium.getText("//td[3]/a"));
 	}
 }

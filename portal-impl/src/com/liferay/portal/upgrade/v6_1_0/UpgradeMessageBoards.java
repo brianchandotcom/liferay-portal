@@ -238,16 +238,24 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
-				"select userId, threadId, modifiedDate from MBMessageFlag " +
-					"where flag = 1");
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("select messageFlag.userId, messageFlag.threadId, ");
+			sb.append("messageFlag.modifiedDate from ");
+			sb.append("MBMessageFlag messageFlag inner join MBThread thread ");
+			sb.append("on messageFlag.threadId = thread.threadId and ");
+			sb.append("messageFlag.userId != thread.rootMessageUserId ");
+			sb.append("where flag = 1");
+
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long userId = rs.getLong("userId");
-				long threadId = rs.getLong("threadId");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				long userId = rs.getLong("messageFlag.userId");
+				long threadId = rs.getLong("messageFlag.threadId");
+				Timestamp modifiedDate = rs.getTimestamp(
+					"messageFlag.modifiedDate");
 
 				addThreadFlag(increment(), userId, threadId, modifiedDate);
 			}

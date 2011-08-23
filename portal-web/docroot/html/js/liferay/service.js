@@ -707,6 +707,7 @@ Liferay.Service.registerClass(
 		refreshFileEntryLock: true,
 		refreshFolderLock: true,
 		revertFileEntry: true,
+		search: true,
 		unlockFolder: true,
 		updateFileShortcut: true,
 		updateFolder: true,

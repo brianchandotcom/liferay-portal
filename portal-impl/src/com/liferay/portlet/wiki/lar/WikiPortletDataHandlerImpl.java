@@ -211,14 +211,14 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			importedPage = WikiPageLocalServiceUtil.addPage(
 				userId, nodeId, page.getTitle(), page.getVersion(),
-				page.getContent(), page.getSummary(), true, page.getFormat(),
-				page.getHead(), page.getParentTitle(), page.getRedirectTitle(),
-				serviceContext);
+				page.getContent(), page.getSummary(), page.getMinorEdit(),
+				page.getFormat(), page.getHead(), page.getParentTitle(),
+				page.getRedirectTitle(), serviceContext);
 		}
 		else {
 			importedPage = WikiPageLocalServiceUtil.updatePage(
 				userId, nodeId, existingPage.getTitle(), 0, page.getContent(),
-				page.getSummary(), true, page.getFormat(),
+				page.getSummary(), page.getMinorEdit(), page.getFormat(),
 				page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 		}
 

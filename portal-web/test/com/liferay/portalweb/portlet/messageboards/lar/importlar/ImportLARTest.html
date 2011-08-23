@@ -14,78 +14,108 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//div[4]/div/ul/li[6]/a</td>
+	<td>Manage Content</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong</td>
-	<td></td>
+	<td>//div[4]/div/ul/li[6]/a</td>
+	<td>Manage Content</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//ul[@class='category-portlets']/li[6]/a</td>
+	<td>Message Boards</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//ul[@class='category-portlets']/li[6]/a</td>
+	<td>Message Boards</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//ul[@class='category-portlets']/li[6]/a</td>
+	<td>Message Boards</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/div/div/div/div/div/section/header/menu/span/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[2]/div/div/div/div/div/div/section/header/menu/span/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_162_xafr']</td>
+	<td>Export / Import</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_162_xafr']</td>
+	<td>Export / Import</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_162_xafr']</td>
+	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Import</td>
-	<td></td>
+	<td>Import</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_importFileName</td>
+	<td>//input[@id='_86_importFileName']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\messageboards\lar\importlar\dependencies\Message_Boards-Selenium.portlet.lar</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>_86_DELETE_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_DELETE_PORTLET_DATACheckbox']</td>
+	<td>Delete portlet data before importing.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_86_DELETE_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_DELETE_PORTLET_DATACheckbox']</td>
+	<td>Delete portlet data before importing.</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>_86_DELETE_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_DELETE_PORTLET_DATACheckbox']</td>
+	<td>Delete portlet data before importing.</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>_86_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_PORTLET_DATACheckbox']</td>
+	<td>Data</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_86_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_PORTLET_DATACheckbox']</td>
+	<td>Data</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>_86_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_PORTLET_DATACheckbox']</td>
+	<td>Data</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Import']</td>
-	<td></td>
+	<td>Import</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 

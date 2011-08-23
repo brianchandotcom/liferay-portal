@@ -22,18 +22,21 @@ import java.util.Map;
  * @author Micha Kiener
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
+ * @author Eduardo Lundgren
  */
 public interface WorkflowDefinition {
+
+	public String getContent();
 
 	public InputStream getInputStream();
 
 	public String getName();
 
+	public Map<String, Object> getOptionalAttributes();
+
 	public String getTitle();
 
 	public String getTitle(String languageId);
-
-	public Map<String, Object> getOptionalAttributes();
 
 	public int getVersion();
 

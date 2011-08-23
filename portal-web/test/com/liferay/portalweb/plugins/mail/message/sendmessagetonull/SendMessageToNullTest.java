@@ -46,10 +46,10 @@ public class SendMessageToNullTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"liferay.qa.mail.portlet.60x@gmail.com"),
-			selenium.getText("//div[1]/div/ul/li/span/span/a"));
-		selenium.clickAt("//div[1]/div/ul/li/span/span/a",
-			RuntimeVariables.replace("liferay.qa.mail.portlet.60x@gmail.com"));
+				"liferay.qa.testing.trunk@gmail.com"),
+			selenium.getText("//div/div/div[1]/div/ul/li/span/span/a"));
+		selenium.clickAt("//div/div/div[1]/div/ul/li/span/span/a",
+			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -60,7 +60,7 @@ public class SendMessageToNullTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("Compose Email")
 										.equals(selenium.getText(
-								"//div[3]/div/div/div[1]/div/div/div/a[1]"))) {
+								"//a[@class='compose-message']"))) {
 					break;
 				}
 			}
@@ -72,8 +72,8 @@ public class SendMessageToNullTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Compose Email"),
-			selenium.getText("//div[3]/div/div/div[1]/div/div/div/a[1]"));
-		selenium.clickAt("//div[3]/div/div/div[1]/div/div/div/a[1]",
+			selenium.getText("//a[@class='compose-message']"));
+		selenium.clickAt("//a[@class='compose-message']",
 			RuntimeVariables.replace("Compose Email"));
 		Thread.sleep(5000);
 
@@ -83,7 +83,8 @@ public class SendMessageToNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_1_WAR_mailportlet_subject")) {
+				if (selenium.isVisible(
+							"//input[@id='_1_WAR_mailportlet_subject']")) {
 					break;
 				}
 			}
@@ -94,7 +95,7 @@ public class SendMessageToNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_1_WAR_mailportlet_subject",
+		selenium.type("//input[@id='_1_WAR_mailportlet_subject']",
 			RuntimeVariables.replace("Mail Subject"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Send']",

@@ -126,17 +126,18 @@ public class ThemeHelper {
 		if (Validator.isNotNull(portletId)) {
 			exists = _resourceExists(servletContext, theme, portletId, path);
 
-			if (!exists) {
-				if (portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
-					String rootPortletId = PortletConstants.getRootPortletId(
-						portletId);
+			if (!exists &&
+				portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
 
-					exists = _resourceExists(
-						servletContext, theme, rootPortletId, path);
-				}
-				else {
-					exists = _resourceExists(servletContext, theme, null, path);
-				}
+				String rootPortletId = PortletConstants.getRootPortletId(
+					portletId);
+
+				exists = _resourceExists(
+					servletContext, theme, rootPortletId, path);
+			}
+
+			if (!exists) {
+				exists = _resourceExists(servletContext, theme, null, path);
 			}
 		}
 

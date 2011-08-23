@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class GmailTearDownMailingListMessageTest extends BaseTestCase {
-	public void testGmailTearDownMailingListMessage() throws Exception {
+public class Gmail_TearDownMailingListMessageTest extends BaseTestCase {
+	public void testGmail_TearDownMailingListMessage()
+		throws Exception {
 		int label = 1;
 
 		while (label >= 1) {

@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>GmailTearDownEmail2Test</title>
+<title>Gmail_ReplyMBCategoryThreadMessageEmailTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">GmailTearDownEmail2Test</td></tr>
+<tr><td rowspan="1" colspan="3">Gmail_ReplyMBCategoryThreadMessageEmailTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>openWindow</td>
@@ -25,23 +25,18 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>60000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
-	<td>signedIn1</td>
+	<td>SignedIn</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${signedIn1}</td>
-	<td>signedOut1</td>
+	<td>!${SignedIn}</td>
+	<td>SignedOut</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -54,8 +49,13 @@
 	<td>Sign out</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>//span/a</td>
+	<td>Sign in to Gmail</td>
+</tr>
+<tr>
 	<td>label</td>
-	<td>signedOut1</td>
+	<td>SignedOut</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='Email']</td>
-	<td>liferay.qa.server.trunk@gmail.com</td>
+	<td>liferay.qa.testing.trunk</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -129,19 +129,44 @@
 	<td>Sign In</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@type='checkbox']</td>
-	<td>All</td>
+	<td>assertText</td>
+	<td>//td[3]/div/span</td>
+	<td>liferay.qa.server.trunk</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@type='checkbox']</td>
-	<td>All</td>
+	<td>//td[3]/div/span</td>
+	<td>liferay.qa.server.trunk</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//h1/span[1]</td>
+	<td>[MB Category Name]</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//h1/span[1]</td>
+	<td>[MB Category Name]</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//h1/span[1]</td>
+	<td>MB Message Subject</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[contains(child::text(),'MB Message Body')]</td>
+	<td>MB Message Body</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/table/tbody/tr/td[1]/div/span</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div/table/tbody/tr/td[1]/div/span</td>
+	<td>Reply</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -149,19 +174,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]</td>
-	<td>Delete</td>
+	<td>selectFrame</td>
+	<td>//iframe[@id='canvas_frame']</td>
+	<td>Email Body</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@class='Am Al editable']</td>
+	<td>Email Body</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//body</td>
+	<td>MB Message Email Reply</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]</td>
-	<td>Delete</td>
+	<td>//div[3]/div/div/div/div[1]/b</td>
+	<td>Send</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]</td>
-	<td>Delete</td>
+	<td>//div[3]/div/div/div/div[1]/b</td>
+	<td>Send</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -176,12 +216,12 @@
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
-	<td>signedIn2</td>
+	<td>SignedIn2</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${signedIn2}</td>
-	<td>signedOut2</td>
+	<td>!${SignedIn2}</td>
+	<td>SignedOut2</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -195,7 +235,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>signedOut2</td>
+	<td>SignedOut2</td>
 	<td></td>
 </tr>
 <tr>

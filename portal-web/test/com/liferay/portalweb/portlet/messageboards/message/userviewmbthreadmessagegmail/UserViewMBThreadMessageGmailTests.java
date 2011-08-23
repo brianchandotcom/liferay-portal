@@ -38,11 +38,11 @@ public class UserViewMBThreadMessageGmailTests extends BaseTests {
 			ConfigurePortletCategoryMailingListActiveTest.class);
 		testSuite.addTestSuite(AddMBCategoryMessageTest.class);
 		testSuite.addTestSuite(
-			GmailReplyMBCategoryThreadMessageEmailTest.class);
+			Gmail_ReplyMBCategoryThreadMessageEmailTest.class);
 		testSuite.addTestSuite(UserViewMBThreadMessageGmailTest.class);
-		testSuite.addTestSuite(GmailTearDownEmailTest.class);
-		testSuite.addTestSuite(GmailTearDownEmail2Test.class);
-		testSuite.addTestSuite(GmailTearDownMailingListMessageTest.class);
+		testSuite.addTestSuite(Gmail_TearDownEmailTest.class);
+		testSuite.addTestSuite(Gmail_TearDownEmail2Test.class);
+		testSuite.addTestSuite(Gmail_TearDownMailingListMessageTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

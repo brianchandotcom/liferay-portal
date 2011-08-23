@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class GmailTearDownEmailTest extends BaseTestCase {
-	public void testGmailTearDownEmail() throws Exception {
+public class Gmail_TearDownEmail2Test extends BaseTestCase {
+	public void testGmail_TearDownEmail2() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -84,7 +84,7 @@ public class GmailTearDownEmailTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Email']",
 					RuntimeVariables.replace(
-						"liferay.qa.testing.trunk@gmail.com"));
+						"liferay.qa.server.trunk@gmail.com"));
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Passwd']",
 					RuntimeVariables.replace("loveispatient"));

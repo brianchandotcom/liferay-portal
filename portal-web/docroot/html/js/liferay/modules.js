@@ -73,7 +73,7 @@
 			'portlet-url': ['aui-base', 'aui-io-request', 'querystring-stringify-simple'],
 			'ratings': ['aui-io-request', 'aui-rating', 'substitute'],
 			'search-container': ['aui-base', 'selector-css3'],
-			'session': ['aui-io', 'collection', 'cookie', 'liferay-notice', 'substitute'],
+			'session': ['aui-io', 'aui-task-manager', 'cookie', 'liferay-notice'],
 			'service-datasource': ['aui-base', 'datasource-local'],
 			'staging': ['aui-dialog', 'aui-io-plugin'],
 			'staging-branch': ['liferay-staging'],

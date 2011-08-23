@@ -50,15 +50,17 @@
 
 		<c:if test="<%= sessionTimeoutWarning > 0 %>">
 			<aui:script use="liferay-session">
-				Liferay.Session.init(
+				Liferay.Session = new Liferay.SessionBase(
 					{
 						autoExtend: <%= PropsValues.SESSION_TIMEOUT_AUTO_EXTEND %>,
-						timeout: <%= sessionTimeout %>,
-						timeoutWarning: <%= sessionTimeoutWarning %>,
+						sessionLength: <%= sessionTimeout %>,
 						redirectOnExpire: <%= sessionRedirectOnExpire %>,
-						redirectUrl: '<%= sessionRedirectUrl %>'
+						redirectUrl: '<%= sessionRedirectUrl %>',
+						warningLength: <%= sessionTimeoutWarning %>
 					}
 				);
+
+				Liferay.Session.plug(Liferay.SessionDisplay);
 			</aui:script>
 		</c:if>
 	</c:if>

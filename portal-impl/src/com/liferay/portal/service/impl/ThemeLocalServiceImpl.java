@@ -63,6 +63,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Raymond Augé
  */
 public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
@@ -225,10 +226,10 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		List<String> themeIdsList = new ArrayList<String>();
 
 		try {
-			for (int i = 0; i < xmls.length; i++) {
+			for (String xml : xmls) {
 				Set<String> themeIds = _readThemes(
 					servletContextName, servletContext, themesPath,
-					loadFromServletContext, xmls[i], pluginPackage);
+					loadFromServletContext, xml, pluginPackage);
 
 				for (String themeId : themeIds) {
 					if (!themeIdsList.contains(themeId)) {
@@ -633,8 +634,10 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 						settingElement.attributeValue("options"));
 					String type = settingElement.attributeValue("type");
 					String value = settingElement.attributeValue("value");
+					String script = settingElement.getTextTrim();
 
-					theme.addSetting(key, value, configurable, type, options);
+					theme.addSetting(
+						key, value, configurable, type, options, script);
 				}
 			}
 

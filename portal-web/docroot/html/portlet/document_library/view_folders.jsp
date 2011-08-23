@@ -139,6 +139,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 							<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewFolders" value="<%= Boolean.TRUE.toString() %>" />
+							<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="entryStart" value="0" />
 							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 							<portlet:param name="folderStart" value="0" />
@@ -182,6 +183,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+								<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 								<portlet:param name="folderStart" value="0" />
@@ -209,6 +211,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+								<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 								<portlet:param name="folderStart" value="0" />
@@ -242,6 +245,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 									<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 									<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 									<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+									<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
 									<portlet:param name="entryStart" value="0" />
 									<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 									<portlet:param name="folderStart" value="0" />
@@ -275,6 +279,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 									<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 									<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 									<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+									<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
 									<portlet:param name="entryStart" value="0" />
 									<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 									<portlet:param name="folderStart" value="0" />
@@ -320,6 +325,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 									<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 									<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 									<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+									<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
 									<portlet:param name="entryStart" value="0" />
 									<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 									<portlet:param name="folderStart" value="0" />
@@ -371,6 +377,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 							<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="viewFolders" value="<%= Boolean.TRUE.toString() %>" />
+							<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
 							<portlet:param name="entryStart" value="0" />
 							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 							<portlet:param name="folderStart" value="0" />
@@ -418,6 +425,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+								<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 								<portlet:param name="folderStart" value="0" />

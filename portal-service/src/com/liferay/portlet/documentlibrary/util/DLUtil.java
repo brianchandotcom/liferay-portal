@@ -134,6 +134,7 @@ public class DLUtil {
 		portletURL.setParameter(
 			"viewFileEntrySearch", Boolean.TRUE.toString());
 		portletURL.setParameter("viewFolders", Boolean.TRUE.toString());
+		portletURL.setParameter("viewSortButton", Boolean.TRUE.toString());
 
 		Map<String, Object> data = new HashMap<String, Object>();
 

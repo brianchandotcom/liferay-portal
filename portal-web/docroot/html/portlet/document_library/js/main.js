@@ -52,6 +52,8 @@ AUI().add(
 
 		var VIEW_FILE_ENTRY_SEARCH = 'viewFileEntrySearch';
 
+        var VIEW_SORT_BUTTON = 'viewSortButton';
+
 		var DocumentLibrary = A.Component.create(
 			{
 				NAME: 'documentlibrary',
@@ -274,6 +276,7 @@ AUI().add(
 						requestParams[namespace + VIEW_ADD_BREADCRUMB] = true;
 						requestParams[namespace + VIEW_DISPLAY_STYLE_BUTTONS] = true;
 						requestParams[namespace + VIEW_FILE_ENTRY_SEARCH] = true;
+                        requestParams[namespace + VIEW_SORT_BUTTON] = true;
 
 						if (dataFolderId) {
 							requestParams[instance._folderId] = dataFolderId;
@@ -398,6 +401,7 @@ AUI().add(
 						requestParams[namespace + VIEW_DISPLAY_STYLE_BUTTONS] = true;
 						requestParams[namespace + VIEW_ENRTIES] = true;
 						requestParams[namespace + VIEW_FILE_ENTRY_SEARCH] = true;
+                        requestParams[namespace + VIEW_SORT_BUTTON] = true;
 
 						Liferay.fire(
 							instance._eventDataRequest,

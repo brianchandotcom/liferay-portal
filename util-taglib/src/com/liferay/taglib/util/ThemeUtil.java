@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.velocity.VelocityContext;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.kernel.velocity.VelocityVariablesUtil;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -38,7 +39,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import freemarker.ext.jsp.TaglibFactory;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
-
 import freemarker.template.ObjectWrapper;
 
 import java.io.Writer;
@@ -124,6 +124,17 @@ public class ThemeUtil {
 
 		String resourcePath = theme.getResourcePath(
 			servletContext, portletId, path);
+
+		if (Validator.isNotNull(portletId) &&
+			!FreeMarkerEngineUtil.resourceExists(resourcePath) &&
+			portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
+
+			String rootPortletId = PortletConstants.getRootPortletId(
+				portletId);
+
+			resourcePath = theme.getResourcePath(
+				servletContext, rootPortletId, path);
+		}
 
 		if (Validator.isNotNull(portletId) &&
 			!FreeMarkerEngineUtil.resourceExists(resourcePath)) {

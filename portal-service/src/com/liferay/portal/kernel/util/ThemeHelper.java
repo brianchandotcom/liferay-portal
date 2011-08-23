@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.util.PortalUtil;
 
@@ -124,6 +125,16 @@ public class ThemeHelper {
 
 		if (Validator.isNotNull(portletId)) {
 			exists = _resourceExists(servletContext, theme, portletId, path);
+
+			if (!exists &&
+				portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
+
+				String rootPortletId = PortletConstants.getRootPortletId(
+					portletId);
+
+				exists = _resourceExists(
+					servletContext, theme, rootPortletId, path);
+			}
 
 			if (!exists) {
 				exists = _resourceExists(servletContext, theme, null, path);

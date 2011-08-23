@@ -31,7 +31,6 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRenderer" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRendererFactory" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskDisplayTerms" %>
 <%@ page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskSearch" %>
 <%@ page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskSearchTerms" %>

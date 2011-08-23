@@ -18,11 +18,7 @@
 
 <%@ page import="com.liferay.portal.DuplicateUserEmailAddressException" %>
 <%@ page import="com.liferay.portal.LayoutFriendlyURLException" %>
-<%@ page import="com.liferay.portal.LayoutHiddenException" %>
-<%@ page import="com.liferay.portal.LayoutNameException" %>
-<%@ page import="com.liferay.portal.LayoutParentLayoutIdException" %>
 <%@ page import="com.liferay.portal.LayoutPermissionException" %>
-<%@ page import="com.liferay.portal.LayoutTypeException" %>
 <%@ page import="com.liferay.portal.NoSuchResourceException" %>
 <%@ page import="com.liferay.portal.PortletActiveException" %>
 <%@ page import="com.liferay.portal.RequiredLayoutException" %>

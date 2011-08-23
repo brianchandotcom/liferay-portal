@@ -30,7 +30,6 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRenderer" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRendererFactory" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
 
 <%
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);

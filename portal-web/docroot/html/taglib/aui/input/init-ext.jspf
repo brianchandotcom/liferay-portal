@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ page import="java.text.Format" %>
-
 <%
 if (!useNamespace) {
 	namespace = StringPool.BLANK;

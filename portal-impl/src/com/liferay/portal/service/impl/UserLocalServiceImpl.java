@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1819,13 +1820,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Skip
 	public User getDefaultUser(long companyId)
 		throws PortalException, SystemException {
 
 		User userModel = _defaultUsers.get(companyId);
 
 		if (userModel == null) {
-			userModel = userPersistence.findByC_DU(companyId, true);
+			userModel = userLocalService.loadDefaultUser(companyId);
 
 			_defaultUsers.put(companyId, userModel);
 		}
@@ -1842,6 +1844,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Skip
 	public long getDefaultUserId(long companyId)
 		throws PortalException, SystemException {
 
@@ -2774,6 +2777,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		return false;
+	}
+
+	public User loadDefaultUser(long companyId)
+		throws PortalException, SystemException {
+
+		return userPersistence.findByC_DU(companyId, true);
 	}
 
 	/**

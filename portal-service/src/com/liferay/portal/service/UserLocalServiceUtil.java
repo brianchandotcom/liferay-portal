@@ -1795,6 +1795,12 @@ public class UserLocalServiceUtil {
 		return getService().isPasswordExpiringSoon(user);
 	}
 
+	public static com.liferay.portal.model.User loadDefaultUser(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().loadDefaultUser(companyId);
+	}
+
 	/**
 	* Updates a user account that was automatically created when a guest user
 	* participated in an action (e.g. posting a comment) and only provided his

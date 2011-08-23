@@ -104,6 +104,11 @@ if (Validator.isNull(searchConfiguration)) {
 }
 
 boolean displayResultsInDocumentForm = GetterUtil.getBoolean(portletPreferences.getValue("displayResultsInDocumentForm", String.valueOf(false)));
+
+if (!permissionChecker.isCompanyAdmin()) {
+	displayResultsInDocumentForm = false;
+}
+
 boolean viewInContext = GetterUtil.getBoolean(portletPreferences.getValue("viewInContext", String.valueOf(true)));
 boolean displayMainQuery = GetterUtil.getBoolean(portletPreferences.getValue("displayMainQuery", String.valueOf(false)));
 boolean displayOpenSearchResults = GetterUtil.getBoolean(portletPreferences.getValue("displayOpenSearchResults", String.valueOf(true)));

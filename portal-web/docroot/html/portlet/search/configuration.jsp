@@ -32,7 +32,9 @@
 
 		<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= displayModifiedRangeFacet %>" />
 
-		<aui:input helpMessage="display-results-in-document-form-help" name="preferences--displayResultsInDocumentForm--" type="checkbox" value="<%= displayResultsInDocumentForm %>" />
+		<c:if test="<%= permissionChecker.isCompanyAdmin() %>"
+			<aui:input helpMessage="display-results-in-document-form-help" name="preferences--displayResultsInDocumentForm--" type="checkbox" value="<%= displayResultsInDocumentForm %>" />
+		</c:if>
 
 		<aui:input name="preferences--viewInContext--" type="checkbox" value="<%= viewInContext %>" />
 

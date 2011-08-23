@@ -530,7 +530,7 @@ AUI().add(
 					);
 				}
 
-				var isStaging = BODY.hasClass('staging') || BODY.hasClass('remote-staging');
+				var isStaging = BODY.hasClass('staging');
 				var isLiveView = BODY.hasClass('live-view');
 
 				if (isStaging || isLiveView) {

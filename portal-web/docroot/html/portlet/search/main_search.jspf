@@ -45,7 +45,18 @@ for (FacetConfiguration facetConfiguration : facetConfigurations) {
 
 Hits hits = FacetedSearcher.getInstance().search(searchContext);
 
+queryTerms = hits.getQueryTerms();
+
+request.setAttribute("view.jsp-portletURL", portletURL);
+request.setAttribute("view.jsp-queryTerms", queryTerms);
+
 boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAssetCategoriesFacet || displayModifiedRangeFacet;
+
+String displayResultsPath = "/html/portlet/search/main_search_result_form.jsp";
+
+if (displayResultsInDocumentForm) {
+	displayResultsPath = "/html/portlet/search/main_search_document_form.jsp";
+}
 %>
 
 <aui:layout cssClass='<%= "search-layout" + (showMenu ? " menu-column" : StringPool.BLANK) %>'>
@@ -93,23 +104,12 @@ boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAsse
 					keyProperty="uID"
 					stringKey="<%= true %>"
 				>
-					<liferay-ui:search-container-column-text>
-						<c:choose>
-							<c:when test="<%= displayResultsInDocumentForm %>">
-								<%@ include file="/html/portlet/search/main_search_document_form.jspf" %>
-							</c:when>
-							<c:otherwise>
-								<%@ include file="/html/portlet/search/main_search_result_form.jspf" %>
-							</c:otherwise>
-						</c:choose>
-					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp path="<%= displayResultsPath %>" />
+
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator paginate="<%= false %>" />
-
-				<div class="search-paginator-container">
-					<liferay-ui:search-paginator searchContainer="<%= mainSearchSearchContainer %>" type="more" />
-				</div>
+				<liferay-ui:search-iterator type="more" />
 
 				<c:if test="<%= (hits != null) %>">
 					<em class="taglib-page-iterator">

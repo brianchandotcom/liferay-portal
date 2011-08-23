@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.PortletPreferencesIds;
@@ -115,6 +116,44 @@ public class ServiceContextFactory {
 
 		serviceContext.setAttributes(attributes);
 
+		// Command
+
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
+		serviceContext.setCommand(cmd);
+
+		// Current URL
+
+		String currentURL = PortalUtil.getCurrentURL(request);
+
+		serviceContext.setCurrentURL(currentURL);
+
+		// Permissions
+
+		boolean addGroupPermissions = ParamUtil.getBoolean(
+			request, "addGroupPermissions");
+		boolean addGuestPermissions = ParamUtil.getBoolean(
+			request, "addGuestPermissions");
+		String[] groupPermissions = PortalUtil.getGroupPermissions(request);
+		String[] guestPermissions = PortalUtil.getGuestPermissions(request);
+
+		serviceContext.setAddGroupPermissions(addGroupPermissions);
+		serviceContext.setAddGuestPermissions(addGuestPermissions);
+		serviceContext.setGroupPermissions(groupPermissions);
+		serviceContext.setGuestPermissions(guestPermissions);
+
+		// Portlet preferences ids
+
+		String portletId = PortalUtil.getPortletId(request);
+
+		if (Validator.isNotNull(portletId)) {
+			PortletPreferencesIds portletPreferencesIds =
+				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+					request, portletId);
+
+			serviceContext.setPortletPreferencesIds(portletPreferencesIds);
+		}
+
 		// Request
 
 		Map<String, String> headerMap = new HashMap<String, String>();
@@ -133,6 +172,45 @@ public class ServiceContextFactory {
 
 		serviceContext.setRemoteAddr(request.getRemoteAddr());
 		serviceContext.setRemoteHost(request.getRemoteHost());
+
+		// Asset
+
+		Map<String, String[]> parameterMap = request.getParameterMap();
+
+		List<Long> assetCategoryIdsList = new ArrayList<Long>();
+
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String name = entry.getKey();
+
+			if (name.startsWith("assetCategoryIds")) {
+				long[] assetVocabularyAssetCategoryIds = StringUtil.split(
+					ParamUtil.getString(request, name), 0L);
+
+				for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
+					assetCategoryIdsList.add(assetCategoryId);
+				}
+			}
+		}
+
+		long[] assetCategoryIds = ArrayUtil.toArray(
+			assetCategoryIdsList.toArray(
+				new Long[assetCategoryIdsList.size()]));
+		long[] assetLinkEntryIds = StringUtil.split(
+			ParamUtil.getString(
+				request, "assetLinkSearchContainerPrimaryKeys"), 0L);
+		String[] assetTagNames = StringUtil.split(
+			ParamUtil.getString(request, "assetTagNames"));
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+		serviceContext.setAssetTagNames(assetTagNames);
+
+		// Workflow
+
+		int workflowAction = ParamUtil.getInteger(
+			request, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
+
+		serviceContext.setWorkflowAction(workflowAction);
 
 		return serviceContext;
 	}

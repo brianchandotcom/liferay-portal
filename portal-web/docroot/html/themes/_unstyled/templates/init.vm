@@ -12,11 +12,11 @@
 	#set ($page_group = $layout.getGroup())
 
 	#if ($page_group.isStagingGroup())
-		#set ($css_class = $css_class + " staging")
+		#set ($css_class = $css_class + " staging local-staging")
 	#elseif ($theme_display.isShowStagingIcon() && $page_group.hasStagingGroup())
 		#set ($css_class = $css_class + " live-view")
 	#elseif ($theme_display.isShowStagingIcon() && $page_group.isStagedRemotely())
-		#set ($css_class = $css_class + " remote-staging")
+		#set ($css_class = $css_class + " staging remote-staging")
 	#end
 #end
 

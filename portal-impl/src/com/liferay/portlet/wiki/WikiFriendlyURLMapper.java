@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		String friendlyURLPath = router.parametersToUrl(routeParameters);
 
-		if (friendlyURLPath == null) {
+		if (Validator.isNull(friendlyURLPath)) {
 			return null;
 		}
 

@@ -102,7 +102,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		String friendlyURLPath = router.parametersToUrl(routeParameters);
 
-		if (friendlyURLPath == null) {
+		if (Validator.isNull(friendlyURLPath)) {
 			return null;
 		}
 
@@ -158,7 +158,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		String portletId = getPortletId(routeParameters);
 
-		if (portletId == null) {
+		if (Validator.isNull(portletId)) {
 			return;
 		}
 

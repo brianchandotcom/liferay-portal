@@ -95,6 +95,8 @@ public class LiferayPortlet extends GenericPortlet {
 			if (isSessionErrorException(cause)) {
 				SessionErrors.add(
 					actionRequest, cause.getClass().getName(), cause);
+
+				sendErrorRedirect(actionRequest, actionResponse);
 			}
 			else {
 				throw pe;
@@ -271,6 +273,19 @@ public class LiferayPortlet extends GenericPortlet {
 		throw new PortletException("doPrint method not implemented");
 	}
 
+	protected String getErrorRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		String errorRedirect = (String)actionRequest.getAttribute(
+			WebKeys.ERROR_REDIRECT);
+
+		if (Validator.isNull(errorRedirect)) {
+			errorRedirect = ParamUtil.getString(actionRequest, "errorRedirect");
+		}
+
+		return errorRedirect;
+	}
+
 	protected String getRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
@@ -307,6 +322,17 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 		else {
 			return false;
+		}
+	}
+
+	protected void sendErrorRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
+		String errorRedirect = getErrorRedirect(actionRequest, actionResponse);
+
+		if (Validator.isNotNull(errorRedirect)) {
+			actionResponse.sendRedirect(errorRedirect);
 		}
 	}
 

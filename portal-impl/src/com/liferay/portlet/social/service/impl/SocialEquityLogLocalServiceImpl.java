@@ -665,14 +665,6 @@ public class SocialEquityLogLocalServiceImpl
 		int actionDate = getEquityDate();
 		int type = equitySetting.getType();
 
-		// Invisible
-
-		if (!assetEntry.isVisible() &&
-			(type == SocialEquitySettingConstants.TYPE_INFORMATION)) {
-
-			return false;
-		}
-
 		// Duplicate
 
 		int count = socialEquityLogPersistence.countByU_AEI_AID_AD_A_T_E(

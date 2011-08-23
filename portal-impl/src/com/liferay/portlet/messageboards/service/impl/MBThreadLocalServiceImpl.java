@@ -57,6 +57,49 @@ import java.util.List;
  */
 public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
+	public MBThread addThread(long categoryId, MBMessage message)
+		throws PortalException, SystemException {
+
+		long threadId = counterLocalService.increment();
+
+		MBThread thread = mbThreadPersistence.create(threadId);
+
+		thread.setGroupId(message.getGroupId());
+		thread.setCompanyId(message.getCompanyId());
+		thread.setCategoryId(categoryId);
+		thread.setRootMessageId(message.getMessageId());
+		thread.setRootMessageUserId(message.getUserId());
+		thread.setStatus(message.getStatus());
+		thread.setStatusByUserId(message.getStatusByUserId());
+		thread.setStatusByUserName(message.getStatusByUserName());
+		thread.setStatusDate(message.getStatusDate());
+
+		thread.setMessageCount(thread.getMessageCount() + 1);
+
+		if (message.isAnonymous()) {
+			thread.setLastPostByUserId(0);
+		}
+		else {
+			thread.setLastPostByUserId(message.getUserId());
+		}
+
+		thread.setLastPostDate(message.getCreateDate());
+
+		if (message.getPriority() != MBThreadConstants.PRIORITY_NOT_GIVEN) {
+			thread.setPriority(message.getPriority());
+		}
+
+		mbThreadPersistence.update(thread, false);
+
+		assetEntryLocalService.updateEntry(
+			message.getUserId(), message.getGroupId(), MBThread.class.getName(),
+			thread.getThreadId(), null,	new long[0], new String[0], false, null,
+			null, null, null, null, String.valueOf(thread.getRootMessageId()),
+			null, null, null, null, 0, 0, null, false);
+
+		return thread;
+	}
+
 	public void deleteThread(long threadId)
 		throws PortalException, SystemException {
 
@@ -157,6 +200,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			mbCategoryPersistence.update(category, false);
 		}
+
+		// Thread Asset
+
+		assetEntryLocalService.deleteEntry(
+			MBThread.class.getName(), thread.getThreadId());
 
 		// Thread
 
@@ -626,43 +674,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
 		thread.setViewCount(viewCount);
-
-		mbThreadPersistence.update(thread, false);
-
-		return thread;
-	}
-
-	protected MBThread addThread(long categoryId, MBMessage message)
-		throws SystemException {
-
-		long threadId = counterLocalService.increment();
-
-		MBThread thread = mbThreadPersistence.create(threadId);
-
-		thread.setGroupId(message.getGroupId());
-		thread.setCompanyId(message.getCompanyId());
-		thread.setCategoryId(categoryId);
-		thread.setRootMessageId(message.getMessageId());
-		thread.setRootMessageUserId(message.getUserId());
-		thread.setStatus(message.getStatus());
-		thread.setStatusByUserId(message.getStatusByUserId());
-		thread.setStatusByUserName(message.getStatusByUserName());
-		thread.setStatusDate(message.getStatusDate());
-
-		thread.setMessageCount(thread.getMessageCount() + 1);
-
-		if (message.isAnonymous()) {
-			thread.setLastPostByUserId(0);
-		}
-		else {
-			thread.setLastPostByUserId(message.getUserId());
-		}
-
-		thread.setLastPostDate(message.getCreateDate());
-
-		if (message.getPriority() != MBThreadConstants.PRIORITY_NOT_GIVEN) {
-			thread.setPriority(message.getPriority());
-		}
 
 		mbThreadPersistence.update(thread, false);
 

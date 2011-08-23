@@ -36,7 +36,7 @@ public class MBThreadFlagLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		if (user.isDefaultUser()) {
+		if (user.isDefaultUser() || (thread.getRootMessageUserId() == userId)) {
 			return;
 		}
 
@@ -112,7 +112,7 @@ public class MBThreadFlagLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		if (user.isDefaultUser()) {
+		if (user.isDefaultUser() || (thread.getRootMessageUserId() == userId)) {
 			return null;
 		}
 
@@ -125,7 +125,7 @@ public class MBThreadFlagLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		if (user.isDefaultUser()) {
+		if (user.isDefaultUser() || (thread.getRootMessageUserId() == userId)) {
 			return true;
 		}
 

@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.DuplicateOrganizationException;
-import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.OrganizationNameException;
 import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.OrganizationTypeException;

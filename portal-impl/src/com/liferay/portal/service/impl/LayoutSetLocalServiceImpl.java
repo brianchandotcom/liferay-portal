@@ -106,7 +106,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		if (group.isOrganization() && group.isSite()) {
 			layoutSet.setPageCount(0);
-			
+
 			layoutSetPersistence.update(layoutSet, false);
 		}
 		else {

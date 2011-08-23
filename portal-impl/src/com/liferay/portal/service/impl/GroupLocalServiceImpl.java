@@ -537,7 +537,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.setSite(false);
 
 			groupPersistence.update(group, false);
-		} 
+		}
 		else {
 			groupPersistence.remove(group);
 		}

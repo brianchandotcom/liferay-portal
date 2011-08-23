@@ -19,7 +19,6 @@
 <%@ page import="com.liferay.portal.NoSuchOrganizationException" %>
 <%@ page import="com.liferay.portal.NoSuchUserGroupException" %>
 <%@ page import="com.liferay.portal.NoSuchUserException" %>
-<%@ page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %>

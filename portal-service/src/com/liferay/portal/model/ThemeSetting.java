@@ -21,6 +21,8 @@ public interface ThemeSetting {
 
 	public String[] getOptions();
 
+	public String getScript();
+
 	public String getType();
 
 	public String getValue();
@@ -30,6 +32,8 @@ public interface ThemeSetting {
 	public void setConfigurable(boolean configurable);
 
 	public void setOptions(String[] options);
+
+	public void setScript(String script);
 
 	public void setType(String type);
 

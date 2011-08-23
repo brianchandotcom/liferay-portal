@@ -19,6 +19,7 @@ import com.liferay.portal.model.ThemeSetting;
 
 /**
  * @author Julio Camarero
+ * @author Raymond Augé
  */
 public class ThemeSettingImpl implements ThemeSetting {
 
@@ -31,16 +32,22 @@ public class ThemeSettingImpl implements ThemeSetting {
 	}
 
 	public ThemeSettingImpl(
-		boolean configurable, String[] options, String type, String value) {
+		boolean configurable, String[] options, String script, String type,
+		String value) {
 
 		_configurable = configurable;
 		_options = options;
+		_script = script;
 		_type = type;
 		_value = value;
 	}
 
 	public String[] getOptions() {
 		return _options;
+	}
+
+	public String getScript() {
+		return _script;
 	}
 
 	public String getType() {
@@ -63,6 +70,10 @@ public class ThemeSettingImpl implements ThemeSetting {
 		_options = options;
 	}
 
+	public void setScript(String script) {
+		_script = script;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -75,6 +86,7 @@ public class ThemeSettingImpl implements ThemeSetting {
 
 	private boolean _configurable;
 	private String[] _options;
+	private String _script;
 	private String _type;
 	private String _value;
 

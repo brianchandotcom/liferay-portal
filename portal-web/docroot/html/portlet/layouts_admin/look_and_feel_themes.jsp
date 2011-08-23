@@ -175,6 +175,12 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 										</c:when>
 									</c:choose>
 
+									<c:if test="<%= Validator.isNotNull(themeSetting.getScript()) %>">
+										<aui:script position="inline">
+											<%= StringUtil.replace(themeSetting.getScript(), "[@NAMESPACE@]", renderResponse.getNamespace()) %>
+										</aui:script>
+									</c:if>
+
 								<%
 								}
 								%>

@@ -100,10 +100,10 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public void addSetting(
 		 String key, String value, boolean configurable, String type,
-		 String[] options) {
+		 String[] options, String script) {
 
 		ThemeSetting themeSetting = new ThemeSettingImpl(
-			configurable, options, type, value);
+			configurable, options, script, type, value);
 
 		_themeSettingsMap.put(key, themeSetting);
 	}
@@ -471,7 +471,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			themeSetting.setValue(value);
 		}
 		else {
-			addSetting(key, value, false, null, null);
+			addSetting(key, value, false, null, null, null);
 		}
 	}
 

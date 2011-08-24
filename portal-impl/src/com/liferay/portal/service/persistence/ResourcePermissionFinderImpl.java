@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
@@ -47,6 +48,9 @@ public class ResourcePermissionFinderImpl
 
 	public static String FIND_BY_C_N_S =
 		ResourcePermissionFinder.class.getName() + ".findByC_N_S";
+
+	public static String HAS_VIEW_PERMISSION =
+		ResourcePermissionFinder.class.getName() + ".hasViewPermission";
 
 	public int countByR_S(long roleId, int[] scopes) throws SystemException {
 		Session session = null;
@@ -174,6 +178,56 @@ public class ResourcePermissionFinderImpl
 			qPos.add(scope);
 
 			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public ResourcePermission hasViewPermission(
+			long companyId, String name, int scope, String primKey,
+			long[] roleIds)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(HAS_VIEW_PERMISSION);
+
+			if (roleIds.length > 1) {
+				StringBundler roleIdsOR = new StringBundler(
+					(roleIds.length * 2) -1);
+
+				for (int i = 0; i < roleIds.length; i++) {
+					if (i > 0) {
+						roleIdsOR.append(" OR ");
+					}
+
+					roleIdsOR.append("ResourcePermission.roleId = ?");
+				}
+
+				sql = StringUtil.replace(
+					sql, "ResourcePermission.roleId = ?", roleIdsOR.toString());
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("ResourcePermission", ResourcePermissionImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(name);
+			qPos.add(scope);
+			qPos.add(primKey);
+			qPos.add(roleIds);
+
+			return (ResourcePermission)q.uniqueResult();
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

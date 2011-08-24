@@ -457,6 +457,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		//	permissionCheckerBag.getUserUserGroupGroups();
 		List<Group> groups = permissionCheckerBag.getGroups();
 		List<Role> roles = permissionCheckerBag.getRoles();
+		long[] roleIds = permissionCheckerBag.getRoleIds();
 
 		logHasUserPermissions(userId, resourceId, actionId, stopWatch, block++);
 
@@ -497,7 +498,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		}
 		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 			return hasUserPermissions_6(
-				userId, resourceId, resources, actionId, roles, stopWatch,
+				userId, resourceId, resources, actionId, roleIds, stopWatch,
 				block);
 		}
 
@@ -1036,7 +1037,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 	protected boolean hasUserPermissions_6(
 			long userId, long resourceId, List<Resource> resources,
-			String actionId, List<Role> roles, StopWatch stopWatch,
+			String actionId, long[] roleIds, StopWatch stopWatch,
 			int block)
 		throws PortalException, SystemException {
 
@@ -1049,14 +1050,12 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		for (int i = resources.size() - 1; i >= 0; i--) {
 			Resource resource = resources.get(i);
 
-			for (Role role : roles) {
-				if (resourcePermissionLocalService.hasResourcePermission(
-						resource.getCompanyId(), resource.getName(),
-						resource.getScope(), resource.getPrimKey(),
-						role.getRoleId(), actionId)) {
+			if (resourcePermissionLocalService.hasResourcePermission(
+					resource.getCompanyId(), resource.getName(),
+					resource.getScope(), resource.getPrimKey(), roleIds,
+					actionId)) {
 
-					return true;
-				}
+				return true;
 			}
 		}
 

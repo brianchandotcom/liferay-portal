@@ -128,13 +128,7 @@ AUI().add(
 
 						var portletMessageContainer = instance._portletMessageContainer;
 
-						instance._hideMessageTask = A.debounce(
-							function(event) {
-								portletMessageContainer.hide();
-							},
-							7000,
-							portletMessageContainer
-						);
+						instance._hideMessageTask = A.debounce('hide', 7000, portletMessageContainer);
 
 						instance._tagsList.on(EVENT_CLICK, instance._onTagsListClick, instance);
 						instance._tagsList.on('key', instance._onTagsListSelect, 'up:13', instance);

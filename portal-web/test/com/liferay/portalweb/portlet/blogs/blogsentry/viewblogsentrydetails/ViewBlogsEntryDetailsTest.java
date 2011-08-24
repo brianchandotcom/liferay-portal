@@ -45,7 +45,7 @@ public class ViewBlogsEntryDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@class='entry-title']/a",
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -60,10 +60,9 @@ public class ViewBlogsEntryDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Your Rating"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
-		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]", "Average"));
-		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]", "0 Votes"));
+		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
+			selenium.getText(
+				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		assertEquals(RuntimeVariables.replace("Previous"),
 			selenium.getText("//span[@class='previous']"));
 		assertEquals(RuntimeVariables.replace("Next"),

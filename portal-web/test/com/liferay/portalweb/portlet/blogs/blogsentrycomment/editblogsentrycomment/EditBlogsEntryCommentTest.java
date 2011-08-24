@@ -45,16 +45,17 @@ public class EditBlogsEntryCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@class='entry-title']/a",
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
-			selenium.getText("//div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//div[3]/div/div[4]/div/span/a/span"));
-		selenium.clickAt("//div[3]/div/div[4]/div/span/a/span",
-			RuntimeVariables.replace("Edit"));
+			selenium.getText("//li[3]/span/a/span"));
+		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -76,20 +77,36 @@ public class EditBlogsEntryCommentTest extends BaseTestCase {
 		selenium.type("//textarea[@name='_33_editReplyBody1']",
 			RuntimeVariables.replace("Blogs Entry Comment Body Edit"));
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("//textarea[@name='_33_editReplyBody1']",
-			RuntimeVariables.replace("\\48"));
-		selenium.keyPress("//textarea[@name='_33_editReplyBody1']",
-			RuntimeVariables.replace("\\8"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Your request processed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='lfr-message-response portlet-msg-success']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"Your request processed successfully."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body Edit"),
-			selenium.getText("//div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertNotEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
-			selenium.getText("//div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

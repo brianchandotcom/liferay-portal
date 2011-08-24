@@ -46,8 +46,9 @@ public class ViewPortletScopeDefaultBlogsEntryCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Scope Default"),
-			selenium.getText("//div[@id='panel-manage-content']/div[2]/span"));
+		assertEquals(RuntimeVariables.replace("Scope: Default"),
+			selenium.getText(
+				"//div[@id='panel-manage-content']/div[2]/div/span/ul/li/strong/a"));
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

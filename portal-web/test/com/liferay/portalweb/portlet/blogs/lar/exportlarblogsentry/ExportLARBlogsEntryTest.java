@@ -74,9 +74,9 @@ public class ExportLARBlogsEntryTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Export", RuntimeVariables.replace("Export"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Export the selected data to the given LAR file name."),
+			selenium.getText("//div/span/span/label"));
 		selenium.type("//input[@id='_86_exportFileName']",
 			RuntimeVariables.replace("Blogs_Entry.Portlet.lar"));
 		selenium.saveScreenShotAndSource();

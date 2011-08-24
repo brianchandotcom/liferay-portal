@@ -45,15 +45,17 @@ public class DeleteBlogsEntryCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@class='entry-title']/a",
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
-			selenium.getText("//div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//div[5]/div/span/a/span"));
-		selenium.clickAt("//div[5]/div/span/a/span",
+			selenium.getText("//li[4]/span/a/span"));
+		selenium.clickAt("//li[4]/span/a/span",
 			RuntimeVariables.replace("Delete"));
 
 		for (int second = 0;; second++) {

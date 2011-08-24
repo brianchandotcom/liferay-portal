@@ -96,28 +96,6 @@ public class User_LoginTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				selenium.click("//input[@id='_58_rememberMeCheckbox']");
 
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Sign In']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Sign In']",
-					RuntimeVariables.replace("Sign In"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
 				boolean rememberMeCheckboxChecked1 = selenium.isChecked(
 						"_58_rememberMeCheckbox");
 
@@ -127,12 +105,12 @@ public class User_LoginTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_58_rememberMeCheckbox",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+					RuntimeVariables.replace("Remember Me"));
 
 			case 2:
 				selenium.clickAt("//input[@value='Sign In']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -146,7 +124,7 @@ public class User_LoginTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@value='I Agree']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("I Agree"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -168,7 +146,7 @@ public class User_LoginTest extends BaseTestCase {
 					RuntimeVariables.replace("test"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 

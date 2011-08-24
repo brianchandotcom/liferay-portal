@@ -24,8 +24,13 @@
 	<td>Blogs Test Page</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
@@ -49,16 +54,6 @@
 	<td>Blogs Entry Comment Body</td>
 </tr>
 <tr>
-	<td>keyPress</td>
-	<td>//textarea[@name='_33_postReplyBody0']</td>
-	<td>\48</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>//textarea[@name='_33_postReplyBody0']</td>
-	<td>\8</td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//input[@value='Reply']</td>
 	<td>Reply</td>
@@ -75,7 +70,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div/div/div[3]/div/div[1]</td>
+	<td>//div[@class='lfr-discussion-message']</td>
 	<td>Blogs Entry Comment Body</td>
 </tr>
 

@@ -52,7 +52,6 @@ public class AddBlogsEntry3Test extends BaseTestCase {
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs3 Entry3 Title3"));
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -79,40 +78,21 @@ public class AddBlogsEntry3Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Blogs3 Entry3 Title3"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[1]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[1]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs3 Entry3 Content3."),
 			selenium.getText("xPath=(//div[@class='entry-body'])[1]/p"));
 		assertEquals(RuntimeVariables.replace("Blogs2 Entry2 Title2"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[2]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[2]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs2 Entry2 Content2."),
 			selenium.getText("xPath=(//div[@class='entry-body'])[2]/p"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("xPath=(//div[@class='entry-title'])[3]/a"));
+			selenium.getText("xPath=(//div[@class='entry-title'])[3]/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("xPath=(//div[@class='entry-body'])[3]/p"));
 	}

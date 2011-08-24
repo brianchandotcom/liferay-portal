@@ -25,23 +25,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>assertText</td>
 	<td>//div[@class='entry-body']</td>
 	<td>Blogs Entry Content</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='entry-body']/a</td>
-	<td>Read More</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='entry-body']/a</td>
-	<td>Read More</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,13 +50,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div/div/div[3]/div/div[1]</td>
+	<td>//div[@class='lfr-discussion-message']</td>
 	<td>Blogs Entry Comment Body</td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>//div[@class='entry-body']/a</td>
-	<td>Read More</td>
 </tr>
 
 </tbody></table>

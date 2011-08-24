@@ -132,8 +132,6 @@ public class ConfigurePortletScopeLayoutPage2Page1Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs2 Test2 Page2"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -144,7 +142,7 @@ public class ConfigurePortletScopeLayoutPage2Page1Test extends BaseTestCase {
 				if (RuntimeVariables.replace(
 							"You have successfully updated the setup.")
 										.equals(selenium.getText(
-								"//div[@id='p_p_id_86_']/div/div"))) {
+								"//div[@class='portlet-msg-success']"))) {
 					break;
 				}
 			}
@@ -157,7 +155,7 @@ public class ConfigurePortletScopeLayoutPage2Page1Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Blogs2 Test2 Page2",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 		selenium.open("/web/guest/home/");

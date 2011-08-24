@@ -71,8 +71,8 @@ public class TearDownPortletDisplayStyleTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+					RuntimeVariables.replace("Configuration"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

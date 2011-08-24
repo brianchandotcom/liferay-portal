@@ -31,7 +31,6 @@ public class User_ViewSaveAsDraftBlogsEntryTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(SaveAsDraftBlogsEntryDetailsTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(AddUserPasswordTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(User_LoginTest.class);
 		testSuite.addTestSuite(User_ViewSaveAsDraftBlogsEntryTest.class);

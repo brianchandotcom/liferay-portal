@@ -25,13 +25,23 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td>Users</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Add</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Add</td>
-	<td>Add</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -56,7 +66,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_middleName']</td>
-	<td></td>
+	<td>usermn</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -94,6 +104,11 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_125_prefixId']</td>
+	<td>Mr.</td>
+</tr>
+<tr>
 	<td>assertValue</td>
 	<td>//input[@id='_125_screenName']</td>
 	<td>usersn</td>
@@ -111,12 +126,32 @@
 <tr>
 	<td>assertValue</td>
 	<td>//input[@id='_125_middleName']</td>
-	<td></td>
+	<td>usermn</td>
 </tr>
 <tr>
 	<td>assertValue</td>
 	<td>//input[@id='_125_lastName']</td>
 	<td>userln</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_125_birthdayMonth']</td>
+	<td>April</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_125_birthdayDay']</td>
+	<td>10</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_125_birthdayYear']</td>
+	<td>1986</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_125_male']</td>
+	<td>Male</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -125,23 +160,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_125_password1</td>
-	<td></td>
+	<td>//input[@id='_125_password1']</td>
+	<td>New Password Field</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_password1</td>
+	<td>//input[@id='_125_password1']</td>
 	<td>password</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_password2</td>
+	<td>//input[@id='_125_password2']</td>
 	<td>password</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -156,17 +191,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Sign Out</td>
-	<td></td>
+	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sign Out</td>
-	<td></td>
+	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -175,17 +210,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_58_login</td>
+	<td>//input[@id='_58_login']</td>
 	<td>email address</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_login</td>
+	<td>//input[@id='_58_login']</td>
 	<td>userea@liferay.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_password</td>
+	<td>//input[@id='_58_password']</td>
 	<td>password</td>
 </tr>
 <tr>
@@ -200,8 +235,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_58_rememberMeCheckbox</td>
-	<td></td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>Remember Me</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -211,7 +246,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -226,7 +261,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='I Agree']</td>
-	<td></td>
+	<td>I Agree</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -245,18 +280,18 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>password1</td>
+	<td>//input[@id='password1']</td>
 	<td>test</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>password2</td>
+	<td>//input[@id='password2']</td>
 	<td>test</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -280,13 +315,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>reminderQueryAnswer</td>
+	<td>//input[@id='reminderQueryAnswer']</td>
 	<td>test</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -301,17 +336,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Sign Out</td>
-	<td></td>
+	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sign Out</td>
-	<td></td>
+	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -320,17 +355,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_58_login</td>
+	<td>//input[@id='_58_login']</td>
 	<td>email address</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_login</td>
+	<td>//input[@id='_58_login']</td>
 	<td>test@liferay.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_password</td>
+	<td>//input[@id='_58_password']</td>
 	<td>test</td>
 </tr>
 <tr>
@@ -345,8 +380,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_58_rememberMeCheckbox</td>
-	<td></td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>Remember Me</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -356,7 +391,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
 
 </tbody></table>

@@ -105,7 +105,7 @@ public class AdvancedSearchOrganizationAddressCityTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Selenium"),
-					selenium.getText("//a[2]/strong"));
+					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//div[1]/span[1]/ul/li/strong/a",
 					RuntimeVariables.replace("View"));
 

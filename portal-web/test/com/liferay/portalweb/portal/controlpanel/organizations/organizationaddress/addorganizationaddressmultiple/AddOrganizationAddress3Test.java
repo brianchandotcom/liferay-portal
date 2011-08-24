@@ -213,7 +213,27 @@ public class AddOrganizationAddress3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+				if ("United States".equals(selenium.getSelectedLabel(
+								"//select[@id='_125_addressCountryId2']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if ("California".equals(selenium.getSelectedLabel(
+								"//select[@id='_125_addressRegionId2']"))) {
 					break;
 				}
 			}

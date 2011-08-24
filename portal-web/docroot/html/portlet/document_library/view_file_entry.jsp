@@ -152,7 +152,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 <div class="view">
 	<aui:layout>
-		<aui:column columnWidth="<%= 70 %>" cssClass="lfr-asset-column-details" first="<%= true %>">
+		<aui:column columnWidth="<%= 65 %>" cssClass="lfr-asset-column-details" first="<%= true %>">
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content">
 					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
@@ -421,7 +421,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			</div>
 		</aui:column>
 
-		<aui:column columnWidth="<%= 30 %>" cssClass="lfr-asset-column-details context-pane" last="<%= true %>">
+		<aui:column columnWidth="<%= 35 %>" cssClass="lfr-asset-column-details context-pane" last="<%= true %>">
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content"></div>
 			</div>
@@ -627,6 +627,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								headerNames.add("status");
 							}
 
+							headerNames.add(StringPool.BLANK);
+
 							searchContainer.setHeaderNames(headerNames);
 
 							if (comparableFileEntry) {
@@ -651,32 +653,21 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 								ResultRow row = new ResultRow(new Object[] {fileEntry, curFileVersion, results.size(), conversions, fileEntry.isCheckedOut(), fileEntry.hasLock()}, String.valueOf(curFileVersion.getVersion()), i);
 
-								StringBundler sb = new StringBundler(10);
-
-								sb.append(themeDisplay.getPortalURL());
-								sb.append(themeDisplay.getPathContext());
-								sb.append("/documents/");
-								sb.append(themeDisplay.getScopeGroupId());
-								sb.append(StringPool.SLASH);
-								sb.append(folderId);
-								sb.append(StringPool.SLASH);
-								sb.append(HttpUtil.encodeURL(title));
-								sb.append("?version=");
-								sb.append(String.valueOf(curFileVersion.getVersion()));
-
-								String rowHREF = sb.toString();
-
 								// Statistics
 
-								row.addText(String.valueOf(curFileVersion.getVersion()), rowHREF);
-								row.addText(dateFormatDateTime.format(curFileVersion.getCreateDate()), rowHREF);
-								row.addText(TextFormatter.formatKB(curFileVersion.getSize(), locale) + "k", rowHREF);
+								row.addText(String.valueOf(curFileVersion.getVersion()));
+								row.addText(dateFormatDateTime.format(curFileVersion.getCreateDate()));
+								row.addText(TextFormatter.formatKB(curFileVersion.getSize(), locale) + "k");
 
 								// Status
 
 								if (showNonApprovedDocuments) {
 									row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(curFileVersion.getStatus())));
 								}
+
+                                // Action
+
+                                row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_history_action.jsp");
 
 								// Add result row
 

@@ -135,7 +135,7 @@ public class JavaProps {
 
 		LogUtil.debug(_log, System.getProperties());
 
-		if (_javaVmVersion.compareTo("1.5.0_06-") < 0) {
+		if (_javaVersion.compareTo("1.5.0_06-") < 0) {
 			_sunBug6291034 = true;
 		}
 	}

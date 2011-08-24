@@ -245,6 +245,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setStatusByUserName(userName);
 		message.setStatusDate(serviceContext.getModifiedDate(now));
 
+		if (priority != MBThreadConstants.PRIORITY_NOT_GIVEN) {
+			message.setPriority(priority);
+		}
+
 		// Thread
 
 		if (parentMessageId != MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
@@ -265,19 +269,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if ((thread == null) ||
 			(parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
 
-			threadId = counterLocalService.increment();
-
-			thread = mbThreadPersistence.create(threadId);
-
-			thread.setGroupId(groupId);
-			thread.setCompanyId(user.getCompanyId());
-			thread.setCategoryId(categoryId);
-			thread.setRootMessageId(messageId);
-			thread.setRootMessageUserId(user.getUserId());
-			thread.setStatus(WorkflowConstants.STATUS_DRAFT);
-			thread.setStatusByUserId(user.getUserId());
-			thread.setStatusByUserName(userName);
-			thread.setStatusDate(serviceContext.getModifiedDate(now));
+			thread = mbThreadLocalService.addThread(categoryId, message);
 		}
 
 		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&
@@ -285,13 +277,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			thread.setPriority(priority);
 
+			mbThreadPersistence.update(thread, false);
+
 			updatePriorities(thread.getThreadId(), priority);
 		}
 
 		// Message
 
 		message.setCategoryId(categoryId);
-		message.setThreadId(threadId);
+		message.setThreadId(thread.getThreadId());
 		message.setRootMessageId(thread.getRootMessageId());
 		message.setParentMessageId(parentMessageId);
 		message.setSubject(subject);
@@ -299,10 +293,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setFormat(format);
 		message.setAttachments(!files.isEmpty());
 		message.setAnonymous(anonymous);
-
-		if (priority != MBThreadConstants.PRIORITY_NOT_GIVEN) {
-			message.setPriority(priority);
-		}
 
 		if (message.isDiscussion()) {
 			long classNameId = PortalUtil.getClassNameId(
@@ -353,7 +343,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Commit
 
-		mbThreadPersistence.update(thread, false);
 		mbMessagePersistence.update(message, false);
 
 		// Resources

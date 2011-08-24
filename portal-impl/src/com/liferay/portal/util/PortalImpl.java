@@ -171,6 +171,7 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -5446,6 +5447,8 @@ public class PortalImpl implements Portal {
 				"DLFILEENTRY$]",
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
 				"MBMESSAGE$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
+				"MBTHREAD$]",
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.WIKI.MODEL.WIKIPAGE$]",
 			"[$RESOURCE_SCOPE_COMPANY$]",
 			"[$RESOURCE_SCOPE_GROUP$]",
@@ -5480,6 +5483,7 @@ public class PortalImpl implements Portal {
 			PortalUtil.getClassNameId(CalEvent.class),
 			PortalUtil.getClassNameId(DLFileEntry.class),
 			PortalUtil.getClassNameId(MBMessage.class),
+			PortalUtil.getClassNameId(MBThread.class),
 			PortalUtil.getClassNameId(WikiPage.class),
 			ResourceConstants.SCOPE_COMPANY,
 			ResourceConstants.SCOPE_GROUP,

@@ -181,16 +181,37 @@
 				</social-activity-mapping>
 			</social-equity-mapping>
 			<social-equity-mapping>
+				<action-key>VIEW</action-key>
+				<participation-value>1</participation-value>
+				<participation-lifespan>5</participation-lifespan>
+			</social-equity-mapping>
+		</social-equity>
+	</model-resource>
+		<model-resource>
+		<model-name>com.liferay.portlet.messageboards.model.MBThread</model-name>
+		<portlet-ref>
+			<portlet-name>19</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>SUBSCRIBE</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>SUBSCRIBE</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>SUBSCRIBE</action-key>
+			</guest-unsupported>
+		</permissions>
+		<social-equity>
+			<social-equity-mapping>
 				<action-key>SUBSCRIBE</action-key>
 				<information-value>2</information-value>
 				<information-lifespan>36500</information-lifespan>
 				<participation-value>2</participation-value>
 				<participation-lifespan>36500</participation-lifespan>
-			</social-equity-mapping>
-			<social-equity-mapping>
-				<action-key>VIEW</action-key>
-				<participation-value>1</participation-value>
-				<participation-lifespan>5</participation-lifespan>
 			</social-equity-mapping>
 		</social-equity>
 	</model-resource>

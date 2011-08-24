@@ -254,6 +254,14 @@ public class MBThreadLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBThread addThread(
+		long categoryId,
+		com.liferay.portlet.messageboards.model.MBMessage message)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addThread(categoryId, message);
+	}
+
 	public static void deleteThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -334,6 +342,11 @@ public class MBThreadLocalServiceUtil {
 		return getService()
 				   .getGroupThreadsCount(groupId, userId, status, subscribed,
 			includeAnonymous);
+	}
+
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getNoAssetThreads()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getNoAssetThreads();
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getPriorityThreads(

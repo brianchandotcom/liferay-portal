@@ -73,9 +73,7 @@ public class UserIndexer extends BaseIndexer {
 			searchContext.getAttribute(Field.STATUS),
 			WorkflowConstants.STATUS_APPROVED);
 
-		if (status != WorkflowConstants.STATUS_APPROVED) {
-			contextQuery.addRequiredTerm(Field.STATUS, status);
-		}
+		contextQuery.addRequiredTerm(Field.STATUS, status);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");

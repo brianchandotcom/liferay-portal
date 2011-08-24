@@ -2820,8 +2820,8 @@ public class PortalImpl implements Portal {
 			serverName = virtualHostname;
 		}
 
-		return getPortalURL( serverName, themeDisplay.getServerPort(),
-				themeDisplay.isSecure());
+		return getPortalURL(serverName, themeDisplay.getServerPort(),
+			themeDisplay.isSecure());
 	}
 
 	public String getPortalWebDir() {

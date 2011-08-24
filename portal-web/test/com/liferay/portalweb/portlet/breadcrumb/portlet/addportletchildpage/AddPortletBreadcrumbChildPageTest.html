@@ -16,57 +16,62 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Breadcrumb Test Page</td>
-	<td></td>
+	<td>Breadcrumb Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Breadcrumb Test Page</td>
-	<td></td>
+	<td>Breadcrumb Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Child Test Page</td>
-	<td></td>
+	<td>Child Test Page</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_145_addApplication</td>
-	<td></td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>layout_configuration_content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>typeKeys</td>
-	<td>layout_configuration_content</td>
-	<td>b</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>//div[@title='Breadcrumb']/p/a</td>
-	<td></td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//div[@title='Breadcrumb']/p/a</td>
-	<td></td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//section</td>
-	<td></td>
+	<td>Portlet</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//section</td>
-	<td></td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[1]/span/a</td>
+	<td>Liferay</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a</td>
+	<td>Breadcrumb Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[3]/span/a</td>
+	<td>Child Test Page</td>
 </tr>
 
 </tbody></table>

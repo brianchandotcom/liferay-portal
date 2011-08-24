@@ -42,23 +42,29 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Breadcrumb Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText("//div[@class='portlet-body']/ul/li[1]"));
+			selenium.getText(
+				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
-			selenium.getText("//div[@class='portlet-body']/ul/li[2]"));
+			selenium.getText(
+				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a"));
 		assertFalse(selenium.isElementPresent(
 				"//div[@class='portlet-body']/ul/li[3]"));
-		selenium.clickAt("link=Child Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Child Test Page",
+			RuntimeVariables.replace("Child Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText("//div[@class='portlet-body']/ul/li[1]"));
+			selenium.getText(
+				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
-			selenium.getText("//div[@class='portlet-body']/ul/li[2]"));
+			selenium.getText(
+				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("Child Test Page"),
-			selenium.getText("//div[@class='portlet-body']/ul/li[3]"));
+			selenium.getText(
+				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[3]/span/a"));
 	}
 }

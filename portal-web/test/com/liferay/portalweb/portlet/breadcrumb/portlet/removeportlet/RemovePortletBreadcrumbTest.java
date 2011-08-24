@@ -42,7 +42,7 @@ public class RemovePortletBreadcrumbTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Breadcrumb Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

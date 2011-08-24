@@ -42,7 +42,7 @@ public class ImportLARTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Breadcrumb Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -72,7 +72,7 @@ public class ImportLARTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Import", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("_86_importFileName",
@@ -80,7 +80,7 @@ public class ImportLARTest extends BaseTestCase {
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\breadcrumb\\lar\\importlar\\dependencies\\Breadcrumb-Selenium.portlet.lar"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Import']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

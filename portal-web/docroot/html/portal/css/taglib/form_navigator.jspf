@@ -115,6 +115,18 @@
 	width: 63%;
 }
 
+.taglib-form-navigator .form-section .aui-fieldset {
+	display: table-cell;
+}
+
+.ie .form-section .aui-fieldset {
+	display: block;
+}
+
+.taglib-form-navigator .form-section .aui-field-input, .taglib-form-navigator .lfr-change-logo img {
+	max-width: 100% !important;
+}
+
 .ie6 .taglib-form-navigator .form-section {
 	width: 60%;
 }

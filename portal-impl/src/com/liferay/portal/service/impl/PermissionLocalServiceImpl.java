@@ -247,9 +247,9 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 		List<Permission> permissions = new ArrayList<Permission>();
 
-		for (int i = 0; i < actionIds.length; i++) {
+		for (String actionId : actionIds) {
 			Permission permission = addPermission(
-				companyId, actionIds[i], resourceId);
+				companyId, actionId, resourceId);
 
 			permissions.add(permission);
 		}
@@ -661,9 +661,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			String[] actionIds)
 		throws PortalException, SystemException {
 
-		for (int i = 0; i < actionIds.length; i++) {
-			String actionId = actionIds[i];
-
+		for (String actionId : actionIds) {
 			setRolePermission(
 				roleId, companyId, name, scope, primKey, actionId);
 		}

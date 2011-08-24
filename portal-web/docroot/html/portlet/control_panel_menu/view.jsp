@@ -163,7 +163,7 @@
 									Group group = manageableSites.get(i);
 
 									String image = "site_icon";
-									String message = HtmlUtil.escape(group.getDescriptiveName());
+									String message = group.getDescriptiveName();
 
 									if (group.isCompany()) {
 										image = "folder";
@@ -185,7 +185,7 @@
 
 									<liferay-ui:icon
 										image="<%= image %>"
-										message="<%= message %>"
+										message="<%= HtmlUtil.escape(message) %>"
 										url="<%= url %>"
 									/>
 

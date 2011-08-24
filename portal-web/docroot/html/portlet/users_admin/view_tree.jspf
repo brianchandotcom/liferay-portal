@@ -324,7 +324,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 				<img alt="<%= HtmlUtil.escape(organization.getName()) %>" class="avatar" src='<%= (organization != null) ? themeDisplay.getPathImage() + "/organization_logo?img_id=" + organization.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(organization.getLogoId()) : "" %>' />
 
 				<div class="lfr-asset-name">
-					<h4><%= organization.getName() %></h4>
+					<h4><%= HtmlUtil.escape(organization.getName()) %></h4>
 				</div>
 			</div>
 

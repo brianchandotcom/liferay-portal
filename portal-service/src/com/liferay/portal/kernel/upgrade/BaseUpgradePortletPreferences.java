@@ -43,6 +43,33 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 		updatePortletPreferences();
 	}
 
+	protected long getCompanyId(long userId) throws Exception {
+		long companyId = 0;
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(_GET_USER);
+
+			ps.setLong(1, userId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				companyId = rs.getLong("companyId");
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return companyId;
+	}
+
 	protected Object[] getGroup(long groupId) throws Exception {
 		Object[] group = null;
 
@@ -218,19 +245,25 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 				long companyId = 0;
 
-				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
+				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
+					companyId = ownerId;
+				}
+				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
 					Object[] group = getGroup(ownerId);
 
 					if (group != null) {
 						companyId = (Long)group[1];
 					}
 				}
-				else {
+				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
 					Object[] layout = getLayout(plid);
 
 					if (layout != null) {
 						companyId = (Long)layout[1];
 					}
+				}
+				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
+					companyId = getCompanyId(ownerId);
 				}
 
 				if (companyId > 0) {
@@ -288,5 +321,8 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	private static final String _GET_LAYOUT_UUID =
 		"select uuid_ from Layout where groupId = ? and privateLayout = ? " +
 			"and layoutId = ?";
+
+	private static final String _GET_USER =
+		"select * from User_ where userId = ?";
 
 }

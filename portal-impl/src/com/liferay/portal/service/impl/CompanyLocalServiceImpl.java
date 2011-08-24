@@ -368,6 +368,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
 				serviceContext);
 
+			userLocalService.updateEmailAddressVerified(
+				defaultAdminUser.getUserId(), true);
+
 			userLocalService.updateLastLogin(
 				defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
 

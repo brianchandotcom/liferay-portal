@@ -112,6 +112,10 @@
 		}
 	}
 
+	.document-container {
+		overflow: auto;
+	}
+
 	.document-container, .document-entries-paginator {
 		clear: both;
 	}

@@ -818,7 +818,7 @@ public class WebServerServlet extends HttpServlet {
 		String type = image.getType();
 
 		if (!type.equals(ImageConstants.TYPE_NOT_AVAILABLE)) {
-			contentType = MimeTypesUtil.getContentType(type);
+			contentType = MimeTypesUtil.getContentType("A." + type);
 
 			response.setContentType(contentType);
 		}

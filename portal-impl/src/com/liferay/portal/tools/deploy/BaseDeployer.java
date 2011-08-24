@@ -495,6 +495,18 @@ public class BaseDeployer implements Deployer {
 		copyXmls(srcFile, displayName, pluginPackage);
 		copyPortalDependencies(srcFile);
 
+		File serviceProperties = new File(
+			srcFile.getAbsolutePath() + "/WEB-INF/classes/service.properties");
+
+		if (serviceProperties.exists()) {
+			File portletProperties = new File(srcFile.getAbsolutePath() +
+				"/WEB-INF/classes/portlet.properties");
+
+			if (!portletProperties.exists()) {
+				FileUtil.write(portletProperties, StringPool.BLANK);
+			}
+		}
+
 		updateGeronimoWebXml(srcFile, displayName, pluginPackage);
 
 		File webXml = new File(srcFile + "/WEB-INF/web.xml");

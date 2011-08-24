@@ -1363,7 +1363,7 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="portal-web-signin" />
+			<param name="test.ant.script.command" value="portal-web-sign-in" />
 			<param name="test.ant.script.suite" value="PortalWebSignInTestSuite" />
 		</antcall>
 		

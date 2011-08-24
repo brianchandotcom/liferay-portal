@@ -45,7 +45,9 @@ public class ViewPortletForgotPasswordTest extends BaseTestCase {
 			RuntimeVariables.replace("Sign In Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Forgot Password",
+		assertEquals(RuntimeVariables.replace("Forgot Password"),
+			selenium.getText("//li[3]/a/span"));
+		selenium.clickAt("//li[3]/a/span",
 			RuntimeVariables.replace("Forgot Password"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -62,9 +64,9 @@ public class ViewPortletForgotPasswordTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
-			selenium.getText("//div[@class='portlet-msg-error']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace("Text verification failed."),
-			selenium.getText("//form/div[@class='portlet-msg-error']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		assertTrue(selenium.isVisible("//input[@id='_58_emailAddress']"));
 		selenium.type("//input[@id='_58_emailAddress']",
 			RuntimeVariables.replace("testfake@liferay.com"));
@@ -78,8 +80,8 @@ public class ViewPortletForgotPasswordTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
-			selenium.getText("//div[@class='portlet-msg-error']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace("Text verification failed."),
-			selenium.getText("//form/div[@class='portlet-msg-error']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

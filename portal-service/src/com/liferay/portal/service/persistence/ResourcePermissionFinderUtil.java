@@ -45,6 +45,14 @@ public class ResourcePermissionFinderUtil {
 		return getFinder().findByC_N_S(companyId, name, scope);
 	}
 
+	public static com.liferay.portal.model.ResourcePermission hasViewPermission(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long[] roleIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .hasViewPermission(companyId, name, scope, primKey, roleIds);
+	}
+
 	public static ResourcePermissionFinder getFinder() {
 		if (_finder == null) {
 			_finder = (ResourcePermissionFinder)PortalBeanLocatorUtil.locate(ResourcePermissionFinder.class.getName());

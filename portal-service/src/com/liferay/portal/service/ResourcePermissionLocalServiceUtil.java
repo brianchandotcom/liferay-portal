@@ -514,6 +514,39 @@ public class ResourcePermissionLocalServiceUtil {
 			roleId, actionId);
 	}
 
+	/**
+	* Returns <code>true</code> if the role has permission at the scope to
+	* perform the action on resources of the type.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param primKey the primary key
+	* @param roleIds the primary keys of the roles
+	* @param actionId the action ID
+	* @return <code>true</code> if the role has permission to perform the
+	action on the resource; <code>false</code> otherwise
+	* @throws PortalException if a role with the primary key or a resource
+	action with the name and action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasResourcePermission(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasResourcePermission(companyId, name, scope, primKey,
+			roleIds, actionId);
+	}
+
 	public static boolean hasScopeResourcePermission(long companyId,
 		java.lang.String name, int scope, long roleId, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException,

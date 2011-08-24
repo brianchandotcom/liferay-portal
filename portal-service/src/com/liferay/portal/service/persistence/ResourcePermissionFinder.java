@@ -33,4 +33,9 @@ public interface ResourcePermissionFinder {
 	public java.util.List<java.lang.String> findByC_N_S(long companyId,
 		java.lang.String name, int scope)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.ResourcePermission hasViewPermission(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long[] roleIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

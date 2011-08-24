@@ -49,6 +49,7 @@ import javax.portlet.PortletURL;
  * @author Raymond Augé
  * @author Zsigmond Rab
  * @author Hugo Huijser
+ * @author Brett Swaim
  */
 public class UserIndexer extends BaseIndexer {
 

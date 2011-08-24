@@ -67,6 +67,8 @@ public interface WorkflowHandler {
 			long companyId, long groupId, long classPK)
 		throws PortalException, SystemException;
 
+	public boolean isAssetTypeSearchable();
+
 	public boolean isScopeable();
 
 	public boolean isVisible();

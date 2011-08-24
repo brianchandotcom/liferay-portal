@@ -204,6 +204,17 @@ public class WorkflowTaskManagerUtil {
 	}
 
 	public static List<WorkflowTask> search(
+			long companyId, long userId, String keywords, String[] assetTypes,
+			Boolean completed, Boolean searchByUserRoles, int start, int end,
+			OrderByComparator orderByComparator)
+		throws WorkflowException {
+
+		return _workflowTaskManager.search(
+			companyId, userId, keywords, assetTypes, completed,
+			searchByUserRoles, start, end, orderByComparator);
+	}
+
+	public static List<WorkflowTask> search(
 			long companyId, long userId, String taskName, String assetType,
 			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator,
@@ -223,6 +234,16 @@ public class WorkflowTaskManagerUtil {
 
 		return _workflowTaskManager.searchCount(
 			companyId, userId, keywords, completed,	searchByUserRoles);
+	}
+
+	public static int searchCount(
+			long companyId, long userId, String keywords, String[] assetTypes,
+			Boolean completed, Boolean searchByUserRoles)
+		throws WorkflowException {
+
+		return _workflowTaskManager.searchCount(
+			companyId, userId, keywords, assetTypes, completed,
+			searchByUserRoles);
 	}
 
 	public static int searchCount(

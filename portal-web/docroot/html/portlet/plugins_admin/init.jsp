@@ -20,6 +20,4 @@
 <%@ page import="com.liferay.portal.util.comparator.RoleRoleIdComparator" %>
 <%@ page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %>
 
-<%@ page import="java.net.URL" %>
-
 <%@ include file="/html/portlet/plugins_admin/init-ext.jsp" %>

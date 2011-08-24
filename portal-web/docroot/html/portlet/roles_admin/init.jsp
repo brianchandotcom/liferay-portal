@@ -45,10 +45,6 @@
 <%@ page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
 <%@ page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
-<%@ page import="java.net.URL" %>
-
-<%@ page import="javax.naming.directory.Attribute" %>
-
 <%
 boolean filterManageableGroups = true;
 boolean filterManageableOrganizations = true;

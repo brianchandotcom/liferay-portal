@@ -1088,6 +1088,11 @@ public class LayoutImporter {
 			ImageLocalServiceUtil.deleteImage(importedLayout.getIconImageId());
 		}
 
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			layoutElement, importedLayout, null);
+
+		importedLayout.setExpandoBridgeAttributes(serviceContext);
+
 		LayoutUtil.update(importedLayout, false);
 
 		portletDataContext.setPlid(importedLayout.getPlid());

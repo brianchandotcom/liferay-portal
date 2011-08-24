@@ -1042,6 +1042,21 @@
 				(ResourcePermission.scope = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.hasPermission">
+		<![CDATA[
+			SELECT
+				{ResourcePermission.*}
+			FROM
+				ResourcePermission
+			WHERE
+				(ResourcePermission.companyId = ?) AND
+				(ResourcePermission.name = ?) AND
+				(ResourcePermission.scope = ?) AND
+				(ResourcePermission.primKey = ?) AND
+				(ResourcePermission.roleId = ?) AND
+				(BITWISE_AND(ResourcePermission.actionIds, ?) = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourceTypePermissionFinder.findByEitherScopeC_G_N">
 		<![CDATA[
 			SELECT

@@ -14,15 +14,19 @@
 
 package com.liferay.portal.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
+import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -36,6 +40,20 @@ public class ResourcePermissionFinderImpl
 	extends BasePersistenceImpl<ResourcePermission>
 	implements ResourcePermissionFinder {
 
+	public static final FinderPath FINDER_PATH_HAS_PERMISSION =
+		new FinderPath(
+			ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
+			ResourcePermissionImpl.class,
+			ResourcePermissionPersistenceImpl.FINDER_CLASS_NAME_ENTITY,
+			"hasPermission",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			}
+		);
+
 	public static String COUNT_BY_R_S =
 		ResourcePermissionFinder.class.getName() + ".countByR_S";
 
@@ -47,6 +65,9 @@ public class ResourcePermissionFinderImpl
 
 	public static String FIND_BY_C_N_S =
 		ResourcePermissionFinder.class.getName() + ".findByC_N_S";
+
+	public static String HAS_PERMISSION =
+		ResourcePermissionFinder.class.getName() + ".hasPermission";
 
 	public int countByR_S(long roleId, int[] scopes) throws SystemException {
 		Session session = null;
@@ -173,13 +194,105 @@ public class ResourcePermissionFinderImpl
 			qPos.add(name);
 			qPos.add(scope);
 
-			return q.list(true);
+			return q.list();
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
 		finally {
 			closeSession(session);
+		}
+	}
+
+	public boolean hasPermission(
+			long companyId, String name, int scope, String primKey,
+			long[] roleIds, long actionIdMask)
+		throws SystemException {
+
+		return hasPermission(
+			companyId, name, scope, primKey, roleIds, actionIdMask, true);
+	}
+
+	public boolean hasPermission(
+			long companyId, String name, int scope, String primKey,
+			long[] roleIds, long actionIdMask, boolean retrieveFromCache)
+		throws SystemException {
+
+		Object[] finderArgs = new Object[] {
+			companyId, name, scope, primKey, roleIds, actionIdMask
+		};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(
+				FINDER_PATH_HAS_PERMISSION, finderArgs, this);
+		}
+
+		if (result == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				String sql = CustomSQLUtil.get(HAS_PERMISSION);
+
+				if (roleIds.length > 1) {
+					StringBundler roleIdsOR = new StringBundler(
+						(roleIds.length * 2) -1);
+
+					for (int i = 0; i < roleIds.length; i++) {
+						if (i > 0) {
+							roleIdsOR.append(" OR ");
+						}
+
+						roleIdsOR.append("ResourcePermission.roleId = ?");
+					}
+
+					sql = StringUtil.replace(
+						sql, "ResourcePermission.roleId = ?",
+						roleIdsOR.toString());
+				}
+
+				SQLQuery q = session.createSQLQuery(sql);
+
+				q.addEntity("ResourcePermission", ResourcePermissionImpl.class);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+				qPos.add(name);
+				qPos.add(scope);
+				qPos.add(primKey);
+				qPos.add(roleIds);
+				qPos.add(actionIdMask);
+				qPos.add(actionIdMask);
+
+				List<ResourcePermission> list = q.list(false);
+
+				Boolean hasPermission = Boolean.valueOf(!list.isEmpty());
+
+				result = hasPermission;
+
+				FinderCacheUtil.putResult(FINDER_PATH_HAS_PERMISSION,
+					finderArgs, hasPermission);
+
+				return hasPermission.booleanValue();
+			}
+			catch (Exception e) {
+				throw new SystemException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(
+						FINDER_PATH_HAS_PERMISSION, finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			return ((Boolean)result).booleanValue();
 		}
 	}
 

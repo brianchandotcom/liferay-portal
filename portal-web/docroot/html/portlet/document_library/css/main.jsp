@@ -112,6 +112,10 @@
 		}
 	}
 
+	.document-container {
+		overflow: auto;
+	}
+
 	.document-container, .document-entries-paginator {
 		clear: both;
 	}
@@ -488,7 +492,6 @@
 
 	.view {
 		border: 1px solid #7B7B7B;
-		overflow: auto;
 
 		.portlet-msg-info, .portlet-msg-success {
 			border-width: 0 0 1px;

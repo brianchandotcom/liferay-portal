@@ -22,10 +22,7 @@
 	<target name="build-dist-glassfish">
 		<antcall target="unzip-glassfish" />
 
-		<echo file="app.server.${user.name}.properties">app.server.type=glassfish
-
-app.server.glassfish.zip.name=glassfish-v3-web.zip
-app.server.glassfish.zip.url=http://download.java.net/glassfish/v3/release/${app.server.glassfish.zip.name}</echo>
+		<echo file="app.server.${user.name}.properties">app.server.type=glassfish</echo>
 
 		<ant target="deploy" inheritAll="false" />
 
@@ -837,13 +834,11 @@ release was successful.</echo>
 			 dest="${app.server.parent.dir}"
 			 src="${app.server.parent.dir}/${app.server.glassfish.zip.name}"
 		>
-			<patternset
-				includes="glassfishv3/glassfish/**"
-			/>
+			<patternset includes="${app.server.glassfish.zip.glob}/**" />
 			<mapper
 				type="glob"
-				from="glassfishv3/glassfish/*"
-				to="glassfish-3.0.1/*"
+				from="${app.server.glassfish.zip.glob}/*"
+				to="${app.server.glassfish.dir}/*"
 			/>
 		</unzip>
 	</target>

@@ -1042,7 +1042,7 @@
 				(ResourcePermission.scope = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.hasViewPermission">
+	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.hasPermission">
 		<![CDATA[
 			SELECT
 				{ResourcePermission.*}
@@ -1054,7 +1054,7 @@
 				(ResourcePermission.scope = ?) AND
 				(ResourcePermission.primKey = ?) AND
 				(ResourcePermission.roleId = ?) AND
-				(MOD(ResourcePermission.actionIds, 2) = 1)
+				(BITWISE_AND(ResourcePermission.actionIds, ?) = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourceTypePermissionFinder.findByEitherScopeC_G_N">

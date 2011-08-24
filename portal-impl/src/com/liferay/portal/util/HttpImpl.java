@@ -546,7 +546,7 @@ public class HttpImpl implements Http {
 	}
 
 	public boolean isNonProxyHost(String host) {
-		if (_nonProxyHostsPattern == null ||
+		if (_nonProxyHostsPattern != null &&
 			_nonProxyHostsPattern.matcher(host).matches()) {
 
 			return true;

@@ -446,7 +446,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 					<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">
 						<blockquote class="lfr-asset-description">
-							<%= fileVersion.getDescription() %>
+							<%= HtmlUtil.escape(fileVersion.getDescription()) %>
 						</blockquote>
 					</c:if>
 

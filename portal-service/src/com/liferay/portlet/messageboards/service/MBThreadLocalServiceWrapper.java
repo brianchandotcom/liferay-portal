@@ -335,6 +335,11 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 			status, subscribed, includeAnonymous);
 	}
 
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getNoAssetThreads()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getNoAssetThreads();
+	}
+
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getPriorityThreads(
 		long categoryId, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException,

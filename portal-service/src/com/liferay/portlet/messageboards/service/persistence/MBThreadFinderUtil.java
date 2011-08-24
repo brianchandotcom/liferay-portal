@@ -76,6 +76,11 @@ public class MBThreadFinderUtil {
 		return getFinder().findByG_C_S(groupId, categoryId, status, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByNoAssets()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByNoAssets();
+	}
+
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByS_G_U_C_S(
 		long groupId, long userId, long[] categoryIds, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {

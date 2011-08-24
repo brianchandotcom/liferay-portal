@@ -376,6 +376,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	public List<MBThread> getNoAssetThreads() throws SystemException {
+		return mbThreadFinder.findByNoAssets();
+	}
+
 	public List<MBThread> getPriorityThreads(long categoryId, double priority)
 		throws PortalException, SystemException {
 

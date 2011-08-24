@@ -53,6 +53,9 @@ public class MBThreadFinderImpl
 	public static String FIND_BY_S_G_U_C_S =
 		MBThreadFinder.class.getName() + ".findByS_G_U_C_S";
 
+	public static String FIND_BY_NO_ASSETS =
+		MBThreadFinder.class.getName() + ".findByNoAssets";
+
 	public int countByG_C_S(long groupId, long categoryId, int status)
 		throws SystemException {
 
@@ -185,6 +188,28 @@ public class MBThreadFinderImpl
 		throws SystemException {
 
 		return doFindByG_C_S(groupId, categoryId, status, start, end, false);
+	}
+
+	public List<MBThread> findByNoAssets() throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("MBThread", MBThreadImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public List<MBThread> findByS_G_U_C_S(

@@ -344,6 +344,11 @@ public class MBThreadLocalServiceUtil {
 			includeAnonymous);
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getNoAssetThreads()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getNoAssetThreads();
+	}
+
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getPriorityThreads(
 		long categoryId, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -50,6 +50,9 @@ public interface MBThreadFinder {
 		long groupId, long categoryId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByNoAssets()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByS_G_U_C_S(
 		long groupId, long userId, long[] categoryIds, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException;

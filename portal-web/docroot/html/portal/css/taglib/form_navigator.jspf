@@ -112,6 +112,7 @@
 
 .taglib-form-navigator .form-section {
 	float: left;
+	overflow: auto;
 	width: 63%;
 }
 

@@ -18,8 +18,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -34,15 +36,21 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 	public static void registerAnnotationType(
 		Class<? extends Annotation> annotationType) {
 
-		_annotationTypes.add(annotationType);
+		_annotationAdviceMap.put(annotationType, null);
 	}
 
 	public AnnotationChainableMethodAdvice() {
 		_nullAnnotation = getNullAnnotation();
 
 		_annotationType = _nullAnnotation.annotationType();
+	}
 
-		_annotationTypes.add(_annotationType);
+	public void afterPropertiesSet() {
+		_annotationAdviceMap.put(_annotationType, this);
+	}
+
+	public Class<? extends Annotation> getAnnotationType() {
+		return _annotationType;
 	}
 
 	public abstract T getNullAnnotation();
@@ -85,7 +93,7 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 							annotations.length);
 
 			for (Annotation curAnnotation : annotations) {
-				if (_annotationTypes.contains(
+				if (_annotationAdviceMap.containsKey(
 						curAnnotation.annotationType())) {
 
 					filteredAnnotations.add(curAnnotation);
@@ -98,17 +106,41 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 
 		ServiceMethodAnnotationCache.put(methodInvocation, annotations);
 
+		Set<Class<? extends Annotation>> annotationTypes =
+			new HashSet<Class<? extends Annotation>>();
+
+		annotation = _nullAnnotation;
+
 		for (Annotation curAnnotation : annotations) {
-			if (curAnnotation.annotationType() == _annotationType) {
-				return (T)curAnnotation;
+			Class<? extends Annotation> annotationType =
+				curAnnotation.annotationType();
+
+			if (annotationType == _annotationType) {
+				annotation = curAnnotation;
+			}
+
+			annotationTypes.add(annotationType);
+		}
+
+		for (Map.Entry<Class<? extends Annotation>,
+			AnnotationChainableMethodAdvice<?>> entry :
+				_annotationAdviceMap.entrySet()) {
+
+			if ((!annotationTypes.contains(entry.getKey())) &&
+				(entry.getValue() != null)) {
+				ServiceBeanAopProxy.removeMethodInterceptor(
+					methodInvocation, entry.getValue());
 			}
 		}
 
-		return _nullAnnotation;
+		return (T)annotation;
 	}
 
-	private static Set<Class<? extends Annotation>> _annotationTypes =
-		new HashSet<Class<? extends Annotation>>();
+	private static Map<Class<? extends Annotation>,
+		AnnotationChainableMethodAdvice<?>>
+			_annotationAdviceMap =
+				new HashMap<Class<? extends Annotation>,
+					AnnotationChainableMethodAdvice<?>>();
 
 	private Class<? extends Annotation> _annotationType;
 	private T _nullAnnotation;

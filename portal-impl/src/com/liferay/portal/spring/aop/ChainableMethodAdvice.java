@@ -56,12 +56,7 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 		}
 
 		try {
-			if (nextMethodInterceptor != null) {
-				returnValue = nextMethodInterceptor.invoke(methodInvocation);
-			}
-			else {
-				returnValue = methodInvocation.proceed();
-			}
+			returnValue = methodInvocation.proceed();
 
 			afterReturning(methodInvocation, returnValue);
 		}

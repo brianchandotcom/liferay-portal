@@ -45,12 +45,21 @@ public class ResourcePermissionFinderUtil {
 		return getFinder().findByC_N_S(companyId, name, scope);
 	}
 
-	public static com.liferay.portal.model.ResourcePermission hasViewPermission(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long[] roleIds)
+	public static boolean hasPermission(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey, long[] roleIds, long actionIdMask)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .hasViewPermission(companyId, name, scope, primKey, roleIds);
+				   .hasPermission(companyId, name, scope, primKey, roleIds,
+			actionIdMask);
+	}
+
+	public static boolean hasPermission(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey, long[] roleIds, long actionIdMask,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .hasPermission(companyId, name, scope, primKey, roleIds,
+			actionIdMask, retrieveFromCache);
 	}
 
 	public static ResourcePermissionFinder getFinder() {

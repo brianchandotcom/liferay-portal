@@ -160,6 +160,10 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 			companyId, groupId, getClassName(), 0, 0);
 	}
 
+	public boolean isAssetTypeSearchable() {
+		return _ASSET_TYPE_SEARCHABLE;
+	}
+
 	public boolean isScopeable() {
 		return _SCOPEABLE;
 	}
@@ -202,6 +206,8 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
+
+	private static final boolean _ASSET_TYPE_SEARCHABLE = true;
 
 	private static final boolean _SCOPEABLE = true;
 

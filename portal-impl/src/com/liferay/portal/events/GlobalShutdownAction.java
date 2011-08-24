@@ -22,7 +22,11 @@ import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
+import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployDir;
+import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
@@ -47,6 +51,14 @@ public class GlobalShutdownAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) {
+
+		// Auto deploy
+
+		AutoDeployUtil.unregisterDir(AutoDeployDir.DEFAULT_NAME);
+
+		// Sandbox deploy
+
+		SandboxDeployUtil.unregisterDir(SandboxDeployDir.DEFAULT_NAME);
 
 		// Hot deploy
 

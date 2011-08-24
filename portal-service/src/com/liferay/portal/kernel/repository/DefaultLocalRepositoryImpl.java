@@ -42,9 +42,9 @@ import java.util.List;
  *
  * @author Alexander Chow
  */
-public class BaseLocalRepositoryImpl implements LocalRepository {
+public class DefaultLocalRepositoryImpl implements LocalRepository {
 
-	public BaseLocalRepositoryImpl(Repository repository) {
+	public DefaultLocalRepositoryImpl(Repository repository) {
 		_repository = repository;
 	}
 

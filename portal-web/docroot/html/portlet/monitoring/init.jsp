@@ -21,8 +21,6 @@
 <%@ page import="com.liferay.portal.liveusers.LiveUsers" %>
 <%@ page import="com.liferay.portal.util.comparator.UserTrackerModifiedDateComparator" %>
 
-<%@ page import="java.net.URL" %>
-
 <%
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

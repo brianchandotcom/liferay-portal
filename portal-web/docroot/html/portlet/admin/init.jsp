@@ -41,8 +41,6 @@
 <%@ page import="java.awt.Color" %>
 <%@ page import="java.awt.Font" %>
 
-<%@ page import="java.lang.reflect.Method" %>
-
 <%@ page import="org.apache.commons.collections.map.MultiValueMap" %>
 <%@ page import="org.apache.log4j.Level" %>
 <%@ page import="org.apache.log4j.Logger" %>

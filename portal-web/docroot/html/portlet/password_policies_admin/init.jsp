@@ -31,8 +31,4 @@
 <%@ page import="com.liferay.portlet.usersadmin.search.UserSearch" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
 
-<%@ page import="java.net.URL" %>
-
-<%@ page import="javax.naming.directory.Attribute" %>
-
 <%@ include file="/html/portlet/password_policies_admin/init-ext.jsp" %>

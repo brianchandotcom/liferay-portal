@@ -65,14 +65,12 @@
 <%@ page import="com.liferay.portlet.announcements.model.AnnouncementsEntryConstants" %>
 <%@ page import="com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl" %>
 <%@ page import="com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.rolesadmin.search.GroupRoleChecker" %>
 <%@ page import="com.liferay.portlet.rolesadmin.search.OrganizationRoleChecker" %>
 <%@ page import="com.liferay.portlet.rolesadmin.search.UserGroupRoleChecker" %>
 <%@ page import="com.liferay.portlet.rolesadmin.search.UserRoleChecker" %>
 <%@ page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %>
@@ -86,10 +84,6 @@
 <%@ page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.UserUserGroupChecker" %>
 <%@ page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
-
-<%@ page import="java.net.URL" %>
-
-<%@ page import="javax.naming.directory.Attribute" %>
 
 <%
 boolean showActiveUserSelect = true;

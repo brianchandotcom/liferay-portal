@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
@@ -48,6 +49,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.commons.data.AllowableActions;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.Action;
@@ -223,18 +225,18 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		throws PortalException, SystemException {
 
 		if (_latestFileVersion == null) {
-			Document latestDocumentVersion = null;
+			Document latestDocumentVersion = _document;
 
 			CMISRepository cmisRepository = getCmisRepository();
 
-			if (cmisRepository.isDocumentRetrievableByVersionSeriesId()) {
-				latestDocumentVersion = _document.getObjectOfLatestVersion(
-					false);
-			}
-			else {
-				List<Document> documentVersions = _document.getAllVersions();
+			String pwcId = _document.getVersionSeriesCheckedOutId();
 
-				latestDocumentVersion = documentVersions.get(0);
+			if (Validator.isNotNull(pwcId)) {
+				Session session = cmisRepository.getSession();
+
+				latestDocumentVersion = (Document)session.getObject(pwcId);
+
+				latestDocumentVersion.refresh();
 			}
 
 			_latestFileVersion = CMISRepositoryLocalServiceUtil.toFileVersion(

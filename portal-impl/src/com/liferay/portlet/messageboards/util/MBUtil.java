@@ -727,6 +727,10 @@ public class MBUtil {
 	private static String _getParentMessageIdFromSubject(Message message)
 		throws Exception {
 
+		if (message.getSubject() == null) {
+			return null;
+		}
+
 		String parentMessageId = null;
 
 		String subject = StringUtil.reverse(message.getSubject());

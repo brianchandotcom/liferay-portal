@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.usersscreennameallownumeric.users.user.erroradduserscreennamenumbercommunityid;
+package com.liferay.portalweb.properties.usersscreennameallownumeric.users.user.erroradduserscreennamenumbersiteid;
 
 import com.liferay.portalweb.portal.BaseTests;
 
@@ -22,15 +22,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ErrorAddUserScreenNameNumberCommunityIdTests extends BaseTests {
+public class ErrorAddUserScreenNameNumberSiteIdTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddCommunitiesTest.class);
+		testSuite.addTestSuite(AddSitesTest.class);
 		testSuite.addTestSuite(
-			ErrorAddUserScreenNameNumberCommunityIdTest.class);
-		testSuite.addTestSuite(TearDownCommunityTest.class);
+			ErrorAddUserScreenNameNumberSiteIdTest.class);
+		testSuite.addTestSuite(TearDownSitesTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

@@ -16,27 +16,34 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.sitemap.Sitemap;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Jorge Ferrer
  */
-public class SitemapUtil {
+public class SitemapImpl implements Sitemap {
 
-	public static String getSitemap(
+	public String getSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
@@ -55,14 +62,14 @@ public class SitemapUtil {
 		return doc.asXML();
 	}
 
-	public static String encodeXML(String input) {
+	public String encodeXML(String input) {
 		return StringUtil.replace(
 			input,
 			new String[] {"&", "<", ">", "'", "\""},
 			new String[] {"&amp;", "&lt;", "&gt;", "&apos;", "&quot;"});
 	}
 
-	private static void _visitLayouts(
+	private void _visitLayouts(
 			Element element, List<Layout> layouts, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
@@ -96,10 +103,54 @@ public class SitemapUtil {
 					url.addElement("priority").addText(priority);
 				}
 
+				_visitArticles(element, layout, themeDisplay);
+
 				List<Layout> children = layout.getChildren();
 
 				_visitLayouts(element, children, themeDisplay);
 			}
+		}
+	}
+
+	private void _visitArticles(
+			Element element, Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		List<JournalArticle> journalArticles =
+			JournalArticleServiceUtil.getArticlesByLayoutUuid(
+				layout.getGroupId(), layout.getUuid());
+
+		if (journalArticles.isEmpty()) {
+			return;
+		}
+
+		List<String> processedArticleIds = new ArrayList<String>();
+
+		for (JournalArticle journalArticle : journalArticles) {
+			if (processedArticleIds.contains(
+					journalArticle.getArticleId()) ||
+				(journalArticle.getStatus() !=
+					WorkflowConstants.STATUS_APPROVED)) {
+
+				continue;
+			}
+
+			String portalURL = PortalUtil.getPortalURL(
+				layout, themeDisplay);
+
+			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
+				GroupLocalServiceUtil.getGroup(journalArticle.getGroupId()),
+				false, themeDisplay);
+
+			String articleURL = portalURL.concat(groupFriendlyURL).concat(
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
+					journalArticle.getUrlTitle());
+
+			Element url = element.addElement("url");
+
+			url.addElement("loc").addText(encodeXML(articleURL));
+
+			processedArticleIds.add(journalArticle.getArticleId());
 		}
 	}
 

@@ -157,6 +157,12 @@ public interface JournalArticleService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByLayoutUuid(
+		long groupId, java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -222,6 +222,22 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticleSoap[] getArticlesByLayoutUuid(
+		long groupId, java.lang.String layoutUuid) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalArticle> returnValue =
+				JournalArticleServiceUtil.getArticlesByLayoutUuid(groupId,
+					layoutUuid);
+
+			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticleSoap getLatestArticle(
 		long resourcePrimKey) throws RemoteException {
 		try {

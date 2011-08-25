@@ -221,6 +221,11 @@
 			<bean class="com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdSplitterImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.sitemap.SitemapUtil" class="com.liferay.portal.kernel.sitemap.SitemapUtil">
+		<property name="sitemap">
+			<bean class="com.liferay.portal.util.SitemapImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.staging.LayoutStagingUtil" class="com.liferay.portal.kernel.staging.LayoutStagingUtil">
 		<property name="layoutStaging">
 			<bean class="com.liferay.portal.staging.LayoutStagingImpl" />

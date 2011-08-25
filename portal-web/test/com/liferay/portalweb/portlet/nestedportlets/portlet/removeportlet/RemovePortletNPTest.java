@@ -42,7 +42,7 @@ public class RemovePortletNPTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Nested Portlets Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Nested Portlets Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

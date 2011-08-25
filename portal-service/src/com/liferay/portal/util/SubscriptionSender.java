@@ -110,7 +110,18 @@ public class SubscriptionSender implements Serializable {
 						companyId, className, classPK);
 
 				for (Subscription subscription : subscriptions) {
-					notifySubscriber(subscription);
+					try {
+						notifySubscriber(subscription);
+					}
+					catch (PortalException e) {
+						if (_log.isErrorEnabled()) {
+							_log.error(
+								"Error processing subscription: " +
+									subscription);
+						}
+
+						continue;
+					}
 				}
 
 				if (bulk) {

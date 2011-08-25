@@ -795,7 +795,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				user.getCompanyId(), null, null, groupParams, start, end);
 		}
 		else {
-			return userPersistence.getGroups(userId);
+			return userPersistence.getGroups(userId, start, end);
 		}
 	}
 

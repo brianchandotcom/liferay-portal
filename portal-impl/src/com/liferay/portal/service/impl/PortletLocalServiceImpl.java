@@ -14,8 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.SpriteProcessorUtil;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -102,6 +102,7 @@ import javax.servlet.ServletContext;
  * @author Raymond Augé
  * @author Eduardo Lundgren
  * @author Wesley Gong
+ * @author Shuyang Zhou
  */
 public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
@@ -199,7 +200,13 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		// Refresh company portlets
 
-		_companyPortletsPool.removeAll();
+		portletLocalService.clearCompanyPortletsPool();
+	}
+
+	@Clusterable
+	@Transactional(enabled = false)
+	public void clearCompanyPortletsPool() {
+		_companyPortletsPool.clear();
 	}
 
 	/**
@@ -580,7 +587,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		_portletAppsPool.clear();
 		_portletsPool.clear();
-		_companyPortletsPool.removeAll();
+		portletLocalService.clearCompanyPortletsPool();
 		_portletIdsByStrutsPath.clear();
 		_friendlyURLMapperPortlets.clear();
 
@@ -782,6 +789,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return portletsPool;
 	}
 
+	@Clusterable
+	@Transactional(enabled = false)
+	public void removeCompanyPortletsPool(long companyId) {
+		_companyPortletsPool.remove(companyId);
+	}
+
 	public Portlet updatePortlet(
 			long companyId, String portletId, String roles, boolean active)
 		throws SystemException {
@@ -809,13 +822,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portlet.setRoles(roles);
 		portlet.setActive(active);
 
-		_updateCompanyPortletsPool(companyId);
+		portletLocalService.removeCompanyPortletsPool(companyId);
 
 		return portlet;
-	}
-
-	private String _encodeKey(long companyId) {
-		return _keyPrefix.concat(StringUtil.toHexString(companyId));
 	}
 
 	private PortletApp _getPortletApp(String servletContextName) {
@@ -932,15 +941,13 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private Map<String, Portlet> _getPortletsPool(long companyId)
 		throws SystemException {
 
-		String key = _encodeKey(companyId);
-
 		Map<String, Portlet> portletsPool =
-			(Map<String, Portlet>)_companyPortletsPool.get(key);
+			(Map<String, Portlet>)_companyPortletsPool.get(companyId);
 
 		if (portletsPool == null) {
 			portletsPool = portletLocalService.loadPortletsPool(companyId);
 
-			_companyPortletsPool.put(key, portletsPool);
+			_companyPortletsPool.put(companyId, portletsPool);
 		}
 
 		return portletsPool;
@@ -2113,26 +2120,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletApp.setSpriteImages(spriteFileName, spriteProperties);
 	}
 
-	private void _updateCompanyPortletsPool(long companyId) {
-		String key = _encodeKey(companyId);
-
-		Map<String, Portlet> portletsPool =
-			(Map<String, Portlet>)_companyPortletsPool.get(key);
-
-		_companyPortletsPool.put(key, portletsPool);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletLocalServiceImpl.class);
 
-	private static PortalCache _companyPortletsPool =
-		MultiVMPoolUtil.getCache(Portlet.class.getName());
+	private static Map<Long, Map<String, Portlet>> _companyPortletsPool =
+		new ConcurrentHashMap<Long, Map<String, Portlet>>();
 	private static Map<String, Portlet> _customAttributesDisplayPortlets =
 		new ConcurrentHashMap<String, Portlet>();
 	private static Map<String, Portlet> _friendlyURLMapperPortlets =
 		new ConcurrentHashMap<String, Portlet>();
-	private static String _keyPrefix = Portlet.class.getName().concat(
-		StringPool.POUND);
 	private static Map<String, PortletApp> _portletAppsPool =
 		new ConcurrentHashMap<String, PortletApp>();
 	private static Map<String, String> _portletIdsByStrutsPath =

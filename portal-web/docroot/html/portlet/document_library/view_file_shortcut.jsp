@@ -294,7 +294,7 @@ if (Validator.isNotNull(folder.getName())) {
 		</liferay-ui:panel>
 
 		<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDocumentCommentsPanel" persistState="<%= true %>" title="comments">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryCommentsPanel" persistState="<%= true %>" title="comments">
 				<portlet:actionURL var="discussionURL">
 					<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
 				</portlet:actionURL>

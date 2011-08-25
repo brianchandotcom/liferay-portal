@@ -1513,6 +1513,8 @@
 
 		<action path="/roles_admin/view" forward="portlet.roles_admin.view" />
 
+		<action path="/roles_admin/view_users" forward="portlet.users_admin.view" />
+
 		<!-- RSS -->
 
 		<action path="/rss/article" forward="portlet.rss.article" />

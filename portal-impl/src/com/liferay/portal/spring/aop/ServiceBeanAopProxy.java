@@ -192,7 +192,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 			Skip skip = ServiceMethodAnnotationCache.get(
 				serviceBeanMethodInvocation, Skip.class, null);
 
-			_setMethodInterceptors(serviceBeanMethodInvocation, skip);
+			_setMethodInterceptors(serviceBeanMethodInvocation, skip != null);
 
 			return serviceBeanMethodInvocation.proceed();
 		}
@@ -204,7 +204,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 	}
 
 	private List<MethodInterceptor> _getMethodInterceptors(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation, boolean skip) {
 
 		List<Object> list =
 			_advisorChainFactory.getInterceptorsAndDynamicInterceptionAdvice(
@@ -227,8 +227,15 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 			}
 		}
 
-		List<MethodInterceptor> methodInterceptors =
-			new ArrayList<MethodInterceptor>(_fullMethodInterceptors);
+		List<MethodInterceptor> methodInterceptors = null;
+
+		if (skip) {
+			methodInterceptors = new ArrayList<MethodInterceptor>();
+		}
+		else {
+			methodInterceptors = new ArrayList<MethodInterceptor>(
+				_fullMethodInterceptors);
+		}
 
 		if (!list.isEmpty()) {
 			for (Object object : list) {
@@ -240,14 +247,14 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 	}
 
 	private void _setMethodInterceptors(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation, Skip skip) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation, boolean skip) {
 
 		MethodInterceptorsBag methodInterceptorsBag =
 			_methodInterceptorBags.get(serviceBeanMethodInvocation);
 
 		if (methodInterceptorsBag == null) {
 			List<MethodInterceptor> methodInterceptors = _getMethodInterceptors(
-				serviceBeanMethodInvocation);
+				serviceBeanMethodInvocation, skip);
 
 			methodInterceptorsBag = new MethodInterceptorsBag(
 				_classLevelMethodInterceptors, methodInterceptors);

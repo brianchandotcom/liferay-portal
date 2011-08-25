@@ -222,6 +222,10 @@
 			}
 		},
 
+		clamp: function(value, min, max) {
+			return Math.min(Math.max(value, min), max);
+		},
+
 		disableEsc: function() {
 			if ((document.all) && (event.keyCode == 27)) {
 				event.returnValue = false;
@@ -541,6 +545,10 @@
 				return buffer.join('');
 			}
 		),
+
+		toNumber: function(value) {
+			return parseInt(value, 10) || 0;
+		},
 
 		uncamelize: function(value, separator) {
 			separator = separator || ' ';

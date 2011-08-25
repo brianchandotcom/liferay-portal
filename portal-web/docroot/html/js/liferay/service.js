@@ -900,6 +900,7 @@ Liferay.Service.registerClass(
 		expireArticle: true,
 		getArticle: true,
 		getArticleByUrlTitle: true,
+		getArticlesByLayoutUuid: true,
 		getLatestArticle: true,
 		removeArticleLocale: true,
 		search: true,

@@ -272,6 +272,10 @@ public class PortletLocalServiceUtil {
 		getService().clearCache();
 	}
 
+	public static void clearCompanyPortletsPool() {
+		getService().clearCompanyPortletsPool();
+	}
+
 	/**
 	* @deprecated {@link #clonePortlet(String)}
 	*/
@@ -395,6 +399,10 @@ public class PortletLocalServiceUtil {
 		long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().loadPortletsPool(companyId);
+	}
+
+	public static void removeCompanyPortletsPool(long companyId) {
+		getService().removeCompanyPortletsPool(companyId);
 	}
 
 	public static com.liferay.portal.model.Portlet updatePortlet(

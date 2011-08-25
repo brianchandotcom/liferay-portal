@@ -15,18 +15,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -39,14 +29,14 @@
 	<td>Manage Pages</td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
+	<td>waitForText</td>
 	<td>//div/div[3]/a</td>
-	<td>Liferay</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div/div[3]/a</td>
-	<td>Pages (Liferay)</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -60,8 +50,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[3]/ul/li/div/div[1]</td>
-	<td></td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -69,14 +59,44 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li/ul/li[2]/div/div[3]/a</td>
+	<td>Manage Pages Test Page</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/ul/li[2]/div/div[3]/a</td>
+	<td>Manage Pages Test Page</td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>//div[1]/fieldset/div/span[1]/span/span/span/input</td>
+	<td>Manage Pages Test Page</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//div[1]/fieldset/div/span[1]/span/span/span/input</td>
+	<td>Manage Pages Test Page</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/c</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -90,13 +110,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/combo</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -110,13 +130,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/delegate</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -130,13 +150,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/display_chart</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -150,13 +170,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/dtd</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -170,13 +190,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/facebook</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -190,13 +210,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/google_gadget</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -210,13 +230,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/group</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -230,13 +250,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/html</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -250,13 +270,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/image</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -270,13 +290,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/language</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -290,13 +310,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/netvibes</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -310,13 +330,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -330,13 +350,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/pbhs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -350,13 +370,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/poller</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -370,13 +390,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/public</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -390,13 +410,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/private</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -410,13 +430,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/rss</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -430,13 +450,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/sharepoint</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -450,13 +470,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/sitemap.xml</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -470,13 +490,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/tags</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -490,13 +510,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/software_catalog</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -510,13 +530,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/_vti_</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -530,13 +550,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/wap</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -550,13 +570,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/web</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -570,13 +590,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/widget</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -590,13 +610,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/wsrp</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -610,13 +630,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_friendlyURL</td>
+	<td>//span[2]/input[@id='_88_friendlyURL']</td>
 	<td>/xmlrpc</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>

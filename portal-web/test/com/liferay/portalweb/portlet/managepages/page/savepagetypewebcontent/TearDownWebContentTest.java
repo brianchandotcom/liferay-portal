@@ -47,7 +47,7 @@ public class TearDownWebContentTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Web Content"),
@@ -58,7 +58,7 @@ public class TearDownWebContentTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 				boolean webContentPresent = selenium.isElementPresent(
-						"_15_rowIds");
+						"//input[@name='_15_rowIds']");
 
 				if (!webContentPresent) {
 					label = 2;
@@ -66,7 +66,8 @@ public class TearDownWebContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_15_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");

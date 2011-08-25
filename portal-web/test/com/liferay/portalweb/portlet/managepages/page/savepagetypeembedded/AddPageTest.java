@@ -28,9 +28,8 @@ public class AddPageTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				selenium.clickAt("main-content", RuntimeVariables.replace(""));
-				selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-				selenium.clickAt("navigation", RuntimeVariables.replace(""));
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -58,7 +57,9 @@ public class AddPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isPartialText("//div/div[3]/a", "Liferay")) {
+						if (RuntimeVariables.replace("Public Pages")
+												.equals(selenium.getText(
+										"//div/div[3]/a"))) {
 							break;
 						}
 					}
@@ -69,7 +70,7 @@ public class AddPageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Pages (Liferay)"),
+				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//div/div[3]/a"));
 
 				boolean welcomePresent = selenium.isElementPresent(
@@ -81,8 +82,8 @@ public class AddPageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[3]/ul/li/div/div[1]",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
+					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
 
@@ -92,7 +93,9 @@ public class AddPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//li/ul/li[1]/div/div[3]/a")) {
+						if (RuntimeVariables.replace("Welcome")
+												.equals(selenium.getText(
+										"//li/ul/li[1]/div/div[3]/a"))) {
 							break;
 						}
 					}
@@ -103,10 +106,10 @@ public class AddPageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Pages (Liferay)"),
-					selenium.getText("//div[3]/a"));
-				selenium.clickAt("//div[3]/a",
-					RuntimeVariables.replace("Pages (Liferay)"));
+				assertEquals(RuntimeVariables.replace("Welcome"),
+					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
+				selenium.clickAt("//div/div[3]/a",
+					RuntimeVariables.replace("Public Pages"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -138,7 +141,7 @@ public class AddPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_88_name_en_US")) {
+						if (selenium.isVisible("//input[@id='_88_name_en_US']")) {
 							break;
 						}
 					}
@@ -149,16 +152,30 @@ public class AddPageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.type("_88_name_en_US",
+				selenium.type("//input[@id='_88_name_en_US']",
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Add Page']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+
+				boolean pagePresent = selenium.isElementPresent(
+						"//li/ul/li[2]/div/div[3]/a");
+
+				if (pagePresent) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
+					RuntimeVariables.replace("Drop Down Arrow"));
+
+			case 3:
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -181,6 +198,31 @@ public class AddPageTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
 					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
+				selenium.open("/web/guest/home/");
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Manage Pages Test Page")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("link=Manage Pages Test Page",
+					RuntimeVariables.replace("Manage Pages Test Page"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
+					selenium.getText("//nav/ul/li[2]/span/a"));
 
 			case 100:
 				label = -1;

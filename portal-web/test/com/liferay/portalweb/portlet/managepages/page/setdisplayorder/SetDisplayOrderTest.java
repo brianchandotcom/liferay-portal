@@ -35,8 +35,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"link=Manage Pages Test Page")) {
+						if (selenium.isVisible("link=Manage Pages Test Page")) {
 							break;
 						}
 					}
@@ -47,43 +46,71 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Manage Pages Test Page",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
+				selenium.mouseOver("link=Manage Pages Test Page");
+				assertEquals(RuntimeVariables.replace("Child Test Page1"),
+					selenium.getText("//li[2]/ul/li[1]"));
+				assertEquals(RuntimeVariables.replace("Child Test Page2"),
+					selenium.getText("//li[2]/ul/li[2]"));
+				assertEquals(RuntimeVariables.replace("Child Test Page3"),
+					selenium.getText("//li[2]/ul/li[3]"));
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent("//div[4]/div/ul/li[1]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Child1 Test1 Page1"),
-					selenium.getText(
-						"//nav[@id='navigation']/ul/li[2]/ul/li[1]"));
-				assertEquals(RuntimeVariables.replace("Child2 Test2 Page2"),
-					selenium.getText(
-						"//nav[@id='navigation']/ul/li[2]/ul/li[2]"));
-				assertEquals(RuntimeVariables.replace("Child3 Test3 Page3"),
-					selenium.getText(
-						"//nav[@id='navigation']/ul/li[2]/ul/li[3]"));
-				selenium.clickAt("main-content", RuntimeVariables.replace(""));
-				selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-				selenium.clickAt("navigation", RuntimeVariables.replace(""));
+				selenium.clickAt("//div[4]/div/ul/li[1]/a",
+					RuntimeVariables.replace("Manage Pages"));
 
-				boolean childPagePresent = selenium.isElementPresent(
-						"//li[2]/ul/li[1]/div/div[3]/a");
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
 
-				if (childPagePresent) {
+					try {
+						if (RuntimeVariables.replace("Public Pages")
+												.equals(selenium.getText(
+										"//div/div[3]/a"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Public Pages"),
+					selenium.getText("//div/div[3]/a"));
+
+				boolean welcome1Present = selenium.isElementPresent(
+						"//li/ul/li[1]/div/div[3]/a");
+
+				if (welcome1Present) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//li/ul/li[2]/div/div[1]",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
+					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-				selenium.clickAt("link=Children", RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Display Order",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -91,10 +118,9 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace(
-									"Child1 Test1 Page1 Child2 Test2 Page2 Child3 Test3 Page3")
+						if (RuntimeVariables.replace("Welcome")
 												.equals(selenium.getText(
-										"_88_layoutIdsBox"))) {
+										"//li/ul/li[1]/div/div[3]/a"))) {
 							break;
 						}
 					}
@@ -105,10 +131,12 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.select("_88_layoutIdsBox",
-					RuntimeVariables.replace("label=Child2 Test2 Page2"));
-				selenium.clickAt("//td[2]/a[1]/img",
-					RuntimeVariables.replace(""));
+				assertEquals(RuntimeVariables.replace("Welcome"),
+					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
+				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
+					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
+				selenium.clickAt("//li/ul/li[2]/div/div[3]/a",
+					RuntimeVariables.replace("Manage Pages Test Page"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -116,10 +144,9 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace(
-									"Child2 Test2 Page2 Child1 Test1 Page1 Child3 Test3 Page3")
-												.equals(selenium.getText(
-										"_88_layoutIdsBox"))) {
+						if (RuntimeVariables.replace("Manage Pages Test Page")
+												.equals(selenium.getValue(
+										"//div[1]/fieldset/div/span[1]/span/span/span/input"))) {
 							break;
 						}
 					}
@@ -130,28 +157,103 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Child2 Test2 Page2 Child1 Test1 Page1 Child3 Test3 Page3"),
-					selenium.getText("_88_layoutIdsBox"));
-				selenium.clickAt("//input[@value='Update Display Order']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
+				assertEquals("Manage Pages Test Page",
+					selenium.getValue(
+						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
+
+				boolean childPagePresent = selenium.isElementPresent(
+						"//li[2]/ul/li[1]/div/div[3]/a");
+
+				if (childPagePresent) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("//li/ul/li[2]/div/div[1]",
+					RuntimeVariables.replace("Drop Down Arrow"));
+
+			case 3:
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("Child Test Page1")
+												.equals(selenium.getText(
+										"//li[2]/ul/li[1]/div/div[3]/a"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertEquals(RuntimeVariables.replace("Child2 Test2 Page2"),
-					selenium.getText("//nav/ul/li[2]/ul/li[1]"));
-				assertEquals(RuntimeVariables.replace("Child1 Test1 Page1"),
-					selenium.getText("//nav/ul/li[2]/ul/li[2]"));
-				assertEquals(RuntimeVariables.replace("Child3 Test3 Page3"),
-					selenium.getText("//nav/ul/li[2]/ul/li[3]"));
-				assertEquals(RuntimeVariables.replace("Child2 Test2 Page2"),
+				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
-				assertEquals(RuntimeVariables.replace("Child1 Test1 Page1"),
+				assertEquals(RuntimeVariables.replace("Child Test Page2"),
 					selenium.getText("//li[2]/ul/li[2]/div/div[3]/a"));
-				assertEquals(RuntimeVariables.replace("Child3 Test3 Page3"),
+				assertEquals(RuntimeVariables.replace("Child Test Page3"),
 					selenium.getText("//li[2]/ul/li[3]/div/div[3]/a"));
+				selenium.dragAndDropToObject("//li[2]/ul/li[1]/div/div[3]/a",
+					"//li/ul/li[2]/div/div[3]/a");
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("Child Test Page2")
+												.equals(selenium.getText(
+										"//li[2]/ul/li[1]/div/div[3]/a"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Child Test Page2"),
+					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
+				assertEquals(RuntimeVariables.replace("Child Test Page3"),
+					selenium.getText("//li[2]/ul/li[2]/div/div[3]/a"));
+				assertEquals(RuntimeVariables.replace("Child Test Page1"),
+					selenium.getText("//li[2]/ul/li[3]/div/div[3]/a"));
+				selenium.open("/web/guest/home/");
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Manage Pages Test Page")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.mouseOver("link=Manage Pages Test Page");
+				assertEquals(RuntimeVariables.replace("Child Test Page2"),
+					selenium.getText("//li[2]/ul/li[1]"));
+				assertEquals(RuntimeVariables.replace("Child Test Page3"),
+					selenium.getText("//li[2]/ul/li[2]"));
+				assertEquals(RuntimeVariables.replace("Child Test Page1"),
+					selenium.getText("//li[2]/ul/li[3]"));
 
 			case 100:
 				label = -1;

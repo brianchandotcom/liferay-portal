@@ -15,18 +15,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -39,14 +29,14 @@
 	<td>Manage Pages</td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
+	<td>waitForText</td>
 	<td>//div/div[3]/a</td>
-	<td>Liferay</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div/div[3]/a</td>
-	<td>Pages (Liferay)</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -60,8 +50,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[3]/ul/li/div/div[1]</td>
-	<td></td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -69,24 +59,49 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//li/ul/li[1]/div/div[3]/a</td>
-	<td></td>
+	<td>Welcome</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>assertText</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//div/div[3]/a</td>
-	<td></td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div/span/button[1]</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/span/button[1]</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div/span/button[1]</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_88_name_en_US']</td>
+	<td>Page Name Field</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_name_en_US</td>
-	<td>Manage1 Pages1 Test1 Page1</td>
+	<td>//input[@id='_88_name_en_US']</td>
+	<td>Manage Pages Test Page1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Page']</td>
-	<td></td>
+	<td>Add Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -94,14 +109,54 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//li/ul/li[2]/div/div[3]/a'))</td>
+	<td>pagePresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${pagePresent}</td>
+	<td>PagePresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>PagePresent</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForText</td>
 	<td>//li/ul/li[2]/div/div[3]/a</td>
-	<td>Manage1 Pages1 Test1 Page1</td>
+	<td>Manage Pages Test Page1</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//li/ul/li[2]/div/div[3]/a</td>
-	<td>Manage1 Pages1 Test1 Page1</td>
+	<td>Manage Pages Test Page1</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Manage Pages Test Page1</td>
+	<td>Manage Pages Test Page1</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Manage Pages Test Page1</td>
+	<td>Manage Pages Test Page1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[2]/span/a</td>
+	<td>Manage Pages Test Page1</td>
 </tr>
 
 </tbody></table>

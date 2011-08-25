@@ -14,18 +14,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Manage Pages Test Page</td>
-	<td></td>
+	<td>Manage Pages Test Page</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>link=Manage Pages Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//li[2]/span/a</td>
 	<td>Manage Pages Test Page</td>
 </tr>
 <tr>
@@ -49,19 +44,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>main-content</td>
+	<td>open</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -74,14 +64,14 @@
 	<td>Manage Pages</td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
+	<td>waitForText</td>
 	<td>//div/div[3]/a</td>
-	<td>Liferay</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div/div[3]/a</td>
-	<td>Pages (Liferay)</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -96,7 +86,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//div[3]/ul/li/div/div[1]</td>
-	<td></td>
+	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -105,33 +95,68 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//li[1]/ul/li/div/div[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//li[2]/div/div[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>_88_type</td>
-	<td>label=Portlet</td>
+	<td>//li[1]/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_88_copyLayoutId</td>
+	<td>//li[1]/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[1]/ul/li[2]/div/div[3]/a</td>
+	<td>Manage Pages Test Page</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[1]/ul/li[2]/div/div[3]/a</td>
+	<td>Manage Pages Test Page</td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>//div[1]/fieldset/div/span[1]/span/span/span/input</td>
+	<td>Manage Pages Test Page</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//div[1]/fieldset/div/span[1]/span/span/span/input</td>
+	<td>Manage Pages Test Page</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_88_type']</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/span/button[4]</td>
+	<td>Copy Portlets from Page</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div/span/button[4]</td>
+	<td>Copy Portlets from Page</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//select[@id='_88_copyLayoutId']</td>
+	<td>Copy From Page Drop Down</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//select[@id='_88_copyLayoutId']</td>
 	<td>- Welcome - Manage Pages Test Page</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_88_copyLayoutId</td>
-	<td>label=regexp:-\sWelcome</td>
+	<td>//select[@id='_88_copyLayoutId']</td>
+	<td>regexp:-\sWelcome</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>//input[@value='Copy']</td>
+	<td>Copy</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -144,18 +169,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Manage Pages Test Page</td>
-	<td></td>
+	<td>Manage Pages Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Manage Pages Test Page</td>
-	<td></td>
+	<td>Manage Pages Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[2]/span/a</td>
+	<td>//nav/ul/li[2]/span/a</td>
 	<td>Manage Pages Test Page</td>
 </tr>
 <tr>

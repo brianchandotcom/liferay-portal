@@ -28,31 +28,8 @@ public class SavePageTypeURLTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Manage Pages Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Manage Pages Test Page",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("main-content", RuntimeVariables.replace(""));
-				selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-				selenium.clickAt("navigation", RuntimeVariables.replace(""));
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -80,7 +57,9 @@ public class SavePageTypeURLTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isPartialText("//div/div[3]/a", "Liferay")) {
+						if (RuntimeVariables.replace("Public Pages")
+												.equals(selenium.getText(
+										"//div/div[3]/a"))) {
 							break;
 						}
 					}
@@ -91,7 +70,7 @@ public class SavePageTypeURLTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Pages (Liferay)"),
+				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//div/div[3]/a"));
 
 				boolean welcomePresent = selenium.isElementPresent(
@@ -104,7 +83,7 @@ public class SavePageTypeURLTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//div[3]/ul/li/div/div[1]",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
 
@@ -114,7 +93,7 @@ public class SavePageTypeURLTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//li[2]/div/div[3]/a")) {
+						if (selenium.isVisible("//li/ul/li[1]/div/div[3]/a")) {
 							break;
 						}
 					}
@@ -125,10 +104,36 @@ public class SavePageTypeURLTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//li[2]/div/div[3]/a",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Welcome"),
+					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
+				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
+					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
+				selenium.clickAt("//li/ul/li[2]/div/div[3]/a",
+					RuntimeVariables.replace("Manage Pages Test Page"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("Manage Pages Test Page")
+												.equals(selenium.getValue(
+										"//div[1]/fieldset/div/span[1]/span/span/span/input"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.saveScreenShotAndSource();
+				assertEquals("Manage Pages Test Page",
+					selenium.getValue(
+						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -139,7 +144,7 @@ public class SavePageTypeURLTest extends BaseTestCase {
 						if (RuntimeVariables.replace(
 									"Portlet Panel Embedded Web Content URL Link to Page")
 												.equals(selenium.getText(
-										"_88_type"))) {
+										"//select[@id='_88_type']"))) {
 							break;
 						}
 					}
@@ -150,8 +155,8 @@ public class SavePageTypeURLTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.select("_88_type",
-					RuntimeVariables.replace("label=URL"));
+				selenium.select("//select[@id='_88_type']",
+					RuntimeVariables.replace("URL"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -175,9 +180,12 @@ public class SavePageTypeURLTest extends BaseTestCase {
 					RuntimeVariables.replace("http://www.liferay.com"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
@@ -186,8 +194,7 @@ public class SavePageTypeURLTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"link=Manage Pages Test Page")) {
+						if (selenium.isVisible("link=Manage Pages Test Page")) {
 							break;
 						}
 					}
@@ -199,10 +206,10 @@ public class SavePageTypeURLTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Manage Pages Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isElementPresent("//a[@id='logo']"));
+				assertTrue(selenium.isElementPresent("//img[@alt='Liferay']"));
 				assertFalse(selenium.isElementPresent(
 						"link=Manage Pages Test Page"));
 

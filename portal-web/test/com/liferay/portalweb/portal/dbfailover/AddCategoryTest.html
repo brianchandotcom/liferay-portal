@@ -16,37 +16,37 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>Méssagé Boards Tést Pagé</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>Méssagé Boards Tést Pagé</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Add Category']</td>
-	<td></td>
+	<td>Add Category</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_19_name</td>
+	<td>//input[@id='_19_name']</td>
 	<td>Test Category</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully. </td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Test Category</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[3]/td/a</td>
+	<td>Test Category</td>
 </tr>
 
 </tbody></table>

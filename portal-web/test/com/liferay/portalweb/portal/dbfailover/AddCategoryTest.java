@@ -50,13 +50,16 @@ public class AddCategoryTest extends BaseTestCase {
 				"//input[@value='Add Category']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_name", RuntimeVariables.replace("Test Category"));
+		selenium.type("//input[@id='_19_name']",
+			RuntimeVariables.replace("Test Category"));
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully. "));
-		assertTrue(selenium.isElementPresent("link=Test Category"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Test Category"),
+			selenium.getText("//tr[3]/td/a"));
 	}
 }

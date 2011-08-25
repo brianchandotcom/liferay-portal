@@ -92,8 +92,7 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 
 	<c:if test="<%= !unassignableRole && (role.getType() == RoleConstants.TYPE_REGULAR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewUsersURL">
-			<portlet:param name="struts_action" value="/roles_admin/view" />
-			<portlet:param name="tabs1" value="users" />
+			<portlet:param name="struts_action" value="/roles_admin/view_users" />
 			<portlet:param name="viewUsersRedirect" value="<%= currentURL %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />

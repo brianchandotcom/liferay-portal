@@ -30,6 +30,12 @@
 			<arg value="sample.sql.wiki.page.comment.count=${sample.sql.wiki.page.comment.count}" />
 			<arg value="sample.sql.wiki.page.count=${sample.sql.wiki.page.count}" />
 			<arg value="sample.sql.security.enabled=${sample.sql.security.enabled}" />
+			<arg value="sample.sql.document.library.root.folder.count=${sample.sql.document.library.root.folder.count}" />
+			<arg value="sample.sql.document.library.folder.depth=${sample.sql.document.library.folder.depth}" />
+			<arg value="sample.sql.document.library.folder.fan.out.count=${sample.sql.document.library.folder.fan.out.count}" />
+			<arg value="sample.sql.document.library.file.fan.out.count=${sample.sql.document.library.file.fan.out.count}" />
+			<arg value="sample.sql.document.library.file.size=${sample.sql.document.library.file.size}" />
+			<arg value="sample.sql.document.library.file.leaf.folder.only=${sample.sql.document.library.file.leaf.folder.only}" />
 		</java>
 	</target>
 

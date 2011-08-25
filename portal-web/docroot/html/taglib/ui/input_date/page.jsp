@@ -107,25 +107,25 @@ else if (yearNullable) {
 
 					<c:choose>
 						<c:when test="<%= dateFormatOrder.equals(_DATE_FORMAT_ORDER_MDY) %>">
-							<%@ include file="select_month.jspf" %>
+							<%@ include file="/html/taglib/ui/input_date/select_month.jspf" %>
 
-							<%@ include file="select_day.jspf" %>
+							<%@ include file="/html/taglib/ui/input_date/select_day.jspf" %>
 
-							<%@ include file="select_year.jspf" %>
+							<%@ include file="/html/taglib/ui/input_date/select_year.jspf" %>
 						</c:when>
 						<c:when test="<%= dateFormatOrder.equals(_DATE_FORMAT_ORDER_YMD) %>">
-							<%@ include file="select_year.jspf" %>
+							<%@ include file="/html/taglib/ui/input_date/select_year.jspf" %>
 
-							<%@ include file="select_month.jspf" %>
+							<%@ include file="/html/taglib/ui/input_date/select_month.jspf" %>
 
-							<%@ include file="select_day.jspf" %>
+							<%@ include file="/html/taglib/ui/input_date/select_day.jspf" %>
 						</c:when>
 						<c:otherwise>
-							<%@ include file="select_day.jspf" %>
+							<%@ include file="/html/taglib/ui/input_date/select_day.jspf" %>
 
-							<%@ include file="select_month.jspf" %>
+							<%@ include file="/html/taglib/ui/input_date/select_month.jspf" %>
 
-							<%@ include file="select_year.jspf" %>
+							<%@ include file="/html/taglib/ui/input_date/select_year.jspf" %>
 						</c:otherwise>
 					</c:choose>
 				</c:when>

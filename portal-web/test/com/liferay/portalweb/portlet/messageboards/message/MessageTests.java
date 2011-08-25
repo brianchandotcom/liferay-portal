@@ -33,6 +33,7 @@ import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagebo
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagebodynull.EditCategoryMessageBodyNullTests;
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagesubject.EditCategoryMessageSubjectTests;
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagesubjectnull.EditCategoryMessageSubjectNullTests;
+import com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail.Gmail_ViewMBThreadMessageGmailTests;
 import com.liferay.portalweb.portlet.messageboards.message.markasanswercategorymessagequestionreply.MarkAsAnswerCategoryMessageQuestionReplyTests;
 import com.liferay.portalweb.portlet.messageboards.message.movecategorymessagetocategory.MoveCategoryMessageToCategoryTests;
 import com.liferay.portalweb.portlet.messageboards.message.movecategorymessagetocategoryexplanation.MoveCategoryMessageToCategoryExplanationTests;
@@ -80,6 +81,7 @@ public class MessageTests extends BaseTests {
 		testSuite.addTest(EditCategoryMessageBodyNullTests.suite());
 		testSuite.addTest(EditCategoryMessageSubjectTests.suite());
 		testSuite.addTest(EditCategoryMessageSubjectNullTests.suite());
+		testSuite.addTest(Gmail_ViewMBThreadMessageGmailTests.suite());
 		testSuite.addTest(
 			MarkAsAnswerCategoryMessageQuestionReplyTests.suite());
 		testSuite.addTest(MoveCategoryMessageToCategoryTests.suite());

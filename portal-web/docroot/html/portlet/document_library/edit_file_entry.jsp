@@ -415,9 +415,9 @@ else if (dlFileEntryType != null) {
 						<aui:button onClick='<%= renderResponse.getNamespace() + "checkOut();" %>' value="checkout" />
 					</c:when>
 					<c:otherwise>
-						<aui:button onClick='<%= renderResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout" />
+						<aui:button onClick='<%= renderResponse.getNamespace() + "checkIn();" %>' value="save-and-checkin" />
 
-						<aui:button onClick='<%= renderResponse.getNamespace() + "checkIn();" %>' value="checkin" />
+						<aui:button onClick='<%= renderResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout" />
 					</c:otherwise>
 				</c:choose>
 			</c:if>
@@ -444,7 +444,8 @@ else if (dlFileEntryType != null) {
 	}
 
 	function <portlet:namespace />checkIn() {
-		submitForm(document.hrefFm, "<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKIN %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>");
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UPDATE_AND_CHECKIN %>"
+		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />checkOut() {

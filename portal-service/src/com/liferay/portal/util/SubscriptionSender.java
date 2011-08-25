@@ -292,6 +292,9 @@ public class SubscriptionSender implements Serializable {
 			if (group.isLayout()) {
 				groupId = group.getParentGroupId();
 			}
+			else {
+				groupId = scopeGroupId;
+			}
 		}
 		catch (Exception e) {
 		}

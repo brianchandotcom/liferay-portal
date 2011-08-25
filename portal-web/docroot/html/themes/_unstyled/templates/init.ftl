@@ -8,6 +8,8 @@
 
 <#assign css_class = theme_display.getColorScheme().getCssClass() />
 
+<#assign liferay_toggle_controls = sessionClicks.get(request, "liferay_toggle_controls", "visible") />
+
 <#if layout??>
 	<#assign page_group = layout.getGroup() />
 
@@ -16,9 +18,12 @@
 	<#elseif theme_display.isShowStagingIcon() && page_group.hasStagingGroup()>
 		<#assign css_class = css_class + " live-view" />
 	</#if>
+
+	<#if page_group.isControlPanel()>
+		<#assign liferay_toggle_controls = "visible" />
+	</#if>
 </#if>
 
-<#assign liferay_toggle_controls = sessionClicks.get(request, "liferay_toggle_controls", "visible") />
 <#assign liferay_dockbar_pinned = sessionClicks.get(request, "liferay_dockbar_pinned", "") />
 
 <#if liferay_toggle_controls = "visible">

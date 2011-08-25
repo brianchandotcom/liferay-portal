@@ -88,10 +88,6 @@ import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.DuplicateVocabularyException;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
@@ -103,7 +99,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -684,68 +679,6 @@ public class LayoutImporter {
 			"url",
 			url.substring(0, x) + layout.getGroup().getFriendlyURL() +
 				url.substring(y));
-	}
-
-	protected AssetVocabulary getAssetVocabulary(
-			PortletDataContext portletDataContext, String vocabularyUuid,
-			String vocabularyName, String userUuid,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		AssetVocabulary assetVocabulary = null;
-
-		try {
-			if (portletDataContext.getDataStrategy().equals(
-					PortletDataHandlerKeys.DATA_STRATEGY_MIRROR) ||
-				portletDataContext.getDataStrategy().equals(
-					PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE)) {
-
-				AssetVocabulary existingAssetVocabulary =
-					AssetVocabularyUtil.fetchByUUID_G(
-						vocabularyUuid, portletDataContext.getGroupId());
-
-				if (existingAssetVocabulary == null) {
-					Map<Locale, String> titleMap =
-						new HashMap<Locale, String>();
-
-					titleMap.put(LocaleUtil.getDefault(), vocabularyName);
-
-					serviceContext.setUuid(vocabularyUuid);
-
-					assetVocabulary =
-						AssetVocabularyLocalServiceUtil.addVocabulary(
-							portletDataContext.getUserId(userUuid),
-							StringPool.BLANK, titleMap, null, StringPool.BLANK,
-							serviceContext);
-				}
-				else {
-					assetVocabulary =
-						AssetVocabularyLocalServiceUtil.updateVocabulary(
-							existingAssetVocabulary.getVocabularyId(),
-							existingAssetVocabulary.getTitle(),
-							existingAssetVocabulary.getTitleMap(),
-							existingAssetVocabulary.getDescriptionMap(),
-							existingAssetVocabulary.getSettings(),
-							serviceContext);
-				}
-			}
-			else {
-				Map<Locale, String> titleMap = 	new HashMap<Locale, String>();
-
-				titleMap.put(LocaleUtil.getDefault(), vocabularyName);
-
-				assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-					portletDataContext.getUserId(userUuid), StringPool.BLANK,
-					titleMap, null, StringPool.BLANK, serviceContext);
-			}
-		}
-		catch (DuplicateVocabularyException dve) {
-			assetVocabulary =
-				AssetVocabularyLocalServiceUtil.getGroupVocabulary(
-					portletDataContext.getGroupId(), vocabularyName);
-		}
-
-		return assetVocabulary;
 	}
 
 	protected void importJournalArticle(

@@ -105,7 +105,7 @@ String portletURLString = portletURL.toString();
 
 		// Description
 
-		row.addText(role.getDescription(locale), rowURL);
+		row.addText(HtmlUtil.escape(role.getDescription(locale)), rowURL);
 
 		// Action
 

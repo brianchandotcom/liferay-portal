@@ -185,11 +185,11 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 					<liferay-ui:icon
 						cssClass="lfr-asset-avatar"
 						image='<%= "../file_system/large/" + (((foldersCount + entriesCount) > 0) ? "folder_full_bookmark" : "folder_empty") %>'
-						message='<%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "bookmarks-home") %>'
+						message='<%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(pageContext, "bookmarks-home") %>'
 					/>
 
 					<div class="lfr-asset-name">
-						<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "bookmarks-home") %></h4>
+						<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(pageContext, "bookmarks-home") %></h4>
 					</div>
 				</div>
 

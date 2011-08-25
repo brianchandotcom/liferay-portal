@@ -56,6 +56,13 @@ public class WorkflowInstanceManagerProxyBean
 	}
 
 	public int getWorkflowInstanceCount(
+		long companyId, Long userId, String assetClassNames[],
+		Boolean completed) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public int getWorkflowInstanceCount(
 		long companyId, String workflowDefinitionName,
 		Integer workflowDefinitionVersion, Boolean completed) {
 
@@ -64,6 +71,14 @@ public class WorkflowInstanceManagerProxyBean
 
 	public List<WorkflowInstance> getWorkflowInstances(
 		long companyId, Long userId, String assetClassName, Long assetClassPK,
+		Boolean completed, int start, int end,
+		OrderByComparator orderByComparator) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public List<WorkflowInstance> getWorkflowInstances(
+		long companyId, Long userId, String[] assetClassNames,
 		Boolean completed, int start, int end,
 		OrderByComparator orderByComparator) {
 

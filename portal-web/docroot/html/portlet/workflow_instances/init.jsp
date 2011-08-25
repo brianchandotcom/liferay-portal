@@ -20,6 +20,7 @@
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowException" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowHandler" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %>
+<%@ page import="com.liferay.portal.kernel.workflow.WorkflowHandlerUtil" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil" %>
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowLog" %>

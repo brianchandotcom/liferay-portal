@@ -17,6 +17,8 @@
 <%
 boolean allInstances = false;
 
+String[] assetTypes = WorkflowHandlerUtil.getSearchableAssetTypes();
+
 List<WorkflowInstance> resultsInstances = null;
 
 int totalInstances = 0;
@@ -31,8 +33,8 @@ if (portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS) || portletName.equals(P
 
 	allInstances = true;
 
-	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), null, null, null, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), null);
-	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), null, null, null, completedInstances);
+	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), null, assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), null);
+	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), null, assetTypes, completedInstances);
 }
 else {
 	if (completedInstances) {
@@ -42,7 +44,7 @@ else {
 		searchContainer.setEmptyResultsMessage("there-are-no-pending-instances-started-by-me");
 	}
 
-	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), user.getUserId(), null, null, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), null);
-	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), user.getUserId(), null, null, completedInstances);
+	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), user.getUserId(), assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), null);
+	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), user.getUserId(), assetTypes, completedInstances);
 }
 %>

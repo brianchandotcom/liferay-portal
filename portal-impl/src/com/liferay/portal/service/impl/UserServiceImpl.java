@@ -59,6 +59,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * The implementation of the user remote service.
+ *
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim
  * @author Scott Lee
@@ -67,6 +69,16 @@ import java.util.Locale;
  */
 public class UserServiceImpl extends UserServiceBaseImpl {
 
+	/**
+	 * Adds the users to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if a group or user with the primary key could
+	 *         not be found, or if the user did not have permission to assign
+	 *         group members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addGroupUsers(long groupId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -107,6 +119,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.addGroupUsers(groupId, userIds);
 	}
 
+	/**
+	 * Adds the users to the organization.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if an organization or user with the primary key
+	 *         could not be found, if the user did not have permission to
+	 *         assign organization members, or if current user did not have an
+	 *         organization in common with a given user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -118,6 +141,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.addOrganizationUsers(organizationId, userIds);
 	}
 
+	/**
+	 * Assigns the password policy to the users, removing any other currently
+	 * assigned password policies.
+	 *
+	 * @param  passwordPolicyId the primary key of the password policy
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the user did not have permission to assign
+	 *         policy members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -128,6 +161,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.addPasswordPolicyUsers(passwordPolicyId, userIds);
 	}
 
+	/**
+	 * Adds the users to the role.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if a role or user with the primary key could not
+	 *         be found or if the user did not have permission to assign role
+	 *         members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addRoleUsers(long roleId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -137,6 +180,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.addRoleUsers(roleId, userIds);
 	}
 
+	/**
+	 * Adds the users to the team.
+	 *
+	 * @param  teamId the primary key of the team
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if a team or user with the primary key could not
+	 *         be found or if the user did not have permission to assign team
+	 *         members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addTeamUsers(long teamId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -146,6 +199,60 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.addTeamUsers(teamId, userIds);
 	}
 
+	/**
+	 * Adds a user with additional parameters.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user including
+	 * its resources, metadata, and internal data structures. It is not
+	 * necessary to make subsequent calls to any methods to setup default
+	 * groups, resources, etc.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically
+	 *         generated for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  facebookId the user's facebook ID
+	 * @param  openId the user's OpenID
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixId the user's name prefix ID
+	 * @param  suffixId the user's name suffix ID
+	 * @param  male whether the user is male
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the roles this user possesses
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  addresses the user's addresses
+	 * @param  emailAddresses the user's email addresses
+	 * @param  phones the user's phone numbers
+	 * @param  websites the user's websites
+	 * @param  announcementsDelivers the announcements deliveries
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the user's service context (optionally
+	 *         <code>null</code>). Can specify the user's universally unique
+	 *         identifier (with the <code>uuid</code> attribute), asset
+	 *         category IDs, asset tag names, and expando bridge attributes.
+	 * @return the new user
+	 * @throws PortalException if the user's information was invalid, if the
+	 *         creator did not have permission to add users, if the email
+	 *         address was reserved, or some other portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User addUser(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -178,6 +285,55 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Adds a user.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user including
+	 * its resources, metadata, and internal data structures. It is not
+	 * necessary to make subsequent calls to any methods to setup default
+	 * groups, resources, etc.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically
+	 *         generated for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  facebookId the user's facebook ID
+	 * @param  openId the user's OpenID
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixId the user's name prefix ID
+	 * @param  suffixId the user's name suffix ID
+	 * @param  male whether the user is male
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the roles this user possesses
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the user's service context (optionally
+	 *         <code>null</code>). Can specify the user's universally unique
+	 *         identifier (with the <code>uuid</code> attribute), asset
+	 *         category IDs, asset tag names, and expando bridge attributes.
+	 * @return the new user
+	 * @throws PortalException if the user's information was invalid, if the
+	 *         creator did not have permission to add users, or if the email
+	 *         address was reserved
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User addUser(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -206,6 +362,60 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Adds a user with workflow and additional parameters.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user including
+	 * its resources, metadata, and internal data structures. It is not
+	 * necessary to make subsequent calls to any methods to setup default
+	 * groups, resources, etc.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically
+	 *         generated for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  facebookId the user's facebook ID
+	 * @param  openId the user's OpenID
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixId the user's name prefix ID
+	 * @param  suffixId the user's name suffix ID
+	 * @param  male whether the user is male
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the roles this user possesses
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  addresses the user's addresses
+	 * @param  emailAddresses the user's email addresses
+	 * @param  phones the user's phone numbers
+	 * @param  websites the user's websites
+	 * @param  announcementsDelivers the announcements deliveries
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the user's service context (optionally
+	 *         <code>null</code>). Can specify the user's universally unique
+	 *         identifier (with the <code>uuid</code> attribute), asset
+	 *         category IDs, asset tag names, and expando bridge attributes.
+	 * @return the new user
+	 * @throws PortalException if the user's information was invalid, if the
+	 *         creator did not have permission to add users, if the email
+	 *         address was reserved, or some other portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User addUserWithWorkflow(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -261,6 +471,55 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Adds a user with workflow.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user including
+	 * its resources, metadata, and internal data structures. It is not
+	 * necessary to make subsequent calls to any methods to setup default
+	 * groups, resources, etc.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically
+	 *         generated for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  facebookId the user's facebook ID
+	 * @param  openId the user's OpenID
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixId the user's name prefix ID
+	 * @param  suffixId the user's name suffix ID
+	 * @param  male whether the user is male
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the roles this user possesses
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the user's service context (optionally
+	 *         <code>null</code>). Can specify the user's universally unique
+	 *         identifier (with the <code>uuid</code> attribute), asset
+	 *         category IDs, asset tag names, and expando bridge attributes.
+	 * @return the new user
+	 * @throws PortalException if the user's information was invalid, if the
+	 *         creator did not have permission to add users, or if the email
+	 *         address was reserved
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User addUserWithWorkflow(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -309,6 +568,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
+	/**
+	 * Adds the users to the user group.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if a user group or user with the primary could
+	 *         could not be found, or if the current user did not have
+	 *         permission to assign group members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -318,6 +587,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.addUserGroupUsers(userGroupId, userIds);
 	}
 
+	/**
+	 * Deletes the user's portrait image.
+	 *
+	 * @param  userId the primary key of the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the user's portrait could not be found, or if the
+	 *         current user did not have permission to update the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deletePortrait(long userId)
 		throws PortalException, SystemException {
 
@@ -327,6 +605,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.deletePortrait(userId);
 	}
 
+	/**
+	 * Removes the user from the role.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  userId the primary key of the user
+	 * @throws PortalException if a role or user with the primary key could not
+	 *         be found, or if the current user did not have permission to
+	 *         assign role members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteRoleUser(long roleId, long userId)
 		throws PortalException, SystemException {
 
@@ -336,6 +624,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.deleteRoleUser(roleId, userId);
 	}
 
+	/**
+	 * Deletes the user.
+	 *
+	 * @param  userId the primary key of the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found or if the current user did not have permission to delete
+	 *         the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteUser(long userId)
 		throws PortalException, SystemException {
 
@@ -349,26 +646,67 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.deleteUser(userId);
 	}
 
+	/**
+	 * Returns the primary key of the default user for the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the primary key of the default user for the company
+	 * @throws PortalException if a default user for the company could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public long getDefaultUserId(long companyId)
 		throws PortalException, SystemException {
 
 		return userLocalService.getDefaultUserId(companyId);
 	}
 
+	/**
+	 * Returns the primary keys of all the users belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the primary keys of the users belonging to the group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public long[] getGroupUserIds(long groupId) throws SystemException {
 		return userLocalService.getGroupUserIds(groupId);
 	}
 
+	/**
+	 * Returns the primary keys of all the users belonging to the organization.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @return the primary keys of the users belonging to the organization
+	 * @throws SystemException if a system exception occurred
+	 */
 	public long[] getOrganizationUserIds(long organizationId)
 		throws SystemException {
 
 		return userLocalService.getOrganizationUserIds(organizationId);
 	}
 
+	/**
+	 * Returns the primary keys of all the users belonging to the role.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @return the primary keys of the users belonging to the role
+	 * @throws SystemException if a system exception occurred
+	 */
 	public long[] getRoleUserIds(long roleId) throws SystemException {
 		return userLocalService.getRoleUserIds(roleId);
 	}
 
+	/**
+	 * Returns the user with the email address.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  emailAddress the user's email address
+	 * @return the user with the email address
+	 * @throws PortalException if a user with the email address could not be
+	 *         found or if the current user did not have permission to view the
+	 *         user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User getUserByEmailAddress(long companyId, String emailAddress)
 		throws PortalException, SystemException {
 
@@ -381,6 +719,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return user;
 	}
 
+	/**
+	 * Returns the user with the primary key.
+	 *
+	 * @param  userId the primary key of the user
+	 * @return the user with the primary key
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found or if the current user did not have permission to view the
+	 *         user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User getUserById(long userId)
 		throws PortalException, SystemException {
 
@@ -392,6 +740,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return user;
 	}
 
+	/**
+	 * Returns the user with the screen name.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  screenName the user's screen name
+	 * @return the user with the screen name
+	 * @throws PortalException if a user with the screen name could not be
+	 *         found or if the current user did not have permission to veiw the
+	 *         user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User getUserByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
@@ -404,6 +763,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return user;
 	}
 
+	/**
+	 * Returns the primary key of the user with the email address.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  emailAddress the user's email address
+	 * @return the primary key of the user with the email address
+	 * @throws PortalException if a user with the email address could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public long getUserIdByEmailAddress(long companyId, String emailAddress)
 		throws PortalException, SystemException {
 
@@ -412,6 +781,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return user.getUserId();
 	}
 
+	/**
+	 * Returns the primary key of the user with the screen name.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  screenName the user's screen name
+	 * @return the primary key of the user with the screen name
+	 * @throws PortalException if a user with the screen name could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public long getUserIdByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
@@ -420,18 +799,51 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return user.getUserId();
 	}
 
+	/**
+	 * Returns <code>true</code> if the user is a member of the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userId the primary key of the user
+	 * @return <code>true</code> if the user is a member of the group;
+	 *         <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasGroupUser(long groupId, long userId)
 		throws SystemException {
 
 		return userLocalService.hasGroupUser(groupId, userId);
 	}
 
+	/**
+	 * Returns <code>true</code> if the user is a member of the role.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  userId the primary key of the user
+	 * @return <code>true</code> if the user is a member of the role;
+	 *         <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasRoleUser(long roleId, long userId)
 		throws SystemException {
 
 		return userLocalService.hasRoleUser(roleId, userId);
 	}
 
+	/**
+	 * Returns <code>true</code> if the user has the role with the name,
+	 * optionally through inheritance.
+	 *
+	 * @param  companyId the primary key of the role's company
+	 * @param  name the name of the role (must be a regular role, not an
+	 *         organization, site or provider role)
+	 * @param  userId the primary key of the user
+	 * @param  inherited whether to include roles inherited from organizations,
+	 *         sites, etc.
+	 * @return <code>true</code> if the user has the role; <code>false</code>
+	 *         otherwise
+	 * @throws PortalException if a role with the name could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasRoleUser(
 			long companyId, String name, long userId, boolean inherited)
 		throws PortalException, SystemException {
@@ -439,6 +851,45 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.hasRoleUser(companyId, name, userId, inherited);
 	}
 
+	/**
+	 * Updates a user account that was automatically created when a guest user
+	 * participated in an action (e.g. posting a comment) and only provided his
+	 * name and email address.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically
+	 *         generated for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  facebookId the user's facebook ID
+	 * @param  openId the user's OpenID
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixId the user's name prefix ID
+	 * @param  suffixId the user's name suffix ID
+	 * @param  male whether the user is male
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  updateUserInformation whether to update the user's information
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the user's service context (optionally
+	 *         <code>null</code>). Can specify the user's expando bridge
+	 *         attributes.
+	 * @return the user
+	 * @throws PortalException if the user's information was invalid or if the
+	 *         email address was reserved
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateIncompleteUser(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -475,6 +926,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			updateUserInformation, sendEmail, serviceContext);
 	}
 
+	/**
+	 * Sets the users in the role, removing and adding users to the role as
+	 * necessary.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the current user did not have permission to
+	 *         assign role members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setRoleUsers(long roleId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -484,6 +945,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.setRoleUsers(roleId, userIds);
 	}
 
+	/**
+	 * Sets the users in the user group, removing and adding users to the user
+	 * group as necessary.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the current user did not have permission to
+	 *         assign group members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -493,6 +964,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.setUserGroupUsers(userGroupId, userIds);
 	}
 
+	/**
+	 * Removes the users from the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the current user did not have permission to
+	 *         modify group assignments
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetGroupUsers(long groupId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -535,6 +1015,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.unsetGroupUsers(groupId, userIds);
 	}
 
+	/**
+	 * Removes the users from the organization.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the current user did not have permission to
+	 *         modify organization assignments
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -545,6 +1034,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.unsetOrganizationUsers(organizationId, userIds);
 	}
 
+	/**
+	 * Removes the users from the password policy.
+	 *
+	 * @param  passwordPolicyId the primary key of the password policy
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the current user did not have permission to
+	 *         modify policy assignments
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetPasswordPolicyUsers(long passwordPolicyId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -555,6 +1053,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.unsetPasswordPolicyUsers(passwordPolicyId, userIds);
 	}
 
+	/**
+	 * Removes the users from the role.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the current user did not have permission to
+	 *         modify role assignments
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetRoleUsers(long roleId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -564,6 +1071,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.unsetRoleUsers(roleId, userIds);
 	}
 
+	/**
+	 * Removes the users from the team.
+	 *
+	 * @param  teamId the primary key of the team
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the current user did not have permission to
+	 *         modify team assignments
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetTeamUsers(long teamId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -573,6 +1089,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.unsetTeamUsers(teamId, userIds);
 	}
 
+	/**
+	 * Removes the users from the user group.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the current user did not have permission to
+	 *         modify user group assignments
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
 
@@ -582,6 +1107,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.unsetUserGroupUsers(userGroupId, userIds);
 	}
 
+	/**
+	 * Updates the user's response to the terms of use agreement.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  agreedToTermsOfUse whether the user has agree to the terms of
+	 *         use
+	 * @return the user
+	 * @throws PortalException if the current user did not have permission to
+	 *         update the user's agreement to terms-of-use
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateAgreedToTermsOfUse(
 			long userId, boolean agreedToTermsOfUse)
 		throws PortalException, SystemException {
@@ -593,6 +1129,19 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			userId, agreedToTermsOfUse);
 	}
 
+	/**
+	 * Updates the user's email address.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  password the user's password
+	 * @param  emailAddress1 the user's new email address
+	 * @param  emailAddress2 the user's new email address confirmation
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found or if the current user did not have permission to update
+	 *         the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateEmailAddress(
 			long userId, String password, String emailAddress1,
 			String emailAddress2)
@@ -605,6 +1154,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			userId, password, emailAddress1, emailAddress2);
 	}
 
+	/**
+	 * Updates whether the user is locked out from logging in.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  lockout whether the user is locked out
+	 * @return the user
+	 * @throws PortalException if the user did not have permission to lock out
+	 *         the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateLockoutById(long userId, boolean lockout)
 		throws PortalException, SystemException {
 
@@ -614,6 +1173,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.updateLockoutById(userId, lockout);
 	}
 
+	/**
+	 * Updates the user's OpenID.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  openId the new OpenID
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found or if the current user did not have permission to update
+	 *         the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateOpenId(long userId, String openId)
 		throws PortalException, SystemException {
 
@@ -623,6 +1193,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.updateOpenId(userId, openId);
 	}
 
+	/**
+	 * Sets the organizations that the user is in, removing and adding
+	 * organizations as necessary.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  organizationIds the primary keys of the organizations
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found or if the current user did not have permission to update
+	 *         the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void updateOrganizations(long userId, long[] organizationIds)
 		throws PortalException, SystemException {
 
@@ -632,6 +1213,21 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.updateOrganizations(userId, organizationIds);
 	}
 
+	/**
+	 * Updates the user's password without tracking or validation of the
+	 * change.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  password1 the user's new password
+	 * @param  password2 the user's new password confirmation
+	 * @param  passwordReset whether the user should be asked to reset their
+	 *         password the next time they log in
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found or if the current user did not have permission to update
+	 *         the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updatePassword(
 			long userId, String password1, String password2,
 			boolean passwordReset)
@@ -644,6 +1240,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			userId, password1, password2, passwordReset);
 	}
 
+	/**
+	 * Updates the user's portrait image.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  bytes the new portrait image data
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the new portrait was invalid, or if the current user
+	 *         did not have permission to update the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updatePortrait(long userId, byte[] bytes)
 		throws PortalException, SystemException {
 
@@ -653,6 +1260,18 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.updatePortrait(userId, bytes);
 	}
 
+	/**
+	 * Updates the user's password reset question and answer.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  question the user's new password reset question
+	 * @param  answer the user's new password reset answer
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the new question or answer were invalid, or if the
+	 *         current user did not have permission to update the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateReminderQuery(
 			long userId, String question, String answer)
 		throws PortalException, SystemException {
@@ -663,6 +1282,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.updateReminderQuery(userId, question, answer);
 	}
 
+	/**
+	 * Updates the user's screen name.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  screenName the user's new screen name
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the new screen name was invalid, or if the current
+	 *         user did not have permission to update the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateScreenName(long userId, String screenName)
 		throws PortalException, SystemException {
 
@@ -672,6 +1302,19 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.updateScreenName(userId, screenName);
 	}
 
+	/**
+	 * Updates the user's workflow status.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  status the user's new workflow status
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the current user was updating her own status to
+	 *         anything but {@link WorkflowConstants.STATUS_APPROVED}, or if
+	 *         the current user did not have permission to update the user's
+	 *         workflow status.
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateStatus(long userId, int status)
 		throws PortalException, SystemException {
 
@@ -687,6 +1330,69 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.updateStatus(userId, status);
 	}
 
+	/**
+	 * Updates the user with additional parameters.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  oldPassword the user's old password
+	 * @param  newPassword1 the user's new password (optionally
+	 *         <code>null</code>)
+	 * @param  newPassword2 the user's new password confirmation (optionally
+	 *         <code>null</code>)
+	 * @param  passwordReset whether the user should be asked to reset their
+	 *         password the next time they login
+	 * @param  reminderQueryQuestion the user's new password reset question
+	 * @param  reminderQueryAnswer the user's new password reset answer
+	 * @param  screenName the user's new screen name
+	 * @param  emailAddress the user's new email address
+	 * @param  facebookId the user's new Facebook ID
+	 * @param  openId the user's new OpenID
+	 * @param  languageId the user's new language ID
+	 * @param  timeZoneId the user's new time zone ID
+	 * @param  greeting the user's new greeting
+	 * @param  comments the user's new comments
+	 * @param  firstName the user's new first name
+	 * @param  middleName the user's new middle name
+	 * @param  lastName the user's new last name
+	 * @param  prefixId the user's new name prefix ID
+	 * @param  suffixId the user's new name suffix ID
+	 * @param  male whether user is male
+	 * @param  birthdayMonth the user's new birthday month (0-based, meaning 0
+	 *         for January)
+	 * @param  birthdayDay the user's new birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  smsSn the user's new SMS screen name
+	 * @param  aimSn the user's new AIM screen name
+	 * @param  facebookSn the user's new Facebook screen name
+	 * @param  icqSn the user's new ICQ screen name
+	 * @param  jabberSn the user's new Jabber screen name
+	 * @param  msnSn the user's new MSN screen name
+	 * @param  mySpaceSn the user's new MySpace screen name
+	 * @param  skypeSn the user's new Skype screen name
+	 * @param  twitterSn the user's new Twitter screen name
+	 * @param  ymSn the user's new Yahoo! Messenger screen name
+	 * @param  jobTitle the user's new job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the user's roles
+	 * @param  userGroupRoles the user user's group roles
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  addresses the user's addresses
+	 * @param  emailAddresses the user's email addresses
+	 * @param  phones the user's phone numbers
+	 * @param  websites the user's websites
+	 * @param  announcementsDelivers the announcements deliveries
+	 * @param  serviceContext the user's service context (optionally
+	 *         <code>null</code>). Can specify the user's universally unique
+	 *         identifier (with the <code>uuid</code> attribute), replacement
+	 *         asset category IDs, replacement asset tag names, and new expando
+	 *         bridge attributes.
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the new information was invalid, or if the current
+	 *         user did not have permission to update the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateUser(
 			long userId, String oldPassword, String newPassword1,
 			String newPassword2, boolean passwordReset,
@@ -736,6 +1442,64 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return user;
 	}
 
+	/**
+	 * Updates the user.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  oldPassword the user's old password
+	 * @param  newPassword1 the user's new password (optionally
+	 *         <code>null</code>)
+	 * @param  newPassword2 the user's new password confirmation (optionally
+	 *         <code>null</code>)
+	 * @param  passwordReset whether the user should be asked to reset their
+	 *         password the next time they login
+	 * @param  reminderQueryQuestion the user's new password reset question
+	 * @param  reminderQueryAnswer the user's new password reset answer
+	 * @param  screenName the user's new screen name
+	 * @param  emailAddress the user's new email address
+	 * @param  facebookId the user's new Facebook ID
+	 * @param  openId the user's new OpenID
+	 * @param  languageId the user's new language ID
+	 * @param  timeZoneId the user's new time zone ID
+	 * @param  greeting the user's new greeting
+	 * @param  comments the user's new comments
+	 * @param  firstName the user's new first name
+	 * @param  middleName the user's new middle name
+	 * @param  lastName the user's new last name
+	 * @param  prefixId the user's new name prefix ID
+	 * @param  suffixId the user's new name suffix ID
+	 * @param  male whether user is male
+	 * @param  birthdayMonth the user's new birthday month (0-based, meaning 0
+	 *         for January)
+	 * @param  birthdayDay the user's new birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  smsSn the user's new SMS screen name
+	 * @param  aimSn the user's new AIM screen name
+	 * @param  facebookSn the user's new Facebook screen name
+	 * @param  icqSn the user's new ICQ screen name
+	 * @param  jabberSn the user's new Jabber screen name
+	 * @param  msnSn the user's new MSN screen name
+	 * @param  mySpaceSn the user's new MySpace screen name
+	 * @param  skypeSn the user's new Skype screen name
+	 * @param  twitterSn the user's new Twitter screen name
+	 * @param  ymSn the user's new Yahoo! Messenger screen name
+	 * @param  jobTitle the user's new job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the user's roles
+	 * @param  userGroupRoles the user user's group roles
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  serviceContext the user's service context (optionally
+	 *         <code>null</code>). Can specify the user's universally unique
+	 *         identifier (with the <code>uuid</code> attribute), replacement
+	 *         asset category IDs, replacement asset tag names, and new expando
+	 *         bridge attributes.
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the new information was invalid, or if the current
+	 *         user did not have permission to update the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public User updateUser(
 			long userId, String oldPassword, String newPassword1,
 			String newPassword2, boolean passwordReset,

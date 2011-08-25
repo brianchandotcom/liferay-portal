@@ -58,16 +58,16 @@ public class UpgradeAssetPublisherManualEntries
 
 			rs = ps.executeQuery();
 
-			rs.next();
+			if (rs.next()) {
+				String classUuid = rs.getString("classUuid");
 
-			String classUuid = rs.getString("classUuid");
+				Element assetEntryUuidElement = rootElement.addElement(
+					"assetEntryUuid");
 
-			Element assetEntryUuidElement = rootElement.addElement(
-				"assetEntryUuid");
+				assetEntryUuidElement.addText(classUuid);
 
-			assetEntryUuidElement.addText(classUuid);
-
-			rootElement.remove(assetEntryIdElement);
+				rootElement.remove(assetEntryIdElement);
+			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

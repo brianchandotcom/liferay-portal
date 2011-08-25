@@ -149,31 +149,29 @@ public class JournalContentPortletDataHandlerImpl
 			}
 		}
 
-		if (article == null) {
-			return StringPool.BLANK;
-		}
-
 		Document document = SAXReaderUtil.createDocument();
 
 		Element rootElement = document.addElement("journal-content-data");
 
-		String path = JournalPortletDataHandlerImpl.getArticlePath(
-			portletDataContext, article);
+		if (article != null) {
+			String path = JournalPortletDataHandlerImpl.getArticlePath(
+				portletDataContext, article);
 
-		Element articleElement = rootElement.addElement("article");
+			Element articleElement = rootElement.addElement("article");
 
-		articleElement.addAttribute("path", path);
+			articleElement.addAttribute("path", path);
 
-		Element dlFoldersElement = rootElement.addElement("dl-folders");
-		Element dlFilesElement = rootElement.addElement("dl-file-entries");
-		Element dlFileRanksElement = rootElement.addElement("dl-file-ranks");
-		Element igFoldersElement = rootElement.addElement("ig-folders");
-		Element igImagesElement = rootElement.addElement("ig-images");
+			Element dlFoldersElement = rootElement.addElement("dl-folders");
+			Element dlFilesElement = rootElement.addElement("dl-file-entries");
+			Element dlFileRanksElement = rootElement.addElement("dl-file-ranks");
+			Element igFoldersElement = rootElement.addElement("ig-folders");
+			Element igImagesElement = rootElement.addElement("ig-images");
 
-		JournalPortletDataHandlerImpl.exportArticle(
-			portletDataContext, rootElement, rootElement, rootElement,
-			dlFoldersElement, dlFilesElement, dlFileRanksElement,
-			igFoldersElement, igImagesElement, article, false);
+			JournalPortletDataHandlerImpl.exportArticle(
+				portletDataContext, rootElement, rootElement, rootElement,
+				dlFoldersElement, dlFilesElement, dlFileRanksElement,
+				igFoldersElement, igImagesElement, article, false);
+		}
 
 		return document.formattedString();
 	}
@@ -223,7 +221,7 @@ public class JournalContentPortletDataHandlerImpl
 
 		String articleId = portletPreferences.getValue("articleId", null);
 
-		if (Validator.isNotNull(articleId)) {
+		if (Validator.isNotNull(articleId) && (articleElement != null)) {
 			String importedArticleGroupId = articleElement.attributeValue(
 				"imported-article-group-id");
 
@@ -249,6 +247,10 @@ public class JournalContentPortletDataHandlerImpl
 				portletDataContext.getScopeGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), portletId, articleId, true);
 		}
+		else {
+			portletPreferences.setValue("article-id", StringPool.BLANK);
+			portletPreferences.setValue("group-id", StringPool.BLANK);
+		}
 
 		String templateId = portletPreferences.getValue("templateId", null);
 
@@ -260,6 +262,9 @@ public class JournalContentPortletDataHandlerImpl
 			templateId = MapUtil.getString(templateIds, templateId, templateId);
 
 			portletPreferences.setValue("templateId", templateId);
+		}
+		else {
+			portletPreferences.setValue("template-id", StringPool.BLANK);
 		}
 
 		return portletPreferences;

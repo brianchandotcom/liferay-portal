@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -68,7 +69,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void addAttribute(String name) throws PortalException {
-		addAttribute(name, ExpandoColumnConstants.STRING, null, true);
+		addAttribute(
+			name, ExpandoColumnConstants.STRING, null,
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_WRITE_ENABLED);
 	}
 
 	public void addAttribute(String name, boolean secure)
@@ -78,7 +81,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void addAttribute(String name, int type) throws PortalException {
-		addAttribute(name, type, null, true);
+		addAttribute(
+			name, type, null,
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_WRITE_ENABLED);
 	}
 
 	public void addAttribute(String name, int type, boolean secure)
@@ -91,7 +96,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			String name, int type, Serializable defaultValue)
 		throws PortalException {
 
-		addAttribute(name, type, defaultValue, true);
+		addAttribute(
+			name, type, defaultValue,
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_WRITE_ENABLED);
 	}
 
 	public void addAttribute(
@@ -130,7 +137,10 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public Serializable getAttribute(String name) {
-		return getAttribute(name, true);
+		return getAttribute(
+			name,
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_READ_ENABLED);
+
 	}
 
 	public Serializable getAttribute(String name, boolean secure) {
@@ -212,6 +222,11 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public Map<String, Serializable> getAttributes() {
+		return getAttributes(
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_READ_ENABLED);
+	}
+
+	public Map<String, Serializable> getAttributes(boolean secure) {
 		Map<String, Serializable> attributes =
 			new HashMap<String, Serializable>();
 
@@ -228,7 +243,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		}
 
 		for (ExpandoColumn column : columns) {
-			attributes.put(column.getName(), getAttribute(column.getName()));
+			attributes.put(
+				column.getName(), getAttribute(column.getName(), secure));
 		}
 
 		return attributes;
@@ -306,7 +322,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void setAttribute(String name, Serializable value) {
-		setAttribute(name, value, true);
+		setAttribute(
+			name, value,
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_WRITE_ENABLED);
 	}
 
 	public void setAttribute(String name, Serializable value, boolean secure) {
@@ -351,7 +369,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	public void setAttributeProperties(
 		String name, UnicodeProperties properties) {
 
-		setAttributeProperties(name, properties, true);
+		setAttributeProperties(
+			name, properties,
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_WRITE_ENABLED);
 	}
 
 	public void setAttributeProperties(
@@ -377,7 +397,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void setAttributes(Map<String, Serializable> attributes) {
-		setAttributes(attributes, true);
+		setAttributes(
+			attributes,
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_WRITE_ENABLED);
 	}
 
 	public void setAttributes(
@@ -393,7 +415,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void setAttributes(ServiceContext serviceContext) {
-		setAttributes(serviceContext, true);
+		setAttributes(
+			serviceContext,
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_WRITE_ENABLED);
 	}
 
 	public void setAttributes(ServiceContext serviceContext, boolean secure) {

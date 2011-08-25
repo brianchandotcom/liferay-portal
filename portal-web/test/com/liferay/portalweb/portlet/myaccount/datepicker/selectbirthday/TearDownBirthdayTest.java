@@ -30,7 +30,7 @@ public class TearDownBirthdayTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Joe Bloggs")) {
+				if (selenium.isVisible("link=Joe Bloggs")) {
 					break;
 				}
 			}
@@ -41,9 +41,9 @@ public class TearDownBirthdayTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Joe Bloggs", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Joe Bloggs",
+			RuntimeVariables.replace("Joe Bloggs"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -51,7 +51,7 @@ public class TearDownBirthdayTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_2_birthdayMonth")) {
+				if (selenium.isVisible("//select[@id='_2_birthdayMonth']")) {
 					break;
 				}
 			}
@@ -62,13 +62,24 @@ public class TearDownBirthdayTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_2_birthdayMonth",
-			RuntimeVariables.replace("label=January"));
-		selenium.select("_2_birthdayDay", RuntimeVariables.replace("label=1"));
-		selenium.select("_2_birthdayYear",
-			RuntimeVariables.replace("label=1970"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_2_birthdayMonth']",
+			RuntimeVariables.replace("January"));
+		selenium.select("//select[@id='_2_birthdayDay']",
+			RuntimeVariables.replace("1"));
+		selenium.select("//select[@id='_2_birthdayYear']",
+			RuntimeVariables.replace("1970"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("January",
+			selenium.getSelectedLabel("//select[@id='_2_birthdayMonth']"));
+		assertEquals("1",
+			selenium.getSelectedLabel("//select[@id='_2_birthdayDay']"));
+		assertEquals("1970",
+			selenium.getSelectedLabel("//select[@id='_2_birthdayYear']"));
 	}
 }

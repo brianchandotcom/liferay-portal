@@ -560,7 +560,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									}
 						%>
 
-									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" persistState="<%= true %>" title="<%= ddmStructure.getName(LocaleUtil.getDefault()) %>">
+									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= ddmStructure.getName(LocaleUtil.getDefault()) %>">
 
 										<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true, locale) %>
 
@@ -591,7 +591,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									String name = "metadata." + ddmStructure.getName(LocaleUtil.getDefault(), true);
 						%>
 
-									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" persistState="<%= true %>" title="<%= name %>">
+									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id="documentLibraryAssetMetadataPanel" persistState="<%= true %>" title="<%= name %>">
 
 										<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), true, locale) %>
 
@@ -605,7 +605,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						}
 						%>
 
-						<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" persistState="<%= true %>" title="version-history">
+						<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" id="documentLibraryVersionHistoryPanel" persistState="<%= true %>" title="version-history">
 
 							<%
 							boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(extension);

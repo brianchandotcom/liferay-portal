@@ -26,6 +26,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -192,7 +193,13 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 			Skip skip = ServiceMethodAnnotationCache.get(
 				serviceBeanMethodInvocation, Skip.class, null);
 
-			_setMethodInterceptors(serviceBeanMethodInvocation, skip);
+			if (skip != null) {
+				serviceBeanMethodInvocation.setMethodInterceptors(
+					Collections.<MethodInterceptor>emptyList());
+			}
+			else {
+				_setMethodInterceptors(serviceBeanMethodInvocation);
+			}
 
 			return serviceBeanMethodInvocation.proceed();
 		}
@@ -240,7 +247,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 	}
 
 	private void _setMethodInterceptors(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation, Skip skip) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
 		MethodInterceptorsBag methodInterceptorsBag =
 			_methodInterceptorBags.get(serviceBeanMethodInvocation);

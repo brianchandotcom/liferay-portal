@@ -52,7 +52,6 @@ public class AddBlogsEntryXSSTest extends BaseTestCase {
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("<script>alert(hello)</script>"));
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -84,7 +83,7 @@ public class AddBlogsEntryXSSTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("<script>alert(hello)</script>"),
-			selenium.getText("//div[@class='entry-title']/a"));
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 	}

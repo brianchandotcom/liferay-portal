@@ -197,7 +197,8 @@ public class SourceFormatter {
 	}
 
 	private static void _addJSPIncludeFileNames(
-		String fileName, Set<String> includeFileNames) {
+			String fileName, Set<String> includeFileNames)
+		throws SourceFormatException {
 
 		String content = _jspContents.get(fileName);
 
@@ -224,8 +225,15 @@ public class SourceFormatter {
 				break;
 			}
 
-			String includeFileName =
-				"portal-web/docroot" + content.substring(x + 1, y);
+			String includeFileName = content.substring(x + 1, y);
+
+			Matcher matcher = _includeFilePattern.matcher(includeFileName);
+
+			if (!matcher.find()) {
+				throw new SourceFormatException();
+			}
+
+			includeFileName = "portal-web/docroot" + includeFileName;
 
 			if ((includeFileName.endsWith("jsp") ||
 				 includeFileName.endsWith("jspf")) &&
@@ -1090,6 +1098,8 @@ public class SourceFormatter {
 			_jspContents.put(fileName, content);
 		}
 
+		boolean invalidSourceFormat = false;
+
 		for (String fileName : fileNames) {
 			File file = new File(basedir + fileName);
 
@@ -1108,7 +1118,13 @@ public class SourceFormatter {
 					"javascript:"
 				});
 
-			newContent = _stripJSPImports(fileName, newContent);
+			if (!invalidSourceFormat) {
+				try {
+					newContent = _stripJSPImports(fileName, newContent);
+				} catch (SourceFormatException sfe) {
+					invalidSourceFormat = true;
+				}
+			}
 
 			newContent = StringUtil.replace(
 				newContent,
@@ -1208,6 +1224,28 @@ public class SourceFormatter {
 
 				_sourceFormatterHelper.printError(
 					fileName, "aui:button " + fileName + " " + lineCount);
+			}
+
+			int x = line.indexOf("<%@ include file");
+
+			if (x != -1) {
+				x = line.indexOf(StringPool.QUOTE, x);
+
+				int y = line.indexOf(StringPool.QUOTE, x + 1);
+
+				if (y != -1) {
+					String includeFileName = line.substring(x + 1, y);
+
+					Matcher matcher = _includeFilePattern.matcher(
+						includeFileName);
+
+					if (!matcher.find()) {
+						_sourceFormatterHelper.printError(
+							fileName,
+							"include file without '/' " + fileName + " " +
+								lineCount);
+					}
+				}
 			}
 
 			line = _replacePrimitiveWrapperInstantiation(
@@ -1445,7 +1483,7 @@ public class SourceFormatter {
 	}
 
 	private static List<String> _getJSPUnusedImportClassNames(
-		String fileName, String content) {
+		String fileName, String content) throws SourceFormatException {
 
 		if (Validator.isNull(content) ||
 			fileName.endsWith("html/common/init.jsp") ||
@@ -1674,8 +1712,9 @@ public class SourceFormatter {
 	}
 
 	private static boolean _isJSPImportRequired(
-		String fileName, String className,
-		Set<String> includeFileNames, Set<String> checkedFileNames)  {
+			String fileName, String className,
+			Set<String> includeFileNames, Set<String> checkedFileNames)
+		throws SourceFormatException {
 
 		if (checkedFileNames.contains(fileName)) {
 			return false;
@@ -1772,7 +1811,9 @@ public class SourceFormatter {
 		return newLine;
 	}
 
-	private static String _stripJSPImports(String fileName, String content) {
+	private static String _stripJSPImports(String fileName, String content)
+		throws SourceFormatException {
+
 		fileName = fileName.replace(
 			CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 
@@ -1804,6 +1845,8 @@ public class SourceFormatter {
 	private static String[] _excludes;
 	private static Properties _exclusionsProperties;
 	private static FileImpl _fileUtil = FileImpl.getInstance();
+	private static Pattern _includeFilePattern = Pattern.compile(
+		"/.*[.]jsp[f]?");
 	private static Map<String, String> _jspContents =
 		new HashMap<String, String>();
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();

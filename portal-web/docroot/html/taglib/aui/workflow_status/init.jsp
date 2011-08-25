@@ -50,7 +50,7 @@ _updateOptions(_options, "statusMessage", statusMessage);
 _updateOptions(_options, "version", version);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/workflow_status/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:workflow-status:";

@@ -54,7 +54,7 @@ _updateOptions(_options, "name", name);
 _updateOptions(_options, "required", required);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/field_wrapper/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:field-wrapper:";

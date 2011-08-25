@@ -38,7 +38,7 @@ java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAt
 _updateOptions(_options, "cssClass", cssClass);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/layout/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:layout:";

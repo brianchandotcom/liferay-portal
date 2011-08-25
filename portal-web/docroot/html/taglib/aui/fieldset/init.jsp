@@ -44,7 +44,7 @@ _updateOptions(_options, "helpMessage", helpMessage);
 _updateOptions(_options, "label", label);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/fieldset/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:fieldset:";

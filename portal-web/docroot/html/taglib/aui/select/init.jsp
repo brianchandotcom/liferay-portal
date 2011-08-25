@@ -86,7 +86,7 @@ _updateOptions(_options, "title", title);
 _updateOptions(_options, "useNamespace", useNamespace);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/select/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:select:";

@@ -50,7 +50,7 @@ _updateOptions(_options, "onSubmit", onSubmit);
 _updateOptions(_options, "useNamespace", useNamespace);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/form/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:form:";

@@ -199,13 +199,19 @@ public class CMISRepository extends BaseCmisRepository {
 
 			Document document = (Document)session.getObject(versionSeriesId);
 
-			document = document.getObjectOfLatestVersion(false);
-
-			document.cancelCheckOut();
-
-			document = (Document)session.getObject(versionSeriesId);
-
 			document.refresh();
+
+			String pwcId = document.getVersionSeriesCheckedOutId();
+
+			if (Validator.isNotNull(pwcId)) {
+				document = (Document)session.getObject(pwcId);
+
+				document.cancelCheckOut();
+
+				document = (Document)session.getObject(versionSeriesId);
+
+				document.refresh();
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -223,13 +229,19 @@ public class CMISRepository extends BaseCmisRepository {
 
 			Document document = (Document)session.getObject(versionSeriesId);
 
-			document = document.getObjectOfLatestVersion(false);
-
-			document.checkIn(major, null, null, changeLog);
-
-			document = (Document)session.getObject(versionSeriesId);
-
 			document.refresh();
+
+			String pwcId = document.getVersionSeriesCheckedOutId();
+
+			if (Validator.isNotNull(pwcId)) {
+				document = (Document)session.getObject(pwcId);
+
+				document.checkIn(major, null, null, changeLog);
+
+				document = (Document)session.getObject(versionSeriesId);
+
+				document.refresh();
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1091,7 +1103,13 @@ public class CMISRepository extends BaseCmisRepository {
 
 			document = (Document)session.getObject(versionSeriesId);
 
-			document = document.getObjectOfLatestVersion(false);
+			String pwcId = document.getVersionSeriesCheckedOutId();
+
+			if (Validator.isNotNull(pwcId)) {
+				document = (Document)session.getObject(pwcId);
+
+				document.refresh();
+			}
 
 			String currentTitle = document.getName();
 

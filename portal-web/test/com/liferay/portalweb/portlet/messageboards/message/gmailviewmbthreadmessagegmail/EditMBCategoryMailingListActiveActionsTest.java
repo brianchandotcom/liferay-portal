@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards.message.userviewmbthreadmessagegmail;
+package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletCategoryMailingListActiveTest extends BaseTestCase {
-	public void testConfigurePortletCategoryMailingListActive()
+public class EditMBCategoryMailingListActiveActionsTest extends BaseTestCase {
+	public void testEditMBCategoryMailingListActiveActions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 
@@ -67,6 +67,8 @@ public class ConfigurePortletCategoryMailingListActiveTest extends BaseTestCase 
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//td[1]/a/strong"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//td[5]/span/ul/li/strong/a/span"));
 		selenium.clickAt("//td[5]/span/ul/li/strong/a/span",

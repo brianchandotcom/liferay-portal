@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards.message.userviewmbthreadmessagegmail;
+package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserTest extends BaseTestCase {
-	public void testAddUser() throws Exception {
+public class AddUserGmailTest extends BaseTestCase {
+	public void testAddUserGmail() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {

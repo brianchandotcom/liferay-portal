@@ -33,6 +33,7 @@ import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagebo
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagebodynull.EditCategoryMessageBodyNullTests;
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagesubject.EditCategoryMessageSubjectTests;
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagesubjectnull.EditCategoryMessageSubjectNullTests;
+import com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail.Gmail_ViewMBThreadMessageGmailTests;
 import com.liferay.portalweb.portlet.messageboards.message.markasanswercategorymessagequestionreply.MarkAsAnswerCategoryMessageQuestionReplyTests;
 import com.liferay.portalweb.portlet.messageboards.message.movecategorymessagetocategory.MoveCategoryMessageToCategoryTests;
 import com.liferay.portalweb.portlet.messageboards.message.movecategorymessagetocategoryexplanation.MoveCategoryMessageToCategoryExplanationTests;
@@ -46,7 +47,6 @@ import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategoryme
 import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategorymessagereplyexplanation.SplitThreadCategoryMessageReplyExplanationTests;
 import com.liferay.portalweb.portlet.messageboards.message.splitthreadcategorymessagereplymultiple.SplitThreadCategoryMessageReplyMultipleTests;
 import com.liferay.portalweb.portlet.messageboards.message.unmarkcategorymessagequestionreply.UnmarkCategoryMessageQuestionReplyTests;
-import com.liferay.portalweb.portlet.messageboards.message.userviewmbthreadmessagegmail.UserViewMBThreadMessageGmailTests;
 import com.liferay.portalweb.portlet.messageboards.message.viewcategorymessagemyposts.ViewCategoryMessageMyPostsTests;
 import com.liferay.portalweb.portlet.messageboards.message.viewcategorymessagepostcount.ViewCategoryMessagePostCountTests;
 import com.liferay.portalweb.portlet.messageboards.message.viewcategorymessagerecentposts.ViewCategoryMessageRecentPostsTests;
@@ -81,6 +81,7 @@ public class MessageTests extends BaseTests {
 		testSuite.addTest(EditCategoryMessageBodyNullTests.suite());
 		testSuite.addTest(EditCategoryMessageSubjectTests.suite());
 		testSuite.addTest(EditCategoryMessageSubjectNullTests.suite());
+		testSuite.addTest(Gmail_ViewMBThreadMessageGmailTests.suite());
 		testSuite.addTest(
 			MarkAsAnswerCategoryMessageQuestionReplyTests.suite());
 		testSuite.addTest(MoveCategoryMessageToCategoryTests.suite());
@@ -98,7 +99,6 @@ public class MessageTests extends BaseTests {
 			SplitThreadCategoryMessageReplyExplanationTests.suite());
 		testSuite.addTest(SplitThreadCategoryMessageReplyMultipleTests.suite());
 		testSuite.addTest(UnmarkCategoryMessageQuestionReplyTests.suite());
-		testSuite.addTest(UserViewMBThreadMessageGmailTests.suite());
 		testSuite.addTest(ViewCategoryMessageMyPostsTests.suite());
 		testSuite.addTest(ViewCategoryMessagePostCountTests.suite());
 		testSuite.addTest(ViewCategoryMessageRecentPostsTests.suite());

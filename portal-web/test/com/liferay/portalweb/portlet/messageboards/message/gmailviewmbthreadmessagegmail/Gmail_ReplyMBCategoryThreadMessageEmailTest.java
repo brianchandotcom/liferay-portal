@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards.message.userviewmbthreadmessagegmail;
+package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Gmail_TearDownEmailTest extends BaseTestCase {
-	public void testGmail_TearDownEmail() throws Exception {
+public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
+	public void testGmail_ReplyMBCategoryThreadMessageEmail()
+		throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -32,12 +33,11 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
 				selenium.selectWindow("gmail");
 				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(60000);
 
-				boolean signedIn1 = selenium.isPartialText("//td/a", "Sign out");
+				boolean SignedIn = selenium.isPartialText("//td/a", "Sign out");
 
-				if (!signedIn1) {
+				if (!SignedIn) {
 					label = 2;
 
 					continue;
@@ -46,6 +46,10 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Sign out"),
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+				selenium.clickAt("//span/a",
+					RuntimeVariables.replace("Sign in to Gmail"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -83,8 +87,7 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Email']",
-					RuntimeVariables.replace(
-						"liferay.qa.testing.trunk@gmail.com"));
+					RuntimeVariables.replace("liferay.qa.testing.trunk"));
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Passwd']",
 					RuntimeVariables.replace("loveispatient"));
@@ -112,7 +115,10 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("liferay.qa.server.trunk"),
+					selenium.getText("//td[3]/div/span"));
+				selenium.clickAt("//td[3]/div/span",
+					RuntimeVariables.replace("liferay.qa.server.trunk"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -120,7 +126,7 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//input[@type='checkbox']")) {
+						if (selenium.isVisible("//h1/span[1]")) {
 							break;
 						}
 					}
@@ -131,9 +137,13 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@type='checkbox']",
-					RuntimeVariables.replace("All"));
-				Thread.sleep(5000);
+				assertTrue(selenium.isPartialText("//h1/span[1]",
+						"[MB Category Name]"));
+				assertTrue(selenium.isPartialText("//h1/span[1]",
+						"MB Message Subject"));
+				assertTrue(selenium.isPartialText(
+						"//div[contains(child::text(),'MB Message Body')]",
+						"MB Message Body"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -142,7 +152,7 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]")) {
+									"//div/table/tbody/tr/td[1]/div/span")) {
 							break;
 						}
 					}
@@ -153,17 +163,25 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]"));
-				selenium.clickAt("//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]",
-					RuntimeVariables.replace("Delete"));
+				selenium.clickAt("//div/table/tbody/tr/td[1]/div/span",
+					RuntimeVariables.replace("Reply"));
+				Thread.sleep(5000);
+				selenium.selectFrame("//iframe[@id='canvas_frame']");
+				selenium.selectFrame("//iframe[@class='Am Al editable']");
+				selenium.type("//body",
+					RuntimeVariables.replace("MB Message Email Reply"));
+				selenium.selectFrame("relative=top");
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Send"),
+					selenium.getText("//div[3]/div/div/div/div[1]/b"));
+				selenium.clickAt("//div[3]/div/div/div/div[1]/b",
+					RuntimeVariables.replace("Send"));
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 
-				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
+				boolean SignedIn2 = selenium.isPartialText("//td/a", "Sign out");
 
-				if (!signedIn2) {
+				if (!SignedIn2) {
 					label = 5;
 
 					continue;

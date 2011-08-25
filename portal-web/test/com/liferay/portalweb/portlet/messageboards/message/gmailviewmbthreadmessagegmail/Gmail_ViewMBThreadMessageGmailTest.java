@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards.message.userviewmbthreadmessagegmail;
+package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserViewMBThreadMessageGmailTest extends BaseTestCase {
-	public void testUserViewMBThreadMessageGmail() throws Exception {
+public class Gmail_ViewMBThreadMessageGmailTest extends BaseTestCase {
+	public void testGmail_ViewMBThreadMessageGmail() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -79,27 +79,10 @@ public class UserViewMBThreadMessageGmailTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Message Subject"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"exact:Re: [MB Category Name] MB Message Subject"),
+				"Re: [MB Category Name] MB Message Subject"),
 			selenium.getText(
 				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong"));
 		assertTrue(selenium.isPartialText(
@@ -107,7 +90,7 @@ public class UserViewMBThreadMessageGmailTest extends BaseTestCase {
 				"MB Message Email Reply"));
 		assertEquals(RuntimeVariables.replace("userfn userln"),
 			selenium.getText("//div[5]/table/tbody/tr[1]/td[1]/div/a/span[2]"));
-		assertEquals(RuntimeVariables.replace("exact:Posts: 1"),
+		assertEquals(RuntimeVariables.replace("Posts: 1"),
 			selenium.getText("//div[5]/table/tbody/tr[1]/td[1]/div/div/div[2]"));
 	}
 }

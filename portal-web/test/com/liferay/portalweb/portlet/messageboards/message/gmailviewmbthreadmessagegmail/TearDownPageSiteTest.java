@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards.message.userviewmbthreadmessagegmail;
+package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TearDownPageTest extends BaseTestCase {
-	public void testTearDownPage() throws Exception {
+public class TearDownPageSiteTest extends BaseTestCase {
+	public void testTearDownPageSite() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {

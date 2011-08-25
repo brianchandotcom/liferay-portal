@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UserViewMBThreadMessageGmailTest</title>
+<title>Gmail_ViewMBThreadMessageGmailTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">UserViewMBThreadMessageGmailTest</td></tr>
+<tr><td rowspan="1" colspan="3">Gmail_ViewMBThreadMessageGmailTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -59,19 +59,14 @@
 	<td>2</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
 	<td>MB Message Subject</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong</td>
-	<td>exact:Re: [MB Category Name] MB Message Subject</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong</td>
-	<td>exact:Re: [MB Category Name] MB Message Subject</td>
+	<td>Re: [MB Category Name] MB Message Subject</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -86,7 +81,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[5]/table/tbody/tr[1]/td[1]/div/div/div[2]</td>
-	<td>exact:Posts: 1</td>
+	<td>Posts: 1</td>
 </tr>
 
 </tbody></table>

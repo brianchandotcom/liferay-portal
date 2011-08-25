@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards.message.userviewmbthreadmessagegmail;
+package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Gmail_TearDownEmail2Test extends BaseTestCase {
-	public void testGmail_TearDownEmail2() throws Exception {
+public class GmailServer_TearDownEmailTest extends BaseTestCase {
+	public void testGmailServer_TearDownEmail() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {

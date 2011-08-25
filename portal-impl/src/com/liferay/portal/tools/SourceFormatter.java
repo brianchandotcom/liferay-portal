@@ -228,9 +228,9 @@ public class SourceFormatter {
 				"portal-web/docroot" + content.substring(x + 1, y);
 
 			if ((includeFileName.endsWith("jsp") ||
-				 includeFileName.endsWith("jspf") &&
+				 includeFileName.endsWith("jspf")) &&
 				!includeFileNames.contains(includeFileName) && 
-				!includeFileName.contains("html/portlet/init.jsp"))) {
+				!includeFileName.contains("html/portlet/init.jsp")) {
 
 				includeFileNames.add(includeFileName);
 			}
@@ -1084,6 +1084,9 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
+			fileName = fileName.replace(
+				CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
+
 			_jspContents.put(fileName, content);
 		}
 
@@ -1456,7 +1459,7 @@ public class SourceFormatter {
 		List<String> importClassNames = new ArrayList<String>();
 
 		for (int x = 0;;) {
-			x = content.indexOf("<%@ page import");
+			x = content.indexOf("<%@ page import", x);
 
 			if (x == -1) {
 				break;
@@ -1494,8 +1497,7 @@ public class SourceFormatter {
 				importedClassName.lastIndexOf(StringPool.PERIOD) + 1);
 
 			if (!_isJSPImportRequired(
-					fileName, className, includeFileNames,
-					checkedFileNames)) {
+					fileName, className, includeFileNames, checkedFileNames)) {
 
 				unusedImportClassNames.add(importedClassName);
 			}
@@ -1705,7 +1707,10 @@ public class SourceFormatter {
 			_addJSPReferenceFileNames(fileName, includeFileNames);
 		}
 
-		for (String includeFileName : includeFileNames) {
+		String[] includeFileNamesArray = includeFileNames.toArray(
+			new String[includeFileNames.size()]);
+
+		for (String includeFileName : includeFileNamesArray) {
 			if (!checkedFileNames.contains(includeFileName) &&
 				_isJSPImportRequired(
 					includeFileName, className, includeFileNames,
@@ -1768,6 +1773,9 @@ public class SourceFormatter {
 	}
 
 	private static String _stripJSPImports(String fileName, String content) {
+		fileName = fileName.replace(
+			CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
+
 		List<String> importClassNames = _getJSPUnusedImportClassNames(
 			fileName, content);
 

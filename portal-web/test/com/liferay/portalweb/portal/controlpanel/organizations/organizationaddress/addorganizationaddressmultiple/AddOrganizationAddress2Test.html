@@ -129,6 +129,16 @@
 	<td>label=Billing</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//input[@id='_125_addressMailing0Checkbox2']</td>
+	<td>Mailing Checkbox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_125_addressPrimary2']</td>
+	<td>Primary Button</td>
+</tr>
+<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
@@ -139,9 +149,14 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>waitForSelectedLabel</td>
+	<td>//select[@id='_125_addressCountryId1']</td>
+	<td>United States</td>
+</tr>
+<tr>
+	<td>waitForSelectedLabel</td>
+	<td>//select[@id='_125_addressRegionId1']</td>
+	<td>California</td>
 </tr>
 <tr>
 	<td>assertText</td>

@@ -32,6 +32,7 @@ public class AssignMembersOrganizationTests extends BaseTests {
 		testSuite.addTestSuite(AssignMembersOrganizationTest.class);
 		testSuite.addTestSuite(AssertAssignMembersOrganizationTest.class);
 		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

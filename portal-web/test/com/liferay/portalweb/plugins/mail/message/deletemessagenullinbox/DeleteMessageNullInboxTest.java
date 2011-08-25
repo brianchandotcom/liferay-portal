@@ -45,10 +45,10 @@ public class DeleteMessageNullInboxTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"liferay.qa.mail.portlet.60x@gmail.com"),
-			selenium.getText("//div[1]/div/ul/li/span/span/a"));
-		selenium.clickAt("//div[1]/div/ul/li/span/span/a",
-			RuntimeVariables.replace("liferay.qa.mail.portlet.60x@gmail.com"));
+				"liferay.qa.testing.trunk@gmail.com"),
+			selenium.getText("//div/div/div[1]/div/ul/li/span/span/a"));
+		selenium.clickAt("//div/div/div[1]/div/ul/li/span/span/a",
+			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

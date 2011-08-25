@@ -39,7 +39,7 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertText</td>
 	<td>//td[7]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
@@ -50,38 +50,38 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Site Settings</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Site Settings</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Site Settings</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Virtual Host</td>
-	<td>Virtual Host</td>
+	<td>assertPartialText</td>
+	<td>//a[@id='_165_siteUrlLink']</td>
+	<td>Site URL</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='_165_siteUrlLink']</td>
+	<td>Site URL</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='_134_privateVirtualHost']</td>
+	<td>//input[@name='_165_privateVirtualHost']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>

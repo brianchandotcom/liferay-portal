@@ -94,6 +94,26 @@
 	<td>All Organizations</td>
 </tr>
 <tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>basicVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${basicVisible}</td>
+	<td>BasicNotVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=« Basic</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BasicNotVisible</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>//input[@name='_125_keywords']</td>
 	<td>Selenium</td>
@@ -105,7 +125,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[2]/strong</td>
+	<td>//td[2]/a</td>
 	<td>Selenium</td>
 </tr>
 

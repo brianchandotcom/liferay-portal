@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -29,38 +29,18 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[1]/span[1]/ul/li/strong/a/span</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>All Organizations</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>All Organizations</td>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>All Organizations</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>test</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_allRowIds'))</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
 	<td>organization1Present</td>
 </tr>
 <tr>
@@ -69,14 +49,74 @@
 	<td>Organization1NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_allRowIds']</td>
-	<td></td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Update Associations']</td>
+	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_TabsBack']</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 1</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 1</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>suborganization1Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${suborganization1Present}</td>
+	<td>Suborganization1NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>All Rows</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -85,12 +125,52 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Organization1NotPresent</td>
+	<td>Suborganization1NotPresent</td>
 	<td></td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Row</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
 	<td>organization2Present</td>
 </tr>
 <tr>
@@ -99,14 +179,74 @@
 	<td>Organization2NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Update Associations']</td>
+	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_TabsBack']</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 2</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 2</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>suborganization2Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${suborganization2Present}</td>
+	<td>Suborganization2NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>All Rows</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -115,12 +255,52 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Organization2NotPresent</td>
+	<td>Suborganization2NotPresent</td>
 	<td></td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Row</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
 	<td>organization3Present</td>
 </tr>
 <tr>
@@ -129,14 +309,74 @@
 	<td>Organization3NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Update Associations']</td>
+	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_TabsBack']</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 3</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 3</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>suborganization3Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${suborganization3Present}</td>
+	<td>Suborganization3NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>All Rows</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -145,12 +385,52 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Organization3NotPresent</td>
+	<td>Suborganization3NotPresent</td>
 	<td></td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Row</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
 	<td>organization4Present</td>
 </tr>
 <tr>
@@ -159,14 +439,74 @@
 	<td>Organization4NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Update Associations']</td>
+	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_TabsBack']</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 4</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 4</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>suborganization4Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${suborganization4Present}</td>
+	<td>Suborganization4NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>All Rows</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -175,12 +515,52 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Organization4NotPresent</td>
+	<td>Suborganization4NotPresent</td>
 	<td></td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Row</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
 	<td>organization5Present</td>
 </tr>
 <tr>
@@ -189,14 +569,109 @@
 	<td>Organization5NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Update Associations']</td>
+	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_TabsBack']</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 5</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[2]/strong</td>
+	<td>Organization Entry 5</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>suborganization5Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${suborganization5Present}</td>
+	<td>Suborganization5NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>All Rows</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Suborganization5NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Row</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -206,6 +681,26 @@
 <tr>
 	<td>label</td>
 	<td>Organization5NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Organization4NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Organization3NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Organization2NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Organization1NotPresent</td>
 	<td></td>
 </tr>
 

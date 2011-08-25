@@ -30,22 +30,32 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_1_WAR_mailportlet_address</td>
-	<td>Address</td>
+	<td>//input[@id='_1_WAR_mailportlet_address']</td>
+	<td>Email Address</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_1_WAR_mailportlet_address</td>
-	<td>liferay.qa.mail.portlet.60x@gmail.com</td>
+	<td>//input[@id='_1_WAR_mailportlet_address']</td>
+	<td>liferay.qa.testing.trunk@gmail.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_1_WAR_mailportlet_password</td>
+	<td>//input[@id='_1_WAR_mailportlet_password']</td>
 	<td>loveispatient</td>
 </tr>
 <tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_1_WAR_mailportlet_savePasswordCheckbox']</td>
+	<td>Save Password</td>
+</tr>
+<tr>
 	<td>check</td>
-	<td>_1_WAR_mailportlet_savePasswordCheckbox</td>
+	<td>//input[@id='_1_WAR_mailportlet_savePasswordCheckbox']</td>
+	<td>Save Password</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_1_WAR_mailportlet_savePasswordCheckbox']</td>
 	<td>Save Password</td>
 </tr>
 <tr>
@@ -54,7 +64,7 @@
 	<td>Add Account</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//span[@class='message portlet-msg-success']</td>
 	<td>Account has been created.</td>
 </tr>

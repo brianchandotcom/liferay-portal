@@ -23,6 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class TearDownMailAccountTest extends BaseTestCase {
 	public void testTearDownMailAccount() throws Exception {
 		selenium.open("/web/guest/home");
+		selenium.clickAt("link=Mail Test Page",
+			RuntimeVariables.replace("Mail Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -41,15 +45,11 @@ public class TearDownMailAccountTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Mail Test Page",
-			RuntimeVariables.replace("Mail Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"liferay.qa.mail.portlet.60x@gmail.com"),
-			selenium.getText("//div[1]/div/ul/li/span/span/a"));
-		selenium.clickAt("//div[1]/div/ul/li/span/span/a",
-			RuntimeVariables.replace("liferay.qa.mail.portlet.60x@gmail.com"));
+				"liferay.qa.testing.trunk@gmail.com"),
+			selenium.getText("//div/div/div[1]/div/ul/li/span/span"));
+		selenium.clickAt("//div/div/div[1]/div/ul/li/span/span",
+			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -58,7 +58,8 @@ public class TearDownMailAccountTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace("Edit Account")
-										.equals(selenium.getText("//a[3]"))) {
+										.equals(selenium.getText(
+								"//a[@class='edit-account']"))) {
 					break;
 				}
 			}
@@ -70,8 +71,9 @@ public class TearDownMailAccountTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Edit Account"),
-			selenium.getText("//a[3]"));
-		selenium.clickAt("//a[3]", RuntimeVariables.replace("Edit Account"));
+			selenium.getText("//a[@class='edit-account']"));
+		selenium.clickAt("//a[@class='edit-account']",
+			RuntimeVariables.replace("Edit Account"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {

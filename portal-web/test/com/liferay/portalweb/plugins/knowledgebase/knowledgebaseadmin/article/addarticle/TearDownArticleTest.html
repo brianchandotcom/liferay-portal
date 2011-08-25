@@ -29,19 +29,19 @@
 	<td>Knowledge Base (Admin)</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_1_WAR_knowledgebaseportlet_rowIds'))</td>
-	<td>kbArticle1Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${kbArticle1Present}</td>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
 	<td>KBArticle1Present</td>
 </tr>
 <tr>
+	<td>gotoIf</td>
+	<td>!${KBArticle1Present}</td>
+	<td>KBArticle1NotPresent</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
-	<td>All Rows</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
+	<td>Single Row</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -54,24 +54,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>KBArticle1Present</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_1_WAR_knowledgebaseportlet_rowIds'))</td>
-	<td>kbArticle2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${kbArticle2Present}</td>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
 	<td>KBArticle2Present</td>
 </tr>
 <tr>
+	<td>gotoIf</td>
+	<td>!${KBArticle2Present}</td>
+	<td>KBArticle2NotPresent</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
-	<td>All Rows</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
+	<td>Single Row</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -84,24 +79,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>KBArticle2Present</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_1_WAR_knowledgebaseportlet_rowIds'))</td>
-	<td>kbArticle3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${kbArticle3Present}</td>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
 	<td>KBArticle3Present</td>
 </tr>
 <tr>
+	<td>gotoIf</td>
+	<td>!${KBArticle3Present}</td>
+	<td>KBArticle3NotPresent</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
-	<td>All Rows</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
+	<td>Single Row</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -114,24 +104,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>KBArticle3Present</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_1_WAR_knowledgebaseportlet_rowIds'))</td>
-	<td>kbArticle4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${kbArticle4Present}</td>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
 	<td>KBArticle4Present</td>
 </tr>
 <tr>
+	<td>gotoIf</td>
+	<td>!${KBArticle4Present}</td>
+	<td>KBArticle4NotPresent</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
-	<td>All Rows</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
+	<td>Single Row</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -144,24 +129,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>KBArticle4Present</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_1_WAR_knowledgebaseportlet_rowIds'))</td>
-	<td>kbArticle5Present</td>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
+	<td>KBArticle5Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${kbArticle5Present}</td>
-	<td>KBArticle5Present</td>
+	<td>!${KBArticle5Present}</td>
+	<td>KBArticle5NotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
-	<td>All Rows</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
+	<td>Single Row</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -175,7 +155,27 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>KBArticle5Present</td>
+	<td>KBArticle1NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>KBArticle2NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>KBArticle3NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>KBArticle4NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>KBArticle5NotPresent</td>
 	<td></td>
 </tr>
 

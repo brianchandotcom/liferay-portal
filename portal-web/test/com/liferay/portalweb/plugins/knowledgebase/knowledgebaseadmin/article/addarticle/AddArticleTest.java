@@ -87,7 +87,7 @@ public class AddArticleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("1.0",
 			selenium.getValue("//tr[3]/td[2]/span/span/span/input"));

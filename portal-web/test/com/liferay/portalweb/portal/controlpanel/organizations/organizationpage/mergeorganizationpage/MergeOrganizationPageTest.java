@@ -94,7 +94,7 @@ public class MergeOrganizationPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[@id='_134_advancedLink']")) {
+				if (selenium.isVisible("//a[@id='_156_advancedLink']")) {
 					break;
 				}
 			}
@@ -105,7 +105,7 @@ public class MergeOrganizationPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a[@id='_134_advancedLink']",
+		selenium.clickAt("//a[@id='_156_advancedLink']",
 			RuntimeVariables.replace("Advanced"));
 
 		for (int second = 0;; second++) {
@@ -115,7 +115,7 @@ public class MergeOrganizationPageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//input[@id='_134_mergeGuestPublicPagesCheckbox']")) {
+							"//input[@id='_156_mergeGuestPublicPagesCheckbox']")) {
 					break;
 				}
 			}
@@ -126,7 +126,7 @@ public class MergeOrganizationPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_134_mergeGuestPublicPagesCheckbox']",
+		selenium.clickAt("//input[@id='_156_mergeGuestPublicPagesCheckbox']",
 			RuntimeVariables.replace("Merge Liferay public pages"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");

@@ -55,17 +55,89 @@ public class TearDownArticleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
-				boolean kbArticle1Present = selenium.isElementPresent(
-						"_1_WAR_knowledgebaseportlet_rowIds");
+				boolean KBArticle1Present = selenium.isElementPresent(
+						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
 
-				if (!kbArticle1Present) {
+				if (!KBArticle1Present) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
+				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
+					RuntimeVariables.replace("Single Row"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+				boolean KBArticle2Present = selenium.isElementPresent(
+						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
+
+				if (!KBArticle2Present) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
+					RuntimeVariables.replace("Single Row"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+				boolean KBArticle3Present = selenium.isElementPresent(
+						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
+
+				if (!KBArticle3Present) {
+					label = 4;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
+					RuntimeVariables.replace("Single Row"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+				boolean KBArticle4Present = selenium.isElementPresent(
+						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
+
+				if (!KBArticle4Present) {
+					label = 5;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
+					RuntimeVariables.replace("Single Row"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+				boolean KBArticle5Present = selenium.isElementPresent(
+						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
+
+				if (!KBArticle5Present) {
+					label = 6;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
+					RuntimeVariables.replace("Single Row"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
@@ -74,85 +146,9 @@ public class TearDownArticleTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 2:
-
-				boolean kbArticle2Present = selenium.isElementPresent(
-						"_1_WAR_knowledgebaseportlet_rowIds");
-
-				if (!kbArticle2Present) {
-					label = 3;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
-
 			case 3:
-
-				boolean kbArticle3Present = selenium.isElementPresent(
-						"_1_WAR_knowledgebaseportlet_rowIds");
-
-				if (!kbArticle3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
-
 			case 4:
-
-				boolean kbArticle4Present = selenium.isElementPresent(
-						"_1_WAR_knowledgebaseportlet_rowIds");
-
-				if (!kbArticle4Present) {
-					label = 5;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
-
 			case 5:
-
-				boolean kbArticle5Present = selenium.isElementPresent(
-						"_1_WAR_knowledgebaseportlet_rowIds");
-
-				if (!kbArticle5Present) {
-					label = 6;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
-
 			case 6:
 			case 100:
 				label = -1;

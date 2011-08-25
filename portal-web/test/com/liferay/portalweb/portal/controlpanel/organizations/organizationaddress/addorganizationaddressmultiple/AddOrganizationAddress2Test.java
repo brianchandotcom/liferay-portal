@@ -197,6 +197,10 @@ public class AddOrganizationAddress2Test extends BaseTestCase {
 			RuntimeVariables.replace("label=California"));
 		selenium.select("//select[@id='_125_addressTypeId2']",
 			RuntimeVariables.replace("label=Billing"));
+		selenium.clickAt("//input[@id='_125_addressMailing0Checkbox2']",
+			RuntimeVariables.replace("Mailing Checkbox"));
+		selenium.clickAt("//input[@id='_125_addressPrimary2']",
+			RuntimeVariables.replace("Primary Button"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -209,7 +213,27 @@ public class AddOrganizationAddress2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+				if ("United States".equals(selenium.getSelectedLabel(
+								"//select[@id='_125_addressCountryId1']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if ("California".equals(selenium.getSelectedLabel(
+								"//select[@id='_125_addressRegionId1']"))) {
 					break;
 				}
 			}

@@ -35,26 +35,10 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 
-				boolean signedIn1 = selenium.isElementPresent(
-						"//div[2]/div/nobr/a[2]");
+				boolean SignedIn = selenium.isPartialText("//td/a", "Sign out");
 
-				if (!signedIn1) {
+				if (!SignedIn) {
 					label = 2;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//div[2]/div/nobr/a[2]"));
-				selenium.clickAt("//div[2]/div/nobr/a[2]",
-					RuntimeVariables.replace("Sign out"));
-
-			case 2:
-
-				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
-
-				if (!signedIn2) {
-					label = 3;
 
 					continue;
 				}
@@ -62,6 +46,26 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Sign out"),
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+				selenium.clickAt("//span/a",
+					RuntimeVariables.replace("Sign in to Gmail"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+
+			case 2:
+
+				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
+						"link=Sign in as a different user");
+
+				if (!signInAsADifferentUserPresent) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("link=Sign in as a different user",
+					RuntimeVariables.replace("Sign in as a different user"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -160,26 +164,10 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 
-				boolean signedIn3 = selenium.isElementPresent(
-						"//div[2]/div/nobr/a[2]");
+				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
 
-				if (!signedIn3) {
+				if (!signedIn2) {
 					label = 5;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//div[2]/div/nobr/a[2]"));
-				selenium.clickAt("//div[2]/div/nobr/a[2]",
-					RuntimeVariables.replace("Sign out"));
-
-			case 5:
-
-				boolean signedIn4 = selenium.isPartialText("//td/a", "Sign out");
-
-				if (!signedIn4) {
-					label = 6;
 
 					continue;
 				}
@@ -188,7 +176,7 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
-			case 6:
+			case 5:
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 				selenium.close();

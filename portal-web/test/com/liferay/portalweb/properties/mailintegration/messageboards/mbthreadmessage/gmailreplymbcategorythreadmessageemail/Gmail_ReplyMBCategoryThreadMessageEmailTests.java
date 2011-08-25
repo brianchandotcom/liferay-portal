@@ -30,6 +30,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTests extends BaseTests {
 		testSuite.addTestSuite(ConfigureServerAdministrationMailTest.class);
 		testSuite.addTestSuite(EditPortalInstanceMailDomainTest.class);
 		testSuite.addTestSuite(AddUserGmailTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AssignMembersSiteUserTest.class);
 		testSuite.addTestSuite(AddPageMBTest.class);
 		testSuite.addTestSuite(AddPortletMBTest.class);
@@ -51,6 +52,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTests extends BaseTests {
 		testSuite.addTestSuite(GmailServer_TearDownEmailTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
+		testSuite.addTestSuite(TearDownSitesTest.class);
 		testSuite.addTestSuite(TearDownServerTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 

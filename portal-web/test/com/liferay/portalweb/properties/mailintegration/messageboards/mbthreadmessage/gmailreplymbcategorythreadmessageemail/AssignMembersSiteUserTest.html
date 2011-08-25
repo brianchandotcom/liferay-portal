@@ -30,33 +30,58 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//td[1]/a</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>Assign Members</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>Assign Members</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>Assign Members</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Add Members</td>
+	<td>Add Members</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Add Members</td>
+	<td>Add Members</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Available</td>
-	<td>Available</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -71,12 +96,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@id='_134_toggle_id_enterprise_admin_user_searchkeywords']</td>
-	<td>Search Field</td>
+	<td>« Basic</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -85,7 +105,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_toggle_id_enterprise_admin_user_searchkeywords']</td>
+	<td>//input[@id='_174_toggle_id_users_admin_user_searchkeywords']</td>
 	<td>usersn</td>
 </tr>
 <tr>
@@ -105,18 +125,18 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='_134_allRowIds']</td>
-	<td>Select All</td>
+	<td>//input[@name='_174_rowIds']</td>
+	<td>User Selected</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_134_allRowIds']</td>
-	<td>Select All</td>
+	<td>//input[@name='_174_rowIds']</td>
+	<td>User Selected</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='_134_allRowIds']</td>
-	<td>Select All</td>
+	<td>//input[@name='_174_rowIds']</td>
+	<td>User Selected</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -129,13 +149,18 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Summary</td>
+	<td>Summary</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
+	<td>//tr[4]/td[1]</td>
 	<td>userfn userln</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
+	<td>//tr[4]/td[2]</td>
 	<td>usersn</td>
 </tr>
 

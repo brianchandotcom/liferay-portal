@@ -14,9 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Message Boards Test Page</td>
-	<td>Message Boards Test Page</td>
+	<td>waitForElementPresent</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -25,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -80,12 +85,12 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_86_emailFromName</td>
+	<td>//input[@id='_86_emailFromName']</td>
 	<td>Administrator</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_86_emailFromAddress</td>
+	<td>//input[@id='_86_emailFromAddress']</td>
 	<td>liferay.qa.server.trunk@gmail.com</td>
 </tr>
 

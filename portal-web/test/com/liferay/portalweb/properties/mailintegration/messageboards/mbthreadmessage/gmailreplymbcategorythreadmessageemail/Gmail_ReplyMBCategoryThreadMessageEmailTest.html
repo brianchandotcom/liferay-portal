@@ -30,52 +30,52 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[2]/div/nobr/a[2]'))</td>
-	<td>signedIn1</td>
+	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
+	<td>SignedIn</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${signedIn1}</td>
-	<td>signedOut1</td>
+	<td>!${SignedIn}</td>
+	<td>SignedOut</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/nobr/a[2]</td>
+	<td>//td/a</td>
 	<td>Sign out</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/div/nobr/a[2]</td>
+	<td>//td/a</td>
 	<td>Sign out</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>//span/a</td>
+	<td>Sign in to Gmail</td>
+</tr>
+<tr>
 	<td>label</td>
-	<td>signedOut1</td>
+	<td>SignedOut</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
-	<td>signedIn2</td>
+	<td>storeElementPresent</td>
+	<td>link=Sign in as a different user</td>
+	<td>signInAsADifferentUserPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${signedIn2}</td>
-	<td>signedOut2</td>
+	<td>!${signInAsADifferentUserPresent}</td>
+	<td>SignInAsADifferentUserNotPresent</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td/a</td>
-	<td>Sign out</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td/a</td>
-	<td>Sign out</td>
+	<td>clickAtAndWait</td>
+	<td>link=Sign in as a different user</td>
+	<td>Sign in as a different user</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>signedOut2</td>
+	<td>SignInAsADifferentUserNotPresent</td>
 	<td></td>
 </tr>
 <tr>
@@ -215,38 +215,13 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[2]/div/nobr/a[2]'))</td>
-	<td>signedIn3</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${signedIn3}</td>
-	<td>signedOut3</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div/nobr/a[2]</td>
-	<td>Sign out</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[2]/div/nobr/a[2]</td>
-	<td>Sign out</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>signedOut3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
 	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
-	<td>signedIn4</td>
+	<td>signedIn2</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${signedIn4}</td>
-	<td>signedOut4</td>
+	<td>!${signedIn2}</td>
+	<td>signedOut2</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -260,7 +235,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>signedOut4</td>
+	<td>signedOut2</td>
 	<td></td>
 </tr>
 <tr>

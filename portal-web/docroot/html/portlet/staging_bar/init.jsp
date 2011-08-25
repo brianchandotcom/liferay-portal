@@ -16,9 +16,9 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.staging.StagingUtil" %>
 <%@ page import="com.liferay.portal.LayoutSetBranchNameException" %>
 <%@ page import="com.liferay.portal.NoSuchWorkflowInstanceLinkException" %>
+<%@ page import="com.liferay.portal.kernel.staging.StagingUtil" %>
 <%@ page import="com.liferay.portal.service.LayoutSetBranchLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.service.permission.LayoutBranchPermissionUtil" %>
 <%@ page import="com.liferay.portal.service.permission.LayoutSetBranchPermissionUtil" %>

@@ -18,11 +18,11 @@
 
 <%@ page import="com.liferay.portal.kernel.search.Document" %>
 <%@ page import="com.liferay.portal.kernel.search.Hits" %>
+<%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %>
+<%@ page import="com.liferay.portlet.asset.NoSuchEntryException" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRenderer" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetRendererFactory" %>
-<%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %>
-<%@ page import="com.liferay.portlet.asset.NoSuchEntryException" %>
 <%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.assetpublisher.search.AssetDisplayTerms" %>
 <%@ page import="com.liferay.portlet.assetpublisher.search.AssetSearch" %>

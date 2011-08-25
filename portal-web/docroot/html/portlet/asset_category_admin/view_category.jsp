@@ -1,4 +1,3 @@
-<%@ page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil" %>
 <%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
@@ -16,6 +15,8 @@
 --%>
 
 <%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
+
+<%@ page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil" %>
 
 <%
 long categoryId = ParamUtil.getLong(request, "categoryId");

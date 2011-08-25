@@ -18,7 +18,6 @@
 
 <%@ page import="com.liferay.portal.kernel.search.Document" %>
 <%@ page import="com.liferay.portal.kernel.search.Field" %>
-<%@ page import="com.liferay.portal.kernel.search.Indexer" %>
 <%@ page import="com.liferay.portal.kernel.search.Hits" %>
 <%@ page import="com.liferay.portal.kernel.search.Indexer" %>
 <%@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %>

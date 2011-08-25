@@ -45,11 +45,11 @@
 
 <%@ page import="com.liferay.counter.service.CounterLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.NoSuchUserException" %>
-<%@ page import="com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException" %>
-<%@ page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %>
 <%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %>
 <%@ page import="com.liferay.portal.kernel.cal.Recurrence" %>
+<%@ page import="com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException" %>
+<%@ page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %>
 <%@ page import="com.liferay.portal.kernel.configuration.Filter" %>
 <%@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.AlwaysTrueRowChecker" %>

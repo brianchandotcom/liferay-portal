@@ -101,7 +101,6 @@
 <%@ page import="com.liferay.portlet.journal.service.permission.JournalTemplatePermission" %>
 <%@ page import="com.liferay.portlet.journal.util.JournalUtil" %>
 <%@ page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %>
-
 <%@ page import="com.liferay.util.RSSUtil" %>
 
 <%

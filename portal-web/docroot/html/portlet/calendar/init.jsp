@@ -30,8 +30,8 @@
 <%@ page import="com.liferay.portlet.calendar.model.CalEvent" %>
 <%@ page import="com.liferay.portlet.calendar.model.CalEventConstants" %>
 <%@ page import="com.liferay.portlet.calendar.service.CalEventServiceUtil" %>
-<%@ page import="com.liferay.portlet.calendar.service.permission.CalendarPermission" %>
 <%@ page import="com.liferay.portlet.calendar.service.permission.CalEventPermission" %>
+<%@ page import="com.liferay.portlet.calendar.service.permission.CalendarPermission" %>
 <%@ page import="com.liferay.portlet.calendar.util.CalUtil" %>
 <%@ page import="com.liferay.portlet.calendar.util.comparator.EventTimeComparator" %>
 

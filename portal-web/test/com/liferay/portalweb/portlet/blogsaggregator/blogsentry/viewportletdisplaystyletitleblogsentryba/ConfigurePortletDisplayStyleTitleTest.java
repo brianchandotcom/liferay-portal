@@ -91,7 +91,7 @@ public class ConfigurePortletDisplayStyleTitleTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_displayStyle']",
-			RuntimeVariables.replace("label=Title"));
+			RuntimeVariables.replace("Title"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

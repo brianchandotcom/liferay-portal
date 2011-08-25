@@ -48,7 +48,7 @@ _updateOptions(_options, "style", style);
 _updateOptions(_options, "value", value);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/option/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:option:";

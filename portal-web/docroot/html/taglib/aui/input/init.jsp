@@ -98,7 +98,7 @@ _updateOptions(_options, "useNamespace", useNamespace);
 _updateOptions(_options, "value", value);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/input/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:input:";

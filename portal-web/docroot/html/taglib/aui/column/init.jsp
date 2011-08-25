@@ -44,7 +44,7 @@ _updateOptions(_options, "first", first);
 _updateOptions(_options, "last", last);
 %>
 
-<%@ include file="init-ext.jspf" %>
+<%@ include file="/html/taglib/aui/column/init-ext.jspf" %>
 
 <%!
 private static final String _NAMESPACE = "aui:column:";

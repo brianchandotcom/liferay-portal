@@ -147,7 +147,14 @@ if (layout != null) {
 	Liferay.Notice.prototype.setClosing();
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
-		Liferay._editControlsState = '<%= GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", null), "visible") %>';
+		<c:choose>
+			<c:when test="<%= (layout != null) && layout.getGroup().isControlPanel() %>">
+				Liferay._editControlsState = 'visible';
+			</c:when>
+			<c:otherwise>
+				Liferay._editControlsState = '<%= GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", null), "visible") %>';
+			</c:otherwise>
+		</c:choose>
 
 		if (Liferay.Util) {
 			Liferay.Util.toggleControls();

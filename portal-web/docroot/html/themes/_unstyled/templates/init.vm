@@ -8,6 +8,8 @@
 
 #set ($css_class = $theme_display.getColorScheme().getCssClass() + " yui3-skin-sam")
 
+#set ($liferay_toggle_controls = $sessionClicks.get($request, "liferay_toggle_controls", "visible"))
+
 #if ($layout)
 	#set ($page_group = $layout.getGroup())
 
@@ -18,9 +20,12 @@
 	#elseif ($theme_display.isShowStagingIcon() && $page_group.isStagedRemotely())
 		#set ($css_class = $css_class + " staging remote-staging")
 	#end
+
+	#if ($page_group.isControlPanel())
+		#set ($liferay_toggle_controls = "visible")
+	#end
 #end
 
-#set ($liferay_toggle_controls = $sessionClicks.get($request, "liferay_toggle_controls", "visible"))
 #set ($liferay_dockbar_pinned = $sessionClicks.get($request, "liferay_dockbar_pinned", ""))
 
 #if ($liferay_toggle_controls == "visible")

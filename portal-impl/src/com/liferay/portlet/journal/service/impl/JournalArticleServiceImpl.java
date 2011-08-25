@@ -248,6 +248,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId, null, languageId, themeDisplay);
 	}
 
+	public List<JournalArticle> getArticlesByLayoutUuid(
+			long groupId, String layoutUuid)
+		throws PortalException, SystemException {
+
+		return journalArticlePersistence.filterFindByG_L(groupId, layoutUuid);
+	}
+
 	public JournalArticle getLatestArticle(long resourcePrimKey)
 		throws PortalException, SystemException {
 

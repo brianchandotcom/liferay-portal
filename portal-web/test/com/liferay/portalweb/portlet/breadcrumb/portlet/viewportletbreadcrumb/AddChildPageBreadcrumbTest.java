@@ -265,7 +265,7 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Child Test Page")) {
+						if (selenium.isVisible("link=Breadcrumb Test Page")) {
 							break;
 						}
 					}
@@ -276,6 +276,26 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				selenium.mouseOver("link=Breadcrumb Test Page");
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Child Test Page")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertTrue(selenium.isVisible("link=Child Test Page"));
 				selenium.clickAt("link=Child Test Page",
 					RuntimeVariables.replace("Child Test Page"));
 				selenium.waitForPageToLoad("30000");

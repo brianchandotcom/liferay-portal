@@ -30,7 +30,7 @@ public class AddPortletBreadcrumbChildPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Breadcrumb Test Page")) {
+				if (selenium.isElementPresent("link=Child Test Page")) {
 					break;
 				}
 			}
@@ -40,10 +40,6 @@ public class AddPortletBreadcrumbChildPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Breadcrumb Test Page",
-			RuntimeVariables.replace("Breadcrumb Test Page"));
-		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Child Test Page",
 			RuntimeVariables.replace("Child Test Page"));

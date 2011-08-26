@@ -250,8 +250,8 @@ public class JournalContentPortletDataHandlerImpl
 				layout.getLayoutId(), portletId, articleId, true);
 		}
 		else {
-			portletPreferences.setValue("group-id", StringPool.BLANK);
-			portletPreferences.setValue("article-id", StringPool.BLANK);
+			portletPreferences.setValue("groupId", StringPool.BLANK);
+			portletPreferences.setValue("articleId", StringPool.BLANK);
 		}
 
 		String templateId = portletPreferences.getValue("templateId", null);
@@ -266,7 +266,7 @@ public class JournalContentPortletDataHandlerImpl
 			portletPreferences.setValue("templateId", templateId);
 		}
 		else {
-			portletPreferences.setValue("template-id", StringPool.BLANK);
+			portletPreferences.setValue("templateId", StringPool.BLANK);
 		}
 
 		return portletPreferences;

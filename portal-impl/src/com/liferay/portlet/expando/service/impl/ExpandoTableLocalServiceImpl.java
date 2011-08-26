@@ -167,6 +167,30 @@ public class ExpandoTableLocalServiceImpl
 		deleteTables(companyId, classNameId);
 	}
 
+	public ExpandoTable fetchTable(
+			long companyId, long classNameId, String name)
+		throws SystemException {
+
+		return expandoTablePersistence.fetchByC_C_N(
+			companyId, classNameId, name);
+	}
+
+	public ExpandoTable fetchDefaultTable(long companyId, long classNameId)
+		throws SystemException {
+
+		return fetchTable(
+			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
+	}
+
+	public ExpandoTable fetchDefaultTable(long companyId, String className)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return fetchTable(
+			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
+	}
+
 	public ExpandoTable getDefaultTable(long companyId, long classNameId)
 		throws PortalException, SystemException {
 

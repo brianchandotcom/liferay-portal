@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
@@ -107,13 +106,10 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		throws PortalException {
 
 		try {
-			ExpandoTable table = null;
+			ExpandoTable table = ExpandoTableLocalServiceUtil.fetchDefaultTable(
+				_companyId, _className);
 
-			try {
-				table = ExpandoTableLocalServiceUtil.getDefaultTable(
-					_companyId, _className);
-			}
-			catch (NoSuchTableException nste) {
+			if (table == null) {
 				table = ExpandoTableLocalServiceUtil.addDefaultTable(
 					_companyId, _className);
 			}

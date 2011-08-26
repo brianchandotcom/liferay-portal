@@ -24,9 +24,41 @@ import java.io.File;
 import java.io.InputStream;
 
 /**
+ * Provides methods for storing files in the portal. The file storage
+ * implementation can be selected in <code>portal.properties</code> under the
+ * property <code>dl.store.impl</code>. Virus checking can also be enabled under
+ * the property <code>dl.store.antivirus.impl</code>.
+ *
+ * <p>
+ * The main client for this class is the Document Library portlet. It is also
+ * used by other portlets like Wiki and Message Boards to store file
+ * attachments. For the Document Library portlet, the <code>repositoryId</code>
+ * can be obtained by calling {@link
+ * com.liferay.portlet.documentlibrary.model.DLFolderConstants#getDataRepositoryId(long,long)}.
+ * For all other portlets, the <code>repositoryId</code> should be set to
+ * {@link CompanyConstants#SYSTEM}. These methods can be used in plugins and
+ * other portlets, as shown below.
+ * </p>
+ *
+ * <pre>
+ * <code>
+ * long repositoryId = CompanyConstants.SYSTEM;
+ * String dirName = "portlet_name/1234";
+ *
+ * try {
+ * DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
+ * }
+ * catch (DuplicateDirectoryException dde) {
+ * }
+ *
+ * DLStoreUtil.addFile(
+ * companyId, repositoryId, dirName + "/" + fileName, file);
+ * </code>
+ * </pre>
+ *
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
- * @see    DLStoreImpl
+ * @see DLStoreImpl
  */
 public class DLStoreUtil {
 

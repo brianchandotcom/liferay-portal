@@ -330,6 +330,26 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 		_expandoTableLocalService.deleteTables(companyId, className);
 	}
 
+	public com.liferay.portlet.expando.model.ExpandoTable fetchTable(
+		long companyId, long classNameId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _expandoTableLocalService.fetchTable(companyId, classNameId, name);
+	}
+
+	public com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _expandoTableLocalService.fetchDefaultTable(companyId,
+			classNameId);
+	}
+
+	public com.liferay.portlet.expando.model.ExpandoTable fetchDefaultTable(
+		long companyId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _expandoTableLocalService.fetchDefaultTable(companyId, className);
+	}
+
 	public com.liferay.portlet.expando.model.ExpandoTable getDefaultTable(
 		long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException,

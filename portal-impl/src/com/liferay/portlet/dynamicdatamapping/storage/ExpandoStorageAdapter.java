@@ -33,7 +33,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.FieldCondition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Junction;
 import com.liferay.portlet.dynamicdatamapping.storage.query.LogicalOperator;
-import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
@@ -231,15 +230,15 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		throws PortalException, SystemException {
 
 		for (String name : fields.getNames()) {
-			try {
-				ExpandoColumnLocalServiceUtil.getColumn(
-					expandoTable.getTableId(), name);
-			}
-			catch (NoSuchColumnException nsce) {
-				ExpandoColumnLocalServiceUtil.addColumn(
-					expandoTable.getTableId(), name,
-					ExpandoColumnConstants.STRING);
-			}
+				ExpandoColumn expandoColumn =
+					ExpandoColumnLocalServiceUtil.getColumn(
+						expandoTable.getTableId(), name);
+
+				if (expandoColumn == null) {
+					ExpandoColumnLocalServiceUtil.addColumn(
+						expandoTable.getTableId(), name,
+						ExpandoColumnConstants.STRING);
+				}
 		}
 	}
 

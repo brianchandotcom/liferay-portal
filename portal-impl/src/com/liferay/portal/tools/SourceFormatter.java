@@ -129,20 +129,10 @@ public class SourceFormatter {
 			return content;
 		}
 
-		String imports = _formatImports(matcher.group());
-
-		content =
-			content.substring(0, matcher.start()) + imports +
-				content.substring(matcher.end());
+		String imports = matcher.group();
 
 		Set<String> classes = ClassUtil.getClasses(
 			new UnsyncStringReader(content), className);
-
-		matcher = pattern.matcher(content);
-
-		matcher.find();
-
-		imports = matcher.group();
 
 		StringBuilder sb = new StringBuilder();
 

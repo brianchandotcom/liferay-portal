@@ -71,7 +71,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		thread.setCategoryId(categoryId);
 		thread.setRootMessageId(message.getMessageId());
 		thread.setRootMessageUserId(message.getUserId());
-		thread.setMessageCount(thread.getMessageCount() + 1);
 
 		if (message.isAnonymous()) {
 			thread.setLastPostByUserId(0);
@@ -93,13 +92,16 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		mbThreadPersistence.update(thread, false);
 
-		// Asset
+		if (categoryId >= 0) {
+			// Asset
 
-		assetEntryLocalService.updateEntry(
-			message.getUserId(), message.getGroupId(), MBThread.class.getName(),
-			thread.getThreadId(), null,	new long[0], new String[0], false, null,
-			null, null, null, null, String.valueOf(thread.getRootMessageId()),
-			null, null, null, null, 0, 0, null, false);
+			assetEntryLocalService.updateEntry(
+				message.getUserId(), message.getGroupId(),
+				MBThread.class.getName(), thread.getThreadId(), null,
+				new long[0], new String[0], false, null, null, null, null, null,
+				String.valueOf(thread.getRootMessageId()), null, null, null,
+				null, 0, 0, null, false);
+		}
 
 		return thread;
 	}

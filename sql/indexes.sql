@@ -432,6 +432,7 @@ create unique index IX_8D12316E on MBMessage (uuid_, groupId);
 
 create index IX_A00A898F on MBStatsUser (groupId);
 create index IX_FAB5A88B on MBStatsUser (groupId, messageCount);
+create index IX_97345C5 on MBStatsUser (groupId, messageCount, userId);
 create unique index IX_9168E2C9 on MBStatsUser (groupId, userId);
 create index IX_847F92B5 on MBStatsUser (userId);
 

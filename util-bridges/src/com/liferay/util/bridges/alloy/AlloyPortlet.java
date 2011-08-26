@@ -40,6 +40,8 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -81,6 +83,16 @@ public class AlloyPortlet extends GenericPortlet {
 		String path = getPath(renderRequest);
 
 		include(path, renderRequest, renderResponse);
+	}
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		String path = getPath(resourceRequest);
+
+		include(path, resourceRequest, resourceResponse);
 	}
 
 	protected Map<String, String> getDefaultRouteParameters() {

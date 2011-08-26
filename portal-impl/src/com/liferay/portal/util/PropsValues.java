@@ -1353,6 +1353,8 @@ public class PropsValues {
 
 	public static final boolean USERS_UPDATE_LAST_LOGIN = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_UPDATE_LAST_LOGIN));
 
+	public static boolean USERS_ZIP_CODE_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_ZIP_CODE_REQUIRED));
+
 	public static final boolean VALUE_OBJECT_ENTITY_BLOCKING_CACHE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE));
 
 	public static final boolean VALUE_OBJECT_ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED));

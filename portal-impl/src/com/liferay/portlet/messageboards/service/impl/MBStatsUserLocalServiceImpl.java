@@ -127,13 +127,28 @@ public class MBStatsUserLocalServiceImpl
 			long groupId, int start, int end)
 		throws SystemException {
 
-		return mbStatsUserPersistence.findByG_NotM(groupId, 0, start, end);
+		return getStatsUsersByGroupId(groupId, 0, start, end);
+	}
+
+	public List<MBStatsUser> getStatsUsersByGroupId(
+			long groupId, long excludedUserId, int start, int end)
+		throws SystemException {
+
+		return mbStatsUserPersistence.findByG_NotM_NotU(
+			groupId, 0, excludedUserId, start, end);
 	}
 
 	public int getStatsUsersByGroupIdCount(long groupId)
 		throws SystemException {
 
-		return mbStatsUserPersistence.countByG_NotM(groupId, 0);
+		return getStatsUsersByGroupIdCount(groupId, 0);
+	}
+
+	public int getStatsUsersByGroupIdCount(long groupId, long excludedUserId)
+		throws SystemException {
+
+		return mbStatsUserPersistence.countByG_NotM_NotU(
+			groupId, 0, excludedUserId);
 	}
 
 	public List<MBStatsUser> getStatsUsersByUserId(long userId)

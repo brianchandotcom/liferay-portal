@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
@@ -80,6 +81,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -2998,7 +3001,17 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	public String getContextPath() {
 		if (_portletApp.isWARFile()) {
-			return StringPool.SLASH.concat(_portletApp.getServletContextName());
+			String servletContextName = _portletApp.getServletContextName();
+
+			if (servletContextName != null
+				&& ServletContextPool.containsKey(servletContextName)) {
+
+				ServletContext servletContext =
+					ServletContextPool.get(servletContextName);
+
+				return servletContext.getContextPath();
+			}
+			return StringPool.SLASH.concat(servletContextName);
 		}
 		else {
 			return PortalUtil.getPathContext();

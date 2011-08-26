@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -244,7 +245,17 @@ public class LayoutTemplateImpl
 
 	public String getContextPath() {
 		if (isWARFile()) {
-			return StringPool.SLASH + getServletContextName();
+			String servletContextName = getServletContextName();
+
+			if (servletContextName != null
+				&& ServletContextPool.containsKey(servletContextName)) {
+
+				ServletContext servletContext =
+					ServletContextPool.get(servletContextName);
+
+				return servletContext.getContextPath();
+			}
+			return StringPool.SLASH.concat(servletContextName);
 		}
 		else {
 			return PortalUtil.getPathContext();

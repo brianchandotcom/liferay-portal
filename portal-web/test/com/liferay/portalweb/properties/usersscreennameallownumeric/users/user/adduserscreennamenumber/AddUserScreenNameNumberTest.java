@@ -77,7 +77,7 @@ public class AddUserScreenNameNumberTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_screenName']",
-			RuntimeVariables.replace("testA"));
+			RuntimeVariables.replace("11111"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_emailAddress']",
 			RuntimeVariables.replace("testA@selenium.com"));

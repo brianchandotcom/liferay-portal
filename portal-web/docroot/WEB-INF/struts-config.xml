@@ -518,7 +518,9 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
-		<action path="/document_library/search" type="com.liferay.portlet.documentlibrary.action.SearchAction" />
+		<action path="/document_library/search" type="com.liferay.portlet.documentlibrary.action.SearchAction">
+			<forward name="portlet.document_library.view" path="portlet.document_library.view" />
+		</action>
 
 		<action path="/document_library/select_file_entry" type="com.liferay.portlet.documentlibrary.action.ViewAction">
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />

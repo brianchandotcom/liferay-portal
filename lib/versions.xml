@@ -1613,8 +1613,8 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/ehcache.jar</file-name>
-		<version>2.1.0</version>
+		<file-name>portal/ehcache-core.jar</file-name>
+		<version>2.4.4</version>
 		<project-name>Ehcache</project-name>
 		<project-url>http://ehcache.sourceforge.net</project-url>
 		<licenses>
@@ -1625,7 +1625,7 @@
 	</library>
 	<library>
 		<file-name>portal/ehcache-jgroupsreplication.jar</file-name>
-		<version>1.3.0</version>
+		<version>1.4.0</version>
 		<project-name>Ehcache</project-name>
 		<project-url>http://ehcache.sourceforge.net</project-url>
 		<licenses>

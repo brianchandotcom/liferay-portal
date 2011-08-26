@@ -372,9 +372,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 		</finder>
-		<finder name="G_NotM" return-type="Collection">
+		<finder name="G_NotM_NotU" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="messageCount" comparator="!=" />
+			<finder-column name="userId" comparator="!=" />
 		</finder>
 	</entity>
 	<entity name="MBThread" human-name="message boards thread" local-service="true" remote-service="true">

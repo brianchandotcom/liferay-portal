@@ -104,7 +104,7 @@ portletURL.setParameter("typeSelection", typeSelection);
 			sb.append("', '");
 			sb.append(ResourceActionsUtil.getModelResource(locale, assetEntry.getClassName()));
 			sb.append("', '");
-			sb.append(assetRenderer.getTitle(locale));
+			sb.append(HtmlUtil.escapeJS(assetRenderer.getTitle(locale)));
 			sb.append("');Liferay.Util.getWindow().close();");
 
 			String rowHREF = sb.toString();

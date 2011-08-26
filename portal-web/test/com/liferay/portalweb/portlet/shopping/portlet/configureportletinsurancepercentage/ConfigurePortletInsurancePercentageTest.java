@@ -50,7 +50,7 @@ public class ConfigurePortletInsurancePercentageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("Insurance"));
-		assertFalse(selenium.isElementPresent("_34_insure"));
+		assertFalse(selenium.isElementPresent("//select[@id='_34_insure']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {

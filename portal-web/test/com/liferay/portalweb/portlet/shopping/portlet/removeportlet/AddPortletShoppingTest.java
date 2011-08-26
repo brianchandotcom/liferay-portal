@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.shopping.portlet.addportlet;
+package com.liferay.portalweb.portlet.shopping.portlet.removeportlet;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

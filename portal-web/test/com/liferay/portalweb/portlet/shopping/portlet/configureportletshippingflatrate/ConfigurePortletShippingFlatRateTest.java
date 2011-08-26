@@ -120,7 +120,7 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 			RuntimeVariables.replace("Shipping Calculation"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_86_shippingFormula",
+		selenium.select("//select[@id='_86_shippingFormula']",
 			RuntimeVariables.replace("Flat Amount"));
 		selenium.type("//input[@id='_86_shipping0']",
 			RuntimeVariables.replace("2.49"));

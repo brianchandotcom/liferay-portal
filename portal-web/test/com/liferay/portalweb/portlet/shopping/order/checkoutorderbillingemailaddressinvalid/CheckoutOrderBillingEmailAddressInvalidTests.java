@@ -33,7 +33,7 @@ public class CheckoutOrderBillingEmailAddressInvalidTests extends BaseTests {
 		testSuite.addTestSuite(AddCategoryItemTest.class);
         testSuite.addTestSuite(AddToShoppingCartCategoryItemTest.class);
 		testSuite.addTestSuite(
-			CheckoutOrderBillingEmailAddressInvalidTest.class);		
+			CheckoutOrderBillingEmailAddressInvalidTest.class);
 		testSuite.addTestSuite(TearDownCartTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

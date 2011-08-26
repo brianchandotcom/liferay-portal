@@ -32,7 +32,7 @@ public class CheckoutOrderBillingLastNameNullTests extends BaseTests {
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryItemTest.class);
         testSuite.addTestSuite(AddToShoppingCartCategoryItemTest.class);
-		testSuite.addTestSuite(CheckoutOrderBillingLastNameNullTest.class);		
+		testSuite.addTestSuite(CheckoutOrderBillingLastNameNullTest.class);
 		testSuite.addTestSuite(TearDownCartTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

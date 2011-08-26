@@ -42,13 +42,15 @@ public class AddWebContentTaskCommentAssignedToMyRolesTest extends BaseTestCase 
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
@@ -66,7 +68,8 @@ public class AddWebContentTaskCommentAssignedToMyRolesTest extends BaseTestCase 
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Be the first.", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Be the first.",
+			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -74,7 +77,8 @@ public class AddWebContentTaskCommentAssignedToMyRolesTest extends BaseTestCase 
 			}
 
 			try {
-				if (selenium.isVisible("_158_postReplyBody0")) {
+				if (selenium.isVisible(
+							"//textarea[@name='_158_postReplyBody0']")) {
 					break;
 				}
 			}
@@ -85,21 +89,21 @@ public class AddWebContentTaskCommentAssignedToMyRolesTest extends BaseTestCase 
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_158_postReplyBody0",
+		selenium.type("//textarea[@name='_158_postReplyBody0']",
 			RuntimeVariables.replace("Workflow Task Comment"));
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_158_postReplyBody0",
+		selenium.keyPress("//textarea[@name='_158_postReplyBody0']",
 			RuntimeVariables.replace("\\48"));
-		selenium.keyPress("_158_postReplyBody0", RuntimeVariables.replace("\\8"));
-		selenium.clickAt("//input[@value='Reply']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		selenium.keyPress("//textarea[@name='_158_postReplyBody0']",
+			RuntimeVariables.replace("\\8"));
+		selenium.clickAt("//input[@value='Reply']",
+			RuntimeVariables.replace("Reply"));
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Workflow Task Comment"),
-			selenium.getText("//form/div/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//a[@class='user-name']"));
+			selenium.getText("//div/a/span[2]"));
 	}
 }

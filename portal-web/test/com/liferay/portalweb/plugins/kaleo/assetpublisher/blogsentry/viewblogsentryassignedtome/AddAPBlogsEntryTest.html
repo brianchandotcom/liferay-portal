@@ -16,12 +16,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Asset Publisher Page</td>
-	<td></td>
+	<td>Asset Publisher Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Page</td>
-	<td></td>
+	<td>Asset Publisher Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/span/ul/li/strong/a</td>
+	<td>Add New</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -39,13 +44,23 @@
 	<td>Blogs Entry</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Blogs Entry</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_33_title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>_33_title</td>
+	<td>//input[@id='_33_title']</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
@@ -54,28 +69,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>_33_editor</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>cke_contents_CKEditor1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea</td>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__33_editor']/iframe</td>
 	<td></td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@id='_33_editor']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents_CKEditor1']/iframe</td>
+	<td>//td[@id='cke_contents__33_editor']/iframe</td>
 	<td></td>
 </tr>
 <tr>
@@ -89,9 +89,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Submit for Publication']</td>
+	<td>Submit for Publication</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Submit for Publication']</td>
-	<td></td>
+	<td>Submit for Publication</td>
 </tr>
 <tr>
 	<td>assertText</td>

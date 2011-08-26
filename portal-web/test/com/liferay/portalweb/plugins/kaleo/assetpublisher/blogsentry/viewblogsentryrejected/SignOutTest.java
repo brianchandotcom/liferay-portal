@@ -51,7 +51,7 @@ public class SignOutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_58_login")) {
+				if (selenium.isVisible("//input[@id='_58_login']")) {
 					break;
 				}
 			}
@@ -62,6 +62,6 @@ public class SignOutTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("_58_login"));
+		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
 	}
 }

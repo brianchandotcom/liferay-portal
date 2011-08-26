@@ -41,13 +41,15 @@ public class ApproveTaskWebContentDetailsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
@@ -73,7 +75,8 @@ public class ApproveTaskWebContentDetailsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[3]"));
 		assertFalse(selenium.isTextPresent(
 				"Joe Bloggs completed the task Review."));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+		selenium.clickAt("//td[4]/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -93,6 +96,9 @@ public class ApproveTaskWebContentDetailsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Approve"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 
 		for (int second = 0;; second++) {
@@ -142,7 +148,5 @@ public class ApproveTaskWebContentDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Joe Bloggs completed the task Review."),
 			selenium.getText("//div[@class='task-activity task-type-3']/div[2]"));
-		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//div[@class='task-activity task-type-3']/div[3]"));
 	}
 }

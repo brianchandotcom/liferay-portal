@@ -41,16 +41,18 @@ public class AssignToMeTaskWebContentDetailsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Workflow", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Submissions",
+			RuntimeVariables.replace("Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
@@ -77,8 +79,8 @@ public class AssignToMeTaskWebContentDetailsTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent(
 				"Joe Bloggs assigned the task to himself."));
 		assertEquals(RuntimeVariables.replace("Assign to Me"),
-			selenium.getText("//span/a/span"));
-		selenium.clickAt("//span/a/span",
+			selenium.getText("//td[4]/span/a/span"));
+		selenium.clickAt("//td[4]/span/a/span",
 			RuntimeVariables.replace("Assign to Me"));
 
 		for (int second = 0;; second++) {
@@ -135,8 +137,5 @@ public class AssignToMeTaskWebContentDetailsTest extends BaseTestCase {
 				"Joe Bloggs assigned the task to himself."),
 			selenium.getText(
 				"xPath=(//div[@class='task-activity task-type-1'])[2]/div[2]"));
-		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText(
-				"xPath=(//div[@class='task-activity task-type-1'])[2]/div[3]"));
 	}
 }

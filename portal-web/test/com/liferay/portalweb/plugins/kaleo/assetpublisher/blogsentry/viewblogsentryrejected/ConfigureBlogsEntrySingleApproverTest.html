@@ -16,27 +16,27 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Workflow Configuration</td>
-	<td></td>
+	<td>Workflow Configuration</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']</td>
 	<td>label=Single Approver (Version 1)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']</td>
 	<td>Single Approver (Version 1)</td>
 </tr>
 

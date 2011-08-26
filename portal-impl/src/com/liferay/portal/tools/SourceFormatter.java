@@ -134,7 +134,7 @@ public class SourceFormatter {
 		Set<String> classes = ClassUtil.getClasses(
 			new UnsyncStringReader(content), className);
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -165,7 +165,7 @@ public class SourceFormatter {
 			}
 		}
 
-		imports = _formatImports(sb.toString());
+		imports = _formatImports(sb.toString(), 7);
 
 		content =
 			content.substring(0, matcher.start()) + imports +
@@ -682,7 +682,9 @@ public class SourceFormatter {
 		return sb.toString();
 	}
 
-	private static String _formatImports(String imports) throws IOException {
+	private static String _formatImports(String imports, int classStartPos)
+		throws IOException {
+
 		if ((imports.indexOf("/*") != -1) ||
 			(imports.indexOf("*/") != -1) ||
 			(imports.indexOf("//") != -1)) {
@@ -698,16 +700,17 @@ public class SourceFormatter {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.indexOf("import ") != -1) {
-				if (!importsList.contains(line)) {
-					importsList.add(line);
-				}
+			if (((line.indexOf("import=") != -1) ||
+				 (line.indexOf("import ") != -1)) &&
+				!importsList.contains(line)) {
+
+				importsList.add(line);
 			}
 		}
 
 		importsList = ListUtil.sort(importsList);
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		String temp = null;
 
@@ -722,7 +725,7 @@ public class SourceFormatter {
 				pos = s.indexOf(".");
 			}
 
-			String packageLevel = s.substring(7, pos);
+			String packageLevel = s.substring(classStartPos, pos);
 
 			if ((i != 0) && (!packageLevel.equals(temp))) {
 				sb.append("\n");
@@ -928,7 +931,7 @@ public class SourceFormatter {
 
 		boolean longLogFactoryUtil = false;
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
@@ -973,7 +976,7 @@ public class SourceFormatter {
 					fileName, "{:" + fileName + " " + lineCount);
 			}
 
-			StringBuilder lineSB = new StringBuilder();
+			StringBundler lineSB = new StringBundler();
 
 			int spacesPerTab = 4;
 
@@ -1192,7 +1195,7 @@ public class SourceFormatter {
 	private static String _formatJSPContent(String fileName, String content)
 		throws IOException {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
@@ -1318,7 +1321,7 @@ public class SourceFormatter {
 					}
 
 					if (result.indexOf(quoteFix) == -1) {
-						StringBuilder sb = new StringBuilder();
+						StringBundler sb = new StringBundler(5);
 
 						sb.append(content.substring(0, x));
 						sb.append(quoteFix);
@@ -1374,7 +1377,7 @@ public class SourceFormatter {
 				urlPatterns.add(locale);
 			}
 
-			StringBuilder sb = new StringBuilder();
+			StringBundler sb = new StringBundler();
 
 			for (String urlPattern : urlPatterns) {
 				sb.append("\t<servlet-mapping>\n");
@@ -1415,7 +1418,7 @@ public class SourceFormatter {
 
 			y = newContent.lastIndexOf("</url-pattern>", y) + 15;
 
-			sb = new StringBuilder();
+			sb = new StringBundler();
 
 			sb.append(
 				"\t\t\t<url-pattern>/c/portal/protected</url-pattern>\n");
@@ -1473,43 +1476,26 @@ public class SourceFormatter {
 	}
 
 	private static List<String> _getJSPUnusedImportClassNames(
-		String fileName, String content) {
-
-		if (Validator.isNull(content) ||
-			fileName.endsWith("html/common/init.jsp") ||
-			fileName.endsWith("html/portal/init.jsp") ||
-			!fileName.startsWith("portal-web/docroot") ||
-			!content.contains("<%@ page import")) {
-
-			return Collections.emptyList();
-		}
+		String fileName, String imports) throws IOException {
 
 		List<String> importClassNames = new ArrayList<String>();
 
-		for (int x = 0;;) {
-			x = content.indexOf("<%@ page import", x);
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(imports));
 
-			if (x == -1) {
-				break;
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.indexOf("import=") != -1) {
+				int x = line.indexOf(StringPool.QUOTE);
+				int y = line.indexOf(StringPool.QUOTE, x + 1);
+
+				if ((x != -1) && (y != -1)) {
+					String importClassName = line.substring(x + 1, y);
+
+					importClassNames.add(importClassName);
+				}
 			}
-
-			x = content.indexOf(StringPool.QUOTE, x);
-
-			if (x == -1) {
-				break;
-			}
-
-			int y = content.indexOf(StringPool.QUOTE, x + 1);
-
-			if (y == -1) {
-				break;
-			}
-
-			String importClassName = content.substring(x + 1, y);
-
-			importClassNames.add(importClassName);
-
-			x = y;
 		}
 
 		List<String> unusedImportClassNames = new ArrayList<String>();
@@ -1800,25 +1786,58 @@ public class SourceFormatter {
 		return newLine;
 	}
 
-	private static String _stripJSPImports(String fileName, String content) {
+	private static String _stripJSPImports(String fileName, String content)
+			throws IOException {
 		fileName = fileName.replace(
 			CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 
+		if (fileName.endsWith("html/common/init.jsp") ||
+			fileName.endsWith("html/portal/init.jsp") ||
+			!fileName.startsWith("portal-web/docroot")) {
+
+			return content;
+		}
+
+		Pattern pattern = Pattern.compile(
+			"(<.*page.import=\".*>\n*)+", Pattern.MULTILINE);
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String imports = matcher.group();
+
 		List<String> importClassNames = _getJSPUnusedImportClassNames(
-			fileName, content);
+			fileName, imports);
 
 		for (String importClassName : importClassNames) {
-			content = StringUtil.replace(
-				content,
+			imports = StringUtil.replace(
+				imports,
 				new String[] {
-					"\n\n<%@ page import=\"" + importClassName + "\" %>\n\n",
 					"<%@ page import=\"" + importClassName + "\" %>\n"
 				},
 				new String[] {
-					"\n\n",
 					StringPool.BLANK
 				});
 		}
+
+		imports = _formatImports(imports, 17);
+
+		String afterImports = content.substring(matcher.end());
+
+		if (Validator.isNull(afterImports)) {
+			imports = StringUtil.replaceLast(imports, "\n", StringPool.BLANK);
+
+			content = content.substring(0, matcher.start()) + imports;
+
+			return content;
+		}
+
+		content =
+			content.substring(0, matcher.start()) + imports + "\n" +
+			afterImports;
 
 		return content;
 	}

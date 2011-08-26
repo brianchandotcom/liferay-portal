@@ -25,4 +25,7 @@ public interface AttachedModel {
 
 	public long getClassPK();
 
+	public void setClassNameId(long classNameId);
+
+	public void setClassPK(long classPK);
 }

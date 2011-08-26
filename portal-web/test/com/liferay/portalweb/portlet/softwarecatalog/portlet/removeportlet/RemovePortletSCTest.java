@@ -42,7 +42,7 @@ public class RemovePortletSCTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Software Catalog Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Software Catalog Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

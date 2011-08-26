@@ -32,9 +32,9 @@
 		<finder name="TableId" return-type="Collection">
 			<finder-column name="tableId" />
 		</finder>
-		<finder name="T_N" return-type="ExpandoColumn" unique="true">
+		<finder name="T_N" return-type="Collection" unique="true">
 			<finder-column name="tableId" />
-			<finder-column name="name" />
+			<finder-column name="name" arrayable-operator="OR"/>
 		</finder>
 	</entity>
 	<entity name="ExpandoRow" local-service="true" remote-service="false">

@@ -337,8 +337,7 @@ public class ExpandoColumnLocalServiceUtil {
 
 	public static com.liferay.portlet.expando.model.ExpandoColumn getColumn(
 		long tableId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getColumn(tableId, name);
 	}
 
@@ -356,6 +355,12 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
+		long tableId, java.util.Collection<java.lang.String> columnNames)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getColumns(tableId, columnNames);
+	}
+
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
 		long companyId, long classNameId, java.lang.String tableName)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getColumns(companyId, classNameId, tableName);
@@ -365,6 +370,22 @@ public class ExpandoColumnLocalServiceUtil {
 		long companyId, java.lang.String className, java.lang.String tableName)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getColumns(companyId, className, tableName);
+	}
+
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.util.Collection<java.lang.String> columnNames)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getColumns(companyId, className, tableName, columnNames);
+	}
+
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
+		long companyId, long classNameId, java.lang.String tableName,
+		java.util.Collection<java.lang.String> columnNames)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getColumns(companyId, classNameId, tableName, columnNames);
 	}
 
 	public static int getColumnsCount(long tableId)

@@ -19,13 +19,10 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
-import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl;
 
 import java.util.List;
 
@@ -200,23 +197,6 @@ public class ExpandoColumnPersistenceTest extends BasePersistenceTestCase {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		assertEquals(0, result.size());
-	}
-
-	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
-		ExpandoColumn newExpandoColumn = addExpandoColumn();
-
-		_persistence.clearCache();
-
-		ExpandoColumnModelImpl existingExpandoColumnModelImpl = (ExpandoColumnModelImpl)_persistence.findByPrimaryKey(newExpandoColumn.getPrimaryKey());
-
-		assertEquals(existingExpandoColumnModelImpl.getTableId(),
-			existingExpandoColumnModelImpl.getOriginalTableId());
-		assertTrue(Validator.equals(existingExpandoColumnModelImpl.getName(),
-				existingExpandoColumnModelImpl.getOriginalName()));
 	}
 
 	protected ExpandoColumn addExpandoColumn() throws Exception {

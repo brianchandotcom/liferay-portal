@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>User_LeaveSitesTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">User_LeaveSitesTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/selenium01/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=My Sites</td>
+	<td>My Sites</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=My Sites</td>
+	<td>My Sites</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_29_name']</td>
+	<td>Test Open Community</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//form/span/span[2]/span/input</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span/a/span</td>
+	<td>Leave</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span/a/span</td>
+	<td>Leave</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/user/selenium01/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=My Sites</td>
+	<td>My Sites</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=My Sites</td>
+	<td>My Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No sites were found.</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

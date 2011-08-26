@@ -132,6 +132,40 @@ public class ExpandoValueServiceHttp {
 		}
 	}
 
+	public static void addValues(HttpPrincipal httpPrincipal, long companyId,
+		java.lang.String className, java.lang.String tableName, long classPK,
+		java.util.Map<java.lang.String, java.io.Serializable> attributes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
+					"addValues", _addValuesParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, className, tableName, classPK, attributes);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.io.Serializable getData(HttpPrincipal httpPrincipal,
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK)
@@ -139,7 +173,7 @@ public class ExpandoValueServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
-					"getData", _getDataParameterTypes2);
+					"getData", _getDataParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, className, tableName, columnName, classPK);
@@ -170,6 +204,45 @@ public class ExpandoValueServiceHttp {
 		}
 	}
 
+	public static java.util.Map<java.lang.String, java.io.Serializable> getData(
+		HttpPrincipal httpPrincipal, long companyId,
+		java.lang.String className, java.lang.String tableName,
+		java.util.Collection<java.lang.String> columnNames, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
+					"getData", _getDataParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, className, tableName, columnNames, classPK);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.Map<java.lang.String, java.io.Serializable>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.kernel.json.JSONObject getJSONData(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.lang.String className, java.lang.String tableName,
@@ -178,7 +251,7 @@ public class ExpandoValueServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
-					"getJSONData", _getJSONDataParameterTypes3);
+					"getJSONData", _getJSONDataParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, className, tableName, columnName, classPK);
@@ -218,11 +291,19 @@ public class ExpandoValueServiceHttp {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _getDataParameterTypes2 = new Class[] {
+	private static final Class<?>[] _addValuesParameterTypes2 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class,
+			long.class, java.util.Map.class
+		};
+	private static final Class<?>[] _getDataParameterTypes3 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, long.class
 		};
-	private static final Class<?>[] _getJSONDataParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getDataParameterTypes4 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class,
+			java.util.Collection.class, long.class
+		};
+	private static final Class<?>[] _getJSONDataParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, long.class
 		};

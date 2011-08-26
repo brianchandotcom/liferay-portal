@@ -502,6 +502,18 @@ public interface ExpandoValueLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void addValues(long companyId, java.lang.String className,
+		java.lang.String tableName, long classPK,
+		java.util.Map<java.lang.String, java.io.Serializable> attributes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void addValues(long companyId, long classNameId,
+		java.lang.String tableName, long classPK,
+		java.util.Map<java.lang.String, java.io.Serializable> attributes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void addValues(long classNameId, long tableId,
 		java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> columns,
 		long classPK, java.util.Map<java.lang.String, java.lang.String> data)
@@ -619,6 +631,13 @@ public interface ExpandoValueLocalService extends PersistedModelLocalService {
 		java.lang.String tableName, java.lang.String columnName,
 		java.lang.String data)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.String, java.io.Serializable> getData(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.util.Collection<java.lang.String> columnNames, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.io.Serializable getData(long companyId,

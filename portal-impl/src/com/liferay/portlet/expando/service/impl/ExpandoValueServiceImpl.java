@@ -28,6 +28,9 @@ import com.liferay.portlet.expando.service.permission.ExpandoColumnPermission;
 
 import java.io.Serializable;
 
+import java.util.Collection;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -63,6 +66,18 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 			companyId, className, tableName, columnName, classPK, data);
 	}
 
+	public void addValues(
+			long companyId, String className, String tableName,
+			long classPK, Map<String, Serializable> attributes)
+		throws PortalException, SystemException {
+
+		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
+			addValue(
+				companyId, className, tableName, entry.getKey(),
+				classPK, entry.getValue());
+		}
+	}
+
 	public Serializable getData(
 			long companyId, String className, String tableName,
 			String columnName, long classPK)
@@ -80,6 +95,29 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 		else {
 			return null;
 		}
+	}
+
+	public Map<String, Serializable> getData(
+			long companyId, String className, String tableName,
+			Collection<String> columnNames, long classPK)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> attributeValues =
+			expandoValueLocalService.getData(
+				companyId, className, tableName, columnNames, classPK);
+
+		for (String columnName : columnNames) {
+			ExpandoColumn column = expandoColumnLocalService.getColumn(
+				companyId, className, tableName, columnName);
+
+			if (!ExpandoColumnPermission.contains(
+					getPermissionChecker(), column, ActionKeys.VIEW)) {
+
+				attributeValues.remove(columnName);
+			}
+		}
+
+		return attributeValues;
 	}
 
 	public JSONObject getJSONData(

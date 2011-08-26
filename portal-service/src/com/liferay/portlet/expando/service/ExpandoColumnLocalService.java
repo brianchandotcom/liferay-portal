@@ -292,8 +292,7 @@ public interface ExpandoColumnLocalService extends PersistedModelLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoColumn getColumn(
 		long tableId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoColumn getColumn(
@@ -308,12 +307,29 @@ public interface ExpandoColumnLocalService extends PersistedModelLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
+		long tableId, java.util.Collection<java.lang.String> columnNames)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
 		long companyId, long classNameId, java.lang.String tableName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
 		long companyId, java.lang.String className, java.lang.String tableName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.util.Collection<java.lang.String> columnNames)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
+		long companyId, long classNameId, java.lang.String tableName,
+		java.util.Collection<java.lang.String> columnNames)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

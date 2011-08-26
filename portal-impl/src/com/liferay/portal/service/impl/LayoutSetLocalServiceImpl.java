@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.DuplicateVirtualHostNameException;
 import com.liferay.portal.LayoutSetVirtualHostException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchVirtualHostException;
@@ -318,6 +319,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, String virtualHostname)
 		throws PortalException, SystemException {
 
+		validate(groupId, privateLayout, virtualHostname);
+
 		virtualHostname = virtualHostname.trim().toLowerCase();
 
 		if (virtualHostname.startsWith(Http.HTTP_WITH_SLASH) ||
@@ -357,6 +360,26 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 
 		return layoutSet;
+	}
+
+	protected void validate(
+			long groupId, boolean privateLayout, String virtualHostname)
+		throws PortalException, SystemException {
+
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+			groupId, !privateLayout);
+
+		VirtualHost oppositeVirtualHost = virtualHostPersistence.fetchByC_L(
+			layoutSet.getCompanyId(),
+			layoutSet.getLayoutSetId());
+
+		String oppositeVirtualHostname = oppositeVirtualHost.getHostname();
+
+		if (oppositeVirtualHost != null &&
+			oppositeVirtualHostname.equals(virtualHostname)) {
+
+			throw new DuplicateVirtualHostNameException();
+		}
 	}
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portlet.sites.action;
 
 import com.liferay.portal.DuplicateGroupException;
+import com.liferay.portal.DuplicateVirtualHostNameException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.GroupNameException;
 import com.liferay.portal.NoSuchGroupException;
@@ -101,6 +102,7 @@ public class EditGroupAction extends PortletAction {
 			else if (e instanceof AssetCategoryException ||
 					 e instanceof AssetTagException ||
 					 e instanceof DuplicateGroupException ||
+					 e instanceof DuplicateVirtualHostNameException ||
 					 e instanceof GroupFriendlyURLException ||
 					 e instanceof GroupNameException ||
 					 e instanceof RequiredGroupException) {

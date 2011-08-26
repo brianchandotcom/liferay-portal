@@ -48,9 +48,10 @@ public class ConfigureBlogsEntrySingleApproverTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry",
+		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
 			RuntimeVariables.replace("label=Single Approver (Version 1)"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -58,6 +59,6 @@ public class ConfigureBlogsEntrySingleApproverTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Single Approver (Version 1)",
 			selenium.getSelectedLabel(
-				"_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry"));
+				"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']"));
 	}
 }

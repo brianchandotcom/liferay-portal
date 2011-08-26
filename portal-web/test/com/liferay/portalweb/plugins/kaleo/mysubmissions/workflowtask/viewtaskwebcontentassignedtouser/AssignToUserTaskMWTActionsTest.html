@@ -16,22 +16,22 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//td[6]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_153_assigneeUserId</td>
+	<td>//select[@id='_153_assigneeUserId']</td>
 	<td>Assign to</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_153_assigneeUserId</td>
+	<td>//select[@id='_153_assigneeUserId']</td>
 	<td>label=userfn userln</td>
 </tr>
 <tr>
@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
 	<td>There are no pending tasks assigned to you.</td>
 </tr>
 <tr>

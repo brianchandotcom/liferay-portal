@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards</td>
-	<td></td>
+	<td>Message Boards</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -36,62 +36,47 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Post New Thread']</td>
-	<td></td>
+	<td>Post New Thread</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_19_subject</td>
+	<td>//input[@id='_162_subject']</td>
 	<td>MB10 Message10 Subject10</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__162_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__162_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>_19_textArea</td>
+	<td>//body</td>
 	<td>MB10 Message10 Body10</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Submit for Publication']</td>
-	<td></td>
+	<td>Submit for Publication</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=My Posts</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>MB10 Message10 Subject10</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>Joe Bloggs</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[5]/a</td>
-	<td>None</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[6]/a</td>
-	<td>Pending</td>
 </tr>
 
 </tbody></table>

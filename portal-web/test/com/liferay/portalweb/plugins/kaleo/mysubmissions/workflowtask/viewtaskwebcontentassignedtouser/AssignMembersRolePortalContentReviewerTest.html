@@ -16,31 +16,31 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Roles</td>
-	<td></td>
+	<td>Roles</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_128_keywords</td>
+	<td>//input[@name='_128_keywords']</td>
 	<td>Portal</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//td[4]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -61,27 +61,37 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Available</td>
-	<td></td>
+	<td>Available</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_128_toggle_id_enterprise_admin_user_searchkeywords</td>
+	<td>//input[@name='_128_keywords']</td>
 	<td>usersn</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_128_rowIds']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_128_rowIds</td>
+	<td>//input[@name='_128_rowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_128_rowIds']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Associations']</td>
-	<td></td>
+	<td>Update Associations</td>
 </tr>
 <tr>
 	<td>assertText</td>

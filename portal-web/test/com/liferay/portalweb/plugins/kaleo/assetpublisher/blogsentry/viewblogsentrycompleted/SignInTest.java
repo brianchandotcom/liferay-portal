@@ -51,7 +51,7 @@ public class SignInTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_58_login")) {
+				if (selenium.isVisible("//input[@id='_58_login']")) {
 					break;
 				}
 			}
@@ -62,17 +62,20 @@ public class SignInTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_58_login", RuntimeVariables.replace("test@liferay.com"));
+		selenium.type("//input[@id='_58_login']",
+			RuntimeVariables.replace("test@liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_58_password", RuntimeVariables.replace("test"));
+		selenium.type("//input[@id='_58_password']",
+			RuntimeVariables.replace("test"));
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isChecked("_58_rememberMeCheckbox"));
+		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_58_rememberMeCheckbox", RuntimeVariables.replace(""));
-		assertTrue(selenium.isChecked("_58_rememberMeCheckbox"));
+		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+			RuntimeVariables.replace("Remember Me Checkbox"));
+		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

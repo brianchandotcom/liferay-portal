@@ -41,13 +41,15 @@ public class RejectTaskWebContentDetailsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
@@ -73,7 +75,8 @@ public class RejectTaskWebContentDetailsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[3]"));
 		assertFalse(selenium.isTextPresent(
 				"Joe Bloggs completed the task Review."));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+		selenium.clickAt("//td[4]/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

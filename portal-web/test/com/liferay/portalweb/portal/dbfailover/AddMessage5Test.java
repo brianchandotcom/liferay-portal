@@ -46,6 +46,8 @@ public class AddMessage5Test extends BaseTestCase {
 				"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Test Category"),
+			selenium.getText("//tr[3]/td/a"));
 		selenium.click(RuntimeVariables.replace("//tr[3]/td/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -96,6 +98,6 @@ public class AddMessage5Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Message 5 Subject"),
 			selenium.getText("//tr[3]/td/a"));
-		System.out.println("Sample data 5 added successfully.\\\n");
+		System.out.println("Sample data 5 added successfully.\\");
 	}
 }

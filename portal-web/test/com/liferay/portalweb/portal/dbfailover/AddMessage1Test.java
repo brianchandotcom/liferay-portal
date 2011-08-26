@@ -46,6 +46,8 @@ public class AddMessage1Test extends BaseTestCase {
 				"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Test Category"),
+			selenium.getText("//tr[3]/td/a"));
 		selenium.click(RuntimeVariables.replace("//tr[3]/td/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

@@ -42,8 +42,8 @@
 
 <%@ page import="org.apache.commons.collections.map.MultiValueMap" %>
 <%@ page import="org.apache.log4j.Level" %>
-<%@ page import="org.apache.log4j.Logger" %>
 <%@ page import="org.apache.log4j.LogManager" %>
+<%@ page import="org.apache.log4j.Logger" %>
 
 <%@ page import="org.jfree.chart.JFreeChart" %>
 <%@ page import="org.jfree.chart.plot.DialShape" %>

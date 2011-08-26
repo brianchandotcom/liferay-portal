@@ -36,6 +36,7 @@ import com.liferay.portalweb.portlet.documentlibrary.document.editdlfolderdocume
 import com.liferay.portalweb.portlet.documentlibrary.document.editdlfolderdocumenttitlequote.EditDLFolderDocumentTitleQuoteTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.editdlfolderdocumenttitlestar.EditDLFolderDocumentTitleStarTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.editfolderdocument.EditFolderDocumentTests;
+import com.liferay.portalweb.portlet.documentlibrary.document.guestviewpermissionsdldocumentguestviewoff.Guest_ViewPermissionsDLDocumentGuestViewOffTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.lockfolderdocument.LockFolderDocumentTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.searchfolderdocument.SearchFolderDocumentTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.unlockfolderdocument.UnlockFolderDocumentTests;
@@ -75,6 +76,8 @@ public class DocumentTests extends BaseTests {
 		testSuite.addTest(EditDLFolderDocumentTitleQuoteTests.suite());
 		testSuite.addTest(EditDLFolderDocumentTitleStarTests.suite());
 		testSuite.addTest(EditFolderDocumentTests.suite());
+		testSuite.addTest(
+			Guest_ViewPermissionsDLDocumentGuestViewOffTests.suite());
 		testSuite.addTest(LockFolderDocumentTests.suite());
 		//testSuite.addTest(MoveFolderDocumentDuplicateToFolderTests.suite());
 		//testSuite.addTest(MoveFolderDocumentToFolderTests.suite());

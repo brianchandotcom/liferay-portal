@@ -16,57 +16,62 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']/a</td>
+	<td>This page is empty. Edit it to add some text.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=This page is empty. Edit it to add some text.</td>
+	<td>//div[@class='portlet-msg-info']/a</td>
+	<td>This page is empty. Edit it to add some text.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[9]/span/span/a</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[9]/span/span/a</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>Test wiki front page content</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>_36_content</td>
-	<td>==Test Wiki Article==<br /><br />//this is italics//<br /><br />**bold**<br /><br />[[http://www.liferay.com|Link to website]]<br /><br />*this is a list item<br />**this is a sub list item</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>Test wiki front page content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/h2</td>
-	<td>Test Wiki Article#</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//i</td>
-	<td>this is italics</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//b</td>
-	<td>bold</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=Link to website</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li</td>
-	<td>this is a list item this is a sub list item</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Test wiki front page content</td>
 </tr>
 
 </tbody></table>

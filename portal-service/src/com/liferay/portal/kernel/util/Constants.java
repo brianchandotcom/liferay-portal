@@ -110,6 +110,8 @@ public interface Constants {
 
 	public static final String UPDATE = "update";
 
+	public static final String UPDATE_AND_CHECKIN = "update_and_checkin";
+
 	public static final String VIEW = "view";
 
 	public static final String WRITE = "write";

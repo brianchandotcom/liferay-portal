@@ -95,7 +95,9 @@ public class EditFileEntryAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) ||
+				cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
+
 				updateFileEntry(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
@@ -611,6 +613,14 @@ public class EditFileEntryAction extends PortletAction {
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, DLFileEntry.class.getName(),
 				fileEntry.getFileEntryId(), -1);
+		}
+		else if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
+
+			// Update file entry and checkin
+
+			fileEntry = DLAppServiceUtil.updateFileEntryAndCheckIn(
+				fileEntryId, sourceFileName, contentType, title, description,
+				changeLog, majorVersion, file, serviceContext);
 		}
 		else {
 

@@ -2107,6 +2107,53 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return fileEntry;
 	}
 
+	public FileEntry updateFileEntryAndCheckIn(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if (file == null || !file.exists() || (file.length() == 0)) {
+			return updateFileEntryAndCheckIn(
+				fileEntryId, sourceFileName, mimeType, title, description,
+				changeLog, majorVersion, null, 0, serviceContext);
+		}
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		FileEntry fileEntry = repository.updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, serviceContext);
+
+		repository.checkInFileEntry(
+			fileEntryId, majorVersion, changeLog, serviceContext);
+
+		DLProcessorRegistryUtil.trigger(fileEntry);
+
+		return fileEntry;
+	}
+
+	public FileEntry updateFileEntryAndCheckIn(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		FileEntry fileEntry = repository.updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, is, size, serviceContext);
+
+		repository.checkInFileEntry(
+			fileEntryId, majorVersion, changeLog, serviceContext);
+
+		DLProcessorRegistryUtil.trigger(fileEntry);
+
+		return fileEntry;
+	}
+
 	/**
 	 * Updates a file shortcut to the existing file entry. This method is only
 	 * supported by the Liferay repository.

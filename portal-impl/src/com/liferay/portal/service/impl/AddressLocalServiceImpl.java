@@ -19,6 +19,7 @@ import com.liferay.portal.AddressStreetException;
 import com.liferay.portal.AddressZipException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Address;
@@ -28,6 +29,8 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -215,7 +218,11 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		else if (Validator.isNull(city)) {
 			throw new AddressCityException();
 		}
-		else if (Validator.isNull(zip)) {
+		else if (Validator.isNull(zip) &&
+				PrefsPropsUtil.getBoolean(
+					companyId, PropsKeys.USERS_ZIP_CODE_REQUIRED,
+					PropsValues.USERS_ZIP_CODE_REQUIRED)) {
+
 			throw new AddressZipException();
 		}
 

@@ -14,54 +14,59 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Categories</td>
-	<td></td>
+	<td>Categories</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
-	<td></td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Subcategory']</td>
-	<td></td>
+	<td>Add Subcategory</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_name</td>
-	<td>Subcategory Test</td>
+	<td>//input[@id='_34_name']</td>
+	<td>Shopping Subcategory Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_description</td>
-	<td>This is a subcategory test.</td>
+	<td>//textarea[@id='_34_description']</td>
+	<td>Shopping Subcategory Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Subcategory Test<br />This is a subcategory test.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Shopping Subcategory Name<br />Shopping Subcategory Description</td>
 </tr>
 
 </tbody></table>

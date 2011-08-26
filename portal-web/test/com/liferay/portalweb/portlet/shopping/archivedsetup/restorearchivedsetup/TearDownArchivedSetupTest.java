@@ -35,7 +35,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Shopping Test Page")) {
+						if (selenium.isVisible("link=Shopping Test Page")) {
 							break;
 						}
 					}
@@ -47,7 +47,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Shopping Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//strong/a",
@@ -74,8 +74,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+					RuntimeVariables.replace("Configuration"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -83,7 +83,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//span[@class='taglib-text']")) {
+						if (selenium.isVisible("//a[@class='taglib-icon']/span")) {
 							break;
 						}
 					}
@@ -94,7 +94,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//span[@class='taglib-text']",
+				selenium.clickAt("//a[@class='taglib-icon']/span",
 					RuntimeVariables.replace("Archive/Restore Setup"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
@@ -108,6 +108,9 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				selenium.selectFrame("//iframe");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -140,6 +143,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 2:
+				selenium.selectFrame("relative=top");
+				selenium.saveScreenShotAndSource();
 
 				boolean shoppingArchivedSetup2Present = selenium.isElementPresent(
 						"//tr[3]/td[4]/span/ul/li/strong/a");
@@ -150,6 +155,9 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				selenium.selectFrame("//iframe");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -182,6 +190,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 3:
+				selenium.selectFrame("relative=top");
+				selenium.saveScreenShotAndSource();
 
 				boolean shoppingArchivedSetup3Present = selenium.isElementPresent(
 						"//tr[3]/td[4]/span/ul/li/strong/a");
@@ -192,6 +202,9 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				selenium.selectFrame("//iframe");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -224,6 +237,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 4:
+				selenium.selectFrame("relative=top");
+				selenium.saveScreenShotAndSource();
 
 				boolean shoppingArchivedSetup4Present = selenium.isElementPresent(
 						"//tr[3]/td[4]/span/ul/li/strong/a");
@@ -234,6 +249,9 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				selenium.selectFrame("//iframe");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -266,6 +284,8 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 5:
+				selenium.selectFrame("relative=top");
+				selenium.saveScreenShotAndSource();
 
 				boolean shoppingArchivedSetup5Present = selenium.isElementPresent(
 						"//tr[3]/td[4]/span/ul/li/strong/a");
@@ -276,6 +296,9 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				selenium.selectFrame("//iframe");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -308,6 +331,9 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 6:
+				selenium.selectFrame("relative=top");
+				selenium.saveScreenShotAndSource();
+
 			case 100:
 				label = -1;
 			}

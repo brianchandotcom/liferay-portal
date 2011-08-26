@@ -14,58 +14,63 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Cart</td>
-	<td></td>
+	<td>Cart</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br /><br />Availability: In Stock<br /><br /><br />Price for 1 Items and Above:$9.99</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Checkout']</td>
+	<td>Checkout</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_34_billingLastName']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_billingLastName</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_34_billingStreet</td>
+	<td>//input[@id='_34_billingStreet']</td>
 	<td>1234 Sesame Street</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_billingCity</td>
+	<td>//input[@id='_34_billingCity']</td>
 	<td>Gotham City</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_34_billingStateSel</td>
-	<td>label=California</td>
+	<td>//select[@id='_34_billingStateSel']</td>
+	<td>California</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_billingZip</td>
+	<td>//input[@id='_34_billingZip']</td>
 	<td>90028</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_billingCountry</td>
+	<td>//input[@id='_34_billingCountry']</td>
 	<td>USA</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_billingPhone</td>
+	<td>//input[@id='_34_billingPhone']</td>
 	<td>626-589-1453</td>
 </tr>
 <tr>
@@ -80,7 +85,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_34_shipToBillingCheckbox</td>
+	<td>//input[@id='_34_shipToBillingCheckbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -89,39 +94,44 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_34_shipToBillingCheckbox']</td>
+	<td>Same as Billing</td>
+</tr>
+<tr>
 	<td>select</td>
-	<td>_34_ccType</td>
-	<td>label=Visa</td>
+	<td>//select[@id='_34_ccType']</td>
+	<td>Visa</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_ccNumber</td>
+	<td>//input[@id='_34_ccNumber']</td>
 	<td>4111111111111111</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_34_ccExpYear</td>
-	<td>label=2011</td>
+	<td>//select[@id='_34_ccExpYear']</td>
+	<td>2014</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_comments</td>
-	<td>Please take care of my order.</td>
+	<td>//textarea[@id='_34_comments']</td>
+	<td>Shopping Category Item Comments</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Continue']</td>
-	<td></td>
+	<td>Continue</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
 	<td>Your request failed to complete.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>Please enter a valid last name.</td>
-	<td></td>
 </tr>
 
 </tbody></table>

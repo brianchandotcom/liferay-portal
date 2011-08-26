@@ -24,7 +24,7 @@ import com.liferay.portalweb.portlet.shopping.item.addtoshoppingcartcategoryitem
 import com.liferay.portalweb.portlet.shopping.item.deletecategoryitem.DeleteCategoryItemTests;
 import com.liferay.portalweb.portlet.shopping.item.editcategoryitem.EditCategoryItemTests;
 import com.liferay.portalweb.portlet.shopping.item.emptycartcategoryitem.EmptyCartCategoryItemTests;
-import com.liferay.portalweb.portlet.shopping.item.movecategoryitemtocategory.MoveCategoryItemToCategoryTests;
+import com.liferay.portalweb.portlet.shopping.item.movecategory1itemtocategory2.MoveCategory1ItemToCategory2Tests;
 import com.liferay.portalweb.portlet.shopping.item.searchcategoryitem.SearchCategoryItemTests;
 import com.liferay.portalweb.portlet.shopping.item.updatecartcategoryitemquantity.UpdateCartCategoryItemQuantityTests;
 import com.liferay.portalweb.portlet.shopping.item.updatecartcategoryitemquantity0.UpdateCartCategoryItemQuantity0Tests;
@@ -49,7 +49,7 @@ public class ItemTests extends BaseTests {
 		testSuite.addTest(DeleteCategoryItemTests.suite());
 		testSuite.addTest(EditCategoryItemTests.suite());
 		testSuite.addTest(EmptyCartCategoryItemTests.suite());
-		testSuite.addTest(MoveCategoryItemToCategoryTests.suite());
+		testSuite.addTest(MoveCategory1ItemToCategory2Tests.suite());
 		testSuite.addTest(SearchCategoryItemTests.suite());
 		testSuite.addTest(UpdateCartCategoryItemQuantityTests.suite());
 		testSuite.addTest(UpdateCartCategoryItemQuantity0Tests.suite());

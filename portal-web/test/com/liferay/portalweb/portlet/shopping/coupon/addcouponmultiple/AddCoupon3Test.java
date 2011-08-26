@@ -30,7 +30,7 @@ public class AddCoupon3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -41,33 +41,47 @@ public class AddCoupon3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Coupons", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Coupon']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Coupon"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("_34_autoCodeCheckbox"));
-		selenium.clickAt("_34_autoCodeCheckbox", RuntimeVariables.replace(""));
-		assertTrue(selenium.isChecked("_34_autoCodeCheckbox"));
+		assertFalse(selenium.isChecked("//input[@id='_34_autoCodeCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_name", RuntimeVariables.replace("Coupon3 Test3"));
+		selenium.clickAt("//input[@id='_34_autoCodeCheckbox']",
+			RuntimeVariables.replace("Autogenerate Code"));
+		assertTrue(selenium.isChecked("//input[@id='_34_autoCodeCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_description",
-			RuntimeVariables.replace("This is a coupon3 test3."));
+		selenium.type("//input[@id='_34_name']",
+			RuntimeVariables.replace("Shopping Coupon3 Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_discount", RuntimeVariables.replace("0.50"));
+		selenium.type("//textarea[@id='_34_description']",
+			RuntimeVariables.replace("Shopping Coupon3 Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_34_discount']",
+			RuntimeVariables.replace("0.50"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isTextPresent(
-				"Coupon3 Test3\nThis is a coupon3 test3."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Coupon1 Name\nShopping Coupon1 Description"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Coupon2 Name\nShopping Coupon2 Description"),
+			selenium.getText("//tr[4]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Coupon3 Name\nShopping Coupon3 Description"),
+			selenium.getText("//tr[5]/td[3]/a"));
 	}
 }

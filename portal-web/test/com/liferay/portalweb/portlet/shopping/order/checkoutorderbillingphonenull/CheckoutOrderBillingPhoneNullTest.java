@@ -35,7 +35,7 @@ public class CheckoutOrderBillingPhoneNullTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Shopping Test Page")) {
+						if (selenium.isVisible("link=Shopping Test Page")) {
 							break;
 						}
 					}
@@ -47,31 +47,35 @@ public class CheckoutOrderBillingPhoneNullTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Shopping Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Cart", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace(
+						"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"),
+					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//input[@value='Checkout']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkout"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_34_billingStreet",
+				selenium.type("//input[@id='_34_billingStreet']",
 					RuntimeVariables.replace("1234 Sesame Street"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("_34_billingCity",
+				selenium.type("//input[@id='_34_billingCity']",
 					RuntimeVariables.replace("Gotham City"));
 				selenium.saveScreenShotAndSource();
-				selenium.select("_34_billingStateSel",
-					RuntimeVariables.replace("label=California"));
-				selenium.type("_34_billingZip",
+				selenium.select("//select[@id='_34_billingStateSel']",
+					RuntimeVariables.replace("California"));
+				selenium.type("//input[@id='_34_billingZip']",
 					RuntimeVariables.replace("90028"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("_34_billingCountry",
+				selenium.type("//input[@id='_34_billingCountry']",
 					RuntimeVariables.replace("USA"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("_34_billingPhone", RuntimeVariables.replace(""));
+				selenium.type("//input[@id='_34_billingPhone']",
+					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 
 				boolean sameAsBillingChecked = selenium.isChecked(
@@ -83,27 +87,35 @@ public class CheckoutOrderBillingPhoneNullTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_34_shipToBillingCheckbox",
+				selenium.clickAt("//input[@id='_34_shipToBillingCheckbox']",
 					RuntimeVariables.replace(""));
 
 			case 2:
-				selenium.select("_34_ccType",
-					RuntimeVariables.replace("label=Visa"));
-				selenium.type("_34_ccNumber",
+				assertTrue(selenium.isChecked(
+						"//input[@id='_34_shipToBillingCheckbox']"));
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select[@id='_34_ccType']",
+					RuntimeVariables.replace("Visa"));
+				selenium.type("//input[@id='_34_ccNumber']",
 					RuntimeVariables.replace("4111111111111111"));
 				selenium.saveScreenShotAndSource();
-				selenium.select("_34_ccExpYear",
-					RuntimeVariables.replace("label=2011"));
-				selenium.type("_34_comments",
-					RuntimeVariables.replace("Please take care of my order."));
+				selenium.select("//select[@id='_34_ccExpYear']",
+					RuntimeVariables.replace("2014"));
+				selenium.type("//textarea[@id='_34_comments']",
+					RuntimeVariables.replace("Shopping Category Item Comments"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Continue']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Continue"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isTextPresent(
-						"Your request failed to complete."));
-				assertTrue(selenium.isTextPresent("Please enter a valid phone."));
+				assertEquals(RuntimeVariables.replace(
+						"Your request failed to complete."),
+					selenium.getText(
+						"xPath=(//div[@class='portlet-msg-error'])[1]"));
+				assertEquals(RuntimeVariables.replace(
+						"Please enter a valid phone."),
+					selenium.getText(
+						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 
 			case 100:
 				label = -1;

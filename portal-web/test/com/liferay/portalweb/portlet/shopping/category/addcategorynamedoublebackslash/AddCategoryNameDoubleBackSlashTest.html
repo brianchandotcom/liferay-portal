@@ -14,49 +14,49 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Categories</td>
-	<td></td>
+	<td>Categories</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Category']</td>
-	<td></td>
+	<td>Add Category</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_name</td>
-	<td>\\</td>
+	<td>//input[@id='_34_name']</td>
+	<td>Shopping\\ Category\\ Name\\</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_description</td>
-	<td>This is a category test.</td>
+	<td>//textarea[@id='_34_description']</td>
+	<td>Shopping\\ Category\\ Description\\</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
 	<td>Your request failed to complete.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>Please enter a valid name.</td>
-	<td></td>
 </tr>
 
 </tbody></table>

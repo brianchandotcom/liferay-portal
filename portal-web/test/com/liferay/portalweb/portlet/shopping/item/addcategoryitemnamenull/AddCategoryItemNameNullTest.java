@@ -30,7 +30,7 @@ public class AddCategoryItemNameNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -41,44 +41,61 @@ public class AddCategoryItemNameNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Categories", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Categories",
+			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Category Name\nShopping Category Description"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace(
+				"Shopping Category Name\nShopping Category Description"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Item']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Item"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_sku", RuntimeVariables.replace("1111"));
+		selenium.type("//input[@id='_34_sku']", RuntimeVariables.replace("1111"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_name", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_34_name']", RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_description",
-			RuntimeVariables.replace("This is an item test."));
+		selenium.type("//textarea[@id='_34_description']",
+			RuntimeVariables.replace("Shopping Category Item Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_stockQuantity", RuntimeVariables.replace("50"));
+		selenium.type("//textarea[@id='_34_properties']",
+			RuntimeVariables.replace("Shopping Category Item Properties"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_properties",
-			RuntimeVariables.replace("Limited Time Only"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_34_requiresShippingCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("_34_requiresShippingCheckbox"));
-		selenium.clickAt("_34_requiresShippingCheckbox",
-			RuntimeVariables.replace(""));
-		assertTrue(selenium.isChecked("_34_requiresShippingCheckbox"));
+		selenium.clickAt("//input[@id='_34_requiresShippingCheckbox']",
+			RuntimeVariables.replace("Requires Shipping"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_34_requiresShippingCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_price0", RuntimeVariables.replace("$9.99"));
+		selenium.type("//input[@id='_34_stockQuantity']",
+			RuntimeVariables.replace("50"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_minQuantity0", RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_34_price0']",
+			RuntimeVariables.replace("$9.99"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_34_minQuantity0']",
+			RuntimeVariables.replace("1"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid name."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid name."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

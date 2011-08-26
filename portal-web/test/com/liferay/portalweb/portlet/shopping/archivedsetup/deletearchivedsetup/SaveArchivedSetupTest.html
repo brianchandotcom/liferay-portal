@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -45,33 +45,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@class='taglib-text']</td>
+	<td>//a[@class='taglib-icon']/span</td>
 	<td>Archive/Restore Setup</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span[@class='taglib-text']</td>
+	<td>//a[@class='taglib-icon']/span</td>
 	<td>Archive/Restore Setup</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_name</td>
-	<td>Current Setup Test</td>
+	<td>//input[@id='_86_name']</td>
+	<td>Shopping Archive Setup Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr[3]/td[1]</td>
-	<td>Current Setup Test</td>
+	<td>Shopping Archive Setup Name</td>
 </tr>
 <tr>
 	<td>assertText</td>

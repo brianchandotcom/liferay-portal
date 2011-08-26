@@ -14,44 +14,54 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
-	<td></td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br />Shopping: Category Item Properties</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[2]/a</td>
-	<td></td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br />Shopping: Category Item Properties</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Item Test</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[1]/strong</td>
+	<td>Shopping Category Item Name</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>This is an item test.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[3]</td>
+	<td>Shopping Category Item Name<br /> <br /> Shopping Category Item Description <br /> Shopping: Category Item Properties <br /><br /> Price for 1 Items and Above: $9.99<br /> <br /> Availability: In Stock</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add to Shopping Cart']</td>
-	<td></td>
+	<td>Add to Shopping Cart</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>open</td>
@@ -59,34 +69,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Cart</td>
-	<td></td>
+	<td>Cart</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Item Test</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>This is an item test.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Price for 1 Items and Above:$9.99</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br /><br />Availability: In Stock<br /><br /><br />Price for 1 Items and Above:$9.99</td>
 </tr>
 
 </tbody></table>

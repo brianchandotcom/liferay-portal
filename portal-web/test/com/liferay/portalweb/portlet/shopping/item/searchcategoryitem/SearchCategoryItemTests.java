@@ -32,7 +32,6 @@ public class SearchCategoryItemTests extends BaseTests {
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryItemTest.class);
 		testSuite.addTestSuite(SearchCategoryItemTest.class);
-		testSuite.addTestSuite(SearchCategoryItemQuotesTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

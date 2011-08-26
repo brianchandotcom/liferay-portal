@@ -30,7 +30,7 @@ public class AddCategoryItem1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -41,48 +41,63 @@ public class AddCategoryItem1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Categories", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Categories",
+			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Category Name\nShopping Category Description"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace(
+				"Shopping Category Name\nShopping Category Description"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Item']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Item"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_sku", RuntimeVariables.replace("1111"));
+		selenium.type("//input[@id='_34_sku']", RuntimeVariables.replace("1111"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_name", RuntimeVariables.replace("Jona Lyons - Wheel"));
+		selenium.type("//input[@id='_34_name']",
+			RuntimeVariables.replace("Shopping Category Item1 Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_description",
-			RuntimeVariables.replace("Sounds like: The middle of a vacation."));
+		selenium.type("//textarea[@id='_34_description']",
+			RuntimeVariables.replace("Shopping Category Item1 Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_stockQuantity", RuntimeVariables.replace("50"));
+		selenium.type("//textarea[@id='_34_properties']",
+			RuntimeVariables.replace("Shopping Category Item1 Properties"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_properties",
-			RuntimeVariables.replace("Limited Time Only"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_34_requiresShippingCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("_34_requiresShippingCheckbox"));
-		selenium.clickAt("_34_requiresShippingCheckbox",
-			RuntimeVariables.replace(""));
-		assertTrue(selenium.isChecked("_34_requiresShippingCheckbox"));
+		selenium.clickAt("//input[@id='_34_requiresShippingCheckbox']",
+			RuntimeVariables.replace("Requires Shipping"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_34_requiresShippingCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_price0", RuntimeVariables.replace("$9.99"));
+		selenium.type("//input[@id='_34_stockQuantity']",
+			RuntimeVariables.replace("50"));
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("_34_minQuantity0", RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_34_price0']",
+			RuntimeVariables.replace("$9.99"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_minQuantity0", RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_34_minQuantity0']",
+			RuntimeVariables.replace("1"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isTextPresent(
-				"Jona Lyons - Wheel\nSounds like: The middle of a vacation.\nLimited: Time Only"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Category Item1 Name\nShopping Category Item1 Description\nShopping: Category Item1 Properties"),
+			selenium.getText("//td[2]/a"));
 	}
 }

@@ -67,4 +67,9 @@
 	<route>
 		<pattern>{method}/{controller}/{action}.{format}</pattern>
 	</route>
+	<route>
+		<pattern>{method}/{controller}/{action}/{className}/{folderId:\d+}/{fileName:[^/]+}</pattern>
+		<implicit-parameter name="p_p_lifecycle">2</implicit-parameter>
+		<implicit-parameter name="p_p_resource_id">download</implicit-parameter>
+	</route>
 </routes>

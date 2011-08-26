@@ -18,6 +18,7 @@ import com.liferay.portal.freemarker.FreeMarkerTemplateLoader;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -167,7 +168,17 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public String getContextPath() {
 		if (isWARFile()) {
-			return StringPool.SLASH.concat(getServletContextName());
+			String servletContextName = getServletContextName();
+
+			if (servletContextName != null &&
+				ServletContextPool.containsKey(servletContextName)) {
+
+				ServletContext servletContext =
+					ServletContextPool.get(servletContextName);
+
+				return servletContext.getContextPath();
+			}
+			return StringPool.SLASH.concat(servletContextName);
 		}
 		else {
 			return PortalUtil.getPathContext();

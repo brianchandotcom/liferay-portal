@@ -43,7 +43,7 @@ public class ViewBlogsEntryAssignedToMyRolesGuestTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//section"));

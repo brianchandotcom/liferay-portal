@@ -43,13 +43,15 @@ public class WithdrawSubmissionTaskWCAssignedToMyRolesDetailsTest
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
@@ -69,8 +71,8 @@ public class WithdrawSubmissionTaskWCAssignedToMyRolesDetailsTest
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Withdraw Submission"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right null']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right null']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[1]/a",
 			RuntimeVariables.replace("Withdraw Submission"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

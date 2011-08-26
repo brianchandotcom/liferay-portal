@@ -41,13 +41,15 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
@@ -72,8 +74,9 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("No"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Resubmit"),
-			selenium.getText("//span/a/span"));
-		selenium.clickAt("//span/a/span", RuntimeVariables.replace("Resubmit"));
+			selenium.getText("//td[4]/span/a/span"));
+		selenium.clickAt("//td[4]/span/a/span",
+			RuntimeVariables.replace("Resubmit"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

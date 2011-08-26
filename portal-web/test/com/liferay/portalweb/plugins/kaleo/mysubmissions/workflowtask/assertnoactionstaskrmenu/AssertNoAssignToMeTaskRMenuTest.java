@@ -41,13 +41,15 @@ public class AssertNoAssignToMeTaskRMenuTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
@@ -65,8 +67,7 @@ public class AssertNoAssignToMeTaskRMenuTest extends BaseTestCase {
 			RuntimeVariables.replace("Single Approver"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isPartialText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right null']",
-				"Assign to Me"));
+		assertFalse(selenium.isTextPresent(
+				"xPath=(//div[@class='task-activity task-type-1'])[2]/div[2]"));
 	}
 }

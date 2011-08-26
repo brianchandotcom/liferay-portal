@@ -42,12 +42,9 @@ public class ViewMessageCompletedTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("main-content", RuntimeVariables.replace(""));
-		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-		selenium.clickAt("navigation", RuntimeVariables.replace(""));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
 			selenium.getText("//h3/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Body"),
@@ -80,22 +77,24 @@ public class ViewMessageCompletedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Workflow Tasks", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Workflow Tasks",
+			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
-		selenium.clickAt("link=Completed", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Review"),

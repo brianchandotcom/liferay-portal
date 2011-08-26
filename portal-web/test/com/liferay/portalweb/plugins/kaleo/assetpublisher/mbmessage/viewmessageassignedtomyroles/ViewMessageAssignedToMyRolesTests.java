@@ -30,6 +30,8 @@ public class ViewMessageAssignedToMyRolesTests extends BaseTests {
 		testSuite.addTestSuite(ConfigureMessageSingleApproverTest.class);
 		testSuite.addTestSuite(AddPageAPTest.class);
 		testSuite.addTestSuite(AddPortletAPTest.class);
+		testSuite.addTestSuite(AddPageMBTest.class);
+		testSuite.addTestSuite(AddPortletMBTest.class);
 		testSuite.addTestSuite(AddMessageTest.class);
 		testSuite.addTestSuite(ViewMessageAssignedToMyRolesTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

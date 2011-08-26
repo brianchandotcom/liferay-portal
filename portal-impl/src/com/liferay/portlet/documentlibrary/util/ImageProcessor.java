@@ -134,7 +134,8 @@ public class ImageProcessor implements DLProcessor {
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileEntries.contains(fileVersion.getFileEntryId())) {
+		if (!_fileEntries.contains(fileVersion.getFileVersionId()) &&
+			hasLargeImage(fileVersion) && !hasSmallImage(fileVersion)) {
 			_fileEntries.add(fileVersion.getFileVersionId());
 
 			MessageBusUtil.sendMessage(
@@ -191,7 +192,7 @@ public class ImageProcessor implements DLProcessor {
 			imageId, ImageProcessorUtil.getBytes(thumbnail, contentType));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PDFProcessor.class);
+	private static Log _log = LogFactoryUtil.getLog(ImageProcessor.class);
 
 	private static ImageProcessor _instance = new ImageProcessor();
 

@@ -32,7 +32,7 @@ public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
+				if (selenium.isElementPresent("link=Site Name")) {
 					break;
 				}
 			}
@@ -43,8 +43,11 @@ public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
@@ -82,14 +85,14 @@ public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='subject'])[1]/a/strong"));
 		assertEquals(RuntimeVariables.replace("MB Message Body"),
 			selenium.getText("xPath=(//div[@class='thread-body'])[1]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("xPath=(//div[@class='user-details'])[1]/a"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//span[@class='user-name'])[1]", "Joe Bloggs"));
 		assertEquals(RuntimeVariables.replace(
 				"Re: [MB Category Name] MB Message Subject"),
 			selenium.getText("xPath=(//div[@class='subject'])[2]/a/strong"));
-		assertEquals(RuntimeVariables.replace("userfn userln"),
-			selenium.getText("xPath=(//div[@class='user-details'])[2]/a"));
 		assertEquals(RuntimeVariables.replace("MB Message Email Reply"),
 			selenium.getText("xPath=(//div[@class='thread-body'])[2]"));
+		assertEquals(RuntimeVariables.replace("userfn userln"),
+			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
 	}
 }

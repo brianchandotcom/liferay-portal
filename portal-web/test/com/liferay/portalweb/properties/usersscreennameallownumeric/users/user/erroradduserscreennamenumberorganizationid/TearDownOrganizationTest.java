@@ -47,15 +47,16 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				assertTrue(selenium.isPartialText("//a[2]/strong", "Liferay"));
 
-				boolean liferayFirst1 = selenium.isPartialText("//tr[3]/td[2]",
+				boolean liferayFirst1 = selenium.isPartialText("//a[2]/strong",
 						"Liferay");
 
 				if (liferayFirst1) {
@@ -64,7 +65,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -74,7 +75,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -85,23 +86,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -111,7 +113,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -124,9 +126,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -134,7 +136,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 			case 2:
 
-				boolean liferayFirst2 = selenium.isPartialText("//tr[3]/td[2]",
+				boolean liferayFirst2 = selenium.isPartialText("//a[2]/strong",
 						"Liferay");
 
 				if (liferayFirst2) {
@@ -143,7 +145,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -153,7 +155,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -164,23 +166,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -190,7 +193,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -203,9 +206,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -222,7 +225,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -232,7 +235,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -243,23 +246,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -269,7 +273,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -282,9 +286,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -301,7 +305,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -311,7 +315,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -322,23 +326,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -348,7 +353,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -361,9 +366,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -380,7 +385,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -390,7 +395,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -401,23 +406,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -427,7 +433,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -440,9 +446,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -451,7 +457,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 			case 6:
 
 				boolean organization1Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"//tr[4]/td[2]/a[2]/strong");
 
 				if (!organization1Present) {
 					label = 7;
@@ -459,7 +465,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -469,7 +475,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -480,23 +486,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -506,7 +513,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -519,18 +526,16 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 7:
-
 				boolean organization2Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"//tr[4]/td[2]/a[2]/strong");
 
 				if (!organization2Present) {
 					label = 8;
@@ -538,7 +543,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -548,7 +553,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -559,23 +564,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -585,7 +591,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -598,18 +604,16 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 8:
-
 				boolean organization3Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"//tr[4]/td[2]/a[2]/strong");
 
 				if (!organization3Present) {
 					label = 9;
@@ -617,7 +621,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -627,7 +631,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -638,23 +642,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -664,7 +669,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -677,18 +682,16 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 9:
-
 				boolean organization4Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"//tr[4]/td[2]/a[2]/strong");
 
 				if (!organization4Present) {
 					label = 10;
@@ -696,7 +699,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -706,7 +709,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -717,23 +720,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -743,7 +747,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -756,18 +760,16 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 10:
-
 				boolean organization5Present = selenium.isElementPresent(
-						"//tr[4]/td[4]/span/ul/li/strong/a");
+						"//tr[4]/td[2]/a[2]/strong");
 
 				if (!organization5Present) {
 					label = 11;
@@ -775,7 +777,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -785,7 +787,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -796,23 +798,24 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Assign Members"),
+				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("_126_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -822,7 +825,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 							break;
 						}
 					}
@@ -835,14 +838,18 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[12]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
+			case 7:
+			case 8:
+			case 9:
+			case 10:
 			case 11:
 			case 100:
 				label = -1;

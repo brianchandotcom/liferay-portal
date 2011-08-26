@@ -19,14 +19,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Message Boards Test Page</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards Test Page</td>
-	<td></td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -109,8 +114,8 @@
 	<td>MB Message Body</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='user-details'])[1]/a</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//span[@class='user-name'])[1]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
@@ -120,13 +125,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='user-details'])[2]/a</td>
-	<td>userfn userln</td>
+	<td>xPath=(//div[@class='thread-body'])[2]</td>
+	<td>MB Message Email Reply</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='thread-body'])[2]</td>
-	<td>MB Message Email Reply</td>
+	<td>xPath=(//span[@class='user-name'])[2]</td>
+	<td>userfn userln</td>
 </tr>
 
 </tbody></table>

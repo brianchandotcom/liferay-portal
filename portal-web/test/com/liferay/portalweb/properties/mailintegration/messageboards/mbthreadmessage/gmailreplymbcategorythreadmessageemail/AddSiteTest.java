@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.usersscreennameallownumeric.users.user.erroradduserscreennamenumbercommunityid;
+package com.liferay.portalweb.properties.mailintegration.messageboards.mbthreadmessage.gmailreplymbcategorythreadmessageemail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddCommunitiesTest extends BaseTestCase {
-	public void testAddCommunities() throws Exception {
+public class AddSiteTest extends BaseTestCase {
+	public void testAddSite() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -41,12 +41,14 @@ public class AddCommunitiesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -54,7 +56,8 @@ public class AddCommunitiesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Add")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
 					break;
 				}
 			}
@@ -65,7 +68,8 @@ public class AddCommunitiesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+			RuntimeVariables.replace("User"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -75,7 +79,7 @@ public class AddCommunitiesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_134_name")) {
+				if (selenium.isVisible("//input[@id='_134_name']")) {
 					break;
 				}
 			}
@@ -86,17 +90,17 @@ public class AddCommunitiesTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name", RuntimeVariables.replace("Test Community"));
+		selenium.type("//input[@id='_134_name']",
+			RuntimeVariables.replace("Site Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_134_description",
-			RuntimeVariables.replace("This is a test community!"));
-		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//td[1]/a"));
 	}
 }

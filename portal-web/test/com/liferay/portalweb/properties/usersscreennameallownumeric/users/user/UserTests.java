@@ -16,8 +16,8 @@ package com.liferay.portalweb.properties.usersscreennameallownumeric.users.user;
 
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.properties.usersscreennameallownumeric.users.user.adduserscreennamenumber.AddUserScreenNameNumberTests;
-import com.liferay.portalweb.properties.usersscreennameallownumeric.users.user.erroradduserscreennamenumbercommunityid.ErrorAddUserScreenNameNumberCommunityIdTests;
 import com.liferay.portalweb.properties.usersscreennameallownumeric.users.user.erroradduserscreennamenumberorganizationid.ErrorAddUserScreenNameNumberOrganizationIdTests;
+import com.liferay.portalweb.properties.usersscreennameallownumeric.users.user.erroradduserscreennamenumbersiteid.ErrorAddUserScreenNameNumberSiteIdTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,9 +31,9 @@ public class UserTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddUserScreenNameNumberTests.suite());
-		testSuite.addTest(ErrorAddUserScreenNameNumberCommunityIdTests.suite());
 		testSuite.addTest(
 			ErrorAddUserScreenNameNumberOrganizationIdTests.suite());
+		testSuite.addTest(ErrorAddUserScreenNameNumberSiteIdTests.suite());
 
 		return testSuite;
 	}

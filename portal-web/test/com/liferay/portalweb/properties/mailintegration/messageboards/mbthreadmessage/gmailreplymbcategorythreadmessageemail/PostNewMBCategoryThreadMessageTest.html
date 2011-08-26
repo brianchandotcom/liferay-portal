@@ -14,9 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Message Boards Test Page</td>
-	<td>Message Boards Test Page</td>
+	<td>waitForElementPresent</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -44,9 +49,29 @@
 	<td>MB Message Subject</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//textarea[@id='_19_editor']</td>
+	<td>//body</td>
 	<td>MB Message Body</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -57,6 +82,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_19_TabsBack']</td>
+	<td>« Back to MB Category Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -81,7 +111,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[5]/a</td>
-	<td>0</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -105,7 +135,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='user-name']</td>
+	<td>//span[@class='user-name']</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>

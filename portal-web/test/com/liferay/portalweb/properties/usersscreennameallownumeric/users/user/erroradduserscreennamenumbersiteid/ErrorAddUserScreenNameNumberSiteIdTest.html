@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ErrorAddUserScreenNameNumberCommunityIdTest</title>
+<title>ErrorAddUserScreenNameNumberSiteIdTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ErrorAddUserScreenNameNumberCommunityIdTest</td></tr>
+<tr><td rowspan="1" colspan="3">ErrorAddUserScreenNameNumberSiteIdTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -16,82 +16,97 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td></td>
+	<td>link=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[4]/td[6]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Edit</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Edit</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Edit</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>storeFirstNumber</td>
 	<td>//fieldset/div/div[1]/div</td>
-	<td>CommunityID</td>
+	<td>SiteID</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
-	<td></td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_screenName</td>
-	<td>${CommunityID}</td>
+	<td>//input[@id='_125_screenName']</td>
+	<td>${SiteID}</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_emailAddress</td>
+	<td>//input[@id='_125_emailAddress']</td>
 	<td>testA@selenium.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_firstName</td>
+	<td>//input[@id='_125_firstName']</td>
 	<td>testA</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_lastName</td>
+	<td>//input[@id='_125_lastName']</td>
 	<td>testA</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -103,6 +118,7 @@
 	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>Please enter a valid screen name.</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

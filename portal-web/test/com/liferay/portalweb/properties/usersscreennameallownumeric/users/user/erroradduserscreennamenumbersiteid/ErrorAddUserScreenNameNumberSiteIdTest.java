@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.usersscreennameallownumeric.users.user.erroradduserscreennamenumbercommunityid;
+package com.liferay.portalweb.properties.usersscreennameallownumeric.users.user.erroradduserscreennamenumbersiteid;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ErrorAddUserScreenNameNumberCommunityIdTest extends BaseTestCase {
-	public void testErrorAddUserScreenNameNumberCommunityId()
+public class ErrorAddUserScreenNameNumberSiteIdTest extends BaseTestCase {
+	public void testErrorAddUserScreenNameNumberSiteId()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 
@@ -42,13 +42,14 @@ public class ErrorAddUserScreenNameNumberCommunityIdTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//tr[4]/td[6]/span/ul/li/strong/a",
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -69,7 +70,7 @@ public class ErrorAddUserScreenNameNumberCommunityIdTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Edit"),
+		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
@@ -77,9 +78,8 @@ public class ErrorAddUserScreenNameNumberCommunityIdTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
-		String CommunityID = selenium.getFirstNumber(
-				"//fieldset/div/div[1]/div");
-		RuntimeVariables.setValue("CommunityID", CommunityID);
+		String SiteID = selenium.getFirstNumber("//fieldset/div/div[1]/div");
+		RuntimeVariables.setValue("SiteID", SiteID);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -87,7 +87,7 @@ public class ErrorAddUserScreenNameNumberCommunityIdTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Users")) {
+				if (selenium.isElementPresent("link=Users and Organizations")) {
 					break;
 				}
 			}
@@ -98,23 +98,51 @@ public class ErrorAddUserScreenNameNumberCommunityIdTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_screenName",
-			RuntimeVariables.replace(RuntimeVariables.getValue("CommunityID")));
+		selenium.type("//input[@id='_125_screenName']",
+			RuntimeVariables.replace(RuntimeVariables.getValue("SiteID")));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_emailAddress",
+		selenium.type("//input[@id='_125_emailAddress']",
 			RuntimeVariables.replace("testA@selenium.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_firstName", RuntimeVariables.replace("testA"));
+		selenium.type("//input[@id='_125_firstName']",
+			RuntimeVariables.replace("testA"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_125_lastName", RuntimeVariables.replace("testA"));
+		selenium.type("//input[@id='_125_lastName']",
+			RuntimeVariables.replace("testA"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

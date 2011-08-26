@@ -30,7 +30,7 @@ public class AddMBCategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
+				if (selenium.isElementPresent("link=Site Name")) {
 					break;
 				}
 			}
@@ -40,6 +40,9 @@ public class AddMBCategoryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));

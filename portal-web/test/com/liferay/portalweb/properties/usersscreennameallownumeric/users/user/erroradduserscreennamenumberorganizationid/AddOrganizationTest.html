@@ -16,37 +16,62 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Organizations</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Regular Organization</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Regular Organization</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Regular Organization</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_125_name']</td>
+	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_name</td>
+	<td>//input[@id='_125_name']</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_126_type</td>
+	<td>//select[@id='_125_type']</td>
 	<td>label=Regular Organization</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -54,25 +79,51 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=View All</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//span[@title='View']/ul/li/strong/a/span</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>All Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>All Organizations</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>All Organizations</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_keywords</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]//strong</td>
+	<td>//td[2]/a</td>
 	<td>Test Organization</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

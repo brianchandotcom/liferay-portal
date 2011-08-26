@@ -39,6 +39,7 @@ import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -133,8 +134,17 @@ public class ImageProcessor implements DLProcessor {
 		}
 	}
 
+	private boolean _isSupportedImage(FileVersion fileVersion) {
+		if (fileVersion == null) {
+			return false;
+		}
+
+		return _imageMimeTypes.contains(fileVersion.getMimeType());
+	}
+
 	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileEntries.contains(fileVersion.getFileEntryId())) {
+		if (!_fileEntries.contains(fileVersion.getFileVersionId()) &&
+			_isSupportedImage(fileVersion) && !hasImages(fileVersion)) {
 			_fileEntries.add(fileVersion.getFileVersionId());
 
 			MessageBusUtil.sendMessage(
@@ -191,9 +201,12 @@ public class ImageProcessor implements DLProcessor {
 			imageId, ImageProcessorUtil.getBytes(thumbnail, contentType));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PDFProcessor.class);
+	private static Log _log = LogFactoryUtil.getLog(ImageProcessor.class);
 
 	private static ImageProcessor _instance = new ImageProcessor();
+
+	private static List<String> _imageMimeTypes =
+		Arrays.asList(PropsValues.IG_IMAGE_THUMBNAIL_MIME_TYPES);
 
 	private static List<Long> _fileEntries = new Vector<Long>();
 

@@ -46,30 +46,58 @@ public class AddMessage1Test extends BaseTestCase {
 				"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("link=Test Category"));
+		assertEquals(RuntimeVariables.replace("Test Category"),
+			selenium.getText("//tr[3]/td/a"));
+		selenium.click(RuntimeVariables.replace("//tr[3]/td/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace(
-				"//input[@value=\"Post New Thread\"]"));
+				"//input[@value='Post New Thread']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_subject", RuntimeVariables.replace("Test Message 1"));
+		selenium.type("//input[@id='_19_subject']",
+			RuntimeVariables.replace("Test Message 1 Subject"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_textArea",
-			RuntimeVariables.replace("This is Test Message 1."));
+		selenium.clickAt("link=Source", RuntimeVariables.replace("Source"));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__19_editor']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("//input[@value='Publish']"));
+		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
+			RuntimeVariables.replace("Test Message 1 Content"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Test Message 1 Content"),
+			selenium.getText("//div[@class='thread-body']"));
+		assertEquals(RuntimeVariables.replace("Test Message 1 Subject"),
+			selenium.getText("//nav[@id='breadcrumbs']/ul/li[6]/span/a"));
+		assertEquals(RuntimeVariables.replace("Test Category"),
+			selenium.getText("//nav[@id='breadcrumbs']/ul/li[5]/span/a"));
+		selenium.clickAt("//nav[@id='breadcrumbs']/ul/li[5]/span/a",
+			RuntimeVariables.replace("Test Category"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("This is Test Message 1."));
-		assertTrue(selenium.isElementPresent("link=Test Message 1"));
-		selenium.click(RuntimeVariables.replace("link=Test Category"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Test Message 1"));
+		assertEquals(RuntimeVariables.replace("Test Message 1 Subject"),
+			selenium.getText("//tr[3]/td/a"));
 		System.out.println("Sample data 1 added successfully.\n");
 	}
 }

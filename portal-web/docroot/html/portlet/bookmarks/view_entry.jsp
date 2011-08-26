@@ -38,6 +38,7 @@ request.setAttribute("view_entry.jsp-entry", entry);
 	<liferay-ui:header
 		localizeTitle="<%= false %>"
 		title="<%= entry.getName() %>"
+		escapeXml="<%= false %>"
 	/>
 </c:if>
 

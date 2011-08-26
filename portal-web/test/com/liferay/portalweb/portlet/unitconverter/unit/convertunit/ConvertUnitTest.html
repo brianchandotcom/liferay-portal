@@ -14,43 +14,48 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Unit Converter Test Page</td>
-	<td></td>
+	<td>Unit Converter Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Unit Converter Test Page</td>
-	<td></td>
+	<td>Unit Converter Test Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_27_fromValue</td>
+	<td>//input[@name='_27_fromValue']</td>
 	<td>1.0</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_27_fromId</td>
-	<td>label=Inch</td>
+	<td>//select[@name='_27_fromId']</td>
+	<td>Inch</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_27_toId</td>
-	<td>label=Centimeter</td>
+	<td>//select[@name='_27_toId']</td>
+	<td>Centimeter</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@name='_27_type']</td>
+	<td>Length</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Convert']</td>
-	<td></td>
+	<td>Convert</td>
 </tr>
 <tr>
 	<td>waitForValue</td>
-	<td>_27_to_value</td>
+	<td>//input[@name='_27_to_value']</td>
 	<td>2.5399999187200026</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_27_to_value</td>
+	<td>//input[@name='_27_to_value']</td>
 	<td>2.5399999187200026</td>
 </tr>
 

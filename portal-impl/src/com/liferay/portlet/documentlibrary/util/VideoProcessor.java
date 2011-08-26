@@ -198,7 +198,7 @@ public class VideoProcessor implements DLProcessor {
 			_log.error(e, e);
 		}
 		finally {
-			_fileEntries.remove(fileVersion.getFileEntryId());
+			_fileEntries.remove(fileVersion.getFileVersionId());
 		}
 	}
 
@@ -366,7 +366,7 @@ public class VideoProcessor implements DLProcessor {
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileEntries.contains(fileVersion.getFileEntryId()) &&
+		if (!_fileEntries.contains(fileVersion.getFileVersionId()) &&
 			_isSupportedVideo(fileVersion)) {
 
 			_fileEntries.add(fileVersion.getFileVersionId());
@@ -389,9 +389,8 @@ public class VideoProcessor implements DLProcessor {
 
 	private static VideoProcessor _instance = new VideoProcessor();
 
-	private static List<String> _videoMimeTypes = Arrays.asList(
-		"video/avi", "video/mp4", "video/mpeg", "video/quicktime",
-		"video/x-flv", "video/x-ms-wmv", "video/x-msvideo");
+	private static List<String> _videoMimeTypes =
+		Arrays.asList(PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);
 
 	private List<Long> _fileEntries = new Vector<Long>();
 

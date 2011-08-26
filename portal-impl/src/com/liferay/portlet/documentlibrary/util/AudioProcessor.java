@@ -147,7 +147,7 @@ public class AudioProcessor implements DLProcessor {
 			_log.error(e, e);
 		}
 		finally {
-			_fileEntries.remove(fileVersion.getFileEntryId());
+			_fileEntries.remove(fileVersion.getFileVersionId());
 		}
 	}
 
@@ -250,10 +250,10 @@ public class AudioProcessor implements DLProcessor {
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileEntries.contains(fileVersion.getFileEntryId()) &&
+		if (!_fileEntries.contains(fileVersion.getFileVersionId()) &&
 			_isSupportedAudio(fileVersion)) {
 
-			_fileEntries.add(fileVersion.getFileEntryId());
+			_fileEntries.add(fileVersion.getFileVersionId());
 
 			MessageBusUtil.sendMessage(
 				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR,
@@ -273,11 +273,8 @@ public class AudioProcessor implements DLProcessor {
 
 	private static AudioProcessor _instance = new AudioProcessor();
 
-	private static List<String> _audioMimeTypes = Arrays.asList(
-		"audio/basic", "audio/mid", "audio/midi", "audio/mod", "audio/mp3",
-		"audio/mpeg", "audio/mpeg3", "audio/wav", "audio/x-mid", "audio/x-midi",
-		"audio/x-mod", "audio/x-mpeg", "audio/x-pn-realaudio",
-		"audio/x-realaudio", "audio/x-wav");
+	private static List<String> _audioMimeTypes =
+		Arrays.asList(PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);
 
 	private List<Long> _fileEntries = new Vector<Long>();
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -79,6 +80,12 @@ public class ClassPathUtil {
 		URL url = classloader.getResource(pathOfClass);
 
 		String path = URLCodec.decodeURL(url.getPath());
+
+		if (ServerDetector.isWebLogic()) {
+			if (url.getProtocol().equals("zip")) {
+				path = "file:".concat(path);
+			}
+		}
 
 		File dir = null;
 

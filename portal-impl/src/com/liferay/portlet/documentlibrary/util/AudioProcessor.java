@@ -147,7 +147,7 @@ public class AudioProcessor implements DLProcessor {
 			_log.error(e, e);
 		}
 		finally {
-			_fileEntries.remove(fileVersion.getFileEntryId());
+			_fileEntries.remove(fileVersion.getFileVersionId());
 		}
 	}
 
@@ -250,10 +250,10 @@ public class AudioProcessor implements DLProcessor {
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileEntries.contains(fileVersion.getFileEntryId()) &&
+		if (!_fileEntries.contains(fileVersion.getFileVersionId()) &&
 			_isSupportedAudio(fileVersion)) {
 
-			_fileEntries.add(fileVersion.getFileEntryId());
+			_fileEntries.add(fileVersion.getFileVersionId());
 
 			MessageBusUtil.sendMessage(
 				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR,

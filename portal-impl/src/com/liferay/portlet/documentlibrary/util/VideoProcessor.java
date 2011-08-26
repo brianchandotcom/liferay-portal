@@ -198,7 +198,7 @@ public class VideoProcessor implements DLProcessor {
 			_log.error(e, e);
 		}
 		finally {
-			_fileEntries.remove(fileVersion.getFileEntryId());
+			_fileEntries.remove(fileVersion.getFileVersionId());
 		}
 	}
 
@@ -366,7 +366,7 @@ public class VideoProcessor implements DLProcessor {
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileEntries.contains(fileVersion.getFileEntryId()) &&
+		if (!_fileEntries.contains(fileVersion.getFileVersionId()) &&
 			_isSupportedVideo(fileVersion)) {
 
 			_fileEntries.add(fileVersion.getFileVersionId());

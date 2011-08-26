@@ -14,64 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Site Map Test Page</td>
-	<td></td>
+	<td>Site Map Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Site Map Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeText</td>
-	<td>//nav[@class='site-breadcrumbs']/ul/li[1]/span/a</td>
-	<td>guestCommunity</td>
+	<td>Site Map Test Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div/div[3]/div/ul/li[1]/a</td>
-	<td>Manage Pages</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div/div[3]/div/ul/li[1]/a</td>
+	<td>//div[4]/div/ul/li[1]/a</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
+	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>//div/div[3]/a</td>
-	<td>${guestCommunity}</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -85,7 +55,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/ul/li/div/div[1]</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
@@ -94,19 +64,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Children</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div/span/button[1]</td>
+	<td>Add Child Page</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div/span/button[1]</td>
+	<td>Add Child Page</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_88_name_en_US']</td>
+	<td>Name (Required)</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_88_name_en_US</td>
-	<td>Child Test Page</td>
+	<td>//input[@id='_88_name_en_US']</td>
+	<td>Site Map Test Child Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Page']</td>
-	<td></td>
+	<td>Add Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -121,27 +101,27 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Site Map Test Page</td>
-	<td></td>
+	<td>Site Map Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Site Map Test Page</td>
-	<td></td>
+	<td>Site Map Test Page</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Child Test Page</td>
-	<td></td>
+	<td>link=Site Map Test Child Page</td>
+	<td>Site Map Test Child Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Child Test Page</td>
-	<td></td>
+	<td>link=Site Map Test Child Page</td>
+	<td>Site Map Test Child Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//nav/ul/li[3]/span/a</td>
-	<td>Child Test Page</td>
+	<td>Site Map Test Child Page</td>
 </tr>
 
 </tbody></table>

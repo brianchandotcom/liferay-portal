@@ -1658,13 +1658,13 @@
 	</library>
 	<library>
 		<file-name>portal/fontbox.jar</file-name>
-		<version>1.4.0</version>
+		<version>1.6.0</version>
 		<project-name>PDFBox</project-name>
-		<project-url>http://www.pdfbox.org</project-url>
+		<project-url>http://pdfbox.apache.org/</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
-				<copyright-notice>Copyright (c) 2000-2002 The Apache Software Foundation. All rights reserved.</copyright-notice>
+				<copyright-notice>Copyright (c) 2011 The Apache Software Foundation. All rights reserved.</copyright-notice>
 			</license>
 		</licenses>
 	</library>
@@ -2040,13 +2040,13 @@
 	</library>
 	<library>
 		<file-name>portal/jempbox.jar</file-name>
-		<version>1.4.0</version>
+		<version>1.6.0</version>
 		<project-name>PDFBox</project-name>
-		<project-url>http://www.pdfbox.org</project-url>
+		<project-url>http://pdfbox.apache.org/</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
-				<copyright-notice>Copyright (c) 2000-2002 The Apache Software Foundation. All rights reserved.</copyright-notice>
+				<copyright-notice>Copyright (c) 2011 The Apache Software Foundation. All rights reserved.</copyright-notice>
 			</license>
 		</licenses>
 	</library>
@@ -2505,13 +2505,13 @@
 	</library>
 	<library>
 		<file-name>portal/pdfbox.jar</file-name>
-		<version>1.4.0</version>
+		<version>1.6.0</version>
 		<project-name>PDFBox</project-name>
-		<project-url>http://www.pdfbox.org</project-url>
+		<project-url>http://pdfbox.apache.org/</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
-				<copyright-notice>Copyright (c) 2000-2002 The Apache Software Foundation. All rights reserved.</copyright-notice>
+				<copyright-notice>Copyright (c) 2011 The Apache Software Foundation. All rights reserved.</copyright-notice>
 			</license>
 		</licenses>
 	</library>

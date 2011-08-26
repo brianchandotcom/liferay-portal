@@ -25,6 +25,7 @@ import java.util.Map;
  * @author Micha Kiener
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
+ * @author Marcellus Tavares
  */
 public class WorkflowInstanceManagerUtil {
 
@@ -62,6 +63,15 @@ public class WorkflowInstanceManagerUtil {
 	}
 
 	public static int getWorkflowInstanceCount(
+			long companyId, Long userId, String[] assetClassNames,
+			Boolean completed)
+		throws WorkflowException {
+
+		return _workflowInstanceManager.getWorkflowInstanceCount(
+			companyId, userId, assetClassNames, completed);
+	}
+
+	public static int getWorkflowInstanceCount(
 			long companyId, String workflowDefinitionName,
 			Integer workflowDefinitionVersion, Boolean completed)
 		throws WorkflowException {
@@ -84,6 +94,17 @@ public class WorkflowInstanceManagerUtil {
 		return _workflowInstanceManager.getWorkflowInstances(
 			companyId, userId, assetClassName, assetClassPK,
 			completed, start, end, orderByComparator);
+	}
+
+	public static List<WorkflowInstance> getWorkflowInstances(
+			long companyId, Long userId, String[] assetClassNames,
+			Boolean completed, int start, int end,
+			OrderByComparator orderByComparator)
+		throws WorkflowException {
+
+		return _workflowInstanceManager.getWorkflowInstances(
+			companyId, userId, assetClassNames, completed, start, end,
+			orderByComparator);
 	}
 
 	public static List<WorkflowInstance> getWorkflowInstances(

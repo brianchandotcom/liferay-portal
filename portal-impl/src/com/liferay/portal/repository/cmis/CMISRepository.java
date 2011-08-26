@@ -91,6 +91,7 @@ import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.data.AllowableActions;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.data.PropertyData;
+import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
 import org.apache.chemistry.opencmis.commons.enums.Action;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
@@ -237,6 +238,10 @@ public class CMISRepository extends BaseCmisRepository {
 				document.getVersionSeriesCheckedOutId();
 
 			if (Validator.isNotNull(versionSeriesCheckedOutId)) {
+				if (!isMinorVersionsSupported()) {
+					major = true;
+				}
+
 				document = (Document)session.getObject(
 					versionSeriesCheckedOutId);
 
@@ -837,6 +842,32 @@ public class CMISRepository extends BaseCmisRepository {
 		return _cmisRepositoryHandler.isDocumentRetrievableByVersionSeriesId();
 	}
 
+	@Override
+	public boolean isMinorVersionsSupported()
+		throws PortalException, SystemException {
+
+		try {
+			Session session = getSession();
+
+			RepositoryInfo repositoryInfo = session.getRepositoryInfo();
+
+			String productName = repositoryInfo.getProductName();
+
+			return _cmisRepositoryHandler.isMinorVersionsSupported(productName);
+		}
+		catch (PortalException pe) {
+			throw pe;
+		}
+		catch (SystemException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			processException(e);
+
+			throw new RepositoryException(e);
+		}
+	}
+
 	public boolean isRefreshBeforePermissionCheck() {
 		return _cmisRepositoryHandler.isRefreshBeforePermissionCheck();
 	}
@@ -1149,6 +1180,10 @@ public class CMISRepository extends BaseCmisRepository {
 			checkUpdatable(allowableActionsSet, properties, contentStream);
 
 			if (checkOutDocumentObjectId != null) {
+				if (!isMinorVersionsSupported()) {
+					majorVersion = true;
+				}
+
 				document.checkIn(
 					majorVersion, properties, contentStream, changeLog);
 

@@ -324,6 +324,21 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 		return true;
 	}
 
+	public boolean isMinorVersionsSupported(String productName)
+		throws PortalException, SystemException {
+
+		// LPS-20509
+
+		productName = productName.toLowerCase();
+
+		if (productName.contains("filenet") && productName.contains("p8")) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 	public boolean isRefreshBeforePermissionCheck() {
 		return false;
 	}

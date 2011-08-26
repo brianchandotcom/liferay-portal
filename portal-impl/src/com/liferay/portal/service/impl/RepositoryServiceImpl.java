@@ -388,67 +388,17 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		return (BaseRepository)getRepositoryImpl(repositoryId);
 	}
 
-	@Deprecated
+	/**
+	 * @deprecated Replaced by {@link #createRepositoryImpl(Repository, long)}
+	 */
 	protected BaseRepository createRepositoryImpl(
 			long repositoryId, long classNameId)
 		throws PortalException, SystemException {
 
-		BaseRepository baseRepository = null;
+		Repository repository = getRepository(repositoryId);
 
-		Repository repository = null;
-
-		try {
-			repository = getRepository(repositoryId);
-
-			String repositoryImplClassName = PortalUtil.getClassName(
-				classNameId);
-
-			baseRepository = RepositoryFactoryUtil.getInstance(
-				repositoryImplClassName);
-		}
-		catch (Exception e) {
-			throw new RepositoryException(
-				"There is no valid repository class with class name id " +
-					classNameId,
-				e);
-		}
-
-		CMISRepositoryHandler cmisRepositoryHandler = null;
-
-		if (baseRepository instanceof CMISRepositoryHandler) {
-			cmisRepositoryHandler = (CMISRepositoryHandler)baseRepository;
-		}
-		else if (baseRepository instanceof BaseRepositoryProxyBean) {
-			BaseRepositoryProxyBean baseRepositoryProxyBean =
-				(BaseRepositoryProxyBean) baseRepository;
-
-			ClassLoaderBeanHandler classLoaderBeanHandler =
-				(ClassLoaderBeanHandler)Proxy.getInvocationHandler(
-					baseRepositoryProxyBean.getProxyBean());
-
-			Object bean = classLoaderBeanHandler.getBean();
-
-			if (bean instanceof CMISRepositoryHandler) {
-				cmisRepositoryHandler = (CMISRepositoryHandler)bean;
-			}
-		}
-
-		if (cmisRepositoryHandler != null) {
-			CMISRepository cmisRepository = new CMISRepository(
-				cmisRepositoryHandler);
-
-			cmisRepositoryHandler.setCmisRepository(cmisRepository);
-
-			setupRepository(repositoryId, repository, cmisRepository);
-		}
-
-		setupRepository(repositoryId, repository, baseRepository);
-
-		baseRepository.initRepository();
-
-		return baseRepository;
+		return createRepositoryImpl(repository.getRepositoryId(), classNameId);
 	}
-
 
 	protected BaseRepository createRepositoryImpl(
 			Repository repository, long classNameId)

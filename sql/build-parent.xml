@@ -174,6 +174,12 @@
 			<arg value="sample.sql.wiki.page.comment.count=1" />
 			<arg value="sample.sql.wiki.page.count=1" />
 			<arg value="sample.sql.security.enabled=false" />
+			<arg value="sample.sql.document.library.root.folder.count=1" />
+			<arg value="sample.sql.document.library.folder.depth=2" />
+			<arg value="sample.sql.document.library.folder.fan.out.count=1" />
+			<arg value="sample.sql.document.library.file.fan.out.count=1" />
+			<arg value="sample.sql.document.library.file.size=1024" />
+			<arg value="sample.sql.document.library.file.leaf.folder.only=false" />
 		</java>
 
 		<delete dir="${tstamp.value}" />

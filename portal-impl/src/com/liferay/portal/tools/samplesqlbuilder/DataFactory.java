@@ -57,6 +57,24 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portlet.documentlibrary.model.DLFileRank;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
+import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
+import com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentImpl;
+import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkImpl;
+import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
+import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkImpl;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -68,6 +86,8 @@ import com.liferay.portlet.messageboards.model.impl.MBDiscussionImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
+import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.impl.SocialActivityImpl;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.impl.WikiNodeImpl;
@@ -89,7 +109,8 @@ public class DataFactory {
 	public DataFactory(
 		String baseDir, int maxGroupsCount, int maxUserToGroupCount,
 		SimpleCounter counter, SimpleCounter permissionCounter,
-		SimpleCounter resourceCounter, SimpleCounter resourceCodeCounter) {
+		SimpleCounter resourceCounter, SimpleCounter resourceCodeCounter, 
+		SimpleCounter socialActivityCounter) {
 
 		try {
 			_baseDir = baseDir;
@@ -100,6 +121,7 @@ public class DataFactory {
 			_permissionCounter = permissionCounter;
 			_resourceCounter = resourceCounter;
 			_resourceCodeCounter = resourceCodeCounter;
+			_socialActivityCounter = socialActivityCounter;
 
 			initClassNames();
 			initCompany();
@@ -171,6 +193,162 @@ public class DataFactory {
 		contact.setLastName(lastName);
 
 		return contact;
+	}
+
+	public DDMContent addDDMContent(long groupId, long companyId, long userId)
+		throws Exception {
+
+		DDMContent ddmContent = new DDMContentImpl();
+
+		ddmContent.setContentId(_counter.get());
+		ddmContent.setGroupId(groupId);
+		ddmContent.setCompanyId(companyId);
+		ddmContent.setUserId(userId);
+
+		return ddmContent;
+	}
+
+	public DDMStorageLink addDDMStorageLink(
+			long classNameId, long classPK, long structureId)
+		throws Exception {
+
+		DDMStorageLink ddmStorageLink = new DDMStorageLinkImpl();
+
+		ddmStorageLink.setStorageLinkId(_counter.get());
+		ddmStorageLink.setClassNameId(classNameId);
+		ddmStorageLink.setClassPK(classPK);
+		ddmStorageLink.setStructureId(structureId);
+
+		return ddmStorageLink;
+	}
+
+	public DDMStructure addDDMStructure(
+			long groupId, long companyId, long userId, long classNameId)
+		throws Exception {
+
+		DDMStructure ddmStructure = new DDMStructureImpl();
+
+		ddmStructure.setStructureId(_counter.get());
+		ddmStructure.setGroupId(groupId);
+		ddmStructure.setCompanyId(companyId);
+		ddmStructure.setUserId(userId);
+		ddmStructure.setClassNameId(classNameId);
+
+		return ddmStructure;
+	}
+
+	public DDMStructureLink addDDMStructureLink(
+			long classNameId, long classPK, long structureId)
+		throws Exception {
+
+		DDMStructureLink ddmStructureLink = new DDMStructureLinkImpl();
+
+		ddmStructureLink.setStructureLinkId(_counter.get());
+		ddmStructureLink.setClassNameId(classNameId);
+		ddmStructureLink.setClassPK(classPK);
+		ddmStructureLink.setStructureId(structureId);
+
+		return ddmStructureLink;
+	}
+
+	public DLFileEntry addDlFileEntry(
+			long groupId, long companyId, long userId, long folderId,
+			String extension, String mimeType, String name, String title, 
+			String description)
+		throws Exception {
+
+		DLFileEntry dlFileEntry = new DLFileEntryImpl();
+
+		dlFileEntry.setGroupId(groupId);
+		dlFileEntry.setCompanyId(companyId);
+		dlFileEntry.setFileEntryId(_counter.get());
+		dlFileEntry.setUserId(userId);
+		dlFileEntry.setFolderId(folderId);
+		dlFileEntry.setName(name);
+		dlFileEntry.setExtension(extension);
+		dlFileEntry.setMimeType(mimeType);
+		dlFileEntry.setTitle(title);
+		dlFileEntry.setDescription(description);
+		dlFileEntry.setRepositoryId(groupId);
+		dlFileEntry.setSmallImageId(_counter.get());
+		dlFileEntry.setLargeImageId(_counter.get());
+
+		return dlFileEntry;
+	}
+
+	public DLFileEntryMetadata addDLFileEntryMetadata(
+			long ddmStorageId, long ddmStructureId, long fileEntryId, 
+			long fileVersionId)
+		throws Exception {
+
+		DLFileEntryMetadata dlFileEntryMetadata = new DLFileEntryMetadataImpl();
+
+		dlFileEntryMetadata.setFileEntryMetadataId(_counter.get());
+		dlFileEntryMetadata.setDDMStorageId(ddmStorageId);
+		dlFileEntryMetadata.setDDMStructureId(ddmStructureId);
+		dlFileEntryMetadata.setFileEntryId(fileEntryId);
+		dlFileEntryMetadata.setFileVersionId(fileVersionId);
+
+		return dlFileEntryMetadata;
+	}
+
+	public DLFileRank addDLFileRank(
+			long groupId, long companyId, long userId, long fileEntryId)
+		throws Exception {
+
+		DLFileRank dlFileRank = new DLFileRankImpl();
+
+		dlFileRank.setGroupId(groupId);
+		dlFileRank.setCompanyId(companyId);
+		dlFileRank.setFileRankId(_counter.get());
+		dlFileRank.setUserId(userId);
+		dlFileRank.setFileEntryId(fileEntryId);
+
+		return dlFileRank;
+	}
+
+	public DLFileVersion addDLFileVersion(DLFileEntry dlFileEntry)
+		throws Exception {
+
+		DLFileVersion dlFileVersion = new DLFileVersionImpl();
+
+		dlFileVersion.setGroupId(dlFileEntry.getGroupId());
+		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
+		dlFileVersion.setFileVersionId(_counter.get());
+		dlFileVersion.setUserId(dlFileEntry.getUserId());
+		dlFileVersion.setFileEntryId(dlFileEntry.getFileEntryId());
+		dlFileVersion.setExtension(dlFileEntry.getExtension());
+		dlFileVersion.setMimeType(dlFileEntry.getMimeType());
+		dlFileVersion.setSize(dlFileEntry.getSize());
+		dlFileVersion.setTitle(dlFileEntry.getTitle());
+		dlFileVersion.setDescription(dlFileEntry.getDescription());
+		dlFileVersion.setRepositoryId(dlFileEntry.getRepositoryId());
+		dlFileVersion.setSmallImageId(dlFileEntry.getSmallImageId());
+		dlFileVersion.setLargeImageId(dlFileEntry.getLargeImageId());
+		dlFileVersion.setCustom1ImageId(dlFileEntry.getCustom1ImageId());
+		dlFileVersion.setCustom2ImageId(dlFileEntry.getCustom2ImageId());
+		
+
+		return dlFileVersion;
+	}
+
+	public DLFolder addDLFolder(
+			long groupId, long companyId, long userId, long parentFolderId, 
+			String name, String description)
+		throws Exception {
+
+		DLFolder dlFolder = new DLFolderImpl();
+
+		dlFolder.setGroupId(groupId);
+		dlFolder.setCompanyId(companyId);
+		dlFolder.setFolderId(_counter.get());
+		dlFolder.setUserId(userId);
+		dlFolder.setParentFolderId(parentFolderId);
+		dlFolder.setName(name);
+		dlFolder.setDescription(description);
+		dlFolder.setRepositoryId(groupId);
+
+		return dlFolder;
 	}
 
 	public Group addGroup(
@@ -393,6 +571,23 @@ public class DataFactory {
 		return rolesPermissions;
 	}
 
+	public SocialActivity addSocialActivity(
+			long groupId, long companyId, long userId, long classNameId, 
+			long classPK)
+		throws Exception {
+
+		SocialActivity socialActivity = new SocialActivityImpl();
+
+		socialActivity.setActivityId(_socialActivityCounter.get());
+		socialActivity.setGroupId(groupId);
+		socialActivity.setCompanyId(companyId);
+		socialActivity.setUserId(userId);
+		socialActivity.setClassNameId(classNameId);
+		socialActivity.setClassPK(classPK);
+
+		return socialActivity;
+	}
+
 	public User addUser(boolean defaultUser, String screenName)
 		throws Exception {
 
@@ -485,8 +680,20 @@ public class DataFactory {
 		return _counters;
 	}
 
+	public ClassName getDdmContentClassName() {
+		return _ddmContentClassName;
+	}
+
 	public User getDefaultUser() {
 		return _defaultUser;
+	}
+
+	public ClassName getDlFileEntryClassName() {
+		return _dlFileEntryClassName;
+	}
+
+	public ClassName getDlFileEntryMetadataClassName() {
+		return _dlFileEntryMetadataClassName;
 	}
 
 	public ClassName getGroupClassName() {
@@ -585,6 +792,15 @@ public class DataFactory {
 			if (model.equals(BlogsEntry.class.getName())) {
 				_blogsEntryClassName = className;
 			}
+			else if (model.equals(DDMContent.class.getName())) {
+				_ddmContentClassName = className;
+			}
+			else if (model.equals(DLFileEntry.class.getName())) {
+				_dlFileEntryClassName = className;
+			}
+			else if (model.equals(DLFileEntryMetadata.class.getName())) {
+				_dlFileEntryMetadataClassName = className;
+			}
 			else if (model.equals(Group.class.getName())) {
 				_groupClassName = className;
 			}
@@ -650,6 +866,15 @@ public class DataFactory {
 
 		counter.setName(ResourceCode.class.getName());
 		counter.setCurrentId(_resourceCodeCounter.get());
+
+		_counters.add(counter);
+
+		// SocialActivity
+
+		counter = new CounterModelImpl();
+
+		counter.setName(SocialActivity.class.getName());
+		counter.setCurrentId(_socialActivityCounter.get());
 
 		_counters.add(counter);
 	}
@@ -935,7 +1160,10 @@ public class DataFactory {
 	private Company _company;
 	private SimpleCounter _counter;
 	private List<CounterModelImpl> _counters;
+	private ClassName _ddmContentClassName;
 	private User _defaultUser;
+	private ClassName _dlFileEntryClassName;
+	private ClassName _dlFileEntryMetadataClassName;
 	private ClassName _groupClassName;
 	private List<Group> _groups;
 	private Group _guestGroup;
@@ -959,6 +1187,7 @@ public class DataFactory {
 	private Role _siteAdministratorRole;
 	private Role _siteMemberRole;
 	private Role _siteOwnerRole;
+	private SimpleCounter _socialActivityCounter;
 	private ClassName _userClassName;
 	private Object[] _userNames;
 	private Role _userRole;

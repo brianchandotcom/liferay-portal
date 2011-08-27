@@ -27,4 +27,6 @@
 	<#include "mb.ftl">
 
 	<#include "wiki.ftl">
+
+	<#include "dl.ftl">
 </#list>

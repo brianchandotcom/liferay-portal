@@ -34,6 +34,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
 
 import java.util.ArrayList;
@@ -504,20 +505,43 @@ public class ResourcePermissionLocalServiceImpl
 		ResourceAction resourceAction =
 			resourceActionLocalService.getResourceAction(name, actionId);
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P_R(
-				companyId, name, scope, primKey, roleIds);
+		DB db = DBFactoryUtil.getDB();
 
-		if (resourcePermissions.isEmpty()) {
-			return false;
-		}
+		String dbType = db.getType();
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (hasActionId(resourcePermission, resourceAction)) {
+		int roleResourcePermissionQueryThreshold =
+			PropsValues.PERMISSIONS_ROLE_RESOURCE_PERMISSION_QUERY_THRESHOLD;
+
+		if (!dbType.equals(DB.TYPE_DERBY) &&
+			!dbType.equals(DB.TYPE_JDATASTORE) &&
+			!dbType.equals(DB.TYPE_SAP) &&
+			(roleIds.length > roleResourcePermissionQueryThreshold)) {
+
+			int numResourcePermissions =
+				resourcePermissionFinder.countByC_N_S_P_R_A(
+					companyId, name, scope, primKey, roleIds,
+					resourceAction.getBitwiseValue());
+
+			if (numResourcePermissions > 0) {
 				return true;
 			}
 		}
+		else {
+			List<ResourcePermission> resourcePermissions =
+				resourcePermissionPersistence.findByC_N_S_P_R(
+					companyId, name, scope, primKey, roleIds);
 
+			if (resourcePermissions.isEmpty()) {
+				return false;
+			}
+
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				if (hasActionId(resourcePermission, resourceAction)) {
+					return true;
+				}
+			}
+
+		}
 		return false;
 	}
 

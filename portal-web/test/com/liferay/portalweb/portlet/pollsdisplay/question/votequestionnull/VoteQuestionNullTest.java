@@ -30,7 +30,7 @@ public class VoteQuestionNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Polls Display Test Page")) {
+				if (selenium.isVisible("link=Polls Display Test Page")) {
 					break;
 				}
 			}
@@ -42,10 +42,11 @@ public class VoteQuestionNullTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Polls Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Vote']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Vote']",
+			RuntimeVariables.replace("Vote"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Please select an option."),

@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -39,24 +44,24 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_questionId</td>
+	<td>//select[@id='_86_questionId']</td>
 	<td>Question</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_86_questionId</td>
-	<td>label=Test2 Poll2 Question2</td>
+	<td>//select[@id='_86_questionId']</td>
+	<td>PD Question2 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -65,8 +70,8 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_86_questionId</td>
-	<td>Test2 Poll2 Question2</td>
+	<td>//select[@id='_86_questionId']</td>
+	<td>PD Question2 Title</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -74,44 +79,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//span[1]/span/span/input</td>
-	<td></td>
+	<td>//div/span[1]/span/span/input</td>
+	<td>Choice A Radio Button</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//span[2]/span/span/input</td>
-	<td></td>
+	<td>//div/span[2]/span/span/input</td>
+	<td>Choice B Radio Button</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//span[3]/span/span/input</td>
-	<td></td>
+	<td>//div/span[3]/span/span/input</td>
+	<td>Choice C Radio Button</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[1]/span/label</td>
-	<td>a. Test2 Choice2 A2</td>
+	<td>//div/span[1]/span/label</td>
+	<td>a. PD Question2 ChoiceA</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[2]/span/label</td>
-	<td>b. Test2 Choice2 B2</td>
+	<td>//div/span[2]/span/label</td>
+	<td>b. PD Question2 ChoiceB</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[3]/span/label</td>
-	<td>c. Test2 Choice2 C2</td>
+	<td>//div/span[3]/span/label</td>
+	<td>c. PD Question2 ChoiceC</td>
 </tr>
 
 </tbody></table>

@@ -30,7 +30,7 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Polls Display Test Page")) {
+				if (selenium.isVisible("link=Polls Display Test Page")) {
 					break;
 				}
 			}
@@ -42,9 +42,11 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Polls Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -68,7 +70,8 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -76,7 +79,8 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span[@class='taglib-text']")) {
+				if (selenium.isVisible(
+							"//div[@class='archived-setups']/span/a/span")) {
 					break;
 				}
 			}
@@ -87,7 +91,9 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//span[@class='taglib-text']",
+		assertEquals(RuntimeVariables.replace("Archive/Restore Setup"),
+			selenium.getText("//div[@class='archived-setups']/span/a/span"));
+		selenium.clickAt("//div[@class='archived-setups']/span/a/span",
 			RuntimeVariables.replace("Archive/Restore Setup"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -95,7 +101,9 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[3]/td[2]"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[3]"));
+		assertTrue(selenium.isVisible("//tr[3]/td[3]"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 		selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
@@ -106,7 +114,7 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']")) {
 					break;
 				}
 			}
@@ -119,13 +127,13 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Restore"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']",
+			RuntimeVariables.replace("Restore"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
+				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
@@ -135,7 +143,7 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Polls Display Test Page")) {
+				if (selenium.isVisible("link=Polls Display Test Page")) {
 					break;
 				}
 			}
@@ -147,16 +155,18 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Polls Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent("//span[1]/span/span/input"));
-		assertFalse(selenium.isElementPresent("//span[2]/span/span/input"));
-		assertFalse(selenium.isElementPresent("//span[3]/span/span/input"));
-		assertFalse(selenium.isTextPresent("Test Choice A"));
-		assertFalse(selenium.isTextPresent("Test Choice B"));
-		assertFalse(selenium.isTextPresent("Test Choice C"));
-		assertTrue(selenium.isTextPresent(
-				"Please configure this portlet to make it visible to all users."));
+		assertFalse(selenium.isElementPresent("//div/span[1]/span/span/input"));
+		assertFalse(selenium.isElementPresent("//div/span[2]/span/span/input"));
+		assertFalse(selenium.isElementPresent("//div/span[3]/span/span/input"));
+		assertFalse(selenium.isTextPresent("PD Question ChoiceA"));
+		assertFalse(selenium.isTextPresent("PD Question ChoiceB"));
+		assertFalse(selenium.isTextPresent("PD Question ChoiceC"));
+		assertEquals(RuntimeVariables.replace(
+				"Please configure this portlet to make it visible to all users."),
+			selenium.getText(
+				"//div[@class='portlet-configuration portlet-msg-info']"));
 	}
 }

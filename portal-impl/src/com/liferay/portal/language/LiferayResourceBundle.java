@@ -96,7 +96,8 @@ public class LiferayResourceBundle extends ResourceBundle {
 	public Enumeration<String> getKeys() {
 		final Set<String> keys = _map.keySet();
 
-		final Enumeration<String> parentKeys = parent.getKeys();
+		final Enumeration<String> parentKeys =
+			parent == null ? null : parent.getKeys();
 
 		final Iterator<String> itr = keys.iterator();
 

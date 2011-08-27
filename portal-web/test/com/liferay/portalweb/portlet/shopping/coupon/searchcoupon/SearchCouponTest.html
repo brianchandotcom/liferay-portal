@@ -14,19 +14,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Coupons</td>
-	<td></td>
+	<td>Coupons</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Shopping Coupon Name<br />Shopping Coupon Description</td>
 </tr>
 <tr>
 	<td>storeText</td>
@@ -35,18 +40,18 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_code</td>
+	<td>//input[@id='_34_code']</td>
 	<td>${codeSearch}</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Coupon Test<br />This is a coupon test.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Shopping Coupon Name<br />Shopping Coupon Description</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -54,38 +59,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Coupons</td>
-	<td></td>
+	<td>Coupons</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_code</td>
+	<td>//input[@id='_34_code']</td>
 	<td>${codeSearch}</td>
 </tr>
 <tr>
 	<td>typeKeys</td>
-	<td>_34_code</td>
+	<td>//input[@id='_34_code']</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Coupon Test<br />This is a coupon test.</td>
+	<td>Shopping Coupon Name<br />Shopping Coupon Description</td>
 	<td></td>
 </tr>
 

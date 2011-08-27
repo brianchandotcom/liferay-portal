@@ -14,73 +14,88 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
-	<td></td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Item Test<br />This is an item test.<br />Limited: Time Only</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br />Shopping: Category Item Properties</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
-	<td></td>
+	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Edit</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Edit</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_name</td>
-	<td>Item Test Edited</td>
+	<td>//input[@id='_34_name']</td>
+	<td>Shopping Category Item Name Edit</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_description</td>
-	<td>This is an item test. Edited.</td>
+	<td>//textarea[@id='_34_description']</td>
+	<td>Shopping Category Item Description Edit</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_properties</td>
-	<td>Limited: Time Only Edited</td>
+	<td>//textarea[@id='_34_properties']</td>
+	<td>Shopping Category Item Properties Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Item Test Edited<br />This is an item test. Edited.<br />Limited:: Time Only Edited</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Shopping Category Item Name Edit<br />Shopping Category Item Description Edit<br />Shopping: Category Item Properties Edit</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Item Test<br />This is an item test.<br />Limited: Time Only</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br />Shopping: Category Item Properties</td>
 	<td></td>
 </tr>
 

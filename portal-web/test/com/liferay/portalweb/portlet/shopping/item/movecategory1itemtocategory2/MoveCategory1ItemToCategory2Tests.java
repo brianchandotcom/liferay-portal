@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.shopping.item.movecategoryitemtocategory;
+package com.liferay.portalweb.portlet.shopping.item.movecategory1itemtocategory2;
 
 import com.liferay.portalweb.portal.BaseTests;
 
@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MoveCategoryItemToCategoryTests extends BaseTests {
+public class MoveCategory1ItemToCategory2Tests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
@@ -30,8 +30,9 @@ public class MoveCategoryItemToCategoryTests extends BaseTests {
 		testSuite.addTestSuite(AddPageShoppingTest.class);
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
 		testSuite.addTestSuite(AddCategory1Test.class);
-		testSuite.addTestSuite(AddCategoryItemTest.class);
+		testSuite.addTestSuite(AddCategory1ItemTest.class);
 		testSuite.addTestSuite(AddCategory2Test.class);
+		testSuite.addTestSuite(MoveCategory1ItemToCategory2Test.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

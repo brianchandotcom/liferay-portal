@@ -30,7 +30,7 @@ public class EditCouponTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -41,15 +41,20 @@ public class EditCouponTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Coupons", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Coupon Test\nThis is a coupon test."));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Coupon Name\nShopping Coupon Description"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[7]/span/ul/li/strong/a"));
 		selenium.clickAt("//td[7]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -69,21 +74,28 @@ public class EditCouponTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace(
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_name", RuntimeVariables.replace("Coupon Test Edited"));
+		selenium.type("//input[@id='_34_name']",
+			RuntimeVariables.replace("Shopping Coupon Name Edit"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_description",
-			RuntimeVariables.replace("This is a coupon test. Edited."));
+		selenium.type("//textarea[@id='_34_description']",
+			RuntimeVariables.replace("Shopping Coupon Description Edit"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isTextPresent(
-				"Coupon Test\nThis is a coupon test."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Coupon Name Edit\nShopping Coupon Description Edit"),
+			selenium.getText("//td[3]/a"));
 	}
 }

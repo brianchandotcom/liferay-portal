@@ -14,34 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Categories</td>
-	<td></td>
+	<td>Categories</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_keywords1</td>
-	<td>Item Test</td>
+	<td>//input[@id='_34_keywords1']</td>
+	<td>Shopping Category Item Name</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Search Categories']</td>
-	<td></td>
+	<td>Search Categories</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Item Test<br />This is an item test.<br />Limited: Time Only</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br />Shopping: Category Item Properties</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -49,33 +49,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Categories</td>
-	<td></td>
+	<td>Categories</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_keywords1</td>
-	<td>Item1 Test1</td>
+	<td>//input[@id='_34_keywords1']</td>
+	<td>Shopping1 Category1 Item1 Name1</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Search Categories']</td>
-	<td></td>
+	<td>Search Categories</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No entries were found that matched the keywords: Shopping1 Category1 Item1 Name1.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Item Test<br />This is an item test.<br />Limited: Time Only</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br />Shopping: Category Item Properties</td>
 	<td></td>
 </tr>
 

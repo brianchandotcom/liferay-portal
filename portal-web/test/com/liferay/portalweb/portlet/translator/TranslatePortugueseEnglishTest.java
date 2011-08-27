@@ -22,13 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class TranslatePortugueseEnglishTest extends BaseTestCase {
 	public void testTranslatePortugueseEnglish() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Translator Test Page")) {
+				if (selenium.isVisible("link=Translator Test Page")) {
 					break;
 				}
 			}
@@ -39,16 +41,18 @@ public class TranslatePortugueseEnglishTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("link=Translator Test Page"));
+		selenium.clickAt("link=Translator Test Page",
+			RuntimeVariables.replace("Translator Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_26_id",
-			RuntimeVariables.replace("label=Portuguese to English"));
-		selenium.type("_26_text",
+		selenium.type("//textarea[@id='_26_text']",
 			RuntimeVariables.replace(
 				"Meu nome \u00e9 tradutor de Liferay, fluent dentro sobre 6 milh\u00e3o formul\u00e1rios de uma comunica\u00e7\u00e3o."));
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("//input[@value='Translate']"));
+		selenium.select("//select[@id='_26_id']",
+			RuntimeVariables.replace("Portuguese to English"));
+		selenium.clickAt("//input[@value='Translate']",
+			RuntimeVariables.replace("Translate"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(

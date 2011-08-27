@@ -30,7 +30,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Map Test Page")) {
+				if (selenium.isVisible("link=Site Map Test Page")) {
 					break;
 				}
 			}
@@ -41,14 +41,15 @@ public class AssertImportLARTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Map Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Site Map Test Page",
+			RuntimeVariables.replace("Site Map Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Welcome"),
 			selenium.getText("//section/div/div/div/ul/li[1]/a"));
 		assertEquals(RuntimeVariables.replace("Site Map Test Page"),
 			selenium.getText("//section/div/div/div/ul/li[2]/a"));
-		assertEquals(RuntimeVariables.replace("Child Test Page"),
+		assertEquals(RuntimeVariables.replace("Site Map Test Child Page"),
 			selenium.getText("//div/ul/li[2]/ul/li/a"));
 	}
 }

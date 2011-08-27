@@ -30,7 +30,7 @@ public class SearchCategoryItemTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -41,20 +41,24 @@ public class SearchCategoryItemTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Categories", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Categories",
+			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_keywords1", RuntimeVariables.replace("Item Test"));
+		selenium.type("//input[@id='_34_keywords1']",
+			RuntimeVariables.replace("Shopping Category Item Name"));
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace(
 				"//input[@value='Search Categories']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Item Test\nThis is an item test.\nLimited: Time Only"));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Category Item Name\nShopping Category Item Description\nShopping: Category Item Properties"),
+			selenium.getText("//td[2]/a"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -63,7 +67,7 @@ public class SearchCategoryItemTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -74,19 +78,25 @@ public class SearchCategoryItemTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Categories", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Categories",
+			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_34_keywords1", RuntimeVariables.replace("Item1 Test1"));
+		selenium.type("//input[@id='_34_keywords1']",
+			RuntimeVariables.replace("Shopping1 Category1 Item1 Name1"));
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace(
-				"//input[@value='Search Categories']"));
+		selenium.clickAt("//input[@value='Search Categories']",
+			RuntimeVariables.replace("Search Categories"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"No entries were found that matched the keywords: Shopping1 Category1 Item1 Name1."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent(
-				"Item Test\nThis is an item test.\nLimited: Time Only"));
+				"Shopping Category Item Name\nShopping Category Item Description\nShopping: Category Item Properties"));
 	}
 }

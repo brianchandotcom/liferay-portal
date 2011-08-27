@@ -9,29 +9,34 @@
 <tr><td rowspan="1" colspan="3">TranslateEnglishDutchTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Translator Test Page</td>
+	<td>open</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>waitForVisible</td>
 	<td>link=Translator Test Page</td>
-	<td></td>
+	<td>Translator Test Page</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>_26_id</td>
-	<td>label=English to Dutch</td>
+	<td>clickAtAndWait</td>
+	<td>link=Translator Test Page</td>
+	<td>Translator Test Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_26_text</td>
+	<td>//textarea[@id='_26_text']</td>
 	<td>My name is Liferay Translator, fluent in over 6 million forms of communication.</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>select</td>
+	<td>//select[@id='_26_id']</td>
+	<td>English to Dutch</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Translate']</td>
-	<td></td>
+	<td>Translate</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>

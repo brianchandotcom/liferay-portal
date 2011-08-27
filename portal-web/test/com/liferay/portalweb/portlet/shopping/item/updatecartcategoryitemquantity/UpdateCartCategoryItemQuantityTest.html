@@ -14,79 +14,84 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Cart</td>
-	<td></td>
+	<td>Cart</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br /><br />Availability: In Stock<br /><br /><br />Price for 1 Items and Above:$9.99</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select</td>
-	<td>label=10</td>
+	<td>10</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Cart']</td>
-	<td></td>
+	<td>Update Cart</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>$99.90</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//fieldset/div/div[1]/div</td>
+	<td>Subtotal $99.90</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select</td>
-	<td>label=5</td>
+	<td>5</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Cart']</td>
-	<td></td>
+	<td>Update Cart</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>$49.95</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//fieldset/div/div[1]/div</td>
+	<td>Subtotal $49.95</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select</td>
-	<td>label=1</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Cart']</td>
-	<td></td>
+	<td>Update Cart</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>$9.99</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//fieldset/div/div[1]/div</td>
+	<td>Subtotal $9.99</td>
 </tr>
 
 </tbody></table>

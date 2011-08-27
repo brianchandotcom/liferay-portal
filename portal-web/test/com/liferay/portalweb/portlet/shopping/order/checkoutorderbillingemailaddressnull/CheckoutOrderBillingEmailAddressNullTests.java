@@ -31,8 +31,8 @@ public class CheckoutOrderBillingEmailAddressNullTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryItemTest.class);
-		testSuite.addTestSuite(CheckoutOrderBillingEmailAddressNullTest.class);
 		testSuite.addTestSuite(AddToShoppingCartCategoryItemTest.class);
+		testSuite.addTestSuite(CheckoutOrderBillingEmailAddressNullTest.class);
 		testSuite.addTestSuite(TearDownCartTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

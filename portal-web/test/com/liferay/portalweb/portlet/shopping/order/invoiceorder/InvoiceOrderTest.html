@@ -14,19 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Orders</td>
-	<td></td>
+	<td>Orders</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -34,39 +34,39 @@
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Checkout</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Checkout</td>
-	<td></td>
+	<td>//td[4]/a</td>
+	<td>Checkout</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Please take care of my order.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Invoice']</td>
+	<td>Shopping Category Item Comments</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Invoice']</td>
-	<td></td>
+	<td>Invoice</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>undefined</td>
+	<td>Shopping</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>waitForText</td>
+	<td>//form[@id='_34_fm']/span/strong</td>
 	<td>Invoice</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//form[@id='_34_fm']/span/strong</td>
 	<td>Invoice</td>
-	<td></td>
 </tr>
 <tr>
 	<td>close</td>

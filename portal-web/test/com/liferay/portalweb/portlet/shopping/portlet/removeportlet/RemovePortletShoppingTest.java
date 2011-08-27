@@ -41,7 +41,8 @@ public class RemovePortletShoppingTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

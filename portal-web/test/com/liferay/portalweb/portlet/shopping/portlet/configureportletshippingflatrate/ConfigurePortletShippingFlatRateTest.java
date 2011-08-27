@@ -31,7 +31,7 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -42,10 +42,11 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Cart", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Shipping $0.00"),
@@ -58,7 +59,7 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -69,7 +70,8 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -115,22 +117,28 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shipping Calculation",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Shipping Calculation"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_86_shippingFormula",
-			RuntimeVariables.replace("label=Flat Amount"));
-		selenium.type("_86_shipping0", RuntimeVariables.replace("2.49"));
+		selenium.select("//select[@id='_86_shippingFormula']",
+			RuntimeVariables.replace("Flat Amount"));
+		selenium.type("//input[@id='_86_shipping0']",
+			RuntimeVariables.replace("2.49"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_shipping1", RuntimeVariables.replace("5.49"));
+		selenium.type("//input[@id='_86_shipping1']",
+			RuntimeVariables.replace("5.49"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_shipping2", RuntimeVariables.replace("12.49"));
+		selenium.type("//input[@id='_86_shipping2']",
+			RuntimeVariables.replace("12.49"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_shipping3", RuntimeVariables.replace("19.99"));
+		selenium.type("//input[@id='_86_shipping3']",
+			RuntimeVariables.replace("19.99"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_shipping4", RuntimeVariables.replace("25.61"));
+		selenium.type("//input[@id='_86_shipping4']",
+			RuntimeVariables.replace("25.61"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -144,7 +152,7 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -155,10 +163,11 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Cart", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Shipping $2.49"),

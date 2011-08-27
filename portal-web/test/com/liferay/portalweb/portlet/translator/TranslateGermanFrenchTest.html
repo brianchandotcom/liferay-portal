@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>TranslateGermanFrenchTest</title>
@@ -9,29 +9,34 @@
 <tr><td rowspan="1" colspan="3">TranslateGermanFrenchTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Translator Test Page</td>
+	<td>open</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>waitForVisible</td>
 	<td>link=Translator Test Page</td>
-	<td></td>
+	<td>Translator Test Page</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>_26_id</td>
-	<td>label=German to French</td>
+	<td>clickAtAndWait</td>
+	<td>link=Translator Test Page</td>
+	<td>Translator Test Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_26_text</td>
-	<td>Mein Name ist ein Flüssigübersetzer Liferay unter mehr als 6 Millionen Kommunikationsformen. </td>
+	<td>//textarea[@id='_26_text']</td>
+	<td>Mein Name ist ein Flüssigübersetzer Liferay unter mehr als 6 Millionen Kommunikationsformen.</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>select</td>
+	<td>//select[@id='_26_id']</td>
+	<td>German to French</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Translate']</td>
-	<td></td>
+	<td>Translate</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>

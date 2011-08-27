@@ -30,7 +30,7 @@ public class EmptyCartCategoryItemTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Shopping Test Page")) {
+				if (selenium.isVisible("link=Shopping Test Page")) {
 					break;
 				}
 			}
@@ -41,23 +41,33 @@ public class EmptyCartCategoryItemTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Cart", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Item Test"));
-		assertTrue(selenium.isTextPresent("This is an item test."));
-		assertTrue(selenium.isTextPresent("Price for 1 Items and Above:$9.99"));
+		assertEquals(RuntimeVariables.replace(
+				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"),
+			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//input[@value='Empty Cart']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Your cart is empty."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
-		assertFalse(selenium.isTextPresent("Item Test"));
-		assertFalse(selenium.isTextPresent("This is an item test."));
-		assertFalse(selenium.isTextPresent("Price for 1 Items and Above:$9.99"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Your cart is empty."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent(
+				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"));
 	}
 }

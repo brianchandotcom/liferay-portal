@@ -35,7 +35,7 @@ public class TearDownCouponTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Shopping Test Page")) {
+						if (selenium.isVisible("link=Shopping Test Page")) {
 							break;
 						}
 					}
@@ -47,10 +47,11 @@ public class TearDownCouponTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Shopping Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Coupons", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Coupons",
+					RuntimeVariables.replace("Coupons"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -62,7 +63,8 @@ public class TearDownCouponTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_34_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_34_allRowIds']",
+					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");

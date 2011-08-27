@@ -30,7 +30,7 @@ public class RemovePortletUCTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Unit Converter Test Page")) {
+				if (selenium.isVisible("link=Unit Converter Test Page")) {
 					break;
 				}
 			}
@@ -42,7 +42,7 @@ public class RemovePortletUCTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Unit Converter Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Unit Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

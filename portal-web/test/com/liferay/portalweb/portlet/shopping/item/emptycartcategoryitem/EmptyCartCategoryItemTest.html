@@ -14,34 +14,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Cart</td>
-	<td></td>
+	<td>Cart</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Item Test</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>This is an item test.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Price for 1 Items and Above:$9.99</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br /><br />Availability: In Stock<br /><br /><br />Price for 1 Items and Above:$9.99</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -49,23 +39,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>Your cart is empty.</td>
+</tr>
+<tr>
 	<td>assertTextPresent</td>
 	<td>Your request completed successfully.</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Item Test</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>Your cart is empty.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>This is an item test.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>Price for 1 Items and Above:$9.99</td>
+	<td>Shopping Category Item Name<br />Shopping Category Item Description<br /><br />Availability: In Stock<br /><br /><br />Price for 1 Items and Above:$9.99</td>
 	<td></td>
 </tr>
 

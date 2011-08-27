@@ -14,29 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Site Map Test Page</td>
-	<td></td>
+	<td>Site Map Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Site Map Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//section/div/div/div/ul/li[1]/a</td>
-	<td>Welcome</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//section/div/div/div/ul/li[2]/a</td>
 	<td>Site Map Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/ul/li[2]/ul/li/a</td>
-	<td>Child Test Page</td>
+	<td>xPath=(//div[@class='portlet-body']/ul/li/a)[1]</td>
+	<td>Welcome</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-body']/ul/li/a)[2]</td>
+	<td>Site Map Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-body']/ul/li/ul/li/a</td>
+	<td>Site Map Test Child Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -60,23 +60,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_rootLayoutUuid</td>
+	<td>//select[@id='_86_rootLayoutUuid']</td>
 	<td>Root Layout</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_86_rootLayoutUuid</td>
-	<td>label=regexp:-\sSite Map Test Page</td>
+	<td>//select[@id='_86_rootLayoutUuid']</td>
+	<td>regexp:-\sSite Map Test Page</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_86_displayDepth</td>
-	<td>label=1</td>
+	<td>//select[@id='_86_displayDepth']</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -89,19 +89,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Site Map Test Page</td>
-	<td></td>
+	<td>Site Map Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Site Map Test Page</td>
-	<td></td>
+	<td>Site Map Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/ul/li[1]/a</td>
-	<td>Child Test Page</td>
+	<td>//div[@class='portlet-body']/ul/li/a</td>
+	<td>Site Map Test Child Page</td>
 </tr>
 
 </tbody></table>

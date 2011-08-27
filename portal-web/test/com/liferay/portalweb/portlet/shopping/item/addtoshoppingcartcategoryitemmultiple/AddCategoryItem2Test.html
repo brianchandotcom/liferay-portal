@@ -14,69 +14,104 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Categories</td>
-	<td></td>
+	<td>Categories</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
-	<td></td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Item']</td>
-	<td></td>
+	<td>Add Item</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_sku</td>
-	<td>1112</td>
+	<td>//input[@id='_34_sku']</td>
+	<td>2222</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_name</td>
-	<td>M. Saech - How to Play Guitar - for Dummies.</td>
+	<td>//input[@id='_34_name']</td>
+	<td>Shopping Category Item2 Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_description</td>
-	<td>Noted guitarist and performer (for one) lays down how to thrash with the might battle axe of music.</td>
+	<td>//textarea[@id='_34_description']</td>
+	<td>Shopping Category Item2 Description</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_price0</td>
-	<td>$16.99</td>
+	<td>//textarea[@id='_34_properties']</td>
+	<td>Shopping Category Item2 Properties</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_34_requiresShippingCheckbox']</td>
+	<td>Requires Shipping</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_34_requiresShippingCheckbox']</td>
+	<td>Requires Shipping</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_34_requiresShippingCheckbox']</td>
+	<td>Requires Shipping</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_stockQuantity</td>
-	<td>200</td>
+	<td>//input[@id='_34_stockQuantity']</td>
+	<td>50</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_34_price0']</td>
+	<td>$9.99</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_34_minQuantity0']</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>M. Saech - How to Play Guitar - for Dummies.<br />Noted guitarist and performer (for one) lays down how to thrash with the might battle axe of music.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Shopping Category Item1 Name<br />Shopping Category Item1 Description<br />Shopping: Category Item1 Properties</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[2]/a</td>
+	<td>Shopping Category Item2 Name<br />Shopping Category Item2 Description<br />Shopping: Category Item2 Properties</td>
 </tr>
 
 </tbody></table>

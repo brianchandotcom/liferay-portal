@@ -14,94 +14,99 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
-	<td></td>
+	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Categories</td>
-	<td></td>
+	<td>Categories</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
-	<td></td>
+	<td>Shopping Category Name<br />Shopping Category Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Item']</td>
+	<td>Add Item</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_34_sku']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_sku</td>
-	<td></td>
+	<td>//input[@id='_34_name']</td>
+	<td>Shopping Category Item Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_name</td>
-	<td>Item Test</td>
+	<td>//textarea[@id='_34_description']</td>
+	<td>Shopping Category Item Description</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_description</td>
-	<td>This is an item test.</td>
+	<td>//textarea[@id='_34_properties']</td>
+	<td>Shopping Category Item Properties</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_34_requiresShippingCheckbox']</td>
+	<td>Requires Shipping</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_34_requiresShippingCheckbox']</td>
+	<td>Requires Shipping</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_34_requiresShippingCheckbox']</td>
+	<td>Requires Shipping</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_stockQuantity</td>
+	<td>//input[@id='_34_stockQuantity']</td>
 	<td>50</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_properties</td>
-	<td>Limited Time Only</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>_34_requiresShippingCheckbox</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_34_requiresShippingCheckbox</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>_34_requiresShippingCheckbox</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_34_price0</td>
+	<td>//input[@id='_34_price0']</td>
 	<td>$9.99</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_34_minQuantity0</td>
+	<td>//input[@id='_34_minQuantity0']</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
 	<td>Your request failed to complete.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>Please enter a valid item SKU.</td>
-	<td></td>
 </tr>
 
 </tbody></table>

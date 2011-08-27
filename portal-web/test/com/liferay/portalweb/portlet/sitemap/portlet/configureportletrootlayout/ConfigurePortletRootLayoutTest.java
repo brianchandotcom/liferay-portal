@@ -30,7 +30,7 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Map Test Page")) {
+				if (selenium.isVisible("link=Site Map Test Page")) {
 					break;
 				}
 			}
@@ -41,15 +41,16 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Map Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Site Map Test Page",
+			RuntimeVariables.replace("Site Map Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Welcome"),
-			selenium.getText("//section/div/div/div/ul/li[1]/a"));
+			selenium.getText("xPath=(//div[@class='portlet-body']/ul/li/a)[1]"));
 		assertEquals(RuntimeVariables.replace("Site Map Test Page"),
-			selenium.getText("//section/div/div/div/ul/li[2]/a"));
-		assertEquals(RuntimeVariables.replace("Child Test Page"),
-			selenium.getText("//div/ul/li[2]/ul/li/a"));
+			selenium.getText("xPath=(//div[@class='portlet-body']/ul/li/a)[2]"));
+		assertEquals(RuntimeVariables.replace("Site Map Test Child Page"),
+			selenium.getText("//div[@class='portlet-body']/ul/li/ul/li/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -81,7 +82,7 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_86_rootLayoutUuid")) {
+				if (selenium.isVisible("//select[@id='_86_rootLayoutUuid']")) {
 					break;
 				}
 			}
@@ -92,10 +93,12 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_86_rootLayoutUuid",
-			RuntimeVariables.replace("label=regexp:-\\sSite Map Test Page"));
-		selenium.select("_86_displayDepth", RuntimeVariables.replace("label=1"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_86_rootLayoutUuid']",
+			RuntimeVariables.replace("regexp:-\\sSite Map Test Page"));
+		selenium.select("//select[@id='_86_displayDepth']",
+			RuntimeVariables.replace("1"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -109,7 +112,7 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Map Test Page")) {
+				if (selenium.isVisible("link=Site Map Test Page")) {
 					break;
 				}
 			}
@@ -120,10 +123,11 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Map Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Site Map Test Page",
+			RuntimeVariables.replace("Site Map Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Child Test Page"),
-			selenium.getText("//section/div/div/div/ul/li[1]/a"));
+		assertEquals(RuntimeVariables.replace("Site Map Test Child Page"),
+			selenium.getText("//div[@class='portlet-body']/ul/li/a"));
 	}
 }

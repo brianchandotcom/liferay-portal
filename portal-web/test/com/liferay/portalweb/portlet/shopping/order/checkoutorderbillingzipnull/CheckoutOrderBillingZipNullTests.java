@@ -31,8 +31,8 @@ public class CheckoutOrderBillingZipNullTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryItemTest.class);
-		testSuite.addTestSuite(CheckoutOrderBillingZipNullTest.class);
 		testSuite.addTestSuite(AddToShoppingCartCategoryItemTest.class);
+		testSuite.addTestSuite(CheckoutOrderBillingZipNullTest.class);
 		testSuite.addTestSuite(TearDownCartTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

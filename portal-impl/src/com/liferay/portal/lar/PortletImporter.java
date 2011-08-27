@@ -76,7 +76,6 @@ import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
-import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoTable;
@@ -1232,17 +1231,16 @@ public class PortletImporter {
 					ExpandoConverterUtil.getAttributeFromString(
 						type, defaultData);
 
-				ExpandoColumn expandoColumn = null;
-
-				try {
-					expandoColumn = ExpandoColumnLocalServiceUtil.getColumn(
+				ExpandoColumn expandoColumn =
+					ExpandoColumnLocalServiceUtil.getColumn(
 						expandoTable.getTableId(), name);
 
+				if (expandoColumn != null) {
 					ExpandoColumnLocalServiceUtil.updateColumn(
 						expandoColumn.getColumnId(), name, type,
 						defaultDataObject);
 				}
-				catch (NoSuchColumnException nsce) {
+				else {
 					expandoColumn = ExpandoColumnLocalServiceUtil.addColumn(
 						expandoTable.getTableId(), name, type,
 						defaultDataObject);

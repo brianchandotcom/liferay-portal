@@ -1011,6 +1011,10 @@ public class PropsValues {
 
 	public static final String PERMISSIONS_CHECKER = PropsUtil.get(PropsKeys.PERMISSIONS_CHECKER);
 
+	public static boolean PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_READ_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_READ_ENABLED));
+
+	public static boolean PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_WRITE_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PERMISSIONS_CUSTOM_ATTRIBUTE_CHECK_ON_WRITE_ENABLED));
+
 	public static final boolean PERMISSIONS_INLINE_SQL_CHECK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PERMISSIONS_INLINE_SQL_CHECK_ENABLED));
 
 	public static final String PERMISSIONS_LIST_FILTER = PropsUtil.get(PropsKeys.PERMISSIONS_LIST_FILTER);

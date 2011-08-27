@@ -20,6 +20,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -56,6 +57,11 @@ public interface ExpandoBridge {
 	public UnicodeProperties getAttributeProperties(String name);
 
 	public Map<String, Serializable> getAttributes();
+
+	public Map<String, Serializable> getAttributes(Collection<String> names);
+
+	public Map<String, Serializable> getAttributes(
+		Collection<String> names, boolean secure);
 
 	public int getAttributeType(String name);
 

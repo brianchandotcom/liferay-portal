@@ -3888,6 +3888,7 @@
 		<attributes>
 			<transient name="boolean" />
 			<transient name="booleanArray" />
+			<transient name="column" />
 			<transient name="date" />
 			<transient name="dateArray" />
 			<transient name="double" />

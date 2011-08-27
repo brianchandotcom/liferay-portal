@@ -114,6 +114,7 @@ request.setAttribute("view_entry.jsp-entry", entry);
 				image="../file_system/large/bookmark"
 				message="download"
 				url="<%= entry.getUrl() %>"
+				method="get"
 			/>
 
 			<div class="lfr-asset-name">

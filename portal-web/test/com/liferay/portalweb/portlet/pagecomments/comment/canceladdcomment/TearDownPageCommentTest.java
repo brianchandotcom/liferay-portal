@@ -35,8 +35,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"link=Page Comments Test Page")) {
+						if (selenium.isVisible("link=Page Comments Test Page")) {
 							break;
 						}
 					}
@@ -48,12 +47,12 @@ public class TearDownPageCommentTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Page Comments Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Page Comments Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
 				boolean pageComment1Present = selenium.isElementPresent(
-						"link=Delete");
+						"//li[4]/span/a/span");
 
 				if (!pageComment1Present) {
 					label = 2;
@@ -61,8 +60,11 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
-				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//li[4]/span/a/span"));
+				selenium.clickAt("//li[4]/span/a/span",
+					RuntimeVariables.replace("Delete"));
+				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
@@ -70,7 +72,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 			case 2:
 
 				boolean pageComment2Present = selenium.isElementPresent(
-						"link=Delete");
+						"//li[4]/span/a/span");
 
 				if (!pageComment2Present) {
 					label = 3;
@@ -78,8 +80,11 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
-				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//li[4]/span/a/span"));
+				selenium.clickAt("//li[4]/span/a/span",
+					RuntimeVariables.replace("Delete"));
+				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
@@ -87,7 +92,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 			case 3:
 
 				boolean pageComment3Present = selenium.isElementPresent(
-						"link=Delete");
+						"//li[4]/span/a/span");
 
 				if (!pageComment3Present) {
 					label = 4;
@@ -95,8 +100,11 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
-				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//li[4]/span/a/span"));
+				selenium.clickAt("//li[4]/span/a/span",
+					RuntimeVariables.replace("Delete"));
+				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
@@ -104,7 +112,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 			case 4:
 
 				boolean pageComment4Present = selenium.isElementPresent(
-						"link=Delete");
+						"//li[4]/span/a/span");
 
 				if (!pageComment4Present) {
 					label = 5;
@@ -112,8 +120,11 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
-				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//li[4]/span/a/span"));
+				selenium.clickAt("//li[4]/span/a/span",
+					RuntimeVariables.replace("Delete"));
+				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
@@ -121,7 +132,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 			case 5:
 
 				boolean pageComment5Present = selenium.isElementPresent(
-						"link=Delete");
+						"//li[4]/span/a/span");
 
 				if (!pageComment5Present) {
 					label = 6;
@@ -129,8 +140,11 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
-				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//li[4]/span/a/span"));
+				selenium.clickAt("//li[4]/span/a/span",
+					RuntimeVariables.replace("Delete"));
+				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();

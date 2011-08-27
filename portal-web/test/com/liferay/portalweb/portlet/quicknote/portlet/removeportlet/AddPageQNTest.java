@@ -66,7 +66,8 @@ public class AddPageQNTest extends BaseTestCase {
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Quick Note Test Page"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -86,7 +87,7 @@ public class AddPageQNTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Quick Note Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Quick Note Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

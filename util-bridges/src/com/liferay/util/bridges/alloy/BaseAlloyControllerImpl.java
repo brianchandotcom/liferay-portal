@@ -81,6 +81,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 			executeRender(method);
 		}
+		else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+			executeResource(method);
+		}
 	}
 
 	public void setPageContext(PageContext pageContext) {
@@ -152,6 +155,12 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		else {
 			portletRequestDispatcher.include(
 				portletRequest, portletResponse);
+		}
+	}
+
+	protected void executeResource(Method method) throws Exception {
+		if (method != null) {
+			method.invoke(this);
 		}
 	}
 

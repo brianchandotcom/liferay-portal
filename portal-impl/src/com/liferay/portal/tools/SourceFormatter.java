@@ -1671,7 +1671,9 @@ public class SourceFormatter {
 		fileName = fileName.replaceFirst(
 			"portal-web/docroot", StringPool.BLANK);
 
-		if (fileName.endsWith("init.jsp")) {
+		if (fileName.endsWith("init.jsp") ||
+			fileName.contains("init-ext.jsp")) {
+
 			_addJSPReferenceFileNames(fileName, includeFileNames);
 		}
 

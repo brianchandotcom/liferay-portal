@@ -62,7 +62,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Thread
 
-		long threadId = counterLocalService.increment();
+		long threadId = message.getThreadId();
+
+		if (threadId <= 0) {
+			threadId = counterLocalService.increment();
+		}
 
 		MBThread thread = mbThreadPersistence.create(threadId);
 

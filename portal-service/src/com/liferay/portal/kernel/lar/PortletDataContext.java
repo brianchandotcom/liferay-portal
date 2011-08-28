@@ -75,6 +75,10 @@ public interface PortletDataContext extends Serializable {
 	public void addComments(
 		String className, long classPK, List<MBMessage> messages);
 
+	public void addExpando(
+			Element element, String path, ClassedModel classedModel)
+		throws PortalException, SystemException;
+
 	public void addLocks(Class<?> clazz, String key)
 		throws PortalException, SystemException;
 

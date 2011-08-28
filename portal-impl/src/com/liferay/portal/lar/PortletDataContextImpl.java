@@ -369,6 +369,41 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_commentsMap.put(getPrimaryKeyString(className, classPK), messages);
 	}
 
+	public void addExpando(
+			Element element, String path, ClassedModel classedModel)
+		throws PortalException, SystemException {
+
+		Class<?> clazz = classedModel.getModelClass();
+
+		String className = clazz.getName();
+
+		if (!_expandoColumnsMap.containsKey(className)) {
+			List<ExpandoColumn> expandoColumns =
+				ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
+					_companyId, className);
+
+			for (ExpandoColumn expandoColumn : expandoColumns) {
+				addPermissions(
+				ExpandoColumn.class, expandoColumn.getColumnId());
+			}
+
+			_expandoColumnsMap.put(className, expandoColumns);
+		}
+
+		ExpandoBridge expandoBridge = classedModel.getExpandoBridge();
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			expandoBridge.getAttributes();
+
+		if (!expandoBridgeAttributes.isEmpty()) {
+			String expandoPath = getExpandoPath(path);
+
+			element.addAttribute("expando-path", expandoPath);
+
+			addZipEntry(expandoPath, expandoBridgeAttributes);
+		}
+	}
+
 	public void addLocks(Class<?> clazz, String key)
 		throws PortalException, SystemException {
 
@@ -1204,41 +1239,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public void setStartDate(Date startDate) {
 		_startDate = startDate;
-	}
-
-	protected void addExpando(
-			Element element, String path, ClassedModel classedModel)
-		throws PortalException, SystemException {
-
-		Class<?> clazz = classedModel.getModelClass();
-
-		String className = clazz.getName();
-
-		if (!_expandoColumnsMap.containsKey(className)) {
-			List<ExpandoColumn> expandoColumns =
-				ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
-					_companyId, className);
-
-			for (ExpandoColumn expandoColumn : expandoColumns) {
-				addPermissions(
-				ExpandoColumn.class, expandoColumn.getColumnId());
-			}
-
-			_expandoColumnsMap.put(className, expandoColumns);
-		}
-
-		ExpandoBridge expandoBridge = classedModel.getExpandoBridge();
-
-		Map<String, Serializable> expandoBridgeAttributes =
-			expandoBridge.getAttributes();
-
-		if (!expandoBridgeAttributes.isEmpty()) {
-			String expandoPath = getExpandoPath(path);
-
-			element.addAttribute("expando-path", expandoPath);
-
-			addZipEntry(expandoPath, expandoBridgeAttributes);
-		}
 	}
 
 	protected ServiceContext createServiceContext(

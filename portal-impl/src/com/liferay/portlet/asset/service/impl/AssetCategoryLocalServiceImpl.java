@@ -526,7 +526,7 @@ public class AssetCategoryLocalServiceImpl
 			throw new AssetCategoryNameException();
 		}
 
-		List<AssetCategory> categories =  assetCategoryPersistence.findByP_N(
+		List<AssetCategory> categories = assetCategoryPersistence.findByP_N(
 			parentCategoryId, name);
 
 		if ((categories.size() > 0) &&

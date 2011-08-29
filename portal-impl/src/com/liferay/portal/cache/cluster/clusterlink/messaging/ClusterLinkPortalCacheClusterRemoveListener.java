@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
-import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
 
 /**
  * @author Shuyang Zhou
@@ -62,23 +62,23 @@ public class ClusterLinkPortalCacheClusterRemoveListener
 
 		String cacheName = portalCacheClusterEvent.getCacheName();
 
-		Cache cache = _portalCacheManager.getCache(cacheName);
+		Ehcache ehcache = _portalCacheManager.getEhcache(cacheName);
 
-		if (cache == null) {
-			cache = _hibernateCacheManager.getCache(cacheName);
+		if (ehcache == null) {
+			ehcache = _hibernateCacheManager.getEhcache(cacheName);
 		}
 
-		if (cache != null) {
+		if (ehcache != null) {
 			PortalCacheClusterEventType portalCacheClusterEventType =
 				portalCacheClusterEvent.getEventType();
 
 			if (portalCacheClusterEventType.equals(
 					PortalCacheClusterEventType.REMOVEALL)) {
 
-				cache.removeAll(true);
+				ehcache.removeAll(true);
 			}
 			else {
-				cache.remove(portalCacheClusterEvent.getElementKey(), true);
+				ehcache.remove(portalCacheClusterEvent.getElementKey(), true);
 			}
 		}
 	}

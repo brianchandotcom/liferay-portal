@@ -582,7 +582,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		PortletApp portletApp = portlet.getPortletApp();
 
-		if (portletApp.isWARFile() && !portlet.isPrivateSessionAttributes()) {
+		if (!portlet.isPrivateSessionAttributes() || 
+			(portletApp.isWARFile() && !portlet.isPrivateSessionAttributes())) {
 			portalSessionShared = true;
 		}
 

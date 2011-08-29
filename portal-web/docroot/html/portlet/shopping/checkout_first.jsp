@@ -71,8 +71,8 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 
 	<aui:model-context bean="<%= order %>" model="<%= ShoppingOrder.class %>" />
 
-	<liferay-ui:panel-container extended="<%= true %>" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="billing-address">
+	<liferay-ui:panel-container extended="<%= true %>" id="shoppingCheckoutPanelContainer" persistState="<%= true %>">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutBillingAddressPanel" persistState="<%= true %>" title="billing-address">
 			<liferay-ui:error exception="<%= BillingCityException.class %>" message="please-enter-a-valid-city" />
 			<liferay-ui:error exception="<%= BillingCountryException.class %>" message="please-enter-a-valid-country" />
 			<liferay-ui:error exception="<%= BillingEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
@@ -147,7 +147,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 			</aui:fieldset>
 		</liferay-ui:panel>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="shipping-address">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutShippingAddressPanel" persistState="<%= true %>" title="shipping-address">
 			<liferay-ui:error exception="<%= ShippingCityException.class %>" message="please-enter-a-valid-city" />
 			<liferay-ui:error exception="<%= ShippingCountryException.class %>" message="please-enter-a-valid-country" />
 			<liferay-ui:error exception="<%= ShippingEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
@@ -230,7 +230,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 		%>
 
 		<c:if test="<%= !shoppingPrefs.usePayPal() && (ccTypes.length > 0) %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="credit-card">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutCreditCardPanel" persistState="<%= true %>" title="credit-card">
 				<liferay-ui:error exception="<%= CCExpirationException.class %>" message="please-enter-a-valid-credit-card-expiration-date" />
 				<liferay-ui:error exception="<%= CCNameException.class %>" message="please-enter-the-full-name-exactly-as-it-is-appears-on-your-credit-card" />
 				<liferay-ui:error exception="<%= CCNumberException.class %>" message="please-enter-a-valid-credit-card-number" />
@@ -311,7 +311,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 			</liferay-ui:panel>
 		</c:if>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="comments">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutCommentsPanel" persistState="<%= true %>" title="comments">
 			<aui:fieldset>
 				<aui:input label="" name="comments" />
 			</aui:fieldset>

@@ -369,23 +369,23 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 					</c:otherwise>
 				</c:choose>
 
-				<liferay-ui:panel-container cssClass="export-pages-panel-container" extended="<%= true %>" persistState="<%= true %>">
-					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="pages">
+				<liferay-ui:panel-container cssClass="export-pages-panel-container" extended="<%= true %>" id="layoutsAdminExportPagesPanelContainer" persistState="<%= true %>">
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="layoutsAdminExportPagesPagesPanel" persistState="<%= true %>" title="pages">
 						<%@ include file="/html/portlet/layouts_admin/publish_layouts_select_pages.jspf" %>
 					</liferay-ui:panel>
 
-					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" persistState="<%= true %>" title="options">
+					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesOptionsPanel" persistState="<%= true %>" title="options">
 						<%@ include file="/html/portlet/layouts_admin/publish_layouts_options.jspf" %>
 					</liferay-ui:panel>
 
 					<c:if test="<%= !localPublishing %>">
-						<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" persistState="<%= true %>" title="remote-live-connection-settings">
+						<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesConnectionPanel" persistState="<%= true %>" title="remote-live-connection-settings">
 							<%@ include file="/html/portlet/layouts_admin/publish_layouts_remote_options.jspf" %>
 						</liferay-ui:panel>
 					</c:if>
 
 					<c:if test="<%= schedule %>">
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="schedule">
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="layoutsAdminExportPagesSchedulePanel" persistState="<%= true %>" title="schedule">
 							<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
 						</liferay-ui:panel>
 					</c:if>

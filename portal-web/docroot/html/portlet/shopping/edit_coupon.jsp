@@ -103,8 +103,8 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 
-	<liferay-ui:panel-container extended="<%= true %>" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="discount">
+	<liferay-ui:panel-container extended="<%= true %>" id="shoppingEditCouponPanelContainer" persistState="<%= true %>">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingEditCouponDiscountPanel" persistState="<%= true %>" title="discount">
 			<liferay-ui:message arguments="<%= currencyFormat.format(0) %>" key="coupons-can-be-set-to-only-apply-to-orders-above-a-minimum-amount" translateArguments="<%= false %>" />
 
 			<br /><br />
@@ -135,7 +135,7 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 			</aui:fieldset>
 		</liferay-ui:panel>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="limits">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingEditCouponLimitsPanel" persistState="<%= true %>" title="limits">
 			<liferay-ui:error exception="<%= CouponLimitCategoriesException.class %>">
 
 				<%

@@ -293,10 +293,6 @@
 	}
 }
 
-.lfr-position-helper {
-	z-index: 10000;
-}
-
 .ie6, .ie7 {
 	.portlet-asset-category-admin {
 		.vocabulary-content-wrapper {

@@ -305,10 +305,6 @@
 	}
 }
 
-.lfr-position-helper {
-	z-index: 10000;
-}
-
 .ie {
 	.portlet-asset-tag-admin {
 		.tag-item a {

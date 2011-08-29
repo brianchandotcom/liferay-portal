@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Recent Bloggers Test Page</td>
-	<td></td>
+	<td>Recent Bloggers Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Recent Bloggers Test Page</td>
-	<td></td>
+	<td>Recent Bloggers Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -39,24 +44,24 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_displayStyle</td>
+	<td>//select[@id='_86_displayStyle']</td>
 	<td>Display Style</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_86_displayStyle</td>
-	<td>label=User Name and Image</td>
+	<td>//select[@id='_86_displayStyle']</td>
+	<td>User Name and Image</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -65,7 +70,7 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_86_displayStyle</td>
+	<td>//select[@id='_86_displayStyle']</td>
 	<td>User Name and Image</td>
 </tr>
 

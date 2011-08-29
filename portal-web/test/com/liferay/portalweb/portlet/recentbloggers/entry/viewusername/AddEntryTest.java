@@ -30,7 +30,7 @@ public class AddEntryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Blogs Test Page")) {
+				if (selenium.isVisible("link=Blogs Test Page")) {
 					break;
 				}
 			}
@@ -41,16 +41,17 @@ public class AddEntryTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Blog Entry']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Blog Entry"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_33_title", RuntimeVariables.replace("Title"));
+		selenium.type("//input[@id='_33_title']",
+			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -71,19 +72,19 @@ public class AddEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Content."));
+		selenium.type("//body", RuntimeVariables.replace("Blogs Entry Content"));
 		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Title"),
-			selenium.getText("//div[2]/div[1]/div[1]/a"));
-		assertEquals(RuntimeVariables.replace("Content."),
-			selenium.getText("//p"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
+			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

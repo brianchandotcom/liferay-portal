@@ -1,0 +1,64 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SOFr_ViewMicroblogsEntryActivityFriendsTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOFr_ViewMicroblogsEntryActivityFriendsTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/socialofficefriendsn/home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div[1]/div/div/div/ul[1]/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div[1]/div/div/div/ul[1]/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/section/header/h1/span</td>
+	<td>Activities</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[1]/span/span/a</td>
+	<td>Friends</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//li[1]/span/span/a</td>
+	<td>Friends</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[1]/span[1]/img</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[2]/span/img</td>
+	<td>Microblogs icon</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section/div/div/div/div/div/div[2]/div[1]</td>
+	<td>Microblogs Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[2]/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

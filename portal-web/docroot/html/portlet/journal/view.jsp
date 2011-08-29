@@ -123,7 +123,9 @@ portletURL.setParameter("tabs1", tabs1);
 			<aui:input name="groupId" type="hidden" />
 			<aui:input name="deleteStructureIds" type="hidden" />
 
-			<liferay-ui:error exception="<%= RequiredStructureException.class %>" message="required-structures-could-not-be-deleted" />
+			<liferay-ui:error exception="<%= StructureRequiredByJournalException.class %>" message="structures-could-not-be-deleted-there-are-web-contents-using-them" />
+			<liferay-ui:error exception="<%= StructureRequiredByStructureException.class %>" message="structures-could-not-be-deleted-there-are-other-structures--using-them" />
+			<liferay-ui:error exception="<%= StructureRequiredByTemplateException.class %>" message="structures-could-not-be-deleted-there-are-templates-using-them" />
 
 			<%
 			StructureSearch searchContainer = new StructureSearch(renderRequest, portletURL);
@@ -199,7 +201,7 @@ portletURL.setParameter("tabs1", tabs1);
 			<aui:input name="groupId" type="hidden" />
 			<aui:input name="deleteTemplateIds" type="hidden" />
 
-			<liferay-ui:error exception="<%= RequiredTemplateException.class %>" message="required-templates-could-not-be-deleted" />
+			<liferay-ui:error exception="<%= RequiredTemplateException.class %>" message="templates-could-not-be-deleted" />
 
 			<%
 			TemplateSearch searchContainer = new TemplateSearch(renderRequest, portletURL);

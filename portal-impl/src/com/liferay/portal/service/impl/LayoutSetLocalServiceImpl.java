@@ -318,6 +318,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, String virtualHostname)
 		throws PortalException, SystemException {
 
+		validate(groupId, privateLayout, virtualHostname);
+
 		virtualHostname = virtualHostname.trim().toLowerCase();
 
 		if (virtualHostname.startsWith(Http.HTTP_WITH_SLASH) ||
@@ -357,6 +359,23 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 
 		return layoutSet;
+	}
+
+	protected void validate(
+			long groupId, boolean privateLayout, String virtualHostname)
+		throws PortalException, SystemException {
+
+		LayoutSet oppositeLayoutSet = layoutSetPersistence.findByG_P(
+			groupId, !privateLayout);
+
+		VirtualHost oppositeVirtualHost = virtualHostPersistence.fetchByC_L(
+			oppositeLayoutSet.getCompanyId(),
+			oppositeLayoutSet.getLayoutSetId() );
+
+		if (oppositeVirtualHost != null &&
+				oppositeVirtualHost.getHostname().equals(virtualHostname)) {
+			throw new LayoutSetVirtualHostException();
+		}
 	}
 
 }

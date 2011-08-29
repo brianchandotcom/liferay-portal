@@ -75,6 +75,8 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 <liferay-ui:error exception="<%= LayoutSetVirtualHostException.class %>">
 	<liferay-ui:message key="please-enter-a-unique-virtual-host" />
 
+	<liferay-ui:message key="please-enter-different-virtualhost-names" />
+
 	<liferay-ui:message key="virtual-hosts-must-be-valid-domain-names" />
 </liferay-ui:error>
 

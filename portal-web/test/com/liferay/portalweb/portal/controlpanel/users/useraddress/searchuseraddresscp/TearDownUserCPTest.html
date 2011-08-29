@@ -80,18 +80,18 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user1Deactivated</td>
+	<td>eval(selenium.isPartialText('//div[5]','No users were found'))</td>
+	<td>UsersExists</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${user1Deactivated}</td>
-	<td>User1NotDeactivated</td>
+	<td>${UsersExists}</td>
+	<td>UsersDoNotExists</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Check All</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -105,127 +105,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>User1NotDeactivated</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user2Deactivated</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user2Deactivated}</td>
-	<td>User2NotDeactivated</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Deactivate']</td>
-	<td>Deactivate</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User2NotDeactivated</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user3Deactivated</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user3Deactivated}</td>
-	<td>User3NotDeactivated</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Deactivate']</td>
-	<td>Deactivate</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User3NotDeactivated</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user4Deactivated</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user4Deactivated}</td>
-	<td>User4NotDeactivated</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Deactivate']</td>
-	<td>Deactivate</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User4NotDeactivated</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user5Deactivated</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user5Deactivated}</td>
-	<td>User5NotDeactivated</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Deactivate']</td>
-	<td>Deactivate</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User5NotDeactivated</td>
+	<td>UsersDoNotExists</td>
 	<td></td>
 </tr>
 <tr>
@@ -270,7 +150,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
+	<td>//input[@name='_125_rowIds']</td>
 	<td>user1Deleted</td>
 </tr>
 <tr>
@@ -280,12 +160,112 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Entry Check Box</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>user2Deleted</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${user2Deleted}</td>
+	<td>User2NotDeleted</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Entry Check Box</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>user3Deleted</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${user3Deleted}</td>
+	<td>User3NotDeleted</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Entry Check Box</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>user4Deleted</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${user4Deleted}</td>
+	<td>User4NotDeleted</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Entry Check Box</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>user5Deleted</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${user5Deleted}</td>
+	<td>User5NotDeleted</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Entry Check Box</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -299,58 +279,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td>user2Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user2Deleted}</td>
-	<td>User2NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>User2NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td>user3Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user3Deleted}</td>
-	<td>User3NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
 </tr>
 <tr>
@@ -359,58 +289,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td>user4Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user4Deleted}</td>
-	<td>User4NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>User4NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td>user5Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user5Deleted}</td>
-	<td>User5NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
 </tr>
 <tr>
@@ -441,12 +321,12 @@
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
+	<td>basic2Visible</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>basicNotVisible</td>
+	<td>!${basic2Visible}</td>
+	<td>basic2NotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -455,7 +335,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>basicNotVisible</td>
+	<td>basic2NotVisible</td>
 	<td></td>
 </tr>
 

@@ -108,7 +108,7 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 		addPortletURL.setParameter("assetCategoryIds", StringUtil.merge(allAssetCategoryIds));
 		addPortletURL.setParameter("assetTagNames", StringUtil.merge(allAssetTagNames));
 
-		if (dlFileEntryTypeId > 0) {
+		if (dlFileEntryTypeId >= 0) {
 			addPortletURL.setParameter(Constants.CMD, Constants.ADD);
 			addPortletURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 			addPortletURL.setParameter("fileEntryTypeId", String.valueOf(dlFileEntryTypeId));
@@ -150,7 +150,7 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 			}
 		}
 		else {
-			PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className.getValue(), allAssetCategoryIds, allAssetTagNames, 0, StringPool.BLANK);
+			PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className.getValue(), allAssetCategoryIds, allAssetTagNames, -1, StringPool.BLANK);
 
 			if (addPortletURL != null) {
 				addPortletURLs.put(className.getValue(), addPortletURL);
@@ -163,7 +163,7 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 	List<JournalStructure> journalStructures = JournalStructureServiceUtil.getStructures(themeDisplay.getScopeGroupId());
 
 	for (JournalStructure journalStructure : journalStructures) {
-		PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, journalArticleClassName.getValue(), allAssetCategoryIds, allAssetTagNames, 0, journalStructure.getStructureId());
+		PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, journalArticleClassName.getValue(), allAssetCategoryIds, allAssetTagNames, -1, journalStructure.getStructureId());
 
 		if (addPortletURL != null) {
 			String classNameValue = journalArticleClassName.getValue() + _CLASSNAME_SEPARATOR + journalStructure.getName(themeDisplay.getLocale());

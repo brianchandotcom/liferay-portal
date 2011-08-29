@@ -361,7 +361,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSet;
 	}
 
-	private void validate(
+	protected void validate(
 			long groupId, boolean privateLayout, String virtualHostname)
 		throws PortalException, SystemException {
 

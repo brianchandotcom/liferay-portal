@@ -30,6 +30,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 %>
 
 <liferay-ui:error exception="<%= GroupFriendlyURLException.class %>">
+
 	<%
 	GroupFriendlyURLException gfurle = (GroupFriendlyURLException)errorException;
 	%>

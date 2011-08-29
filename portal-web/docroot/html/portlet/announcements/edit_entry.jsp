@@ -22,6 +22,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
 
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
+
+String content = BeanParamUtil.getString(entry, request, "content");
 %>
 
 <aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
@@ -81,7 +83,11 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
 		<aui:input name="url" />
 
-		<aui:input name="content" />
+		<aui:field-wrapper label="content">
+			<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"/>
+
+			<aui:input name="content" type="hidden" />
+		</aui:field-wrapper>
 
 		<aui:select name="type">
 
@@ -117,10 +123,19 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 </aui:form>
 
 <aui:script>
+	function <portlet:namespace />getContent() {
+		return window.<portlet:namespace />editor.getHTML();
+	}
+
+	function <portlet:namespace />initEditor() {
+		return "<%= UnicodeFormatter.toString(content) %>";
+	}
+
 	function <portlet:namespace />previewEntry() {
 		document.<portlet:namespace />fm.action = '<portlet:actionURL><portlet:param name="struts_action" value="/announcements/preview_entry" /></portlet:actionURL>';
 		document.<portlet:namespace />fm.target = '_blank';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.PREVIEW %>";
+		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
 		document.<portlet:namespace />fm.submit();
 	}
 
@@ -128,6 +143,7 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 		document.<portlet:namespace />fm.action = '<portlet:actionURL><portlet:param name="struts_action" value="/announcements/edit_entry" /></portlet:actionURL>';
 		document.<portlet:namespace />fm.target = '';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
 		submitForm(document.<portlet:namespace />fm);
 	}
 
@@ -135,3 +151,7 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);
 	</c:if>
 </aui:script>
+
+<%!
+public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp";
+%>

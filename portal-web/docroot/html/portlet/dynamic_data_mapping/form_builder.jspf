@@ -150,12 +150,6 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 						<form class="aui-form-builder-settings"></form>
 
 						<div class="aui-button-row aui-form-builder-settings-buttons">
-							<span class="aui-button aui-button-submit aui-priority-primary aui-state-positive">
-								<span class="aui-button-content">
-									<input type="button" value="<liferay-ui:message key="save" />" class="aui-button-input aui-form-builder-button-save">
-								</span>
-							</span>
-
 							<span class="aui-button aui-button-submit aui-priority-secondary aui-state-positive">
 								<span class="aui-button-content">
 									<input class="aui-button-input aui-form-builder-button-close" type="button" value="<liferay-ui:message key="close" />">

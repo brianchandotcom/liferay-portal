@@ -103,7 +103,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 			<c:if test="<%= !colorSchemes.isEmpty() || !configurableSettings.isEmpty() %>">
 				<liferay-ui:panel-container extended="<%= true %>" id="layoutsAdminLookAndFeelPanelContainer" persistState="<%= true %>">
 					<c:if test="<%= !colorSchemes.isEmpty() %>">
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="layoutsAdminLookAndFeelColoursPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, "color-schemes-x", colorSchemes.size()) %>'>
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="layoutsAdminLookAndFeelColorsPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, "color-schemes-x", colorSchemes.size()) %>'>
 							<aui:fieldset cssCclass="color-schemes">
 								<div class="lfr-component lfr-theme-list">
 

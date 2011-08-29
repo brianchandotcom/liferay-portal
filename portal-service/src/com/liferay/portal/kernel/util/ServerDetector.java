@@ -17,8 +17,16 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.net.URI;
+import java.net.URL;
+
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class ServerDetector {
 
@@ -41,6 +49,10 @@ public class ServerDetector {
 	public static final String WEBLOGIC_ID = "weblogic";
 
 	public static final String WEBSPHERE_ID = "websphere";
+
+	public static String getJasperVersion() {
+		return _instance._jasperVersion;
+	}
 
 	public static String getServerId() {
 		return _instance._serverId;
@@ -135,6 +147,8 @@ public class ServerDetector {
 			}
 		}
 
+		_jasperVersion = _detectJasperVersion();
+
 		if (System.getProperty("external-properties") == null) {
 			if (_log.isInfoEnabled()) {
 				if (_serverId != null) {
@@ -169,6 +183,42 @@ public class ServerDetector {
 			else {
 				return false;
 			}
+		}
+	}
+
+	private String _detectJasperVersion() {
+		Class<?> clazz = getClass();
+
+		URL url = clazz.getResource(
+			"/org/apache/jasper/JasperException.class");
+
+		if (url == null) {
+			return StringPool.BLANK;
+		}
+
+		String path = url.getPath();
+
+		int index = path.indexOf(CharPool.EXCLAMATION);
+
+		if (index == -1) {
+			return StringPool.BLANK;
+		}
+
+		String jarFilePath = path.substring(0, index);
+
+		try {
+			URI jarFileURI = new URI(jarFilePath);
+
+			JarFile jarFile = new JarFile(new java.io.File(jarFileURI));
+
+			Manifest manifest = jarFile.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			return attributes.getValue("Specification-Version");
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
 		}
 	}
 
@@ -232,6 +282,7 @@ public class ServerDetector {
 	private boolean _geronimo;
 	private boolean _glassfish;
 	private boolean _jBoss;
+	private String _jasperVersion;
 	private boolean _jetty;
 	private boolean _jonas;
 	private boolean _oc4j;

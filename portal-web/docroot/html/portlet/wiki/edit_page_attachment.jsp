@@ -192,7 +192,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 							for (var i = 0; i < jsonArray.length; i++) {
 								var item = jsonArray[i];
 
-								var checkBox = A.one('input[data-fileName=' + item.fileName + ']');
+								var checkBox = A.one('input[data-fileName="' + item.fileName + '"]');
 
 								checkBox.attr('checked', false);
 								checkBox.hide();

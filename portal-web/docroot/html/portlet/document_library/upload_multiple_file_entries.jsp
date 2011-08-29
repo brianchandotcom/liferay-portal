@@ -150,7 +150,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 									for (var i = 0; i < jsonArray.length; i++) {
 										var item = jsonArray[i];
 
-										var checkBox = A.one('input[data-fileName=' + item.fileName + ']');
+										var checkBox = A.one('input[data-fileName="' + item.fileName + '"]');
 
 										var li = checkBox.ancestor();
 

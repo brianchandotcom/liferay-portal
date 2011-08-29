@@ -37,10 +37,12 @@ import com.liferay.portlet.journal.DuplicateStructureElementException;
 import com.liferay.portlet.journal.DuplicateStructureIdException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchStructureException;
-import com.liferay.portlet.journal.RequiredStructureException;
 import com.liferay.portlet.journal.StructureIdException;
 import com.liferay.portlet.journal.StructureInheritanceException;
 import com.liferay.portlet.journal.StructureNameException;
+import com.liferay.portlet.journal.StructureRequiredByJournalException;
+import com.liferay.portlet.journal.StructureRequiredByStructureException;
+import com.liferay.portlet.journal.StructureRequiredByTemplateException;
 import com.liferay.portlet.journal.StructureXsdException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalStructure;
@@ -259,19 +261,19 @@ public class JournalStructureLocalServiceImpl
 		if (journalArticlePersistence.countByG_C_S(
 				structure.getGroupId(), 0, structure.getStructureId()) > 0) {
 
-			throw new RequiredStructureException();
+			throw new StructureRequiredByJournalException();
 		}
 
 		if (journalStructurePersistence.countByG_P(
 				structure.getGroupId(), structure.getStructureId()) > 0) {
 
-			throw new RequiredStructureException();
+			throw new StructureRequiredByStructureException();
 		}
 
 		if (journalTemplatePersistence.countByG_S(
 				structure.getGroupId(), structure.getStructureId()) > 0) {
 
-			throw new RequiredStructureException();
+			throw new StructureRequiredByTemplateException();
 		}
 
 		// WebDAVProps

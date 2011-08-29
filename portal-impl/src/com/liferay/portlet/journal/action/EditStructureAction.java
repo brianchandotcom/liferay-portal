@@ -36,6 +36,9 @@ import com.liferay.portlet.journal.RequiredStructureException;
 import com.liferay.portlet.journal.StructureIdException;
 import com.liferay.portlet.journal.StructureInheritanceException;
 import com.liferay.portlet.journal.StructureNameException;
+import com.liferay.portlet.journal.StructureRequiredByJournalException;
+import com.liferay.portlet.journal.StructureRequiredByStructureException;
+import com.liferay.portlet.journal.StructureRequiredByTemplateException;
 import com.liferay.portlet.journal.StructureXsdException;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalStructureServiceUtil;
@@ -106,10 +109,12 @@ public class EditStructureAction extends PortletAction {
 			}
 			else if (e instanceof DuplicateStructureElementException ||
 					 e instanceof DuplicateStructureIdException ||
-					 e instanceof RequiredStructureException ||
 					 e instanceof StructureIdException ||
 					 e instanceof StructureInheritanceException ||
 					 e instanceof StructureNameException ||
+					 e instanceof StructureRequiredByJournalException ||
+					 e instanceof StructureRequiredByStructureException ||
+					 e instanceof StructureRequiredByTemplateException ||
 					 e instanceof StructureXsdException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());

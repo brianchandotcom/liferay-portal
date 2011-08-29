@@ -526,16 +526,8 @@ public class AssetCategoryLocalServiceImpl
 			throw new AssetCategoryNameException();
 		}
 
-		List<AssetCategory> categories = null;
-
-		if (parentCategoryId == 0) {
-			categories = assetCategoryPersistence.findByN_V(
-				name, vocabularyId);
-		}
-		else {
-			categories = assetCategoryPersistence.findByP_N(
-				parentCategoryId, name);
-		}
+		List<AssetCategory> categories = assetCategoryPersistence.findByP_N(
+			parentCategoryId, name);
 
 		if ((categories.size() > 0) &&
 			(categories.get(0).getCategoryId() != categoryId)) {

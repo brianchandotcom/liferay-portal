@@ -52,6 +52,10 @@ List<AssetCategoryProperty> categoryProperties = AssetCategoryPropertyServiceUti
 
 			<aui:button data-url="<%= permissionsURL %>" id="updateCategoryPermissions" value="permissions" />
 		</c:if>
+
+		<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_CATEGORY) %>">
+			<aui:button id="addSubCategoryButton" value="add-subcategory" />
+		</c:if>
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(category.getDescription(locale)) %>">

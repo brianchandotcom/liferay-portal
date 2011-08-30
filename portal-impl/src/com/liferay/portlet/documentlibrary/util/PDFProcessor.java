@@ -15,11 +15,9 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageProcessor;
 import com.liferay.portal.kernel.image.ImageProcessorUtil;
-import com.liferay.portal.kernel.io.FileFilter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -29,24 +27,21 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -63,8 +58,9 @@ import org.im4java.process.ProcessStarter;
 /**
  * @author Alexander Chow
  * @author Mika Koivisto
+ * @author Juan González
  */
-public class PDFProcessor implements DLProcessor {
+public class PDFProcessor extends DLPreviewableProcessor {
 
 	public static final String PREVIEW_TYPE = ImageProcessor.TYPE_PNG;
 
@@ -74,15 +70,24 @@ public class PDFProcessor implements DLProcessor {
 		_instance._generateImages(fileVersion);
 	}
 
-	public static File getPreviewFile(String id, int index) {
-		return _instance._getPreviewFile(id, index);
+	public static InputStream getPreviewAsStream(
+			FileVersion fileVersion, int index)
+		throws Exception {
+
+		return _instance.doGetPreviewAsStream(fileVersion, index);
+	}
+
+	public static long getPreviewFileSize(FileVersion fileVersion, int index)
+		throws Exception {
+
+		return _instance.doGetPreviewFileSize(fileVersion, index);
 	}
 
 	public static int getPreviewFileCount(FileEntry fileEntry, String version) {
 		try {
 			FileVersion fileVersion = fileEntry.getFileVersion(version);
 
-			return _instance._getPreviewFileCount(fileVersion);
+			return _instance.getPreviewFileCount(fileVersion);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -91,8 +96,16 @@ public class PDFProcessor implements DLProcessor {
 		return 0;
 	}
 
-	public static File getThumbnailFile(String id) {
-		return _instance._getThumbnailFile(id);
+	public static InputStream getThumbnailAsStream(FileVersion fileVersion)
+		throws Exception {
+
+		return _instance.doGetThumbnailAsStream(fileVersion);
+	}
+
+	public static long getThumbnailFileSize(FileVersion fileVersion)
+		throws Exception {
+
+		return _instance.doGetThumbnailFileSize(fileVersion);
 	}
 
 	public static boolean hasImages(FileEntry fileEntry, String version) {
@@ -101,11 +114,11 @@ public class PDFProcessor implements DLProcessor {
 		try {
 			FileVersion fileVersion = fileEntry.getFileVersion(version);
 
-			 hasImages = _instance._hasImages(fileVersion);
+			hasImages = _instance._hasImages(fileVersion);
 
-			 if (!hasImages) {
-				 _instance._queueGeneration(fileVersion);
-			 }
+			if (!hasImages) {
+				_instance._queueGeneration(fileVersion);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -129,6 +142,14 @@ public class PDFProcessor implements DLProcessor {
 		_instance._queueGeneration(fileVersion);
 	}
 
+	protected String getPreviewType() {
+		return PREVIEW_TYPE;
+	}
+
+	protected String getThumbnailType() {
+		return THUMBNAIL_TYPE;
+	}
+
 	private void _generateImages(FileVersion fileVersion) {
 		try {
 			if (_hasImages(fileVersion)) {
@@ -138,6 +159,21 @@ public class PDFProcessor implements DLProcessor {
 			String extension = fileVersion.getExtension();
 
 			if (extension.equals("pdf")) {
+				if (fileVersion instanceof LiferayFileVersion) {
+					try {
+						LiferayFileVersion liferayFileVersion =
+							(LiferayFileVersion)fileVersion;
+
+						File file = liferayFileVersion.getFile(false);
+
+						_generateImages(fileVersion, file);
+
+						return;
+					}
+					catch (UnsupportedOperationException uoe) {
+					}
+				}
+
 				InputStream inputStream = fileVersion.getContentStream(false);
 
 				_generateImages(fileVersion, inputStream);
@@ -165,45 +201,39 @@ public class PDFProcessor implements DLProcessor {
 	}
 
 	private void _generateImages(FileVersion fileVersion, File file)
-		throws IOException, PortalException, SystemException {
+		throws Exception {
 
 		if (PropsValues.IMAGEMAGICK_ENABLED) {
-			String id = DLUtil.getTempFileId(
-				fileVersion.getFileEntryId(), fileVersion.getVersion());
+			long fileVersionId = fileVersion.getFileVersionId();
 
-			if (_isGeneratePreview(id)) {
+			if (_isGeneratePreview(fileVersion)) {
 				_generateImagesIM(
-					file, id, PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH,
+					fileVersion, file,
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH, false);
 
-				// ImageMagick converts single page PDFs without appending an
-				// index. Rename file for consistency.
-
-				File singlePagePreviewFile = _getPreviewFile(id, -1);
-
-				if (singlePagePreviewFile.exists()) {
-					singlePagePreviewFile.renameTo(_getPreviewFile(id, 1));
-				}
-
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"ImageMagick generated " +
-							_getPreviewFileCount(fileVersion) +
-								" preview pages for " + id);
+							getPreviewFileCount(fileVersion) +
+								" preview pages for " + fileVersionId);
 				}
 			}
 
-			if (_isGenerateThumbnail(id)) {
+			if (_isGenerateThumbnail(fileVersion)) {
 				_generateImagesIM(
-					file, id, PropsValues.DL_FILE_ENTRY_THUMBNAIL_DEPTH,
+					fileVersion, file,
+					PropsValues.DL_FILE_ENTRY_THUMBNAIL_DEPTH,
 					PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI,
 					PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT,
 					PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH, true);
 
 				if (_log.isInfoEnabled()) {
-					_log.info("ImageMagick generated a thumbnail for " + id);
+					_log.info(
+						"ImageMagick generated a thumbnail for " +
+							fileVersionId);
 				}
 			}
 		}
@@ -214,7 +244,7 @@ public class PDFProcessor implements DLProcessor {
 
 	private void _generateImages(
 			FileVersion fileVersion, InputStream inputStream)
-		throws IOException, PortalException, SystemException {
+		throws Exception {
 
 		String id = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
@@ -231,7 +261,7 @@ public class PDFProcessor implements DLProcessor {
 					_generateImages(fileVersion, file);
 				}
 				finally {
-					file.delete();
+					FileUtil.delete(file);
 				}
 			}
 			else {
@@ -242,8 +272,10 @@ public class PDFProcessor implements DLProcessor {
 			}
 		}
 		else {
-			boolean generatePreview = _isGeneratePreview(id);
-			boolean generateThumbnail = _isGenerateThumbnail(id);
+			long fileVersionId = fileVersion.getFileVersionId();
+
+			boolean generatePreview = _isGeneratePreview(fileVersion);
+			boolean generateThumbnail = _isGenerateThumbnail(fileVersion);
 
 			PDDocument pdDocument = null;
 
@@ -260,12 +292,15 @@ public class PDFProcessor implements DLProcessor {
 
 					if (generateThumbnail && (i == 0)) {
 						_generateImagesPB(
-							pdPage, id, PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI,
+							fileVersion, pdPage,
+							PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI,
 							PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT,
 							PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH, true, 0);
 
 						if (_log.isInfoEnabled()) {
-							_log.info("PDFBox generated a thumbnail for " + id);
+							_log.info(
+								"PDFBox generated a thumbnail for " +
+									fileVersionId);
 						}
 					}
 
@@ -274,7 +309,7 @@ public class PDFProcessor implements DLProcessor {
 					}
 
 					_generateImagesPB(
-						pdPage, id,
+						fileVersion, pdPage,
 						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
 						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT,
 						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH, false,
@@ -284,8 +319,8 @@ public class PDFProcessor implements DLProcessor {
 				if (_log.isInfoEnabled() && generatePreview) {
 					_log.info(
 						"PDFBox generated " +
-							_getPreviewFileCount(fileVersion) +
-								" preview pages for " + id);
+							getPreviewFileCount(fileVersion) +
+								" preview pages for " + fileVersionId);
 				}
 			}
 			finally {
@@ -297,9 +332,14 @@ public class PDFProcessor implements DLProcessor {
 	}
 
 	private void _generateImagesIM(
-			File file, String id, int depth, int dpi, int height, int width,
-			boolean thumbnail)
-		throws IOException, SystemException {
+			FileVersion fileVersion, File file, int depth, int dpi, int height,
+			int width, boolean thumbnail)
+		throws Exception {
+
+		// Generate images
+
+		String id = DLUtil.getTempFileId(
+			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 		IMOperation imOperation = new IMOperation();
 
@@ -316,11 +356,11 @@ public class PDFProcessor implements DLProcessor {
 
 		if (thumbnail) {
 			imOperation.addImage(file.getPath() + "[0]");
-			imOperation.addImage(_getThumbnailFilePath(id));
+			imOperation.addImage(getThumbnailTempFilePath(id));
 		}
 		else {
 			imOperation.addImage(file.getPath());
-			imOperation.addImage(_getPreviewFilePath(id, -1));
+			imOperation.addImage(getPreviewTempFilePath(id, -1));
 		}
 
 		try {
@@ -332,12 +372,58 @@ public class PDFProcessor implements DLProcessor {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+
+		// Store images
+
+		if (thumbnail) {
+			File tempFile = getThumbnailTempFile(id);
+
+			try {
+				addFileToStore(
+					fileVersion.getCompanyId(), THUMBNAIL_PATH,
+					getThumbnailFilePath(fileVersion), tempFile);
+			}
+			finally {
+				FileUtil.delete(tempFile);
+			}
+		}
+		else {
+
+			// ImageMagick converts single page PDFs without appending an
+			// index. Rename file for consistency.
+
+			File singlePagePreviewFile = getPreviewTempFile(id, -1);
+
+			if (singlePagePreviewFile.exists()) {
+				singlePagePreviewFile.renameTo(getPreviewTempFile(id, 1));
+			}
+
+			int total = getPreviewTempFileCount(fileVersion);
+
+			for (int i = 0; i < total; i++) {
+				File tempFile = getPreviewTempFile(id, i + 1);
+
+				try {
+					addFileToStore(
+						fileVersion.getCompanyId(), PREVIEW_PATH,
+						getPreviewFilePath(fileVersion, i + 1), tempFile);
+				}
+				finally {
+					FileUtil.delete(tempFile);
+				}
+			}
+		}
 	}
 
 	private void _generateImagesPB(
-			PDPage pdPage, String id, int dpi, int height, int width,
-			boolean thumbnail, int index)
-		throws IOException, FileNotFoundException {
+			FileVersion fileVersion, PDPage pdPage, int dpi, int height,
+			int width, boolean thumbnail, int index)
+		throws Exception {
+
+		// Generate images
+
+		String id = DLUtil.getTempFileId(
+			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 		RenderedImage renderedImage = pdPage.convertToImage(
 			BufferedImage.TYPE_INT_RGB,
@@ -351,134 +437,63 @@ public class PDFProcessor implements DLProcessor {
 			renderedImage = ImageProcessorUtil.scale(renderedImage, width);
 		}
 
-		if (thumbnail) {
-			File file = _getThumbnailFile(id);
+		// Store images
 
-			file.createNewFile();
+		File tempFile = null;
 
-			ImageIO.write(
-				renderedImage, THUMBNAIL_TYPE, new FileOutputStream(file));
-		}
-		else {
-			File file = _getPreviewFile(id, index);
+		try {
+			if (thumbnail) {
+				tempFile = getThumbnailTempFile(id);
 
-			file.createNewFile();
+				tempFile.createNewFile();
 
-			ImageIO.write(
-				renderedImage, PREVIEW_TYPE, new FileOutputStream(file));
-		}
-	}
+				ImageIO.write(
+					renderedImage, THUMBNAIL_TYPE,
+					new FileOutputStream(tempFile));
 
-	private File _getPreviewFile(String id, int index) {
-		String filePath = _getPreviewFilePath(id, index);
+				addFileToStore(
+					fileVersion.getCompanyId(), THUMBNAIL_PATH,
+					getThumbnailFilePath(fileVersion), tempFile);
+			}
+			else {
+				tempFile = getPreviewTempFile(id, index);
 
-		return new File(filePath);
-	}
+				tempFile.createNewFile();
 
-	private String _getPreviewFilePath(String id, int index) {
-		StringBundler sb;
+				ImageIO.write(
+					renderedImage, PREVIEW_TYPE,
+					new FileOutputStream(tempFile));
 
-		if (index <= 0 ) {
-			sb = new StringBundler(4);
-		}
-		else {
-			sb = new StringBundler(6);
-		}
-
-		sb.append(_PREVIEW_PATH);
-		sb.append(id);
-
-		if (index > 0) {
-			sb.append(StringPool.DASH);
-			sb.append(index - 1);
-		}
-
-		sb.append(StringPool.PERIOD);
-		sb.append(PREVIEW_TYPE);
-
-		return sb.toString();
-	}
-
-	private int _getPreviewFileCount(FileVersion fileVersion) {
-		String id = DLUtil.getTempFileId(
-			fileVersion.getFileEntryId(), fileVersion.getVersion());
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(id);
-		sb.append(StringPool.DASH);
-		sb.append("(.*)");
-		sb.append(StringPool.PERIOD);
-		sb.append(PREVIEW_TYPE);
-
-		File dir = new File(_PREVIEW_PATH);
-
-		File[] files = dir.listFiles(new FileFilter(sb.toString()));
-
-		if (_log.isDebugEnabled()) {
-			for (File file : files) {
-				_log.debug("Preview page for " + id + " " + file);
+				addFileToStore(
+					fileVersion.getCompanyId(), PREVIEW_PATH,
+					getPreviewFilePath(fileVersion, index), tempFile);
 			}
 		}
-
-		return files.length;
-	}
-
-	private File _getThumbnailFile(String id) {
-		String filePath = _getThumbnailFilePath(id);
-
-		return new File(filePath);
-	}
-
-	private String _getThumbnailFilePath(String id) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_THUMBNAIL_PATH);
-		sb.append(id);
-		sb.append(StringPool.PERIOD);
-		sb.append(THUMBNAIL_TYPE);
-
-		return sb.toString();
-	}
-
-	private boolean _hasImages(FileVersion fileVersion) {
-		String id = DLUtil.getTempFileId(
-			fileVersion.getFileEntryId(), fileVersion.getVersion());
-
-		File previewFile = _getPreviewFile(id, 1);
-
-		Date statusDate = fileVersion.getStatusDate();
-
-		if (previewFile.lastModified() < statusDate.getTime()) {
-			int previewFileCount = _getPreviewFileCount(fileVersion);
-
-			for (int i = 0; i < previewFileCount; i++) {
-				File file = _getPreviewFile(id, i + 1);
-
-				file.delete();
-			}
+		finally {
+			FileUtil.delete(tempFile);
 		}
+	}
 
-		File thumbnailFile = _getThumbnailFile(id);
+	private boolean _hasImages(FileVersion fileVersion) throws Exception {
+		long companyId = fileVersion.getCompanyId();
 
-		if (thumbnailFile.lastModified() < statusDate.getTime()) {
-			thumbnailFile.delete();
-		}
+		boolean previewExists = DLStoreUtil.hasFile(
+			companyId, REPOSITORY_ID, getPreviewFilePath(fileVersion, 1));
+		boolean thumbnailExists = DLStoreUtil.hasFile(
+			companyId, REPOSITORY_ID, getThumbnailFilePath(fileVersion));
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
 			PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
 
-			if (previewFile.exists() && thumbnailFile.exists()) {
+			if (previewExists && thumbnailExists) {
 				return true;
 			}
 		}
-		else  if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
-				  previewFile.exists()) {
-
+		else  if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED && previewExists) {
 			return true;
 		}
 		else if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
-				 thumbnailFile.exists()) {
+				 thumbnailExists) {
 
 			return true;
 		}
@@ -486,11 +501,15 @@ public class PDFProcessor implements DLProcessor {
 		return false;
 	}
 
-	private boolean _isGeneratePreview(String id) {
-		File previewFile = _getPreviewFile(id, 1);
+	private boolean _isGeneratePreview(FileVersion fileVersion)
+		throws Exception {
+
+		long companyId = fileVersion.getCompanyId();
+
+		String previewFilePath = getPreviewFilePath(fileVersion, 1);
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
-			!previewFile.exists()) {
+			!DLStoreUtil.hasFile(companyId, REPOSITORY_ID, previewFilePath)) {
 
 			return true;
 		}
@@ -499,11 +518,15 @@ public class PDFProcessor implements DLProcessor {
 		}
 	}
 
-	private boolean _isGenerateThumbnail(String id) {
-		File thumbnailFile = _getThumbnailFile(id);
+	private boolean _isGenerateThumbnail(FileVersion fileVersion)
+		throws Exception {
+
+		long companyId = fileVersion.getCompanyId();
+
+		String thumbnailFilePath = getThumbnailFilePath(fileVersion);
 
 		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
-			!thumbnailFile.exists()) {
+			!DLStoreUtil.hasFile(companyId, REPOSITORY_ID, thumbnailFilePath)) {
 
 			return true;
 		}
@@ -544,14 +567,6 @@ public class PDFProcessor implements DLProcessor {
 		}
 	}
 
-	private static final String _PREVIEW_PATH =
-		SystemProperties.get(SystemProperties.TMP_DIR) +
-			"/liferay/document_preview/";
-
-	private static final String _THUMBNAIL_PATH =
-		SystemProperties.get(SystemProperties.TMP_DIR) +
-			"/liferay/document_thumbnail/";
-
 	private static Log _log = LogFactoryUtil.getLog(PDFProcessor.class);
 
 	private static PDFProcessor _instance = new PDFProcessor();
@@ -560,8 +575,8 @@ public class PDFProcessor implements DLProcessor {
 	private static List<Long> _fileEntries = new Vector<Long>();
 
 	static {
-		FileUtil.mkdirs(_PREVIEW_PATH);
-		FileUtil.mkdirs(_THUMBNAIL_PATH);
+		FileUtil.mkdirs(PREVIEW_TMP_PATH);
+		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 
 		if (PropsValues.IMAGEMAGICK_ENABLED) {
 			String filterName = null;

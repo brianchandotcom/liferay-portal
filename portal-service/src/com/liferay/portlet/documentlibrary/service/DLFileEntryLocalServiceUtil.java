@@ -393,6 +393,14 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getExtraSettingsFileEntries(start, end);
 	}
 
+	public static java.io.File getFile(long userId, long fileEntryId,
+		java.lang.String version, boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFile(userId, fileEntryId, version, incrementCounter);
+	}
+
 	public static java.io.InputStream getFileAsStream(long userId,
 		long fileEntryId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException,

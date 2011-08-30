@@ -30,14 +30,21 @@ Map<String, PortletURL> addPortletURLs = getAddPortletURLs(liferayPortletRequest
 		for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
 			String className = entry.getKey();
 
-			String message = ResourceActionsUtil.getModelResourceNamePrefix() + className;
+			String message = StringPool.BLANK;
 
-			int pos = className.indexOf(_CLASSNAME_SEPARATOR);
+			if (JournalArticle.class.getName().equals(className)) {
+				message = "basic-web-content";
+			}
+			else {
+				message = ResourceActionsUtil.getModelResourceNamePrefix() + className;
 
-			if (pos != -1) {
-				message = className.substring(pos + _CLASSNAME_SEPARATOR.length(), className.length());
+				int pos = className.indexOf(_CLASSNAME_SEPARATOR);
 
-				className = className.substring(0, pos);
+				if (pos != -1) {
+					message = className.substring(pos + _CLASSNAME_SEPARATOR.length(), className.length());
+
+					className = className.substring(0, pos);
+				}
 			}
 
 			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);

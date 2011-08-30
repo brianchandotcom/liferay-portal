@@ -1667,14 +1667,7 @@ public interface UserLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	/**
-	* Returns the default user.
-	*
-	* @param companyId the primary key of the company
-	* @return the default user
-	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
-	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.User loadDefaultUser(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -2583,8 +2576,8 @@ public interface UserLocalService extends PersistedModelLocalService {
 	*
 	* @param ticketKey the ticket key
 	* @throws PortalException if a ticket matching the ticket key could not be
-	found, if the ticket expired, if the ticket was not an email
-	address ticket, or if the email address was invalid
+	found, if the ticket has expired, if the ticket is an email
+	address ticket, or if the email address is invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public void verifyEmailAddress(java.lang.String ticketKey)

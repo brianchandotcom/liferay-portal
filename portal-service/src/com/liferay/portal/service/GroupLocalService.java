@@ -503,4 +503,15 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	public com.liferay.portal.model.Group updateSite(long groupId, boolean site)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Group loadGroupFetch(long companyId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Group loadGroupFind(long companyId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

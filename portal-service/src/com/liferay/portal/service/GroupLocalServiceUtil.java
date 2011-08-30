@@ -617,6 +617,19 @@ public class GroupLocalServiceUtil {
 		return getService().updateSite(groupId, site);
 	}
 
+	public static com.liferay.portal.model.Group loadGroupFetch(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().loadGroupFetch(companyId, name);
+	}
+
+	public static com.liferay.portal.model.Group loadGroupFind(long companyId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().loadGroupFind(companyId, name);
+	}
+
 	public static GroupLocalService getService() {
 		if (_service == null) {
 			_service = (GroupLocalService)PortalBeanLocatorUtil.locate(GroupLocalService.class.getName());

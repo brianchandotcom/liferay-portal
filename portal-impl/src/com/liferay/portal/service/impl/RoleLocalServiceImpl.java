@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.CharPool;
@@ -147,8 +148,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	public void checkSystemRoles(long companyId)
 		throws PortalException, SystemException {
 
+		String companyIdHexString = StringUtil.toHexString(companyId);
+
 		for (Role role : roleFinder.findBySystem(companyId)) {
-			_systemRolesMap.put(companyId + role.getName(), role);
+			_systemRolesMap.put(
+				companyIdHexString.concat(role.getName()), role);
 		}
 
 		// Regular roles
@@ -257,6 +261,19 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	@Skip
+	public Role fetchRole(long companyId, String name) throws SystemException {
+
+		Role role = _systemRolesMap.get(
+			StringUtil.toHexString(companyId).concat(name));
+
+		if (role != null) {
+			return role;
+		}
+
+		return roleLocalService.loadRoleFetch(companyId, name);
+	}
+
 	public Role getDefaultGroupRole(long groupId)
 		throws PortalException, SystemException {
 
@@ -321,16 +338,18 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return rolePersistence.findByPrimaryKey(roleId);
 	}
 
+	@Skip
 	public Role getRole(long companyId, String name)
 		throws PortalException, SystemException {
 
-		Role role = _systemRolesMap.get(companyId + name);
+		Role role = _systemRolesMap.get(
+			StringUtil.toHexString(companyId).concat(name));
 
 		if (role != null) {
 			return role;
 		}
 
-		return rolePersistence.findByC_N(companyId, name);
+		return roleLocalService.loadRoleFind(companyId, name);
 	}
 
 	public List<Role> getRoles(int type, String subtype)
@@ -495,6 +514,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return false;
 	}
 
+	public Role loadRoleFetch(long companyId, String name)
+		throws SystemException {
+		return rolePersistence.fetchByC_N(companyId, name);
+	}
+
+	public Role loadRoleFind(long companyId, String name)
+		throws PortalException, SystemException {
+		return rolePersistence.findByC_N(companyId, name);
+	}
+
 	public List<Role> search(
 			long companyId, String keywords, Integer[] types, int start,
 			int end, OrderByComparator obc)
@@ -626,7 +655,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			int type)
 		throws PortalException, SystemException {
 
-		Role role = _systemRolesMap.get(companyId + name);
+		String companyIdHexString = StringUtil.toHexString(companyId);
+
+		String roleCacheKey = companyIdHexString.concat(name);
+
+		Role role = _systemRolesMap.get(roleCacheKey);
 
 		try {
 			if (role == null) {
@@ -648,7 +681,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			}
 		}
 
-		_systemRolesMap.put(companyId + name, role);
+		_systemRolesMap.put(roleCacheKey, role);
 	}
 
 	protected String[] getDefaultControlPanelPortlets() {

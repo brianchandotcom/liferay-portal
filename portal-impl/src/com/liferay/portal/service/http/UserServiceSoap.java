@@ -71,8 +71,8 @@ public class UserServiceSoap {
 	* @param groupId the primary key of the group
 	* @param userIds the primary keys of the users
 	* @throws PortalException if a group or user with the primary key could
-	not be found, or if the current user did not have permission to
-	assign group members
+	not be found, or if the user did not have permission to assign
+	group members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addGroupUsers(long groupId, long[] userIds)
@@ -93,9 +93,9 @@ public class UserServiceSoap {
 	* @param organizationId the primary key of the organization
 	* @param userIds the primary keys of the users
 	* @throws PortalException if an organization or user with the primary key
-	could not be found, if the current user did not have permission
-	to assign organization members, or if current user did not have
-	an organization in common with a given user
+	could not be found, if the user did not have permission to
+	assign organization members, or if current user did not have an
+	organization in common with a given user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addOrganizationUsers(long organizationId, long[] userIds)
@@ -116,8 +116,8 @@ public class UserServiceSoap {
 	*
 	* @param passwordPolicyId the primary key of the password policy
 	* @param userIds the primary keys of the users
-	* @throws PortalException if the current user did not have permission to
-	assign policy members
+	* @throws PortalException if the user did not have permission to assign
+	policy members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addPasswordPolicyUsers(long passwordPolicyId,
@@ -138,8 +138,8 @@ public class UserServiceSoap {
 	* @param roleId the primary key of the role
 	* @param userIds the primary keys of the users
 	* @throws PortalException if a role or user with the primary key could not
-	be found or if the current user did not have permission to
-	assign role members
+	be found or if the user did not have permission to assign role
+	members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addRoleUsers(long roleId, long[] userIds)
@@ -160,8 +160,8 @@ public class UserServiceSoap {
 	* @param teamId the primary key of the team
 	* @param userIds the primary keys of the users
 	* @throws PortalException if a team or user with the primary key could not
-	be found or if the current user did not have permission to
-	assign team members
+	be found or if the user did not have permission to assign team
+	members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addTeamUsers(long teamId, long[] userIds)
@@ -1208,8 +1208,8 @@ public class UserServiceSoap {
 	* @param userId the primary key of the user
 	* @param lockout whether the user is locked out
 	* @return the user
-	* @throws PortalException if the current user did not have permission to
-	lock out the user
+	* @throws PortalException if the user did not have permission to lock out
+	the user
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserSoap updateLockoutById(

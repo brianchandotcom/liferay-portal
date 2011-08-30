@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -573,6 +574,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupPersistence.fetchByPrimaryKey(groupId);
 	}
 
+	@Skip
 	public Group fetchGroup(long companyId, String name)
 		throws SystemException {
 
@@ -583,7 +585,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return group;
 		}
 
-		return groupPersistence.fetchByC_N(companyId, name);
+		return groupLocalService.loadGroupFetch(companyId, name);
 	}
 
 	public Group getCompanyGroup(long companyId)
@@ -624,6 +626,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupPersistence.findByPrimaryKey(groupId);
 	}
 
+	@Skip
 	public Group getGroup(long companyId, String name)
 		throws PortalException, SystemException {
 
@@ -634,7 +637,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return group;
 		}
 
-		return groupPersistence.findByC_N(companyId, name);
+		return groupLocalService.loadGroupFind(companyId, name);
 	}
 
 	public List<Group> getGroups(long[] groupIds)
@@ -1466,6 +1469,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return false;
+	}
+
+	public Group loadGroupFetch(long companyId, String name)
+		throws SystemException {
+
+		return groupPersistence.fetchByC_N(companyId, name);
+	}
+
+	public Group loadGroupFind(long companyId, String name)
+		throws PortalException, SystemException {
+
+		return groupPersistence.findByC_N(companyId, name);
 	}
 
 	protected void setCompanyPermissions(

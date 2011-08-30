@@ -600,6 +600,19 @@ public class GroupLocalServiceWrapper implements GroupLocalService {
 		return _groupLocalService.updateSite(groupId, site);
 	}
 
+	public com.liferay.portal.model.Group loadGroupFetch(long companyId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.loadGroupFetch(companyId, name);
+	}
+
+	public com.liferay.portal.model.Group loadGroupFind(long companyId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.loadGroupFind(companyId, name);
+	}
+
 	public GroupLocalService getWrappedGroupLocalService() {
 		return _groupLocalService;
 	}

@@ -23,23 +23,14 @@ String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaul
 
 String layoutUuid = BeanParamUtil.getString(article, request, "layoutUuid");
 
-boolean preselectCurrentLayout = false;
+Layout refererLayout = null;
+boolean selected = false;
 
 if ((article == null) || article.isNew()) {
-	UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
-
 	long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
 	if (refererPlid > 0) {
-		Layout refererLayout = LayoutLocalServiceUtil.getLayout(refererPlid);
-
-		typeSettingsProperties = refererLayout.getTypeSettingsProperties();
-
-		String defaultAssetPublisherPortletId = typeSettingsProperties.getProperty(LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID);
-
-		if (Validator.isNotNull(defaultAssetPublisherPortletId)) {
-			preselectCurrentLayout = true;
-		}
+		refererLayout = LayoutLocalServiceUtil.getLayout(refererPlid);
 	}
 }
 %>
@@ -74,9 +65,10 @@ else {
 
 	<%
 		for (Layout groupLayout : publicGroupLayouts) {
+			selected = layoutUuid.equals(groupLayout.getUuid()) || ((refererLayout != null) && groupLayout.equals(refererLayout));
 	%>
 
-			<aui:option label="<%= groupLayout.getName(defaultLanguageId) %>" selected="<%= layoutUuid.equals(groupLayout.getUuid()) || preselectCurrentLayout %>" value="<%= groupLayout.getUuid() %>" />
+			<aui:option label="<%= groupLayout.getName(defaultLanguageId) %>" selected="<%= selected %>" value="<%= groupLayout.getUuid() %>" />
 
 	<%
 		}
@@ -94,9 +86,10 @@ else {
 
 	<%
 		for (Layout groupLayout : privateGroupLayouts) {
+			selected = layoutUuid.equals(groupLayout.getUuid()) || ((refererLayout != null) && groupLayout.equals(refererLayout));
 	%>
 
-			<aui:option label="<%= groupLayout.getName(defaultLanguageId) %>" selected="<%= layoutUuid.equals(groupLayout.getUuid()) || preselectCurrentLayout %>" value="<%= groupLayout.getUuid() %>" />
+			<aui:option label="<%= groupLayout.getName(defaultLanguageId) %>" selected="<%= selected %>" value="<%= groupLayout.getUuid() %>" />
 
 	<%
 		}

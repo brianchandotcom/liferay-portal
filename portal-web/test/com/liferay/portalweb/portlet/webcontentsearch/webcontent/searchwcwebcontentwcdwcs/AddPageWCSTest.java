@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentsearch.portlet.addportletduplicate;
+package com.liferay.portalweb.portlet.webcontentsearch.webcontent.searchwcwebcontentwcdwcs;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

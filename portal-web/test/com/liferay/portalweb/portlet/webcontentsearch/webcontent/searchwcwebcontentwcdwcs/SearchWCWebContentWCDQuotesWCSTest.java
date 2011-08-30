@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentsearch.portlet.addportletduplicate;
+package com.liferay.portalweb.portlet.webcontentsearch.webcontent.searchwcwebcontentwcdwcs;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,54 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageWCSTest extends BaseTestCase {
-	public void testAddPageWCS() throws Exception {
+public class SearchWCWebContentWCDQuotesWCSTest extends BaseTestCase {
+	public void testSearchWCWebContentWCDQuotesWCS() throws Exception {
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//nav[@id='navigation']",
-			RuntimeVariables.replace("Navigation"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//a[@id='addPage']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a[@id='addPage']",
-			RuntimeVariables.replace("Add Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Web Content Search Test Page"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//button[@id='save']",
-			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -90,5 +45,46 @@ public class AddPageWCSTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_77_keywords']",
+			RuntimeVariables.replace("\"WCD Web Content Title\""));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@type='image']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isTextPresent("WCD Web Content Title"));
+		assertTrue(selenium.isTextPresent("WCD Web Content Content"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Web Content Search Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Web Content Search Test Page",
+			RuntimeVariables.replace("Web Content Search Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_77_keywords']",
+			RuntimeVariables.replace("\"WCD1 Web1 Content1 Title1\""));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@type='image']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isTextPresent("WCD Web Content Title"));
+		assertFalse(selenium.isTextPresent("WCD Web Content Content"));
 	}
 }

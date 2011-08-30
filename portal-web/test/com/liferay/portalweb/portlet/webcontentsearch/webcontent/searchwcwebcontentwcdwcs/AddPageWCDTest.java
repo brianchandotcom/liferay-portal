@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentsearch.portlet.addportletduplicate;
+package com.liferay.portalweb.portlet.webcontentsearch.webcontent.searchwcwebcontentwcdwcs;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageWCSTest extends BaseTestCase {
-	public void testAddPageWCS() throws Exception {
+public class AddPageWCDTest extends BaseTestCase {
+	public void testAddPageWCD() throws Exception {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
@@ -64,7 +64,7 @@ public class AddPageWCSTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Web Content Search Test Page"));
+			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
@@ -75,7 +75,7 @@ public class AddPageWCSTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Web Content Search Test Page")) {
+				if (selenium.isVisible("link=Web Content Display Test Page")) {
 					break;
 				}
 			}
@@ -86,8 +86,8 @@ public class AddPageWCSTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content Search Test Page",
-			RuntimeVariables.replace("Web Content Search Test Page"));
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

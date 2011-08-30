@@ -26,8 +26,10 @@ body.portlet {
 	cursor: pointer;
 }
 
-.panel-page-content .portlet-title-text, .panel-page-body .portlet-title-text{
-	cursor: auto;
+.panel-page-content, .panel-page-body {
+	.portlet-title-text {
+		cursor: auto;
+	}
 }
 
 .portlet-topper-toolbar {

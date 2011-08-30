@@ -333,7 +333,7 @@ if (workflowEnabled) {
 					var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
 
 					<liferay-util:buffer var="workflowDefinitionsBuffer">
-						<aui:select label="" name="DEFAULT_WORKFLOW_DEFINITION_NAME_FOR_FILE_ENTRY_TYPE" ><aui:option label='<%= LanguageUtil.get(pageContext, "no-workflow") %>' value="" />
+						<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE" ><aui:option label='<%= LanguageUtil.get(pageContext, "no-workflow") %>' value="" />
 
 					<%
 					for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
@@ -350,7 +350,7 @@ if (workflowEnabled) {
 
 					var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
 
-					workflowDefinitions =  workflowDefinitions.replace(/DEFAULT_WORKFLOW_DEFINITION_NAME_FOR_FILE_ENTRY_TYPE/g, "workflowDefinition" + fileEntryTypeId);
+					workflowDefinitions =  workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE/g, "workflowDefinition" + fileEntryTypeId);
 
 					defaultWorkflow.hide();
 

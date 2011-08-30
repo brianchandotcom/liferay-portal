@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ViewWebContentTest</title>
+<title>ViewWCWebContentWCLTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ViewWebContentTest</td></tr>
+<tr><td rowspan="1" colspan="3">ViewWCWebContentWCLTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -14,24 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Web Content List Test Page</td>
-	<td></td>
+	<td>Web Content List Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content List Test Page</td>
-	<td></td>
+	<td>Web Content List Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Web Content Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Web Content Test</td>
-	<td></td>
+	<td>//td[1]/a</td>
+	<td>Web Content Name</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>This is a test web content.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='journal-content-article']/p</td>
+	<td>Web Content Content</td>
 </tr>
 
 </tbody></table>

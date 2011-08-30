@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentlist.webcontent.viewwebcontent;
+package com.liferay.portalweb.portlet.webcontentlist.webcontent.viewwcwebcontentwcl;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewWebContentTest extends BaseTestCase {
-	public void testViewWebContent() throws Exception {
+public class ViewWCWebContentWCLTest extends BaseTestCase {
+	public void testViewWCWebContentWCL() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -30,7 +30,7 @@ public class ViewWebContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Web Content List Test Page")) {
+				if (selenium.isVisible("link=Web Content List Test Page")) {
 					break;
 				}
 			}
@@ -42,12 +42,16 @@ public class ViewWebContentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content List Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content List Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content Test", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("This is a test web content."));
+		assertEquals(RuntimeVariables.replace("Web Content Content"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

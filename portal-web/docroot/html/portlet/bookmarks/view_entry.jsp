@@ -113,8 +113,8 @@ request.setAttribute("view_entry.jsp-entry", entry);
 				cssClass="lfr-asset-avatar"
 				image="../file_system/large/bookmark"
 				message="download"
-				url="<%= entry.getUrl() %>"
 				method="get"
+				url="<%= entry.getUrl() %>"
 			/>
 
 			<div class="lfr-asset-name">

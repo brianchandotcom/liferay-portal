@@ -491,7 +491,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 									Group companyGroup = company.getGroup();
 
 									if (scopeGroupId != companyGroup.getGroupId()) {
-										List<AssetVocabulary> assetVocabularies = AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId);
+										List<AssetVocabulary> assetVocabularies = AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false);
 
 										if (!assetVocabularies.isEmpty()) {
 										%>
@@ -517,7 +517,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 									%>
 
 									<%
-									List<AssetVocabulary> assetVocabularies = AssetVocabularyLocalServiceUtil.getGroupVocabularies(companyGroup.getGroupId());
+									List<AssetVocabulary> assetVocabularies = AssetVocabularyLocalServiceUtil.getGroupVocabularies(companyGroup.getGroupId(), false);
 
 									if (!assetVocabularies.isEmpty()) {
 									%>

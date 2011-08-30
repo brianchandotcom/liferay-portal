@@ -2,7 +2,7 @@
 
 <#assign groupIds = dataFactory.addUserToGroupIds(group.groupId)>
 <#assign organizationIds = []>
-<#assign roleIds = [dataFactory.administratorRole.roleId]>
+<#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
 
 <#assign firstNames = dataFactory.userNames?first>
 <#assign lastNames = dataFactory.userNames?last>

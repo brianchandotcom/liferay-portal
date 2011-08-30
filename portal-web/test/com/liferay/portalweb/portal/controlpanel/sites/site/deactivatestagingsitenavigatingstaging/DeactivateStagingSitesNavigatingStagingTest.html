@@ -1,0 +1,169 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DeactivateStagingSitesNavigatingStagingTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DeactivateStagingSitesNavigatingStagingTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/community-name-staging/public-page</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Sites</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_134_name']</td>
+	<td>Community</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Edit Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Edit Settings</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Edit Settings</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_165_stagingLink']</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_165_stagingLink']</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='_165_stagingLink']</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_165_stagingType']</td>
+	<td>label=None</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to deactivate staging for Community Name?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Sites</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_134_name']</td>
+	<td>Community</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Edit Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Edit Settings</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Edit Settings</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_165_stagingLink']</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_165_stagingLink']</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='_165_stagingLink']</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_165_stagingType']</td>
+	<td>None</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

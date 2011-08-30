@@ -216,6 +216,10 @@ public class CMISQueryBuilder {
 			if (!cmisDisjunction.isEmpty()) {
 				criterion.add(cmisDisjunction);
 			}
+
+			if (!notCMISConjunction.isEmpty()) {
+				criterion.add(new CMISNotExpression(notCMISConjunction));
+			}
 		}
 		else if (query instanceof TermQuery) {
 			TermQuery termQuery = (TermQuery)query;

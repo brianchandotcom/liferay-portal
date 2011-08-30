@@ -26,6 +26,12 @@ body.portlet {
 	cursor: pointer;
 }
 
+.panel-page-content, .panel-page-body {
+	.portlet-title-text {
+		cursor: auto;
+	}
+}
+
 .portlet-topper-toolbar {
 	margin: 0;
 	padding: 2px;

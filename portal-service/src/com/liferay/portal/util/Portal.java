@@ -205,6 +205,8 @@ public interface Portal {
 	 */
 	public void clearRequestParameters(RenderRequest renderRequest);
 
+	public void clearCDNHostCaches();
+
 	/**
 	 * Copies the request parameters to the render parameters, unless a
 	 * parameter with that name already exists in the render parameters.
@@ -381,7 +383,7 @@ public interface Portal {
 	 *
 	 * @return the CDN host address
 	 */
-	public String getCDNHostHttp();
+	public String getCDNHostHttp(long companyId);
 
 	/**
 	 * Returns the secure (HTTPS) content distribution network (CDN) host
@@ -389,7 +391,7 @@ public interface Portal {
 	 *
 	 * @return the CDN host address
 	 */
-	public String getCDNHostHttps();
+	public String getCDNHostHttps(long companyId);
 
 	/**
 	 * Returns the fully qualified name of the class from its ID.

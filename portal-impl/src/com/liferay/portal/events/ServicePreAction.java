@@ -787,10 +787,10 @@ public class ServicePreAction extends Action {
 		String cdnHost = null;
 
 		if (request.isSecure()) {
-			cdnHost = PortalUtil.getCDNHostHttps();
+			cdnHost = PortalUtil.getCDNHostHttps(companyId);
 		}
 		else {
-			cdnHost = PortalUtil.getCDNHostHttp();
+			cdnHost = PortalUtil.getCDNHostHttp(companyId);
 		}
 
 		cdnHost = ParamUtil.getString(request, "cdn_host", cdnHost);

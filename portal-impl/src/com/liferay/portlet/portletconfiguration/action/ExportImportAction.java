@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -245,6 +246,8 @@ public class ExportImportAction extends EditConfigurationAction {
 			ServletResponseUtil.sendFile(
 				request, response, fileName, new FileInputStream(file),
 				ContentTypes.APPLICATION_ZIP);
+
+			FileUtil.delete(file);
 
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}

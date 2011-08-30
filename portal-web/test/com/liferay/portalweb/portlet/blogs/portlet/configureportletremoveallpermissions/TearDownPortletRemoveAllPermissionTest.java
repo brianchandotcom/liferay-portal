@@ -46,6 +46,8 @@ public class TearDownPortletRemoveAllPermissionTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 

@@ -73,7 +73,7 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 			RuntimeVariables.replace("Test Restricted Community"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 

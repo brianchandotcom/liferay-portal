@@ -39,6 +39,11 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
@@ -59,7 +64,7 @@
 	<td>Manage Memberships</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertText</td>
 	<td>//span[2]/ul/li/strong/a/span</td>
 	<td>Add Members</td>
 </tr>
@@ -82,6 +87,26 @@
 	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
 	<td>User</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>basicVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${basicVisible}</td>
+	<td>BasicNotVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=« Basic</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BasicNotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -117,6 +142,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_174_rowIds']</td>
+	<td></td>
 </tr>
 
 </tbody></table>

@@ -39,8 +39,13 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -57,6 +62,11 @@
 	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
 	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>Add Members</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -127,11 +137,6 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Associations']</td>
 	<td>Update Associations</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>

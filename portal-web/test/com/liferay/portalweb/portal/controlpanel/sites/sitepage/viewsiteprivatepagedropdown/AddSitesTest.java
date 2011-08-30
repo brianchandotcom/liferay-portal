@@ -86,6 +86,6 @@ public class AddSitesTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Community Name"),
-			selenium.getText("//tr[3]/td[1]"));
+			selenium.getText("//td[1]/a"));
 	}
 }

@@ -96,12 +96,7 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 		parentNode<%= i %>.appendChild(
 			new A.TreeNodeTask(
 				{
-					checked: checked<%= i %>,
-					expanded: <%= treeNodeView.getDepth() == 0 %>,
-					id: 'treePanel<%= treeNodeView.getId() %>',
-					label: label<%= i %>,
-					leaf: <%= treeNodeView.isLeaf() %>,
-					on: {
+					after: {
 						checkedChange: function(event) {
 							if (event.newVal) {
 								onCheck(event, objId<%= i %>);
@@ -110,7 +105,12 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 								onUncheck(event, objId<%= i %>);
 							}
 						}
-					}
+					},
+					checked: checked<%= i %>,
+					expanded: <%= treeNodeView.getDepth() == 0 %>,
+					id: 'treePanel<%= treeNodeView.getId() %>',
+					label: label<%= i %>,
+					leaf: <%= treeNodeView.isLeaf() %>
 				}
 			)
 		);

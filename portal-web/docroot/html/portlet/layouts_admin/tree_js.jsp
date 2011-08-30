@@ -89,15 +89,10 @@ if (!selectableTree) {
 				function(node) {
 					var newNode = {
 						after: {
-							check: function(event) {
+							checkedChange: function(event) {
 								var plid = TreeUtil.extractPlid(event.target);
 
-								TreeUtil.updateSessionTreeClick(plid, true, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
-							},
-							uncheck: function(event) {
-								var plid = TreeUtil.extractPlid(event.target);
-
-								TreeUtil.updateSessionTreeClick(plid, false, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
+								TreeUtil.updateSessionTreeClick(plid, event.newVal, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
 							}
 						},
 						alwaysShowHitArea: node.hasChildren,

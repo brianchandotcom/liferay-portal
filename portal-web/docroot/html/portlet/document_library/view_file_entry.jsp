@@ -433,7 +433,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					</h3>
 
 					<div class="lfr-asset-icon lfr-asset-author">
-						<liferay-ui:message arguments="<%= fileVersion.getUserName() %>" key="last-updated-by-x" />
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getUserName()) %>" key="last-updated-by-x" />
 					</div>
 
 					<div class="lfr-asset-icon lfr-asset-date">
@@ -446,7 +446,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 					<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">
 						<blockquote class="lfr-asset-description">
-							<%= fileVersion.getDescription() %>
+							<%= HtmlUtil.escape(fileVersion.getDescription()) %>
 						</blockquote>
 					</c:if>
 

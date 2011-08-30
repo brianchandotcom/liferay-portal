@@ -19,10 +19,13 @@ import com.liferay.portal.struts.PortletAction;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
@@ -43,6 +46,15 @@ public class SearchAction extends PortletAction {
 				"/html/portlet/document_library/search_resources.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
+	}
+
+	@Override
+	public ActionForward render(
+			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		return mapping.findForward("portlet.document_library.view");
 	}
 
 }

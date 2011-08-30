@@ -79,106 +79,108 @@ long assetClassPK = 0;
 	<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 		<aui:input name="description" />
 
-		<liferay-ui:panel cssClass="document-type" collapsible="<%= true %>" id="documentTypePanel" persistState="<%= true %>" title="document-type">
-			<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
+		<c:if test="<%= fileEntryTypes.size() > 1 %>">
+			<liferay-ui:panel cssClass="document-type" collapsible="<%= true %>" id="documentTypePanel" persistState="<%= true %>" title="document-type">
+				<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
 
-			<div class="document-type-selector">
-				<liferay-ui:icon-menu align="left" direction="down" id="groupSelector" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName()) : "basic-document" %>'>
-					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewBasicFileEntryTypeURL">
-						<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						<portlet:param name="fileEntryTypeId" value="0" />
-					</liferay-portlet:resourceURL>
-
-					<liferay-ui:icon
-						cssClass="upload-multiple-document-types"
-						id='<%= "fileEntryType_0" %>'
-						image="copy"
-						message="basic-document"
-						method="get"
-						url="<%= viewBasicFileEntryTypeURL %>"
-					/>
-
-					<%
-					for (DLFileEntryType curFileEntryType : fileEntryTypes) {
-					%>
-
-						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewFileEntryTypeURL">
+				<div class="document-type-selector">
+					<liferay-ui:icon-menu align="left" direction="down" id="groupSelector" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName()) : "basic-document" %>'>
+						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewBasicFileEntryTypeURL">
 							<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(curFileEntryType.getFileEntryTypeId()) %>" />
+							<portlet:param name="fileEntryTypeId" value="0" />
 						</liferay-portlet:resourceURL>
 
 						<liferay-ui:icon
 							cssClass="upload-multiple-document-types"
-							id='<%= "fileEntryType_" + String.valueOf(curFileEntryType.getFileEntryTypeId()) %>'
+							id='<%= "fileEntryType_0" %>'
 							image="copy"
-							message="<%= curFileEntryType.getName() %>"
+							message="basic-document"
 							method="get"
-							url="<%= viewFileEntryTypeURL %>"
+							url="<%= viewBasicFileEntryTypeURL %>"
 						/>
 
-					<%
-					}
-					%>
+						<%
+						for (DLFileEntryType curFileEntryType : fileEntryTypes) {
+						%>
 
-				</liferay-ui:icon-menu>
-			</div>
+							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewFileEntryTypeURL">
+								<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+								<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(curFileEntryType.getFileEntryTypeId()) %>" />
+							</liferay-portlet:resourceURL>
 
-			<%
-			if (fileEntryTypeId > 0) {
-				try {
-					List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
+							<liferay-ui:icon
+								cssClass="upload-multiple-document-types"
+								id='<%= "fileEntryType_" + String.valueOf(curFileEntryType.getFileEntryTypeId()) %>'
+								image="copy"
+								message="<%= curFileEntryType.getName() %>"
+								method="get"
+								url="<%= viewFileEntryTypeURL %>"
+							/>
 
-					for (DDMStructure ddmStructure : ddmStructures) {
-						Fields fields = null;
-
-						try {
-							DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
-
-							fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
+						<%
 						}
-						catch (Exception e) {
-						}
-			%>
+						%>
 
-							<div class="document-type-fields">
-								<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), locale) %>
-							</div>
+					</liferay-ui:icon-menu>
+				</div>
 
-			<%
-					}
-				}
-				catch (Exception e) {
-				}
-			}
-			%>
+				<%
+				if (fileEntryTypeId > 0) {
+					try {
+						List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
-			<aui:script use="aui-base">
-				var commonFileMetadataContainer = A.one('#<portlet:namespace />commonFileMetadataContainer');
+						for (DDMStructure ddmStructure : ddmStructures) {
+							Fields fields = null;
 
-				var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector ul');
+							try {
+								DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-				groupSelectorMenu.delegate(
-					'click',
-					function(event) {
-						event.preventDefault();
-
-						var documentTypePanel = A.one('#documentTypePanel');
-
-						documentTypePanel.load(
-							event.currentTarget.attr('href') + ' #documentTypePanel',
-							{
-								where: 'outer'
+								fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
 							}
-						);
-					},
-					'li a'
-				);
-			</aui:script>
-		</liferay-ui:panel>
+							catch (Exception e) {
+							}
+				%>
+
+								<div class="document-type-fields">
+									<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), locale) %>
+								</div>
+
+				<%
+						}
+					}
+					catch (Exception e) {
+					}
+				}
+				%>
+
+				<aui:script use="aui-base">
+					var commonFileMetadataContainer = A.one('#<portlet:namespace />commonFileMetadataContainer');
+
+					var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector ul');
+
+					groupSelectorMenu.delegate(
+						'click',
+						function(event) {
+							event.preventDefault();
+
+							var documentTypePanel = A.one('#documentTypePanel');
+
+							documentTypePanel.load(
+								event.currentTarget.attr('href') + ' #documentTypePanel',
+								{
+									where: 'outer'
+								}
+							);
+						},
+						'li a'
+					);
+				</aui:script>
+			</liferay-ui:panel>
+		</c:if>
 
 		<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
 			<liferay-ui:custom-attribute-list

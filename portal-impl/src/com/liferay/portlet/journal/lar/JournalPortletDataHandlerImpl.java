@@ -689,7 +689,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 					articleId, autoArticleId, article.getVersion(),
 					article.getTitleMap(), article.getDescriptionMap(),
 					article.getContent(), article.getType(), parentStructureId,
-					parentTemplateId, StringPool.BLANK, displayDateMonth,
+					parentTemplateId, article.getLayoutUuid(), displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,

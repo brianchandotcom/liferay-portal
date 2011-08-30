@@ -381,6 +381,14 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 		return _dlFileEntryLocalService.getExtraSettingsFileEntries(start, end);
 	}
 
+	public java.io.File getFile(long userId, long fileEntryId,
+		java.lang.String version, boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFile(userId, fileEntryId, version,
+			incrementCounter);
+	}
+
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException,

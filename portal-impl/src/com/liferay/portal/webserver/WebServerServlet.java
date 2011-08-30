@@ -674,10 +674,9 @@ public class WebServerServlet extends HttpServlet {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.THUMBNAIL_TYPE);
 
-			File thumbnailFile = PDFProcessor.getThumbnailFile(tempFileId);
+			contentLength = PDFProcessor.getThumbnailFileSize(fileVersion);
 
-			inputStream = new FileInputStream(thumbnailFile);
-			contentLength = thumbnailFile.length();
+			inputStream = PDFProcessor.getThumbnailAsStream(fileVersion);
 
 			converted = true;
 		}
@@ -685,11 +684,11 @@ public class WebServerServlet extends HttpServlet {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.PREVIEW_TYPE);
 
-			File previewFile = PDFProcessor.getPreviewFile(
-				tempFileId, previewFileIndex);
+			contentLength = PDFProcessor.getPreviewFileSize(
+				fileVersion, previewFileIndex);
 
-			inputStream = new FileInputStream(previewFile);
-			contentLength = previewFile.length();
+			inputStream = PDFProcessor.getPreviewAsStream(
+				fileVersion, previewFileIndex);
 
 			converted = true;
 		}
@@ -697,10 +696,9 @@ public class WebServerServlet extends HttpServlet {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(AudioProcessor.PREVIEW_TYPE);
 
-			File previewFile = AudioProcessor.getPreviewFile(tempFileId);
+			contentLength = AudioProcessor.getPreviewFileSize(fileVersion);
 
-			inputStream = new FileInputStream(previewFile);
-			contentLength = previewFile.length();
+			inputStream = AudioProcessor.getPreviewAsStream(fileVersion);
 
 			converted = true;
 		}
@@ -708,10 +706,9 @@ public class WebServerServlet extends HttpServlet {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(VideoProcessor.PREVIEW_TYPE);
 
-			File previewFile = VideoProcessor.getPreviewFile(tempFileId);
+			contentLength = VideoProcessor.getPreviewFileSize(fileVersion);
 
-			inputStream = new FileInputStream(previewFile);
-			contentLength = previewFile.length();
+			inputStream = VideoProcessor.getPreviewAsStream(fileVersion);
 
 			converted = true;
 		}
@@ -719,11 +716,9 @@ public class WebServerServlet extends HttpServlet {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(VideoProcessor.THUMBNAIL_TYPE);
 
-			File thumbnailFile = VideoProcessor.getThumbnailFile(
-				tempFileId);
+			contentLength = VideoProcessor.getThumbnailFileSize(fileVersion);
 
-			inputStream = new FileInputStream(thumbnailFile);
-			contentLength = thumbnailFile.length();
+			inputStream = VideoProcessor.getThumbnailAsStream(fileVersion);
 
 			converted = true;
 		}

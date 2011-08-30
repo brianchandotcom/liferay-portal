@@ -189,7 +189,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 					/>
 
 					<div class="lfr-asset-name">
-						<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "bookmarks-home") %></h4>
+						<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(pageContext, "bookmarks-home") %></h4>
 					</div>
 				</div>
 

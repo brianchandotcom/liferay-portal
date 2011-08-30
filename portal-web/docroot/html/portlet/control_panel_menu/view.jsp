@@ -163,7 +163,7 @@
 									Group group = manageableSites.get(i);
 
 									String image = "site_icon";
-									String message = HtmlUtil.escape(group.getDescriptiveName());
+									String message = group.getDescriptiveName();
 
 									if (group.isCompany()) {
 										image = "folder";
@@ -215,7 +215,7 @@
 								cssClass="lfr-panel-title-single"
 								image="<%= image %>"
 								label="<%= true %>"
-								message="<%= HtmlUtil.escape(StringUtil.shorten(curGroupName, 25)) %>"
+								message="<%= StringUtil.shorten(curGroupName, 25) %>"
 							/>
 						</c:otherwise>
 					</c:choose>
@@ -253,7 +253,7 @@
 
 								<liferay-ui:icon
 									image="folder"
-									message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
+									message="<%= curScopeLayout.getName(locale) %>"
 									url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", curScopeLayout.getScopeGroup().getGroupId()) %>'
 								/>
 

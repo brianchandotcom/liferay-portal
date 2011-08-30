@@ -176,7 +176,7 @@
 				buffer.append("<a href=\"");
 				buffer.append(viewUserURL);
 				buffer.append("\">");
-				buffer.append(organizationUser.getFullName());
+				buffer.append(HtmlUtil.escape(organizationUser.getFullName()));
 				buffer.append("</a>");
 			}
 			else {

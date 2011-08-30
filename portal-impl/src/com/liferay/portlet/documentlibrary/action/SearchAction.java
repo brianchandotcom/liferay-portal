@@ -49,9 +49,9 @@ public class SearchAction extends PortletAction {
 	}
 
 	@Override
-	public ActionForward render(ActionMapping mapping, ActionForm form,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+	public ActionForward render(
+			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
 		return mapping.findForward("portlet.document_library.view");

@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -631,6 +630,11 @@ public class PortalImpl implements Portal {
 			themeDisplay, themeDisplay.getLayout(), url, true);
 	}
 
+	public void clearCDNHostCaches() {
+		_cdnHostHttpCache.clear();
+		_cdnHostHttpsCache.clear();
+	}
+
 	public void clearRequestParameters(RenderRequest renderRequest) {
 		RenderRequestImpl renderRequestImpl = (RenderRequestImpl)renderRequest;
 
@@ -1030,26 +1034,28 @@ public class PortalImpl implements Portal {
 	 * @deprecated {@link #getCDNHost(boolean)}
 	 */
 	public String getCDNHost() {
-		return getCDNHostHttp();
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		return getCDNHostHttp(companyId);
 	}
 
 	public String getCDNHost(boolean secure) {
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
 		if (secure) {
-			return getCDNHostHttps();
+			return getCDNHostHttps(companyId);
 		}
 		else {
-			return getCDNHostHttp();
+			return getCDNHostHttp(companyId);
 		}
 	}
 
-	public String getCDNHostHttp() {
-		String cdnHostHttp = _cdnHostHttp.get();
+	public String getCDNHostHttp(long companyId) {
+		String cdnHostHttp = _cdnHostHttpCache.get(companyId);
 
 		if (cdnHostHttp != null) {
 			return cdnHostHttp;
 		}
-
-		long companyId = CompanyThreadLocal.getCompanyId();
 
 		try {
 			cdnHostHttp = PrefsPropsUtil.getString(
@@ -1062,19 +1068,17 @@ public class PortalImpl implements Portal {
 			cdnHostHttp = StringPool.BLANK;
 		}
 
-		_cdnHostHttp.set(cdnHostHttp);
+		_cdnHostHttpCache.put(companyId, cdnHostHttp);
 
 		return cdnHostHttp;
 	}
 
-	public String getCDNHostHttps() {
-		String cdnHostHttps = _cdnHostHttps.get();
+	public String getCDNHostHttps(long companyId) {
+		String cdnHostHttps = _cdnHostHttpsCache.get(companyId);
 
 		if (cdnHostHttps != null) {
 			return cdnHostHttps;
 		}
-
-		long companyId = CompanyThreadLocal.getCompanyId();
 
 		try {
 			cdnHostHttps = PrefsPropsUtil.getString(
@@ -1088,7 +1092,7 @@ public class PortalImpl implements Portal {
 			cdnHostHttps = StringPool.BLANK;
 		}
 
-		_cdnHostHttps.set(cdnHostHttps);
+		_cdnHostHttpsCache.put(companyId, cdnHostHttps);
 
 		return cdnHostHttps;
 	}
@@ -5578,12 +5582,10 @@ public class PortalImpl implements Portal {
 	private Pattern _bannedResourceIdPattern = Pattern.compile(
 		PropsValues.PORTLET_RESOURCE_ID_BANNED_PATHS_REGEXP,
 		Pattern.CASE_INSENSITIVE);
-	private static ThreadLocal<String> _cdnHostHttp =
-		new AutoResetThreadLocal<String>(
-			PortalImpl.class + "._cdnHostHttp");
-	private static ThreadLocal<String> _cdnHostHttps =
-		new AutoResetThreadLocal<String>(
-			PortalImpl.class + "._cdnHostHttps");
+	private static Map<Long, String> _cdnHostHttpCache =
+		new ConcurrentHashMap<Long, String>();
+	private static Map<Long, String> _cdnHostHttpsCache =
+		new ConcurrentHashMap<Long, String>();
 	private String _computerAddress;
 	private String _computerName;
 	private String[] _customSqlKeys;

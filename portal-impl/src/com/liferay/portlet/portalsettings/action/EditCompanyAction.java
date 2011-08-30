@@ -169,6 +169,8 @@ public class EditCompanyAction extends PortletAction {
 			legalType, sicCode, tickerSymbol, industry, type, size, languageId,
 			timeZoneId, addresses, emailAddresses, phones, websites,
 			properties);
+
+		PortalUtil.clearCDNHostCaches();
 	}
 
 	protected void updateDisplay(ActionRequest actionRequest) throws Exception {

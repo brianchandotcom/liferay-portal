@@ -151,11 +151,7 @@ if (Validator.isNotNull(historyKey)) {
 				<aui:button-row>
 					<aui:button type="submit" />
 
-					<%
-					String taglibOnClick = Validator.isNull(backURL) ? "location.href = '';" : backURL;
-					%>
-
-					<aui:button onClick="<%= taglibOnClick %>" type="cancel" />
+					<aui:button href="<%= backURL %>" type="cancel" />
 				</aui:button-row>
 			</c:if>
 

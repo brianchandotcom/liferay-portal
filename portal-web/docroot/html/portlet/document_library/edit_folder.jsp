@@ -218,9 +218,9 @@ if (workflowEnabled) {
 
 							<c:if test="<%= workflowEnabled %>">
 								<liferay-ui:search-container-column-text name="workflow">
-									<select name='workflowDefinition<%= dlFileEntryType.getFileEntryTypeId() %>'>
+									<aui:select label="" name='<%= "workflowDefinition" + dlFileEntryType.getFileEntryTypeId() %>'>
 
-										<option label="<%= LanguageUtil.get(pageContext, "no-workflow") %>" value=''></option>
+										<aui:option label='<%= LanguageUtil.get(pageContext, "no-workflow") %>' value="" />
 
 										<%
 										WorkflowDefinitionLink workflowDefinitionLink = null;
@@ -239,13 +239,13 @@ if (workflowEnabled) {
 											}
 										%>
 
-											<option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>' <%= selected ? "selected='true'" : "" %> value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />
+											<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>' selected='<%= selected %>' value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 										<%
 										}
 										%>
 
-									</select>
+									</aui:select>
 								</liferay-ui:search-container-column-text>
 							</c:if>
 
@@ -332,19 +332,25 @@ if (workflowEnabled) {
 				<c:when test="<%= workflowEnabled %>">
 					var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
 
-					var workflowDefinitions = '<select name="workflowDefinition' + fileEntryTypeId + '"><option label="<%= LanguageUtil.get(pageContext, "no-workflow") %>" value="" />';
+					<liferay-util:buffer var="workflowDefinitionsBuffer">
+						<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE" ><aui:option label='<%= LanguageUtil.get(pageContext, "no-workflow") %>' value="" />
 
 					<%
 					for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 					%>
 
-						workflowDefinitions = workflowDefinitions + '<option label="<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>" value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />';
+							<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>' selected='<% selected %>' value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 					<%
 					}
 					%>
 
-					workflowDefinitions = workflowDefinitions + '</select>';
+						</aui:select>
+					</liferay-util:buffer>
+
+					var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
+
+					workflowDefinitions =  workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE/g, "workflowDefinition" + fileEntryTypeId);
 
 					defaultWorkflow.hide();
 

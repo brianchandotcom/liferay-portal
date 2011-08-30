@@ -58,7 +58,7 @@ if (showThumbnail) {
 				<liferay-ui:icon
 					image='<%= "../file_system/small/" + fileVersion.getIcon() %>'
 					label="<%= true %>"
-					message="<%= HtmlUtil.escape(fileVersion.getTitle()) %>"
+					message="<%= fileVersion.getTitle() %>"
 					url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileVersion.getRepositoryId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileVersion.getVersion() %>'
 				/>
 			</c:otherwise>

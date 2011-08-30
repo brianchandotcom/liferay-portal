@@ -101,8 +101,6 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 		if (folderId > 0) {
 			Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
-			folder = folder.toEscapedModel();
-
 			folderId = folder.getFolderId();
 			folderName = folder.getName();
 		}
@@ -127,7 +125,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="new-folder">
-			<aui:a href="<%= viewFolderURL %>" id="folderName"><%= folderName %></aui:a>
+			<aui:a href="<%= viewFolderURL %>" id="folderName"><%= HtmlUtil.escape(folderName) %></aui:a>
 
 			<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="selectFolderURL">
 				<portlet:param name="struts_action" value="/document_library/select_folder" />

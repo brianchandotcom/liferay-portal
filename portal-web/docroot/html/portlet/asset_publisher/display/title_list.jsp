@@ -66,7 +66,7 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 		<li class="title-list <%= assetRendererFactory.getType() %>">
 			<liferay-ui:icon
 				label="<%= true %>"
-				message="<%= HtmlUtil.escape(title) %>"
+				message="<%= title %>"
 				src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
 				url="<%= viewURL %>"
 			/>

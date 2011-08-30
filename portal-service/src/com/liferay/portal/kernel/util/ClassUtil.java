@@ -146,6 +146,10 @@ public class ClassUtil {
 			}
 			else {
 				path = uri.getPath();
+
+				if (path == null) {
+					path = url.getFile();
+				}
 			}
 		}
 		catch (URISyntaxException urise) {

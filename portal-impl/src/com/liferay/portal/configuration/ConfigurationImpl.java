@@ -492,16 +492,17 @@ public class ConfigurationImpl
 		// If the resource is located inside of a JAR, then EasyConf needs the
 		// "jar:file:" prefix appended to the path. Use URL.toExternalForm() to
 		// achieve that. When running under JBoss, the protocol returned is
-		// "vfsfile" or "vfszip". When running under OC4J, the protocol returned
-		// is "code-source". When running under WebLogic, the protocol returned
-		// is "zip". When running under WebSphere, the protocol returned is
-		// "wsjar".
+		// "vfsfile" or "vfszip"; on AS7 its "vfs". When running under OC4J,
+		// the protocol returned is "code-source". When running under WebLogic,
+		// the protocol returne is "zip". When running under WebSphere,
+		// the protocol returned is "wsjar".
 
 		String protocol = url.getProtocol();
 
 		if (protocol.equals("code-source") || protocol.equals("jar") ||
 			protocol.equals("vfsfile") || protocol.equals("vfszip") ||
-			protocol.equals("wsjar") || protocol.equals("zip")) {
+			protocol.equals("vfs") || protocol.equals("wsjar") ||
+			protocol.equals("zip")) {
 
 			name = url.toExternalForm();
 		}

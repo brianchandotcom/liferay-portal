@@ -89,6 +89,18 @@ public class ClassPathUtil {
 			}
 		}
 
+		if (ServerDetector.isJBoss()) {
+
+			path = StringUtil.replace(
+				path, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			String protocol = url.getProtocol();
+
+			if (protocol.equals("vfs")) {
+				path = "file:".concat(path);
+			}
+		}
+
 		File dir = null;
 
 		int pos = -1;

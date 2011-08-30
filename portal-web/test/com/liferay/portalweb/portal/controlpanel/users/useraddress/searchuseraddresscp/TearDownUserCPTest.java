@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.user.searchuserfullnamecp;
+package com.liferay.portalweb.portal.controlpanel.users.useraddress.searchuseraddresscp;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

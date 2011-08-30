@@ -61,7 +61,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 
 						<liferay-ui:icon
 							image="site_icon"
-							message="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>"
+							message="<%= layoutSetPrototype.getName(locale) %>"
 							method="get"
 							url='<%= addSiteURL.toString() %>'
 						/>

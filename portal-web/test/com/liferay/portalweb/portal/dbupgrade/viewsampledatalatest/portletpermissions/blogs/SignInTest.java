@@ -30,7 +30,7 @@ public class SignInTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Sign In")) {
+				if (selenium.isElementPresent("link=Sign In")) {
 					break;
 				}
 			}
@@ -41,19 +41,17 @@ public class SignInTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Sign In", RuntimeVariables.replace("Sign In"));
+		selenium.clickAt("link=Sign In", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_58_login']",
-			RuntimeVariables.replace("test@liferay.com"));
+		selenium.type("_58_login", RuntimeVariables.replace("test@liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_58_password']",
-			RuntimeVariables.replace("test"));
+		selenium.type("_58_password", RuntimeVariables.replace("test"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
-			RuntimeVariables.replace("Remember Me Checkbox"));
+		selenium.clickAt("//input[@type='checkbox']",
+			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace("Sign In"));
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

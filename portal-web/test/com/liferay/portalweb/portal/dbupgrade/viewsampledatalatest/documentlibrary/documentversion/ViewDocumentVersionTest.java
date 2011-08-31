@@ -47,6 +47,7 @@ public class ViewDocumentVersionTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Folder1"));
+		Thread.sleep(3000);
 		assertEquals(RuntimeVariables.replace("Test2 Document2.txt"),
 			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",

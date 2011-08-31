@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewCouponTest extends BaseTestCase {
 	public void testViewCoupon() throws Exception {
-		selenium.open("/web/shopping-coupon-community/");
+		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewCouponTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Shopping Coupon Page")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,22 +41,37 @@ public class ViewCouponTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Shopping Coupon Page",
-			RuntimeVariables.replace("Shopping Coupon Page"));
+		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
+		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("_134_name",
+			RuntimeVariables.replace("Shopping Coupon Community"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Shopping Coupon Page",
+			RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Coupons", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Coupon Code"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals("Coupon Test", selenium.getValue("//input[@id='_34_name']"));
+		assertEquals("Coupon Test", selenium.getValue("_34_name"));
 		assertEquals("This is a coupon test.",
-			selenium.getValue("//textarea[@id='_34_description']"));
-		assertEquals("0.00", selenium.getValue("//input[@id='_34_minOrder']"));
-		assertEquals("0.50", selenium.getValue("//input[@id='_34_discount']"));
-		assertEquals("Percentage",
-			selenium.getSelectedLabel("//select[@id='_34_discountType']"));
+			selenium.getValue("_34_description"));
+		assertEquals("0.00", selenium.getValue("_34_minOrder"));
+		assertEquals("0.50", selenium.getValue("_34_discount"));
+		assertEquals("Percentage", selenium.getSelectedLabel("_34_discountType"));
 	}
 }

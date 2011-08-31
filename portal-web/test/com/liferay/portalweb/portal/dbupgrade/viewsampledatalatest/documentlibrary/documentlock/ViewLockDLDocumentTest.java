@@ -49,6 +49,7 @@ public class ViewLockDLDocumentTest extends BaseTestCase {
 			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Folder1"));
+		Thread.sleep(3000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

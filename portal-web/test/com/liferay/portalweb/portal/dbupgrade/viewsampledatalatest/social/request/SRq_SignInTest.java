@@ -149,6 +149,16 @@ public class SRq_SignInTest extends BaseTestCase {
 						"//input[@value='I Agree']"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				selenium.type("//input[@id='password1']",
+					RuntimeVariables.replace("asdf"));
+				selenium.saveScreenShotAndSource();
+				selenium.type("//input[@id='password2']",
+					RuntimeVariables.replace("asdf"));
+				selenium.saveScreenShotAndSource();
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Save']"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 				selenium.type("reminderQueryAnswer",
 					RuntimeVariables.replace("Test"));
 				selenium.saveScreenShotAndSource();

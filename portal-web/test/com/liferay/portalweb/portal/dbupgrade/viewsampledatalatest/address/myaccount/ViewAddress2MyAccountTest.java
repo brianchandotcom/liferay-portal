@@ -30,7 +30,7 @@ public class ViewAddress2MyAccountTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,36 +41,13 @@ public class ViewAddress2MyAccountTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
+		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Account",
-			RuntimeVariables.replace("My Account"));
+		selenium.clickAt("link=My Account", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_2_addressesLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//a[@id='_2_addressesLink']",
-				"Addresses"));
-		selenium.clickAt("//a[@id='_2_addressesLink']",
-			RuntimeVariables.replace("Addresses"));
+		selenium.clickAt("addressesLink", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -79,7 +56,7 @@ public class ViewAddress2MyAccountTest extends BaseTestCase {
 
 			try {
 				if ("Canada".equals(selenium.getSelectedLabel(
-								"//select[@id='_2_addressCountryId1']"))) {
+								"_2_addressCountryId1"))) {
 					break;
 				}
 			}
@@ -98,7 +75,7 @@ public class ViewAddress2MyAccountTest extends BaseTestCase {
 
 			try {
 				if ("Ontario".equals(selenium.getSelectedLabel(
-								"//select[@id='_2_addressRegionId1']"))) {
+								"_2_addressRegionId1"))) {
 					break;
 				}
 			}
@@ -109,20 +86,13 @@ public class ViewAddress2MyAccountTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals("123 Lets",
-			selenium.getValue("//input[@id='_2_addressStreet1_1']"));
-		assertEquals("Other",
-			selenium.getSelectedLabel("//select[@id='_2_addressTypeId1']"));
-		assertEquals("897 Hope",
-			selenium.getValue("//input[@id='_2_addressStreet2_1']"));
-		assertEquals("00000", selenium.getValue("//input[@id='_2_addressZip1']"));
-		assertEquals("7896 This",
-			selenium.getValue("//input[@id='_2_addressStreet3_1']"));
-		assertEquals("Works",
-			selenium.getValue("//input[@id='_2_addressCity1']"));
-		assertEquals("Canada",
-			selenium.getSelectedLabel("//select[@id='_2_addressCountryId1']"));
-		assertEquals("Ontario",
-			selenium.getSelectedLabel("//select[@id='_2_addressRegionId1']"));
+		assertEquals("123 Lets", selenium.getValue("_2_addressStreet1_1"));
+		assertEquals("Other", selenium.getSelectedLabel("_2_addressTypeId1"));
+		assertEquals("897 Hope", selenium.getValue("_2_addressStreet2_1"));
+		assertEquals("00000", selenium.getValue("_2_addressZip1"));
+		assertEquals("7896 This", selenium.getValue("_2_addressStreet3_1"));
+		assertEquals("Works", selenium.getValue("_2_addressCity1"));
+		assertEquals("Canada", selenium.getSelectedLabel("_2_addressCountryId1"));
+		assertEquals("Ontario", selenium.getSelectedLabel("_2_addressRegionId1"));
 	}
 }

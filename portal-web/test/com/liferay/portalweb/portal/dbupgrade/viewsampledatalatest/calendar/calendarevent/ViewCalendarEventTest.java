@@ -61,6 +61,6 @@ public class ViewCalendarEventTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("5/31/10"),
 			selenium.getText("//dd[1]"));
 		assertEquals(RuntimeVariables.replace("This is so much fun!"),
-			selenium.getText("//p[2]"));
+			selenium.getText("//p"));
 	}
 }

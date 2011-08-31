@@ -85,7 +85,7 @@ public class EditPageLayoutTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='layoutTemplateId2']",
 			RuntimeVariables.replace(""));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[5]", RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(

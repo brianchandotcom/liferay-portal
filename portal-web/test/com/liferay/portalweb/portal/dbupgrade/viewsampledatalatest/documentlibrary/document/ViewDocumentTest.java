@@ -47,6 +47,7 @@ public class ViewDocumentTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Folder1"));
+		Thread.sleep(3000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SearchTagsTest extends BaseTestCase {
 	public void testSearchTags() throws Exception {
-		selenium.open("/web/tags-message-board-community/");
+		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class SearchTagsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Message Boards Page")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,15 +41,30 @@ public class SearchTagsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Message Boards Page",
-			RuntimeVariables.replace("Message Boards Page"));
+		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_19_keywords1']",
-			RuntimeVariables.replace("selenium1"));
+		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("_134_name",
+			RuntimeVariables.replace("Tags Message Board Community"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
+			RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Message Boards Page",
+			RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("_19_keywords1", RuntimeVariables.replace("selenium1"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Message1 Tag1 Test1"));
@@ -77,14 +92,13 @@ public class SearchTagsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Page",
-			RuntimeVariables.replace("Message Boards Page"));
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_19_keywords1']",
-			RuntimeVariables.replace("selenium2"));
+		selenium.type("_19_keywords1", RuntimeVariables.replace("selenium2"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Message2 Tag2 Test2"));
@@ -112,14 +126,13 @@ public class SearchTagsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Page",
-			RuntimeVariables.replace("Message Boards Page"));
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_19_keywords1']",
-			RuntimeVariables.replace("selenium3"));
+		selenium.type("_19_keywords1", RuntimeVariables.replace("selenium3"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Message3 Tag3 Test3"));
@@ -147,14 +160,13 @@ public class SearchTagsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Page",
-			RuntimeVariables.replace("Message Boards Page"));
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_19_keywords1']",
-			RuntimeVariables.replace("selenium"));
+		selenium.type("_19_keywords1", RuntimeVariables.replace("selenium"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=MessageA TagA TestA"));

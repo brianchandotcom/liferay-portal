@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewWebFormTest extends BaseTestCase {
 	public void testViewWebForm() throws Exception {
-		selenium.open("/web/expando-web-form-community/");
+		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewWebFormTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Web Form Page")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,8 +41,23 @@ public class ViewWebFormTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Form Page",
-			RuntimeVariables.replace("Web Form Page"));
+		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("_134_name",
+			RuntimeVariables.replace("Expando Web Form Community"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//td[2]/a", RuntimeVariables.replace(""));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Web Form Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -95,8 +110,5 @@ public class ViewWebFormTest extends BaseTestCase {
 			selenium.getText("//div[3]/div[2]/fieldset/div/div[1]"));
 		assertTrue(selenium.isElementPresent("//input[@value='Export Data']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Delete Data']"));
-		assertFalse(selenium.isElementPresent("//div[3]/span/span/button[1]"));
-		assertFalse(selenium.isElementPresent("//div[4]/span/span/button[1]"));
-		assertFalse(selenium.isElementPresent("//div[5]/span/span/button[1]"));
 	}
 }

@@ -47,9 +47,14 @@ public class ViewShortcutTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/a/span[2]",
 			RuntimeVariables.replace("Test2 Folder2"));
+		Thread.sleep(3000);
 		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
 			selenium.getText("//div/a/span[2]"));
+		selenium.clickAt("//div/a/span[2]",
+			RuntimeVariables.replace("Test1 Document1.txt"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("This is test1 document1."),
-			selenium.getText("//a/span[3]"));
+			selenium.getText("//div[2]/div[1]/span[4]"));
 	}
 }

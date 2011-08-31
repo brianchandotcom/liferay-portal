@@ -58,8 +58,9 @@ public class ViewAssignMembersRoleCommunityTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("RolesGroupsRolesName"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+			selenium.getText("//td[4]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[4]/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -86,10 +87,10 @@ public class ViewAssignMembersRoleCommunityTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Communities"),
-			selenium.getText("//form/ul[1]/li[2]/span/span/a"));
-		selenium.clickAt("//form/ul[1]/li[2]/span/span/a",
-			RuntimeVariables.replace("Communities"));
+		assertEquals(RuntimeVariables.replace("Sites"),
+			selenium.getText("//form/ul[1]/li[2]/span/a"));
+		selenium.clickAt("//form/ul[1]/li[2]/span/a",
+			RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Current", RuntimeVariables.replace("Current"));

@@ -105,7 +105,8 @@ public class SelectWebContentImageAssociationTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//form[@id='_86_fm1']/div",
 				"Displaying Content:"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//form[2]/div/span/span/input",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

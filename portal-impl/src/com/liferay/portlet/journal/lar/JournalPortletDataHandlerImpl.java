@@ -299,6 +299,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroup(article.getGroupId());
+
 		boolean isScopedArticle = false;
 
 		if (group.getParentGroupId() != 0) {
@@ -306,10 +307,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			isScopedArticle = true;
 		}
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(portletDataContext.getPortletPath(
-				PortletKeys.JOURNAL, isScopedArticle));
+			PortletKeys.JOURNAL, isScopedArticle));
 		sb.append("/articles/");
 		sb.append(article.getArticleResourceUuid());
 		sb.append(StringPool.SLASH);
@@ -381,12 +382,13 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		Group exportedGroup = GroupLocalServiceUtil.getGroup(
 			article.getGroupId());
 
-		Group group = null;
 		boolean isScopedArticle = false;
 
 		if (exportedGroup.getParentGroupId() != 0) {
 			isScopedArticle = true;
 		}
+
+		Group group = null;
 
 		if (isScopedArticle) {	
 			group = GroupLocalServiceUtil.getGroup(
@@ -672,7 +674,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String articleResourceUuid = articleElement.attributeValue(
 			"article-resource-uuid");
 
-		Long originalGroupId = portletDataContext.getGroupId();
+		long originalGroupId = portletDataContext.getGroupId();
 
 		if (isScopedArticle) {
 			portletDataContext.setGroupId(
@@ -2151,15 +2153,13 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element articlesElement = rootElement.addElement("articles");
 
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "articles")) {
-			List<JournalArticle> articles = new ArrayList<JournalArticle>();
+			List<JournalArticle> articles = JournalArticleUtil.findByGroupId(
+				portletDataContext.getScopeGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new ArticleIDComparator(true));
 
 			articles.addAll(JournalArticleUtil.findByGroupId(
-					portletDataContext.getScopeGroupId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, new ArticleIDComparator(true)));
-
-			articles.addAll(JournalArticleUtil.findByGroupId(
-					portletDataContext.getGroupId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, new ArticleIDComparator(true)));
+				portletDataContext.getGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new ArticleIDComparator(true)));
 
 			for (JournalArticle article : articles) {
 				exportArticle(

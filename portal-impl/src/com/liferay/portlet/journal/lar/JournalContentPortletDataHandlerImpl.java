@@ -32,6 +32,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
@@ -232,11 +233,12 @@ public class JournalContentPortletDataHandlerImpl
 			articleId = MapUtil.getString(articleIds, articleId, articleId);
 
 			JournalArticle article = JournalArticleUtil.fetchByG_A_V(
-				portletDataContext.getScopeGroupId(), articleId, 1);
+				portletDataContext.getScopeGroupId(), articleId,
+				JournalArticleConstants.VERSION_DEFAULT);
 
 			if (article == null) {
-					portletDataContext.setScopeGroupId(
-						portletDataContext.getGroupId());
+				portletDataContext.setScopeGroupId(
+					portletDataContext.getGroupId());
 			}
 
 			String importedArticleGroupId = articleElement.attributeValue(

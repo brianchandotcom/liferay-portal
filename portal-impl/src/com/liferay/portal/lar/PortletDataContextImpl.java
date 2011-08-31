@@ -760,6 +760,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		if (isScoped) {
 			return ROOT_PATH_GROUPS + getScopeGroupId();
 		}
+
 		return ROOT_PATH_GROUPS + getGroupId();
 	}
 

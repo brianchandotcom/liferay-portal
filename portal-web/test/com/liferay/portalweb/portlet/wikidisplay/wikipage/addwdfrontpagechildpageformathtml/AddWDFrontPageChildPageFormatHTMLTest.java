@@ -31,7 +31,7 @@ public class AddWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -43,53 +43,40 @@ public class AddWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("//select", RuntimeVariables.replace("label=HTML"));
+		selenium.select("//select", RuntimeVariables.replace("HTML"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div/span[1]/span/span/input")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		assertTrue(selenium.getConfirmation()
+						   .matches("^You may lose some formatting when switching from Creole to HTML. Do you want to continue[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//div/span[1]/span/span/input",
-			RuntimeVariables.replace("WD Wiki Page Format HTML Test"));
+			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("cke_42_label", RuntimeVariables.replace("Source"));
-		selenium.type("//td[@id='cke_contents_CKEditor1']/textarea",
-			RuntimeVariables.replace(
-				"<a href=http://www.liferay.com>Welcome to LIFERAY</a>"));
-		selenium.saveScreenShotAndSource();
-		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
+		selenium.click("//span[9]/span[2]/span/a/span[2]");
 		Thread.sleep(5000);
-		selenium.clickAt("cke_42_label", RuntimeVariables.replace("Source"));
+		selenium.type("//textarea[@class='cke_source cke_enable_context_menu']",
+			RuntimeVariables.replace(
+				"<a herf=http://www.liferay.com>Welcome to LIFERAY</a>"));
+		selenium.saveScreenShotAndSource();
+		selenium.selectWindow("null");
+		selenium.saveScreenShotAndSource();
+		selenium.click("//span[9]/span[2]/span/a/span[2]");
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -98,7 +85,7 @@ public class AddWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -110,17 +97,25 @@ public class AddWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent(
-				"link=WD Wiki Page Format HTML Test"));
-		selenium.clickAt("link=WD Wiki Page Format HTML Test",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page Title"),
+			selenium.getText("//div[@class='child-pages']/ul/li/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
+			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Welcome to LIFERAY"));
-		selenium.clickAt("link=Details", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Welcome to LIFERAY"),
+			selenium.getText("//div[@class='wiki-body']/p/a"));
+		assertEquals(RuntimeVariables.replace("Details"),
+			selenium.getText("//div[3]/span[2]/a/span"));
+		selenium.clickAt("//div[3]/span[2]/a/span",
+			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("HTML"),

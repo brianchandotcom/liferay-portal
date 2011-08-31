@@ -14,44 +14,74 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Wiki Display Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[5]/div</td>
-	<td>This is a wiki frontpage article test.</td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Edit</td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Front Page Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[1]/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[1]/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe</td>
+	<td>IFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>IFrame</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//textarea</td>
-	<td>This is an edited wiki frontpage article test.</td>
+	<td>//body</td>
+	<td>Wiki Front Page Content Edit</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[6]/div</td>
-	<td>This is an edited wiki frontpage article test.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Front Page Content Edit</td>
 </tr>
 <tr>
 	<td>assertNotText</td>
-	<td>//div[6]/div</td>
-	<td>This is a wiki frontpage article test.</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Front Page Content</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -59,39 +89,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Details</td>
-	<td></td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=History</td>
-	<td></td>
+	<td>History</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=1.2</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>1.2</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=1.1</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/a</td>
+	<td>1.1</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=1.0 (Minor Edit)</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[5]/td[4]/a</td>
+	<td>1.0 (Minor Edit)</td>
 </tr>
 
 </tbody></table>

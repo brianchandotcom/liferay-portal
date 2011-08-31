@@ -30,7 +30,7 @@ public class PreviewWDFrontPageChildPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -42,31 +42,56 @@ public class PreviewWDFrontPageChildPageTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//td[2]/input",
-			RuntimeVariables.replace("Front Page Child Page Test"));
+		Thread.sleep(5000);
+		selenium.type("//div/span[1]/span/span/input",
+			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea",
-			RuntimeVariables.replace("This is a front page child page test."));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki Front Page Child Page Content"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Preview']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Preview"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"This is a front page child page test."),
-			selenium.getText("//div[@class='preview']/div"));
+				"Wiki Front Page Child Page Content"),
+			selenium.getText("//div[@class='preview']/div/p"));
 		selenium.clickAt("//input[@value='Cancel']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Cancel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(
 				"Your request completed successfully."));
-		assertFalse(selenium.isElementPresent("Front Page Child Page Test"));
+		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Title"));
+		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Content"));
 	}
 }

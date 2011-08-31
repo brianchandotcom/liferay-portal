@@ -30,7 +30,7 @@ public class EditWDFrontPageCommentBodyTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -42,16 +42,19 @@ public class EditWDFrontPageCommentBodyTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"This is a wiki page test comment."),
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment Body"),
 			selenium.getText("//div/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//div[4]/div/span/a/span"));
-		selenium.clickAt("//div[4]/div/span/a/span",
-			RuntimeVariables.replace("Edit"));
+			selenium.getText("//li[3]/span/a/span"));
+		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
+		selenium.type("//div[3]/div/div[2]/span/span/span/textarea",
+			RuntimeVariables.replace("Wiki Front Page Comment Body Edit"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -59,8 +62,8 @@ public class EditWDFrontPageCommentBodyTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[4]/div/div[2]/span/span/span/textarea")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-message-response portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -71,25 +74,14 @@ public class EditWDFrontPageCommentBodyTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//div[4]/div/div[2]/span/span/span/textarea",
-			RuntimeVariables.replace(
-				"This is a wiki page test comment. Edited."));
-		selenium.saveScreenShotAndSource();
-		selenium.keyPress("//div[4]/div/div[2]/span/span/span/textarea",
-			RuntimeVariables.replace("\\48"));
-		selenium.keyPress("//div[4]/div/div[2]/span/span/span/textarea",
-			RuntimeVariables.replace("\\8"));
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
 		assertEquals(RuntimeVariables.replace(
-				"This is a wiki page test comment. Edited."),
+				"Your request processed successfully."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Comment Body Edit"),
 			selenium.getText("//div/div[3]/div/div[1]"));
-		assertNotEquals(RuntimeVariables.replace(
-				"This is a wiki page test comment."),
+		assertNotEquals(RuntimeVariables.replace("Wiki Front Page Comment Body"),
 			selenium.getText("//div/div[3]/div/div[1]"));
 	}
 }

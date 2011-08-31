@@ -32,7 +32,7 @@ public class LinkWDFrontPageChildPageToWDFrontPageChildPageTest
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -44,29 +44,97 @@ public class LinkWDFrontPageChildPageToWDFrontPageChildPageTest
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Front2 Page2 Child2 Page2 Test2",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page2 Title"),
+			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
+		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
+			RuntimeVariables.replace("Wiki Front Page Child Page2 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent(
-				"link=Front1 Page1 Child1 Page1 Test1"));
-		selenium.clickAt("link=Edit", RuntimeVariables.replace(""));
+		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page1 Title"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("//div[3]/span[1]/a/span"));
+		selenium.clickAt("//div[3]/span[1]/a/span",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea",
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//iframe");
+		selenium.type("//body",
 			RuntimeVariables.replace(
-				"This is a front2 page2 child2 page2 test2.\n\n[[Front1 Page1 Child1 Page1 Test1]]"));
+				"Wiki Front Page Child Page2 Content\n\n[[Wiki Front Page Child Page1 Title]]"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isElementPresent(
-				"link=Front1 Page1 Child1 Page1 Test1"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page1 Title"),
+			selenium.getText("//div[@class='wiki-body']/p/a"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Wiki Display Test Page",
+			RuntimeVariables.replace("Wiki Display Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page2 Title"),
+			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
+		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
+			RuntimeVariables.replace("Wiki Front Page Child Page2 Title"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//div[@class='wiki-body']/p/a",
+			RuntimeVariables.replace("Wiki Front Page Child Page1 Title"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page1 Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page1 Content"),
+			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

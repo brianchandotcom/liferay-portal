@@ -14,59 +14,89 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[1]/span[1]/a/span</td>
+	<td>Add Child Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Add Child Page</td>
-	<td></td>
+	<td>//div[1]/span[1]/a/span</td>
+	<td>Add Child Page</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//div/span[1]/span/span/input</td>
-	<td>Front2 Page2 Child2 Page2 Test2</td>
+	<td>Wiki Front Page Child Page2 Title</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe</td>
+	<td>IFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>IFrame</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea</td>
-	<td>This is a front2 page2 child2 page2 test2.</td>
+	<td>//body</td>
+	<td>Wiki Front Page Child Page2 Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='child-pages']/ul/li[2]/a</td>
-	<td>Front2 Page2 Child2 Page2 Test2</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='child-pages']/ul/li/a)[1]</td>
+	<td>Wiki Front Page Child Page1 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='child-pages']/ul/li/a)[2]</td>
+	<td>Wiki Front Page Child Page2 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Front2 Page2 Child2 Page2 Test2</td>
-	<td></td>
+	<td>xPath=(//div[@class='child-pages']/ul/li/a)[2]</td>
+	<td>Wiki Front Page Child Page2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
-	<td>Front2 Page2 Child2 Page2 Test2</td>
+	<td>Wiki Front Page Child Page2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']</td>
-	<td>This is a front2 page2 child2 page2 test2.</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Front Page Child Page2 Content</td>
 </tr>
 
 </tbody></table>

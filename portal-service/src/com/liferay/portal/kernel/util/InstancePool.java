@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,6 +38,8 @@ public class InstancePool {
 	}
 
 	public static void put(String className, Object obj) {
+		className = className.trim();
+
 		_instance._put(className, obj);
 	}
 
@@ -46,7 +48,7 @@ public class InstancePool {
 	}
 
 	private InstancePool() {
-		_classPool = new HashMap<String, Object>();
+		_classPool = new ConcurrentHashMap<String, Object>();
 	}
 
 	private boolean _contains(String className) {
@@ -73,7 +75,7 @@ public class InstancePool {
 
 				obj = clazz.newInstance();
 
-				_put(className, obj);
+				_classPool.put(className, obj);
 			}
 			catch (Exception e1) {
 				if (logErrors && _log.isWarnEnabled()) {
@@ -93,7 +95,7 @@ public class InstancePool {
 
 					obj = clazz.newInstance();
 
-					_put(className, obj);
+					_classPool.put(className, obj);
 				}
 				catch (Exception e2) {
 					if (logErrors) {
@@ -111,8 +113,6 @@ public class InstancePool {
 	}
 
 	private void _put(String className, Object obj) {
-		className = className.trim();
-
 		_classPool.put(className, obj);
 	}
 
@@ -124,6 +124,6 @@ public class InstancePool {
 
 	private static InstancePool _instance = new InstancePool();
 
-	private Map<String, Object> _classPool;
+	private final Map<String, Object> _classPool;
 
 }

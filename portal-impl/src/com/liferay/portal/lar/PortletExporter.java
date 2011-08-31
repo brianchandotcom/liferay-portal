@@ -924,8 +924,6 @@ public class PortletExporter {
 
 		long groupId = portletDataContext.getGroupId();
 
-		portletDataContext.setGroupId(portletDataContext.getScopeGroupId());
-
 		try {
 			data = portletDataHandler.exportData(
 				portletDataContext, portletId, jxPreferences);

@@ -170,11 +170,15 @@ public interface PortletDataContext extends Serializable {
 
 	public String getPortletPath(String portletId);
 
+	public String getPortletPath(String portletId, boolean isScoped);
+
 	public Set<String> getPrimaryKeys();
 
 	public Map<String, List<RatingsEntry>> getRatingsEntries();
 
 	public String getRootPath();
+
+	public String getRootPath(boolean isScoped);
 
 	public long getScopeGroupId();
 

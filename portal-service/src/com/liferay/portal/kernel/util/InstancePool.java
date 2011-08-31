@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -74,7 +75,7 @@ public class InstancePool {
 
 				obj = clazz.newInstance();
 
-				_put(className, obj);
+				_classPool.put(className, obj);
 			}
 			catch (Exception e1) {
 				if (logErrors && _log.isWarnEnabled()) {
@@ -94,7 +95,7 @@ public class InstancePool {
 
 					obj = clazz.newInstance();
 
-					_put(className, obj);
+					_classPool.put(className, obj);
 				}
 				catch (Exception e2) {
 					if (logErrors) {
@@ -112,7 +113,7 @@ public class InstancePool {
 	}
 
 	private void _put(String className, Object obj) {
-		_classPool.putIfAbsent(className, obj);
+		_classPool.put(className, obj);
 	}
 
 	private void _reset() {
@@ -123,6 +124,6 @@ public class InstancePool {
 
 	private static InstancePool _instance = new InstancePool();
 
-	private ConcurrentHashMap<String, Object> _classPool;
+	private final Map<String, Object> _classPool;
 
 }

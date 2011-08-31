@@ -1070,8 +1070,11 @@ AUI().add(
 							success: function(event, id, obj) {
 								var objectData = this.get('responseData');
 
-								if (objectData) {
+								if (objectData.cssValue) {
 									instance._objData = objectData;
+								}
+								else {
+									instance._objData.portletData = objectData.portletData;
 								}
 
 								onLookAndFeelComplete();

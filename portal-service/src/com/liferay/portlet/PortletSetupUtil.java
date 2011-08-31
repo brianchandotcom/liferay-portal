@@ -45,9 +45,7 @@ public class PortletSetupUtil {
 			"portletSetupCss", StringPool.BLANK);
 
 		try {
-			if (Validator.isNotNull(css)) {
-				return _toJSONObject(portletSetup, css).toString();
-			}
+			return _toJSONObject(portletSetup, css).toString();
 		}
 		catch (Exception e) {
 			css = null;
@@ -68,7 +66,16 @@ public class PortletSetupUtil {
 			_log.debug("Transform CSS to JSON " + css);
 		}
 
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(css);
+		JSONObject jsonObj = null;
+
+		if (Validator.isNotNull(css)) {
+			jsonObj = JSONFactoryUtil.createJSONObject(css);
+
+			jsonObj.put("cssValue", true);
+		}
+		else {
+			jsonObj = JSONFactoryUtil.createJSONObject();
+		}
 
 		JSONObject portletData = JSONFactoryUtil.createJSONObject();
 

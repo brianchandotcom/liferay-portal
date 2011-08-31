@@ -375,9 +375,9 @@
 		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-6.0.33/webapps" />
+			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-7.0.20/webapps" />
 			<param name="deployer.app.server.type" value="tomcat" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat-6.0.33/webapps/ROOT/WEB-INF/lib" />
+			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat-7.0.20/webapps/ROOT/WEB-INF/lib" />
 		</antcall>
 	</target>
 
@@ -1049,11 +1049,11 @@ release was successful.</echo>
 			src="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
 		>
 			<patternset
-				excludes="apache-tomcat-6.0.33/webapps/**"
+				excludes="apache-tomcat-7.0.20/webapps/**"
 			/>
 			<mapper
 				type="glob"
-				from="apache-tomcat-6.0.33/*"
+				from="apache-tomcat-7.0.20/*"
 				to="${app.server.tomcat.dir.name}/*"
 			/>
 		</unzip>

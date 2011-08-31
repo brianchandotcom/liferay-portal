@@ -1045,6 +1045,18 @@
 		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingOrderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingOrderService" />
 	</bean>
+	<bean name="/com_liferay_portlet_social_service_spring_SocialActivitySettingService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.social.service.SocialActivitySettingService" />
+		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialActivitySettingService" />
+	</bean>
+	<bean name="/com_liferay_portlet_social_service_spring_SocialActivitySettingService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.social.service.SocialActivitySettingService" />
+		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialActivitySettingService" />
+	</bean>
+	<bean name="/com_liferay_portlet_social_service_spring_SocialActivitySettingService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.social.service.SocialActivitySettingService" />
+		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialActivitySettingService" />
+	</bean>
 	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCFrameworkVersionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />

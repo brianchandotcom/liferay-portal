@@ -18,12 +18,31 @@ package com.liferay.portlet.social.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface SocialActivityStatsEntryFinder {
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityStatsEntry> findUserStatsByCounters(
-		long groupId, Long[] userIds, java.lang.String[] selectedCounters,
-		int start, int end)
+	public int countTopUsersByCounters(long groupId,
+		java.lang.String[] rankingCounters)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<java.lang.Long> getTopUsersByCounters(long groupId,
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityStatsEntry> findStatsByNameAndPeriod(
+		long groupId, java.lang.String statName, int statPeriodStart,
+		int statPeriodEnd)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityStatsEntry> findStatsDistributionByNameAndPeriod(
+		long groupId, java.lang.String statName, int statPeriodStart,
+		int statPeriodEnd)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityStatsEntry> findTagsByCounter(
+		long groupId, java.lang.String statName, int statPeriodStart,
+		int statPeriodEnd)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.Long> findTopUsersByCounters(long groupId,
 		java.lang.String[] rankingCounters, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityStatsEntry> findUserStatsByCounters(
+		long groupId, java.util.List<java.lang.Long> userIds,
+		java.lang.String[] selectedCounters, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

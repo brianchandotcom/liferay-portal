@@ -680,6 +680,7 @@ create index IX_1387F0A5 on SocialActivityAchievement (groupId, unlockedBy, firs
 create index IX_B15863FA on SocialActivityLimit (classNameId, classPK);
 create unique index IX_6388397F on SocialActivityLimit (groupId, userId, classNameId, classPK, activityKey, statName);
 
+create index IX_AEB44CD0 on SocialActivitySetting (groupId, activityKey);
 create index IX_EFF0DCA2 on SocialActivitySetting (groupId, classNameId, activityKey);
 create index IX_F527AAE1 on SocialActivitySetting (groupId, classNameId, activityKey, name);
 

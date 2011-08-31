@@ -21,20 +21,53 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class SocialActivityStatsEntryFinderUtil {
+	public static int countTopUsersByCounters(long groupId,
+		java.lang.String[] rankingCounters)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countTopUsersByCounters(groupId, rankingCounters);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityStatsEntry> findStatsByNameAndPeriod(
+		long groupId, java.lang.String statName, int statPeriodStart,
+		int statPeriodEnd)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findStatsByNameAndPeriod(groupId, statName,
+			statPeriodStart, statPeriodEnd);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityStatsEntry> findStatsDistributionByNameAndPeriod(
+		long groupId, java.lang.String statName, int statPeriodStart,
+		int statPeriodEnd)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findStatsDistributionByNameAndPeriod(groupId, statName,
+			statPeriodStart, statPeriodEnd);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityStatsEntry> findTagsByCounter(
+		long groupId, java.lang.String statName, int statPeriodStart,
+		int statPeriodEnd)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findTagsByCounter(groupId, statName, statPeriodStart,
+			statPeriodEnd);
+	}
+
+	public static java.util.List<java.lang.Long> findTopUsersByCounters(
+		long groupId, java.lang.String[] rankingCounters, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findTopUsersByCounters(groupId, rankingCounters, start, end);
+	}
+
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityStatsEntry> findUserStatsByCounters(
-		long groupId, Long[] userIds, java.lang.String[] selectedCounters,
-		int start, int end)
+		long groupId, java.util.List<java.lang.Long> userIds,
+		java.lang.String[] selectedCounters, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findUserStatsByCounters(groupId, userIds, selectedCounters,
 			start, end);
-	}
-
-	public static java.util.List<java.lang.Long> getTopUsersByCounters(
-		long groupId, java.lang.String[] rankingCounters, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder()
-				   .getTopUsersByCounters(groupId, rankingCounters, start, end);
 	}
 
 	public static SocialActivityStatsEntryFinder getFinder() {

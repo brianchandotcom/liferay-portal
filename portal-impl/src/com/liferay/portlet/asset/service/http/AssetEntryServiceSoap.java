@@ -155,13 +155,10 @@ public class AssetEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.asset.model.AssetEntrySoap incrementViewCounter(
-		java.lang.String className, long classPK) throws RemoteException {
+	public static void incrementViewCounter(java.lang.String className,
+		long classPK) throws RemoteException {
 		try {
-			com.liferay.portlet.asset.model.AssetEntry returnValue = AssetEntryServiceUtil.incrementViewCounter(className,
-					classPK);
-
-			return com.liferay.portlet.asset.model.AssetEntrySoap.toSoapModel(returnValue);
+			AssetEntryServiceUtil.incrementViewCounter(className, classPK);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

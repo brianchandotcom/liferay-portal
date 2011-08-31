@@ -1553,7 +1553,7 @@
 			if (checkbox) {
 				var checked = checkbox.attr('checked');
 
-				var value = '';
+				var value = 'false';
 
 				if (checked) {
 					value = checkbox.val();

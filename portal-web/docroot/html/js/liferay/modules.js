@@ -75,6 +75,7 @@
 			'search-container': ['aui-base', 'selector-css3'],
 			'session': ['aui-io', 'aui-task-manager', 'cookie', 'liferay-notice'],
 			'service-datasource': ['aui-base', 'datasource-local'],
+			'shutdown': ['aui-base', 'collection', 'liferay-notice', 'liferay-poller', 'substitute'],
 			'staging': ['aui-dialog', 'aui-io-plugin'],
 			'staging-branch': ['liferay-staging'],
 			'staging-version': ['aui-button-item', 'liferay-staging'],

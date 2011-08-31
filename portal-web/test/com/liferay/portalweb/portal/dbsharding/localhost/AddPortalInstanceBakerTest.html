@@ -16,62 +16,62 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Portal Instances</td>
-	<td></td>
+	<td>Portal Instances</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_135_webId</td>
-	<td></td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_135_webId</td>
+	<td>//input[@id='_135_webId']</td>
 	<td>www.baker.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_135_virtualHostname</td>
+	<td>//input[@id='_135_virtualHostname']</td>
 	<td>www.baker.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_135_mx</td>
+	<td>//input[@id='_135_mx']</td>
 	<td>baker.com</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=www.baker.com</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[5]/td[2]/a</td>
+	<td>www.baker.com</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=baker.com</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[5]/td[3]/a</td>
+	<td>www.baker.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[4]/a</td>
+	<td>baker.com</td>
 </tr>
 
 </tbody></table>

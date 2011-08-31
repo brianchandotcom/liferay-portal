@@ -15,48 +15,53 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Board Test Page</td>
+	<td>Message Board Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Board Test Page</td>
+	<td>Message Board Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Subcategory']</td>
-	<td></td>
+	<td>Add Subcategory</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_19_name</td>
-	<td>Tést Subcatégory</td>
+	<td>//input[@id='_19_name']</td>
+	<td>MB Subcategory Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_19_description</td>
-	<td>This is a tést subcatégory!</td>
+	<td>//textarea[@id='_19_description']</td>
+	<td>MB Subcategory Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Tést Subcatégory</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Subcategory Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//td[1]/a</td>
+	<td>MB Subcategory Description</td>
 </tr>
 
 </tbody></table>

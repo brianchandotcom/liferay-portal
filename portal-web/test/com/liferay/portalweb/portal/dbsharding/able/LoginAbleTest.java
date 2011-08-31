@@ -45,72 +45,25 @@ public class LoginAbleTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Sign In"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_58_login", RuntimeVariables.replace("test@able.com"));
+		selenium.type("//input[@id='_58_login']",
+			RuntimeVariables.replace("test@able.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_58_password", RuntimeVariables.replace("test"));
+		selenium.type("//input[@id='_58_password']",
+			RuntimeVariables.replace("test"));
 		selenium.saveScreenShotAndSource();
-		selenium.click("_58_rememberMeCheckbox");
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Sign In']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+			RuntimeVariables.replace("Remember Me"));
+		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='I Agree']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='I Agree']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("reminderQueryAnswer", RuntimeVariables.replace("Test"));
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Save']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");

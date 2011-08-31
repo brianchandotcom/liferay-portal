@@ -15,53 +15,73 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Board Test Page</td>
+	<td>Message Board Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>link=Message Board Test Page</td>
+	<td>Message Board Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a/strong</td>
+	<td>MB Subcategory Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Post New Thread']</td>
+	<td>Post New Thread</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_19_subject']</td>
+	<td>MB Subcategory Message Name</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>_19_subject</td>
-	<td>Tést Méssagé</td>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_19_textArea</td>
-	<td>This is a tést méssagé!</td>
+	<td>//body</td>
+	<td>MB Subcategory Message Description</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>This is a tést méssagé!</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='thread-body']</td>
+	<td>MB Subcategory Message Description</td>
 </tr>
 
 </tbody></table>

@@ -117,7 +117,7 @@ else {
 
 				<h3><liferay-ui:message key="css" /></h3>
 
-				<aui:input label="insert-custom-css-that-will-be-loaded-after-the-theme" name="regularCss" type="textarea" value="<%= cssText %>" />
+				<aui:input cssClass="lfr-textarea-container" label="insert-custom-css-that-will-be-loaded-after-the-theme" name="regularCss" type="textarea" value="<%= cssText %>" />
 			</div>
 		</liferay-ui:section>
 

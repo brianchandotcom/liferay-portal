@@ -15,16 +15,21 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Edit</td>
 </tr>
@@ -35,18 +40,23 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_19_name</td>
+	<td>//input[@id='_19_name']</td>
 	<td>Test Category 2</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Test Category 2</td>
-	<td></td>
+	<td>Test Category 2</td>
 </tr>
 
 </tbody></table>

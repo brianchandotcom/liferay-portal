@@ -71,7 +71,7 @@
 				Image largeImage = ImageLocalServiceUtil.getImage(fileVersion.getLargeImageId());
 
 				if (largeImage != null) {
-					href = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
+					href = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId()) + "&fileName=" + HttpUtil.encodeURL(fileEntry.getTitle());
 					src = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId + "&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
 					style = "height: " + smallImageHeight + "; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; width: " + smallImageWidth + ";";
 				}

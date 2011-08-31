@@ -16,7 +16,6 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.NoSuchUserException" %>
 <%@ page import="com.liferay.portal.kernel.servlet.PortalSessionContext" %>
 <%@ page import="com.liferay.portal.liveusers.LiveUsers" %>
 <%@ page import="com.liferay.portal.util.comparator.UserTrackerModifiedDateComparator" %>

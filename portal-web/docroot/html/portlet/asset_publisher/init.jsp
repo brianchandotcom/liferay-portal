@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.NoSuchModelException" %>
-<%@ page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %>
-<%@ page import="com.liferay.portal.kernel.portlet.LiferayPortletResponse" %>
 <%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %>
 <%@ page import="com.liferay.portal.kernel.search.Hits" %>
 <%@ page import="com.liferay.portal.kernel.xml.Document" %>

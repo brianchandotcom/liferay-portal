@@ -35,8 +35,8 @@ public class ShutdownPollerProcessor extends BasePollerProcessor {
 
 		if (ShutdownUtil.isInProcess()) {
 			shutdownInfo.put("process", ShutdownUtil.getInProcess());
-			shutdownInfo.put("message", HtmlUtil.escape(
-				ShutdownUtil.getMessage()));
+			shutdownInfo.put(
+				"message", HtmlUtil.escape(ShutdownUtil.getMessage()));
 		}
 		else {
 			shutdownInfo.put("process", 0);
@@ -45,6 +45,7 @@ public class ShutdownPollerProcessor extends BasePollerProcessor {
 		pollerResponse.setParameter("shutdown", shutdownInfo);
 	}
 
+	@Override
 	protected void doReceive(
 			PollerRequest pollerRequest, PollerResponse pollerResponse)
 		throws Exception {
@@ -52,6 +53,7 @@ public class ShutdownPollerProcessor extends BasePollerProcessor {
 		checkShutdown(pollerRequest, pollerResponse);
 	}
 
+	@Override
 	protected void doSend(PollerRequest pollerRequest)
 		throws Exception {
 	}

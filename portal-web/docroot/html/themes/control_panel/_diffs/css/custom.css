@@ -149,14 +149,6 @@ body.portal-popup:after, body.portal-popup:before {
 	margin-bottom: 5px;
 }
 
-.panel-page-application .lfr-panel {
-	background: url(../images/custom/panel_top_gradient.png) 0 0 repeat-x;
-}
-
-.panel-page-application .lfr-panel-content {
-	background: url(../images/custom/panel_bottom_gradient.png) 0 bottom repeat-x;
-}
-
 .panel-page-application .lfr-panel-container .lfr-extended.lfr-collapsible .lfr-panel-titlebar {
 	border-top: none;
 }
@@ -165,17 +157,13 @@ body.portal-popup:after, body.portal-popup:before {
 	padding: 5px 5px 2px;
 }
 
-.panel-page-application .lfr-panel .lfr-panel-titlebar {
-	padding-left: 19px;
-}
-
 .panel-page-application .lfr-panel .lfr-panel-titlebar, .panel-page-application .lfr-panel .lfr-panel-titlebar .lfr-panel-button, .panel-page-application .lfr-panel .lfr-panel-titlebar .lfr-panel-button {
-	background: url(../images/custom/panel_normal_header_toggler_bg.png) 0 -1px no-repeat;
+	background: url(../images/custom/panel_normal_header_toggler_bg.png) -3px -1px no-repeat;
 	margin: 2px 0 0;
 }
 
 .panel-page-application .lfr-panel.lfr-extended .lfr-panel-titlebar, .panel-page-application .lfr-panel.lfr-extended .lfr-panel-titlebar .lfr-panel-button, .panel-page-application .lfr-panel.lfr-extended .lfr-panel-titlebar .lfr-panel-button {
-	background: url(../images/custom/panel_header_toggler_bg.png) 0 -1px no-repeat;
+	background: url(../images/custom/panel_header_toggler_bg.png) -3px -1px no-repeat;
 	margin: 2px 0 0;
 }
 
@@ -193,7 +181,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .panel-page-application .lfr-panel.lfr-collapsed .lfr-panel-titlebar, .panel-page-application .lfr-panel.lfr-collapsed .lfr-panel-titlebar .lfr-panel-button {
-	background-position: 0 -23px;
+	background-position: -3px -23px;
 }
 
 .panel-page-menu {
@@ -217,10 +205,6 @@ body.portal-popup:after, body.portal-popup:before {
 
 .aui-tagselector-content {
 	margin-bottom: 0;
-}
-
-.lfr-panel-content {
-	padding: 5px 10px;
 }
 
 .lfr-ctrl-panel-content .aui-column-content, .lfr-ctrl-panel-content .aui-column-content-center, .lfr-ctrl-panel .panel-page-menu-content {

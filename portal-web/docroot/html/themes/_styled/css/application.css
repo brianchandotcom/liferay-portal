@@ -325,6 +325,14 @@
 	background: #FFF;
 }
 
+.lfr-panel-content {
+	padding: 5px 10px;
+}
+
+.lfr-panel-basic .lfr-panel-content {
+	padding-left: 15px;
+}
+
 .aui-dialog-bd {
 	min-height: 30px;
 }

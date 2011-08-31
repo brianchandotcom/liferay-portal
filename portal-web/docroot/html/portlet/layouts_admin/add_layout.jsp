@@ -35,7 +35,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 	<aui:model-context model="<%= Layout.class %>" />
 
 	<portlet:actionURL var="editPageURL">
-		<portlet:param name="struts_action" value="/manage_pages/edit_layouts" />
+		<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= editPageURL %>" enctype="multipart/form-data" method="post" name="fm2">

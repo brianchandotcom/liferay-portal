@@ -76,7 +76,7 @@ String[][] categorySections = {mainSections};
 </div>
 
 <portlet:actionURL var="editLayoutURL">
-	<portlet:param name="struts_action" value="/manage_pages/edit_layouts" />
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 </portlet:actionURL>
 
 <aui:form action="<%= editLayoutURL %>" cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout();" %>'>

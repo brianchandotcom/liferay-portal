@@ -639,7 +639,7 @@ AUI().add(
 
 								columns.each(
 									function(item, index, collection) {
-										var overlayMask = item.getData('customizatonControls');
+										var overlayMask = item.getData('customizationControls');
 
 										if (!overlayMask) {
 											overlayMask = instance._createCustomizationMask(item);
@@ -648,6 +648,23 @@ AUI().add(
 										overlayMask.toggle();
 									}
 								);
+							}
+						);
+
+						Liferay.publish(
+							'updatedLayout',
+							{
+								defaultFn: function(event) {
+									columns.each(
+										function(item, index, collection) {
+											var overlayMask = item.getData('customizationControls');
+
+											if (overlayMask) {
+												item.setData('customizationControls', null);
+											}
+										}
+									);
+								}
 							}
 						);
 					}

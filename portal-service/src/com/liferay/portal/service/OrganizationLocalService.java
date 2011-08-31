@@ -796,6 +796,13 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Organization> search(
+		long companyId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns an ordered range of all the organizations that match the
 	* keywords, type, region, and country, without using the indexer. It is

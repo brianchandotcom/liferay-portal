@@ -19,6 +19,8 @@ import com.liferay.portal.AddressStreetException;
 import com.liferay.portal.AddressZipException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Address;
@@ -26,8 +28,11 @@ import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -215,8 +220,25 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		else if (Validator.isNull(city)) {
 			throw new AddressCityException();
 		}
-		else if (Validator.isNull(zip)) {
-			throw new AddressZipException();
+		else {
+			String country = CountryServiceUtil.getCountry(countryId).getA2();
+
+			String[] countriesZipNotRequired = PrefsPropsUtil.getStringArray(
+				companyId, PropsKeys.ADDRESS_COUNTRIES_ZIP_CODE_NOT_REQUIRED,
+				StringPool.COMMA,
+				PropsValues.ADDRESS_COUNTRIES_ZIP_CODE_NOT_REQUIRED);
+
+			boolean zipRequired = true;
+
+			for (String countryZipNotRequired : countriesZipNotRequired) {
+				if (country.equalsIgnoreCase(countryZipNotRequired)) {
+					zipRequired = false;
+				}
+			}
+
+			if (zipRequired && Validator.isNull(zip)) {
+				throw new AddressZipException();
+			}
 		}
 
 		if (addressId > 0) {

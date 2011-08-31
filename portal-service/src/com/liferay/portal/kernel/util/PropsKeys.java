@@ -19,6 +19,8 @@ package com.liferay.portal.kernel.util;
  */
 public interface PropsKeys {
 
+	public static final String ADDRESS_COUNTRIES_ZIP_CODE_NOT_REQUIRED = "address.countries.zip.code.not.required";
+
 	public static final String ADMIN_DEFAULT_GROUP_NAMES = "admin.default.group.names";
 
 	public static final String ADMIN_DEFAULT_ROLE_NAMES = "admin.default.role.names";

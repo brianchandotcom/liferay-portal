@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class PropsValues {
 
+	public static final String[] ADDRESS_COUNTRIES_ZIP_CODE_NOT_REQUIRED = PropsUtil.getArray(PropsKeys.ADDRESS_COUNTRIES_ZIP_CODE_NOT_REQUIRED);
+
 	public static String[] ADMIN_DEFAULT_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_GROUP_NAMES));
 
 	public static String[] ADMIN_DEFAULT_ROLE_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_ROLE_NAMES));

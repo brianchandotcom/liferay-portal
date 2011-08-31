@@ -43,7 +43,6 @@ import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoRowLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
-import com.liferay.portlet.expando.service.ExpandoValueServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -444,7 +443,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		while (itr.hasNext()) {
 			Field field = itr.next();
 
-			ExpandoValueServiceUtil.addValue(
+			ExpandoValueLocalServiceUtil.addValue(
 				expandoTable.getCompanyId(),
 				ExpandoStorageAdapter.class.getName(), expandoTable.getName(),
 				field.getName(), classPK, field.getValue());

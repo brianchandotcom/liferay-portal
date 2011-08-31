@@ -221,12 +221,12 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			throw new AddressCityException();
 		}
 		else {
+			String country = CountryServiceUtil.getCountry(countryId).getA2();
+
 			String[] countriesZipNotRequired = PrefsPropsUtil.getStringArray(
 				companyId, PropsKeys.ADDRESS_COUNTRIES_ZIP_CODE_NOT_REQUIRED,
 				StringPool.COMMA,
 				PropsValues.ADDRESS_COUNTRIES_ZIP_CODE_NOT_REQUIRED);
-
-			String country = CountryServiceUtil.getCountry(countryId).getA2();
 
 			boolean zipRequired = true;
 

@@ -19,7 +19,10 @@ import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.NoSuchUserException;
+import com.liferay.portal.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,7 +51,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -63,6 +65,8 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -631,6 +635,25 @@ public class PortalImpl implements Portal {
 			themeDisplay, themeDisplay.getLayout(), url, true);
 	}
 
+	public void clearCDNHostCaches() {
+		_cdnHostHttpCache.clear();
+		_cdnHostHttpsCache.clear();
+
+		if (!ClusterInvokeThreadLocal.isEnabled()) {
+			return;
+		}
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			_clearCDNHostCachesMethodHandler, true);
+
+		try {
+			ClusterExecutorUtil.execute(clusterRequest);
+		}
+		catch (SystemException se) {
+			_log.error("Failed to clear cluster wide cdn host cache : " + se);
+		}
+	}
+
 	public void clearRequestParameters(RenderRequest renderRequest) {
 		RenderRequestImpl renderRequestImpl = (RenderRequestImpl)renderRequest;
 
@@ -1030,26 +1053,28 @@ public class PortalImpl implements Portal {
 	 * @deprecated {@link #getCDNHost(boolean)}
 	 */
 	public String getCDNHost() {
-		return getCDNHostHttp();
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		return getCDNHostHttp(companyId);
 	}
 
 	public String getCDNHost(boolean secure) {
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
 		if (secure) {
-			return getCDNHostHttps();
+			return getCDNHostHttps(companyId);
 		}
 		else {
-			return getCDNHostHttp();
+			return getCDNHostHttp(companyId);
 		}
 	}
 
-	public String getCDNHostHttp() {
-		String cdnHostHttp = _cdnHostHttp.get();
+	public String getCDNHostHttp(long companyId) {
+		String cdnHostHttp = _cdnHostHttpCache.get(companyId);
 
 		if (cdnHostHttp != null) {
 			return cdnHostHttp;
 		}
-
-		long companyId = CompanyThreadLocal.getCompanyId();
 
 		try {
 			cdnHostHttp = PrefsPropsUtil.getString(
@@ -1062,19 +1087,17 @@ public class PortalImpl implements Portal {
 			cdnHostHttp = StringPool.BLANK;
 		}
 
-		_cdnHostHttp.set(cdnHostHttp);
+		_cdnHostHttpCache.put(companyId, cdnHostHttp);
 
 		return cdnHostHttp;
 	}
 
-	public String getCDNHostHttps() {
-		String cdnHostHttps = _cdnHostHttps.get();
+	public String getCDNHostHttps(long companyId) {
+		String cdnHostHttps = _cdnHostHttpsCache.get(companyId);
 
 		if (cdnHostHttps != null) {
 			return cdnHostHttps;
 		}
-
-		long companyId = CompanyThreadLocal.getCompanyId();
 
 		try {
 			cdnHostHttps = PrefsPropsUtil.getString(
@@ -1088,7 +1111,7 @@ public class PortalImpl implements Portal {
 			cdnHostHttps = StringPool.BLANK;
 		}
 
-		_cdnHostHttps.set(cdnHostHttps);
+		_cdnHostHttpsCache.put(companyId, cdnHostHttps);
 
 		return cdnHostHttps;
 	}
@@ -5569,6 +5592,10 @@ public class PortalImpl implements Portal {
 	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
 		WebServerServlet.class);
 
+	private static MethodHandler _clearCDNHostCachesMethodHandler =
+		new MethodHandler(new MethodKey(PortalUtil.class.getName(),
+			"clearCDNHostCaches"));
+
 	private String[] _allSystemGroups;
 	private String[] _allSystemOrganizationRoles;
 	private String[] _allSystemRoles;
@@ -5578,12 +5605,10 @@ public class PortalImpl implements Portal {
 	private Pattern _bannedResourceIdPattern = Pattern.compile(
 		PropsValues.PORTLET_RESOURCE_ID_BANNED_PATHS_REGEXP,
 		Pattern.CASE_INSENSITIVE);
-	private static ThreadLocal<String> _cdnHostHttp =
-		new AutoResetThreadLocal<String>(
-			PortalImpl.class + "._cdnHostHttp");
-	private static ThreadLocal<String> _cdnHostHttps =
-		new AutoResetThreadLocal<String>(
-			PortalImpl.class + "._cdnHostHttps");
+	private static Map<Long, String> _cdnHostHttpCache =
+		new ConcurrentHashMap<Long, String>();
+	private static Map<Long, String> _cdnHostHttpsCache =
+		new ConcurrentHashMap<Long, String>();
 	private String _computerAddress;
 	private String _computerName;
 	private String[] _customSqlKeys;

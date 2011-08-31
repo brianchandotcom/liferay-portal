@@ -163,6 +163,10 @@ public class PortalUtil {
 		return getPortal().addPreservedParameters(themeDisplay, url);
 	}
 
+	public static void clearCDNHostCaches() {
+		getPortal().clearCDNHostCaches();
+	}
+
 	public static void clearRequestParameters(RenderRequest renderRequest) {
 		getPortal().clearRequestParameters(renderRequest);
 	}
@@ -265,12 +269,12 @@ public class PortalUtil {
 		return getPortal().getCDNHost(secure);
 	}
 
-	public static String getCDNHostHttp() {
-		return getPortal().getCDNHostHttp();
+	public static String getCDNHostHttp(long companyId) {
+		return getPortal().getCDNHostHttp(companyId);
 	}
 
-	public static String getCDNHostHttps() {
-		return getPortal().getCDNHostHttps();
+	public static String getCDNHostHttps(long companyId) {
+		return getPortal().getCDNHostHttps(companyId);
 	}
 
 	public static String getClassName(long classNameId) {

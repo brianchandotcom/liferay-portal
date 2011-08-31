@@ -35,5 +35,10 @@ public class ViewProfileExpertiseTest extends BaseTestCase {
 			selenium.getText("//div[2]/div/div[1]/div/div[1]/div/a"));
 		assertEquals(RuntimeVariables.replace("Expertise"),
 			selenium.getText("//div[2]/div[1]/div/span"));
+		assertTrue(selenium.isVisible("//div/h3"));
+		assertEquals(RuntimeVariables.replace("Apr 2011 - Current"),
+			selenium.getText("//div[2]/div[2]/div[2]/div/div/div[1]"));
+		assertEquals(RuntimeVariables.replace("Expertise Description"),
+			selenium.getText("//div[2]/div/div/div[2]"));
 	}
 }

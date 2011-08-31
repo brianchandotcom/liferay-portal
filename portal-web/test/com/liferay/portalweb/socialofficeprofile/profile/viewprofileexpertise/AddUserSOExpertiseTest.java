@@ -135,7 +135,7 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_125_projectsEntryStartDateMonth0']",
-					RuntimeVariables.replace("label=April"));
+					RuntimeVariables.replace("April"));
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_125_projectsEntryCurrent0Checkbox']"));
 
@@ -200,6 +200,17 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals("Expertise Title",
+					selenium.getValue("//input[@id='_125_projectsEntryTitle0']"));
+				assertEquals("April",
+					selenium.getSelectedLabel(
+						"//select[@id='_125_projectsEntryStartDateMonth0']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_125_projectsEntryCurrent0Checkbox']"));
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Expertise Description"),
+					selenium.getText(
+						"//textarea[@id='_125_projectsEntryDescription0']"));
 
 			case 100:
 				label = -1;

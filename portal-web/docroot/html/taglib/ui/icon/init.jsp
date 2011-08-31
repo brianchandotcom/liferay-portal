@@ -111,7 +111,7 @@ else {
 	StringBundler sb = new StringBundler(6);
 
 	sb.append(" alt=\"");
-	sb.append(LanguageUtil.get(pageContext, HtmlUtil.escapeAttribute(message)));
+	sb.append(LanguageUtil.get(pageContext, message));
 	sb.append("\"");
 
 	if (toolTip) {
@@ -121,7 +121,7 @@ else {
 	}
 	else {
 		sb.append(" title=\"");
-		sb.append(LanguageUtil.get(pageContext, HtmlUtil.escapeAttribute(message)));
+		sb.append(LanguageUtil.get(pageContext, message));
 		sb.append("\"");
 	}
 

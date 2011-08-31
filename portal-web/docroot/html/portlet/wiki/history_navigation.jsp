@@ -134,7 +134,7 @@ if (type.equals("html")) {
 					StringBundler sb = new StringBundler(intermediatePages.size() * 7);
 
 					for (WikiPage wikiPage: intermediatePages) {
-						sb.append(wikiPage.getUserName());
+						sb.append(HtmlUtil.escape(wikiPage.getUserName()));
 						sb.append(StringPool.SPACE);
 						sb.append(StringPool.OPEN_PARENTHESIS);
 						sb.append(wikiPage.getVersion());
@@ -165,7 +165,7 @@ if (type.equals("html")) {
 						cssClass="central-username"
 						image="user_icon"
 						label="<%= true %>"
-						message="<%= wikiPage.getUserName() %>"
+						message="<%= HtmlUtil.escape(wikiPage.getUserName()) %>"
 						toolTip="author"
 					/>
 

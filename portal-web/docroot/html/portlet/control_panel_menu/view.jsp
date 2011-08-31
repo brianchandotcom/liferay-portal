@@ -185,7 +185,7 @@
 
 									<liferay-ui:icon
 										image="<%= image %>"
-										message="<%= message %>"
+										message="<%= HtmlUtil.escape(message) %>"
 										url="<%= url %>"
 									/>
 
@@ -215,7 +215,7 @@
 								cssClass="lfr-panel-title-single"
 								image="<%= image %>"
 								label="<%= true %>"
-								message="<%= StringUtil.shorten(curGroupName, 25) %>"
+								message="<%= HtmlUtil.escape(StringUtil.shorten(curGroupName, 25)) %>"
 							/>
 						</c:otherwise>
 					</c:choose>
@@ -253,7 +253,7 @@
 
 								<liferay-ui:icon
 									image="folder"
-									message="<%= curScopeLayout.getName(locale) %>"
+									message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
 									url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", curScopeLayout.getScopeGroup().getGroupId()) %>'
 								/>
 

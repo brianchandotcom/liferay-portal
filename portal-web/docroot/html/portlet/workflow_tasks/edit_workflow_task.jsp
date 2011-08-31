@@ -208,7 +208,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					</div>
 
 					<h3 class="task-content-title">
-						<img src="<%= workflowHandler.getIconPath(liferayPortletRequest) %>" alt="" /> <%= workflowHandler.getTitle(classPK, locale) %>
+						<img src="<%= workflowHandler.getIconPath(liferayPortletRequest) %>" alt="" /> <%= HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)) %>
 					</h3>
 
 					<%

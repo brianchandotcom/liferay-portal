@@ -100,7 +100,7 @@ portletURL.setParameter("typeSelection", typeSelection);
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(entry.getClassPK());
 
-			row.addText(assetRenderer.getTitle(locale), rowHREF);
+			row.addText(HtmlUtil.escape(assetRenderer.getTitle(locale)), rowHREF);
 
 			// Description
 

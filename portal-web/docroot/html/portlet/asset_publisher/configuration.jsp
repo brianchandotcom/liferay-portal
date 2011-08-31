@@ -306,7 +306,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 								AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-								String title = assetRenderer.getTitle(locale);
+								String title = HtmlUtil.escape(assetRenderer.getTitle(locale));
 
 								if (assetEntryClassName.equals(DLFileEntryConstants.getClassName())) {
 									FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(assetEntry.getClassPK());

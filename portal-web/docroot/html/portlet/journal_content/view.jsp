@@ -242,13 +242,13 @@ try {
 
 								<div class="portlet-msg-alert">
 									<a href="<%= editURL %>">
-										<%= LanguageUtil.format(pageContext, "x-is-not-approved", title) %>
+										<%= LanguageUtil.format(pageContext, "x-is-not-approved", HtmlUtil.escape(title)) %>
 									</a>
 								</div>
 							</c:when>
 							<c:otherwise>
 								<div class="portlet-msg-alert">
-									<%= LanguageUtil.format(pageContext, "x-is-not-approved", title) %>
+									<%= LanguageUtil.format(pageContext, "x-is-not-approved", HtmlUtil.escape(title)) %>
 								</div>
 							</c:otherwise>
 						</c:choose>

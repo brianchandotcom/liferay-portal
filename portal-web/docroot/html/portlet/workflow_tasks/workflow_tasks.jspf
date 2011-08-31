@@ -98,7 +98,7 @@
 		>
 
 			<%
-			buffer.append(workflowHandler.getTitle(classPK, locale));
+			buffer.append(HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)));
 			%>
 
 		</liferay-ui:search-container-column-text>

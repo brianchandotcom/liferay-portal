@@ -37,7 +37,6 @@
 <%@ page import="com.liferay.portal.NoSuchOrganizationException" %>
 <%@ page import="com.liferay.portal.NoSuchRegionException" %>
 <%@ page import="com.liferay.portal.NoSuchRoleException" %>
-<%@ page import="com.liferay.portal.NoSuchUserException" %>
 <%@ page import="com.liferay.portal.NoSuchUserGroupException" %>
 <%@ page import="com.liferay.portal.OrganizationNameException" %>
 <%@ page import="com.liferay.portal.OrganizationParentException" %>

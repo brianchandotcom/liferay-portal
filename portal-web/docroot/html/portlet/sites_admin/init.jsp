@@ -33,7 +33,6 @@
 <%@ page import="com.liferay.portal.kernel.lar.PortletDataHandler" %>
 <%@ page import="com.liferay.portal.kernel.staging.StagingConstants" %>
 <%@ page import="com.liferay.portal.liveusers.LiveUsers" %>
-<%@ page import="com.liferay.portal.service.permission.GroupPermissionUtil" %>
 <%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
 <%@ page import="com.liferay.portal.service.permission.TeamPermissionUtil" %>
 <%@ page import="com.liferay.portal.util.CustomJspRegistryUtil" %>

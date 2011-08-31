@@ -31,7 +31,6 @@
 <%@ page import="com.liferay.portal.NoSuchCountryException" %>
 <%@ page import="com.liferay.portal.NoSuchListTypeException" %>
 <%@ page import="com.liferay.portal.NoSuchRegionException" %>
-<%@ page import="com.liferay.portal.NoSuchUserException" %>
 <%@ page import="com.liferay.portal.PasswordExpiredException" %>
 <%@ page import="com.liferay.portal.PhoneNumberException" %>
 <%@ page import="com.liferay.portal.RequiredFieldException" %>

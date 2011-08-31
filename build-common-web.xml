@@ -51,6 +51,16 @@
 
 	<target name="deploy" depends="compile">
 		<if>
+			<and>
+				<equals arg1="${war.file}" arg2="tunnel-web"/>
+				<equals arg1="${app.server.type}" arg2="jboss-as7"/>
+			</and>
+			<then>
+				<property name="war.file.dest" value="${app.server.deploy.dir}/${war.file}.war" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${war.file}" arg2="portal-web" />
 			<then>
 				<property name="war.file.dest" value="${app.server.portal.dir}" />

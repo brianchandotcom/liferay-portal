@@ -372,6 +372,133 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djb
 		</if>
 
 		<if>
+			<equals arg1="${app.server.type}" arg2="jboss-as7" />
+			<then>
+				<!-- add java VM arguments (linux) -->
+				<loadfile property="standalone.conf.content" srcfile="${app.server.bin.dir}/standalone.conf" />
+
+				<antelope:stringutil string="${standalone.conf.content}" property="standalone.conf.content.index">
+					<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
+				</antelope:stringutil>
+
+				<if>
+					<equals arg1="${standalone.conf.content.index}" arg2="-1" />
+					<then>
+						<echo file="${app.server.bin.dir}/standalone.conf" append="true">
+JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"</echo>
+					</then>
+				</if>
+
+				<!-- add java VM arguments (windows) -->
+				<loadfile property="standalone.conf.bat.content" srcfile="${app.server.bin.dir}/standalone.conf.bat" />
+
+				<antelope:stringutil string="${standalone.conf.bat.content}" property="standalone.conf.bat.content.index">
+					<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
+				</antelope:stringutil>
+
+				<if>
+					<equals arg1="${standalone.conf.bat.content.index}" arg2="-1" />
+					<then>
+						<replace file="${app.server.bin.dir}/standalone.conf.bat">
+							<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
+							<replacevalue><![CDATA[set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+
+:JAVA_OPTS_SET]]></replacevalue>
+						</replace>
+					</then>
+				</if>
+
+				<!-- delete older version of jboss-web.xml (for jboss 5) -->
+				<loadfile property="jboss-web.xml.content" srcfile="${app.server.portal.dir}/WEB-INF/jboss-web.xml" />
+
+				<antelope:stringutil string="${jboss-web.xml.content}" property="jboss-web.xml.content.index">
+					<indexof string="java2ClassLoadingCompliance=" fromindex="0" />
+				</antelope:stringutil>
+
+				<if>
+					<not>
+						<equals arg1="${jboss-web.xml.content.index}" arg2="-1" />
+					</not>
+					<then>
+						<delete file="${app.server.portal.dir}/WEB-INF/jboss-web.xml"/>
+					</then>
+				</if>
+
+				<!-- add jboss-web.xml -->
+				<if>
+					<not>
+						<available file="${app.server.portal.dir}/WEB-INF/jboss-web.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jboss-as7/jboss-web.xml"
+							tofile="${app.server.portal.dir}/WEB-INF/jboss-web.xml"
+						/>
+					</then>
+				</if>
+
+				<!-- add jboss-deployment-structure.xml -->
+				<if>
+					<not>
+						<available file="${app.server.portal.dir}/WEB-INF/jboss-deployment-structure.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jboss-as7/jboss-deployment-structure.xml"
+							tofile="${app.server.portal.dir}/WEB-INF/jboss-deployment-structure.xml"
+						/>
+					</then>
+				</if>
+
+				<!-- add MANIFEST.MF -->
+				<if>
+					<not>
+						<available file="${app.server.portal.dir}/WEB-INF/classes/META-INF/MANIFEST.MF" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jboss-as7/MANIFEST.MF"
+							tofile="${app.server.portal.dir}/WEB-INF/classes/META-INF/MANIFEST.MF"
+						/>
+					</then>
+				</if>
+
+				<!-- add module.xml -->
+				<if>
+					<not>
+						<available file="${app.server.lib.global.dir}/module.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jboss-as7/module.xml"
+							tofile="${app.server.lib.global.dir}/module.xml"
+						/>
+					</then>
+				</if>
+
+				<!-- add jboss-deployment-structure.xml (tunnel-web) -->
+				<if>
+					<not>
+						<available file="${app.server.deploy.dir}/tunnel-web.war/WEB-INF/jboss-deployment-structure.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jboss-as7/tunnel-web-jboss-deployment-structure.xml"
+							tofile="${app.server.deploy.dir}/tunnel-web.war/WEB-INF/jboss-deployment-structure.xml"
+						/>
+					</then>
+				</if>
+
+				<!-- delete problematic jars -->
+				<delete file="${app.server.lib.portal.dir}/eclipselink.jar"/>
+
+				<!-- deploy -->
+				<echo file="${app.server.deploy.dir}/ROOT.war.dodeploy" append="false">.</echo>
+				<echo file="${app.server.deploy.dir}/tunnel-web.war.dodeploy" append="false">.</echo>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${app.server.type}" arg2="jetty" />
 			<then>
 				<if>

@@ -895,6 +895,49 @@ release was successful.</echo>
 		<move file="${app.server.parent.dir}/jboss-5.1.0/server/web" tofile="${app.server.parent.dir}/jboss-5.1.0/server/default" />
 	</target>
 
+	<target name="unzip-jboss-as7">
+		<delete dir="${app.server.jboss-as7.dir}" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.jboss-as7.zip.name}" />
+			</not>
+			<then>
+				<get
+					dest="${app.server.parent.dir}/${app.server.jboss-as7.zip.name}"
+					src="${app.server.jboss-as7.zip.url}"
+					verbose="true"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="${app.server.parent.dir}"
+			src="${app.server.parent.dir}/${app.server.jboss-as7.zip.name}"
+		>
+			<mapper
+				type="glob"
+				from="jboss-as-7.0.1.Final/*"
+				to="jboss-as-7.0.1/*"
+			/>
+		</unzip>
+
+		<replace file="${app.server.jboss-as7.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
+			<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss-as7.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[<security-domains>]]></replacetoken>
+			<replacevalue><![CDATA[<security-domains>
+				<security-domain name="PortalRealm">
+					<authentication>
+						<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required"/>
+					</authentication>
+				</security-domain>]]></replacevalue>
+		</replace>
+	</target>
+
 	<target name="unzip-jetty">
 		<delete dir="${app.server.jetty.dir}" />
 

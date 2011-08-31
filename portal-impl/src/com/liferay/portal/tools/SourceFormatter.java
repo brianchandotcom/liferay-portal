@@ -249,6 +249,38 @@ public class SourceFormatter {
 		}
 	}
 
+	private static void _addJSPUnusedImports(
+			String fileName, List<String> importLines,
+			List<String> unneededImports)
+		throws IOException {
+
+		for (String importLine : importLines) {
+			Set<String> includeFileNames = new HashSet<String>();
+
+			includeFileNames.add(fileName);
+
+			Set<String> checkedFileNames =  new HashSet<String>();
+
+			int x = importLine.indexOf(StringPool.QUOTE);
+			int y = importLine.indexOf(StringPool.QUOTE, x + 1);
+
+			if ((x == -1) || (y == -1)) {
+				continue;
+			}
+
+			String className = importLine.substring(x + 1, y);
+
+			className = className.substring(className.lastIndexOf(
+				StringPool.PERIOD) + 1);
+
+			if (!_isJSPImportRequired(
+					fileName, className, includeFileNames, checkedFileNames)) {
+
+				unneededImports.add(importLine);
+			}
+		}
+	}
+
 	private static void _checkPersistenceTestSuite() throws IOException {
 		String basedir = "./portal-impl/test";
 
@@ -1262,7 +1294,7 @@ public class SourceFormatter {
 			while ((x != -1) && (y != -1)) {
 				String result = content.substring(x + 1, y + 2);
 
-				if (result.indexOf(quoteType) != -1) {
+				if (result.contains(quoteType)) {
 					int lineCount = 1;
 
 					char contentCharArray[] = content.toCharArray();
@@ -1428,50 +1460,31 @@ public class SourceFormatter {
 		return copyright;
 	}
 
-	private static List<String> _getJSPUnusedImportClassNames(
-			String fileName, String imports)
+	private static List<String> _getJSPDuplicateImports(
+			String fileName, String content, List<String> importLines)
 		throws IOException {
 
-		List<String> importClassNames = new ArrayList<String>();
+		List<String> duplicateImports = new ArrayList<String>();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
+		for (String importLine : importLines) {
+			int x = content.indexOf("<%@ include file=");
 
-		String line = null;
+			if (x == -1) {
+				continue;
+			}
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.contains("import=")) {
-				int x = line.indexOf(StringPool.QUOTE);
-				int y = line.indexOf(StringPool.QUOTE, x + 1);
+			int y = content.indexOf("<%@ page import=");
 
-				if ((x != -1) && (y != -1)) {
-					String importClassName = line.substring(x + 1, y);
+			if (y == -1) {
+				continue;
+			}
 
-					importClassNames.add(importClassName);
-				}
+			if ((x < y) && _isJSPDuplicateImport(fileName, importLine, false)) {
+				duplicateImports.add(importLine);
 			}
 		}
 
-		List<String> unusedImportClassNames = new ArrayList<String>();
-
-		for (String importedClassName : importClassNames) {
-			Set<String> includeFileNames = new HashSet<String>();
-
-			includeFileNames.add(fileName);
-
-			Set<String> checkedFileNames =  new HashSet<String>();
-
-			String className = importedClassName.substring(
-				importedClassName.lastIndexOf(StringPool.PERIOD) + 1);
-
-			if (!_isJSPImportRequired(
-					fileName, className, includeFileNames, checkedFileNames)) {
-
-				unusedImportClassNames.add(importedClassName);
-			}
-		}
-
-		return unusedImportClassNames;
+		return duplicateImports;
 	}
 
 	private static String _getOldCopyright() throws IOException {
@@ -1641,6 +1654,40 @@ public class SourceFormatter {
 		}
 	}
 
+	private static boolean _isJSPDuplicateImport(
+		String fileName, String importLine, boolean checkFile) {
+
+		String content = _jspContents.get(fileName);
+
+		if (checkFile && content.contains(importLine)) {
+			return true;
+		}
+
+		int x = content.indexOf("<%@ include file=");
+
+		if (x == -1) {
+			return false;
+		}
+
+		x = content.indexOf(StringPool.QUOTE, x);
+
+		if (x == -1) {
+			return false;
+		}
+
+		int y = content.indexOf(StringPool.QUOTE, x + 1);
+
+		if (y == -1) {
+			return false;
+		}
+
+		String includeFileName = content.substring(x + 1, y);
+
+		includeFileName = "portal-web/docroot" + includeFileName;
+
+		return _isJSPDuplicateImport(includeFileName, importLine, true);
+	}
+
 	private static boolean _isJSPImportRequired(
 		String fileName, String className, Set<String> includeFileNames,
 		Set<String> checkedFileNames) {
@@ -1763,18 +1810,27 @@ public class SourceFormatter {
 
 		String imports = matcher.group();
 
-		List<String> importClassNames = _getJSPUnusedImportClassNames(
-			fileName, imports);
+		List<String> importLines = new ArrayList<String>();
 
-		for (String importClassName : importClassNames) {
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(imports));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.contains("import=")) {
+				importLines.add(line);
+			}
+		}
+
+		List<String> unneededImports = _getJSPDuplicateImports(
+			fileName, content, importLines);
+
+		_addJSPUnusedImports(fileName, importLines, unneededImports);
+
+		for (String unneededImport : unneededImports) {
 			imports = StringUtil.replace(
-				imports,
-				new String[] {
-					"<%@ page import=\"" + importClassName + "\" %>\n"
-				},
-				new String[] {
-					StringPool.BLANK
-				});
+				imports, unneededImport, StringPool.BLANK);
 		}
 
 		imports = _formatImports(imports, 17);

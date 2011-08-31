@@ -24,7 +24,6 @@ import org.apache.lucene.store.jdbc.dialect.Dialect;
 /**
  * @author Matthew Kong
  */
-
 public class LiferayJdbcDirectory extends JdbcDirectory {
 
 	public LiferayJdbcDirectory(
@@ -35,7 +34,6 @@ public class LiferayJdbcDirectory extends JdbcDirectory {
 
 	@Override
 	public String[] listAll() throws IOException {
-
 		return list();
 	}
 

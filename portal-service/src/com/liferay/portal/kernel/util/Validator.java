@@ -951,29 +951,6 @@ public class Validator {
 		}
 	}
 
-	public static boolean isZipCode(String s) {
-		if (isNull(s)) {
-			return false;
-		}
-
-		int size = s.length();
-
-		for (int i = 0; i < size; i++) {
-			char c = s.charAt(i);
-
-			if ((i == 0 || i == size-1) &&
-				(Character.isWhitespace(c) || (c == CharPool.DASH))) {
-				return false;
-			}
-			else if (!isDigit(c) && !isChar(c) && !Character.isWhitespace(c) &&
-					(c != CharPool.DASH)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	private static final int _CHAR_BEGIN = 65;
 
 	private static final int _CHAR_END = 122;

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class PropsValues {
 
+	public static final String[] ADDRESS_COUNTRIES_ZIP_CODE_NOT_REQUIRED = PropsUtil.getArray(PropsKeys.ADDRESS_COUNTRIES_ZIP_CODE_NOT_REQUIRED);
+
 	public static String[] ADMIN_DEFAULT_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_GROUP_NAMES));
 
 	public static String[] ADMIN_DEFAULT_ROLE_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_ROLE_NAMES));
@@ -1362,8 +1364,6 @@ public class PropsValues {
 	public static final boolean USERS_SEARCH_WITH_INDEX = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_SEARCH_WITH_INDEX));
 
 	public static final boolean USERS_UPDATE_LAST_LOGIN = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_UPDATE_LAST_LOGIN));
-
-	public static final String[] ADDRESS_ZIP_CODE_NOT_REQUIRED = PropsUtil.getArray(PropsKeys.ADDRESS_ZIP_CODE_NOT_REQUIRED);
 
 	public static final boolean VALUE_OBJECT_ENTITY_BLOCKING_CACHE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE));
 

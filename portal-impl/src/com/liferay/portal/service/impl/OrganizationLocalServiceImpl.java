@@ -1082,6 +1082,15 @@ public class OrganizationLocalServiceImpl
 			new OrganizationNameComparator(true));
 	}
 
+	public List<Organization> search(
+			long companyId, LinkedHashMap<String, Object> params, int start,
+			int end)
+		throws SystemException {
+
+		return organizationFinder.findByCompany(companyId, params, start, end,
+			new OrganizationNameComparator(true));
+	}
+
 	/**
 	 * Returns an ordered range of all the organizations that match the
 	 * keywords, type, region, and country, without using the indexer. It is

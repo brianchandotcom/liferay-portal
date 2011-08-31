@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
@@ -436,9 +435,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			organizationParams.put("usersOrgs", new Long(userId));
 
 			List<Organization> userOrgs = organizationLocalService.search(
-				user.getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
-				null, null, null, organizationParams, start, end);
+				user.getCompanyId(), organizationParams, start, end);
 
 			for (Organization organization : userOrgs) {
 				userPlaces.add(0, organization.getGroup());

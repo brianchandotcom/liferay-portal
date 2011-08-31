@@ -862,6 +862,14 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			start, end);
 	}
 
+	public java.util.List<com.liferay.portal.model.Organization> search(
+		long companyId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.search(companyId, params, start, end);
+	}
+
 	/**
 	* Returns an ordered range of all the organizations that match the
 	* keywords, type, region, and country, without using the indexer. It is

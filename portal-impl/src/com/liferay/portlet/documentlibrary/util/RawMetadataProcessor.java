@@ -38,12 +38,30 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Document library processor responsible for the generation of raw metadata
+ * associated with all of the the files stored in the document library.
+ *
+ * <p>
+ * This processor automatically and assynchronously extracts the metadata from
+ * all of the files stored in the document library. The metadata extraction is
+ * done with the help of {@link
+ * com.liferay.portal.metadata.TikaRawMetadataProcessor}
+ * </p>
+ *
  * @author Alexander Chow
  * @author Mika Koivisto
  * @author Miguel Pastor
  */
 public class RawMetadataProcessor implements DLProcessor {
 
+	/**
+	 * Generates the raw metadata associated with the file entry.
+	 *
+	 * @param  fileEntry the file entry	from which the raw metatada is to be
+	 *         generated
+	 * @throws PortalException if an error occurred in the metadata extraction
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static void generateMetadata(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
@@ -57,6 +75,19 @@ public class RawMetadataProcessor implements DLProcessor {
 		}
 	}
 
+	/**
+	 * Saves the raw metadata present in the file version.
+	 *
+	 * <p>
+	 * The raw metadata present in the file version is extracted and persisted
+	 * using {@link com.liferay.portal.metadata.TikaRawMetadataProcessor}.
+	 * </p>
+	 *
+	 * @param  fileVersion the file version from which the raw metatada is to
+	 *         be extracted and persisted
+	 * @throws PortalException if an error occurred in the metadata extraction
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static void saveMetadata(FileVersion fileVersion)
 		throws PortalException, SystemException {
 
@@ -81,6 +112,16 @@ public class RawMetadataProcessor implements DLProcessor {
 			rawMetadataMap, serviceContext);
 	}
 
+	/**
+	 * Launches extraction of raw metadata from the file entry.
+	 *
+	 * <p>
+	 * The raw metadata extraction is done asynchronously.
+	 * </p>
+	 *
+	 * @param fileEntry the file entry from which the raw metadata is to be
+	 *        generated
+	 */
 	public void trigger(FileEntry fileEntry) {
 		try {
 			MessageBusUtil.sendMessage(

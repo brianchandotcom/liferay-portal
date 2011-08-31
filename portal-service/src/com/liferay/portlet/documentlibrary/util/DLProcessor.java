@@ -17,11 +17,25 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
+ * Common interface for all the processors of the document library. All
+ * document library processors must implement this interface.
+ *
  * @author Alexander Chow
  * @author Mika Koivisto
+ * @see    AudioProcessor
+ * @see    DLPreviewableProcessor
+ * @see    com.liferay.portal.kernel.image.ImageProcessor
+ * @see    PDFProcessor
+ * @see    com.liferay.portal.kernel.metadata.RawMetadataProcessor
+ * @see    VideoProcessor
  */
 public interface DLProcessor {
 
+	/**
+	 * Launches the processor's work with respect to the given file entry.
+	 *
+	 * @param fileEntry the file entry to process
+	 */
 	public void trigger(FileEntry fileEntry);
 
 }

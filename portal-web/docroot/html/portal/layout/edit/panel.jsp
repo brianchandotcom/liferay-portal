@@ -96,15 +96,21 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 		parentNode<%= i %>.appendChild(
 			new A.TreeNodeTask(
 				{
+					after: {
+						checkedChange: function(event) {
+							if (event.newVal) {
+								onCheck(event, objId<%= i %>);
+							}
+							else {
+								onUncheck(event, objId<%= i %>);
+							}
+						}
+					},
 					checked: checked<%= i %>,
 					expanded: <%= treeNodeView.getDepth() == 0 %>,
 					id: 'treePanel<%= treeNodeView.getId() %>',
 					label: label<%= i %>,
-					leaf: <%= treeNodeView.isLeaf() %>,
-					on: {
-						check: A.rbind(onCheck, window, objId<%= i %>),
-						uncheck: A.rbind(onUncheck, window, objId<%= i %>)
-					}
+					leaf: <%= treeNodeView.isLeaf() %>
 				}
 			)
 		);

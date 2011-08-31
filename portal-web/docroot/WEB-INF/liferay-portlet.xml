@@ -1371,6 +1371,7 @@
 		<portlet-name>145</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>dockbar</struts-path>
+		<poller-processor-class>com.liferay.portlet.admin.poller.ShutdownPollerProcessor</poller-processor-class>
 		<use-default-template>false</use-default-template>
 		<show-portlet-access-denied>false</show-portlet-access-denied>
 		<show-portlet-inactive>false</show-portlet-inactive>

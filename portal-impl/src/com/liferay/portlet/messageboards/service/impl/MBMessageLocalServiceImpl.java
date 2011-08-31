@@ -233,6 +233,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBMessage message = mbMessagePersistence.create(messageId);
 
 		message.setUuid(serviceContext.getUuid());
+
+		if (threadId > 0) {
+			message.setThreadId(threadId);
+		}
+
 		message.setGroupId(groupId);
 		message.setCompanyId(user.getCompanyId());
 		message.setUserId(user.getUserId());

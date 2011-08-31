@@ -31,6 +31,27 @@ public class ViewScopeCurrentPageWebContentListPage2Test extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isElementPresent("link=Site Name")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("link=Web Content Display Test Page3")) {
 					break;
 				}
@@ -115,7 +136,7 @@ public class ViewScopeCurrentPageWebContentListPage2Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//div[@class='portlet-msg-info']",
 				"Please select a web content from the list below."));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
 			selenium.getText("//td[2]/a"));
 		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();

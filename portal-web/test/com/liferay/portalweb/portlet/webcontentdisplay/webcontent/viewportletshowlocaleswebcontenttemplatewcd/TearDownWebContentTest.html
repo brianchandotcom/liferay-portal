@@ -16,62 +16,37 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
-	<td>Web Content</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>BasicNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>BasicNotVisible</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
 	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent1Present</td>
+	<td>webContentPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${webContent1Present}</td>
-	<td>WebContent1NotPresent</td>
+	<td>!${webContentPresent}</td>
+	<td>WebContentNotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_15_allRowIds</td>
-	<td></td>
+	<td>//input[@name='_15_allRowIds']</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -80,127 +55,77 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>WebContent1NotPresent</td>
+	<td>WebContentNotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Templates</td>
+	<td>Templates</td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent2Present</td>
+	<td>templatePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${webContent2Present}</td>
-	<td>WebContent2NotPresent</td>
+	<td>!${templatePresent}</td>
+	<td>TemplateNotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_15_allRowIds</td>
-	<td></td>
+	<td>//input[@name='_15_allRowIds']</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
+	<td>Are you sure you want to delete the selected templates?</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>WebContent2NotPresent</td>
+	<td>TemplateNotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Structures</td>
+	<td>Structures</td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent3Present</td>
+	<td>structurePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${webContent3Present}</td>
-	<td>WebContent3NotPresent</td>
+	<td>!${structurePresent}</td>
+	<td>StructureNotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_15_allRowIds</td>
-	<td></td>
+	<td>//input[@name='_15_allRowIds']</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
+	<td>Are you sure you want to delete the selected structures?</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>WebContent3NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent4Present}</td>
-	<td>WebContent4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_15_allRowIds</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>WebContent4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent5Present}</td>
-	<td>WebContent5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_15_allRowIds</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>WebContent5NotPresent</td>
+	<td>StructureNotPresent</td>
 	<td></td>
 </tr>
 

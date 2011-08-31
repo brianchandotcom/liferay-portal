@@ -45,10 +45,10 @@ public class AddPortletWCD2Test extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("More\u2026"),
-			selenium.getText("//a[@id='_145_addApplication']"));
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More\u2026"));
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -69,7 +69,7 @@ public class AddPortletWCD2Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@title='Web Content Display']/p/a",
-			RuntimeVariables.replace("Add"));
+			RuntimeVariables.replace("Web Content Display"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

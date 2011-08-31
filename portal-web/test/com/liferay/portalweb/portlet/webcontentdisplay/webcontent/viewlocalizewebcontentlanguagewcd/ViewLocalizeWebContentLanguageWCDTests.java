@@ -31,7 +31,7 @@ public class ViewLocalizeWebContentLanguageWCDTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletWCDTest.class);
 		testSuite.addTestSuite(AddPageLanguageTest.class);
 		testSuite.addTestSuite(AddPortletLanguageTest.class);
-		testSuite.addTestSuite(AddWebContentTest.class);
+		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(LocalizeWCWebContentWCDTest.class);
 		testSuite.addTestSuite(ViewLocalizeWebContentLanguageWCDTest.class);
 		testSuite.addTestSuite(TearDownLanguageTest.class);

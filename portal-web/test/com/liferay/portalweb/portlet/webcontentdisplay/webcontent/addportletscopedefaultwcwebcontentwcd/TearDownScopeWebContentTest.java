@@ -35,6 +35,28 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 					}
 
 					try {
+						if (selenium.isElementPresent("link=Site Name")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("link=Site Name",
+					RuntimeVariables.replace("Site Name"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
 						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
@@ -54,28 +76,13 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/span/a",
-					RuntimeVariables.replace("Scope"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Default")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Default",
-					RuntimeVariables.replace("Default"));
+				assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
+						"Scope: Default"));
+				selenium.clickAt("//div/span/ul/li/strong/a",
+					RuntimeVariables.replace("Scope: Default"));
+				assertEquals(RuntimeVariables.replace("Default"),
+					selenium.getText("//a"));
+				selenium.clickAt("//a", RuntimeVariables.replace("Default"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -145,28 +152,14 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 
 			case 3:
 			case 4:
-				selenium.clickAt("//div[2]/span/a",
-					RuntimeVariables.replace("Scope"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"link=Web Content Display Test Page2")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Web Content Display Test Page2",
+				assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
+						"Scope: Default"));
+				selenium.clickAt("//div/span/ul/li/strong/a",
+					RuntimeVariables.replace("Scope: Default"));
+				assertEquals(RuntimeVariables.replace(
+						"Web Content Display Test Page2"),
+					selenium.getText("//li[2]/a"));
+				selenium.clickAt("//li[2]/a",
 					RuntimeVariables.replace("Web Content Display Test Page2"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();

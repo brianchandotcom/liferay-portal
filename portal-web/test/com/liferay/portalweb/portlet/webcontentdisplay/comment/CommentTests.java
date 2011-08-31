@@ -15,9 +15,9 @@
 package com.liferay.portalweb.portlet.webcontentdisplay.comment;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcdwebcontentcomment.AddWCDWebContentCommentTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.comment.deletewcdwebcontentcomment.DeleteWCDWebContentCommentTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.comment.editwcdwebcontentcomment.EditWCDWebContentCommentTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddWCWebContentCommentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.comment.deletewcwebcontentcommentwcd.DeleteWCWebContentCommentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.comment.editwcwebcontentcommentwcd.EditWCWebContentCommentWCDTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,9 +30,9 @@ public class CommentTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddWCDWebContentCommentTests.suite());
-		testSuite.addTest(DeleteWCDWebContentCommentTests.suite());
-		testSuite.addTest(EditWCDWebContentCommentTests.suite());
+		testSuite.addTest(AddWCWebContentCommentWCDTests.suite());
+		testSuite.addTest(DeleteWCWebContentCommentWCDTests.suite());
+		testSuite.addTest(EditWCWebContentCommentWCDTests.suite());
 
 		return testSuite;
 	}

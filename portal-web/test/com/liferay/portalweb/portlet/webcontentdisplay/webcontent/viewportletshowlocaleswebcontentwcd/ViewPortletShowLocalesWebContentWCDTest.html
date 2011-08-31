@@ -24,43 +24,33 @@
 	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//img[@alt='English (United States)']</td>
-	<td></td>
+	<td>assertElementPresent</td>
+	<td>//img[@title='English (United States)']</td>
+	<td>English (United States)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//img[@alt='English (United States)']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//p</td>
-	<td>Web Content Content</td>
+	<td>//img[@title='English (United States)']</td>
+	<td>English (United States)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p</td>
-	<td>Web Content Content</td>
+	<td>//div[@class='journal-content-article']/p</td>
+	<td>WCD Web Content Content</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//img[@alt='中文 (中国)']</td>
-	<td></td>
+	<td>assertElementPresent</td>
+	<td>//img[@title='中文 (中国)']</td>
+	<td>中文 (中国)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//img[@alt='中文 (中国)']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//p</td>
-	<td>世界您好 Page Description</td>
+	<td>//img[@title='中文 (中国)']</td>
+	<td>中文 (中国)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p</td>
+	<td>//div[@class='journal-content-article']/p</td>
 	<td>世界您好 Page Description</td>
 </tr>
 

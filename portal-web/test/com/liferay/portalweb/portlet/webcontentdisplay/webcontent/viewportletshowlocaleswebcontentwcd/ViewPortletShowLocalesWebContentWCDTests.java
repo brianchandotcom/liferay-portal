@@ -27,13 +27,13 @@ public class ViewPortletShowLocalesWebContentWCDTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddPageLanguageTest.class);
-		testSuite.addTestSuite(AddPortletLanguageTest.class);
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
+		testSuite.addTestSuite(AddPageLanguageTest.class);
+		testSuite.addTestSuite(AddPortletLanguageTest.class);
 		testSuite.addTestSuite(
 			ConfigurePortletShowAvailableLocalesTest.class);
-		testSuite.addTestSuite(AddWebContentTest.class);
+		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(LocalizeWCWebContentWCDTest.class);
 		testSuite.addTestSuite(
 			ViewPortletShowLocalesWebContentWCDTest.class);

@@ -94,7 +94,7 @@ public class ConfigurePortletScopeCurrentPageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_scopeType']",
-			RuntimeVariables.replace("label=Select Layout"));
+			RuntimeVariables.replace("Select Layout"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

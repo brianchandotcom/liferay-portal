@@ -44,7 +44,7 @@ public class ViewConfigurePortletScopeDefaultTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page",
-			RuntimeVariables.replace("Web Content Display Test Page"));
+			RuntimeVariables.replace("Web Content Display Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -116,7 +116,7 @@ public class ViewConfigurePortletScopeDefaultTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page",
-			RuntimeVariables.replace("Web Content Display Test Page"));
+			RuntimeVariables.replace("Web Content Display Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 

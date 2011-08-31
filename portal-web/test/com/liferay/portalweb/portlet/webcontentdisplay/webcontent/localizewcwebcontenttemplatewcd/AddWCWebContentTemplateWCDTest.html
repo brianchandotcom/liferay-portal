@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Web Content Display Test Page</td>
 	<td>Web Content Display Test Page</td>
 </tr>
@@ -29,69 +29,59 @@
 	<td>Add Web Content</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_15_title']</td>
-	<td>Web Content Name</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//fieldset/div/div/span/span/input</td>
+	<td>clickAt</td>
+	<td>//a[@id='_15_selectTemplateLink']</td>
 	<td>Select Template</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForVisible</td>
+	<td>//td[2]/a</td>
+	<td>Web Content Localized Template Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Web Content Localized Template Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[2]/a</td>
+	<td>Web Content Localized Template Name</td>
+</tr>
+<tr>
+	<td>waitForConfirmation</td>
 	<td>Selecting a template will change the structure, available input fields, and available templates? Do you want to proceed?</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>template</td>
-	<td>30000</td>
+	<td>waitForText</td>
+	<td>//span[@class='structure-name-label']</td>
+	<td>Web Content Localized Structure Name</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>template</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@class='structure-name-label']</td>
+	<td>Web Content Localized Structure Name</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@class='template-name-label']</td>
+	<td>Web Content Localized Template Name</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>type</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td>Hello World Localized Article</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='page-name']</td>
-	<td>Web Content Page Name</td>
+	<td>Hello World Page Name</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='page-description']</td>
-	<td>Web Content Page Description</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//fieldset/div/div/div/div/span</td>
-	<td>Test Localized Structure</td>
+	<td>Hello World Page Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -100,13 +90,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]</td>
-	<td>Web Content Page Name</td>
+	<td>//td[@class='page-name']</td>
+	<td>Hello World Page Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]</td>
-	<td>Web Content Page Description</td>
+	<td>//td[@class='page-description']</td>
+	<td>Hello World Page Description</td>
 </tr>
 
 </tbody></table>

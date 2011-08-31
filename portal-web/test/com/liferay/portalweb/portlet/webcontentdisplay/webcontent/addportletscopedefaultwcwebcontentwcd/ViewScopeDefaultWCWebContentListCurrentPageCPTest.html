@@ -15,6 +15,16 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -29,29 +39,29 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//div[2]/span</td>
-	<td>Scope</td>
+	<td>assertPartialText</td>
+	<td>//div/span/ul/li/strong/a</td>
+	<td>Scope: Default</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/span/a</td>
-	<td>Default</td>
+	<td>//div/span/ul/li/strong/a</td>
+	<td>Scope: Default</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Test Page2</td>
+	<td>assertText</td>
+	<td>//li[2]/a</td>
 	<td>Web Content Display Test Page2</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Web Content Display Test Page2</td>
+	<td>//li[2]/a</td>
 	<td>Web Content Display Test Page2</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[2]/span</td>
-	<td>Scope Web Content Display Test Page2</td>
+	<td>assertPartialText</td>
+	<td>//div/span/ul/li/strong/a</td>
+	<td>Scope: Web Content Display Test Page2</td>
 </tr>
 <tr>
 	<td>assertText</td>

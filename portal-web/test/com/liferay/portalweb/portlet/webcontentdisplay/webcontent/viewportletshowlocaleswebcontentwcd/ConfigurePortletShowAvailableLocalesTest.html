@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Web Content Display Test Page</td>
-	<td></td>
+	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Test Page</td>
-	<td></td>
+	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -45,18 +45,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_showAvailableLocalesCheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td>Show Available Locales</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td>Show Available Locales</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_86_showAvailableLocalesCheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td>Show Available Locales</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td>Show Available Locales</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -67,6 +72,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td>Show Available Locales</td>
 </tr>
 
 </tbody></table>

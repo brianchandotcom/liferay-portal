@@ -31,7 +31,7 @@ public class ViewScopeDefaultWebContentListDefaultTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Web Content Display Test Page")) {
+				if (selenium.isElementPresent("link=Site Name")) {
 					break;
 				}
 			}
@@ -42,8 +42,29 @@ public class ViewScopeDefaultWebContentListDefaultTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content Display Test Page",
-			RuntimeVariables.replace("Web Content Display Test Page"));
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Web Content Display Test Page1")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Web Content Display Test Page1",
+			RuntimeVariables.replace("Web Content Display Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
@@ -94,8 +115,8 @@ public class ViewScopeDefaultWebContentListDefaultTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//div[@class='portlet-msg-info']",
-				"Displaying Content: Web Content Name"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+				"Displaying Content: WCD Web Content Title"));
+		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
 			selenium.getText("//td[2]/a"));
 	}
 }

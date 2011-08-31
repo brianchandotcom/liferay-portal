@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.lucene.dump.DumpIndexDeletionPolicy;
 import com.liferay.portal.search.lucene.dump.IndexCommitSerializationUtil;
+import com.liferay.portal.search.lucene.store.jdbc.LiferayJdbcDirectory;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -372,7 +373,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 			try {
 				DataSource dataSource = InfrastructureUtil.getDataSource();
 
-				jdbcDirectory = new JdbcDirectory(
+				jdbcDirectory = new LiferayJdbcDirectory(
 					dataSource, _dialect, tableName);
 
 				_jdbcDirectories.put(tableName, jdbcDirectory);

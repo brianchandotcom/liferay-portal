@@ -59,7 +59,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 								</li>
 							</c:if>
 
-							<c:if test="<%= !themeDisplay.isStateMaximized() %>">
+							<c:if test="<%= !themeDisplay.isStateMaximized() && layout.isTypePortlet() %>">
 								<li class="last common-items">
 									<div class="aui-menugroup">
 										<div class="aui-menugroup-content">

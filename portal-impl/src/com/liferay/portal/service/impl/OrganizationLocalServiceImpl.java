@@ -972,7 +972,7 @@ public class OrganizationLocalServiceImpl
 			int end)
 		throws SystemException {
 
-		return organizationFinder.findByCompany(
+		return organizationFinder.findByCompanyId(
 			companyId, params, start, end,
 			new OrganizationNameComparator(true));
 	}

@@ -200,8 +200,51 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					selenium.getText("//li[2]/ul/li[2]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Child Test Page3"),
 					selenium.getText("//li[2]/ul/li[3]/div/div[3]/a"));
-				selenium.dragAndDropToObject("//li[2]/ul/li[1]/div/div[3]/a",
-					"//li/ul/li[2]/div/div[3]/a");
+				selenium.mouseOver("//li[2]/ul/li[1]/div/div[3]/a");
+				selenium.mouseDown("//li[2]/ul/li[1]/div/div[3]/a");
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[contains(@class, 'yui3-dd-drop-active-valid')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.mouseMoveAt("//li[2]/ul/li[3]/div/div[3]/a",
+					RuntimeVariables.replace("0,15"));
+				selenium.mouseMoveAt("//li[2]/ul/li[3]/div/div[3]/a",
+					RuntimeVariables.replace("0,15"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[contains(@class,'aui-tree-drag-insert-below')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.mouseUp("//li[2]/ul/li[3]/div/div[3]/a");
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

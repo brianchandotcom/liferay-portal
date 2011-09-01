@@ -26,6 +26,7 @@ import com.liferay.portlet.PortletServletRequest;
 import com.liferay.portlet.PortletServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.Set;
 
@@ -200,9 +201,17 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 		PortletResponseImpl portletResponseImpl =
 			(PortletResponseImpl)portletResponse;
 
-		return new PipingServletResponse(
-			new PortletServletResponse(response, portletResponseImpl, include),
-			servletResponse.getWriter());
+		HttpServletResponse httpServletResponse = new PortletServletResponse(
+			response, portletResponseImpl, include);
+
+		PrintWriter printWriter = servletResponse.getWriter();
+
+		if (printWriter != null) {
+			httpServletResponse = new PipingServletResponse(
+				httpServletResponse, printWriter);
+		}
+
+		return httpServletResponse;
 	}
 
 	protected Set<String> getServletURLPatterns(

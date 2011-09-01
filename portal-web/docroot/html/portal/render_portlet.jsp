@@ -724,7 +724,7 @@ if (group.isControlPanel()) {
 
 // Make sure the Tiles context is reset for the next portlet
 
-if ((invokerPortlet != null) && invokerPortlet.isStrutsPortlet()) {
+if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
 	request.removeAttribute(ComponentConstants.COMPONENT_CONTEXT);
 }
 %>
@@ -843,7 +843,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 			useDefaultTemplate = useDefaultTemplateObj.booleanValue();
 		}
 
-		if ((invokerPortlet != null) && invokerPortlet.isStrutsPortlet()) {
+		if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
 			if (!access || portletException) {
 				PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
 

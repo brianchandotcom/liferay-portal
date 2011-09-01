@@ -52,6 +52,15 @@ public class OrganizationPermissionUtil {
 	}
 
 	public static boolean contains(
+			PermissionChecker permissionChecker, long[] organizationIds,
+			String actionId)
+		throws PortalException, SystemException {
+
+		return getOrganizationPermission().contains(
+			permissionChecker, organizationIds, actionId);
+	}
+
+	public static boolean contains(
 			PermissionChecker permissionChecker, Organization organization,
 			String actionId)
 		throws PortalException, SystemException {

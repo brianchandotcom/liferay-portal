@@ -48,11 +48,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * The implementation of the user group local service.
+ *
  * @author Charles May
  * @author Miguel Pastor
  */
 public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
+	/**
+	 * Adds the user groups to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
 		throws SystemException {
 
@@ -61,6 +70,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Adds the user groups to the team.
+	 *
+	 * @param  teamId the primary key of the team
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
 		throws SystemException {
 
@@ -69,6 +85,27 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Adds a user group.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user group, 
+	 * including its resources, metadata, and internal data structures. It is 
+	 * not necessary to make subsequent calls setup default groups and resources.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  companyId the primary key of the user group's company
+	 * @param  name the user group's name
+	 * @param  description the user group's description
+	 * @param  publicLayoutSetPrototypeId the primary key of the user group's 
+	 * 		   public layout set
+	 * @param  privateLayoutSetPrototypeId the primary key of the user group's 
+	 * 		   private layout set
+	 * @return the user group
+	 * @throws PortalException if the user group's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
 	public UserGroup addUserGroup(
 			long userId, long companyId, String name, String description,
 			long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
@@ -109,12 +146,32 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroup;
 	}
 
+	/**
+	 * Clears all associations between the user and its user groups and 
+	 * clears the permissions cache. 
+	 *
+	 * <p>
+	 * This method is called from {@link #deleteUserGroup(UserGroup)}.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void clearUserUserGroups(long userId) throws SystemException {
 		userPersistence.clearUserGroups(userId);
 
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Copies the user group's layouts to the users who are not 
+	 * members of the user group.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void copyUserGroupLayouts(long userGroupId, long userIds[])
 		throws PortalException, SystemException {
 
@@ -140,6 +197,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Copies the user groups' layouts to the user.
+	 *
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @param  userId the primary key of the user
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void copyUserGroupLayouts(long userGroupIds[], long userId)
 		throws PortalException, SystemException {
 
@@ -150,6 +215,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Copies the user group's layout to the user.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @param  userId the primary key of the user
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void copyUserGroupLayouts(long userGroupId, long userId)
 		throws PortalException, SystemException {
 
@@ -171,6 +244,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Deletes the user group.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @throws PortalException if a user group with the primary key could not be 
+	 * found or if the user group had a workflow in approved status
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public void deleteUserGroup(long userGroupId)
 		throws PortalException, SystemException {
@@ -181,6 +262,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		deleteUserGroup(userGroup);
 	}
 
+	/**
+	 * Deletes the user group.
+	 *
+	 * @param  userGroup the user group
+	 * @throws PortalException if the organization had a workflow in 
+	 * 		   approved status
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public void deleteUserGroup(UserGroup userGroup)
 		throws PortalException, SystemException {
@@ -222,6 +311,15 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Returns the user group with the primary key.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @return Returns the user group with the primary key
+	 * @throws PortalException if a user group with the primary key could
+	 * 		   not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public UserGroup getUserGroup(long userGroupId)
 		throws PortalException, SystemException {
@@ -229,18 +327,43 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroupPersistence.findByPrimaryKey(userGroupId);
 	}
 
+	/**
+	 * Returns the user group with the name.
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  name the user group's name
+	 * @return Returns the user group with the name
+	 * @throws PortalException if a user group with the name could not
+	 *         be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public UserGroup getUserGroup(long companyId, String name)
 		throws PortalException, SystemException {
 
 		return userGroupPersistence.findByC_N(companyId, name);
 	}
 
+	/**
+	 * Returns all the user groups belonging to the company.
+	 *
+	 * @param  companyId the primary key of the user groups' company
+	 * @return the user groups belonging to the company
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<UserGroup> getUserGroups(long companyId)
 		throws SystemException {
 
 		return userGroupPersistence.findByCompanyId(companyId);
 	}
 
+	/**
+	 * Returns all the user groups with the primary keys.
+	 *
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @return the user groups with the primary keys
+	 * @throws PortalException if one of the user groups could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<UserGroup> getUserGroups(long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -256,24 +379,79 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroups;
 	}
 
+	/**
+	 * Returns all the user groups the user belongs to.
+	 *
+	 * @param  userId the primary key of the user
+	 * @return the user groups the user belongs to
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<UserGroup> getUserUserGroups(long userId)
 		throws SystemException {
 
 		return userPersistence.getUserGroups(userId);
 	}
 
+	/**
+	 * Returns <code>true</code> if the user group belongs to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userGroupId the primary key of the user group
+	 * @return <code>true</code> if the user group belongs to the group;
+	 *         <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasGroupUserGroup(long groupId, long userGroupId)
 		throws SystemException {
 
 		return groupPersistence.containsUserGroup(groupId, userGroupId);
 	}
 
+	/**
+	 * Returns <code>true</code> if the user group belongs to the team.
+	 *
+	 * @param  teamId the primary key of the team
+	 * @param  userGroupId the primary key of the user group
+	 * @return <code>true</code> if the user group belongs to the team;
+	 *         <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasTeamUserGroup(long teamId, long userGroupId)
 		throws SystemException {
 
 		return teamPersistence.containsUserGroup(teamId, userGroupId);
 	}
 
+	/**
+	 * Returns an ordered range of all the user groups that match the name 
+	 * and description without using the indexer.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
+	 * full result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  name the user group's name (optionally <code>null</code>)
+	 * @param  description the user group's description (optionally 
+	 * 		   <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). 
+	 * 		   For more information see {@link 
+	 * 		   com.liferay.portal.service.persistence.UserGroupFinder}
+	 * @param  start the lower bound of the range of user groups to return
+	 * @param  end the upper bound of the range of user groups to return
+	 * 		   (not inclusive)
+	 * @param  obc the comparator to order the user groups(optionally
+	 *         <code>null</code>)
+	 * @return the matching user groups ordered by comparator <code>obc</code>
+	 * @throws SystemException if a system exception occurred
+	 * @see	   com.liferay.portal.service.persistence.UserGroupFinder
+	 */
 	public List<UserGroup> search(
 			long companyId, String name, String description,
 			LinkedHashMap<String, Object> params, int start, int end,
@@ -284,6 +462,20 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			companyId, name, description, params, start, end, obc);
 	}
 
+	/**
+	 * Returns the number of user groups that match the name and description.
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  name the user group's name (optionally <code>null</code>)
+	 * @param  description the user group's description (optionally 
+	 * 		   <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). 
+	 * 		   For more information see {@link 
+	 * 		   com.liferay.portal.service.persistence.UserGroupFinder}
+	 * @return the number of matching user groups
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.service.persistence.UserGroupFinder
+	 */
 	public int searchCount(
 			long companyId, String name, String description,
 			LinkedHashMap<String, Object> params)
@@ -293,6 +485,15 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			companyId, name, description, params);
 	}
 
+	/**
+	 * Sets the user groups associated with the user, removing and 
+	 * adding associations as necessary.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @throws PortalException if a portal exception occurred 
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setUserUserGroups(long userId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -307,6 +508,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Removes the user groups from the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
 		throws SystemException {
 
@@ -324,6 +532,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Removes the user groups from the team.
+	 *
+	 * @param  teamId the primary key of the team
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
 		throws SystemException {
 
@@ -332,6 +547,22 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Updates the user group.
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  userGroupId the primary key of the user group
+	 * @param  name the user group's name
+	 * @param  description the user group's description
+	 * @param  publicLayoutSetPrototypeId the primary key of the user group's
+	 * 		   public layout set
+	 * @param  privateLayoutSetPrototypeId the primary key of the user group's
+	 * 		   private layout set
+	 * @return the user group
+	 * @throws PortalException if an user group with the primary key is not found
+	 * 		   or if the new information is invalid
+	 * @throws SystemException if a system exception occurred
+	 */
 	public UserGroup updateUserGroup(
 			long companyId, long userGroupId, String name, String description,
 			long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)

@@ -28,10 +28,22 @@ import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import java.util.List;
 
 /**
+ * The implementation of the user group remote service.
+ *
  * @author Charles May
  */
 public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 
+	/**
+	 * Adds the user groups to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @throws PortalException if a group or user group with the primary key
+	 * 		   could not be found or if the user did not have permission to
+	 * 		   assign group members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -41,6 +53,16 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		userGroupLocalService.addGroupUserGroups(groupId, userGroupIds);
 	}
 
+	/**
+	 * Adds the user groups to the team
+	 *
+	 * @param  teamId the primary key of the team
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @throws PortalException if a team or user group with the primary key
+	 * 		   could not be found or if the user did not have permission to
+	 * 		   assign team members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -50,6 +72,25 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		userGroupLocalService.addTeamUserGroups(teamId, userGroupIds);
 	}
 
+	/**
+	 * Adds a user group.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user group,
+	 * including its resources, metadata, and internal datastructures.
+	 * </p>
+	 *
+	 * @param  name the user group's name
+	 * @param  description the user group's description
+	 * @param  publicLayoutSetPrototypeId the primary key of the user group's
+	 * 		   public layout set
+	 * @param  privateLayoutSetPrototypeId the primary key of the user group's
+	 * 		   private layout set
+	 * @return the user group
+	 * @throws PortalException if the user group's information was invalid or
+	 * 		   if the user did not have permission to add the user group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public UserGroup addUserGroup(
 			String name, String description, long publicLayoutSetPrototypeId,
 			long privateLayoutSetPrototypeId)
@@ -65,6 +106,15 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
 	}
 
+	/**
+	 * Deletes the user group.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @throws PortalException if a user group with the primary key could not
+	 * 		   be found, if the user did not have permission to delete the
+	 * 		   user group, if the user group had a workflow in approved status
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteUserGroup(long userGroupId)
 		throws PortalException, SystemException {
 
@@ -74,6 +124,16 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		userGroupLocalService.deleteUserGroup(userGroupId);
 	}
 
+	/**
+	 * Returns the user group with the primary key.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @return Returns the user group with the primary key
+	 * @throws PortalException if a user group with the primary key could
+	 * 		   not be found or if the user did not have permission to view
+	 * 		   the user group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public UserGroup getUserGroup(long userGroupId)
 		throws PortalException, SystemException {
 
@@ -83,6 +143,16 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		return userGroupLocalService.getUserGroup(userGroupId);
 	}
 
+	/**
+	 * Returns the user group with the name.
+	 *
+	 * @param  name the user group's name
+	 * @return Returns the user group with the name
+	 * @throws PortalException if a user group with the name could not
+	 * 		   be found or if the user did not have permission to
+	 * 		   view the user group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public UserGroup getUserGroup(String name)
 		throws PortalException, SystemException {
 
@@ -99,12 +169,28 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		return userGroup;
 	}
 
+	/**
+	 * Returns all the user groups the user belongs to.
+	 *
+	 * @param  userId the primary key of the user
+	 * @return the user groups the user belongs to
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<UserGroup> getUserUserGroups(long userId)
 		throws SystemException {
 
 		return userGroupLocalService.getUserUserGroups(userId);
 	}
 
+	/**
+	 * Removes the user groups from the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @throws PortalException if the user did not have permission to
+	 * 		   assign group members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -114,6 +200,15 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		userGroupLocalService.unsetGroupUserGroups(groupId, userGroupIds);
 	}
 
+	/**
+	 * Removes the user groups from the team.
+	 *
+	 * @param  teamId the primary key of the team
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @throws PortalException if the user did not have permission to
+	 * 		   assign team members
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -123,6 +218,22 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		userGroupLocalService.unsetTeamUserGroups(teamId, userGroupIds);
 	}
 
+	/**
+	 * Updates the user group.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @param  name the user group's name
+	 * @param  description the the user group's description
+	 * @param  publicLayoutSetPrototypeId the primary key of the 
+	 * 		   user group's public layout set
+	 * @param  privateLayoutSetPrototypeId the primary key of the
+	 * 		   user group's private layout set
+	 * @return the user group
+	 * @throws PortalException if an user gropu with the primary key is not
+	 * 		   found, if the new information is invalid, or if the user
+	 * 		   did not have permission to update the user group information
+	 * @throws SystemException if a system exception occurred
+	 */
 	public UserGroup updateUserGroup(
 			long userGroupId, String name, String description,
 			long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)

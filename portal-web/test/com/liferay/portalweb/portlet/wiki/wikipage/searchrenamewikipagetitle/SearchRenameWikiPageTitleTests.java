@@ -32,7 +32,6 @@ public class SearchRenameWikiPageTitleTests extends BaseTests {
 		testSuite.addTestSuite(AddWikiPageTest.class);
 		testSuite.addTestSuite(RenameWikiPageTitleTest.class);
 		testSuite.addTestSuite(SearchRenameWikiPageTitleTest.class);
-		testSuite.addTestSuite(SearchRenameWikiPageTitleQuotesTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

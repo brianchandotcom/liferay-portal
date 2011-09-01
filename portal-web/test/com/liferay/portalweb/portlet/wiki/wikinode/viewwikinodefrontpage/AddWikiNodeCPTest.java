@@ -30,7 +30,7 @@ public class AddWikiNodeCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -45,14 +45,20 @@ public class AddWikiNodeCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki", RuntimeVariables.replace("Wiki"));
+		assertEquals(RuntimeVariables.replace("Wiki"),
+			selenium.getText("//li[9]/a"));
+		selenium.clickAt("//li[9]/a", RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Wiki']",
 			RuntimeVariables.replace("Add Wiki"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_154_name", RuntimeVariables.replace("Wiki Node Name"));
+		selenium.type("//input[@id='_154_name']",
+			RuntimeVariables.replace("Wiki Node Name"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//textarea[@id='_154_description']",
+			RuntimeVariables.replace("Wiki Node Description"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -63,5 +69,9 @@ public class AddWikiNodeCPTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
 			selenium.getText("//tr[4]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[4]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//tr[4]/td[3]/a"));
 	}
 }

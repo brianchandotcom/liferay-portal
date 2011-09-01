@@ -31,7 +31,7 @@ public class CompareVersionEditFrontPageMinorChangeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -42,57 +42,53 @@ public class CompareVersionEditFrontPageMinorChangeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Details", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Details"),
+			selenium.getText("//div[3]/span[2]/a/span"));
+		selenium.clickAt("//div[3]/span[2]/a/span",
+			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=History", RuntimeVariables.replace(""));
+		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=1.2 (Minor Edit)"));
-		assertTrue(selenium.isElementPresent("link=1.1"));
-		assertTrue(selenium.isElementPresent("link=1.0 (Minor Edit)"));
+		assertEquals(RuntimeVariables.replace("1.2 (Minor Edit)"),
+			selenium.getText("//td[4]/a"));
+		assertEquals(RuntimeVariables.replace("1.1"),
+			selenium.getText("//tr[4]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace("1.0 (Minor Edit)"),
+			selenium.getText("//tr[5]/td[4]/a"));
 		selenium.check("//input[@name='_36_rowIds' and @value='1.2']");
 		selenium.check("//input[@name='_36_rowIds' and @value='1.1']");
 		selenium.uncheck("//input[@name='_36_rowIds' and @value='1.0']");
 		selenium.clickAt("//input[@value='Compare Versions']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Compare Versions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"This is a wiki frontpage test.Minor Edit"),
-			selenium.getText("//div/div[4]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Text Mode")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Text Mode", RuntimeVariables.replace(""));
+				"Comparing Versions 1.1 and 1.2 (Last Version)"),
+			selenium.getText("//span[@class='central-title']/span"));
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Content Edit"),
+			selenium.getText("//p"));
+		assertEquals(RuntimeVariables.replace("Text Mode"),
+			selenium.getText("//div[3]/div/a"));
+		selenium.clickAt("//div[3]/div/a", RuntimeVariables.replace("Text Mode"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("FrontPage 1.1"),
 			selenium.getText(
-				"//table[@id='taglib-diff-results']/tbody/tr[1]/td[1]"));
+				"xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[1]"));
 		assertEquals(RuntimeVariables.replace("FrontPage 1.2"),
 			selenium.getText(
-				"//table[@id='taglib-diff-results']/tbody/tr[1]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Minor Edit"),
+				"xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[2]"));
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
 			selenium.getText(
-				"//table[@class='taglib-diff-table']/tbody/tr/td/ins"));
+				"xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[1]"));
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Content Edit"),
+			selenium.getText(
+				"xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[2]"));
 	}
 }

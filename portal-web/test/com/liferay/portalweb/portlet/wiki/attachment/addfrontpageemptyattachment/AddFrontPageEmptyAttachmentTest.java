@@ -30,7 +30,7 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,27 +41,32 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"This page is empty. Edit it to add some text."),
+			selenium.getText("//div[@class='portlet-msg-info']/a"));
 		selenium.clickAt("//div[@class='portlet-msg-info']/a",
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Attachments"));
-		selenium.clickAt("link=Attachments", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Attachments",
+			RuntimeVariables.replace("Attachments"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"This page does not have any file attachments."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//input[@value='Add Attachments']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.selectWindow("null");
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		selenium.windowFocus();
 
 		for (int second = 0;; second++) {
@@ -70,7 +75,8 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Use the classic uploader.")) {
+				if (selenium.isVisible(
+							"//a[@class='use-fallback using-new-uploader']")) {
 					break;
 				}
 			}
@@ -81,7 +87,7 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click("link=Use the classic uploader.");
+		selenium.click("//a[@class='use-fallback using-new-uploader']");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -89,7 +95,7 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_36_file1")) {
+				if (selenium.isVisible("//input[@id='_36_file1']")) {
 					break;
 				}
 			}
@@ -100,7 +106,7 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_file1",
+		selenium.type("//input[@id='_36_file1']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\wiki\\attachment\\addfrontpageemptyattachment\\dependencies\\Wiki_Attachment.jpg"));
 		selenium.saveScreenShotAndSource();
@@ -112,7 +118,7 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki_Attachment.jpg"),
-			selenium.getText("link=Wiki_Attachment.jpg"));
+			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']/"));
 		selenium.open("/web/guest/home/");
@@ -123,7 +129,7 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -134,17 +140,17 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"This page is empty. Edit it to add some text."),
-			selenium.getText("//div[@class='portlet-msg-info']/a"));
 		selenium.clickAt("//div[@class='portlet-msg-info']/a",
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals("", selenium.getValue("_36_content"));
+		assertEquals(RuntimeVariables.replace(
+				"Attachments Wiki_Attachment.jpg (3.1k)"),
+			selenium.getText("//fieldset[2]/div/div[1]/div"));
 	}
 }

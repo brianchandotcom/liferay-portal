@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RenameWikiPageTitleSameTest</title>
 </head>
 <body>
@@ -17,69 +14,84 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=All Pages</td>
-	<td></td>
+	<td>All Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki Page Test</td>
-	<td></td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[2]/h1/span</td>
-	<td>Wiki Page Test</td>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>(Redirected from Wiki Page Test)</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Page Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Details</td>
-	<td></td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[9]/td/ul/li[3]/a/span</td>
+	<td>Move</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Move</td>
-	<td></td>
+	<td>//tr[9]/td/ul/li[3]/a/span</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_newTitle</td>
-	<td>Wiki Page Test</td>
+	<td>//input[@id='_36_newTitle']</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Rename']</td>
-	<td></td>
+	<td>Rename</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[4]/h1/span</td>
-	<td>Wiki Page Test</td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
 	<td>Your request failed to complete.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>There is already a page with the specified title.</td>
-	<td></td>
 </tr>
 
 </tbody></table>

@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>DeleteFrontPageAttachmentTest</title>
 </head>
 <body>
@@ -17,34 +14,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=1 Attachment</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[6]/div[1]/span[2]/a/span</td>
+	<td>1 Attachment</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=1 Attachment</td>
-	<td></td>
+	<td>//div[6]/div[1]/span[2]/a/span</td>
+	<td>1 Attachment</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki_Attachment.jpg</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Wiki_Attachment.jpg</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/span/a/span</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
+	<td>//td[3]/span/a/span</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -52,14 +54,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>This page does not have any file attachments.</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>link=Wiki_Attachment.jpg</td>
-	<td></td>
+	<td>//td[1]/a</td>
+	<td>Wiki_Attachment.jpg</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -67,23 +74,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=0 Attachments</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[6]/div[1]/span[2]/a/span</td>
+	<td>0 Attachments</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=1 Attachments</td>
+	<td>assertTextNotPresent</td>
+	<td>1 Attachment</td>
 	<td></td>
 </tr>
 

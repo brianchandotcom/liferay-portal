@@ -14,39 +14,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=All Pages</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Wiki Page Test</td>
-	<td>Wiki Page Test</td>
+	<td>All Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']</td>
-	<td>Wiki page content.</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=0 Attachments</td>
-	<td></td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=0 Attachments</td>
-	<td></td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Page Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[6]/div[1]/span[2]/a/span</td>
+	<td>0 Attachments</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[6]/div[1]/span[2]/a/span</td>
+	<td>0 Attachments</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -56,7 +61,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Attachments']</td>
-	<td></td>
+	<td>Add Attachments</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -70,22 +75,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
+	<td>//a[@class='use-fallback using-new-uploader']</td>
+	<td>Use the classic uploader.</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
+	<td>//a[@class='use-fallback using-new-uploader']</td>
+	<td>Use the classic uploader.</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_36_file1</td>
-	<td></td>
+	<td>//input[@id='_36_file1']</td>
+	<td>File 1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_file1</td>
+	<td>//input[@id='_36_file1']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\wiki\wikipage\addfrontpagecreoleimage\dependencies\Wiki_Attachment.jpg</td>
 </tr>
 <tr>

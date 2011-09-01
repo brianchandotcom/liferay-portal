@@ -31,7 +31,6 @@ public class SearchWikiPageTitleTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletWikiTest.class);
 		testSuite.addTestSuite(AddWikiPageTest.class);
 		testSuite.addTestSuite(SearchWikiPageTitleTest.class);
-		testSuite.addTestSuite(SearchWikiPageTitleQuotesTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

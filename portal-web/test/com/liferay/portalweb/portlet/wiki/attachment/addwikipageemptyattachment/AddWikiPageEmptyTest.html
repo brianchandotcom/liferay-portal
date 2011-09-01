@@ -14,24 +14,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=All Pages</td>
-	<td></td>
+	<td>All Pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Page']</td>
-	<td></td>
+	<td>Add Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -39,14 +39,19 @@
 	<td>This page does not exist yet. Use the form below to create it.</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>_36_title</td>
-	<td>Wiki Page Test</td>
+	<td>//input[@id='_36_title']</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -54,34 +59,24 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki Page Test</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki Page Test</td>
-	<td></td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/h1/span</td>
-	<td>Wiki Page Test</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']/a</td>
 	<td>This page is empty. Edit it to add some text.</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='portlet-msg-info']/a</td>
-	<td>This page is empty. Edit it to add some text.</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>_36_content</td>
-	<td></td>
 </tr>
 
 </tbody></table>

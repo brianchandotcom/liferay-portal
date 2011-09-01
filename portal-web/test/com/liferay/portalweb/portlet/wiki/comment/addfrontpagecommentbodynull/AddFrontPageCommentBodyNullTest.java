@@ -30,7 +30,7 @@ public class AddFrontPageCommentBodyNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,10 +41,14 @@ public class AddFrontPageCommentBodyNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Be the first.", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Be the first."),
+			selenium.getText("//fieldset/div/a"));
+		selenium.clickAt("//fieldset/div/a",
+			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -52,7 +56,7 @@ public class AddFrontPageCommentBodyNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_36_postReplyBody0")) {
+				if (selenium.isVisible("//textarea[@name='_36_postReplyBody0']")) {
 					break;
 				}
 			}
@@ -63,13 +67,32 @@ public class AddFrontPageCommentBodyNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_postReplyBody0", RuntimeVariables.replace(""));
+		selenium.click("//input[@value='Reply']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-message-response portlet-msg-error']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_36_postReplyBody0", RuntimeVariables.replace("\\48"));
-		selenium.keyPress("_36_postReplyBody0", RuntimeVariables.replace("\\8"));
-		selenium.clickAt("//input[@value='Reply']", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
-		assertTrue(selenium.isElementPresent("link=Be the first."));
-		assertTrue(selenium.isElementPresent("_36_postReplyBody0"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid message."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-error']"));
+		assertEquals(RuntimeVariables.replace("Be the first."),
+			selenium.getText("//fieldset/div/a"));
+		assertTrue(selenium.isElementPresent(
+				"//textarea[@name='_36_postReplyBody0']"));
 	}
 }

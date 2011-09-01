@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -29,23 +29,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Export / Import</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Export / Import</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Import</td>
-	<td></td>
+	<td>Import</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_importFileName</td>
+	<td>//input[@id='_86_importFileName']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\wiki\lar\importlar\dependencies\Wiki-Selenium.portlet.lar</td>
 </tr>
 <tr>
@@ -91,12 +91,12 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Import']</td>
-	<td></td>
+	<td>Import</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 
 </tbody></table>

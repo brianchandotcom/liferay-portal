@@ -30,7 +30,7 @@ public class AddWikiPageChildPage3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,41 +41,73 @@ public class AddWikiPageChildPage3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace(""));
+		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Page Test", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//tr[6]/td[1]/a"));
+		selenium.clickAt("//tr[6]/td[1]/a",
+			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add Child Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText("//div[7]/div[1]/span[1]/a/span"));
+		selenium.clickAt("//div[7]/div[1]/span[1]/a/span",
+			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_title",
-			RuntimeVariables.replace("Front3 Page3 Child3 Page3 Test3"));
+		selenium.type("//input[@id='_36_title']",
+			RuntimeVariables.replace("Wiki Page Child Page3 Title"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
-			RuntimeVariables.replace(
-				"This is a front3 page3 child3 page3 test3."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Wiki Page Child Page3 Content"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertEquals(RuntimeVariables.replace("Front3 Page3 Child3 Page3 Test3"),
-			selenium.getText("//div[@class='child-pages']/ul/li[3]/a"));
-		selenium.clickAt("link=Front3 Page3 Child3 Page3 Test3",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//div[2]/h1/span",
-				"Front3 Page3 Child3 Page3 Test3"));
 		assertEquals(RuntimeVariables.replace(
-				"This is a front3 page3 child3 page3 test3."),
-			selenium.getText("//div/div[5]/div"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Child Page1 Title"),
+			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Child Page2 Title"),
+			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Child Page3 Title"),
+			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[3]"));
+		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[3]",
+			RuntimeVariables.replace("Wiki Page Child Page3 Title"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Wiki Page Child Page3 Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Child Page3 Content"),
+			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

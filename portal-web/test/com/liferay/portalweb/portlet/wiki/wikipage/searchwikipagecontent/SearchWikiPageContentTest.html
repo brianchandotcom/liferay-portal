@@ -14,43 +14,48 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_keywords</td>
-	<td>"This is a wiki page test."</td>
+	<td>//input[@id='_36_keywords']</td>
+	<td>Wiki Page Content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki Page Test</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_keywords</td>
-	<td>"This1 is1 a1 wiki1 page1 test1."</td>
+	<td>//input[@id='_36_keywords']</td>
+	<td>"Wiki1 Page1 Content1."</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Wiki Page Test</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No pages were found that matched the keywords: "Wiki1 Page1 Content1.".</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Wiki Page Title</td>
 	<td></td>
 </tr>
 

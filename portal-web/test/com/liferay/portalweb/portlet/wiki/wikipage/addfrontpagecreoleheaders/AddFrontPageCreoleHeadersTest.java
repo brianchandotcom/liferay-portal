@@ -30,7 +30,7 @@ public class AddFrontPageCreoleHeadersTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -41,28 +41,47 @@ public class AddFrontPageCreoleHeadersTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=This page is empty. Edit it to add some text.",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_36_content",
+		assertEquals(RuntimeVariables.replace(
+				"This page is empty. Edit it to add some text."),
+			selenium.getText("//div[@class='wiki-body']/div/a"));
+		selenium.clickAt("//div[@class='wiki-body']/div/a",
 			RuntimeVariables.replace(
-				"== Large heading ==\n=== Medium heading ===\n==== Small heading ===="));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertEquals(RuntimeVariables.replace("Large heading #"),
+		assertTrue(selenium.isVisible("//span[@id='cke_34_label']"));
+		Thread.sleep(5000);
+		selenium.clickAt("//span[@id='cke_34_label']",
+			RuntimeVariables.replace("Source"));
+		assertTrue(selenium.isVisible(
+				"//td[@id='cke_contents__36_editor']/textarea"));
+		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+			RuntimeVariables.replace(
+				"== Wiki Front Page Content ==\n=== Wiki Front Page Content ===\n==== Wiki Front Page Content ===="));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//span[@id='cke_34_label']",
+			RuntimeVariables.replace("Source"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isElementPresent(
+				"//td[@id='cke_contents__36_editor']/iframe"));
+		Thread.sleep(5000);
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Content #"),
 			selenium.getText("//div[@class='wiki-body']/h2"));
-		assertEquals(RuntimeVariables.replace("Medium heading #"),
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Content #"),
 			selenium.getText("//div[@class='wiki-body']/h3"));
-		assertEquals(RuntimeVariables.replace("Small heading #"),
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Content #"),
 			selenium.getText("//div[@class='wiki-body']/h4"));
 	}
 }

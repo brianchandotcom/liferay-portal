@@ -14,34 +14,74 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>Wiki Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/div/a</td>
+	<td>This page is empty. Edit it to add some text.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=This page is empty. Edit it to add some text.</td>
+	<td>//div[@class='wiki-body']/div/a</td>
+	<td>This page is empty. Edit it to add some text.</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[@id='cke_34_label']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@id='cke_34_label']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_content</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
 	<td><<TableOfContents>><br />== Unit ==<br />=== Chapter ===<br />==== Section ====</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Publish']</td>
+	<td>//span[@id='cke_34_label']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,18 +95,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='toc-index']//li[1]/a</td>
-	<td>1 Unit</td>
+	<td>//div[@class='toc-index']/ol/li/a</td>
+	<td>Unit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='toc-index']//li[2]/a</td>
-	<td>1.1 Chapter</td>
+	<td>//div[@class='toc-index']/ol/li/ol/li/a</td>
+	<td>Chapter</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='toc-index']//li[3]/a</td>
-	<td>1.1.1 Section</td>
+	<td>//div[@class='toc-index']/ol/li/ol/li/ol/li/a</td>
+	<td>Section</td>
 </tr>
 <tr>
 	<td>assertText</td>

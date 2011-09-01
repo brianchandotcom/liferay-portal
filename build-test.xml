@@ -2351,6 +2351,31 @@ file.
 		</if>
 	</target>
 
+	<target name="rebuild-database-clean">
+		<if>
+			<not>
+				<isset property="skip.rebuild-database" />
+			</not>
+			<then>
+				<if>
+					<not>
+						<isset property="skip.delete-liferay-home" />
+					</not>
+					<then>
+						<delete dir="${user.home}/liferay"/>
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${db.type}" arg2="mysql" />
+					<then>
+						<antcall target="rebuild-database-mysql-clean" />
+					</then>
+				</if>
+			</then>
+		</if>
+	</target>
+
 	<target name="rebuild-database-db2">
 		<if>
 			<or>
@@ -2423,6 +2448,17 @@ file.
 				<delete file="${sql.file}" />
 			</else>
 		</if>
+	</target>
+
+	<target name="rebuild-database-mysql-clean">
+		<echo file="create-mysql-clean.sql">drop database if exists ${db.mysql.schema};
+create database ${db.mysql.schema} character set utf8;</echo>
+
+		<exec executable="cmd">
+			<arg line="/c mysql &lt; create-mysql-clean.sql" />
+		</exec>
+
+		<delete file="create-mysql-clean.sql" />
 	</target>
 
 	<target name="rebuild-database-oracle">
@@ -2967,15 +3003,13 @@ executable ZIP file.
 	<target name="test">
 		<antcall target="prepare-mysql" />
 
-		<antcall target="rebuild-database" inheritAll="false" />
+		<antcall target="rebuild-database-clean" inheritAll="false" />
 
 		<antcall target="revert-test-properties" />
 
 		<ant dir="portal-impl" target="test-class" inheritAll="false">
 			<property name="class" value="ServiceTestSuite" />
 		</ant>
-
-		<antcall target="rebuild-database" inheritAll="false" />
 
 		<ant dir="portal-impl" target="test-class" inheritAll="false">
 			<property name="class" value="PersistenceTestSuite" />

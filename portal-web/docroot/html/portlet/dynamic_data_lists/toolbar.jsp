@@ -36,9 +36,13 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
-		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>"><a href="<%= addRecordSetURL %>"><liferay-ui:message key="add" /></a></span>
+		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
+			<a href="<%= addRecordSetURL %>"><liferay-ui:message key="add" /></a>
+		</span>
 
-		<span class="lfr-toolbar-button view-structures <%= toolbarItem.equals("manage-data-definitions") ? "current" : StringPool.BLANK %>"><a href="javascript:void(0);" id="<portlet:namespace />manageDDMStructuresLink"><liferay-ui:message key="manage-data-definitions" /></a></span>
+		<span class="lfr-toolbar-button view-structures <%= toolbarItem.equals("manage-data-definitions") ? "current" : StringPool.BLANK %>">
+			<a href="javascript:void(0);" id="<portlet:namespace />manageDDMStructuresLink"><liferay-ui:message key="manage-data-definitions" /></a>
+		</span>
 	</c:if>
 </div>
 

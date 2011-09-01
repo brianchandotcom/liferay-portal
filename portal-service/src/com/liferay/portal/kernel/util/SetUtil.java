@@ -46,6 +46,20 @@ public class SetUtil {
 		return set;
 	}
 
+	public static Set<Integer> fromArray(int[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return new HashSet<Integer>();
+		}
+
+		Set<Integer> set = new HashSet<Integer>(array.length);
+
+		for (int i = 0; i < array.length; i++) {
+			set.add(array[i]);
+		}
+
+		return set;
+	}
+
 	public static Set<Long> fromArray(long[] array) {
 		if ((array == null) || (array.length == 0)) {
 			return new HashSet<Long>();

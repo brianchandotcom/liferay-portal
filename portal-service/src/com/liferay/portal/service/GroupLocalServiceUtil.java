@@ -1062,6 +1062,14 @@ public class GroupLocalServiceUtil {
 			start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Group> search(
+		long companyId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(companyId, params, start, end);
+	}
+
 	/**
 	* Returns a name ordered range of all the site groups and organization
 	* groups that match the name and description, optionally including the

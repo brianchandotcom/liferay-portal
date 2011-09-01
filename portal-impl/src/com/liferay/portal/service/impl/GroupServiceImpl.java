@@ -423,7 +423,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			userPlaces.addAll(
 				groupLocalService.search(
-					user.getCompanyId(), null, null, groupParams, start, end));
+					user.getCompanyId(), groupParams, start, end));
 		}
 
 		if ((classNames == null) ||

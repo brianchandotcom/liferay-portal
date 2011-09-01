@@ -142,6 +142,21 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByCompanyId">
+		<![CDATA[
+			SELECT
+				Group_.groupId AS groupId, Group_.name AS groupName
+			FROM
+				Group_
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(Group_.companyId = ?) AND
+				(Group_.classNameId = ?) AND
+				(Group_.liveGroupId = 0) AND
+				(Group_.type_ != 4)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_N_D">
 		<![CDATA[
 			SELECT
@@ -176,15 +191,11 @@
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.joinByGroupOrg">
 		<![CDATA[
+			INNER JOIN
+				Users_Orgs ON
+					(Users_Orgs.organizationId = Group_.classPK)
 			WHERE
-				Group_.classPK IN (
-					SELECT
-						organizationId
-					FROM
-						Users_Orgs
-					WHERE
-						userId = ?
-				)
+				(Users_Orgs.userId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.joinByGroupsOrgs">

@@ -58,7 +58,9 @@ public class LiferayStrutsRequestImpl extends HttpServletRequestWrapper {
 	public Object getAttribute(String name) {
 		Object value = null;
 
-		if (name.startsWith(StrutsUtil.STRUTS_PACKAGE)) {
+		if (name.startsWith(StrutsUtil.STRUTS_PACKAGE) &&
+			_strutsAttributes.containsKey(name)) {
+
 			value = _strutsAttributes.get(name);
 		}
 		else {
@@ -66,6 +68,18 @@ public class LiferayStrutsRequestImpl extends HttpServletRequestWrapper {
 		}
 
 		return value;
+	}
+
+	@Override
+	public void removeAttribute(String name) {
+		if (name.startsWith(StrutsUtil.STRUTS_PACKAGE) &&
+			_strutsAttributes.containsKey(name)) {
+
+			_strutsAttributes.remove(name);
+		}
+		else {
+			super.removeAttribute(name);
+		}
 	}
 
 	@Override

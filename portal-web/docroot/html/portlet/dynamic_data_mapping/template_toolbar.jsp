@@ -55,7 +55,9 @@ long structureId = ParamUtil.getLong(request, "structureId");
 		}
 		%>
 
-		<span class="lfr-toolbar-button add-template <%= toolbarItem.equals("add-detail-template") ? "current" : StringPool.BLANK %>"><a href="<%= addEntryURL %>"><liferay-ui:message key="<%= message %>" /></a></span>
+		<span class="lfr-toolbar-button add-template <%= toolbarItem.equals("add-detail-template") ? "current" : StringPool.BLANK %>">
+			<a href="<%= addEntryURL %>"><liferay-ui:message key="<%= message %>" /></a>
+		</span>
 	</c:if>
 
 	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_LIST)) %>">
@@ -74,6 +76,8 @@ long structureId = ParamUtil.getLong(request, "structureId");
 		}
 		%>
 
-		<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>"><a href="<%= addEntryURL %>"><liferay-ui:message key="<%= message %>" /></a></span>
+		<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>">
+			<a href="<%= addEntryURL %>"><liferay-ui:message key="<%= message %>" /></a>
+		</span>
 	</c:if>
 </div>

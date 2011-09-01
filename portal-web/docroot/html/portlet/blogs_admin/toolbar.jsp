@@ -36,7 +36,9 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
-		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>"><a href="<%= addEntryURL %>"><liferay-ui:message key="add" /></a></span>
+		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
+			<a href="<%= addEntryURL %>"><liferay-ui:message key="add" /></a>
+		</span>
 	</c:if>
 
 	<c:if test="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>">

@@ -2491,6 +2491,21 @@ public interface UserLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Updates the user's workflow status.
+	*
+	* @param user the user
+	* @param status the user's new workflow status
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.User updateStatus(
+		com.liferay.portal.model.User user, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Updates the user.
 	*
 	* @param userId the primary key of the user

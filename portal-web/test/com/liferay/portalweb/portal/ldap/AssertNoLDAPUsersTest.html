@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Users</td>
-	<td>Users</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_toggle_id_enterprise_admin_user_searchkeywords']</td>
+	<td>//input[@id='_125_keywords']</td>
 	<td>jane</td>
 </tr>
 <tr>
@@ -45,12 +45,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
 	<td>No users were found.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_toggle_id_enterprise_admin_user_searchkeywords']</td>
+	<td>//input[@id='_125_keywords']</td>
 	<td>luke</td>
 </tr>
 <tr>
@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
 	<td>No users were found.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_toggle_id_enterprise_admin_user_searchkeywords']</td>
+	<td>//input[@id='_125_keywords']</td>
 	<td>martin</td>
 </tr>
 <tr>
@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
 	<td>No users were found.</td>
 </tr>
 

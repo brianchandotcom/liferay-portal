@@ -103,6 +103,7 @@ public class EnableLDAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=LDAP", RuntimeVariables.replace("LDAP"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_130_ldap.auth.enabledCheckbox']"));
 		selenium.saveScreenShotAndSource();

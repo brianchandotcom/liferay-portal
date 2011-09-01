@@ -46,10 +46,10 @@ public class AssertNoLDAPUsersTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		System.out.println("Now testing LDAP integration...");
-		selenium.click(RuntimeVariables.replace("link=Users"));
+		selenium.click(RuntimeVariables.replace("link=Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_125_toggle_id_enterprise_admin_user_searchkeywords']",
+		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("jane"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
@@ -57,8 +57,8 @@ public class AssertNoLDAPUsersTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No users were found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.type("//input[@id='_125_toggle_id_enterprise_admin_user_searchkeywords']",
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("luke"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
@@ -66,8 +66,8 @@ public class AssertNoLDAPUsersTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No users were found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.type("//input[@id='_125_toggle_id_enterprise_admin_user_searchkeywords']",
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("martin"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
@@ -75,6 +75,6 @@ public class AssertNoLDAPUsersTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No users were found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
 	}
 }

@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-body']</td>
+	<td>//section/div/div/div</td>
 	<td>You are signed in as Luke Skywalker.</td>
 </tr>
 <tr>
@@ -94,9 +94,14 @@
 	<td>Luke Skywalker</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//a[2]</td>
 	<td>Luke Skywalker</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_2_userGroupsLink']</td>
+	<td>User Groups</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>

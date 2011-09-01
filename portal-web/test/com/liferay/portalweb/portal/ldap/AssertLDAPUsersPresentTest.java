@@ -45,10 +45,10 @@ public class AssertLDAPUsersPresentTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("link=Users"));
+		selenium.click(RuntimeVariables.replace("link=Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_125_toggle_id_enterprise_admin_user_searchkeywords']",
+		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("jane"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
@@ -62,7 +62,7 @@ public class AssertLDAPUsersPresentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("janesmith"),
 			selenium.getText("//td[4]/a"));
 		assertFalse(selenium.isTextPresent("No users were found."));
-		selenium.type("//input[@id='_125_toggle_id_enterprise_admin_user_searchkeywords']",
+		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("luke"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
@@ -76,7 +76,7 @@ public class AssertLDAPUsersPresentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("lukeskywalker"),
 			selenium.getText("//td[4]/a"));
 		assertFalse(selenium.isTextPresent("No users were found."));
-		selenium.type("//input[@id='_125_toggle_id_enterprise_admin_user_searchkeywords']",
+		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("martin"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",

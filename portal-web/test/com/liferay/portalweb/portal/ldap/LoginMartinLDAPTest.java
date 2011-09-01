@@ -82,11 +82,27 @@ public class LoginMartinLDAPTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Martin Luther."),
-			selenium.getText("//div[@class='portlet-body']"));
+			selenium.getText("//section/div/div/div"));
 		assertEquals(RuntimeVariables.replace("Martin Luther"),
 			selenium.getText("//a[2]"));
 		selenium.clickAt("//a[2]", RuntimeVariables.replace("Martin Luther"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_2_userGroupsLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_2_userGroupsLink']",
 				"User Groups"));

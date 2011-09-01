@@ -62,6 +62,6 @@ public class LoginAdminTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Joe Bloggs."),
-			selenium.getText("//div[@class='portlet-body']"));
+			selenium.getText("//section/div/div/div"));
 	}
 }

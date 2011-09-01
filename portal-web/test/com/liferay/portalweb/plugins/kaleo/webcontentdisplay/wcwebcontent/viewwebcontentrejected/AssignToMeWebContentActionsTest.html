@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -41,7 +41,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
-	<td>Web Content Name</td>
+	<td>WC Web Content Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -49,7 +49,7 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
@@ -59,8 +59,13 @@
 	<td>Never</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -74,7 +79,7 @@
 	<td>Assign to Me</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Assign to Me</td>
 </tr>
@@ -101,7 +106,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
-	<td>Web Content Name</td>
+	<td>WC Web Content Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -109,7 +114,7 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>

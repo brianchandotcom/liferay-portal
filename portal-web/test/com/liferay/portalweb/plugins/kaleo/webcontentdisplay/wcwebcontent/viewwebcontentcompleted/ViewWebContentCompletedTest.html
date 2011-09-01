@@ -15,27 +15,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Web Content Display Page</td>
-	<td></td>
+	<td>link=Web Content Display Test Page</td>
+	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Web Content Display Page</td>
-	<td></td>
+	<td>link=Web Content Display Test Page</td>
+	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
-	<td>Web Content Display</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//p</td>
-	<td>Web Content Content</td>
+	<td>//div[@class='journal-content-article']/p</td>
+	<td>WC Web Content Content</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Web Content Name is not approved.</td>
+	<td>WC Web Content Title is not approved.</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,26 +41,26 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
 	<td>There are no pending tasks assigned to you.</td>
 </tr>
 <tr>
@@ -76,7 +71,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Completed</td>
-	<td></td>
+	<td>Completed</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -86,7 +81,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
-	<td>Web Content Name</td>
+	<td>WC Web Content Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -94,7 +89,7 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>

@@ -262,6 +262,23 @@ public class OpenSSOUtil {
 
 		boolean authenticated = false;
 
+		String[] cookieNames = _getCookieNames(serviceUrl);
+
+		int cookieCount = 0;
+		for (String cookieName : cookieNames) {
+			if (CookieUtil.get(request, cookieName) != null) {
+				cookieCount++;
+			}
+		}
+
+		if (cookieCount == 0) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Request has no SSO cookies. User is not logged in.");
+			}
+
+			return false;
+		}
+
 		String url = serviceUrl + _VALIDATE_TOKEN;
 
 		URL urlObj = new URL(url);
@@ -272,13 +289,6 @@ public class OpenSSOUtil {
 		urlc.setRequestMethod("POST");
 		urlc.setRequestProperty(
 			"Content-type", "application/x-www-form-urlencoded");
-
-		String[] cookieNames = _getCookieNames(serviceUrl);
-
-		if (cookieNames.length == 0) {
-			throw new IOException(
-				"Cookie names from OpenSSO service are not accessible");
-		}
 
 		_setCookieProperty(request, urlc, cookieNames);
 

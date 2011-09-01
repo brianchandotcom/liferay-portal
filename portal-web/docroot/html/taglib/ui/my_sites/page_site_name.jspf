@@ -15,5 +15,5 @@
 --%>
 
 <span class="site-name">
-	<%= siteName %>
+	<%= HtmlUtil.escape(siteName) %>
 </span>

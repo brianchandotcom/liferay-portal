@@ -81,12 +81,13 @@ public class PluginPackageIndexer extends BaseIndexer {
 
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.ENTRY_CLASS_NAME,
-			PluginPackage.class.getName());
-
 		document.addUID(PORTLET_ID, pluginPackage.getModuleId());
 
 		document.addKeyword(Field.COMPANY_ID, CompanyConstants.SYSTEM);
+
+		document.addKeyword(
+			Field.ENTRY_CLASS_NAME, PluginPackage.class.getName());
+		document.addKeyword(Field.ENTRY_CLASS_PK, pluginPackage.getModuleId());
 
 		StringBundler sb = new StringBundler(7);
 

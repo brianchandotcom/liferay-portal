@@ -793,6 +793,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		serviceContext.setAttribute("autoPassword", autoPassword);
 		serviceContext.setAttribute("sendEmail", sendEmail);
+		serviceContext.setAttribute("workflow_user", user);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			companyId, workflowUserId, User.class.getName(), userId, user,
@@ -4416,6 +4417,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		return updateStatus(user, status);
+	}
+
+	/**
+	 * Updates the user's workflow status.
+	 *
+	 * @param  user the user
+	 * @param  status the user's new workflow status
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User updateStatus(User user, int status)
+		throws PortalException, SystemException {
 
 		boolean oldActive = user.isActive();
 

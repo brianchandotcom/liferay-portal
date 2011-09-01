@@ -882,14 +882,6 @@
 		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>Dynamic CSS Filter</filter-name>
-		<url-pattern>*.css</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>Dynamic CSS Filter - JSP</filter-name>
-		<url-pattern>*.jsp</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
 		<filter-name>Minifier Filter</filter-name>
 		<url-pattern>*.css</url-pattern>
 	</filter-mapping>
@@ -899,6 +891,14 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Minifier Filter - JSP</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Dynamic CSS Filter</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Dynamic CSS Filter - JSP</filter-name>
 		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 	<filter-mapping>

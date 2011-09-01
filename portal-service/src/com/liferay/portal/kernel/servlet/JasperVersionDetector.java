@@ -38,9 +38,7 @@ public class JasperVersionDetector {
 			return _jasperVersion;
 		}
 
-		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-
-		URL url = classLoader.getResource(
+		URL url = JasperVersionDetector.class.getResource(
 			"/org/apache/jasper/JasperException.class");
 
 		if (url == null) {

@@ -839,7 +839,14 @@ public class SourceFormatter {
 			}
 
 			if (!newContent.contains(copyright)) {
-				_sourceFormatterHelper.printError(fileName, "(c): " + fileName);
+				String customizedCopyright = _getCustomizedCopyright(file);
+
+				if (Validator.isNull(customizedCopyright) ||
+					!newContent.contains(customizedCopyright)) {
+
+					_sourceFormatterHelper.printError(
+						fileName, "(c): " + fileName);
+				}
 			}
 
 			if (newContent.contains(className + ".java.html")) {
@@ -1134,8 +1141,19 @@ public class SourceFormatter {
 				}
 
 				if (!newContent.contains(copyright)) {
-					_sourceFormatterHelper.printError(
-						fileName, "(c): " + fileName);
+					String customizedCopyright = _getCustomizedCopyright(file);
+
+					if (Validator.isNull(customizedCopyright) ||
+						!newContent.contains(customizedCopyright)) {
+
+						_sourceFormatterHelper.printError(
+							fileName, "(c): " + fileName);
+					}
+					else {
+						newContent = StringUtil.replace(
+							newContent, "<%\n" + customizedCopyright + "\n%>",
+							"<%--\n" + customizedCopyright + "\n--%>");
+					}
 				}
 				else {
 					newContent = StringUtil.replace(
@@ -1448,12 +1466,38 @@ public class SourceFormatter {
 	private static String _getCopyright() throws IOException {
 		String copyright = _fileUtil.read("copyright.txt");
 
-		if (copyright == null) {
+		if (Validator.isNull(copyright)) {
 			copyright = _fileUtil.read("../copyright.txt");
 		}
 
-		if (copyright == null) {
+		if (Validator.isNull(copyright)) {
 			copyright = _fileUtil.read("../../copyright.txt");
+		}
+
+		return copyright;
+	}
+
+	private static String _getCustomizedCopyright(File file)
+		throws IOException {
+
+		String absolutePath = _fileUtil.getAbsolutePath(file);
+		String copyright = null;
+
+		for (int x = absolutePath.length();;) {
+			x = absolutePath.lastIndexOf(StringPool.SLASH, x);
+
+			if (x == -1) {
+				break;
+			}
+
+			copyright = _fileUtil.read(
+				absolutePath.substring(0, x + 1) + "copyright.txt");
+
+			if (Validator.isNotNull(copyright)) {
+				return copyright;
+			}
+
+			x = x - 1;
 		}
 
 		return copyright;
@@ -1488,11 +1532,11 @@ public class SourceFormatter {
 	private static String _getOldCopyright() throws IOException {
 		String copyright = _fileUtil.read("old-copyright.txt");
 
-		if (copyright == null) {
+		if (Validator.isNull(copyright)) {
 			copyright = _fileUtil.read("../old-copyright.txt");
 		}
 
-		if (copyright == null) {
+		if (Validator.isNull(copyright)) {
 			copyright = _fileUtil.read("../../old-copyright.txt");
 		}
 

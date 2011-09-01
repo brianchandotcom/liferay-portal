@@ -220,7 +220,10 @@ public class SourceFormatter {
 					"Invalid include " + includeFileName);
 			}
 
-			includeFileName = "portal-web/docroot" + includeFileName;
+			String docrootPath = fileName.substring(
+				0, fileName.indexOf("docroot") + 7);
+
+			includeFileName = docrootPath + includeFileName;
 
 			if ((includeFileName.endsWith("jsp") ||
 				 includeFileName.endsWith("jspf")) &&
@@ -1724,7 +1727,10 @@ public class SourceFormatter {
 
 		String includeFileName = content.substring(x + 1, y);
 
-		includeFileName = "portal-web/docroot" + includeFileName;
+		String docrootPath = fileName.substring(
+			0, fileName.indexOf("docroot") + 7);
+
+		includeFileName = docrootPath + includeFileName;
 
 		return _isJSPDuplicateImport(includeFileName, importLine, true);
 	}
@@ -1756,8 +1762,10 @@ public class SourceFormatter {
 
 		_addJSPIncludeFileNames(fileName, includeFileNames);
 
-		fileName = fileName.replaceFirst(
-			"portal-web/docroot", StringPool.BLANK);
+		String docrootPath = fileName.substring(
+			0, fileName.indexOf("docroot") + 7);
+
+		fileName = fileName.replaceFirst(docrootPath, StringPool.BLANK);
 
 		if (fileName.endsWith("init.jsp") ||
 			fileName.contains("init-ext.jsp")) {
@@ -1838,7 +1846,7 @@ public class SourceFormatter {
 
 		if (fileName.endsWith("html/common/init.jsp") ||
 			fileName.endsWith("html/portal/init.jsp") ||
-			!fileName.startsWith("portal-web/docroot")) {
+			!fileName.contains("docroot")) {
 
 			return content;
 		}

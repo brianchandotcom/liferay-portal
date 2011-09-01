@@ -40,10 +40,10 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.FileTimeStampUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
@@ -185,7 +185,6 @@ import com.liferay.util.PwdGenerator;
 import com.liferay.util.UniqueList;
 import com.liferay.util.servlet.DynamicServletRequest;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -3436,7 +3435,7 @@ public class PortalImpl implements Portal {
 		HttpServletRequest request, String uri, String queryString,
 		long timestamp) {
 
-		if (uri.contains(StringPool.QUESTION)) {
+		if (uri.indexOf(CharPool.QUESTION) != -1) {
 			return uri;
 		}
 
@@ -3541,16 +3540,7 @@ public class PortalImpl implements Portal {
 				ServletContext servletContext =
 					(ServletContext)request.getAttribute(WebKeys.CTX);
 
-				String uriRealPath = ServletContextUtil.getRealPath(
-					servletContext, uri);
-
-				if (uriRealPath != null) {
-					File uriFile = new File(uriRealPath);
-
-					if (uriFile.exists()) {
-						timestamp = uriFile.lastModified();
-					}
-				}
+				timestamp = FileTimeStampUtil.getTimeStamp(servletContext, uri);
 			}
 
 			if (timestamp == 0) {

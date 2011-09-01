@@ -10,57 +10,47 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/document-library-document-community/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_134_name</td>
-	<td>Document Library Document Community</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
-	<td>Open</td>
+	<td>waitForVisible</td>
+	<td>link=Document Library Page</td>
+	<td>Document Library Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Document Library Page</td>
-	<td></td>
+	<td>Document Library Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>clickAt</td>
+	<td>//div/a/span[2]</td>
 	<td>Test1 Folder1</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//a/span/span</td>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/a/span[2]</td>
 	<td>Test1 Document1.txt</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/div</td>
+	<td>//div/a/span[2]</td>
+	<td>Test1 Document1.txt</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/a/span[2]</td>
+	<td>Test1 Document1.txt</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[1]/span[4]</td>
 	<td>This is test1 document1.</td>
 </tr>
 

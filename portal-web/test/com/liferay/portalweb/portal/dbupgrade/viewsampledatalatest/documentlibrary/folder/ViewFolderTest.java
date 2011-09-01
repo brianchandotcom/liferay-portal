@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewFolderTest extends BaseTestCase {
 	public void testViewFolder() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/document-library-folder-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Document Library Page")) {
 					break;
 				}
 			}
@@ -41,24 +41,8 @@ public class ViewFolderTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Document Library Folder Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Document Library Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -68,9 +52,7 @@ public class ViewFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Test1 Folder1")
-										.equals(selenium.getText(
-								"//a[2]/strong"))) {
+				if (selenium.isVisible("//div/a/span[2]")) {
 					break;
 				}
 			}
@@ -82,6 +64,6 @@ public class ViewFolderTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
-			selenium.getText("//a[2]/strong"));
+			selenium.getText("//div/a/span[2]"));
 	}
 }

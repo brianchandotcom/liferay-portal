@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewWebContentImageAssociationTest extends BaseTestCase {
 	public void testViewWebContentImageAssociation() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/web-content-image-association-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewWebContentImageAssociationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Web Content Display Page")) {
 					break;
 				}
 			}
@@ -41,25 +41,8 @@ public class ViewWebContentImageAssociationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Web Content Image Association Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[1]/a",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Text Test"),

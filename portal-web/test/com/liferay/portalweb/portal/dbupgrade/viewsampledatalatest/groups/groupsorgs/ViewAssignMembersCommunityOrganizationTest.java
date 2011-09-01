@@ -31,7 +31,7 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -46,8 +46,7 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_134_name']",
@@ -59,9 +58,6 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Community Groups Orgs"),
 			selenium.getText("//tr[3]/td[1]"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -69,8 +65,7 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+				if (selenium.isVisible("//td[7]/span/ul/li/strong/a/span")) {
 					break;
 				}
 			}
@@ -81,20 +76,41 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Assign Members"),
+		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Manage Memberships"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Organizations"),
-			selenium.getText("//li[2]/span/span/a"));
-		selenium.clickAt("//li[2]/span/span/a",
+			selenium.getText("link=Organizations"));
+		selenium.clickAt("link=Organizations",
 			RuntimeVariables.replace("Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isChecked("//input[@name='_134_rowIds']"));
+		assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Organization Groups Orgs"),
 			selenium.getText("//tr[3]/td[2]"));

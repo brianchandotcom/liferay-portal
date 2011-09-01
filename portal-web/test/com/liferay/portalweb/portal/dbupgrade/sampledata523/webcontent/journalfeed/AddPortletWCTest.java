@@ -90,7 +90,7 @@ public class AddPortletWCTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//td[1]/div/div[1]/div")) {
+				if (selenium.isVisible("//td[1]/div/div/div")) {
 					break;
 				}
 			}
@@ -101,6 +101,6 @@ public class AddPortletWCTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//td[1]/div/div[1]/div"));
+		assertTrue(selenium.isVisible("//td[1]/div/div/div"));
 	}
 }

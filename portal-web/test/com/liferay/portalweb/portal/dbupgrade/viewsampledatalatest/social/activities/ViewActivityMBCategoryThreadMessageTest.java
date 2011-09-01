@@ -31,7 +31,7 @@ public class ViewActivityMBCategoryThreadMessageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Activities Page")) {
+				if (selenium.isVisible("link=Activities Page")) {
 					break;
 				}
 			}
@@ -42,7 +42,8 @@ public class ViewActivityMBCategoryThreadMessageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Activities Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Activities Page",
+			RuntimeVariables.replace("Activities Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

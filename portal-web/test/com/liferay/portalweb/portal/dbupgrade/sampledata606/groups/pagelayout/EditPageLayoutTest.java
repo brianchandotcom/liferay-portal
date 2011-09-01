@@ -63,9 +63,9 @@ public class EditPageLayoutTest extends BaseTestCase {
 		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
 		selenium.clickAt("navigation", RuntimeVariables.replace(""));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='column-1' and @class='yui3-aui-w30 portlet-column portlet-column-first yui3-aui-dd-drop']"));
+				"//div[@id='column-1' and @class='aui-w30 portlet-column portlet-column-first aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='column-2' and @class='yui3-aui-w70 portlet-column portlet-column-last yui3-aui-dd-drop']"));
+				"//div[@id='column-2' and @class='aui-w70 portlet-column portlet-column-last aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));
 		selenium.clickAt("pageTemplate", RuntimeVariables.replace("Page Layout"));
 
 		for (int second = 0;; second++) {
@@ -94,18 +94,18 @@ public class EditPageLayoutTest extends BaseTestCase {
 		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
 		selenium.clickAt("navigation", RuntimeVariables.replace(""));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='column-1' and @class='yui3-aui-w50 portlet-column portlet-column-first yui3-aui-dd-drop']"));
+				"//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first aui-dd-drop']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='column-2' and @class='yui3-aui-w50 portlet-column portlet-column-last yui3-aui-dd-drop']"));
+				"//div[@id='column-2' and @class='aui-w50 portlet-column portlet-column-last aui-dd-drop']"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb"),
 			selenium.getText(
-				"//div[@id='column-1' and @class='yui3-aui-w50 portlet-column portlet-column-first yui3-aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));
+				"//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Navigation"),
 			selenium.getText(
-				"//div[@id='column-2' and @class='yui3-aui-w50 portlet-column portlet-column-last yui3-aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));
+				"//div[@id='column-2' and @class='aui-w50 portlet-column portlet-column-last aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));
 		assertFalse(selenium.isElementPresent(
-				"//div[@id='column-1' and @class='yui3-aui-w30 portlet-column portlet-column-first yui3-aui-dd-drop']"));
+				"//div[@id='column-1' and @class='aui-w30 portlet-column portlet-column-first aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));
 		assertFalse(selenium.isElementPresent(
-				"//div[@id='column-2' and @class='yui3-aui-w70 portlet-column portlet-column-last yui3-aui-dd-drop']"));
+				"//div[@id='column-2' and @class='aui-w70 portlet-column portlet-column-last aui-dd-drop']/div[1]/div[1]/section/header/h1/span[2]"));
 	}
 }

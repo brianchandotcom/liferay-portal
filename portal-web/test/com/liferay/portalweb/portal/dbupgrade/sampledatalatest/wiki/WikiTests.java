@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.UseCaseTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.wikipage.WikiPageTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,9 +28,9 @@ public class WikiTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(UseCaseTests.suite());
+		testSuite.addTest(WikiPageTests.suite());
 
 		return testSuite;
-	}
+ 	}
 
 }

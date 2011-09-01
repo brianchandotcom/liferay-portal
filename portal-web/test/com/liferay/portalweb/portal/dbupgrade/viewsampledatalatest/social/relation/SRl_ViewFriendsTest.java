@@ -48,6 +48,6 @@ public class SRl_ViewFriendsTest extends BaseTestCase {
 			selenium.getText("//section/div/div/div/div[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"socialrelationfn2 socialrelationmn2 socialrelationln2"),
-			selenium.getText("//a[@class='user-name']"));
+			selenium.getText("//span[@class='user-name']"));
 	}
 }

@@ -110,7 +110,8 @@ public class ConfigurePortletScopeCurrentPageTest extends BaseTestCase {
 		selenium.select("_86_scopeLayoutUuid",
 			RuntimeVariables.replace(
 				"label=Current Page (Blogs Page Scope Current Page)"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//form[@id='_86_fm']/div/span/span/input",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

@@ -63,51 +63,6 @@
 	<td>//input[@value='Sign In']</td>
 	<td>Sign In</td>
 </tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span/input'))</td>
-	<td>iAgreePresent</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${iAgreePresent}</td>
-	<td>IAgreeNotPresent</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='I Agree']</td>
-	<td>I Agree</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='I Agree']</td>
-	<td>I Agree</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>reminderQueryAnswer</td>
-	<td>Answer</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>reminderQueryAnswer</td>
-	<td>Test</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>IAgreeNotPresent</td>
-	<td></td>
-</tr>
 
 </tbody></table>
 </body>

@@ -14,69 +14,49 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Organizations</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>BasicNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>BasicNotVisible</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_keywords</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>Sample</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//ul[@class='lfr-component lfr-actions right&nbsp;&nbsp;show-arrow']/li/strong/a</td>
+	<td>clickAt</td>
+	<td>//td[4]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Assign Members</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Assign Members</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Assign Members</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -94,49 +74,59 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Organizations</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_keywords</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>Sample</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//ul[@class='lfr-component lfr-actions right show-arrow']/li/strong/a</td>
-	<td>Actions</td>
+	<td>clickAt</td>
+	<td>//div[1]/span[1]/ul/li/strong/a/span</td>
+	<td>View</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>View Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>All Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>View Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>All Users</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
-	<td>View Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>All Users</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>Joe</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -159,19 +149,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>assertText</td>
 	<td>//tr[@class='portlet-section-body results-row last']/td[6]</td>
-	<td>Liferay Los Angeles</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//tr[@class='portlet-section-body results-row last']/td[6]</td>
-	<td>Liferay, Inc.</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//tr[@class='portlet-section-body results-row last']/td[6]</td>
-	<td>Organization Sample Test</td>
+	<td>Liferay Los Angeles, Liferay, Inc., Organization Sample Test</td>
 </tr>
 
 </tbody></table>

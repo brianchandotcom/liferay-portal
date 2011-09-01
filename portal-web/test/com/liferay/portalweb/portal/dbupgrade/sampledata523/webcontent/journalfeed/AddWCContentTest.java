@@ -131,7 +131,7 @@ public class AddWCContentTest extends BaseTestCase {
 		selenium.selectFrame("//iframe[@id=\"_15_editor\"]");
 		selenium.selectFrame("//iframe[@id=\"FCKeditor1___Frame\"]");
 		selenium.selectFrame("//iframe");
-		selenium.type("//body", RuntimeVariables.replace("Web Content Body"));
+		selenium.type("//body", RuntimeVariables.replace("Web Content Content"));
 		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save and Approve']",

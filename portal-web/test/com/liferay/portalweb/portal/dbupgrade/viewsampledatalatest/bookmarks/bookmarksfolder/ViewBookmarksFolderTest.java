@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewBookmarksFolderTest extends BaseTestCase {
 	public void testViewBookmarksFolder() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/bookmarks-folder-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewBookmarksFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Bookmarks Entry Page")) {
 					break;
 				}
 			}
@@ -41,24 +41,8 @@ public class ViewBookmarksFolderTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Bookmarks Folder Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Open"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
+		selenium.clickAt("link=Bookmarks Entry Page",
+			RuntimeVariables.replace("Bookmarks Entry Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Bookmarks Folder Name"),

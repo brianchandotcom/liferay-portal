@@ -1833,19 +1833,24 @@ public class SourceFormatter {
 
 		imports = _formatImports(imports, 17);
 
+		String beforeImports = content.substring(0, matcher.start());
+
+		if (Validator.isNull(imports)) {
+			beforeImports = StringUtil.replaceLast(
+				beforeImports, "\n", StringPool.BLANK);
+		}
+
 		String afterImports = content.substring(matcher.end());
 
 		if (Validator.isNull(afterImports)) {
 			imports = StringUtil.replaceLast(imports, "\n", StringPool.BLANK);
 
-			content = content.substring(0, matcher.start()) + imports;
+			content = beforeImports + imports;
 
 			return content;
 		}
 
-		content =
-			content.substring(0, matcher.start()) + imports + "\n" +
-				afterImports;
+		content = beforeImports + imports + "\n" + afterImports;
 
 		return content;
 	}

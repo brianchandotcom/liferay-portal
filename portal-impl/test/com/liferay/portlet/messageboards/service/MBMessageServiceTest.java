@@ -64,7 +64,7 @@ public class MBMessageServiceTest extends BaseServiceTestCase {
 		boolean mailingListActive = false;
 
 		Group group = GroupLocalServiceUtil.getGroup(
-			TestPropsValues.COMPANY_ID, GroupConstants.GUEST);
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
 
 		ServiceContext serviceContext = new ServiceContext();
 

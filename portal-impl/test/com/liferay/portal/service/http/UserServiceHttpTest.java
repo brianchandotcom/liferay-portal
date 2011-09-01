@@ -35,14 +35,15 @@ public class UserServiceHttpTest extends BaseServiceHttpTestCase {
 	public void testDeleteUser() throws Exception {
 		User user = addUser();
 
-		UserServiceHttp.deleteUser(getHttpPrincipal(), user.getUserId());
+		UserServiceHttp.deleteUser(
+			getHttpPrincipal(user.getUserId()), user.getUserId());
 	}
 
 	public void testGetUser() throws Exception {
 		User user = addUser();
 
 		UserServiceHttp.getUserByEmailAddress(
-			getHttpPrincipal(), TestPropsValues.COMPANY_ID,
+			getHttpPrincipal(user.getUserId()), TestPropsValues.getCompanyId(),
 			user.getEmailAddress());
 	}
 
@@ -76,12 +77,12 @@ public class UserServiceHttpTest extends BaseServiceHttpTestCase {
 		ServiceContext serviceContext = new ServiceContext();
 
 		return UserServiceHttp.addUser(
-			getHttpPrincipal(), TestPropsValues.COMPANY_ID, autoPassword,
-			password1, password2, autoScreenName, screenName, emailAddress,
-			facebookId, openId, locale, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-			sendMail, serviceContext);
+			getHttpPrincipal(TestPropsValues.getUserId()),
+			TestPropsValues.getCompanyId(), autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
 	}
 
 }

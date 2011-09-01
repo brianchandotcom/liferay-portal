@@ -14,6 +14,8 @@
 
 package com.liferay.portal.repository;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -21,9 +23,12 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -70,9 +75,7 @@ public class RepositoryTest extends TestCase {
 
 		RepositoryServiceUtil.unmountRepositories(getGroupId());
 
-		for (int i = 0; i < repositoryIds.length; i++) {
-			long repositoryId = repositoryIds[i];
-
+		for (long repositoryId : repositoryIds) {
 			try {
 				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
 
@@ -119,7 +122,7 @@ public class RepositoryTest extends TestCase {
 					".txt";
 
 			FileEntry fileEntry1 = localRepository.addFileEntry(
-				TestPropsValues.USER_ID,
+				TestPropsValues.getUserId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name1,
 				ContentTypes.TEXT_PLAIN, name1, StringPool.BLANK,
 				StringPool.BLANK, inputStream, _TEST_CONTENT.length(),
@@ -128,7 +131,7 @@ public class RepositoryTest extends TestCase {
 			fileEntryIds[i] = fileEntry1.getFileEntryId();
 
 			Folder folder = localRepository.addFolder(
-				TestPropsValues.USER_ID,
+				TestPropsValues.getUserId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				String.valueOf(repositoryId), String.valueOf(repositoryId),
 				new ServiceContext());
@@ -138,7 +141,7 @@ public class RepositoryTest extends TestCase {
 			String name2 = String.valueOf(folderIds[i]) + ".txt";
 
 			FileEntry fileEntry2 = localRepository.addFileEntry(
-				TestPropsValues.USER_ID, folderIds[i], name2,
+				TestPropsValues.getUserId(), folderIds[i], name2,
 				ContentTypes.TEXT_PLAIN, name2, StringPool.BLANK,
 				StringPool.BLANK, inputStream, _TEST_CONTENT.length(),
 				new ServiceContext());
@@ -183,15 +186,13 @@ public class RepositoryTest extends TestCase {
 		}
 	}
 
-	protected static long getGroupId() throws Exception {
-		if (_groupId == 0) {
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				TestPropsValues.LAYOUT_PLID);
+	protected static long getGroupId() throws PortalException, SystemException {
+		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
+			TestPropsValues.COMPANY_WEB_ID);
+		Group group = GroupLocalServiceUtil.getGroup(
+			company.getCompanyId(), GroupConstants.GUEST);
 
-			_groupId = layout.getGroupId();
-		}
-
-		return _groupId;
+		return group.getGroupId();
 	}
 
 	private static final String _TEST_CONTENT =

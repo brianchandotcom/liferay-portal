@@ -44,7 +44,7 @@ public class UserServiceTest extends BaseServiceTestCase {
 		User user = addUser();
 
 		UserServiceUtil.getUserByEmailAddress(
-			TestPropsValues.COMPANY_ID, user.getEmailAddress());
+			TestPropsValues.getCompanyId(), user.getEmailAddress());
 	}
 
 	protected User addUser() throws Exception {
@@ -76,7 +76,7 @@ public class UserServiceTest extends BaseServiceTestCase {
 		ServiceContext serviceContext = new ServiceContext();
 
 		return UserServiceUtil.addUser(
-			TestPropsValues.COMPANY_ID, autoPassword, password1, password2,
+			TestPropsValues.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,

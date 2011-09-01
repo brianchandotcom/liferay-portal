@@ -75,13 +75,18 @@ public class ServiceTestUtil {
 
 		InitUtil.initWithSpring();
 
-		PortalInstances.addCompanyId(TestPropsValues.COMPANY_ID);
-
-		PrincipalThreadLocal.setName(TestPropsValues.USER_ID);
+		try {
+			PortalInstances.addCompanyId(TestPropsValues.getCompanyId());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		try {
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 			User user = UserLocalServiceUtil.getUserById(
-				TestPropsValues.USER_ID);
+				TestPropsValues.getUserId());
 
 			PermissionChecker permissionChecker =
 				PermissionCheckerFactoryUtil.create(user, true);
@@ -155,6 +160,16 @@ public class ServiceTestUtil {
 			e.printStackTrace();
 		}
 
+		try {
+			CompanyLocalServiceUtil.addCompany(
+				TestPropsValues.COMPANY_WEB_ID, TestPropsValues.COMPANY_WEB_ID,
+				TestPropsValues.COMPANY_WEB_ID, PropsValues.SHARD_DEFAULT_NAME,
+				true, 0, true, false);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		// Resource actions
 
 		try {
@@ -190,7 +205,7 @@ public class ServiceTestUtil {
 		}
 
 		WebAppPool.put(
-			TestPropsValues.COMPANY_ID,	WebKeys.PORTLET_CATEGORY,
+			TestPropsValues.getCompanyId(),	WebKeys.PORTLET_CATEGORY,
 			new PortletCategory());
 
 		for (int i = 0; i < 200; i++) {
@@ -199,7 +214,7 @@ public class ServiceTestUtil {
 			Portlet portlet = new PortletImpl();
 
 			portlet.setPortletId(portletId);
-			portlet.setCompanyId(TestPropsValues.COMPANY_ID);
+			portlet.setCompanyId(TestPropsValues.getCompanyId());
 			portlet.setPortletModes(new HashMap<String, Set<String>>());
 
 			PortletLocalServiceUtil.deployRemotePortlet(

@@ -17,7 +17,6 @@ package com.liferay.portalweb.portal.util;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.ThemeServiceHttp;
-import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class ThemeIds {
 				List<String> themeIds = new ArrayList<String>();
 
 				List<Theme> themes = ThemeServiceHttp.getThemes(
-					httpPrincipal, TestPropsValues.COMPANY_ID);
+					httpPrincipal, TestPropsValues.getCompanyId());
 
 				for (Theme theme : themes) {
 					if (!theme.isWapTheme()) {

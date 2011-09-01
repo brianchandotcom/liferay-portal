@@ -84,22 +84,85 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			boolean system, int maxUsers, boolean active)
 		throws PortalException, SystemException {
 
+		return addCompany(
+			webId, virtualHostname, mx, shardName, system, maxUsers, active,
+			true);
+	}
+
+	public Company addCompany(
+			String webId, String virtualHostname, String mx, String shardName,
+			boolean system, int maxUsers, boolean active,
+			boolean checkCompany)
+		throws PortalException, SystemException {
+
 		// Company
 
 		virtualHostname = virtualHostname.trim().toLowerCase();
 
 		if ((Validator.isNull(webId)) ||
-			(webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) ||
-			(companyPersistence.fetchByWebId(webId) != null)) {
+			((webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) &&
+			 (companyPersistence.fetchByWebId(webId) != null))) {
 
 			throw new CompanyWebIdException();
 		}
 
 		validate(webId, virtualHostname, mx);
 
-		Company company = checkCompany(webId, mx, shardName);
+		Company company = null;
 
-		company.setMx(mx);
+		if (!checkCompany) {
+			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+				virtualHostname = _DEFAULT_VIRTUAL_HOST;
+			}
+
+			String homeURL = null;
+			String name = webId;
+			String legalName = null;
+			String legalId = null;
+			String legalType = null;
+			String sicCode = null;
+			String tickerSymbol = null;
+			String industry = null;
+			String type = null;
+			String size = null;
+
+			long companyId = counterLocalService.increment();
+
+			company = companyPersistence.create(companyId);
+
+			try {
+				company.setKeyObj(Encryptor.generateKey());
+			}
+			catch (EncryptorException ee) {
+				throw new SystemException(ee);
+			}
+
+			company.setWebId(webId);
+			company.setMx(mx);
+			company.setActive(true);
+
+			companyPersistence.update(company, false);
+
+			// Shard
+
+			shardLocalService.addShard(
+				Company.class.getName(), companyId, shardName);
+
+			// Company
+
+			updateCompany(
+				companyId, virtualHostname, mx, homeURL, name, legalName,
+				legalId, legalType, sicCode, tickerSymbol, industry, type,
+				size);
+
+			// Virtual host
+
+			updateVirtualHost(companyId, virtualHostname);
+		}
+		else {
+			company = checkCompany(webId, mx, shardName);
+		}
+
 		company.setSystem(system);
 		company.setMaxUsers(maxUsers);
 		company.setActive(active);

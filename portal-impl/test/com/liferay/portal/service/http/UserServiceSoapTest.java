@@ -43,7 +43,7 @@ public class UserServiceSoapTest extends BaseServiceSoapTestCase {
 		UserSoap user = addUser();
 
 		getUserServiceSoap().getUserByEmailAddress(
-			TestPropsValues.COMPANY_ID, user.getEmailAddress());
+			TestPropsValues.getCompanyId(), user.getEmailAddress());
 	}
 
 	protected UserSoap addUser() throws Exception {
@@ -75,7 +75,7 @@ public class UserServiceSoapTest extends BaseServiceSoapTestCase {
 		ServiceContext serviceContext = new ServiceContext();
 
 		return getUserServiceSoap().addUser(
-			TestPropsValues.COMPANY_ID, autoPassword,
+			TestPropsValues.getCompanyId(), autoPassword,
 			password1, password2, autoScreenName, screenName, emailAddress,
 			facebookId, openId, locale, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
@@ -88,7 +88,7 @@ public class UserServiceSoapTest extends BaseServiceSoapTestCase {
 			new UserServiceSoapServiceLocator();
 
 		UserServiceSoap service = locator.getPortal_UserService(
-			getURL("Portal_UserService"));
+			getURL(TestPropsValues.getUserId(), "Portal_UserService"));
 
 		return service;
 	}

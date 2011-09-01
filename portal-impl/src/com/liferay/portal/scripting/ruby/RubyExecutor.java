@@ -78,11 +78,11 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 		_loadPaths = new ArrayList<String>(3);
 
-		_loadPaths.add("META-INF/jruby.home/lib/ruby/1.8");
+		// Order of load paths matters
+
 		_loadPaths.add("META-INF/jruby.home/lib/ruby/site_ruby/1.8");
-		_loadPaths.add(
-			"file:" + _basePath +
-				"WEB-INF/lib/ruby-gems.jar!/gems/haml-3.0.25/lib");
+		_loadPaths.add("META-INF/jruby.home/lib/ruby/site_ruby/shared");
+		_loadPaths.add("META-INF/jruby.home/lib/ruby/1.8");
 
 		rubyInstanceConfig.setLoadPaths(_loadPaths);
 

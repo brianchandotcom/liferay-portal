@@ -50,20 +50,24 @@ public class SearchUserGroupQuotesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_11_name']",
-			RuntimeVariables.replace("\"Test User Group\""));
+			RuntimeVariables.replace("\"User Group Name\""));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Test User Group"));
+		assertEquals(RuntimeVariables.replace("User Group Name"),
+			selenium.getText("//tr[3]/td[1]"));
+		assertEquals(RuntimeVariables.replace("User Group Description"),
+			selenium.getText("//tr[3]/td[2]"));
 		selenium.type("//input[@id='_11_name']",
-			RuntimeVariables.replace("\"Test1 User1 Group1\""));
+			RuntimeVariables.replace("\"User1 Group1 Name1\""));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("Test User Group"));
+		assertFalse(selenium.isTextPresent("User Group Name"));
+		assertFalse(selenium.isTextPresent("User Group Description"));
 	}
 }

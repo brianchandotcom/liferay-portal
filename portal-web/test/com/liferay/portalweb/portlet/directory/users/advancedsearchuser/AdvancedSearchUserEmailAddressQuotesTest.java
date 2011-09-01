@@ -51,6 +51,9 @@ public class AdvancedSearchUserEmailAddressQuotesTest extends BaseTestCase {
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				selenium.clickAt("link=Users", RuntimeVariables.replace("Users"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -85,33 +88,33 @@ public class AdvancedSearchUserEmailAddressQuotesTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
-					RuntimeVariables.replace("label=Any"));
+					RuntimeVariables.replace("Any"));
 				selenium.type("//input[@id='_11_emailAddress']",
-					RuntimeVariables.replace("\"testemail1@liferay.com\""));
+					RuntimeVariables.replace("\"userea@liferay.com\""));
 				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
-						"//div[2]/span[2]/span/input"));
+						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_11_emailAddress']",
 					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isElementPresent("link=TestFirst1"));
+				assertTrue(selenium.isElementPresent("link=userfn"));
 				selenium.type("//input[@id='_11_emailAddress']",
-					RuntimeVariables.replace("\"testemail1liferay.com\""));
+					RuntimeVariables.replace("\"userea1@liferay.com\""));
 				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
-						"//div[2]/span[2]/span/input"));
+						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
-					RuntimeVariables.replace("label=All"));
+					RuntimeVariables.replace("All"));
 				selenium.type("//input[@id='_11_emailAddress']",
 					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=\u00ab Basic",
 					RuntimeVariables.replace("\u00ab Basic"));
-				assertFalse(selenium.isTextPresent("TestFirst1"));
+				assertFalse(selenium.isTextPresent("userfn"));
 
 			case 100:
 				label = -1;

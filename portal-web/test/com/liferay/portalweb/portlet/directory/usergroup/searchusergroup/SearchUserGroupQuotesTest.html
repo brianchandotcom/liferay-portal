@@ -31,7 +31,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_11_name']</td>
-	<td>"Test User Group"</td>
+	<td>"User Group Name"</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -39,14 +39,19 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Test User Group</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]</td>
+	<td>User Group Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]</td>
+	<td>User Group Description</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_11_name']</td>
-	<td>"Test1 User1 Group1"</td>
+	<td>"User1 Group1 Name1"</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -55,7 +60,12 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test User Group</td>
+	<td>User Group Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>User Group Description</td>
 	<td></td>
 </tr>
 

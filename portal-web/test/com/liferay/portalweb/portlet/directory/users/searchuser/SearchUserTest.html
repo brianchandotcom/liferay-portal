@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Directory Test Page</td>
-	<td></td>
+	<td>Directory Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Directory Test Page</td>
-	<td></td>
+	<td>Directory Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Users</td>
-	<td></td>
+	<td>Users</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -41,7 +41,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
-	<td></td>
+	<td>« Basic</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -50,32 +50,42 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_11_keywords</td>
-	<td>TestFirst</td>
+	<td>//input[@name='_11_keywords']</td>
+	<td>userfn</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_11_keywords']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=TestFirst1</td>
-	<td></td>
+	<td>link=userfn</td>
+	<td>userfn</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_11_keywords</td>
-	<td>TestFirstA</td>
+	<td>//input[@name='_11_keywords']</td>
+	<td>userfn1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_11_keywords']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>TestFirst1</td>
+	<td>userfn</td>
 	<td></td>
 </tr>
 

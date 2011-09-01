@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Directory Test Page</td>
-	<td></td>
+	<td>Directory Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Directory Test Page</td>
-	<td></td>
+	<td>Directory Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Organizations</td>
-	<td></td>
+	<td>Organizations</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -41,7 +41,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
-	<td></td>
+	<td>Advanced »</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -50,93 +50,113 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_11_andOperator</td>
+	<td>//select[@id='_11_andOperator']</td>
 	<td>Match [All/Any] of the following fields:</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_andOperator</td>
-	<td>label=Any</td>
+	<td>//select[@id='_11_andOperator']</td>
+	<td>All</td>
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>_11_countryId</td>
+	<td>//select[@id='_11_countryId']</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_countryId</td>
-	<td>label=United States</td>
+	<td>//select[@id='_11_countryId']</td>
+	<td>United States</td>
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>_11_regionId</td>
+	<td>//select[@id='_11_regionId']</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_regionId</td>
-	<td>label=California</td>
+	<td>//select[@id='_11_regionId']</td>
+	<td>California</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>_11_regionId</td>
-	<td>label=</td>
+	<td>waitForPartialText</td>
+	<td>//select[@id='_11_regionId']</td>
+	<td>California</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_countryId</td>
-	<td>label=</td>
+	<td>//select[@id='_11_regionId']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>_11_countryId</td>
+	<td>//select[@id='_11_countryId']</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_countryId</td>
-	<td>label=United States</td>
+	<td>//select[@id='_11_countryId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Test Organization</td>
+	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>_11_regionId</td>
+	<td>//select[@id='_11_countryId']</td>
+	<td>United States</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_11_countryId']</td>
+	<td>United States</td>
+</tr>
+<tr>
+	<td>waitForPartialText</td>
+	<td>//select[@id='_11_regionId']</td>
 	<td>Alabama</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_regionId</td>
-	<td>label=Alabama</td>
+	<td>//select[@id='_11_regionId']</td>
+	<td>Alabama</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_regionId</td>
-	<td>label=</td>
+	<td>//select[@id='_11_regionId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPartialText</td>
+	<td>//select[@id='_11_countryId']</td>
+	<td>United States</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_countryId</td>
-	<td>label=</td>
+	<td>//select[@id='_11_countryId']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_andOperator</td>
-	<td>label=All</td>
+	<td>//select[@id='_11_andOperator']</td>
+	<td>All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
-	<td></td>
+	<td>« Basic</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>

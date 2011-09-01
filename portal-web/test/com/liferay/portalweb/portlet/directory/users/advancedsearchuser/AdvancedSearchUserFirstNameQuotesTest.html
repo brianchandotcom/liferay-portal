@@ -24,6 +24,11 @@
 	<td>Directory Test Page</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Users</td>
+	<td>Users</td>
+</tr>
+<tr>
 	<td>store</td>
 	<td>eval(selenium.isVisible('link=Advanced »'))</td>
 	<td>advancedVisible</td>
@@ -51,16 +56,16 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_11_andOperator']</td>
-	<td>label=Any</td>
+	<td>Any</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_11_firstName']</td>
-	<td>"TestFirst"</td>
+	<td>"userfn"</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -70,23 +75,23 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=TestFirst1</td>
-	<td>TestFirst1</td>
+	<td>link=userfn</td>
+	<td>userfn</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_11_firstName']</td>
-	<td>"TestFirstA"</td>
+	<td>"userfn1"</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_11_andOperator']</td>
-	<td>label=All</td>
+	<td>All</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -100,7 +105,7 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>TestFirst1</td>
+	<td>userfn</td>
 	<td></td>
 </tr>
 

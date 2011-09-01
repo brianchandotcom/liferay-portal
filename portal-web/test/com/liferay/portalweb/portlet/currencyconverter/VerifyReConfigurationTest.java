@@ -43,7 +43,7 @@ public class VerifyReConfigurationTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Currency Converter Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Currency Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -65,7 +65,7 @@ public class VerifyReConfigurationTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Return to Full Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Return to Full Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 

@@ -48,11 +48,11 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Directory Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -66,7 +66,7 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Advanced \u00bb",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
 
@@ -76,7 +76,8 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_11_andOperator")) {
+						if (selenium.isVisible(
+									"//select[@id='_11_andOperator']")) {
 							break;
 						}
 					}
@@ -87,8 +88,8 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.select("_11_andOperator",
-					RuntimeVariables.replace("label=Any"));
+				selenium.select("//select[@id='_11_andOperator']",
+					RuntimeVariables.replace("All"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -96,7 +97,8 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isPartialText("_11_countryId",
+						if (selenium.isPartialText(
+									"//select[@id='_11_countryId']",
 									"United States")) {
 							break;
 						}
@@ -108,8 +110,8 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.select("_11_countryId",
-					RuntimeVariables.replace("label=United States"));
+				selenium.select("//select[@id='_11_countryId']",
+					RuntimeVariables.replace("United States"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -117,7 +119,8 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isPartialText("_11_regionId", "California")) {
+						if (selenium.isPartialText(
+									"//select[@id='_11_regionId']", "California")) {
 							break;
 						}
 					}
@@ -128,16 +131,12 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.select("_11_regionId",
-					RuntimeVariables.replace("label=California"));
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.select("//select[@id='_11_regionId']",
+					RuntimeVariables.replace("California"));
+				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.select("_11_regionId",
-					RuntimeVariables.replace("label="));
-				selenium.select("_11_countryId",
-					RuntimeVariables.replace("label="));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -145,8 +144,8 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isPartialText("_11_countryId",
-									"United States")) {
+						if (selenium.isPartialText(
+									"//select[@id='_11_regionId']", "California")) {
 							break;
 						}
 					}
@@ -157,40 +156,106 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.select("_11_countryId",
-					RuntimeVariables.replace("label=United States"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isPartialText("_11_regionId", "Alabama")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.select("_11_regionId",
-					RuntimeVariables.replace("label=Alabama"));
-				selenium.clickAt("//div[2]/span[2]/span/input",
-					RuntimeVariables.replace("Search"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.select("_11_regionId",
-					RuntimeVariables.replace("label="));
-				selenium.select("_11_countryId",
-					RuntimeVariables.replace("label="));
-				selenium.select("_11_andOperator",
-					RuntimeVariables.replace("label=All"));
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.select("//select[@id='_11_regionId']",
 					RuntimeVariables.replace(""));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isPartialText(
+									"//select[@id='_11_countryId']",
+									"United States")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select[@id='_11_countryId']",
+					RuntimeVariables.replace(""));
+				assertTrue(selenium.isVisible("link=Test Organization"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isPartialText(
+									"//select[@id='_11_countryId']",
+									"United States")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select[@id='_11_countryId']",
+					RuntimeVariables.replace("United States"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isPartialText(
+									"//select[@id='_11_regionId']", "Alabama")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select[@id='_11_regionId']",
+					RuntimeVariables.replace("Alabama"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select[@id='_11_regionId']",
+					RuntimeVariables.replace(""));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isPartialText(
+									"//select[@id='_11_countryId']",
+									"United States")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select[@id='_11_countryId']",
+					RuntimeVariables.replace(""));
+				selenium.select("//select[@id='_11_andOperator']",
+					RuntimeVariables.replace("All"));
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
 				assertFalse(selenium.isTextPresent("Test Organization"));
 
 			case 100:

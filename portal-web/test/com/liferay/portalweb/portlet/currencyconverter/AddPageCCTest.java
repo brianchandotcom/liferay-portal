@@ -32,7 +32,7 @@ public class AddPageCCTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[@id='addPage']")) {
+				if (selenium.isElementPresent("//a[@id='addPage']")) {
 					break;
 				}
 			}
@@ -66,7 +66,8 @@ public class AddPageCCTest extends BaseTestCase {
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Currency Converter Test Page"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -86,7 +87,7 @@ public class AddPageCCTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Currency Converter Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Currency Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

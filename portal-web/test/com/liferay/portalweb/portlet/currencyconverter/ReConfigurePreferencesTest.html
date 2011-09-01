@@ -16,12 +16,12 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Currency Converter Test Page</td>
-	<td></td>
+	<td>Currency Converter Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Currency Converter Test Page</td>
-	<td></td>
+	<td>Currency Converter Test Page</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -44,39 +44,44 @@
 	<td>Preferences</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
 	<td>Preferences</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_16_current_actions</td>
-	<td></td>
+	<td>//select[@id='_16_current_actions']</td>
+	<td>Current</td>
 </tr>
 <tr>
 	<td>addSelection</td>
-	<td>_16_current_actions</td>
-	<td>label=Korean Won</td>
+	<td>//select[@id='_16_current_actions']</td>
+	<td>Korean Won</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
+	<td>Left Arrow</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/div/span/span/button[1]</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
 	<td>Left Arrow</td>
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>_16_available_actions</td>
+	<td>//select[@id='_16_available_actions']</td>
 	<td>Korean Won</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>waitForText</td>

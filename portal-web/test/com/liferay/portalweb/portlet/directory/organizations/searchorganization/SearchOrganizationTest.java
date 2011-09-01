@@ -47,11 +47,11 @@ public class SearchOrganizationTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Directory Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -64,27 +64,29 @@ public class SearchOrganizationTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
-				selenium.type("_11_keywords",
+				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("Test Organization"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_11_keywords", RuntimeVariables.replace(""));
+				selenium.type("//input[@name='_11_keywords']",
+					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent("link=Test Organization"));
-				selenium.type("_11_keywords",
+				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("Test1 Organization1"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_11_keywords", RuntimeVariables.replace(""));
+				selenium.type("//input[@name='_11_keywords']",
+					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("Test Organization"));
 

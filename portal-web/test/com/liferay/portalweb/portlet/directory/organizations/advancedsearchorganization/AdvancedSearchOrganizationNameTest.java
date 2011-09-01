@@ -47,11 +47,11 @@ public class AdvancedSearchOrganizationNameTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Directory Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Organizations",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -65,7 +65,7 @@ public class AdvancedSearchOrganizationNameTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Advanced \u00bb",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
 
@@ -75,7 +75,8 @@ public class AdvancedSearchOrganizationNameTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_11_andOperator")) {
+						if (selenium.isVisible(
+									"//select[@id='_11_andOperator']")) {
 							break;
 						}
 					}
@@ -86,31 +87,33 @@ public class AdvancedSearchOrganizationNameTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.select("_11_andOperator",
-					RuntimeVariables.replace("label=Any"));
-				selenium.type("_11_name",
+				selenium.select("//select[@id='_11_andOperator']",
+					RuntimeVariables.replace("Any"));
+				selenium.type("//input[@id='_11_name']",
 					RuntimeVariables.replace("Test Organization"));
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_11_name", RuntimeVariables.replace("\n"));
+				selenium.type("//input[@id='_11_name']",
+					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isElementPresent("link=Test Organization"));
-				selenium.type("_11_name",
+				assertTrue(selenium.isVisible("link=Test Organization"));
+				selenium.type("//input[@id='_11_name']",
 					RuntimeVariables.replace("Test1 Organization1"));
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("_11_name", RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
-				selenium.select("_11_andOperator",
-					RuntimeVariables.replace("label=All"));
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.type("//input[@id='_11_name']",
 					RuntimeVariables.replace(""));
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select[@id='_11_andOperator']",
+					RuntimeVariables.replace("All"));
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
 				assertFalse(selenium.isTextPresent("Test Organization"));
 
 			case 100:

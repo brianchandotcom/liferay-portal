@@ -16,32 +16,47 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Organizations</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
-	<td></td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Regular Organization</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Regular Organization</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_name</td>
+	<td>//input[@id='_125_name']</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -49,69 +64,69 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>addressesLink</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAt</td>
-	<td>addressesLink</td>
-	<td></td>
+	<td>//a[@id='_125_addressesLink']</td>
+	<td>Addresses</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_126_addressStreet1_0</td>
-	<td></td>
+	<td>//input[@id='_125_addressStreet1_0']</td>
+	<td>Street 1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_addressStreet1_0</td>
+	<td>//input[@id='_125_addressStreet1_0']</td>
 	<td>12345 Test Street</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_126_addressTypeId0</td>
-	<td>label=Billing</td>
+	<td>//select[@id='_125_addressTypeId0']</td>
+	<td>Billing</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_addressZip0</td>
+	<td>//input[@id='_125_addressZip0']</td>
 	<td>11111</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_addressCity0</td>
+	<td>//input[@id='_125_addressCity0']</td>
 	<td>Diamond Bar</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_126_addressPrimary0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>_126_addressCountryId0</td>
-	<td>label=United States</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_126_addressMailing0Checkbox</td>
-	<td></td>
+	<td>//input[@id='_125_addressPrimary0']</td>
+	<td>Primary</td>
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>_126_addressRegionId0</td>
+	<td>//select[@id='_125_addressCountryId0']</td>
+	<td>United States</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_125_addressCountryId0']</td>
+	<td>United States</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_125_addressMailing0Checkbox']</td>
+	<td>Mailing</td>
+</tr>
+<tr>
+	<td>waitForPartialText</td>
+	<td>//select[@id='_125_addressRegionId0']</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_126_addressRegionId0</td>
-	<td>label=California</td>
+	<td>//select[@id='_125_addressRegionId0']</td>
+	<td>California</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>

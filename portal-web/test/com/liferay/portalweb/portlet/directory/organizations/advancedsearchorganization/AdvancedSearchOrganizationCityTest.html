@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Directory Test Page</td>
-	<td></td>
+	<td>Directory Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Directory Test Page</td>
-	<td></td>
+	<td>Directory Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Organizations</td>
-	<td></td>
+	<td>Organizations</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -41,7 +41,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
-	<td></td>
+	<td>Advanced »</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -50,58 +50,58 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_11_andOperator</td>
+	<td>//select[@id='_11_andOperator']</td>
 	<td>Match [All/Any] of the following fields:</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_andOperator</td>
-	<td>label=Any</td>
+	<td>//select[@id='_11_andOperator']</td>
+	<td>Any</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_11_city</td>
+	<td>//input[@id='_11_city']</td>
 	<td>Diamond Bar</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_11_city</td>
+	<td>//input[@id='_11_city']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>link=Test Organization</td>
-	<td></td>
+	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_11_city</td>
+	<td>//input[@id='_11_city']</td>
 	<td>Diamond1 Bar1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_11_city</td>
+	<td>//input[@id='_11_city']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_11_andOperator</td>
-	<td>label=All</td>
+	<td>//select[@id='_11_andOperator']</td>
+	<td>All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
-	<td></td>
+	<td>« Basic</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>

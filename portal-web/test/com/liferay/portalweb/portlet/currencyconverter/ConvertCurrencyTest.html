@@ -16,41 +16,51 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Currency Converter Test Page</td>
-	<td></td>
+	<td>Currency Converter Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Currency Converter Test Page</td>
-	<td></td>
+	<td>Currency Converter Test Page</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>_16_number</td>
-	<td></td>
+	<td>//input[@name='_16_number']</td>
+	<td>Number</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_16_number</td>
+	<td>//input[@name='_16_number']</td>
 	<td>2.5</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>_16_from</td>
-	<td>label=KRW</td>
+	<td>waitForPartialText</td>
+	<td>//select[@name='_16_from']</td>
+	<td>KRW</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_16_to</td>
-	<td>label=BHD</td>
+	<td>//select[@name='_16_from']</td>
+	<td>KRW</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//select[@name='_16_to']</td>
+	<td>BHD</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@name='_16_to']</td>
+	<td>BHD</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Convert']</td>
-	<td></td>
+	<td>Convert</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[2]</td>
+	<td>//input[@name='_16_number']</td>
 	<td>2.5</td>
 </tr>
 <tr>
@@ -62,6 +72,11 @@
 	<td>assertTextPresent</td>
 	<td>BHD</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//td/img</td>
+	<td>Graph</td>
 </tr>
 
 </tbody></table>

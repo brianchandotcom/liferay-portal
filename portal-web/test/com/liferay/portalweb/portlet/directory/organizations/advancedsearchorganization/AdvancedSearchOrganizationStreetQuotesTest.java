@@ -89,7 +89,7 @@ public class AdvancedSearchOrganizationStreetQuotesTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
-					RuntimeVariables.replace("label=Any"));
+					RuntimeVariables.replace("Any"));
 				selenium.type("//input[@id='_11_street']",
 					RuntimeVariables.replace("\"12345 Test Street\""));
 				selenium.saveScreenShotAndSource();
@@ -112,7 +112,7 @@ public class AdvancedSearchOrganizationStreetQuotesTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
-					RuntimeVariables.replace("label=All"));
+					RuntimeVariables.replace("All"));
 				selenium.clickAt("link=\u00ab Basic",
 					RuntimeVariables.replace("\u00ab Basic"));
 				assertFalse(selenium.isTextPresent("Test Organization"));

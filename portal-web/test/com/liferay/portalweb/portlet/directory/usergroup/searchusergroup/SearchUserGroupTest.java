@@ -42,25 +42,32 @@ public class SearchUserGroupTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Directory Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Directory Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=User Groups", RuntimeVariables.replace(""));
+		selenium.clickAt("link=User Groups",
+			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_11_name", RuntimeVariables.replace("Test User Group"));
+		selenium.type("//input[@id='_11_name']",
+			RuntimeVariables.replace("User Group Name"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Test User Group"));
-		selenium.type("_11_name", RuntimeVariables.replace("Test1 User1 Group1"));
+		assertEquals(RuntimeVariables.replace("User Group Name"),
+			selenium.getText("//tr[3]/td[1]"));
+		assertEquals(RuntimeVariables.replace("User Group Description"),
+			selenium.getText("//tr[3]/td[2]"));
+		selenium.type("//input[@id='_11_name']",
+			RuntimeVariables.replace("User1 Group1 Name1"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("Test User Group"));
+		assertFalse(selenium.isTextPresent("User Group Name"));
+		assertFalse(selenium.isTextPresent("User Group Description"));
 	}
 }

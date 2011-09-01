@@ -89,7 +89,7 @@ public class AdvancedSearchOrganizationZipQuotesTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
-					RuntimeVariables.replace("label=Any"));
+					RuntimeVariables.replace("Any"));
 				selenium.type("//input[@id='_11_zip']",
 					RuntimeVariables.replace("\"11111\""));
 				selenium.saveScreenShotAndSource();
@@ -112,7 +112,7 @@ public class AdvancedSearchOrganizationZipQuotesTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
-					RuntimeVariables.replace("label=All"));
+					RuntimeVariables.replace("All"));
 				selenium.clickAt("link=\u00ab Basic",
 					RuntimeVariables.replace("\u00ab Basic"));
 				assertFalse(selenium.isTextPresent("Test Organization"));

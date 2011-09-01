@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Directory Test Page</td>
-	<td></td>
+	<td>Directory Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Directory Test Page</td>
-	<td></td>
+	<td>Directory Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Organizations</td>
-	<td></td>
+	<td>Organizations</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -41,7 +41,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
-	<td></td>
+	<td>« Basic</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -50,47 +50,77 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_11_keywords</td>
+	<td>//input[@name='_11_keywords']</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>Test Child</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[3]/td[3]/a</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[3]/td[4]/a</td>
+	<td>Cerritos</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[5]/a</td>
+	<td>Florida</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[6]/a</td>
+	<td>United States</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Test Organization</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[3]/a</td>
+	<td>Regular Organization</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/a</td>
 	<td>Diamond Bar</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[4]/td[5]/a</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[6]/a</td>
+	<td>//tr[4]/td[6]/a</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>//tr[4]/td[7]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>

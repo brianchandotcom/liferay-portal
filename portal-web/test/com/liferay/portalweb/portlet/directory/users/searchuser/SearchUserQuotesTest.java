@@ -64,30 +64,29 @@ public class SearchUserQuotesTest extends BaseTestCase {
 
 			case 2:
 				selenium.type("//input[@name='_11_keywords']",
-					RuntimeVariables.replace(
-						"\"TestFirst1 TestMiddle1 TestLast1\""));
+					RuntimeVariables.replace("\"userfn usermn userln\""));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isElementPresent("link=TestFirst1"));
+				assertTrue(selenium.isElementPresent("link=userfn"));
 				selenium.type("//input[@name='_11_keywords']",
-					RuntimeVariables.replace("\"TestFirst1\""));
+					RuntimeVariables.replace("\"userfn\""));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isElementPresent("link=TestFirst1"));
+				assertTrue(selenium.isElementPresent("link=userfn"));
 				selenium.type("//input[@name='_11_keywords']",
-					RuntimeVariables.replace("\"TestFirstA\""));
+					RuntimeVariables.replace("\"userfn1\""));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertFalse(selenium.isTextPresent("TestFirst1"));
+				assertFalse(selenium.isTextPresent("userfn"));
 
 			case 100:
 				label = -1;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configuredldocumentdefaultnoworkflow;
+package com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurepagerevisionsingleapprover;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigureDLDocumentDefaultNoWorkflowTest extends BaseTestCase {
-	public void testConfigureDLDocumentDefaultNoWorkflow()
+public class ConfigurePageRevisionSingleApproverTest extends BaseTestCase {
+	public void testConfigurePageRevisionSingleApprover()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 
@@ -48,16 +48,17 @@ public class ConfigureDLDocumentDefaultNoWorkflowTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_152_workflowDefinitionName@com.liferay.portlet.documentlibrary.model.DLFileEntry",
-			RuntimeVariables.replace("label=Default: No workflow"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']",
+			RuntimeVariables.replace("Single Approver (Version 1)"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Default: No workflow",
+		assertEquals("Single Approver (Version 1)",
 			selenium.getSelectedLabel(
-				"_152_workflowDefinitionName@com.liferay.portlet.documentlibrary.model.DLFileEntry"));
+				"//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']"));
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configuredldocumentdefaultsingleapprover;
+package com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurepagerevisiondefaultnoworkflow;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigureDLDocumentDefaultSingleApproverTest extends BaseTestCase {
-	public void testConfigureDLDocumentDefaultSingleApprover()
+public class ConfigurePageRevisionDefaultNoWorkflowTest extends BaseTestCase {
+	public void testConfigurePageRevisionDefaultNoWorkflow()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 
@@ -48,16 +48,17 @@ public class ConfigureDLDocumentDefaultSingleApproverTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_152_workflowDefinitionName@com.liferay.portlet.documentlibrary.model.DLFileEntry",
-			RuntimeVariables.replace("label=Default: Single Approver"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']",
+			RuntimeVariables.replace("Default: No workflow"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Default: Single Approver",
+		assertEquals("Default: No workflow",
 			selenium.getSelectedLabel(
-				"_152_workflowDefinitionName@com.liferay.portlet.documentlibrary.model.DLFileEntry"));
+				"//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']"));
 	}
 }

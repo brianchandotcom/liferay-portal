@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configuredldocumentsingleapprover;
+package com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurepagerevisiondefaultnoworkflow;
 
 import com.liferay.portalweb.portal.BaseTests;
 
@@ -22,12 +22,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigureDLDocumentSingleApproverTests extends BaseTests {
+public class ConfigurePageRevisionDefaultNoWorkflowTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(ConfigureDLDocumentSingleApproverTest.class);
+		testSuite.addTestSuite(
+			ConfigurePageRevisionDefaultNoWorkflowTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 
 		return testSuite;

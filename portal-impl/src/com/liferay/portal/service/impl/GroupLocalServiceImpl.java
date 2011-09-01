@@ -1576,6 +1576,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			end, obc);
 	}
 
+	public List<Group> search(
+			long companyId, LinkedHashMap<String, Object> params, int start,
+			int end)
+		throws SystemException {
+
+		return groupFinder.findByCompanyId(
+			companyId, params, start, end, new GroupNameComparator(true));
+	}
+
 	/**
 	 * Returns a name ordered range of all the site groups and organization
 	 * groups that match the name and description, optionally including the

@@ -73,6 +73,9 @@ public class GroupFinderImpl
 	public static String FIND_BY_SYSTEM =
 		GroupFinder.class.getName() + ".findBySystem";
 
+	public static String FIND_BY_COMPANYID =
+		GroupFinder.class.getName() + ".findByCompanyId";
+
 	public static String FIND_BY_C_N =
 		GroupFinder.class.getName() + ".findByC_N";
 
@@ -405,6 +408,140 @@ public class GroupFinderImpl
 		throw new NoSuchGroupException(sb.toString());
 	}
 
+	public List<Group> findByCompanyId(
+			long companyId, LinkedHashMap<String, Object> params, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		if (params == null) {
+			params = _emptyLinkedHashMap;
+		}
+
+		Long userId = (Long)params.get("usersGroups");
+		boolean inherit = GetterUtil.getBoolean(
+			(Serializable)params.get("inherit"), true);
+
+		boolean doUnion = Validator.isNotNull(userId) && inherit;
+
+		LinkedHashMap<String, Object> params1 = params;
+
+		LinkedHashMap<String, Object> params2 = null;
+
+		LinkedHashMap<String, Object> params3 = null;
+
+		LinkedHashMap<String, Object> params4 = null;
+
+		if (doUnion) {
+			params2 = new LinkedHashMap<String, Object>(params1);
+
+			params2.remove("usersGroups");
+			params2.put("groupOrg", userId);
+
+			params3 = new LinkedHashMap<String, Object>(params1);
+
+			params3.remove("usersGroups");
+			params3.put("groupsOrgs", userId);
+
+			params4 = new LinkedHashMap<String, Object>(params1);
+
+			params4.remove("usersGroups");
+			params4.put("groupsUserGroups", userId);
+		}
+
+		String sql = null;
+
+		String sqlKey = _buildSQLKey(
+			params1, params2, params3, params4, obc, doUnion);
+
+		sql = _findByCompanyIdSQLCache.get(sqlKey);
+
+		if (sql == null) {
+			String findByCompanyId_SQL = CustomSQLUtil.get(FIND_BY_COMPANYID);
+
+			if (params.get("active") == Boolean.TRUE) {
+				findByCompanyId_SQL = StringUtil.replace(findByCompanyId_SQL,
+					"(Group_.liveGroupId = 0) AND", StringPool.BLANK);
+			}
+
+			findByCompanyId_SQL = StringUtil.replace(
+				findByCompanyId_SQL, "Group_.classNameId = ?",
+				"Group_.classNameId = ".concat(
+					StringUtil.merge(
+						_getGroupOrganizationClassNameIds(),
+						" OR Group_.classNameId = ")));
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("(");
+			sb.append(replaceJoinAndWhere(findByCompanyId_SQL, params1));
+			sb.append(")");
+
+			if (doUnion) {
+				sb.append(" UNION (");
+				sb.append(replaceJoinAndWhere(findByCompanyId_SQL, params2));
+				sb.append(") UNION (");
+				sb.append(replaceJoinAndWhere(findByCompanyId_SQL, params3));
+				sb.append(") UNION (");
+				sb.append(replaceJoinAndWhere(findByCompanyId_SQL, params4));
+				sb.append(")");
+			}
+
+			if (obc != null) {
+				sb.append(" ORDER BY ");
+				sb.append(obc.toString());
+			}
+
+			sql = sb.toString();
+
+			_findByCompanyIdSQLCache.put(sqlKey, sql);
+		}
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar("groupId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			setJoin(qPos, params1);
+			qPos.add(companyId);
+
+			if (doUnion) {
+				setJoin(qPos, params2);
+				qPos.add(companyId);
+
+				setJoin(qPos, params3);
+				qPos.add(companyId);
+
+				setJoin(qPos, params4);
+				qPos.add(companyId);
+			}
+
+			List<Long> groupIds = (List<Long>)QueryUtil.list(
+				q, getDialect(), start, end);
+
+			List<Group> groups = new ArrayList<Group>(groupIds.size());
+
+			for (Long groupId : groupIds) {
+				Group group = GroupUtil.findByPrimaryKey(groupId);
+
+				groups.add(group);
+			}
+
+			return groups;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	public List<Group> findByC_N_D(
 			long companyId, String name, String realName, String description,
 			LinkedHashMap<String, Object> params, int start, int end,
@@ -463,7 +600,7 @@ public class GroupFinderImpl
 		String sql = null;
 
 		if (classNameIds == _getGroupOrganizationClassNameIds()) {
-			String sqlKey = _buildFindByC_C_N_DSQLKey(
+			String sqlKey = _buildSQLKey(
 				params1, params2, params3, params4, obc, doUnion);
 
 			sql = _findByC_C_N_DSQLCache.get(sqlKey);
@@ -509,7 +646,7 @@ public class GroupFinderImpl
 			sql = sb.toString();
 
 			if (classNameIds == _getGroupOrganizationClassNameIds()) {
-				String sqlKey = _buildFindByC_C_N_DSQLKey(
+				String sqlKey = _buildSQLKey(
 					params1, params2, params3, params4, obc, doUnion);
 
 				_findByC_C_N_DSQLCache.put(sqlKey, sql);
@@ -865,7 +1002,7 @@ public class GroupFinderImpl
 		}
 	}
 
-	private String _buildFindByC_C_N_DSQLKey(
+	private String _buildSQLKey(
 		LinkedHashMap<String, Object> param1,
 		LinkedHashMap<String, Object> param2,
 		LinkedHashMap<String, Object> param3,
@@ -1077,6 +1214,8 @@ public class GroupFinderImpl
 
 	private LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<String, Object>(0);
+	private Map<String, String> _findByCompanyIdSQLCache =
+		new ConcurrentHashMap<String, String>();
 	private Map<String, String> _findByC_C_N_DSQLCache =
 		new ConcurrentHashMap<String, String>();
 	private volatile long[] _groupOrganizationClassNameIds;

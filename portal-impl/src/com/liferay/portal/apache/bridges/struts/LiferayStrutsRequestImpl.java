@@ -71,28 +71,6 @@ public class LiferayStrutsRequestImpl extends HttpServletRequestWrapper {
 	}
 
 	@Override
-	public void removeAttribute(String name) {
-		if (name.startsWith(StrutsUtil.STRUTS_PACKAGE) &&
-			_strutsAttributes.containsKey(name)) {
-
-			_strutsAttributes.remove(name);
-		}
-		else {
-			super.removeAttribute(name);
-		}
-	}
-
-	@Override
-	public void setAttribute(String name, Object value) {
-		if (name.startsWith(StrutsUtil.STRUTS_PACKAGE)) {
-			_strutsAttributes.put(name, value);
-		}
-		else {
-			super.setAttribute(name, value);
-		}
-	}
-
-	@Override
 	public Enumeration<String> getAttributeNames() {
 		List<String> attributeNames = new Vector<String>();
 
@@ -123,6 +101,28 @@ public class LiferayStrutsRequestImpl extends HttpServletRequestWrapper {
 
 		return new UnsyncByteArrayInputStreamWrapper(
 			new UnsyncByteArrayInputStream(_bytes));
+	}
+
+	@Override
+	public void removeAttribute(String name) {
+		if (name.startsWith(StrutsUtil.STRUTS_PACKAGE) &&
+			_strutsAttributes.containsKey(name)) {
+
+			_strutsAttributes.remove(name);
+		}
+		else {
+			super.removeAttribute(name);
+		}
+	}
+
+	@Override
+	public void setAttribute(String name, Object value) {
+		if (name.startsWith(StrutsUtil.STRUTS_PACKAGE)) {
+			_strutsAttributes.put(name, value);
+		}
+		else {
+			super.setAttribute(name, value);
+		}
 	}
 
 	private Map<String, Object> _strutsAttributes;

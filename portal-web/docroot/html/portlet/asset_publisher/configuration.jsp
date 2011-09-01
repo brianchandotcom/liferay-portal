@@ -61,12 +61,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		</c:choose>
 
 		<liferay-util:buffer var="selectAssetTypeInput">
-			<aui:select label='<%= selectionStyle.equals("manual") ? "asset-type" : StringPool.BLANK %>' name="preferences--anyAssetType--">
-				<aui:option label="any" selected="<%= anyAssetType %>" value="<%= true %>" />
-				<aui:option label='<%= LanguageUtil.get(pageContext, "filter[action]") + "..." %>' selected="<%= !anyAssetType %>" value="<%= false %>" />
-			</aui:select>
-
-			<aui:input name="preferences--classNameIds--" type="hidden" />
 
 			<%
 			Set<Long> availableClassNameIdsSet = SetUtil.fromArray(availableClassNameIds);
@@ -86,21 +80,41 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
 
 			Arrays.sort(classNameIds);
+			%>
 
-			for (long classNameId : availableClassNameIdsSet) {
-				if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
-					ClassName className = ClassNameServiceUtil.getClassName(classNameId);
+			<aui:select label='<%= selectionStyle.equals("manual") ? "asset-type" : StringPool.BLANK %>' name="preferences--anyAssetType--">
+				<aui:option label="any" selected="<%= anyAssetType %>" value="<%= true %>" />
+				<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + "..." %>' selected="<%= !anyAssetType && (classNameIds.length > 1) %>" value="<%= false %>" />
 
-					typesRightList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
-				}
-			}
+				<optgroup label="<liferay-ui:message key="asset-type" />">
 
+					<%
+					for (long classNameId : availableClassNameIdsSet) {
+						ClassName className = ClassNameServiceUtil.getClassName(classNameId);
+
+						if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
+							typesRightList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
+						}
+					%>
+
+						<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" selected="<%= (classNameIds.length == 1) && (classNameId == classNameIds[0]) %>" value="<%= classNameId %>" />
+
+					<%
+					}
+					%>
+
+				</optgroup>
+			</aui:select>
+
+			<aui:input name="preferences--classNameIds--" type="hidden" />
+
+			<%
 			typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
 			%>
 
 			<div class="<%= anyAssetType ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />classNamesBoxes">
 				<liferay-ui:input-move-boxes
-					leftTitle="current"
+					leftTitle="selected"
 					rightTitle="available"
 					leftBoxName="currentClassNameIds"
 					rightBoxName="availableClassNameIds"
@@ -112,12 +126,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		</liferay-util:buffer>
 
 		<liferay-util:buffer var="selectScope">
-			<aui:select label="" name="preferences--defaultScope--">
-				<aui:option label="<%= _getName(scopeGroup, pageContext) %>" selected="<%= defaultScope %>" value="<%= true %>" />
-				<aui:option label='<%= LanguageUtil.get(pageContext,"select") + "..." %>' selected="<%= !defaultScope %>" value="<%= false %>" />
-			</aui:select>
-
-			<aui:input name="preferences--scopeIds--" type="hidden" />
 
 			<%
 			Set<Group> groups = new HashSet<Group>();
@@ -146,19 +154,38 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			List<KeyValuePair> scopesRightList = new ArrayList<KeyValuePair>();
 
 			Arrays.sort(groupIds);
+			%>
 
-			for (Group group : groups) {
-				if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-					scopesRightList.add(new KeyValuePair(_getKey(group), _getName(group, pageContext)));
-				}
-			}
+			<aui:select label="" name="preferences--defaultScope--">
+				<aui:option label='<%= LanguageUtil.get(pageContext,"select-more-than-one") + "..." %>' selected="<%= groupIds.length > 1 %>" value="<%= false %>" />
 
+				<optgroup label="<liferay-ui:message key="scopes" />">
+
+					<%
+					for (Group group : groups) {
+						if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
+							scopesRightList.add(new KeyValuePair(_getKey(group), _getName(group, pageContext)));
+						}
+					%>
+
+						<aui:option label="<%= _getName(group, pageContext) %>" selected="<%= (groupIds.length == 1) && (group.getGroupId() == groupIds[0]) %>" value="<%= group.getGroupId() %>" />
+
+					<%
+					}
+					%>
+
+				</optgroup>
+			</aui:select>
+
+			<aui:input name="preferences--scopeIds--" type="hidden" />
+
+			<%
 			scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
 			%>
 
 			<div class="<%= defaultScope ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />scopesBoxes">
 				<liferay-ui:input-move-boxes
-					leftTitle="current"
+					leftTitle="selected"
 					rightTitle="available"
 					leftBoxName="currentScopeIds"
 					rightBoxName="availableScopeIds"

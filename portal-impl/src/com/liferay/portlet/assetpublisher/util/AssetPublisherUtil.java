@@ -46,6 +46,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import org.apache.ecs.vxml.Else;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -324,72 +325,86 @@ public class AssetPublisherUtil {
 			portletPreferences.getValue(
 				"anyAssetType", Boolean.TRUE.toString()));
 
-		long[] classNameIds = null;
+		if (anyAssetType) {
+			return availableClassNameIds;
+		}
 
-		if (!anyAssetType &&
-			(portletPreferences.getValues("classNameIds", null) != null)) {
+		long defaultClassNameId = GetterUtil.getLong(
+			portletPreferences.getValue("anyAssetType", null));
 
-			classNameIds = GetterUtil.getLongValues(
+		if (defaultClassNameId > 0) {
+			return  new long[] {defaultClassNameId};
+		}
+
+		long[] classNameIds = GetterUtil.getLongValues(
 				portletPreferences.getValues("classNameIds", null));
+
+		if (classNameIds != null) {
+			return classNameIds;
 		}
 		else {
-			classNameIds = availableClassNameIds;
+			return availableClassNameIds;
 		}
-
-		return classNameIds;
 	}
 
 	public static long[] getGroupIds(
 		PortletPreferences portletPreferences, long scopeGroupId,
 		Layout layout) {
 
-		long[] groupIds = new long[] {scopeGroupId};
-
 		boolean defaultScope = GetterUtil.getBoolean(
 			portletPreferences.getValue("defaultScope", null), true);
 
-		if (!defaultScope) {
-			String[] scopeIds = portletPreferences.getValues(
-				"scopeIds",
-				new String[] {"group" + StringPool.UNDERLINE + scopeGroupId});
+		if (defaultScope) {
+			return  new long[] {scopeGroupId};
+		}
 
-			groupIds = new long[scopeIds.length];
+		long defaultScopeId = GetterUtil.getLong(
+			portletPreferences.getValue("defaultScope", null));
 
-			for (int i = 0; i < scopeIds.length; i++) {
-				try {
-					String[] scopeIdFragments = StringUtil.split(
-						scopeIds[i], CharPool.UNDERLINE);
+		if (defaultScopeId > 0) {
+			return new long[] {defaultScopeId};
+		}
 
-					if (scopeIdFragments[0].equals("Layout")) {
-						long scopeIdLayoutId = GetterUtil.getLong(
-							scopeIdFragments[1]);
+		String[] scopeIds = portletPreferences.getValues(
+			"scopeIds",
+			new String[] {"group" + StringPool.UNDERLINE + scopeGroupId});
 
-						Layout scopeIdLayout =
-							LayoutLocalServiceUtil.getLayout(
-								scopeGroupId, layout.isPrivateLayout(),
-								scopeIdLayoutId);
+		long[] groupIds = new long[scopeIds.length];
 
-						Group scopeIdGroup = scopeIdLayout.getScopeGroup();
+		for (int i = 0; i < scopeIds.length; i++) {
+			try {
+				String[] scopeIdFragments = StringUtil.split(
+					scopeIds[i], CharPool.UNDERLINE);
 
-						groupIds[i] = scopeIdGroup.getGroupId();
+				if (scopeIdFragments[0].equals("Layout")) {
+					long scopeIdLayoutId = GetterUtil.getLong(
+						scopeIdFragments[1]);
+
+					Layout scopeIdLayout =
+						LayoutLocalServiceUtil.getLayout(
+							scopeGroupId, layout.isPrivateLayout(),
+							scopeIdLayoutId);
+
+					Group scopeIdGroup = scopeIdLayout.getScopeGroup();
+
+					groupIds[i] = scopeIdGroup.getGroupId();
+				}
+				else {
+					if (scopeIdFragments[1].equals(
+							GroupConstants.DEFAULT)) {
+
+						groupIds[i] = scopeGroupId;
 					}
 					else {
-						if (scopeIdFragments[1].equals(
-								GroupConstants.DEFAULT)) {
+						long scopeIdGroupId = GetterUtil.getLong(
+							scopeIdFragments[1]);
 
-							groupIds[i] = scopeGroupId;
-						}
-						else {
-							long scopeIdGroupId = GetterUtil.getLong(
-								scopeIdFragments[1]);
-
-							groupIds[i] = scopeIdGroupId;
-						}
+						groupIds[i] = scopeIdGroupId;
 					}
 				}
-				catch (Exception e) {
-					continue;
-				}
+			}
+			catch (Exception e) {
+				continue;
 			}
 		}
 

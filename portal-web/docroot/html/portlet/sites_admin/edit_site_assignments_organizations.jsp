@@ -32,7 +32,7 @@ PortletURL viewOrganizationsURL = renderResponse.createRenderURL();
 
 viewOrganizationsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 viewOrganizationsURL.setParameter("tabs1", "organizations");
-viewOrganizationsURL.setParameter("tabs2", "current");
+viewOrganizationsURL.setParameter("tabs2", tabs2);
 viewOrganizationsURL.setParameter("redirect", redirect);
 viewOrganizationsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 

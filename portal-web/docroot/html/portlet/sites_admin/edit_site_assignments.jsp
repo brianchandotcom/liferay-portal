@@ -42,7 +42,7 @@ PortletURL tabsURL = renderResponse.createRenderURL();
 
 tabsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 tabsURL.setParameter("tabs1", tabs1);
-tabsURL.setParameter("tabs2", "current");
+tabsURL.setParameter("tabs2", tabs2);
 tabsURL.setParameter("redirect", redirect);
 tabsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 

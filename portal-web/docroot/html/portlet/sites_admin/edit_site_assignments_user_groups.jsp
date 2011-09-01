@@ -32,7 +32,7 @@ PortletURL viewUserGroupsURL = renderResponse.createRenderURL();
 
 viewUserGroupsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 viewUserGroupsURL.setParameter("tabs1", "user-groups");
-viewUserGroupsURL.setParameter("tabs2", "current");
+viewUserGroupsURL.setParameter("tabs2", tabs2);
 viewUserGroupsURL.setParameter("redirect", redirect);
 viewUserGroupsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
@@ -53,6 +53,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, viewUserGro
 userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
+<aui:input name="tabs1" type="hidden" value="user-groups" />
 <aui:input name="addUserGroupIds" type="hidden" />
 <aui:input name="removeUserGroupIds" type="hidden" />
 

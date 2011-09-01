@@ -67,6 +67,18 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 	}
 
 	public boolean contains(
+			PermissionChecker permissionChecker, long[] organizationIds,
+			String actionId)
+		throws PortalException, SystemException {
+
+		for (long organizationId : organizationIds) {
+			check(permissionChecker, organizationId, actionId);
+		}
+
+		return true;
+	}
+
+	public boolean contains(
 			PermissionChecker permissionChecker, Organization organization,
 			String actionId)
 		throws PortalException, SystemException {

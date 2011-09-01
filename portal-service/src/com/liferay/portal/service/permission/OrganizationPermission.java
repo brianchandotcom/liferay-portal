@@ -40,6 +40,11 @@ public interface OrganizationPermission {
 		throws PortalException, SystemException;
 
 	public boolean contains(
+			PermissionChecker permissionChecker, long[] organizationIds,
+			String actionId)
+		throws PortalException, SystemException;
+
+	public boolean contains(
 			PermissionChecker permissionChecker, Organization organization,
 			String actionId)
 		throws PortalException, SystemException;

@@ -313,6 +313,6 @@ public class JournalContentImpl implements JournalContent {
 	protected static PortalCache portalCache = MultiVMPoolUtil.getCache(
 		CACHE_NAME);
 
-	private static Log _log = LogFactoryUtil.getLog(JournalContentUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(JournalContentImpl.class);
 
 }

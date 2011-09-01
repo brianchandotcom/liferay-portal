@@ -46,12 +46,12 @@ public class SetUtil {
 		return set;
 	}
 
-	public static Set<Long> fromArray(long[] array) {
+	public static Set<Integer> fromArray(int[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new HashSet<Long>();
+			return new HashSet<Integer>();
 		}
 
-		Set<Long> set = new HashSet<Long>(array.length);
+		Set<Integer> set = new HashSet<Integer>(array.length);
 
 		for (int i = 0; i < array.length; i++) {
 			set.add(array[i]);
@@ -60,12 +60,12 @@ public class SetUtil {
 		return set;
 	}
 
-	public static Set fromArray(int[] array) {
+	public static Set<Long> fromArray(long[] array) {
 		if ((array == null) || (array.length == 0)) {
-			return new HashSet();
+			return new HashSet<Long>();
 		}
 
-		Set set = new HashSet(array.length);
+		Set<Long> set = new HashSet<Long>(array.length);
 
 		for (int i = 0; i < array.length; i++) {
 			set.add(array[i]);

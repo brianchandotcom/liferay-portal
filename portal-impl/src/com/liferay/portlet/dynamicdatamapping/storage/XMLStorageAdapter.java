@@ -28,14 +28,18 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.query.ComparisonOperator;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.FieldCondition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.FieldConditionImpl;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Junction;
 import com.liferay.portlet.dynamicdatamapping.storage.query.LogicalOperator;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -280,6 +284,9 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 			conditionXPath = _parseCondition(condition);
 		}
 
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
+
 		for (long classPK : classPKs) {
 			DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(
 				classPK);
@@ -300,6 +307,8 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 				for (Element dynamicElementElement : dynamicElementElements) {
 					String fieldName = dynamicElementElement.attributeValue(
 						"name");
+					String fieldDataType = ddmStructure.getFieldDataType(
+						fieldName);
 					String fieldValue = dynamicElementElement.elementText(
 						"dynamic-content");
 
@@ -307,7 +316,10 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 						((fieldNames != null) &&
 						 fieldNames.contains(fieldName))) {
 
-						fields.put(new Field(fieldName, fieldValue));
+						Serializable value = FieldConstants.getSerializable(
+							fieldDataType, fieldValue);
+
+						fields.put(new Field(fieldName, value));
 					}
 				}
 

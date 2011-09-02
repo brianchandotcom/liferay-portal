@@ -25,8 +25,8 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFieldConstants;
 
 import java.io.Serializable;
 
@@ -55,7 +55,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 		StringBundler sb = new StringBundler();
 
 		for (Map<String, String> fieldMap : fieldsMap.values()) {
-			String label = fieldMap.get(DDMFieldConstants.LABEL);
+			String label = fieldMap.get(FieldConstants.LABEL);
 
 			sb.append(label);
 			sb.append(CharPool.COMMA);
@@ -71,7 +71,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			Fields fields = record.getFields();
 
 			for (Map<String, String> fieldMap : fieldsMap.values()) {
-				String name = fieldMap.get(DDMFieldConstants.NAME);
+				String name = fieldMap.get(FieldConstants.NAME);
 
 				Field field = fields.get(name);
 

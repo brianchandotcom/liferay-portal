@@ -1137,6 +1137,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>portal/bndlib.jar</file-name>
+		<version>1.44.0</version>
+		<project-name>Bnd</project-name>
+		<project-url>http://www.aqute.biz/Bnd/Download</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>portal/bobo-browse.jar</file-name>
 		<version>2.5.0 RC1</version>
 		<project-name>Bob Browse</project-name>

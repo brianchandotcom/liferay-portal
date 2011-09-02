@@ -193,7 +193,8 @@ public class DLFileEntryAssetRenderer extends BaseAssetRenderer {
 
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/clip.png";
+		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
+			_fileEntry.getIcon() + ".png";
 	}
 
 	private FileEntry _fileEntry;

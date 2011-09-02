@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ page session="false"%>
+
 <%@ include file="/html/common/referer_common.jsp" %>
 
 <script type="text/javascript">
@@ -32,9 +34,3 @@
 
 	location.href = '<%= HtmlUtil.escapeJS(referer) %>';
 </script>
-
-<%
-if (logout) {
-	session.invalidate();
-}
-%>

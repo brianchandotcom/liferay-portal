@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ page session="false"%>
+
 <%@ include file="/html/common/referer_common.jsp" %>
 
 <%

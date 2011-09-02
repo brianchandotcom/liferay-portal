@@ -21,6 +21,7 @@ import com.liferay.taglib.util.ThemeUtil;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,22 +29,22 @@ import javax.servlet.http.HttpServletRequest;
 public class IncludeTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
-	protected String getCustomPage(
-		ServletContext servletContext, HttpServletRequest request) {
-
-		return null;
-	}
-
-	@Override
-	protected void include(String page) throws Exception {
+	public int doEndTag() throws JspException {
 		ServletContext servletContext = getServletContext();
 		HttpServletRequest request = getServletRequest();
 
 		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
 
-		ThemeUtil.include(
-			servletContext, request, new PipingServletResponse(pageContext),
-			pageContext, page, theme);
+		try {
+			ThemeUtil.include(
+				servletContext, request, new PipingServletResponse(pageContext),
+				pageContext, getPage(), theme);
+
+			return EVAL_PAGE;
+		}
+		catch (Exception e) {
+			throw new JspException(e);
+		}
 	}
 
 }

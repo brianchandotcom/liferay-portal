@@ -67,7 +67,7 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 			<liferay-ui:icon
 				label="<%= true %>"
 				message="<%= HtmlUtil.escape(title) %>"
-				src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
+				src="<%= assetRenderer.getIconPath(renderRequest) %>"
 				url="<%= viewURL %>"
 			/>
 

@@ -1356,21 +1356,22 @@ public class LayoutTypePortletImpl
 	}
 
 	protected String getColumnValue(String columnId) {
-		String columnValue = StringPool.BLANK;
+		Boolean customizable = null;
+		Boolean columnDisabled = null;
 
-		if (isCustomizable() && isColumnDisabled(columnId) && hasTemplate()) {
-			columnValue = getTemplateProperty(columnId);
-		}
-		else if (isCustomizable() && !isColumnDisabled(columnId) &&
-				 hasUserPreferences()) {
-
-			columnValue = getUserPreference(columnId);
-		}
-		else {
-			columnValue = getTypeSettingsProperties().getProperty(columnId);
+		if (hasTemplate() && (customizable = isCustomizable()) &&
+			(columnDisabled = isColumnDisabled(columnId))) {
+			return getTemplateProperty(columnId);
 		}
 
-		return columnValue;
+		if (hasUserPreferences() &&
+			(customizable == null ? isCustomizable() : customizable) &&
+			(columnDisabled == null ? !isColumnDisabled(columnId) :
+				columnDisabled)) {
+			return getUserPreference(columnId);
+		}
+
+		return getTypeSettingsProperties().getProperty(columnId);
 	}
 
 	protected long getCompanyId() {

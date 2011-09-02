@@ -76,13 +76,12 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		_basePath = WebDirDetector.getRootDir(
 			PortalClassLoaderUtil.getClassLoader());
 
-		_loadPaths = new ArrayList<String>(3);
+		_loadPaths = new ArrayList<String>(
+			PropsValues.SCRIPTING_JRUBY_LOAD_PATHS.length);
 
-		// Order of load paths matters
-
-		_loadPaths.add("META-INF/jruby.home/lib/ruby/site_ruby/1.8");
-		_loadPaths.add("META-INF/jruby.home/lib/ruby/site_ruby/shared");
-		_loadPaths.add("META-INF/jruby.home/lib/ruby/1.8");
+		for (String gemLibPath : PropsValues.SCRIPTING_JRUBY_LOAD_PATHS) {
+			_loadPaths.add(gemLibPath);
+		}
 
 		rubyInstanceConfig.setLoadPaths(_loadPaths);
 

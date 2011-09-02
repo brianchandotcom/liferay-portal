@@ -39,13 +39,6 @@ public class DynamicCSSUtil {
 			_rubyScript = ContentUtil.get(
 				PortalClassLoaderUtil.getClassLoader(),
 				"com/liferay/portal/servlet/filters/dynamiccss/main.rb");
-
-			// Ruby executor needs to warm up when requiring Sass. Always breaks
-			// the first time without this block.
-
-			_rubyExecutor.eval(
-				null, new HashMap<String, Object>(), null,
-				"require 'rubygems'\nrequire 'sass'");
 		}
 		catch (Exception e) {
 			_log.error(e, e);

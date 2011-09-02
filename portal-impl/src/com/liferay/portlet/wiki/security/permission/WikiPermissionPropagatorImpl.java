@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.wiki.security.permission;
 
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -24,6 +24,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -39,107 +40,77 @@ import javax.portlet.ActionRequest;
 public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 
 	@Override
-	public void propagateRolePermissions(ActionRequest actionRequest) 
+	public void propagateRolePermissions(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String selResourceNode = "com.liferay.portlet.wiki.model.WikiNode";
-		String selResourcePage = "com.liferay.portlet.wiki.model.WikiPage";
+		List<String> nodeResourceActions =
+			ResourceActionsUtil.getModelResourceActions(
+				WikiNode.class.getName());
 
-		String resourcePrimKeyNode = ParamUtil.getString(
-			actionRequest, "resourcePrimKey");
+		List<String> pageResourceActions =
+			ResourceActionsUtil.getModelResourceActions(
+				WikiPage.class.getName());
 
-		Long nodeId = Long.parseLong(resourcePrimKeyNode);
+		List<String> sharedResourceActions = new ArrayList<String>();
 
-		List<String> nodeActionList = ResourceActionsUtil.
-			getModelResourceActions(selResourceNode);
-
-		List<String> pageActionList = ResourceActionsUtil.
-			getModelResourceActions(selResourcePage);
-
-		List<String> pageActionExclusive = ListUtil.copy(pageActionList);
-
-		List<String> pageNodeActionsShared = new ArrayList<String>();
-
-		long[] roleIds = StringUtil.split(ParamUtil.getString(
-			actionRequest, "rolesSearchContainerPrimaryKeys"), 0L);
-
-		for (String pageActionId: pageActionList) {
-			boolean actionIdFound = false;
-
-			for(String nodeActionId: nodeActionList) {
-				if (nodeActionId.equals(pageActionId)) {
-					actionIdFound = true;
-				}
+		for (String resourceAction : pageResourceActions) {
+			if (!nodeResourceActions.contains(resourceAction)) {
+				continue;
 			}
 
-			if (actionIdFound) {
-				pageActionExclusive.remove(pageActionId);
-				pageNodeActionsShared.add(pageActionId);
-			}
+			sharedResourceActions.add(resourceAction);
 		}
 
-		int count = WikiPageLocalServiceUtil.getPagesCount(nodeId);
+		long nodeId = ParamUtil.getLong(actionRequest, "resourcePrimKey");
 
-		List<WikiPage> nodePages =
-			WikiPageLocalServiceUtil.getPages(nodeId, 0, count);
+		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
+			nodeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (WikiPage currentPage: nodePages) {
-			String resourcePrimKeyPage = String.valueOf(
-				currentPage.getResourcePrimKey());
+		for (WikiPage wikiPage : wikiPages) {
+			String resourcePrimKey = String.valueOf(
+				wikiPage.getResourcePrimKey());
+
+			String rolesSearchContainerPrimaryKeys = ParamUtil.getString(
+				actionRequest, "rolesSearchContainerPrimaryKeys");
+
+			long[] roleIds = StringUtil.split(
+				rolesSearchContainerPrimaryKeys, 0L);
 
 			for (long roleId : roleIds) {
-				List<String> actionIdsFinal = new ArrayList<String>();
-
 				List<String> nodeActionIds =
 					ResourcePermissionLocalServiceUtil.
 						getAvailableResourcePermissionActionIds(
-							themeDisplay.getCompanyId(), selResourceNode,
+							themeDisplay.getCompanyId(),
+							WikiNode.class.getName(),
 							ResourceConstants.SCOPE_INDIVIDUAL,
-							resourcePrimKeyNode, roleId, nodeActionList);
+							String.valueOf(nodeId), roleId,
+							nodeResourceActions);
 
 				List<String> pageActionIds =
 					ResourcePermissionLocalServiceUtil.
 						getAvailableResourcePermissionActionIds(
-							themeDisplay.getCompanyId(), selResourcePage,
-							ResourceConstants.SCOPE_INDIVIDUAL,
-							resourcePrimKeyPage, roleId, pageActionList);
+							themeDisplay.getCompanyId(),
+							WikiPage.class.getName(),
+							ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
+							roleId, pageResourceActions);
 
-				for (String actionId: pageActionIds) {
-					boolean actionIdFound = false;
-					for (String pageExclusiveActionId: pageActionExclusive){
-						if ( actionId.equals(pageExclusiveActionId)){
-							actionIdFound = true;
-						}
+				for (String actionId : nodeActionIds) {
+					if (!sharedResourceActions.contains(actionId)) {
+						continue;
 					}
-					if (actionIdFound) {
-						actionIdsFinal.add(actionId);
-					}
+
+					pageActionIds.add(actionId);
 				}
 
-				for (String actionId: nodeActionIds) {
-					boolean actionIdFound = false;
-					for (String pageNodeActionShared: pageNodeActionsShared) {
-						if ( actionId.equals(pageNodeActionShared)){
-							actionIdFound = true;
-						}
-					}
-					if (actionIdFound) {
-						actionIdsFinal.add(actionId);
-					}
-				}
-
-				String[]actionIds = actionIdsFinal.toArray(new String[]{});
-
-				ResourcePermissionServiceUtil.
-					setIndividualResourcePermissions(
-						themeDisplay.getScopeGroupId(),
-						themeDisplay.getCompanyId(),
-						selResourcePage, resourcePrimKeyPage,
-						roleId, actionIds);
+				ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
+					WikiPage.class.getName(), resourcePrimKey, roleId,
+					pageActionIds.toArray(new String[pageActionIds.size()]));
 			}
 		}
-	} 
+	}
+
 }

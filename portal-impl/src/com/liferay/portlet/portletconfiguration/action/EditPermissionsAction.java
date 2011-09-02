@@ -213,6 +213,7 @@ public class EditPermissionsAction extends EditConfigurationAction {
 
 		if (permissionPropagator != null &&
 			PropsValues.PERMISSIONS_PROPAGATION_ENABLED ) {
+
 			permissionPropagator.propagateRolePermissions(actionRequest);
 		}
 	}

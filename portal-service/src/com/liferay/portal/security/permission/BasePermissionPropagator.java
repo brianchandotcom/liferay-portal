@@ -21,6 +21,7 @@ import javax.portlet.ActionRequest;
  */
 public abstract class BasePermissionPropagator implements PermissionPropagator {
 
-	public abstract void propagateRolePermissions(ActionRequest actionRequest) throws Exception;
+	public abstract void propagateRolePermissions(ActionRequest actionRequest)
+		throws Exception;
 
 }

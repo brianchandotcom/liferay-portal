@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ page session="false"%>
+
 <%@ include file="/html/common/init.jsp" %>
 
 <%
@@ -21,7 +23,13 @@ String referer = null;
 
 String refererParam = PortalUtil.escapeRedirect(request.getParameter(WebKeys.REFERER));
 String refererRequest = (String)request.getAttribute(WebKeys.REFERER);
-String refererSession = (String)session.getAttribute(WebKeys.REFERER);
+String refererSession = null;
+
+HttpSession session = request.getSession(false);
+
+if (session != null) {
+	refererSession = (String)session.getAttribute(WebKeys.REFERER);
+}
 
 if (Validator.isNotNull(refererParam)) {
 	referer = refererParam;
@@ -39,7 +47,7 @@ else {
 	referer = PortalUtil.getPathMain();
 }
 
-if (!CookieKeys.hasSessionId(request) && Validator.isNotNull(referer)) {
+if ((session != null) && !CookieKeys.hasSessionId(request) && Validator.isNotNull(referer)) {
 	referer = PortalUtil.getURLWithSessionId(referer, session.getId());
 }
 %>

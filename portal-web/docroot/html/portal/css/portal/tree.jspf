@@ -17,6 +17,12 @@
 .lfr-tree {
 }
 
+.lfr-tree .aui-tree-label {
+	display: table-cell;
+	float: none;
+	padding-left: 2px;
+}
+
 .lfr-tree .expand-image {
 }
 

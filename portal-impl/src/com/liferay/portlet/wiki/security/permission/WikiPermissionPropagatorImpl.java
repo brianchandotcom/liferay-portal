@@ -57,11 +57,9 @@ public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 		List<String> sharedResourceActions = new ArrayList<String>();
 
 		for (String resourceAction : pageResourceActions) {
-			if (!nodeResourceActions.contains(resourceAction)) {
-				continue;
+			if (nodeResourceActions.contains(resourceAction)) {
+				sharedResourceActions.add(resourceAction);
 			}
-
-			sharedResourceActions.add(resourceAction);
 		}
 
 		long nodeId = ParamUtil.getLong(actionRequest, "resourcePrimKey");
@@ -97,18 +95,25 @@ public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 							ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
 							roleId, pageResourceActions);
 
-				for (String actionId : nodeActionIds) {
-					if (!sharedResourceActions.contains(actionId)) {
-						continue;
-					}
+				List<String> resourceActions = new ArrayList<String>();
 
-					pageActionIds.add(actionId);
+				for (String resourceAction : sharedResourceActions) {
+					if (nodeActionIds.contains(resourceAction)) {
+						resourceActions.add(resourceAction);
+					}
+				}
+
+				for (String resourceAction : pageActionIds) {
+					if (!sharedResourceActions.contains(resourceAction)) {
+						resourceActions.add(resourceAction);
+					}
 				}
 
 				ResourcePermissionServiceUtil.setIndividualResourcePermissions(
 					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
 					WikiPage.class.getName(), resourcePrimKey, roleId,
-					pageActionIds.toArray(new String[pageActionIds.size()]));
+					resourceActions.toArray(
+						new String[resourceActions.size()]));
 			}
 		}
 	}

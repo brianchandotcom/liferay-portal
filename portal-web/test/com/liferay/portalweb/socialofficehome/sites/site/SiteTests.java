@@ -43,7 +43,7 @@ public class SiteTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
- 
+
 		testSuite.addTest(AddSitesDefaultPageNoneTests.suite());
 		testSuite.addTest(AddSitesSiteTests.suite());
 		testSuite.addTest(AddSitesSiteTypePrivateTests.suite());

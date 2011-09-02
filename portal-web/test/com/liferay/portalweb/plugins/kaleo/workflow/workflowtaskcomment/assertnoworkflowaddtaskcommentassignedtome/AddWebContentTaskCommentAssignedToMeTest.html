@@ -16,27 +16,27 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Workflow</td>
-	<td></td>
+	<td>Workflow</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Submissions</td>
-	<td></td>
+	<td>Submissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -46,7 +46,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
-	<td>Web Content Name</td>
+	<td>WC Web Content Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -59,7 +59,7 @@
 	<td>Review</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[5]/a</td>
 	<td>Last Activity Date</td>
 </tr>
@@ -71,51 +71,46 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[2]/a</td>
-	<td>Web Content Name</td>
+	<td>WC Web Content Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//fieldset/div/a</td>
+	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Be the first.</td>
-	<td></td>
+	<td>//fieldset/div/a</td>
+	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_151_postReplyBody0</td>
-	<td></td>
+	<td>//textarea[@name='_151_postReplyBody0']</td>
+	<td>Comment Text Area</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_151_postReplyBody0</td>
+	<td>//textarea[@name='_151_postReplyBody0']</td>
 	<td>Workflow Task Comment</td>
 </tr>
 <tr>
-	<td>keyPress</td>
-	<td>_151_postReplyBody0</td>
-	<td>\48</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>_151_postReplyBody0</td>
-	<td>\8</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Reply']</td>
-	<td></td>
+	<td>Reply</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//form/div/div/div/div/div[3]/div/div[1]</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-discussion-message']</td>
 	<td>Workflow Task Comment</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='user-name']</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td>Workflow Task Comment</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='user-name']</td>
 	<td>Joe Bloggs</td>
 </tr>
 

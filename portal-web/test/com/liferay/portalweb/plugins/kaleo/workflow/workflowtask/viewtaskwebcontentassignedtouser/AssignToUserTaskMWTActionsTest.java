@@ -41,19 +41,33 @@ public class AssignToUserTaskMWTActionsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Workflow Tasks", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Workflow Tasks",
+			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+		assertEquals(RuntimeVariables.replace("Review"),
+			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Web Content"),
+			selenium.getText("//td[3]/a"));
+		assertTrue(selenium.isVisible("//td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//td[5]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -76,7 +90,8 @@ public class AssignToUserTaskMWTActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Assign to..."),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Assign to..."));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -84,7 +99,7 @@ public class AssignToUserTaskMWTActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_153_assigneeUserId")) {
+				if (selenium.isVisible("//select[@id='_153_assigneeUserId']")) {
 					break;
 				}
 			}
@@ -95,8 +110,8 @@ public class AssignToUserTaskMWTActionsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_153_assigneeUserId",
-			RuntimeVariables.replace("label=userfn userln"));
+		selenium.select("//select[@id='_153_assigneeUserId']",
+			RuntimeVariables.replace("userfn userln"));
 		selenium.clickAt("//div/button[1]", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -105,7 +120,7 @@ public class AssignToUserTaskMWTActionsTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));

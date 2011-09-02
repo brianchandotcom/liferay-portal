@@ -16,27 +16,27 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Workflow</td>
-	<td></td>
+	<td>Workflow</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Submissions</td>
-	<td></td>
+	<td>Submissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -46,7 +46,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
-	<td>Web Content Name</td>
+	<td>WC Web Content Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -59,7 +59,7 @@
 	<td>Review</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[5]/a</td>
 	<td>Last Activity Date</td>
 </tr>
@@ -71,7 +71,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[2]/a</td>
-	<td>Web Content Name</td>
+	<td>WC Web Content Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -94,8 +94,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -104,7 +109,12 @@
 	<td>Reject</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Reject</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Reject</td>
 </tr>
@@ -119,18 +129,13 @@
 	<td>OK</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]</td>
+	<td>//span[.='Review']</td>
 	<td>Review</td>
 </tr>
 <tr>
@@ -140,12 +145,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
+	<td>//td[contains(.,'Yes')]</td>
 	<td>Yes</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]</td>
+	<td>//span[.='Update']</td>
 	<td>Update</td>
 </tr>
 <tr>
@@ -155,7 +160,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[3]</td>
+	<td>//td[contains(.,'No')]</td>
 	<td>No</td>
 </tr>
 <tr>

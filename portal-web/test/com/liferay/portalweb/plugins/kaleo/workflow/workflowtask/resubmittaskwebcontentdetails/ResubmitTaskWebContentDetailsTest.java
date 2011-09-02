@@ -41,48 +41,51 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Workflow", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Submissions",
+			RuntimeVariables.replace("Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Update"),
 			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[6]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("Web Content Name"));
+			RuntimeVariables.replace("WC Web Content Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[3]/td[1]"));
+			selenium.getText("//span[.='Review']"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText("//td[contains(.,'Yes')]"));
 		assertEquals(RuntimeVariables.replace("Update"),
-			selenium.getText("//tr[4]/td[1]"));
+			selenium.getText("//span[.='Update']"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[4]/td[2]"));
 		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText("//tr[4]/td[3]"));
+			selenium.getText("//td[contains(.,'No')]"));
 		assertEquals(RuntimeVariables.replace("Resubmit"),
-			selenium.getText("//span/a/span"));
-		selenium.clickAt("//span/a/span", RuntimeVariables.replace("Resubmit"));
+			selenium.getText("//tr[4]/td[4]/span/a/span"));
+		selenium.clickAt("//tr[4]/td[4]/span/a/span",
+			RuntimeVariables.replace("Resubmit"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -104,48 +107,27 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 		selenium.clickAt("//div/button[1]", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[3]/td[1]"));
+			selenium.getText("xPath=(//span[.='Review'])[1]"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText("xPath=(//td[contains(.,'Yes')])[1]"));
 		assertEquals(RuntimeVariables.replace("Update"),
-			selenium.getText("//tr[4]/td[1]"));
+			selenium.getText("xPath=(//span[.='Update'])[1]"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[4]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//tr[4]/td[3]"));
+			selenium.getText("xPath=(//td[contains(.,'Yes')])[2]"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[5]/td[1]"));
+			selenium.getText("xPath=(//span[.='Review'])[2]"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[5]/td[2]"));
 		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText("//tr[5]/td[3]"));
+			selenium.getText("xPath=(//td[contains(.,'No')])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"Task initially assigned to the Portal Content Reviewer role."),
 			selenium.getText(

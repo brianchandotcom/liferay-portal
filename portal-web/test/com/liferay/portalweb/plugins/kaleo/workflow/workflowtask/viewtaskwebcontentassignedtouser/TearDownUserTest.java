@@ -47,25 +47,14 @@ public class TearDownUserTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
-
-				if (!basicVisible) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
-
-			case 2:
+				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -74,7 +63,7 @@ public class TearDownUserTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"_125_toggle_id_enterprise_admin_user_searchkeywords")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 							break;
 						}
 					}
@@ -85,23 +74,45 @@ public class TearDownUserTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.type("_125_toggle_id_enterprise_admin_user_searchkeywords",
-					RuntimeVariables.replace("usersn"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace(""));
+				assertEquals(RuntimeVariables.replace("All Users"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
-				boolean userActive = selenium.isElementPresent("_125_rowIds");
+				boolean basic1Visible = selenium.isVisible("link=\u00ab Basic");
 
-				if (!userActive) {
+				if (!basic1Visible) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
+
+			case 2:
+				selenium.type("//input[@name='_125_keywords']",
+					RuntimeVariables.replace("usersn"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+
+				boolean UsersExists = selenium.isPartialText("//div[5]",
+						"No users were found");
+
+				if (UsersExists) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("_125_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -110,8 +121,7 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 3:
-				selenium.clickAt("link=Advanced \u00bb",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -119,7 +129,8 @@ public class TearDownUserTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_125_active")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 							break;
 						}
 					}
@@ -130,21 +141,123 @@ public class TearDownUserTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.select("_125_active", RuntimeVariables.replace("No"));
+				assertEquals(RuntimeVariables.replace("All Users"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("link=Advanced \u00bb",
+					RuntimeVariables.replace("Advanced \u00bb"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//select[@id='_125_status']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select[@id='_125_status']",
+					RuntimeVariables.replace("Inactive"));
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
-				boolean userPresent = selenium.isElementPresent("_125_rowIds");
+				boolean user1Deleted = selenium.isElementPresent(
+						"//input[@name='_125_rowIds']");
 
-				if (!userPresent) {
+				if (!user1Deleted) {
 					label = 4;
 
 					continue;
 				}
 
-				selenium.clickAt("_125_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_rowIds']",
+					RuntimeVariables.replace("Entry Check Box"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+				boolean user2Deleted = selenium.isElementPresent(
+						"//input[@name='_125_rowIds']");
+
+				if (!user2Deleted) {
+					label = 5;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_125_rowIds']",
+					RuntimeVariables.replace("Entry Check Box"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+				boolean user3Deleted = selenium.isElementPresent(
+						"//input[@name='_125_rowIds']");
+
+				if (!user3Deleted) {
+					label = 6;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_125_rowIds']",
+					RuntimeVariables.replace("Entry Check Box"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+				boolean user4Deleted = selenium.isElementPresent(
+						"//input[@name='_125_rowIds']");
+
+				if (!user4Deleted) {
+					label = 7;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_125_rowIds']",
+					RuntimeVariables.replace("Entry Check Box"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+				boolean user5Deleted = selenium.isElementPresent(
+						"//input[@name='_125_rowIds']");
+
+				if (!user5Deleted) {
+					label = 8;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_125_rowIds']",
+					RuntimeVariables.replace("Entry Check Box"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
@@ -153,9 +266,50 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 4:
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("All Users"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+
+				boolean basic2Visible = selenium.isVisible("link=\u00ab Basic");
+
+				if (!basic2Visible) {
+					label = 9;
+
+					continue;
+				}
+
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
+
+			case 9:
 			case 100:
 				label = -1;
 			}

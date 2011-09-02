@@ -1457,6 +1457,8 @@ public interface PropsKeys {
 
 	public static final String OSGI_FRAMEWORK_STORAGE = "osgi.framework.storage";
 
+	public static final String OSGI_SYSTEM_BUNDLE_EXPORT_PACKAGES = "osgi.system.bundle.export.packages";
+
 	public static final String OSGI_SYSTEM_PACKAGES_EXTRA = "osgi.system.packages.extra";
 
 	public static final String PASSWORDS_DEFAULT_POLICY_NAME = "passwords.default.policy.name";

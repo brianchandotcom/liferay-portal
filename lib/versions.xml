@@ -2171,7 +2171,7 @@
 	</library>
 	<library>
 		<file-name>portal/jruby.jar</file-name>
-		<version>1.5.6</version>
+		<version>1.6.4</version>
 		<project-name>JRuby</project-name>
 		<project-url>http://jruby.codehaus.org</project-url>
 		<licenses>
@@ -2179,9 +2179,6 @@
 				<license-name>LGPL 2.1</license-name>
 			</license>
 		</licenses>
-		<comments>
-			This includes a public patch from JRUBY-4774.
-		</comments>
 	</library>
 	<library>
 		<file-name>portal/json-java.jar</file-name>

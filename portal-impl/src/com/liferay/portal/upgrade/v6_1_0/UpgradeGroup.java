@@ -65,7 +65,7 @@ public class UpgradeGroup extends UpgradeProcess {
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
 				long classPK = rs.getLong("classPK");
-				String name = rs.getString("Organization_.name");
+				String name = rs.getString("name");
 
 				runSQL(
 					"update Group_ set name = '" + classPK +

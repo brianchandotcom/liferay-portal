@@ -52,10 +52,18 @@ public class JSONWebServiceActionsManagerUtil {
 	}
 
 	public static void registerJSONWebServiceAction(
-		Class<?> actionClass, Method actionMethod, String path, String method) {
+		Class<?> actionClass, Method actionMethod, String path, String method,
+		String portalServletContextName) {
 
 		getJSONWebServiceActionsManager().registerJSONWebServiceAction(
-			actionClass, actionMethod, path, method);
+			actionClass, actionMethod, path, method, portalServletContextName);
+	}
+
+	public static int unregisterJSONWebServiceActions(
+		String portletServletContextName) {
+
+		return getJSONWebServiceActionsManager().
+			unregisterJSONWebServiceActions(portletServletContextName);
 	}
 
 	public void setJSONWebServiceActionsManager(

@@ -29,7 +29,8 @@ public class JSONWebServiceActionConfig
 	JSONWebServiceActionMapping {
 
 	public JSONWebServiceActionConfig(
-		Class<?> actionClass, Method actionMethod, String path, String method) {
+		Class<?> actionClass, Method actionMethod, String path, String method,
+		String portletServletContextName) {
 
 		_actionClass = actionClass;
 		_actionMethod = actionMethod;
@@ -53,6 +54,8 @@ public class JSONWebServiceActionConfig
 		}
 
 		_fullPath = sb.toString();
+
+		_portletServletContextName = portletServletContextName;
 	}
 
 	public int compareTo(
@@ -83,6 +86,10 @@ public class JSONWebServiceActionConfig
 
 	public String getPath() {
 		return _path;
+	}
+
+	public String getPortletServletContextName() {
+		return _portletServletContextName;
 	}
 
 	public String getSignature() {
@@ -119,5 +126,6 @@ public class JSONWebServiceActionConfig
 	private String[] _parameterNames;
 	private Class<?>[] _parameterTypes;
 	private String _path;
+	private String _portletServletContextName;
 
 }

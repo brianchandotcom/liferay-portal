@@ -32,19 +32,24 @@ import org.apache.struts.action.ActionMapping;
  */
 public class JSONWebServiceServiceAction extends JSONServiceAction {
 
-	public JSONWebServiceServiceAction(ClassLoader classLoader) {
-		JSONWebServiceConfigurator jsonWebServiceConfigurator =
-			new JSONWebServiceConfigurator();
+	public JSONWebServiceServiceAction(
+		ClassLoader classLoader, String portletServletContextName) {
 
-		jsonWebServiceConfigurator.setJSONWebServiceActionsManager(
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionsManager());
+		_jsonWebServiceConfigurator =
+			new JSONWebServiceConfigurator(portletServletContextName);
+
+		_jsonWebServiceConfigurator.clean();
 
 		try {
-			jsonWebServiceConfigurator.configure(classLoader);
+			_jsonWebServiceConfigurator.configure(classLoader);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	public void destroy() {
+		_jsonWebServiceConfigurator.clean();
 	}
 
 	@Override
@@ -83,5 +88,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceServiceAction.class);
+
+	private JSONWebServiceConfigurator _jsonWebServiceConfigurator;
 
 }

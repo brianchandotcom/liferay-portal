@@ -34,6 +34,10 @@ public interface JSONWebServiceActionsManager {
 	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings();
 
 	public void registerJSONWebServiceAction(
-		Class<?> actionClass, Method actionMethod, String path, String method);
+		Class<?> actionClass, Method actionMethod, String path, String method,
+		String portletServletContextName);
+
+	public int unregisterJSONWebServiceActions(
+		String portletServletContextName);
 
 }

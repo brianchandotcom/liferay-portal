@@ -14,11 +14,14 @@
 
 package com.liferay.portal.security.permission;
 
+import javax.portlet.ActionRequest;
+
 /**
  * @author Hugo Huijser
  */
 public abstract class BasePermissionPropagator implements PermissionPropagator {
 
-	public abstract void propagateRolePermissions() throws Exception;
+	public abstract void propagateRolePermissions(ActionRequest actionRequest)
+		throws Exception;
 
 }

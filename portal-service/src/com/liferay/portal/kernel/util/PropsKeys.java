@@ -1479,6 +1479,8 @@ public interface PropsKeys {
 
 	public static final String PERMISSIONS_OBJECT_BLOCKING_CACHE = "permissions.object.blocking.cache";
 
+	public static final String PERMISSIONS_PROPAGATION_ENABLED = "permissions.propagation.enabled";
+
 	public static final String PERMISSIONS_THREAD_LOCAL_CACHE_MAX_SIZE = "permissions.thread.local.cache.max.size";
 
 	public static final String PERMISSIONS_USER_CHECK_ALGORITHM = "permissions.user.check.algorithm";

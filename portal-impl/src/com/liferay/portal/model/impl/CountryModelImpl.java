@@ -66,9 +66,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 			{ "a3", Types.VARCHAR },
 			{ "number_", Types.VARCHAR },
 			{ "idd_", Types.VARCHAR },
+			{ "zipRequired", Types.BOOLEAN },
 			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Country (countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Country (countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,zipRequired BOOLEAN,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Country";
 	public static final String ORDER_BY_JPQL = " ORDER BY country.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Country.name ASC";
@@ -97,6 +98,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		model.setA3(soapModel.getA3());
 		model.setNumber(soapModel.getNumber());
 		model.setIdd(soapModel.getIdd());
+		model.setZipRequired(soapModel.getZipRequired());
 		model.setActive(soapModel.getActive());
 
 		return model;
@@ -252,6 +254,19 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	@JSON
+	public boolean getZipRequired() {
+		return _zipRequired;
+	}
+
+	public boolean isZipRequired() {
+		return _zipRequired;
+	}
+
+	public void setZipRequired(boolean zipRequired) {
+		_zipRequired = zipRequired;
+	}
+
+	@JSON
 	public boolean getActive() {
 		return _active;
 	}
@@ -305,6 +320,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		countryImpl.setA3(getA3());
 		countryImpl.setNumber(getNumber());
 		countryImpl.setIdd(getIdd());
+		countryImpl.setZipRequired(getZipRequired());
 		countryImpl.setActive(getActive());
 
 		countryImpl.resetOriginalValues();
@@ -411,6 +427,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 			countryCacheModel.idd = null;
 		}
 
+		countryCacheModel.zipRequired = getZipRequired();
+
 		countryCacheModel.active = getActive();
 
 		return countryCacheModel;
@@ -418,7 +436,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{countryId=");
 		sb.append(getCountryId());
@@ -432,6 +450,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		sb.append(getNumber());
 		sb.append(", idd=");
 		sb.append(getIdd());
+		sb.append(", zipRequired=");
+		sb.append(getZipRequired());
 		sb.append(", active=");
 		sb.append(getActive());
 		sb.append("}");
@@ -440,7 +460,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Country");
@@ -471,6 +491,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		sb.append(getIdd());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>zipRequired</column-name><column-value><![CDATA[");
+		sb.append(getZipRequired());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
@@ -493,6 +517,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	private String _originalA3;
 	private String _number;
 	private String _idd;
+	private boolean _zipRequired;
 	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
 	private Country _escapedModelProxy;

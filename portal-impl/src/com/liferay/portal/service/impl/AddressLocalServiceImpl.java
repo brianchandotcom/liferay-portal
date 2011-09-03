@@ -26,6 +26,7 @@ import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
@@ -215,7 +216,9 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		else if (Validator.isNull(city)) {
 			throw new AddressCityException();
 		}
-		else if (Validator.isNull(zip)) {
+		else if (Validator.isNull(zip) &&
+				 CountryServiceUtil.getCountry(countryId).isZipRequired()) {
+
 			throw new AddressZipException();
 		}
 

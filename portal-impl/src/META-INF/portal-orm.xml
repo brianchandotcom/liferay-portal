@@ -180,6 +180,7 @@
 			<basic name="idd">
 				<column name="IDD_" />
 			</basic>
+			<basic name="zipRequired" />
 			<basic name="active">
 				<column name="ACTIVE_" />
 			</basic>

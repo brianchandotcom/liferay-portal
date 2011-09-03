@@ -377,6 +377,7 @@ create table Country (
 	a3 VARCHAR(75) null,
 	number_ VARCHAR(75) null,
 	idd_ VARCHAR(75) null,
+	zipRequired BOOLEAN,
 	active_ BOOLEAN
 );
 

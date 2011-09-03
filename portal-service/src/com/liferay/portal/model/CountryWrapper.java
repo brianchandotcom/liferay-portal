@@ -163,6 +163,33 @@ public class CountryWrapper implements Country {
 	}
 
 	/**
+	* Returns the zip required of this country.
+	*
+	* @return the zip required of this country
+	*/
+	public boolean getZipRequired() {
+		return _country.getZipRequired();
+	}
+
+	/**
+	* Returns <code>true</code> if this country is zip required.
+	*
+	* @return <code>true</code> if this country is zip required; <code>false</code> otherwise
+	*/
+	public boolean isZipRequired() {
+		return _country.isZipRequired();
+	}
+
+	/**
+	* Sets whether this country is zip required.
+	*
+	* @param zipRequired the zip required of this country
+	*/
+	public void setZipRequired(boolean zipRequired) {
+		_country.setZipRequired(zipRequired);
+	}
+
+	/**
 	* Returns the active of this country.
 	*
 	* @return the active of this country

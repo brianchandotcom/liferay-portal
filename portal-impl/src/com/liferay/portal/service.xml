@@ -237,6 +237,7 @@
 		<column name="a3" type="String" />
 		<column name="number" type="String" />
 		<column name="idd" type="String" />
+		<column name="zipRequired" type="boolean" />
 		<column name="active" type="boolean" />
 
 		<!-- Order -->

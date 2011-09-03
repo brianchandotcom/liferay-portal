@@ -145,6 +145,27 @@ public interface CountryModel extends BaseModel<Country> {
 	public void setIdd(String idd);
 
 	/**
+	 * Returns the zip required of this country.
+	 *
+	 * @return the zip required of this country
+	 */
+	public boolean getZipRequired();
+
+	/**
+	 * Returns <code>true</code> if this country is zip required.
+	 *
+	 * @return <code>true</code> if this country is zip required; <code>false</code> otherwise
+	 */
+	public boolean isZipRequired();
+
+	/**
+	 * Sets whether this country is zip required.
+	 *
+	 * @param zipRequired the zip required of this country
+	 */
+	public void setZipRequired(boolean zipRequired);
+
+	/**
 	 * Returns the active of this country.
 	 *
 	 * @return the active of this country

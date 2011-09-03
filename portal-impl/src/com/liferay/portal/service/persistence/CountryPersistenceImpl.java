@@ -399,6 +399,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		countryImpl.setA3(country.getA3());
 		countryImpl.setNumber(country.getNumber());
 		countryImpl.setIdd(country.getIdd());
+		countryImpl.setZipRequired(country.isZipRequired());
 		countryImpl.setActive(country.isActive());
 
 		return countryImpl;

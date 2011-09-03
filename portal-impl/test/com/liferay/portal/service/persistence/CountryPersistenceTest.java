@@ -78,6 +78,8 @@ public class CountryPersistenceTest extends BasePersistenceTestCase {
 
 		newCountry.setIdd(randomString());
 
+		newCountry.setZipRequired(randomBoolean());
+
 		newCountry.setActive(randomBoolean());
 
 		_persistence.update(newCountry, false);
@@ -90,6 +92,8 @@ public class CountryPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingCountry.getA3(), newCountry.getA3());
 		assertEquals(existingCountry.getNumber(), newCountry.getNumber());
 		assertEquals(existingCountry.getIdd(), newCountry.getIdd());
+		assertEquals(existingCountry.getZipRequired(),
+			newCountry.getZipRequired());
 		assertEquals(existingCountry.getActive(), newCountry.getActive());
 	}
 
@@ -231,6 +235,8 @@ public class CountryPersistenceTest extends BasePersistenceTestCase {
 		country.setNumber(randomString());
 
 		country.setIdd(randomString());
+
+		country.setZipRequired(randomBoolean());
 
 		country.setActive(randomBoolean());
 

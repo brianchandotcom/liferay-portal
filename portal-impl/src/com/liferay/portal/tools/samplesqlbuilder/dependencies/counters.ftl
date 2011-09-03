@@ -3,5 +3,9 @@
 ${dataFactory.initCounters()}
 
 <#list dataFactory.counters as counter>
-	update Counter set currentId = ${counter.currentId} where name = '${counter.name}';
+	<#if ('${counter.name}' == 'com.liferay.counter.model.Counter')>
+		update Counter set currentId = ${counter.currentId} where name = '${counter.name}';
+	<#else>
+		insert into Counter values ('${counter.name}', ${counter.currentId});
+	</#if>
 </#list>

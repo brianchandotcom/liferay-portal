@@ -84,6 +84,8 @@ public class SampleSQLBuilder {
 		String baseDir = arguments.get("sample.sql.base.dir");
 		String outputDir = arguments.get("sample.sql.output.dir");
 		String dbType = arguments.get("sample.sql.db.type");
+		int dlFileEntrySize = GetterUtil.getInteger(
+			arguments.get("sample.sql.dl.file.entry.size"));
 		int maxBlogsEntryCommentCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.blogs.entry.comment.count"));
 		int maxBlogsEntryCount = GetterUtil.getInteger(
@@ -116,26 +118,28 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.security.enabled"));
 
 		new SampleSQLBuilder(
-			arguments, baseDir, outputDir, dbType, maxBlogsEntryCommentCount,
-			maxBlogsEntryCount,	maxDLFileEntryCount, maxDLFolderCount,
-			maxDLFolderDepth, maxGroupCount, maxMBCategoryCount,
-			maxMBMessageCount, maxMBThreadCount, maxUserCount,
-			maxUserToGroupCount, maxWikiNodeCount, maxWikiPageCommentCount,
-			maxWikiPageCount, securityEnabled);
+			arguments, baseDir, outputDir, dbType, dlFileEntrySize, 
+			maxBlogsEntryCommentCount, maxBlogsEntryCount, maxDLFileEntryCount, 
+			maxDLFolderCount, maxDLFolderDepth, maxGroupCount, 
+			maxMBCategoryCount, maxMBMessageCount, maxMBThreadCount, 
+			maxUserCount, maxUserToGroupCount, maxWikiNodeCount, 
+			maxWikiPageCommentCount, maxWikiPageCount, securityEnabled);
 	}
 
 	public SampleSQLBuilder(
 		Map<String, String> arguments, String baseDir, String outputDir,
-		String dbType, int maxBlogsEntryCommentCount, int maxBlogsEntryCount,
-		int maxDLFileEntryCount, int maxDLFolderCount, int maxDLFolderDepth,
-		int maxGroupCount, int maxMBCategoryCount, int maxMBMessageCount,
-		int maxMBThreadCount, int maxUserCount, int maxUserToGroupCount,
-		int maxWikiNodeCount, int maxWikiPageCommentCount, int maxWikiPageCount,
+		String dbType, int dlFileEntrySize, int maxBlogsEntryCommentCount, 
+		int maxBlogsEntryCount, int maxDLFileEntryCount, int maxDLFolderCount, 
+		int maxDLFolderDepth, int maxGroupCount, int maxMBCategoryCount, 
+		int maxMBMessageCount, int maxMBThreadCount, int maxUserCount, 
+		int maxUserToGroupCount, int maxWikiNodeCount, 
+		int maxWikiPageCommentCount, int maxWikiPageCount, 
 		boolean securityEnabled) {
 
 		try {
 			_outputDir = outputDir;
 			_dbType = dbType;
+			_dlFileEntrySize = dlFileEntrySize;
 			_maxBlogsEntryCommentCount = maxBlogsEntryCommentCount;
 			_maxBlogsEntryCount = maxBlogsEntryCount;
 			_maxDLFileEntryCount = maxDLFileEntryCount;
@@ -267,13 +271,18 @@ public class SampleSQLBuilder {
 		processTemplate(_tplDLFileEntry, context);
 	}
 
-	public void insertDLFolder(DLFolder dlFolder, DDMStructure ddmStructure)
+	public void insertDLFolder(
+			DLFolder dlFolder, Writer documentLibraryCsvWriter, 
+			DDMStructure ddmStructure)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "dlFolder", dlFolder);
 		put(context, "ddmStructure", ddmStructure);
+		put(
+			context, "documentLibraryCsvWriter", 
+			documentLibraryCsvWriter);
 
 		processTemplate(_tplDLFolder, context);
 	}
@@ -473,11 +482,16 @@ public class SampleSQLBuilder {
 				Writer mbMessagesCsvWriter = getWriter("mb_messages.csv");
 				Writer usersCsvWriter = getWriter("users.csv");
 				Writer wikiPagesCsvWriter = getWriter("wiki_pages.csv");
+				Writer documentLibraryCsvWriter = getWriter(
+					"document_library.csv");
 
 				put(context, "blogsEntriesCsvWriter", blogsEntriesCsvWriter);
 				put(context, "mbMessagesCsvWriter", mbMessagesCsvWriter);
 				put(context, "usersCsvWriter", usersCsvWriter);
 				put(context, "wikiPagesCsvWriter", wikiPagesCsvWriter);
+				put(
+					context, "documentLibraryCsvWriter", 
+					documentLibraryCsvWriter);
 
 				processTemplate(_tplSample, context);
 
@@ -485,6 +499,7 @@ public class SampleSQLBuilder {
 				mbMessagesCsvWriter.flush();
 				usersCsvWriter.flush();
 				wikiPagesCsvWriter.flush();
+				documentLibraryCsvWriter.flush();
 			}
 
 			protected Writer getWriter(String fileName) throws Exception {
@@ -506,6 +521,7 @@ public class SampleSQLBuilder {
 		put(context, "counter", _counter);
 		put(context, "dataFactory", _dataFactory);
 		put(context, "defaultUserId", defaultUser.getCompanyId());
+		put(context, "dlFileEntrySize", _dlFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);
 		put(context, "maxDLFileEntryCount", _maxDLFileEntryCount);
@@ -615,6 +631,7 @@ public class SampleSQLBuilder {
 	private DataFactory _dataFactory;
 	private DB _db;
 	private String _dbType;
+	private int _dlFileEntrySize;
 	private Map<String, StringBundler> _insertSQLs =
 		new ConcurrentHashMap<String, StringBundler>();
 	private Map<String, Writer> _insertSQLWriters =

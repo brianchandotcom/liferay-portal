@@ -17,6 +17,7 @@ package com.liferay.portlet.directory.workflow;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
@@ -61,7 +62,11 @@ public class UserWorkflowHandler extends BaseWorkflowHandler {
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = (User) serviceContext.getAttribute("workflow_user");
+
+		if (Validator.isNull(user)) {
+			user = UserLocalServiceUtil.getUser(userId);
+		}
 
 		if (((user.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
 			 (user.getStatus() == WorkflowConstants.STATUS_PENDING)) &&
@@ -70,7 +75,7 @@ public class UserWorkflowHandler extends BaseWorkflowHandler {
 			UserLocalServiceUtil.completeUserRegistration(user, serviceContext);
 		}
 
-		return UserLocalServiceUtil.updateStatus(userId, status);
+		return UserLocalServiceUtil.updateStatus(user, status);
 	}
 
 	@Override

@@ -33,8 +33,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFieldConstants;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.util.portlet.PortletRequestUtil;
@@ -101,10 +101,10 @@ public class DDLUtil {
 
 			if (ddmStructure.getFieldDisplayChildLabelAsValue(fieldName)) {
 				Map<String, String> childFields = ddmStructure.getFields(
-					fieldName, DDMFieldConstants.VALUE, fieldValue);
+					fieldName, FieldConstants.VALUE, fieldValue);
 
 				if (childFields != null) {
-					fieldValue = childFields.get(DDMFieldConstants.LABEL);
+					fieldValue = childFields.get(FieldConstants.LABEL);
 				}
 			}
 
@@ -127,34 +127,34 @@ public class DDLUtil {
 		for (Map<String, String> fields : fieldsMap.values()) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			String dataType = fields.get(DDMFieldConstants.DATA_TYPE);
+			String dataType = fields.get(FieldConstants.DATA_TYPE);
 
 			jsonObject.put("dataType", dataType);
 
 			boolean editable = GetterUtil.getBoolean(
-				fields.get(DDMFieldConstants.EDITABLE), true);
+				fields.get(FieldConstants.EDITABLE), true);
 
 			jsonObject.put("editable", editable);
 
-			String label = fields.get(DDMFieldConstants.LABEL);
+			String label = fields.get(FieldConstants.LABEL);
 
 			jsonObject.put("label", label);
 
-			String name = fields.get(DDMFieldConstants.NAME);
+			String name = fields.get(FieldConstants.NAME);
 
 			jsonObject.put("name", name);
 
 			boolean required = GetterUtil.getBoolean(
-				fields.get(DDMFieldConstants.REQUIRED));
+				fields.get(FieldConstants.REQUIRED));
 
 			jsonObject.put("required", required);
 
 			boolean sortable = GetterUtil.getBoolean(
-				fields.get(DDMFieldConstants.SORTABLE), true);
+				fields.get(FieldConstants.SORTABLE), true);
 
 			jsonObject.put("sortable", sortable);
 
-			String type = fields.get(DDMFieldConstants.TYPE);
+			String type = fields.get(FieldConstants.TYPE);
 
 			jsonObject.put("type", type);
 

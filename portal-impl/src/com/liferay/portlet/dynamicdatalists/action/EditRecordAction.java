@@ -34,7 +34,10 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+
+import java.io.Serializable;
 
 import java.util.Set;
 
@@ -167,14 +170,19 @@ public class EditRecordAction extends PortletAction {
 
 		Fields fields = new Fields();
 
-		for (String name : fieldNames) {
+		for (String fieldName : fieldNames) {
 			Field field = new Field();
 
-			field.setName(name);
+			field.setName(fieldName);
 
-			String value = ParamUtil.getString(actionRequest, name);
+			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 
-			field.setValue(value);
+			String value = ParamUtil.getString(actionRequest, fieldName);
+
+			Serializable fieldValue = FieldConstants.getSerializable(
+				fieldDataType, value);
+
+			field.setValue(fieldValue);
 
 			fields.put(field);
 		}

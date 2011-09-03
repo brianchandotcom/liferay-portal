@@ -36,6 +36,12 @@
 
 <#if fields?? && fields.get(fieldName)??>
 	<#assign fieldValue = fields.get(fieldName).getValue()>
+		
+	<#if fieldValue?is_date>
+		<#assign fieldValue = fieldValue?string("MM/dd/yyyy")>
+	<#else>
+		<#assign fieldValue = fieldValue?string>
+	</#if>
 </#if>
 
 <!-- Label -->

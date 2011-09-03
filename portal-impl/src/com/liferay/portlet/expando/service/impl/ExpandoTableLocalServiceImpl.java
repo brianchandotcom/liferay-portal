@@ -43,7 +43,6 @@ public class ExpandoTableLocalServiceImpl
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ExpandoTable addDefaultTable(long companyId, String className)
 		throws PortalException, SystemException {
 

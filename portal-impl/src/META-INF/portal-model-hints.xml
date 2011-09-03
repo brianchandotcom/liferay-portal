@@ -157,8 +157,8 @@
 		<field name="a3" type="String" />
 		<field name="number" type="String" />
 		<field name="idd" type="String" />
+		<field name="zipRequired" type="boolean" />
 		<field name="active" type="boolean" />
-		<field name="zipCodeRequired" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.EmailAddress">
 		<field name="emailAddressId" type="long" />

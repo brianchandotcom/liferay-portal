@@ -438,132 +438,6 @@ public class CountryUtil {
 	}
 
 	/**
-	* Returns all the countries where zipCodeRequired = &#63;.
-	*
-	* @param zipCodeRequired the zip code required
-	* @return the matching countries
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Country> findByZipCodeRequired(
-		boolean zipCodeRequired)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByZipCodeRequired(zipCodeRequired);
-	}
-
-	/**
-	* Returns a range of all the countries where zipCodeRequired = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param zipCodeRequired the zip code required
-	* @param start the lower bound of the range of countries
-	* @param end the upper bound of the range of countries (not inclusive)
-	* @return the range of matching countries
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Country> findByZipCodeRequired(
-		boolean zipCodeRequired, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByZipCodeRequired(zipCodeRequired, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the countries where zipCodeRequired = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param zipCodeRequired the zip code required
-	* @param start the lower bound of the range of countries
-	* @param end the upper bound of the range of countries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching countries
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Country> findByZipCodeRequired(
-		boolean zipCodeRequired, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByZipCodeRequired(zipCodeRequired, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first country in the ordered set where zipCodeRequired = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param zipCodeRequired the zip code required
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching country
-	* @throws com.liferay.portal.NoSuchCountryException if a matching country could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Country findByZipCodeRequired_First(
-		boolean zipCodeRequired,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByZipCodeRequired_First(zipCodeRequired,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last country in the ordered set where zipCodeRequired = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param zipCodeRequired the zip code required
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching country
-	* @throws com.liferay.portal.NoSuchCountryException if a matching country could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Country findByZipCodeRequired_Last(
-		boolean zipCodeRequired,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByZipCodeRequired_Last(zipCodeRequired,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the countries before and after the current country in the ordered set where zipCodeRequired = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param countryId the primary key of the current country
-	* @param zipCodeRequired the zip code required
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next country
-	* @throws com.liferay.portal.NoSuchCountryException if a country with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Country[] findByZipCodeRequired_PrevAndNext(
-		long countryId, boolean zipCodeRequired,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByZipCodeRequired_PrevAndNext(countryId,
-			zipCodeRequired, orderByComparator);
-	}
-
-	/**
 	* Returns all the countries.
 	*
 	* @return the countries
@@ -660,17 +534,6 @@ public class CountryUtil {
 	}
 
 	/**
-	* Removes all the countries where zipCodeRequired = &#63; from the database.
-	*
-	* @param zipCodeRequired the zip code required
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByZipCodeRequired(boolean zipCodeRequired)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByZipCodeRequired(zipCodeRequired);
-	}
-
-	/**
 	* Removes all the countries from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -726,18 +589,6 @@ public class CountryUtil {
 	public static int countByActive(boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByActive(active);
-	}
-
-	/**
-	* Returns the number of countries where zipCodeRequired = &#63;.
-	*
-	* @param zipCodeRequired the zip code required
-	* @return the number of matching countries
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByZipCodeRequired(boolean zipCodeRequired)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByZipCodeRequired(zipCodeRequired);
 	}
 
 	/**

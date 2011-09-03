@@ -36,8 +36,8 @@ public class CountrySoap implements Serializable {
 		soapModel.setA3(model.getA3());
 		soapModel.setNumber(model.getNumber());
 		soapModel.setIdd(model.getIdd());
+		soapModel.setZipRequired(model.getZipRequired());
 		soapModel.setActive(model.getActive());
-		soapModel.setZipCodeRequired(model.getZipCodeRequired());
 
 		return soapModel;
 	}
@@ -138,6 +138,18 @@ public class CountrySoap implements Serializable {
 		_idd = idd;
 	}
 
+	public boolean getZipRequired() {
+		return _zipRequired;
+	}
+
+	public boolean isZipRequired() {
+		return _zipRequired;
+	}
+
+	public void setZipRequired(boolean zipRequired) {
+		_zipRequired = zipRequired;
+	}
+
 	public boolean getActive() {
 		return _active;
 	}
@@ -150,24 +162,12 @@ public class CountrySoap implements Serializable {
 		_active = active;
 	}
 
-	public boolean getZipCodeRequired() {
-		return _zipCodeRequired;
-	}
-
-	public boolean isZipCodeRequired() {
-		return _zipCodeRequired;
-	}
-
-	public void setZipCodeRequired(boolean zipCodeRequired) {
-		_zipCodeRequired = zipCodeRequired;
-	}
-
 	private long _countryId;
 	private String _name;
 	private String _a2;
 	private String _a3;
 	private String _number;
 	private String _idd;
+	private boolean _zipRequired;
 	private boolean _active;
-	private boolean _zipCodeRequired;
 }

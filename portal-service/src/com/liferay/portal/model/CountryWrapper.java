@@ -163,6 +163,33 @@ public class CountryWrapper implements Country {
 	}
 
 	/**
+	* Returns the zip required of this country.
+	*
+	* @return the zip required of this country
+	*/
+	public boolean getZipRequired() {
+		return _country.getZipRequired();
+	}
+
+	/**
+	* Returns <code>true</code> if this country is zip required.
+	*
+	* @return <code>true</code> if this country is zip required; <code>false</code> otherwise
+	*/
+	public boolean isZipRequired() {
+		return _country.isZipRequired();
+	}
+
+	/**
+	* Sets whether this country is zip required.
+	*
+	* @param zipRequired the zip required of this country
+	*/
+	public void setZipRequired(boolean zipRequired) {
+		_country.setZipRequired(zipRequired);
+	}
+
+	/**
 	* Returns the active of this country.
 	*
 	* @return the active of this country
@@ -187,33 +214,6 @@ public class CountryWrapper implements Country {
 	*/
 	public void setActive(boolean active) {
 		_country.setActive(active);
-	}
-
-	/**
-	* Returns the zip code required of this country.
-	*
-	* @return the zip code required of this country
-	*/
-	public boolean getZipCodeRequired() {
-		return _country.getZipCodeRequired();
-	}
-
-	/**
-	* Returns <code>true</code> if this country is zip code required.
-	*
-	* @return <code>true</code> if this country is zip code required; <code>false</code> otherwise
-	*/
-	public boolean isZipCodeRequired() {
-		return _country.isZipCodeRequired();
-	}
-
-	/**
-	* Sets whether this country is zip code required.
-	*
-	* @param zipCodeRequired the zip code required of this country
-	*/
-	public void setZipCodeRequired(boolean zipCodeRequired) {
-		_country.setZipCodeRequired(zipCodeRequired);
 	}
 
 	public boolean isNew() {

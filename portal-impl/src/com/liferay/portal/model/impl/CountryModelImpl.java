@@ -23,7 +23,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.CountryModel;
 import com.liferay.portal.model.CountrySoap;
-import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -67,10 +66,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 			{ "a3", Types.VARCHAR },
 			{ "number_", Types.VARCHAR },
 			{ "idd_", Types.VARCHAR },
-			{ "active_", Types.BOOLEAN },
-			{ "zipCodeRequired", Types.BOOLEAN }
+			{ "zipRequired", Types.BOOLEAN },
+			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Country (countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,active_ BOOLEAN,zipCodeRequired BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Country (countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,zipRequired BOOLEAN,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Country";
 	public static final String ORDER_BY_JPQL = " ORDER BY country.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Country.name ASC";
@@ -99,8 +98,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		model.setA3(soapModel.getA3());
 		model.setNumber(soapModel.getNumber());
 		model.setIdd(soapModel.getIdd());
+		model.setZipRequired(soapModel.getZipRequired());
 		model.setActive(soapModel.getActive());
-		model.setZipCodeRequired(soapModel.getZipCodeRequired());
 
 		return model;
 	}
@@ -255,6 +254,19 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	@JSON
+	public boolean getZipRequired() {
+		return _zipRequired;
+	}
+
+	public boolean isZipRequired() {
+		return _zipRequired;
+	}
+
+	public void setZipRequired(boolean zipRequired) {
+		_zipRequired = zipRequired;
+	}
+
+	@JSON
 	public boolean getActive() {
 		return _active;
 	}
@@ -265,19 +277,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	public void setActive(boolean active) {
 		_active = active;
-	}
-
-	@JSON
-	public boolean getZipCodeRequired() {
-		return _zipCodeRequired;
-	}
-
-	public boolean isZipCodeRequired() {
-		return _zipCodeRequired;
-	}
-
-	public void setZipCodeRequired(boolean zipCodeRequired) {
-		_zipCodeRequired = zipCodeRequired;
 	}
 
 	@Override
@@ -321,8 +320,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		countryImpl.setA3(getA3());
 		countryImpl.setNumber(getNumber());
 		countryImpl.setIdd(getIdd());
+		countryImpl.setZipRequired(getZipRequired());
 		countryImpl.setActive(getActive());
-		countryImpl.setZipCodeRequired(getZipCodeRequired());
 
 		countryImpl.resetOriginalValues();
 
@@ -428,9 +427,9 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 			countryCacheModel.idd = null;
 		}
 
-		countryCacheModel.active = getActive();
+		countryCacheModel.zipRequired = getZipRequired();
 
-		countryCacheModel.zipCodeRequired = getZipCodeRequired();
+		countryCacheModel.active = getActive();
 
 		return countryCacheModel;
 	}
@@ -451,10 +450,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		sb.append(getNumber());
 		sb.append(", idd=");
 		sb.append(getIdd());
+		sb.append(", zipRequired=");
+		sb.append(getZipRequired());
 		sb.append(", active=");
 		sb.append(getActive());
-		sb.append(", zipCodeRequired=");
-		sb.append(getZipCodeRequired());
 		sb.append("}");
 
 		return sb.toString();
@@ -492,12 +491,12 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		sb.append(getIdd());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(getActive());
+			"<column><column-name>zipRequired</column-name><column-value><![CDATA[");
+		sb.append(getZipRequired());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>zipCodeRequired</column-name><column-value><![CDATA[");
-		sb.append(getZipCodeRequired());
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -518,8 +517,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	private String _originalA3;
 	private String _number;
 	private String _idd;
+	private boolean _zipRequired;
 	private boolean _active;
-	private boolean _zipCodeRequired;
 	private transient ExpandoBridge _expandoBridge;
 	private Country _escapedModelProxy;
 }

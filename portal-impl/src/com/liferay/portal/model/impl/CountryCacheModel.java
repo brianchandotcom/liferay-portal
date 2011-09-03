@@ -43,10 +43,10 @@ public class CountryCacheModel implements CacheModel<Country> {
 		sb.append(number);
 		sb.append(", idd=");
 		sb.append(idd);
+		sb.append(", zipRequired=");
+		sb.append(zipRequired);
 		sb.append(", active=");
 		sb.append(active);
-		sb.append(", zipCodeRequired=");
-		sb.append(zipCodeRequired);
 		sb.append("}");
 
 		return sb.toString();
@@ -92,8 +92,8 @@ public class CountryCacheModel implements CacheModel<Country> {
 			countryImpl.setIdd(idd);
 		}
 
+		countryImpl.setZipRequired(zipRequired);
 		countryImpl.setActive(active);
-		countryImpl.setZipCodeRequired(zipCodeRequired);
 
 		countryImpl.resetOriginalValues();
 
@@ -106,6 +106,6 @@ public class CountryCacheModel implements CacheModel<Country> {
 	public String a3;
 	public String number;
 	public String idd;
+	public boolean zipRequired;
 	public boolean active;
-	public boolean zipCodeRequired;
 }

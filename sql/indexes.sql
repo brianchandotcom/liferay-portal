@@ -129,7 +129,6 @@ create unique index IX_717B97E1 on Country (a2);
 create unique index IX_717B9BA2 on Country (a3);
 create index IX_25D734CD on Country (active_);
 create unique index IX_19DA007B on Country (name);
-create index IX_602BAE21 on Country (zipCodeRequired);
 
 create index IX_87A6B599 on DDLRecord (recordSetId);
 create index IX_AAC564D3 on DDLRecord (recordSetId, userId);

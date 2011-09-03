@@ -243,7 +243,7 @@
 
 	var REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
 
-	var REGEX_IMAGE_SRC = /(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,512}$/i;
+	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,512}$/i;
 
 	var REGEX_LASTCHAR_NEWLINE = /(\r?\n)$/;
 

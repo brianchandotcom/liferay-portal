@@ -216,8 +216,9 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		else if (Validator.isNull(city)) {
 			throw new AddressCityException();
 		}
-		else if (Validator.isNull(zip) && CountryServiceUtil.getCountry(
-				 countryId).isZipCodeRequired()) {
+		else if (Validator.isNull(zip) &&
+				 CountryServiceUtil.getCountry(countryId).isZipRequired()) {
+
 			throw new AddressZipException();
 		}
 

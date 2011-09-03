@@ -32,7 +32,7 @@ COMMIT_TRANSACTION;
 
 update Company set active_ = TRUE;
 
-alter table Country add zipCodeRequired BOOLEAN default TRUE;
+alter table Country add zipRequired BOOLEAN default TRUE;
 
 create table DDLRecord (
 	uuid_ VARCHAR(75) null,

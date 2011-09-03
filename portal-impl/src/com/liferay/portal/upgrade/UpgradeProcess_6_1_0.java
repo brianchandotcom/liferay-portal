@@ -20,6 +20,7 @@ import com.liferay.portal.upgrade.v6_1_0.UpgradeAdminPortlets;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeAsset;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeBlogs;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeCamelCasePortletPreferences;
+import com.liferay.portal.upgrade.v6_1_0.UpgradeCountry;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeExpando;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeGroup;

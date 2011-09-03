@@ -482,6 +482,33 @@ public class ResourcePermissionLocalServiceUtil {
 	}
 
 	/**
+	* Returns <code>true</code> if the specified roles have permission at the
+	* scope to perform the action on any of the specified resources.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> held by a Resource
+	* will have different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param roleIds the primary keys of the roles
+	* @param roleIds the primary keys of the roles
+	* @param actionId the action ID
+	* @return <code>true</code> if the roles has permission to perform the
+	action any of the resources; <code>false</code> otherwise
+	* @throws PortalException if a role with the primary key or a resource
+	action with the name and action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasResourcePermission(
+		java.util.List<com.liferay.portal.model.Resource> resources,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasResourcePermission(resources, roleIds, actionId);
+	}
+
+	/**
 	* Returns <code>true</code> if the role has permission at the scope to
 	* perform the action on resources of the type.
 	*
@@ -512,6 +539,39 @@ public class ResourcePermissionLocalServiceUtil {
 		return getService()
 				   .hasResourcePermission(companyId, name, scope, primKey,
 			roleId, actionId);
+	}
+
+	/**
+	* Returns <code>true</code> if the role has permission at the scope to
+	* perform the action on resources of the type.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param primKey the primary key
+	* @param roleIds the primary keys of the roles
+	* @param actionId the action ID
+	* @return <code>true</code> if the role has permission to perform the
+	action on the resource; <code>false</code> otherwise
+	* @throws PortalException if a role with the primary key or a resource
+	action with the name and action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean hasResourcePermission(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasResourcePermission(companyId, name, scope, primKey,
+			roleIds, actionId);
 	}
 
 	public static boolean hasScopeResourcePermission(long companyId,

@@ -152,23 +152,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), Long.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_N_S_P_R = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
-			ResourcePermissionImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_N_S_P_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), String.class.getName(),
-				Long.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_S_P_R = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countByC_N_S_P_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), String.class.getName(),
-				Long.class.getName()
-			});
 	public static final FinderPath FINDER_PATH_FIND_BY_C_N_P_R_A = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourcePermissionImpl.class, FINDER_CLASS_NAME_LIST,
@@ -188,6 +171,46 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_C_N_S_P_R = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
+			ResourcePermissionImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByC_N_S_P_R",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), String.class.getName(),
+				Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_S_P_R = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_N_S_P_R",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), String.class.getName(),
+				Long.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_FIND_BY_C_N_S_P_R_A = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
+			ResourcePermissionImpl.class, FINDER_CLASS_NAME_LIST,
+			"findByC_N_S_P_R_A",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_S_P_R_A = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST, "countByC_N_S_P_R_A",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_N_S_P_R_O_A = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
@@ -223,17 +246,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		EntityCacheUtil.putResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionImpl.class, resourcePermission.getPrimaryKey(),
 			resourcePermission);
-
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-			new Object[] {
-				Long.valueOf(resourcePermission.getCompanyId()),
-				
-			resourcePermission.getName(),
-				Integer.valueOf(resourcePermission.getScope()),
-				
-			resourcePermission.getPrimKey(),
-				Long.valueOf(resourcePermission.getRoleId())
-			}, resourcePermission);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_S_P_R_O_A,
 			new Object[] {
@@ -296,17 +308,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public void clearCache(ResourcePermission resourcePermission) {
 		EntityCacheUtil.removeResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionImpl.class, resourcePermission.getPrimaryKey());
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-			new Object[] {
-				Long.valueOf(resourcePermission.getCompanyId()),
-				
-			resourcePermission.getName(),
-				Integer.valueOf(resourcePermission.getScope()),
-				
-			resourcePermission.getPrimKey(),
-				Long.valueOf(resourcePermission.getRoleId())
-			});
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R_O_A,
 			new Object[] {
@@ -428,17 +429,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 		ResourcePermissionModelImpl resourcePermissionModelImpl = (ResourcePermissionModelImpl)resourcePermission;
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-			new Object[] {
-				Long.valueOf(resourcePermissionModelImpl.getCompanyId()),
-				
-			resourcePermissionModelImpl.getName(),
-				Integer.valueOf(resourcePermissionModelImpl.getScope()),
-				
-			resourcePermissionModelImpl.getPrimKey(),
-				Long.valueOf(resourcePermissionModelImpl.getRoleId())
-			});
-
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R_O_A,
 			new Object[] {
 				Long.valueOf(resourcePermissionModelImpl.getCompanyId()),
@@ -489,49 +479,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		EntityCacheUtil.putResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionImpl.class, resourcePermission.getPrimaryKey(),
 			resourcePermission);
-
-		if (!isNew &&
-				((resourcePermission.getCompanyId() != resourcePermissionModelImpl.getOriginalCompanyId()) ||
-				!Validator.equals(resourcePermission.getName(),
-					resourcePermissionModelImpl.getOriginalName()) ||
-				(resourcePermission.getScope() != resourcePermissionModelImpl.getOriginalScope()) ||
-				!Validator.equals(resourcePermission.getPrimKey(),
-					resourcePermissionModelImpl.getOriginalPrimKey()) ||
-				(resourcePermission.getRoleId() != resourcePermissionModelImpl.getOriginalRoleId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-				new Object[] {
-					Long.valueOf(
-						resourcePermissionModelImpl.getOriginalCompanyId()),
-					
-				resourcePermissionModelImpl.getOriginalName(),
-					Integer.valueOf(
-						resourcePermissionModelImpl.getOriginalScope()),
-					
-				resourcePermissionModelImpl.getOriginalPrimKey(),
-					Long.valueOf(
-						resourcePermissionModelImpl.getOriginalRoleId())
-				});
-		}
-
-		if (isNew ||
-				((resourcePermission.getCompanyId() != resourcePermissionModelImpl.getOriginalCompanyId()) ||
-				!Validator.equals(resourcePermission.getName(),
-					resourcePermissionModelImpl.getOriginalName()) ||
-				(resourcePermission.getScope() != resourcePermissionModelImpl.getOriginalScope()) ||
-				!Validator.equals(resourcePermission.getPrimKey(),
-					resourcePermissionModelImpl.getOriginalPrimKey()) ||
-				(resourcePermission.getRoleId() != resourcePermissionModelImpl.getOriginalRoleId()))) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-				new Object[] {
-					Long.valueOf(resourcePermission.getCompanyId()),
-					
-				resourcePermission.getName(),
-					Integer.valueOf(resourcePermission.getScope()),
-					
-				resourcePermission.getPrimKey(),
-					Long.valueOf(resourcePermission.getRoleId())
-				}, resourcePermission);
-		}
 
 		if (!isNew &&
 				((resourcePermission.getCompanyId() != resourcePermissionModelImpl.getOriginalCompanyId()) ||
@@ -2801,209 +2748,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	/**
-	 * Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or throws a {@link com.liferay.portal.NoSuchResourcePermissionException} if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param roleId the role ID
-	 * @return the matching resource permission
-	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourcePermission findByC_N_S_P_R(long companyId, String name,
-		int scope, String primKey, long roleId)
-		throws NoSuchResourcePermissionException, SystemException {
-		ResourcePermission resourcePermission = fetchByC_N_S_P_R(companyId,
-				name, scope, primKey, roleId);
-
-		if (resourcePermission == null) {
-			StringBundler msg = new StringBundler(12);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", scope=");
-			msg.append(scope);
-
-			msg.append(", primKey=");
-			msg.append(primKey);
-
-			msg.append(", roleId=");
-			msg.append(roleId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchResourcePermissionException(msg.toString());
-		}
-
-		return resourcePermission;
-	}
-
-	/**
-	 * Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param roleId the role ID
-	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourcePermission fetchByC_N_S_P_R(long companyId, String name,
-		int scope, String primKey, long roleId) throws SystemException {
-		return fetchByC_N_S_P_R(companyId, name, scope, primKey, roleId, true);
-	}
-
-	/**
-	 * Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param roleId the role ID
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourcePermission fetchByC_N_S_P_R(long companyId, String name,
-		int scope, String primKey, long roleId, boolean retrieveFromCache)
-		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				companyId, name, scope, primKey, roleId
-			};
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-					finderArgs, this);
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(6);
-
-			query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
-
-			query.append(_FINDER_COLUMN_C_N_S_P_R_COMPANYID_2);
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_1);
-			}
-			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_C_N_S_P_R_SCOPE_2);
-
-			if (primKey == null) {
-				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1);
-			}
-			else {
-				if (primKey.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_C_N_S_P_R_ROLEID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				if (name != null) {
-					qPos.add(name);
-				}
-
-				qPos.add(scope);
-
-				if (primKey != null) {
-					qPos.add(primKey);
-				}
-
-				qPos.add(roleId);
-
-				List<ResourcePermission> list = q.list();
-
-				result = list;
-
-				ResourcePermission resourcePermission = null;
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-						finderArgs, list);
-				}
-				else {
-					resourcePermission = list.get(0);
-
-					cacheResult(resourcePermission);
-
-					if ((resourcePermission.getCompanyId() != companyId) ||
-							(resourcePermission.getName() == null) ||
-							!resourcePermission.getName().equals(name) ||
-							(resourcePermission.getScope() != scope) ||
-							(resourcePermission.getPrimKey() == null) ||
-							!resourcePermission.getPrimKey().equals(primKey) ||
-							(resourcePermission.getRoleId() != roleId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-							finderArgs, resourcePermission);
-					}
-				}
-
-				return resourcePermission;
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-						finderArgs);
-				}
-
-				closeSession(session);
-			}
-		}
-		else {
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (ResourcePermission)result;
-			}
-		}
-	}
-
-	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -3475,6 +3219,1413 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	/**
+	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @return the matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R(long companyId,
+		String name, int scope, String primKey, long roleId)
+		throws SystemException {
+		return findByC_N_S_P_R(companyId, name, scope, primKey, roleId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @return the range of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R(long companyId,
+		String name, int scope, String primKey, long roleId, int start, int end)
+		throws SystemException {
+		return findByC_N_S_P_R(companyId, name, scope, primKey, roleId, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R(long companyId,
+		String name, int scope, String primKey, long roleId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, name, scope, primKey, roleId,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<ResourcePermission> list = (List<ResourcePermission>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_N_S_P_R,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(7 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_COMPANYID_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_SCOPE_2);
+
+			if (primKey == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1);
+			}
+			else {
+				if (primKey.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_ROLEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(scope);
+
+				if (primKey != null) {
+					qPos.add(primKey);
+				}
+
+				qPos.add(roleId);
+
+				list = (List<ResourcePermission>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_N_S_P_R,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_N_S_P_R,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission
+	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission findByC_N_S_P_R_First(long companyId,
+		String name, int scope, String primKey, long roleId,
+		OrderByComparator orderByComparator)
+		throws NoSuchResourcePermissionException, SystemException {
+		List<ResourcePermission> list = findByC_N_S_P_R(companyId, name, scope,
+				primKey, roleId, 0, 1, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(12);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(", scope=");
+			msg.append(scope);
+
+			msg.append(", primKey=");
+			msg.append(primKey);
+
+			msg.append(", roleId=");
+			msg.append(roleId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchResourcePermissionException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission
+	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission findByC_N_S_P_R_Last(long companyId, String name,
+		int scope, String primKey, long roleId,
+		OrderByComparator orderByComparator)
+		throws NoSuchResourcePermissionException, SystemException {
+		int count = countByC_N_S_P_R(companyId, name, scope, primKey, roleId);
+
+		List<ResourcePermission> list = findByC_N_S_P_R(companyId, name, scope,
+				primKey, roleId, count - 1, count, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(12);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(", scope=");
+			msg.append(scope);
+
+			msg.append(", primKey=");
+			msg.append(primKey);
+
+			msg.append(", roleId=");
+			msg.append(roleId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchResourcePermissionException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param resourcePermissionId the primary key of the current resource permission
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next resource permission
+	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission[] findByC_N_S_P_R_PrevAndNext(
+		long resourcePermissionId, long companyId, String name, int scope,
+		String primKey, long roleId, OrderByComparator orderByComparator)
+		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = findByPrimaryKey(resourcePermissionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ResourcePermission[] array = new ResourcePermissionImpl[3];
+
+			array[0] = getByC_N_S_P_R_PrevAndNext(session, resourcePermission,
+					companyId, name, scope, primKey, roleId, orderByComparator,
+					true);
+
+			array[1] = resourcePermission;
+
+			array[2] = getByC_N_S_P_R_PrevAndNext(session, resourcePermission,
+					companyId, name, scope, primKey, roleId, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ResourcePermission getByC_N_S_P_R_PrevAndNext(Session session,
+		ResourcePermission resourcePermission, long companyId, String name,
+		int scope, String primKey, long roleId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
+
+		query.append(_FINDER_COLUMN_C_N_S_P_R_COMPANYID_2);
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_1);
+		}
+		else {
+			if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_2);
+			}
+		}
+
+		query.append(_FINDER_COLUMN_C_N_S_P_R_SCOPE_2);
+
+		if (primKey == null) {
+			query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1);
+		}
+		else {
+			if (primKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2);
+			}
+		}
+
+		query.append(_FINDER_COLUMN_C_N_S_P_R_ROLEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			if (orderByFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (name != null) {
+			qPos.add(name);
+		}
+
+		qPos.add(scope);
+
+		if (primKey != null) {
+			qPos.add(primKey);
+		}
+
+		qPos.add(roleId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByValues(resourcePermission);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ResourcePermission> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleIds the role IDs
+	 * @return the matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R(long companyId,
+		String name, int scope, String primKey, long[] roleIds)
+		throws SystemException {
+		return findByC_N_S_P_R(companyId, name, scope, primKey, roleIds,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleIds the role IDs
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @return the range of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R(long companyId,
+		String name, int scope, String primKey, long[] roleIds, int start,
+		int end) throws SystemException {
+		return findByC_N_S_P_R(companyId, name, scope, primKey, roleIds, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleIds the role IDs
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R(long companyId,
+		String name, int scope, String primKey, long[] roleIds, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, name, scope, primKey, StringUtil.merge(roleIds),
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<ResourcePermission> list = (List<ResourcePermission>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_N_S_P_R,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
+
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_COMPANYID_5);
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_4);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_5);
+				}
+			}
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_SCOPE_5);
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			if (primKey == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_4);
+			}
+			else {
+				if (primKey.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_5);
+				}
+			}
+
+			conjunctionable = true;
+
+			if ((roleIds == null) || (roleIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < roleIds.length; i++) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_ROLEID_5);
+
+					if ((i + 1) < roleIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(scope);
+
+				if (primKey != null) {
+					qPos.add(primKey);
+				}
+
+				if (roleIds != null) {
+					qPos.add(roleIds);
+				}
+
+				list = (List<ResourcePermission>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_N_S_P_R,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_N_S_P_R,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @return the matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R_A(long companyId,
+		String name, int scope, String primKey, long roleId, long actionIds)
+		throws SystemException {
+		return findByC_N_S_P_R_A(companyId, name, scope, primKey, roleId,
+			actionIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @return the range of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R_A(long companyId,
+		String name, int scope, String primKey, long roleId, long actionIds,
+		int start, int end) throws SystemException {
+		return findByC_N_S_P_R_A(companyId, name, scope, primKey, roleId,
+			actionIds, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R_A(long companyId,
+		String name, int scope, String primKey, long roleId, long actionIds,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, name, scope, primKey, roleId, actionIds,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<ResourcePermission> list = (List<ResourcePermission>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_N_S_P_R_A,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(8 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(7);
+			}
+
+			query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_COMPANYID_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_SCOPE_2);
+
+			if (primKey == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_1);
+			}
+			else {
+				if (primKey.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_ROLEID_2);
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_ACTIONIDS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(scope);
+
+				if (primKey != null) {
+					qPos.add(primKey);
+				}
+
+				qPos.add(roleId);
+
+				qPos.add(actionIds);
+
+				list = (List<ResourcePermission>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_N_S_P_R_A,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_N_S_P_R_A,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission
+	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission findByC_N_S_P_R_A_First(long companyId,
+		String name, int scope, String primKey, long roleId, long actionIds,
+		OrderByComparator orderByComparator)
+		throws NoSuchResourcePermissionException, SystemException {
+		List<ResourcePermission> list = findByC_N_S_P_R_A(companyId, name,
+				scope, primKey, roleId, actionIds, 0, 1, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(14);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(", scope=");
+			msg.append(scope);
+
+			msg.append(", primKey=");
+			msg.append(primKey);
+
+			msg.append(", roleId=");
+			msg.append(roleId);
+
+			msg.append(", actionIds=");
+			msg.append(actionIds);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchResourcePermissionException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission
+	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission findByC_N_S_P_R_A_Last(long companyId,
+		String name, int scope, String primKey, long roleId, long actionIds,
+		OrderByComparator orderByComparator)
+		throws NoSuchResourcePermissionException, SystemException {
+		int count = countByC_N_S_P_R_A(companyId, name, scope, primKey, roleId,
+				actionIds);
+
+		List<ResourcePermission> list = findByC_N_S_P_R_A(companyId, name,
+				scope, primKey, roleId, actionIds, count - 1, count,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(14);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(", scope=");
+			msg.append(scope);
+
+			msg.append(", primKey=");
+			msg.append(primKey);
+
+			msg.append(", roleId=");
+			msg.append(roleId);
+
+			msg.append(", actionIds=");
+			msg.append(actionIds);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchResourcePermissionException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param resourcePermissionId the primary key of the current resource permission
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next resource permission
+	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission[] findByC_N_S_P_R_A_PrevAndNext(
+		long resourcePermissionId, long companyId, String name, int scope,
+		String primKey, long roleId, long actionIds,
+		OrderByComparator orderByComparator)
+		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = findByPrimaryKey(resourcePermissionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ResourcePermission[] array = new ResourcePermissionImpl[3];
+
+			array[0] = getByC_N_S_P_R_A_PrevAndNext(session,
+					resourcePermission, companyId, name, scope, primKey,
+					roleId, actionIds, orderByComparator, true);
+
+			array[1] = resourcePermission;
+
+			array[2] = getByC_N_S_P_R_A_PrevAndNext(session,
+					resourcePermission, companyId, name, scope, primKey,
+					roleId, actionIds, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ResourcePermission getByC_N_S_P_R_A_PrevAndNext(Session session,
+		ResourcePermission resourcePermission, long companyId, String name,
+		int scope, String primKey, long roleId, long actionIds,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
+
+		query.append(_FINDER_COLUMN_C_N_S_P_R_A_COMPANYID_2);
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_1);
+		}
+		else {
+			if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_2);
+			}
+		}
+
+		query.append(_FINDER_COLUMN_C_N_S_P_R_A_SCOPE_2);
+
+		if (primKey == null) {
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_1);
+		}
+		else {
+			if (primKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_2);
+			}
+		}
+
+		query.append(_FINDER_COLUMN_C_N_S_P_R_A_ROLEID_2);
+
+		query.append(_FINDER_COLUMN_C_N_S_P_R_A_ACTIONIDS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			if (orderByFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (name != null) {
+			qPos.add(name);
+		}
+
+		qPos.add(scope);
+
+		if (primKey != null) {
+			qPos.add(primKey);
+		}
+
+		qPos.add(roleId);
+
+		qPos.add(actionIds);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByValues(resourcePermission);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ResourcePermission> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63; and actionIds = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleIds the role IDs
+	 * @param actionIds the action IDs
+	 * @return the matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R_A(long companyId,
+		String name, int scope, String primKey, long[] roleIds, long actionIds)
+		throws SystemException {
+		return findByC_N_S_P_R_A(companyId, name, scope, primKey, roleIds,
+			actionIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63; and actionIds = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleIds the role IDs
+	 * @param actionIds the action IDs
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @return the range of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R_A(long companyId,
+		String name, int scope, String primKey, long[] roleIds, long actionIds,
+		int start, int end) throws SystemException {
+		return findByC_N_S_P_R_A(companyId, name, scope, primKey, roleIds,
+			actionIds, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63; and actionIds = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleIds the role IDs
+	 * @param actionIds the action IDs
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ResourcePermission> findByC_N_S_P_R_A(long companyId,
+		String name, int scope, String primKey, long[] roleIds, long actionIds,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, name, scope, primKey, StringUtil.merge(roleIds),
+				actionIds,
+				
+				String.valueOf(start), String.valueOf(end),
+				String.valueOf(orderByComparator)
+			};
+
+		List<ResourcePermission> list = (List<ResourcePermission>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_N_S_P_R_A,
+				finderArgs, this);
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
+
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_COMPANYID_5);
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_4);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_5);
+				}
+			}
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_SCOPE_5);
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			if (primKey == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_4);
+			}
+			else {
+				if (primKey.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_5);
+				}
+			}
+
+			conjunctionable = true;
+
+			if ((roleIds == null) || (roleIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < roleIds.length; i++) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_ROLEID_5);
+
+					if ((i + 1) < roleIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_ACTIONIDS_5);
+
+			conjunctionable = true;
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(scope);
+
+				if (primKey != null) {
+					qPos.add(primKey);
+				}
+
+				if (roleIds != null) {
+					qPos.add(roleIds);
+				}
+
+				qPos.add(actionIds);
+
+				list = (List<ResourcePermission>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FIND_BY_C_N_S_P_R_A,
+						finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FIND_BY_C_N_S_P_R_A,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
 	 * Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and ownerId = &#63; and actionIds = &#63; or throws a {@link com.liferay.portal.NoSuchResourcePermissionException} if it could not be found.
 	 *
 	 * @param companyId the company ID
@@ -3885,25 +5036,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	/**
-	 * Removes the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param roleId the role ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByC_N_S_P_R(long companyId, String name, int scope,
-		String primKey, long roleId)
-		throws NoSuchResourcePermissionException, SystemException {
-		ResourcePermission resourcePermission = findByC_N_S_P_R(companyId,
-				name, scope, primKey, roleId);
-
-		resourcePermissionPersistence.remove(resourcePermission);
-	}
-
-	/**
 	 * Removes all the resource permissions where companyId = &#63; and name = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3917,6 +5049,43 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		long roleId, long actionIds) throws SystemException {
 		for (ResourcePermission resourcePermission : findByC_N_P_R_A(
 				companyId, name, primKey, roleId, actionIds)) {
+			resourcePermissionPersistence.remove(resourcePermission);
+		}
+	}
+
+	/**
+	 * Removes all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByC_N_S_P_R(long companyId, String name, int scope,
+		String primKey, long roleId) throws SystemException {
+		for (ResourcePermission resourcePermission : findByC_N_S_P_R(
+				companyId, name, scope, primKey, roleId)) {
+			resourcePermissionPersistence.remove(resourcePermission);
+		}
+	}
+
+	/**
+	 * Removes all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByC_N_S_P_R_A(long companyId, String name, int scope,
+		String primKey, long roleId, long actionIds) throws SystemException {
+		for (ResourcePermission resourcePermission : findByC_N_S_P_R_A(
+				companyId, name, scope, primKey, roleId, actionIds)) {
 			resourcePermissionPersistence.remove(resourcePermission);
 		}
 	}
@@ -4397,6 +5566,106 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	/**
+	 * Returns the number of resource permissions where companyId = &#63; and name = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @return the number of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByC_N_P_R_A(long companyId, String name, String primKey,
+		long roleId, long actionIds) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, name, primKey, roleId, actionIds
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_N_P_R_A,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_COUNT_RESOURCEPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_N_P_R_A_COMPANYID_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_N_P_R_A_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_P_R_A_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_P_R_A_NAME_2);
+				}
+			}
+
+			if (primKey == null) {
+				query.append(_FINDER_COLUMN_C_N_P_R_A_PRIMKEY_1);
+			}
+			else {
+				if (primKey.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_P_R_A_PRIMKEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_P_R_A_PRIMKEY_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_C_N_P_R_A_ROLEID_2);
+
+			query.append(_FINDER_COLUMN_C_N_P_R_A_ACTIONIDS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				if (primKey != null) {
+					qPos.add(primKey);
+				}
+
+				qPos.add(roleId);
+
+				qPos.add(actionIds);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N_P_R_A,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -4497,59 +5766,103 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	/**
-	 * Returns the number of resource permissions where companyId = &#63; and name = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 * Returns the number of resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
+	 * @param scope the scope
 	 * @param primKey the prim key
-	 * @param roleId the role ID
-	 * @param actionIds the action IDs
+	 * @param roleIds the role IDs
 	 * @return the number of matching resource permissions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByC_N_P_R_A(long companyId, String name, String primKey,
-		long roleId, long actionIds) throws SystemException {
+	public int countByC_N_S_P_R(long companyId, String name, int scope,
+		String primKey, long[] roleIds) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				companyId, name, primKey, roleId, actionIds
+				companyId, name, scope, primKey, StringUtil.merge(roleIds)
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_N_P_R_A,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_N_S_P_R,
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(6);
+			StringBundler query = new StringBundler();
 
 			query.append(_SQL_COUNT_RESOURCEPERMISSION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_N_P_R_A_COMPANYID_2);
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_COMPANYID_5);
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
 
 			if (name == null) {
-				query.append(_FINDER_COLUMN_C_N_P_R_A_NAME_1);
+				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_4);
 			}
 			else {
 				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_N_P_R_A_NAME_3);
+					query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_6);
 				}
 				else {
-					query.append(_FINDER_COLUMN_C_N_P_R_A_NAME_2);
+					query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_5);
 				}
+			}
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_SCOPE_5);
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
 			}
 
 			if (primKey == null) {
-				query.append(_FINDER_COLUMN_C_N_P_R_A_PRIMKEY_1);
+				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_4);
 			}
 			else {
 				if (primKey.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_N_P_R_A_PRIMKEY_3);
+					query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_6);
 				}
 				else {
-					query.append(_FINDER_COLUMN_C_N_P_R_A_PRIMKEY_2);
+					query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_5);
 				}
 			}
 
-			query.append(_FINDER_COLUMN_C_N_P_R_A_ROLEID_2);
+			conjunctionable = true;
 
-			query.append(_FINDER_COLUMN_C_N_P_R_A_ACTIONIDS_2);
+			if ((roleIds == null) || (roleIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < roleIds.length; i++) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_ROLEID_5);
+
+					if ((i + 1) < roleIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
 
 			String sql = query.toString();
 
@@ -4567,6 +5880,113 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				if (name != null) {
 					qPos.add(name);
 				}
+
+				qPos.add(scope);
+
+				if (primKey != null) {
+					qPos.add(primKey);
+				}
+
+				if (roleIds != null) {
+					qPos.add(roleIds);
+				}
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N_S_P_R,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; and actionIds = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param actionIds the action IDs
+	 * @return the number of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByC_N_S_P_R_A(long companyId, String name, int scope,
+		String primKey, long roleId, long actionIds) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, name, scope, primKey, roleId, actionIds
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_N_S_P_R_A,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(7);
+
+			query.append(_SQL_COUNT_RESOURCEPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_COMPANYID_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_SCOPE_2);
+
+			if (primKey == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_1);
+			}
+			else {
+				if (primKey.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_ROLEID_2);
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_ACTIONIDS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(scope);
 
 				if (primKey != null) {
 					qPos.add(primKey);
@@ -4586,7 +6006,166 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N_P_R_A,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N_S_P_R_A,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63; and actionIds = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleIds the role IDs
+	 * @param actionIds the action IDs
+	 * @return the number of matching resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByC_N_S_P_R_A(long companyId, String name, int scope,
+		String primKey, long[] roleIds, long actionIds)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				companyId, name, scope, primKey, StringUtil.merge(roleIds),
+				actionIds
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_N_S_P_R_A,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_RESOURCEPERMISSION_WHERE);
+
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_COMPANYID_5);
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_4);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_NAME_5);
+				}
+			}
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_SCOPE_5);
+
+			conjunctionable = true;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			if (primKey == null) {
+				query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_4);
+			}
+			else {
+				if (primKey.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_5);
+				}
+			}
+
+			conjunctionable = true;
+
+			if ((roleIds == null) || (roleIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < roleIds.length; i++) {
+					query.append(_FINDER_COLUMN_C_N_S_P_R_A_ROLEID_5);
+
+					if ((i + 1) < roleIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_C_N_S_P_R_A_ACTIONIDS_5);
+
+			conjunctionable = true;
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(scope);
+
+				if (primKey != null) {
+					qPos.add(primKey);
+				}
+
+				if (roleIds != null) {
+					qPos.add(roleIds);
+				}
+
+				qPos.add(actionIds);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N_S_P_R_A,
 					finderArgs, count);
 
 				closeSession(session);
@@ -4937,15 +6516,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	private static final String _FINDER_COLUMN_C_N_P_O_PRIMKEY_2 = "resourcePermission.primKey = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_P_O_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = ?) AND ";
 	private static final String _FINDER_COLUMN_C_N_P_O_OWNERID_2 = "resourcePermission.ownerId = ?";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_1 = "resourcePermission.name IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_2 = "resourcePermission.name = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = ?) AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_SCOPE_2 = "resourcePermission.scope = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1 = "resourcePermission.primKey IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2 = "resourcePermission.primKey = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = ?) AND ";
-	private static final String _FINDER_COLUMN_C_N_S_P_R_ROLEID_2 = "resourcePermission.roleId = ?";
 	private static final String _FINDER_COLUMN_C_N_P_R_A_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_P_R_A_NAME_1 = "resourcePermission.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_N_P_R_A_NAME_2 = "resourcePermission.name = ? AND ";
@@ -4955,6 +6525,63 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	private static final String _FINDER_COLUMN_C_N_P_R_A_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = ?) AND ";
 	private static final String _FINDER_COLUMN_C_N_P_R_A_ROLEID_2 = "resourcePermission.roleId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_P_R_A_ACTIONIDS_2 = "resourcePermission.actionIds = ?";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_COMPANYID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_COMPANYID_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_1 = "resourcePermission.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_2 = "resourcePermission.name = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = ?) AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_4 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_NAME_1) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_NAME_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_6 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_NAME_3) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_SCOPE_2 = "resourcePermission.scope = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_SCOPE_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_SCOPE_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1 = "resourcePermission.primKey IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2 = "resourcePermission.primKey = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = ?) AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_4 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_6 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_ROLEID_2 = "resourcePermission.roleId = ?";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_ROLEID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_ROLEID_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_COMPANYID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_COMPANYID_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_NAME_1 = "resourcePermission.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_NAME_2 = "resourcePermission.name = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = ?) AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_NAME_4 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_NAME_1) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_NAME_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_NAME_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_NAME_6 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_NAME_3) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_SCOPE_2 = "resourcePermission.scope = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_SCOPE_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_SCOPE_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_1 = "resourcePermission.primKey IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_2 = "resourcePermission.primKey = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = ?) AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_4 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_1) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_6 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_PRIMKEY_3) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_ROLEID_2 = "resourcePermission.roleId = ? AND ";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_ROLEID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_ROLEID_2) + ")";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_ACTIONIDS_2 = "resourcePermission.actionIds = ?";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_A_ACTIONIDS_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_A_ACTIONIDS_2) + ")";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_O_A_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_O_A_NAME_1 = "resourcePermission.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_O_A_NAME_2 = "resourcePermission.name = ? AND ";

@@ -234,19 +234,6 @@ public class ResourcePermissionPersistenceTest extends BasePersistenceTestCase {
 				existingResourcePermissionModelImpl.getOriginalPrimKey()));
 		assertEquals(existingResourcePermissionModelImpl.getRoleId(),
 			existingResourcePermissionModelImpl.getOriginalRoleId());
-
-		assertEquals(existingResourcePermissionModelImpl.getCompanyId(),
-			existingResourcePermissionModelImpl.getOriginalCompanyId());
-		assertTrue(Validator.equals(
-				existingResourcePermissionModelImpl.getName(),
-				existingResourcePermissionModelImpl.getOriginalName()));
-		assertEquals(existingResourcePermissionModelImpl.getScope(),
-			existingResourcePermissionModelImpl.getOriginalScope());
-		assertTrue(Validator.equals(
-				existingResourcePermissionModelImpl.getPrimKey(),
-				existingResourcePermissionModelImpl.getOriginalPrimKey()));
-		assertEquals(existingResourcePermissionModelImpl.getRoleId(),
-			existingResourcePermissionModelImpl.getOriginalRoleId());
 		assertEquals(existingResourcePermissionModelImpl.getOwnerId(),
 			existingResourcePermissionModelImpl.getOriginalOwnerId());
 		assertEquals(existingResourcePermissionModelImpl.getActionIds(),

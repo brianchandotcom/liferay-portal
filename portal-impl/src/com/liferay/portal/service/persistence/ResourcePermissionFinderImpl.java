@@ -14,12 +14,14 @@
 
 package com.liferay.portal.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
@@ -41,6 +43,9 @@ public class ResourcePermissionFinderImpl
 
 	public static String FIND_BY_RESOURCE =
 		ResourcePermissionFinder.class.getName() + ".findByResource";
+
+	public static String COUNT_BY_C_N_S_P_R_A =
+		ResourcePermissionFinder.class.getName() + ".countByC_N_S_P_R_A";
 
 	public static String FIND_BY_R_S =
 		ResourcePermissionFinder.class.getName() + ".findByR_S";
@@ -85,6 +90,80 @@ public class ResourcePermissionFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	public int countByC_N_S_P_R_A(
+			long companyId, String name, int scope, String primKey,
+			long[] roleIds, long actionIdMask)
+		throws SystemException {
+
+		Object[] finderArgs = new Object[] {
+			companyId, name, scope, primKey, roleIds, actionIdMask
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			ResourcePermissionPersistenceImpl.FINDER_PATH_COUNT_BY_C_N_S_P_R_A,
+			finderArgs, this);
+
+		if (count == null) {
+
+			String sql = CustomSQLUtil.get(COUNT_BY_C_N_S_P_R_A);
+
+			if (roleIds.length > 1) {
+				StringBundler roleIdsOR = new StringBundler(
+					(roleIds.length * 2) -1);
+
+				for (int i = 0; i < roleIds.length; i++) {
+					if (i > 0) {
+						roleIdsOR.append(" OR ");
+					}
+
+					roleIdsOR.append("ResourcePermission.roleId = ?");
+				}
+
+				sql = StringUtil.replace(
+					sql, "ResourcePermission.roleId = ?", roleIdsOR.toString());
+			}
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				SQLQuery q = session.createSQLQuery(sql);
+
+				q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+				qPos.add(name);
+				qPos.add(scope);
+				qPos.add(primKey);
+				qPos.add(roleIds);
+				qPos.add(actionIdMask);
+				qPos.add(actionIdMask);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw new SystemException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(
+					ResourcePermissionPersistenceImpl.
+						FINDER_PATH_COUNT_BY_C_N_S_P_R_A,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
 	}
 
 	public List<ResourcePermission> findByResource(

@@ -1689,18 +1689,26 @@
 			<finder-column name="primKey" />
 			<finder-column name="ownerId" />
 		</finder>
-		<finder name="C_N_S_P_R" return-type="ResourcePermission" unique="true">
-			<finder-column name="companyId" />
-			<finder-column name="name" />
-			<finder-column name="scope" />
-			<finder-column name="primKey" />
-			<finder-column name="roleId" />
-		</finder>
 		<finder name="C_N_P_R_A" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="primKey" />
 			<finder-column name="roleId" />
+			<finder-column name="actionIds" />
+		</finder>
+		<finder name="C_N_S_P_R" return-type="Collection" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+			<finder-column name="scope" />
+			<finder-column name="primKey" />
+			<finder-column name="roleId" arrayable-operator="OR" />
+		</finder>
+		<finder name="C_N_S_P_R_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+			<finder-column name="scope" />
+			<finder-column name="primKey" />
+			<finder-column name="roleId" arrayable-operator="OR" />
 			<finder-column name="actionIds" />
 		</finder>
 		<finder name="C_N_S_P_R_O_A" return-type="ResourcePermission" unique="true">

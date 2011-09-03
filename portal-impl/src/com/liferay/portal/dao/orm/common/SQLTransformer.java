@@ -57,6 +57,21 @@ public class SQLTransformer {
 		else if (dbType.equals(DB.TYPE_DERBY)) {
 			_vendorDerby = true;
 		}
+		else if (dbType.equals(DB.TYPE_FIREBIRD)) {
+			_vendorFirebird = true;
+		}
+		else if (dbType.equals(DB.TYPE_HYPERSONIC)) {
+			_vendorHypersonic = true;
+		}
+		else if (dbType.equals(DB.TYPE_INFORMIX)) {
+			_vendorInformix = true;
+		}
+		else if (dbType.equals(DB.TYPE_INGRES)) {
+			_vendorIngres = true;
+		}
+		else if (dbType.equals(DB.TYPE_INTERBASE)) {
+			_vendorInterbase = true;
+		}
 		else if (dbType.equals(DB.TYPE_MYSQL)) {
 			_vendorMySQL = true;
 		}
@@ -117,11 +132,17 @@ public class SQLTransformer {
 	private String _replaceBitwiseCheck(String sql) {
 		Matcher matcher = _bitwiseCheckPattern.matcher(sql);
 
-		if (_vendorDB2 || _vendorOracle) {
-			return matcher.replaceAll("BITAND($1, $2) != 0");
+		if (_vendorDB2 || _vendorHypersonic || _vendorOracle) {
+			return matcher.replaceAll("BITAND($1, $2)");
 		}
 		else if (_vendorDerby) {
 			return matcher.replaceAll("MOD($1 / $2, 2) != 0");
+		}
+		else if (_vendorInformix || _vendorIngres) {
+			return matcher.replaceAll("BIT_AND($1, $2)");
+		}
+		else if (_vendorFirebird || _vendorInterbase) {
+			return matcher.replaceAll("BIN_AND($1, $2)");
 		}
 		else {
 			return sql;
@@ -308,7 +329,7 @@ public class SQLTransformer {
 	private static SQLTransformer _instance = new SQLTransformer();
 
 	private static Pattern _bitwiseCheckPattern = Pattern.compile(
-		"\\(\\((.+?) & (.+?)\\) != 0\\)");
+		"\\(\\((.+?) & (.+?)\\)\\)");
 	private static Pattern _castTextPattern = Pattern.compile(
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _integerDivisionPattern = Pattern.compile(
@@ -326,6 +347,11 @@ public class SQLTransformer {
 
 	private boolean _vendorDB2;
 	private boolean _vendorDerby;
+	private boolean _vendorFirebird;
+	private boolean _vendorHypersonic;
+	private boolean _vendorInformix;
+	private boolean _vendorIngres;
+	private boolean _vendorInterbase;
 	private boolean _vendorMySQL;
 	private boolean _vendorOracle;
 	private boolean _vendorPostgreSQL;

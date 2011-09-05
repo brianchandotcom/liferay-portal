@@ -90,7 +90,7 @@ public class DialectDetector {
 					sb.append("production. Hypersonic is an embedded ");
 					sb.append("database useful for development and demo'ing ");
 					sb.append("purposes. The database settings can be ");
-					sb.append("changed in portal.properties.");
+					sb.append("changed in portal-ext.properties.");
 
 					_log.warn(sb.toString());
 				}

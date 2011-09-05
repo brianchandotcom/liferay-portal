@@ -170,14 +170,10 @@ searchContainer.setTotal(total);
 request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 %>
 
-<c:if test='<%= !displayStyle.equals("list") %>'>
-	<c:choose>
-		<c:when test="<%= results.isEmpty() %>">
-			<div class="portlet-msg-info">
-				<%= LanguageUtil.get(pageContext, "there-are-no-documents-in-this-folder") %>
-			</div>
-		</c:when>
-	</c:choose>
+<c:if test="<%= results.isEmpty() %>">
+	<div class="portlet-msg-info">
+		<%= LanguageUtil.get(pageContext, "there-are-no-documents-in-this-folder") %>
+	</div>
 </c:if>
 
 <%

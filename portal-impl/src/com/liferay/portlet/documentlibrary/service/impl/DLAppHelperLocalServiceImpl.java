@@ -36,6 +36,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
+import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 
 import java.io.Serializable;
 
@@ -74,6 +75,10 @@ public class DLAppHelperLocalServiceImpl
 
 	public void deleteFileEntry(FileEntry fileEntry)
 		throws PortalException, SystemException {
+
+		// File previews
+		
+		DLPreviewableProcessor.deleteFiles(fileEntry);
 
 		// File ranks
 

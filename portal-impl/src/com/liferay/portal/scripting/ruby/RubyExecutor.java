@@ -83,6 +83,10 @@ public class RubyExecutor extends BaseScriptingExecutor {
 			_loadPaths.add(gemLibPath);
 		}
 
+		_loadPaths.add(
+			"file:" + _basePath +
+				"WEB-INF/lib/ruby-gems.jar!/gems/haml-3.0.25/lib");
+
 		rubyInstanceConfig.setLoadPaths(_loadPaths);
 
 		_scriptingContainer.setCurrentDirectory(_basePath);

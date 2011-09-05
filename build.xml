@@ -363,6 +363,18 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 						includes="eclipselink.jar"
 					/>
 				</delete>
+
+				<if>
+					<not>
+						<available file="${app.server.portal.dir}/WEB-INF/classes/META-INF/MANIFEST.MF" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jboss/MANIFEST.MF"
+							tofile="${app.server.portal.dir}/WEB-INF/classes/META-INF/MANIFEST.MF"
+						/>
+					</then>
+				</if>
 			</then>
 		</if>
 

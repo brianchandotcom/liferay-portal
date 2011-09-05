@@ -531,8 +531,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
-
 		long creatorUserId = 0;
 
 		try {
@@ -541,24 +539,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		catch (PrincipalException pe) {
 		}
 
-		if ((creatorUserId != 0) || !company.isStrangers()) {
-			if (!PortalPermissionUtil.contains(
-					getPermissionChecker(), ActionKeys.ADD_USER) ||
-				!OrganizationPermissionUtil.contains(
-					getPermissionChecker(), organizationIds,
-					ActionKeys.ASSIGN_MEMBERS)) {
-
-				throw new PrincipalException();
-			}
-		}
-
-		if (creatorUserId == 0) {
-			if (!company.isStrangersWithMx() &&
-				company.hasCompanyMx(emailAddress)) {
-
-				throw new ReservedUserEmailAddressException();
-			}
-		}
+		checkAddUserPermission(
+			creatorUserId, companyId, emailAddress, organizationIds);
 
 		return userLocalService.addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -900,8 +882,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
-
 		long creatorUserId = 0;
 
 		try {
@@ -910,13 +890,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		catch (PrincipalException pe) {
 		}
 
-		if (creatorUserId == 0) {
-			if (!company.isStrangersWithMx() &&
-				company.hasCompanyMx(emailAddress)) {
+		long[] organizationIds = null;
 
-				throw new ReservedUserEmailAddressException();
-			}
-		}
+		checkAddUserPermission(
+			creatorUserId, companyId, emailAddress, organizationIds);
 
 		return userLocalService.updateIncompleteUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -1563,6 +1540,33 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
 			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
 			userGroupIds, serviceContext);
+	}
+
+	protected void checkAddUserPermission(
+			long creatorUserId, long companyId, String emailAddress,
+			long[] organizationIds)
+		throws PortalException, SystemException {
+
+		Company company = companyPersistence.findByPrimaryKey(companyId);
+
+		if ((creatorUserId != 0) || !company.isStrangers()) {
+			if (!PortalPermissionUtil.contains(
+					getPermissionChecker(), ActionKeys.ADD_USER) ||
+				!OrganizationPermissionUtil.contains(
+					getPermissionChecker(), organizationIds,
+					ActionKeys.ASSIGN_MEMBERS)) {
+
+				throw new PrincipalException();
+			}
+		}
+
+		if (creatorUserId == 0) {
+			if (!company.isStrangersWithMx() &&
+				company.hasCompanyMx(emailAddress)) {
+
+				throw new ReservedUserEmailAddressException();
+			}
+		}
 	}
 
 	protected long[] checkGroups(long userId, long[] groupIds)

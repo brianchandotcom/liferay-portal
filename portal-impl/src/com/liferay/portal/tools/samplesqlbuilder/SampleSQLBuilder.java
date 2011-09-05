@@ -497,6 +497,7 @@ public class SampleSQLBuilder {
 
 			protected void createSample() throws Exception {
 				_writerBlogsCSV = getWriter("blogs.csv");
+				_writerCompanyCSV = getWriter("company.csv");
 				_writerDocumentLibraryCSV = getWriter("document_library.csv");
 				_writerMessageBoardsCSV = getWriter("message_boards.csv");
 				_writerUsersCSV = getWriter("users.csv");
@@ -507,6 +508,7 @@ public class SampleSQLBuilder {
 				processTemplate(_tplSample, context);
 
 				_writerBlogsCSV.flush();
+				_writerCompanyCSV.flush();
 				_writerDocumentLibraryCSV.flush();
 				_writerMessageBoardsCSV.flush();
 				_writerUsersCSV.flush();
@@ -553,6 +555,7 @@ public class SampleSQLBuilder {
 		put(context, "stringUtil", StringUtil_IW.getInstance());
 		put(context, "userScreenNameIncrementer", _userScreenNameIncrementer);
 		put(context, "writerBlogsCSV", _writerBlogsCSV);
+		put(context, "writerCompanyCSV", _writerCompanyCSV);
 		put(context, "writerDocumentLibraryCSV", _writerDocumentLibraryCSV);
 		put(context, "writerMessageBoardsCSV", _writerMessageBoardsCSV);
 		put(context, "writerUsersCSV", _writerUsersCSV);
@@ -695,6 +698,7 @@ public class SampleSQLBuilder {
 	private String _tplWikiPage = _TPL_ROOT + "wiki_page.ftl";
 	private SimpleCounter _userScreenNameIncrementer;
 	private Writer _writerBlogsCSV;
+	private Writer _writerCompanyCSV;
 	private Writer _writerDocumentLibraryCSV;
 	private Writer _writerMessageBoardsCSV;
 	private Writer _writerSampleSQL;

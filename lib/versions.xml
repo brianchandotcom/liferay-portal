@@ -1137,7 +1137,7 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/bndlib.jar</file-name>
+		<file-name>portal/bnd.jar</file-name>
 		<version>1.44.0</version>
 		<project-name>Bnd</project-name>
 		<project-url>http://www.aqute.biz/Bnd/Download</project-url>

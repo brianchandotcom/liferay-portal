@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -138,21 +139,34 @@ public class AudioProcessor extends DLPreviewableProcessor {
 			}
 
 			if (_isGeneratePreview(fileVersion)) {
-				InputStream inputStream = fileVersion.getContentStream(false);
+				File file = null;
 
-				FileUtil.write(audioTempFile, inputStream);
+				if (fileVersion instanceof LiferayFileVersion) {
+					try {
+						LiferayFileVersion liferayFileVersion =
+							(LiferayFileVersion)fileVersion;
+
+						file = liferayFileVersion.getFile(false);
+					}
+					catch (UnsupportedOperationException uoe) {
+					}
+				}
+
+				if (file == null) {
+					InputStream inputStream = fileVersion.getContentStream(
+						false);
+
+					FileUtil.write(audioTempFile, inputStream);
+
+					file = audioTempFile;
+				}
 
 				try {
 					_generateAudioXuggler(
-						fileVersion, audioTempFile, previewTempFile);
+						fileVersion, file, previewTempFile);
 				}
 				catch (Exception e) {
 					_log.error(e, e);
-				}
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Xuggler generated a preview audio for " + tempFileId);
 				}
 			}
 		}
@@ -181,12 +195,23 @@ public class AudioProcessor extends DLPreviewableProcessor {
 
 		iMediaReader.addListener(iMediaWriter);
 
-		while (iMediaReader.readPacket() == null) {
+		try {
+			while (iMediaReader.readPacket() == null) {
+			}
+		}
+		catch (Exception e) {
+			_log.error(e);
 		}
 
 		addFileToStore(
 			fileVersion.getCompanyId(), PREVIEW_PATH,
 			getPreviewFilePath(fileVersion), destFile);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Xuggler generated a preview audio for " +
+					fileVersion.getFileVersionId());
+		}
 	}
 
 	private File _getAudioTempFile(String tempFileId, String targetExtension) {

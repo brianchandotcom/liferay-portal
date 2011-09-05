@@ -59,8 +59,6 @@ public class CaptureFrameListener extends MediaListenerAdapter {
 				}
 			}
 
-			_written = true;
-
 			_file.createNewFile();
 
 			RenderedImage renderedImage = ImageProcessorUtil.scale(
@@ -68,10 +66,16 @@ public class CaptureFrameListener extends MediaListenerAdapter {
 
 			ImageIO.write(
 				renderedImage, _extension, new FileOutputStream(_file));
+
+			_written = true;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	public boolean isWritten() {
+		return _written;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CaptureFrameListener.class);

@@ -254,7 +254,38 @@ public class PDFProcessor extends DLPreviewableProcessor {
 	private void _generateImagesIM(FileVersion fileVersion, File file)
 		throws Exception {
 
-		_generateImages(fileVersion, new FileInputStream(file));
+		if (_isGeneratePreview(fileVersion)) {
+			_generateImagesIM(
+				fileVersion, file,
+				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH,
+				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
+				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT,
+				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH, false);
+
+			if (_log.isInfoEnabled()) {
+				int previewFileCount = getPreviewFileCount(fileVersion);
+
+				_log.info(
+					"ImageMagick generated " + previewFileCount +
+						" preview pages for " +
+							fileVersion.getFileVersionId());
+			}
+		}
+
+		if (_isGenerateThumbnail(fileVersion)) {
+			_generateImagesIM(
+				fileVersion, file,
+				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DEPTH,
+				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI,
+				PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT,
+				PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH, true);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"ImageMagick generated a thumbnail for " +
+						fileVersion.getFileVersionId());
+			}
+		}
 	}
 
 	private void _generateImagesIM(
@@ -339,67 +370,20 @@ public class PDFProcessor extends DLPreviewableProcessor {
 			FileVersion fileVersion, InputStream inputStream)
 		throws Exception {
 
-		String tempFileId = DLUtil.getTempFileId(
-			fileVersion.getFileEntryId(), fileVersion.getVersion());
+		File file = FileUtil.createTempFile(inputStream);
 
-		String extension = fileVersion.getExtension();
-
-		if (extension.equals("pdf")) {
-			String filePath = DocumentConversionUtil.getFilePath(
-				tempFileId, "pdf");
-
-			File file = new File(filePath);
-
-			try {
-				FileUtil.write(file, inputStream);
-
-				_generateImages(fileVersion, file);
-			}
-			finally {
-				FileUtil.delete(file);
-			}
+		try {
+			_generateImagesIM(fileVersion, file);
 		}
-		else {
-			File file = DocumentConversionUtil.convert(
-				tempFileId, inputStream, extension, "pdf");
-
-			_generateImages(fileVersion, file);
+		finally {
+			FileUtil.delete(file);
 		}
 	}
 
 	private void _generateImagesPB(FileVersion fileVersion, File file)
 		throws Exception {
 
-		if (_isGeneratePreview(fileVersion)) {
-			_generateImagesIM(
-				fileVersion, file,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH, false);
-
-			if (_log.isInfoEnabled()) {
-				int previewFileCount = getPreviewFileCount(fileVersion);
-
-				_log.info(
-					"ImageMagick generated " + previewFileCount +
-						" preview pages for " + fileVersion.getFileVersionId());
-			}
-		}
-
-		if (_isGenerateThumbnail(fileVersion)) {
-			_generateImagesIM(
-				fileVersion, file, PropsValues.DL_FILE_ENTRY_THUMBNAIL_DEPTH,
-				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI,
-				PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT,
-				PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH, true);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"ImageMagick generated a thumbnail for " +
-						fileVersion.getFileVersionId());
-			}
-		}
+		_generateImagesPB(fileVersion, new FileInputStream(file));
 	}
 
 	private void _generateImagesPB(

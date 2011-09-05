@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.io.FileFilter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,11 +34,49 @@ import java.io.InputStream;
  */
 public abstract class DLPreviewableProcessor implements DLProcessor {
 
+	public static void deleteFiles(
+		long companyId, long groupId, long fileEntryId, long fileVersionId) {
+		
+		try {
+			DLStoreUtil.deleteDirectory(
+				companyId, REPOSITORY_ID,
+				getPathSegment(groupId, fileEntryId, fileVersionId, true));
+		}
+		catch (Exception e) {
+		}
+	
+		try {
+			DLStoreUtil.deleteDirectory(
+				companyId, REPOSITORY_ID,
+				getPathSegment(groupId, fileEntryId, fileVersionId, false));
+		}
+		catch (Exception e) {
+		}
+	}
+
+	public static void deleteFiles(FileEntry fileEntry) {
+		long companyId = fileEntry.getCompanyId();
+		long groupId = fileEntry.getGroupId();
+		long fileEntryId = fileEntry.getFileEntryId();
+		long fileVersionId = -1;
+		
+		deleteFiles(companyId, groupId, fileEntryId, fileVersionId);
+	}
+
+	public static void deleteFiles(FileVersion fileVersion) {
+		long companyId = fileVersion.getCompanyId();
+		long groupId = fileVersion.getGroupId();
+		long fileEntryId = fileVersion.getFileEntryId();
+		long fileVersionId = fileVersion.getFileVersionId();
+		
+		deleteFiles(companyId, groupId, fileEntryId, fileVersionId);
+	}
+
 	protected void addFileToStore(
 			long companyId, String dirName, String filePath, File srcFile)
 		throws Exception {
 
-		try{
+		try {
 			DLStoreUtil.addDirectory(companyId, REPOSITORY_ID, dirName);
 		}
 		catch (DuplicateDirectoryException dde) {
@@ -103,15 +142,44 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
 			getThumbnailFilePath(fileVersion));
 	}
+	
+	protected static String getPathSegment(
+		FileVersion fileVersion, boolean preview) {
+		
+		long groupId = fileVersion.getGroupId();
+		long fileEntryId = fileVersion.getFileEntryId();
+		long fileVersionId = fileVersion.getFileVersionId();
+		
+		return getPathSegment(groupId, fileEntryId, fileVersionId, preview);
+	}
 
-	protected String getPathSegment(FileVersion fileVersion) {
-		StringBundler sb = new StringBundler(5);
+	protected static String getPathSegment(
+		long groupId, long fileEntryId, long fileVersionId, boolean preview) {
+		
+		StringBundler sb = null;
 
-		sb.append(fileVersion.getGroupId());
+		if (fileVersionId > 0) {
+			sb = new StringBundler(6);
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+		
+		if (preview) {
+			sb.append(PREVIEW_PATH);
+		}
+		else {
+			sb.append(THUMBNAIL_PATH);
+		}
+		
+		sb.append(groupId);
 		sb.append(StringPool.SLASH);
-		sb.append(fileVersion.getFileEntryId());
-		sb.append(StringPool.SLASH);
-		sb.append(fileVersion.getFileVersionId());
+		sb.append(fileEntryId);
+		
+		if (fileVersionId > 0) {
+			sb.append(StringPool.SLASH);
+			sb.append(fileVersionId);
+		}
 
 		return sb.toString();
 	}
@@ -122,7 +190,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		try {
 			String[] fileNames = DLStoreUtil.getFileNames(
 				fileVersion.getCompanyId(), REPOSITORY_ID,
-				PREVIEW_PATH.concat(getPathSegment(fileVersion)));
+				getPathSegment(fileVersion, true));
 
 			return fileNames.length;
 		}
@@ -140,14 +208,13 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		StringBundler sb = null;
 
 		if (index > 0) {
-			sb = new StringBundler(6);
-		}
-		else {
 			sb = new StringBundler(5);
 		}
+		else {
+			sb = new StringBundler(3);
+		}
 
-		sb.append(PREVIEW_PATH);
-		sb.append(getPathSegment(fileVersion));
+		sb.append(getPathSegment(fileVersion, true));
 
 		if (index > 0) {
 			sb.append(StringPool.SLASH);
@@ -226,10 +293,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected abstract String getPreviewType();
 
 	protected String getThumbnailFilePath(FileVersion fileVersion) {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
-		sb.append(THUMBNAIL_PATH);
-		sb.append(getPathSegment(fileVersion));
+		sb.append(getPathSegment(fileVersion, false));
 		sb.append(StringPool.PERIOD);
 		sb.append(getThumbnailType());
 

@@ -1,4 +1,10 @@
-(function() {
+;(function() {
+	var nativeHasOwnProperty = Object.prototype.hasOwnProperty;
+
+	var isString = function(val) {
+		return (typeof val === 'string');
+	};
+
 	var ELEMENTS_BLOCK = {
 		'*': 1,
 		'center': 1,
@@ -16,6 +22,10 @@
 		'tr': 1
 	};
 
+	var ELEMENTS_CLOSE_SELF = {
+		'*': 1
+	};
+
 	var ELEMENTS_INLINE = {
 		'b': 1,
 		'color': 1,
@@ -28,10 +38,6 @@
 		'url': 1
 	};
 
-	var ELEMENTS_CLOSE_SELF = {
-		'*': 1
-	};
-
 	var STR_TAG_CODE = 'code';
 
 	var Parser = function(config) {
@@ -41,17 +47,13 @@
 
 		instance._config = config;
 
-		instance._init();
+		instance.init();
 	};
 
 	Parser.prototype = {
 		constructor: Parser,
 
-		_isString: function(data) {
-			return (typeof data) == 'string';
-		},
-
-		_init: function() {
+		init: function() {
 			var instance = this;
 
 			var stack = [];
@@ -69,100 +71,12 @@
 			instance._dataPointer = 0;
 		},
 
-		_handleData: function(token, data) {
-			var instance = this;
-
-			var length = data.length;
-			var lastIndex = length;
-
-			if (token) {
-				length = token.index;
-				lastIndex = instance._lexer.getLastIndex();
-			}
-
-			if (length > instance._dataPointer) {
-				instance._result.push(
-					{
-						type: Parser.TOKEN_DATA,
-						value: data.substring(instance._dataPointer, length)
-					}
-				);
-			}
-
-			instance._dataPointer = lastIndex;
-		},
-
-		_handleTagEnd: function(token) {
-			var instance = this;
-
-			var pos = 0;
-
-			var stack = instance._stack;
-
-			if (token) {
-				var tagName = instance._isString(token) ? token : token[3];
-
-				tagName = tagName.toLowerCase();
-
-				for (pos = stack.length - 1; pos >= 0; pos--) {
-					if (stack[pos] == tagName) {
-						break;
-					}
-				}
-			}
-
-			if (pos >= 0) {
-				var TOKEN_TAG_END = Parser.TOKEN_TAG_END;
-
-				for (var i = stack.length - 1; i >= pos; i--) {
-					instance._result.push(
-						{
-							type: TOKEN_TAG_END,
-							value: stack[i]
-						}
-					);
-				}
-
-				stack.length = pos;
-			}
-		},
-
-		_handleTagStart: function(token) {
-			var instance = this;
-
-			var tagName = token[1].toLowerCase();
-
-			var stack = instance._stack;
-
-			var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-			if (hasOwnProperty.call(ELEMENTS_BLOCK, tagName)) {
-				var lastTag;
-
-				while ((lastTag = stack.last()) && hasOwnProperty.call(ELEMENTS_INLINE,lastTag)) {
-					instance._handleTagEnd(lastTag);
-				}
-			}
-
-			if (hasOwnProperty.call(ELEMENTS_CLOSE_SELF, tagName) && stack.last() == tagName ) {
-				instance._handleTagEnd(tagName);
-			}
-
-			stack.push(tagName);
-
-			instance._result.push(
-				{
-					attribute: token[2],
-					type: Parser.TOKEN_TAG_START,
-					value: tagName
-				}
-			);
-		},
-
 		parse: function(data) {
 			var instance = this;
 
-			var lexer = instance._lexer = new Liferay.BBCodeLexer(data);
+			var lexer = new Liferay.BBCodeLexer(data);
+
+			instance._lexer = lexer;
 
 			var token;
 
@@ -191,6 +105,7 @@
 			}
 
 			instance._handleData(null, data);
+
 			instance._handleTagEnd();
 
 			var result = instance._result.slice(0);
@@ -200,11 +115,109 @@
 			return result;
 		},
 
+		_handleData: function(token, data) {
+			var instance = this;
+
+			var length = data.length;
+
+			var lastIndex = length;
+
+			if (token) {
+				length = token.index;
+
+				lastIndex = instance._lexer.getLastIndex();
+			}
+
+			if (length > instance._dataPointer) {
+				instance._result.push(
+					{
+						type: Parser.TOKEN_DATA,
+						value: data.substring(instance._dataPointer, length)
+					}
+				);
+			}
+
+			instance._dataPointer = lastIndex;
+		},
+
+		_handleTagEnd: function(token) {
+			var instance = this;
+
+			var pos = 0;
+
+			var stack = instance._stack;
+
+			if (token) {
+				var tagName;
+
+				if (isString(token)) {
+					tagName = token;
+				}
+				else {
+					tagName = token[3];
+				}
+
+				tagName = tagName.toLowerCase();
+
+				for (pos = stack.length - 1; pos >= 0; pos--) {
+					if (stack[pos] == tagName) {
+						break;
+					}
+				}
+			}
+
+			if (pos >= 0) {
+				var tokenTagEnd = Parser.TOKEN_TAG_END;
+
+				for (var i = stack.length - 1; i >= pos; i--) {
+					instance._result.push(
+						{
+							type: tokenTagEnd,
+							value: stack[i]
+						}
+					);
+				}
+
+				stack.length = pos;
+			}
+		},
+
+		_handleTagStart: function(token) {
+			var instance = this;
+
+			var tagName = token[1].toLowerCase();
+
+			var stack = instance._stack;
+
+			if (hasOwnProperty.call(ELEMENTS_BLOCK, tagName)) {
+				var lastTag;
+
+				while ((lastTag = stack.last()) && hasOwnProperty.call(ELEMENTS_INLINE, lastTag)) {
+					instance._handleTagEnd(lastTag);
+				}
+			}
+
+			if (hasOwnProperty.call(ELEMENTS_CLOSE_SELF, tagName) && stack.last() == tagName) {
+				instance._handleTagEnd(tagName);
+			}
+
+			stack.push(tagName);
+
+			instance._result.push(
+				{
+					attribute: token[2],
+					type: Parser.TOKEN_TAG_START,
+					value: tagName
+				}
+			);
+		},
+
 		_reset: function() {
 			var instance = this;
 
 			instance._stack.length = 0;
 			instance._result.length = 0;
+
 			instance._dataPointer = 0;
 		}
 	};

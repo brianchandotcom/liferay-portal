@@ -1,51 +1,7 @@
-(function() {
-	var REGEX_NUMBER = /^[\\.0-9]{1,8}$/i;
+;(function() {
+	var Parser = Liferay.BBCodeParser;
 
-	var REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
-
-	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,512}$/i;
-
-	var REGEX_LASTCHAR_NEWLINE = /(\r?\n)$/;
-
-	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/;
-
-	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
-
-	var REGEX_NEW_LINE = /r?\n/g;
-
-	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,512}$/i;
-
-	var STR_BLANK = '';
-
-	var STR_CODE = 'code';
-
-	var STR_IMG = 'img';
-
-	var STR_NEW_LINE = '\n';
-
-	var STR_TAG_A_CLOSE = '</a>';
-
-	var STR_TAG_ATTR_CLOSE = '">';
-
-	var STR_TAG_ATTR_HREF_OPEN = '<a href="';
-
-	var STR_TAG_END_CLOSE = '>';
-
-	var STR_TAG_END_OPEN = '</';
-
-	var STR_TAG_LIST_ITEM_SHORT = '*';
-
-	var STR_TAG_P_CLOSE = '</p>';
-
-	var STR_TAG_OPEN = '<';
-
-	var STR_TAG_SPAN_CLOSE = '</span>';
-
-	var STR_TAG_SPAN_STYLE_OPEN = '<span style="';
-
-	var STR_TAG_URL = 'url';
-
-	var STR_TEXT_ALIGN = '<p style="text-align: ';
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 	var MAP_FONT_SIZE = {
 		1: 10,
@@ -56,6 +12,36 @@
 		6: 32,
 		7: 48,
 		defaultSize: 12
+	};
+
+	var MAP_HANDLERS = {
+		b: '_handleStrong',
+		code: '_handleCode',
+		font: '_handleFont',
+		i: '_handleEm',
+		img: '_handleImage',
+		list: '_handleList',
+		s: '_handleStrikeThrough',
+		size: '_handleSize',
+		table: '_handleTable',
+		td: '_handleTableCell',
+		th: '_handleTableHeader',
+		tr: '_handleTableRow',
+		url: '_handleURL',
+
+		color: '_handleColor',
+		colour: '_handleColor',
+
+		'*': '_handleListItem',
+		li: '_handleListItem',
+
+		q: '_handleQuote',
+		quote: '_handleQuote',
+
+		center: '_handleTextAlign',
+		justify: '_handleTextAlign',
+		left: '_handleTextAlign',
+		right: '_handleTextAlign'
 	};
 
 	var MAP_LIST_STYLES = {
@@ -72,12 +58,66 @@
 		table: 2
 	};
 
+	var REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
+
+	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,512}$/i;
+
+	var REGEX_LASTCHAR_NEWLINE = /(\r?\n)$/;
+
+	var REGEX_NEW_LINE = /r?\n/g;
+
+	var REGEX_NUMBER = /^[\\.0-9]{1,8}$/i;
+
+	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
+
+	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/;
+
+	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,512}$/i;
+
+	var STR_BLANK = '';
+
+	var STR_CODE = 'code';
+
+	var STR_IMG = 'img';
+
+	var STR_NEW_LINE = '\n';
+
+	var STR_TAG_ATTR_CLOSE = '">';
+
+	var STR_TAG_ATTR_HREF_OPEN = '<a href="';
+
+	var STR_TAG_A_CLOSE = '</a>';
+
+	var STR_TAG_END_CLOSE = '>';
+
+	var STR_TAG_END_OPEN = '</';
+
+	var STR_TAG_LIST_ITEM_SHORT = '*';
+
+	var STR_TAG_OPEN = '<';
+
+	var STR_TAG_P_CLOSE = '</p>';
+
+	var STR_TAG_SPAN_CLOSE = '</span>';
+
+	var STR_TAG_SPAN_STYLE_OPEN = '<span style="';
+
+	var STR_TAG_URL = 'url';
+
+	var STR_TEXT_ALIGN = '<p style="text-align: ';
+
+	var TOKEN_DATA = Parser.TOKEN_DATA;
+
+	var TOKEN_TAG_END = Parser.TOKEN_TAG_END;
+
+	var TOKEN_TAG_START = Parser.TOKEN_TAG_START;
+
 	var Converter = function(config) {
 		var instance = this;
 
 		config = config || {};
 
-		instance._init(config);
+		instance.init(config);
 
 		instance._config = config;
 	};
@@ -88,22 +128,26 @@
 		convert: function(data) {
 			var instance = this;
 
-			var Parser = Liferay.BBCodeParser;
+			var parsedData = instance._parser.parse(data);
 
-			var parsedData = instance._parsedData = instance._parser.parse(data);
+			instance._parsedData = parsedData;
 
 			var length = parsedData.length;
 
-			for (instance._tokenPointer = 0; instance._tokenPointer < length; instance._tokenPointer++) {
-				var token = parsedData[instance._tokenPointer];
+			for (var i = 0; i < length; i++) {
+				instance._tokenPointer = i;
 
-				if (token.type == Parser.TOKEN_TAG_START) {
+				var token = parsedData[i];
+
+				var type = token.type;
+
+				if (type == TOKEN_TAG_START) {
 					instance._handleTagStart(token);
 				}
-				else if (token.type == Parser.TOKEN_TAG_END) {
+				else if (type == TOKEN_TAG_END) {
 					instance._handleTagEnd(token);
 				}
-				else if (token.type == Parser.TOKEN_DATA) {
+				else if (type == TOKEN_DATA) {
 					instance._handleData(token);
 				}
 				else {
@@ -118,29 +162,34 @@
 			return result;
 		},
 
-		_escapeHTML: Liferay.Util.escapeHTML,
+		init: function(config) {
+			var instance = this;
 
-		_getFontSize: function(fontSize) {
-			return MAP_FONT_SIZE[fontSize] || MAP_FONT_SIZE.defaultSize;
+			instance._parser = new Parser(config.parser);
+
+			instance._result = [];
+			instance._stack = [];
 		},
+
+		_escapeHTML: Liferay.Util.escapeHTML,
 
 		_extractData: function(toTagName, consume) {
 			var instance = this;
 
 			var result = [];
 
-			var Parser = Liferay.BBCodeParser;
-
 			var index = instance._tokenPointer + 1;
 
-			do {
-				var token = instance._parsedData[index++];
+			var token;
 
-				if (token.type == Parser.TOKEN_DATA) {
+			do {
+				token = instance._parsedData[index++];
+
+				if (token.type == TOKEN_DATA) {
 					result.push(token.value);
 				}
 
-			} while(token.type != Parser.TOKEN_TAG_END && token.value != toTagName);
+			} while((token.type != TOKEN_TAG_END) && (token.value != toTagName));
 
 			if (consume) {
 				instance._tokenPointer = index - 1;
@@ -149,13 +198,8 @@
 			return result.join(STR_BLANK);
 		},
 
-		_init: function(config) {
-			var instance = this;
-
-			instance._parser = new Liferay.BBCodeParser(config.parser);
-
-			instance._result = [];
-			instance._stack = [];
+		_getFontSize: function(fontSize) {
+			return MAP_FONT_SIZE[fontSize] || MAP_FONT_SIZE.defaultSize;
 		},
 
 		_handleCode: function(token) {
@@ -164,6 +208,7 @@
 			instance._noParse = true;
 
 			instance._handleSimpleTag('pre');
+
 			instance._result.push(STR_NEW_LINE);
 		},
 
@@ -177,6 +222,7 @@
 			}
 
 			instance._result.push(STR_TAG_SPAN_STYLE_OPEN + 'color: ' + colorName + STR_TAG_ATTR_CLOSE);
+
 			instance._stack.push(STR_TAG_SPAN_CLOSE);
 		},
 
@@ -204,6 +250,7 @@
 			fontName = CKEDITOR.tools.htmlEncodeAttr(fontName);
 
 			instance._result.push(STR_TAG_SPAN_STYLE_OPEN + 'font-family: ' + fontName + STR_TAG_ATTR_CLOSE);
+
 			instance._stack.push(STR_TAG_SPAN_CLOSE);
 		},
 
@@ -242,19 +289,22 @@
 			}
 
 			instance._result.push(result);
+
 			instance._stack.push(STR_TAG_END_OPEN + tag + STR_TAG_END_CLOSE);
 		},
 
 		_handleNewLine: function(value) {
 			var instance = this;
 
+			var nextToken;
+
 			if (!instance._noParse) {
 				if (REGEX_STRING_IS_NEW_LINE.test(value)) {
-					var nextToken = instance._parsedData[instance._tokenPointer + 1];
+					nextToken = instance._parsedData[instance._tokenPointer + 1];
 
 					if (nextToken &&
-						Object.prototype.hasOwnProperty.call(MAP_TOKENS_EXCLUDE_NEW_LINE, nextToken.value) &&
-							(nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value])) {
+						hasOwnProperty.call(MAP_TOKENS_EXCLUDE_NEW_LINE, nextToken.value) &&
+						(nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value])) {
 
 							value = STR_BLANK;
 					}
@@ -262,7 +312,10 @@
 				else if(REGEX_LASTCHAR_NEWLINE.test(value)) {
 					nextToken = instance._parsedData[instance._tokenPointer + 1];
 
-					if (nextToken && nextToken.type == Liferay.BBCodeParser.TOKEN_TAG_END && nextToken.value == STR_TAG_LIST_ITEM_SHORT) {
+					if (nextToken &&
+						(nextToken.type == TOKEN_TAG_END) &&
+						(nextToken.value == STR_TAG_LIST_ITEM_SHORT)) {
+
 						value = value.replace(REGEX_LASTCHAR_NEWLINE, '');
 					}
 				}
@@ -284,70 +337,9 @@
 			var tagName = token.value;
 
 			if (instance._isValidTag(tagName)) {
-				var handler = instance._handleSimpleTags;
+				var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
 
-				if (tagName == 'b') {
-					handler = instance._handleStrong;
-				}
-				else if (tagName == 'center') {
-					handler = instance._handleTextAlign;
-				}
-				else if (tagName == STR_CODE) {
-					handler = instance._handleCode;
-				}
-				else if (tagName == 'color' || tagName == 'colour') {
-					handler = instance._handleColor;
-				}
-				else if (tagName == 'font') {
-					handler = instance._handleFont;
-				}
-				else if (tagName == 'i') {
-					handler = instance._handleEm;
-				}
-				else if (tagName == STR_IMG) {
-					handler = instance._handleImage;
-				}
-				else if (tagName == 'justify') {
-					handler = instance._handleTextAlign;
-				}
-				else if (tagName == 'list') {
-					handler = instance._handleList;
-				}
-				else if (tagName == 'left') {
-					handler = instance._handleTextAlign;
-				}
-				else if (tagName == 'right') {
-					handler = instance._handleTextAlign;
-				}
-				else if (tagName == 'q' || tagName == 'quote') {
-					handler = instance._handleQuote;
-				}
-				else if (tagName == STR_TAG_LIST_ITEM_SHORT || tagName == 'li') {
-					handler = instance._handleListItem;
-				}
-				else if (tagName == 's') {
-					handler = instance._handleStrikeThrough;
-				}
-				else if (tagName == 'size') {
-					handler = instance._handleSize;
-				}
-				else if (tagName == 'table') {
-					handler = instance._handleTable;
-				}
-				else if (tagName == 'td') {
-					handler = instance._handleTableCell;
-				}
-				else if (tagName == 'th') {
-					handler = instance._handleTableHeader;
-				}
-				else if (tagName == 'tr') {
-					handler = instance._handleTableRow;
-				}
-				else if (tagName == STR_TAG_URL) {
-					handler = instance._handleURL;
-				}
-
-				handler.apply(instance, arguments);
+				instance[handlerName](tagName);
 			}
 		},
 
@@ -369,6 +361,7 @@
 			var instance = this;
 
 			instance._result.push(STR_TEXT_ALIGN, token.value, STR_TAG_ATTR_CLOSE);
+
 			instance._stack.push(STR_TAG_P_CLOSE);
 		},
 
@@ -392,6 +385,7 @@
 			}
 
 			instance._result.push(result);
+
 			instance._stack.push('</blockquote>');
 		},
 
@@ -405,6 +399,7 @@
 			}
 
 			instance._result.push(STR_TAG_SPAN_STYLE_OPEN, 'font-size: ', instance._getFontSize(size), 'px', STR_TAG_ATTR_CLOSE);
+
 			instance._stack.push(STR_TAG_SPAN_CLOSE);
 		},
 
@@ -412,6 +407,7 @@
 			var instance = this;
 
 			instance._result.push(STR_TAG_OPEN, tagName, STR_TAG_END_CLOSE);
+
 			instance._stack.push(STR_TAG_END_OPEN + tagName + STR_TAG_END_CLOSE);
 		},
 
@@ -469,6 +465,7 @@
 			}
 
 			instance._result.push(STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE);
+
 			instance._stack.push(STR_TAG_A_CLOSE);
 		},
 
@@ -487,7 +484,9 @@
 
 			instance._result.length = 0;
 			instance._stack.length = 0;
+
 			instance._parsedData = null;
+
 			instance._noParse = false;
 		}
 	};

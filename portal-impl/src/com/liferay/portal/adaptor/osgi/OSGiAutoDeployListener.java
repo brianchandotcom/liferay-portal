@@ -33,6 +33,7 @@ import java.util.jar.Manifest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.launch.Framework;
 
@@ -120,10 +121,15 @@ public class OSGiAutoDeployListener implements AutoDeployListener {
 
 		BundleContext bundleContext = framework.getBundleContext();
 
-		Bundle bundle = bundleContext.installBundle(file.toURI().toString());
+		try {
+			Bundle bundle = bundleContext.installBundle(file.toURI().toString());
 
-		if (bundle.getState() == Bundle.INSTALLED) {
-			bundle.start();
+			if (bundle.getState() == Bundle.INSTALLED) {
+				bundle.start();
+			}
+		}
+		catch (BundleException be) {
+			_log.warn(be.getMessage());
 		}
 	}
 

@@ -104,7 +104,7 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	public Date getModifiedDate() {
-		return _dlFolder.getCreateDate();
+		return _dlFolder.getModifiedDate();
 	}
 
 	public String getName() {

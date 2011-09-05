@@ -60,7 +60,8 @@ public abstract class CopyThreadLocalCallable<T> implements Callable<T> {
 	public abstract T doCall() throws Exception;
 
 	private final boolean _clearOnExit;
-	private final Map<ThreadLocal<?>, Object> _longLivedThreadLocals;
-	private final Map<ThreadLocal<?>, Object> _shortLivedlThreadLocals;
+	private final Map<CentralizedThreadLocal<?>, Object> _longLivedThreadLocals;
+	private final Map<CentralizedThreadLocal<?>, Object>
+		_shortLivedlThreadLocals;
 
 }

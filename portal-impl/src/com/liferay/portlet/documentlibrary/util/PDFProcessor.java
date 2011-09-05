@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -127,11 +128,34 @@ public class PDFProcessor extends DLPreviewableProcessor {
 		return hasImages;
 	}
 
+	public static boolean isImageMagickEnabled() {
+		if (PropsValues.IMAGEMAGICK_ENABLED) {
+			return true;
+		}
+		else {
+			if (!_warned) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Liferay is not configured to use ImageMagick for ");
+				sb.append("generating Document Library previews and will ");
+				sb.append("default to PDFBox. For better quality previews, ");
+				sb.append("install ImageMagick and enable it in ");
+				sb.append("portal-ext.properties");
+
+				_log.warn(sb.toString());
+
+				_warned = true;
+			}
+
+			return false;
+		}
+	}
+
 	public PDFProcessor() {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 
-		if (PropsValues.IMAGEMAGICK_ENABLED && (_convertCmd == null)) {
+		if (isImageMagickEnabled() && (_convertCmd == null)) {
 			String filterName = null;
 
 			if (OSDetector.isApple()) {
@@ -231,7 +255,7 @@ public class PDFProcessor extends DLPreviewableProcessor {
 	private void _generateImages(FileVersion fileVersion, File file)
 		throws Exception {
 
-		if (PropsValues.IMAGEMAGICK_ENABLED) {
+		if (isImageMagickEnabled()) {
 			_generateImagesIM(fileVersion, file);
 		}
 		else {
@@ -243,7 +267,7 @@ public class PDFProcessor extends DLPreviewableProcessor {
 			FileVersion fileVersion, InputStream inputStream)
 		throws Exception {
 
-		if (PropsValues.IMAGEMAGICK_ENABLED) {
+		if (isImageMagickEnabled()) {
 			_generateImagesIM(fileVersion, inputStream);
 		}
 		else {
@@ -604,5 +628,6 @@ public class PDFProcessor extends DLPreviewableProcessor {
 
 	private static ConvertCmd _convertCmd;
 	private static List<Long> _fileVersionIds = new Vector<Long>();
+	private static boolean _warned = false;
 
 }

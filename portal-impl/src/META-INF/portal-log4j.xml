@@ -766,7 +766,7 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil">
+	<category name="com.liferay.portlet.documentlibrary.util">
 		<priority value="WARN" />
 	</category>
 

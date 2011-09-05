@@ -134,10 +134,8 @@
 
 			var length = parsedData.length;
 
-			for (var i = 0; i < length; i++) {
-				instance._tokenPointer = i;
-
-				var token = parsedData[i];
+			for (instance._tokenPointer = 0; instance._tokenPointer < length; instance._tokenPointer++) {
+				var token = parsedData[instance._tokenPointer];
 
 				var type = token.type;
 
@@ -339,7 +337,7 @@
 			if (instance._isValidTag(tagName)) {
 				var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
 
-				instance[handlerName](tagName);
+				instance[handlerName](token);
 			}
 		},
 

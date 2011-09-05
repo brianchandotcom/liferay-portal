@@ -23,10 +23,10 @@
 
 	Liferay.BBCodeLexer = Lexer;
 })();;(function() {
-	var nativeHasOwnProperty = Object.prototype.hasOwnProperty;
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 	var isString = function(val) {
-		return (typeof val === 'string');
+		return (typeof val == 'string');
 	};
 
 	var ELEMENTS_BLOCK = {
@@ -387,10 +387,8 @@
 
 			var length = parsedData.length;
 
-			for (var i = 0; i < length; i++) {
-				instance._tokenPointer = i;
-
-				var token = parsedData[i];
+			for (instance._tokenPointer = 0; instance._tokenPointer < length; instance._tokenPointer++) {
+				var token = parsedData[instance._tokenPointer];
 
 				var type = token.type;
 
@@ -592,7 +590,7 @@
 			if (instance._isValidTag(tagName)) {
 				var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
 
-				instance[handlerName](tagName);
+				instance[handlerName](token);
 			}
 		},
 

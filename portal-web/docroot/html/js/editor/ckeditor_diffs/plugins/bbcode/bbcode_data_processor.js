@@ -2,7 +2,7 @@
 	var toHex = function(val) {
 		val = parseInt(val, 10).toString(16);
 
-		if (val.length === 1) {
+		if (val.length == 1) {
 			val = '0' + val;
 		}
 
@@ -729,21 +729,17 @@
 
 			var tagName = element.tagName;
 
-			if (!tagName || tagName.toLowerCase() == 'a') {
-				var style = element.style;
-
-				if (style) {
-					instance._handleStyleAlignCenter(element, stylesTagsIn, stylesTagsOut);
-					instance._handleStyleAlignJustify(element, stylesTagsIn, stylesTagsOut);
-					instance._handleStyleAlignLeft(element, stylesTagsIn, stylesTagsOut);
-					instance._handleStyleAlignRight(element, stylesTagsIn, stylesTagsOut);
-					instance._handleStyleBold(element, stylesTagsIn, stylesTagsOut);
-					instance._handleStyleColor(element, stylesTagsIn, stylesTagsOut);
-					instance._handleStyleFontFamily(element, stylesTagsIn, stylesTagsOut);
-					instance._handleStyleFontSize(element, stylesTagsIn, stylesTagsOut);
-					instance._handleStyleItalic(element, stylesTagsIn, stylesTagsOut);
-					instance._handleStyleTextDecoration(element, stylesTagsIn, stylesTagsOut);
-				}
+			if ((!tagName || tagName.toLowerCase() != 'a') && element.style) {
+				instance._handleStyleAlignCenter(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleAlignJustify(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleAlignLeft(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleAlignRight(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleBold(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleColor(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleFontFamily(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleFontSize(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleItalic(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleTextDecoration(element, stylesTagsIn, stylesTagsOut);
 			}
 		},
 

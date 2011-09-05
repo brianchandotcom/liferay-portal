@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.1
+Created-By: 1.6.0_24-b07 (Oracle Corporation)
+Extension-List: crypto
+crypto-Extension-Name: javax.crypto

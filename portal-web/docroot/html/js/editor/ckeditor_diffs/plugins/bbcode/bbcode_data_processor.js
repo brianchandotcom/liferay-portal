@@ -103,7 +103,7 @@
 			for (var i = 0; i < length; i++) {
 				var image = TEMPLATE_IMAGE.replace('{image}', imagePath + emoticonImages[i]);
 
-				var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, "\\$&");
+				var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, '\\$&');
 
 				data = data.replace(new RegExp(escapedSymbol, 'g'), image);
 			}
@@ -139,6 +139,7 @@
 			var instance = this;
 
 			var node = document.createElement(TAG_DIV);
+
 			node.innerHTML = data;
 
 			instance._handle(node);
@@ -151,8 +152,6 @@
 		},
 
 		_convertRGBToHex: function(color) {
-			var red, green, blue;
-
 			color = color.replace(
 				REGEX_COLOR_RGB,
 				function(mstr, red, green, blue, offset, string) {
@@ -190,6 +189,8 @@
 		_getEmoticonSymbol: function(element) {
 			var instance = this;
 
+			var emoticonSymbol = null;
+
 			var imagePath = element.getAttribute('src');
 
 			if (imagePath) {
@@ -197,11 +198,11 @@
 				var imageIndex = instance._getImageIndex(CKEDITOR.config.smiley_images, image);
 
 				if (imageIndex >= 0) {
-					return CKEDITOR.config.smiley_symbols[imageIndex];
+					emoticonSymbol = CKEDITOR.config.smiley_symbols[imageIndex];
 				}
 			}
 
-			return null;
+			return emoticonSymbol;
 		},
 
 		_getFontSize: function(fontSize) {
@@ -210,7 +211,7 @@
 			var bodySize;
 
 			if (REGEX_PX.test(fontSize)) {
-				return instance._getFontSizePX(fontSize);
+				fontSize = instance._getFontSizePX(fontSize);
 			}
 			else if (REGEX_EM.test(fontSize)) {
 				bodySize = instance._getBodySize();
@@ -218,7 +219,7 @@
 				fontSize = parseFloat(fontSize, 10);
 				fontSize = Math.round((fontSize * bodySize)) + 'px';
 
-				return instance._getFontSize(fontSize);
+				fontSize = instance._getFontSize(fontSize);
 			}
 			else if (REGEX_PERCENT.test(fontSize)) {
 				bodySize = instance._getBodySize();
@@ -226,36 +227,38 @@
 				fontSize = parseFloat(fontSize, 10);
 				fontSize = Math.round(((fontSize * bodySize) / 100)) + 'px';
 
-				return instance._getFontSize(fontSize);
+				fontSize = instance._getFontSize(fontSize);
 			}
 
 			return fontSize;
 		},
 
 		_getFontSizePX: function(fontSize) {
-			fontSize = parseInt(fontSize, 10);
+			var sizeValue = parseInt(fontSize, 10);
 
-			if (fontSize <= 10) {
-				return '1';
+			if (sizeValue <= 10) {
+				sizeValue = '1';
 			}
-			else if (fontSize <= 12) {
-				return '2';
+			else if (sizeValue <= 12) {
+				sizeValue = '2';
 			}
-			else if (fontSize <= 16) {
-				return '3';
+			else if (sizeValue <= 16) {
+				sizeValue = '3';
 			}
-			else if (fontSize <= 18) {
-				return '4';
+			else if (sizeValue <= 18) {
+				sizeValue = '4';
 			}
-			else if (fontSize <= 24) {
-				return '5';
+			else if (sizeValue <= 24) {
+				sizeValue = '5';
 			}
-			else if (fontSize <= 32) {
-				return '6';
+			else if (sizeValue <= 32) {
+				sizeValue = '6';
 			}
 			else {
-				return '7';
+				sizeValue = '7';
 			}
+
+			return sizeValue;
 		},
 
 		_getImageIndex: function(array, image) {
@@ -597,13 +600,10 @@
 		_handleQuote: function(element, listTagsIn, listTagsOut) {
 			var cite = element.getAttribute(TAG_CITE);
 
-			var openTag;
+			var openTag = '[quote]';
 
 			if (cite) {
-				openTag = '[quote=', cite, ']';
-			}
-			else {
-				openTag = '[quote]';
+				openTag = '[quote=' + cite + ']';
 			}
 
 			listTagsIn.push(openTag);

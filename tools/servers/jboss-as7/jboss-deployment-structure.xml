@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.0">
+	<deployment>
+		<exclusions>
+			<module name="org.hibernate" />
+		</exclusions>
+		<dependencies>
+			<module name="com.liferay.portal" />
+			<module name="javax.mail.api" />
+			<module name="org.jboss.modules" />
+			<module name="org.apache.xerces" />
+			<module name="system" export="false">
+				<imports>
+					<include path="com/sun/jmx"/>
+					<exclude path="/**" />
+				</imports>
+			</module>
+		</dependencies>
+	</deployment>
+</jboss-deployment-structure>

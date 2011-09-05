@@ -146,10 +146,24 @@ public class ClassUtil {
 			}
 			else {
 				path = uri.getPath();
+
+				if (path == null) {
+					path = url.getFile();
+				}
 			}
 		}
 		catch (URISyntaxException urise) {
 			path = url.getFile();
+		}
+
+		if (ServerDetector.isJBoss()) {
+			if (path.startsWith("file:") && !path.startsWith("file:/")) {
+				path = path.substring(5, path.length());
+
+				path = "file:/".concat(path);
+
+				path = StringUtil.replace(path, "%5C", StringPool.SLASH);
+			}
 		}
 
 		if (_log.isDebugEnabled()) {

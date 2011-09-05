@@ -89,6 +89,33 @@ public class ClassPathUtil {
 			}
 		}
 
+		if (ServerDetector.isJBoss()) {
+
+			path = StringUtil.replace(
+				path, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			String protocol = url.getProtocol();
+
+			if (protocol.equals("vfs")) {
+				// check if inside of jar
+
+				int jarIndex = path.indexOf(".jar/");
+
+				if (jarIndex != -1) {
+
+					String jarFilePath = path.substring(0, jarIndex + 4);
+
+					File jarFile = new File(jarFilePath);
+
+					if (jarFile.isFile()) {
+						path = jarFilePath + '!' + path.substring(jarIndex + 4);
+					}
+				}
+
+				path = "file:".concat(path);
+			}
+		}
+
 		File dir = null;
 
 		int pos = -1;

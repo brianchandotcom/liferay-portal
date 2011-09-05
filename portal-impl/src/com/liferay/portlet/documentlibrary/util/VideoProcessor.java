@@ -170,6 +170,9 @@ public class VideoProcessor extends DLPreviewableProcessor {
 
 			try {
 				while (iMediaReader.readPacket() == null) {
+					if (captureFrameListener.isWritten()) {
+						break;
+					}
 				}
 			}
 			catch (Exception e) {

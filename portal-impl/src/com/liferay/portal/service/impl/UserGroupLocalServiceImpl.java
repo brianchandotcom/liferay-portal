@@ -89,19 +89,20 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * Adds a user group.
 	 *
 	 * <p>
-	 * This method handles the creation and bookkeeping of the user group, 
-	 * including its resources, metadata, and internal data structures. It is 
-	 * not necessary to make subsequent calls setup default groups and resources.
+	 * This method handles the creation and bookkeeping of the user group,
+	 * including its resources, metadata, and internal data structures. It is
+	 * not necessary to make subsequent calls to setup default groups and
+	 * resources for the user group.
 	 * </p>
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the user group's company
 	 * @param  name the user group's name
 	 * @param  description the user group's description
-	 * @param  publicLayoutSetPrototypeId the primary key of the user group's 
-	 * 		   public layout set
-	 * @param  privateLayoutSetPrototypeId the primary key of the user group's 
-	 * 		   private layout set
+	 * @param  publicLayoutSetPrototypeId the primary key of the user group's
+	 *         public layout set
+	 * @param  privateLayoutSetPrototypeId the primary key of the user group's
+	 *         private layout set
 	 * @return the user group
 	 * @throws PortalException if the user group's information was invalid
 	 * @throws SystemException if a system exception occurred
@@ -147,8 +148,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Clears all associations between the user and its user groups and 
-	 * clears the permissions cache. 
+	 * Clears all associations between the user and its user groups and clears
+	 * the permissions cache.
 	 *
 	 * <p>
 	 * This method is called from {@link #deleteUserGroup(UserGroup)}.
@@ -164,12 +165,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Copies the user group's layouts to the users who are not 
-	 * members of the user group.
+	 * Copies the user group's layouts to the users who are not already members
+	 * of the user group.
 	 *
 	 * @param  userGroupId the primary key of the user group
 	 * @param  userIds the primary keys of the users
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if any one of the users could not be found or if
+	 *         a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void copyUserGroupLayouts(long userGroupId, long userIds[])
@@ -202,7 +204,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param  userGroupIds the primary keys of the user groups
 	 * @param  userId the primary key of the user
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void copyUserGroupLayouts(long userGroupIds[], long userId)
@@ -220,7 +223,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param  userGroupId the primary key of the user group
 	 * @param  userId the primary key of the user
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void copyUserGroupLayouts(long userGroupId, long userId)
@@ -248,8 +252,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * Deletes the user group.
 	 *
 	 * @param  userGroupId the primary key of the user group
-	 * @throws PortalException if a user group with the primary key could not be 
-	 * found or if the user group had a workflow in approved status
+	 * @throws PortalException if a user group with the primary key could not
+	 *         be found or if the user group had a workflow in approved status
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -266,8 +270,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * Deletes the user group.
 	 *
 	 * @param  userGroup the user group
-	 * @throws PortalException if the organization had a workflow in 
-	 * 		   approved status
+	 * @throws PortalException if the organization had a workflow in approved
+	 *         status
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -316,8 +320,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param  userGroupId the primary key of the user group
 	 * @return Returns the user group with the primary key
-	 * @throws PortalException if a user group with the primary key could
-	 * 		   not be found
+	 * @throws PortalException if a user group with the primary key could not
+	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -333,8 +337,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the user group's company
 	 * @param  name the user group's name
 	 * @return Returns the user group with the name
-	 * @throws PortalException if a user group with the name could not
-	 *         be found
+	 * @throws PortalException if a user group with the name could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup getUserGroup(long companyId, String name)
@@ -361,7 +364,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param  userGroupIds the primary keys of the user groups
 	 * @return the user groups with the primary keys
-	 * @throws PortalException if one of the user groups could not be found
+	 * @throws PortalException if any one of the user groups could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<UserGroup> getUserGroups(long[] userGroupIds)
@@ -380,10 +383,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the user groups the user belongs to.
+	 * Returns all the user groups to which the user belongs.
 	 *
 	 * @param  userId the primary key of the user
-	 * @return the user groups the user belongs to
+	 * @return the user groups to which the user belongs
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<UserGroup> getUserUserGroups(long userId)
@@ -393,7 +396,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user group belongs to the group.
+	 * Returns <code>true</code> if the user group is associated with the
+	 * group.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  userGroupId the primary key of the user group
@@ -423,8 +427,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns an ordered range of all the user groups that match the name 
-	 * and description without using the indexer.
+	 * Returns an ordered range of all the user groups that match the name and
+	 * description.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -438,19 +442,19 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the user group's company
 	 * @param  name the user group's name (optionally <code>null</code>)
-	 * @param  description the user group's description (optionally 
-	 * 		   <code>null</code>)
-	 * @param  params the finder params (optionally <code>null</code>). 
-	 * 		   For more information see {@link 
-	 * 		   com.liferay.portal.service.persistence.UserGroupFinder}
+	 * @param  description the user group's description (optionally
+	 *         <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). For
+	 *         more information see {@link
+	 *         com.liferay.portal.service.persistence.UserGroupFinder}
 	 * @param  start the lower bound of the range of user groups to return
-	 * @param  end the upper bound of the range of user groups to return
-	 * 		   (not inclusive)
-	 * @param  obc the comparator to order the user groups(optionally
+	 * @param  end the upper bound of the range of user groups to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the user groups (optionally
 	 *         <code>null</code>)
 	 * @return the matching user groups ordered by comparator <code>obc</code>
 	 * @throws SystemException if a system exception occurred
-	 * @see	   com.liferay.portal.service.persistence.UserGroupFinder
+	 * @see    com.liferay.portal.service.persistence.UserGroupFinder
 	 */
 	public List<UserGroup> search(
 			long companyId, String name, String description,
@@ -467,11 +471,11 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the user group's company
 	 * @param  name the user group's name (optionally <code>null</code>)
-	 * @param  description the user group's description (optionally 
-	 * 		   <code>null</code>)
-	 * @param  params the finder params (optionally <code>null</code>). 
-	 * 		   For more information see {@link 
-	 * 		   com.liferay.portal.service.persistence.UserGroupFinder}
+	 * @param  description the user group's description (optionally
+	 *         <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). For
+	 *         more information see {@link
+	 *         com.liferay.portal.service.persistence.UserGroupFinder}
 	 * @return the number of matching user groups
 	 * @throws SystemException if a system exception occurred
 	 * @see    com.liferay.portal.service.persistence.UserGroupFinder
@@ -486,12 +490,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Sets the user groups associated with the user, removing and 
-	 * adding associations as necessary.
+	 * Sets the user groups associated with the user copying the user group
+	 * layouts and removing and adding user group associations for the user as
+	 * necessary.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  userGroupIds the primary keys of the user groups
-	 * @throws PortalException if a portal exception occurred 
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void setUserUserGroups(long userId, long[] userGroupIds)
@@ -555,12 +560,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @param  name the user group's name
 	 * @param  description the user group's description
 	 * @param  publicLayoutSetPrototypeId the primary key of the user group's
-	 * 		   public layout set
+	 *         public layout set
 	 * @param  privateLayoutSetPrototypeId the primary key of the user group's
-	 * 		   private layout set
+	 *         private layout set
 	 * @return the user group
-	 * @throws PortalException if an user group with the primary key is not found
-	 * 		   or if the new information is invalid
+	 * @throws PortalException if a user group with the primary key could not
+	 *         be found or if the new information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup updateUserGroup(

@@ -40,8 +40,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  userGroupIds the primary keys of the user groups
 	 * @throws PortalException if a group or user group with the primary key
-	 * 		   could not be found or if the user did not have permission to
-	 * 		   assign group members
+	 *         could not be found, or if the user did not have permission to
+	 *         assign group members
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
@@ -59,8 +59,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @param  teamId the primary key of the team
 	 * @param  userGroupIds the primary keys of the user groups
 	 * @throws PortalException if a team or user group with the primary key
-	 * 		   could not be found or if the user did not have permission to
-	 * 		   assign team members
+	 *         could not be found, or if the user did not have permission to
+	 *         assign team members
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
@@ -77,18 +77,18 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *
 	 * <p>
 	 * This method handles the creation and bookkeeping of the user group,
-	 * including its resources, metadata, and internal datastructures.
+	 * including its resources, metadata, and internal data structures.
 	 * </p>
 	 *
 	 * @param  name the user group's name
 	 * @param  description the user group's description
 	 * @param  publicLayoutSetPrototypeId the primary key of the user group's
-	 * 		   public layout set
+	 *         public layout set
 	 * @param  privateLayoutSetPrototypeId the primary key of the user group's
-	 * 		   private layout set
+	 *         private layout set
 	 * @return the user group
 	 * @throws PortalException if the user group's information was invalid or
-	 * 		   if the user did not have permission to add the user group
+	 *         if the user did not have permission to add the user group
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup addUserGroup(
@@ -111,8 +111,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *
 	 * @param  userGroupId the primary key of the user group
 	 * @throws PortalException if a user group with the primary key could not
-	 * 		   be found, if the user did not have permission to delete the
-	 * 		   user group, if the user group had a workflow in approved status
+	 *         be found, if the user did not have permission to delete the user
+	 *         group, or if the user group had a workflow in approved status
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteUserGroup(long userGroupId)
@@ -129,9 +129,9 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *
 	 * @param  userGroupId the primary key of the user group
 	 * @return Returns the user group with the primary key
-	 * @throws PortalException if a user group with the primary key could
-	 * 		   not be found or if the user did not have permission to view
-	 * 		   the user group
+	 * @throws PortalException if a user group with the primary key could not
+	 *         be found or if the user did not have permission to view the user
+	 *         group
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup getUserGroup(long userGroupId)
@@ -148,9 +148,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *
 	 * @param  name the user group's name
 	 * @return Returns the user group with the name
-	 * @throws PortalException if a user group with the name could not
-	 * 		   be found or if the user did not have permission to
-	 * 		   view the user group
+	 * @throws PortalException if a user group with the name could not be found
+	 *         or if the user did not have permission to view the user group
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup getUserGroup(String name)
@@ -170,10 +169,10 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the user groups the user belongs to.
+	 * Returns all the user groups to which the user belongs.
 	 *
 	 * @param  userId the primary key of the user
-	 * @return the user groups the user belongs to
+	 * @return the user groups to which the user belongs
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<UserGroup> getUserUserGroups(long userId)
@@ -187,8 +186,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  userGroupIds the primary keys of the user groups
-	 * @throws PortalException if the user did not have permission to
-	 * 		   assign group members
+	 * @throws PortalException if the user did not have permission to assign
+	 *         group members
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
@@ -205,8 +204,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *
 	 * @param  teamId the primary key of the team
 	 * @param  userGroupIds the primary keys of the user groups
-	 * @throws PortalException if the user did not have permission to
-	 * 		   assign team members
+	 * @throws PortalException if the user did not have permission to assign
+	 *         team members
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
@@ -224,14 +223,14 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @param  userGroupId the primary key of the user group
 	 * @param  name the user group's name
 	 * @param  description the the user group's description
-	 * @param  publicLayoutSetPrototypeId the primary key of the 
-	 * 		   user group's public layout set
-	 * @param  privateLayoutSetPrototypeId the primary key of the
-	 * 		   user group's private layout set
+	 * @param  publicLayoutSetPrototypeId the primary key of the user group's
+	 *         public layout set
+	 * @param  privateLayoutSetPrototypeId the primary key of the user group's
+	 *         private layout set
 	 * @return the user group
-	 * @throws PortalException if an user gropu with the primary key is not
-	 * 		   found, if the new information is invalid, or if the user
-	 * 		   did not have permission to update the user group information
+	 * @throws PortalException if a user group with the primary key was not
+	 *         found, if the new information was invalid, or if the user did
+	 *         not have permission to update the user group information
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup updateUserGroup(

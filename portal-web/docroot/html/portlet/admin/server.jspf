@@ -747,6 +747,14 @@ numberFormat.setMinimumIntegerDigits(2);
 						</tr>
 						<tr>
 							<td>
+								<liferay-ui:message key="reset-all-document-library-preview-and-thumbnail-files" />
+							</td>
+							<td>
+								<input type="button" value="<liferay-ui:message key="execute" />" onClick="<portlet:namespace />saveServer('dlPreviews');" />
+							</td>
+						</tr>
+						<tr>
+							<td>
 								<liferay-ui:message key="reindex-all-search-indexes" />
 							</td>
 							<td>

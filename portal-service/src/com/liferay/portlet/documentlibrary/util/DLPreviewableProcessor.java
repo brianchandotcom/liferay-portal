@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
@@ -48,16 +50,24 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		SystemProperties.get(SystemProperties.TMP_DIR) +
 			"/liferay/" + THUMBNAIL_PATH;
 
-	public static void deleteFiles(FileEntry fileEntry) {
-		deleteFiles(
-			fileEntry.getCompanyId(), fileEntry.getGroupId(),
-			fileEntry.getFileEntryId(), -1);
-	}
+	public static void deleteFiles() {
+		long[] companyIds = PortalUtil.getCompanyIds();
 
-	public static void deleteFiles(FileVersion fileVersion) {
-		deleteFiles(
-			fileVersion.getCompanyId(), fileVersion.getGroupId(),
-			fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
+		for (long companyId : companyIds) {
+			try {
+				DLStoreUtil.deleteDirectory(
+					companyId, REPOSITORY_ID, PREVIEW_PATH);
+			}
+			catch (Exception e) {
+			}
+
+			try {
+				DLStoreUtil.deleteDirectory(
+					companyId, REPOSITORY_ID, THUMBNAIL_PATH);
+			}
+			catch (Exception e) {
+			}
+		}
 	}
 
 	public static void deleteFiles(
@@ -78,6 +88,18 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 		catch (Exception e) {
 		}
+	}
+
+	public static void deleteFiles(FileEntry fileEntry) {
+		deleteFiles(
+			fileEntry.getCompanyId(), fileEntry.getGroupId(),
+			fileEntry.getFileEntryId(), -1);
+	}
+
+	public static void deleteFiles(FileVersion fileVersion) {
+		deleteFiles(
+			fileVersion.getCompanyId(), fileVersion.getGroupId(),
+			fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 	}
 
 	protected void addFileToStore(

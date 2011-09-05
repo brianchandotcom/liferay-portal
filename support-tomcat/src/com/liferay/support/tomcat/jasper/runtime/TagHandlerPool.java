@@ -68,8 +68,9 @@ public class TagHandlerPool extends org.apache.jasper.runtime.TagHandlerPool {
 
 			_tags.offer(tag);
 		}
-
-		tag.release();
+		else {
+			tag.release();
+		}
 	}
 
 	@Override

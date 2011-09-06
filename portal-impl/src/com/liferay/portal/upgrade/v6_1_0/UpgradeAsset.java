@@ -51,7 +51,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		upgradeIGImageClassName();
 	}
 
-	protected long getJournalStructureId(long structureId) throws Exception {
+	protected long getJournalStructureId(String structureId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -64,7 +64,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			ps = con.prepareStatement(
 				"select * from JournalStructure where structureId = ?");
 
-			ps.setLong(1, structureId);
+			ps.setString(1, structureId);
 
 			rs = ps.executeQuery();
 
@@ -94,7 +94,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			while (rs.next()) {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
-				long structureId = rs.getLong("structureId");
+				String structureId = rs.getString("structureId");
 
 				long journalStructureId = getJournalStructureId(
 					structureId);

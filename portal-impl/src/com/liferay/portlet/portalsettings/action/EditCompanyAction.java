@@ -22,6 +22,7 @@ import com.liferay.portal.CompanyMxException;
 import com.liferay.portal.CompanyVirtualHostException;
 import com.liferay.portal.CompanyWebIdException;
 import com.liferay.portal.EmailAddressException;
+import com.liferay.portal.InvalidLocaleException;
 import com.liferay.portal.NoSuchCountryException;
 import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchRegionException;
@@ -101,6 +102,7 @@ public class EditCompanyAction extends PortletAction {
 					 e instanceof CompanyVirtualHostException ||
 					 e instanceof CompanyWebIdException ||
 					 e instanceof EmailAddressException ||
+					 e instanceof InvalidLocaleException ||
 					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
 					 e instanceof NoSuchRegionException ||

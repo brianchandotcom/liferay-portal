@@ -537,6 +537,10 @@ public class LanguageImpl implements Language {
 
 			int pos = languageId.indexOf(CharPool.UNDERLINE);
 
+			if (pos == -1) {
+				continue;
+			}
+
 			String language = languageId.substring(0, pos);
 			//String country = languageId.substring(pos + 1);
 

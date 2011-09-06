@@ -18,6 +18,7 @@ import com.liferay.portal.AccountNameException;
 import com.liferay.portal.CompanyMxException;
 import com.liferay.portal.CompanyVirtualHostException;
 import com.liferay.portal.CompanyWebIdException;
+import com.liferay.portal.InvalidLocaleException;
 import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.NoSuchVirtualHostException;
@@ -31,9 +32,11 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -711,7 +714,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	public void updatePreferences(long companyId, UnicodeProperties properties)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
 			companyId);
@@ -724,6 +727,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					PropsKeys.LOCALES, StringPool.BLANK);
 
 				if (!Validator.equals(oldLocales, newLocales)) {
+					validateLocales(newLocales);
+
 					LanguageUtil.resetAvailableLocales(companyId);
 				}
 			}
@@ -757,6 +762,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 
 			preferences.store();
+		}
+		catch (InvalidLocaleException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -893,6 +901,19 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 		else if (!Validator.isDomain(mx)) {
 			throw new CompanyMxException();
+		}
+	}
+
+	protected void validateLocales(String locales)
+		throws InvalidLocaleException{
+
+		String[] newLocales = StringUtil.split(locales, StringPool.COMMA);
+
+		for (String locale : newLocales) {
+			if (!ArrayUtil.contains(PropsValues.LOCALES, locale)) {
+				throw new InvalidLocaleException();
+			}
+
 		}
 	}
 

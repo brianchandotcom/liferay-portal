@@ -308,17 +308,16 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private void _doCleanUpJdbc() {
-		for (String table : _jdbcDirectories.keySet()) {
+		for (String tableName : _jdbcDirectories.keySet()) {
 			JdbcDirectory jdbcDirectory = (JdbcDirectory)_jdbcDirectories.get(
-				table);
+				tableName);
 
 			try {
 				jdbcDirectory.deleteMarkDeleted(60000);
 			}
 			catch (IOException e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Couldn't clean up lucene jdbc table " + table, e);
+					_log.warn("Could not clean up JDBC directory " + tableName);
 				}
 			}
 		}

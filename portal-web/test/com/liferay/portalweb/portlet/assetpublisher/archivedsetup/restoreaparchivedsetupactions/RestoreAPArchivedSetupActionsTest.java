@@ -46,8 +46,9 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -101,8 +102,8 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -112,7 +113,7 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']")) {
 					break;
 				}
 			}
@@ -125,9 +126,9 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Restore"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -157,8 +158,9 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -203,7 +205,7 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 		assertEquals("Manual",
 			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
 		assertEquals(RuntimeVariables.replace("Selection"),
-			selenium.getText("//div[@class='lfr-panel-title']/span"));
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[1]/span"));
 		assertEquals(RuntimeVariables.replace("Display Settings"),
 			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[2]/span"));
 	}

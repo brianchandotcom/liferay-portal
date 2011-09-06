@@ -47,8 +47,9 @@ public class ConfigurePortletAssetSelectionDynamicTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -116,39 +117,20 @@ public class ConfigurePortletAssetSelectionDynamicTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"You have successfully updated the setup.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Dynamic",
 			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//div[@class='lfr-panel-title']/span"));
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[1]/span"));
 		assertEquals(RuntimeVariables.replace("Filter"),
 			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[2]/span"));
-		assertEquals(RuntimeVariables.replace("Ordering and Grouping"),
+		assertEquals(RuntimeVariables.replace("Custom User Attributes"),
 			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[3]/span"));
-		assertEquals(RuntimeVariables.replace("Display Settings"),
+		assertEquals(RuntimeVariables.replace("Ordering and Grouping"),
 			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[4]/span"));
+		assertEquals(RuntimeVariables.replace("Display Settings"),
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[5]/span"));
 	}
 }

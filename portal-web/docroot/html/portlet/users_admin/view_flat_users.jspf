@@ -44,7 +44,7 @@
 		try {
 			userOrganization = OrganizationLocalServiceUtil.getOrganization(userOrganizationId);
 
-			searchContainer.setEmptyResultsMessage("this-organization-does-not-have-any-user");
+			searchContainer.setEmptyResultsMessage("this-organization-does-not-have-any-users");
 		}
 		catch (NoSuchOrganizationException nsoe) {
 		}

@@ -359,7 +359,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 						usersTitle = LanguageUtil.get(pageContext, "users");
 					}
 					else if (organization == null) {
-						usersTitle = LanguageUtil.get(pageContext, "users-without-organization");
+						usersTitle = LanguageUtil.get(pageContext, "users-without-an-organization");
 					}
 					else if(usersCount == 0) {
 						usersTitle = StringPool.BLANK;

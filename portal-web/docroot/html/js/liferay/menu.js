@@ -79,11 +79,7 @@ AUI().add(
 			if (!arguments.callee._hasRun) {
 				arguments.callee._hasRun = true;
 
-				var Layout = Liferay.Layout;
-
-				if (Layout) {
-					Layout.on('drag:start', instance._closeActiveMenu, instance);
-				}
+				Liferay.on('portletDragStart', instance._closeActiveMenu, instance);
 
 				A.getWin().on('resize', A.debounce(instance._positionActiveMenu, 200, instance));
 

@@ -575,8 +575,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		Object[] finderArgs = new Object[] {
 				entryId1,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E1,
@@ -913,8 +912,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		Object[] finderArgs = new Object[] {
 				entryId2,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E2,
@@ -1256,8 +1254,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		Object[] finderArgs = new Object[] {
 				entryId1, entryId2,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E_E,
@@ -1617,8 +1614,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		Object[] finderArgs = new Object[] {
 				entryId1, type,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E1_T,
@@ -1978,8 +1974,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		Object[] finderArgs = new Object[] {
 				entryId2, type,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_E2_T,
@@ -2480,10 +2475,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public List<AssetLink> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<AssetLink> list = (List<AssetLink>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);

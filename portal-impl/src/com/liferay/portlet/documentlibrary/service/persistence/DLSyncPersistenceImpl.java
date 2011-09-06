@@ -635,8 +635,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		Object[] finderArgs = new Object[] {
 				companyId, modifiedDate, repositoryId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<DLSync> list = (List<DLSync>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_M_R,
@@ -1015,10 +1014,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 */
 	public List<DLSync> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<DLSync> list = (List<DLSync>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);

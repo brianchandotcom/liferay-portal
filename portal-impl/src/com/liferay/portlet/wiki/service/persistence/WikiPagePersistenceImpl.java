@@ -917,12 +917,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { uuid, start, end, orderByComparator };
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
 				finderArgs, this);
@@ -1433,12 +1428,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByNodeId(long nodeId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				nodeId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { nodeId, start, end, orderByComparator };
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_NODEID,
 				finderArgs, this);
@@ -1771,12 +1761,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findByFormat(String format, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				format,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { format, start, end, orderByComparator };
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_FORMAT,
 				finderArgs, this);
@@ -2142,8 +2127,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				resourcePrimKey, nodeId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_R_N,
@@ -2503,8 +2487,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, title,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_T,
@@ -2887,8 +2870,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, head,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_H,
@@ -3247,8 +3229,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, parentTitle,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_P,
@@ -3633,8 +3614,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, redirectTitle,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_R,
@@ -4018,8 +3998,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_S,
@@ -4534,8 +4513,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				resourcePrimKey, nodeId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_R_N_S,
@@ -4917,8 +4895,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				userId, nodeId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_N_S,
@@ -5464,8 +5441,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, title, head,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_T_H,
@@ -5870,8 +5846,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, title, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_T_S,
@@ -6276,8 +6251,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, head, parentTitle,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_H_P,
@@ -6682,8 +6656,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, head, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_H_S,
@@ -7068,8 +7041,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object[] finderArgs = new Object[] {
 				nodeId, head, parentTitle, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_N_H_P_S,
@@ -7476,10 +7448,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public List<WikiPage> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);

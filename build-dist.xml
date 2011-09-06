@@ -878,6 +878,11 @@ release was successful.</echo>
 		</replace>
 
 		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[<deployment-scanner scan-interval="]]></replacetoken>
+			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="120" scan-interval="]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[<security-domains>]]></replacetoken>
 			<replacevalue><![CDATA[<security-domains>
 				<security-domain name="PortalRealm">

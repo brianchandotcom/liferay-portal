@@ -943,26 +943,6 @@ var defaultTypes = []]>
 		/>
 	</target>
 
-	<target name="compile-jboss">
-		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
-
-		<path id="jspc.classpath">
-			<pathelement location="${env.JAVA_HOME}/jre/lib/rt.jar" />
-			<path refid="jspc.common.classpath" />
-			<pathelement location="${app.server.dir}/lib/jboss-logging-spi.jar" />
-			<pathelement location="${app.server.deploy.dir}/jbossweb.sar/jasper-jdt.jar" />
-			<pathelement location="${app.server.deploy.dir}/jbossweb.sar/jbossweb.jar" />
-			<pathelement location="${app.server.deploy.dir}/jbossweb.sar/jstl.jar" />
-			<pathelement location="${app.server.dir}/common/lib/el-api.jar" />
-			<pathelement location="${app.server.dir}/common/lib/jsp-api.jar" />
-			<pathelement location="${app.server.dir}/common/lib/servlet-api.jar" />
-		</path>
-
-		<antcall target="compile-common-jsp" inheritrefs="true">
-			<param name="arg.line" value="-d ${jspc.classes.dir} -webapp ${jsp.precompile.dir}" />
-		</antcall>
-	</target>
-
 	<target name="compile-jonas">
 		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
 
@@ -1070,30 +1050,17 @@ Please set the property "jdk.6.home" in build.properties.
 			<equals arg1="${jsp.precompile}" arg2="on" />
 			<then>
 				<if>
-					<equals arg1="${app.server.type}" arg2="jboss" />
+					<equals arg1="${app.server.type}" arg2="jonas" />
 					<then>
-						<!--<antcall target="compile-jboss" />
+						<antcall target="compile-jonas" />
 
-						<copy todir="${app.server.instance.dir}/work/jboss.web/localhost/_">
+						<copy todir="${app.server.dir}/work/jonas/localhost/_">
 							<fileset dir="classes/${app.server.type}">
 								<exclude name="**/*.jspc_error" />
 								<exclude name="**/*.java" />
 							</fileset>
-						</copy>-->
+						</copy>
 					</then>
-					<elseif>
-						<equals arg1="${app.server.type}" arg2="jonas" />
-						<then>
-							<antcall target="compile-jonas" />
-
-							<copy todir="${app.server.dir}/work/jonas/localhost/_">
-								<fileset dir="classes/${app.server.type}">
-									<exclude name="**/*.jspc_error" />
-									<exclude name="**/*.java" />
-								</fileset>
-							</copy>
-						</then>
-					</elseif>
 					<elseif>
 						<equals arg1="${app.server.type}" arg2="resin" />
 						<then>

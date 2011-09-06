@@ -322,6 +322,11 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 				<if>
 					<equals arg1="${standalone.conf.content.index}" arg2="-1" />
 					<then>
+						<replace file="${app.server.bin.dir}/standalone.conf">
+							<replacetoken><![CDATA[JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m ]]></replacetoken>
+							<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
+						</replace>
+
 						<echo file="${app.server.bin.dir}/standalone.conf" append="true">
 JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"</echo>
 					</then>
@@ -336,6 +341,11 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 				<if>
 					<equals arg1="${standalone.conf.bat.content.index}" arg2="-1" />
 					<then>
+						<replace file="${app.server.bin.dir}/standalone.conf.bat">
+							<replacetoken><![CDATA[set "JAVA_OPTS=-Xms64M ]]></replacetoken>
+							<replacevalue><![CDATA[rem set "JAVA_OPTS=-Xms64M ]]></replacevalue>
+						</replace>
+
 						<replace file="${app.server.bin.dir}/standalone.conf.bat">
 							<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 							<replacevalue><![CDATA[set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"

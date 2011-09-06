@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1818,8 +1819,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setCompanyId(message.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$COMMENTS_BODY$]", message.getBody(true),
-			"[$COMMENTS_USER_ADDRESS$]", userAddress, "[$COMMENTS_USER_NAME$]",
-			userName, "[$CONTENT_URL$]", contentURL);
+			"[$COMMENTS_USER_ADDRESS$]", HtmlUtil.escape(userAddress),
+			"[$COMMENTS_USER_NAME$]", HtmlUtil.escape(userName),
+			"[$CONTENT_URL$]", contentURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId(
@@ -1985,12 +1987,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setBulk(true);
 		subscriptionSenderPrototype.setCompanyId(message.getCompanyId());
 		subscriptionSenderPrototype.setContextAttributes(
-			"[$CATEGORY_NAME$]", categoryName, "[$MAILING_LIST_ADDRESS$]",
-			mailingListAddress, "[$MESSAGE_BODY$]", message.getBody(),
-			"[$MESSAGE_ID$]", message.getMessageId(), "[$MESSAGE_SUBJECT$]",
-			message.getSubject(), "[$MESSAGE_URL$]", messageURL,
-			"[$MESSAGE_USER_ADDRESS$]", emailAddress, "[$MESSAGE_USER_NAME$]",
-			fullName);
+			"[$CATEGORY_NAME$]", categoryName,
+			"[$MAILING_LIST_ADDRESS$]",	mailingListAddress,
+			"[$MESSAGE_BODY$]", message.getBody(),
+			"[$MESSAGE_ID$]", message.getMessageId(),
+			"[$MESSAGE_SUBJECT$]",	message.getSubject(),
+			"[$MESSAGE_URL$]", messageURL,
+			"[$MESSAGE_USER_ADDRESS$]",	HtmlUtil.escape(emailAddress),
+			"[$MESSAGE_USER_NAME$]", HtmlUtil.escape(fullName));
 		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
 		subscriptionSenderPrototype.setHtmlFormat(
 			MBUtil.getEmailHtmlFormat(preferences));

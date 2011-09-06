@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -666,8 +667,8 @@ public class ShoppingOrderLocalServiceImpl
 				String.valueOf(total),
 				company.getVirtualHostname(),
 				portletName,
-				toAddress,
-				toName
+				HtmlUtil.escape(toAddress),
+				HtmlUtil.escape(toName)
 			});
 
 		body = StringUtil.replace(
@@ -695,8 +696,8 @@ public class ShoppingOrderLocalServiceImpl
 				String.valueOf(total),
 				company.getVirtualHostname(),
 				portletName,
-				toAddress,
-				toName
+				HtmlUtil.escape(toAddress),
+				HtmlUtil.escape(toName)
 			});
 
 		InternetAddress from = new InternetAddress(fromAddress, fromName);

@@ -260,14 +260,14 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 				fromName,
 				serviceContext.getPortalURL(),
 				reason,
-				reportedEmailAddress,
-				reportedUserName,
+				HtmlUtil.escape(reportedEmailAddress),
+				HtmlUtil.escape(reportedUserName),
 				reportedUserURL,
-				reporterEmailAddress,
-				reporterUserName,
+				HtmlUtil.escape(reporterEmailAddress),
+				HtmlUtil.escape(reporterUserName),
 				groupName,
-				toAddress,
-				toName
+				HtmlUtil.escape(toAddress),
+				HtmlUtil.escape(toName)
 			});
 
 		body = StringUtil.replace(
@@ -307,14 +307,14 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 				fromName,
 				serviceContext.getPortalURL(),
 				reason,
-				reportedEmailAddress,
-				reportedUserName,
+				HtmlUtil.escape(reportedEmailAddress),
+				HtmlUtil.escape(reportedUserName),
 				reportedUserURL,
-				reporterEmailAddress,
-				reporterUserName,
+				HtmlUtil.escape(reporterEmailAddress),
+				HtmlUtil.escape(reporterUserName),
 				groupName,
-				toAddress,
-				toName
+				HtmlUtil.escape(toAddress),
+				HtmlUtil.escape(toName)
 			});
 
 		InternetAddress from = new InternetAddress(fromAddress, fromName);

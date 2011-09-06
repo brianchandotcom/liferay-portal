@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.mail.SMTPAccount;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
@@ -209,10 +210,11 @@ public class SubscriptionSender implements Serializable {
 		if ((userId > 0) && Validator.isNotNull(_contextUserPrefix)) {
 			setContextAttribute(
 				"[$" + _contextUserPrefix + "_USER_ADDRESS$]",
-				PortalUtil.getUserEmailAddress(userId));
+				HtmlUtil.escape(PortalUtil.getUserEmailAddress(userId)));
 			setContextAttribute(
 				"[$" + _contextUserPrefix + "_USER_NAME$]",
-				PortalUtil.getUserName(userId, StringPool.BLANK));
+				HtmlUtil.escape(
+					PortalUtil.getUserName(userId, StringPool.BLANK)));
 		}
 
 		mailId = PortalUtil.getMailId(
@@ -457,8 +459,9 @@ public class SubscriptionSender implements Serializable {
 			new String[] {
 				from.getAddress(),
 				GetterUtil.getString(from.getPersonal(), from.getAddress()),
-				to.getAddress(),
-				GetterUtil.getString(to.getPersonal(), to.getAddress())
+				HtmlUtil.escape(to.getAddress()),
+				HtmlUtil.escape(
+					GetterUtil.getString(to.getPersonal(), to.getAddress()))
 			});
 
 		processedSubject = replaceContent(processedSubject, locale);
@@ -476,8 +479,9 @@ public class SubscriptionSender implements Serializable {
 			new String[] {
 				from.getAddress(),
 				GetterUtil.getString(from.getPersonal(), from.getAddress()),
-				to.getAddress(),
-				GetterUtil.getString(to.getPersonal(), to.getAddress())
+				HtmlUtil.escape(to.getAddress()),
+				HtmlUtil.escape(
+					GetterUtil.getString(to.getPersonal(), to.getAddress()))
 			});
 
 		processedBody = replaceContent(processedBody, locale);

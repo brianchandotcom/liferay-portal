@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -480,8 +481,8 @@ public class AnnouncementsEntryLocalServiceImpl
 				LanguageUtil.get(
 					company.getLocale(),
 					(entry.isAlert() ? "alert" : "announcement")),
-				toAddress,
-				toName
+				HtmlUtil.escape(toAddress),
+				HtmlUtil.escape(toName)
 			});
 
 		body = StringUtil.replace(
@@ -511,8 +512,8 @@ public class AnnouncementsEntryLocalServiceImpl
 				LanguageUtil.get(
 					company.getLocale(),
 					(entry.isAlert() ? "alert" : "announcement")),
-				toAddress,
-				toName
+				HtmlUtil.escape(toAddress),
+				HtmlUtil.escape(toName)
 			});
 
 		InternetAddress from = new InternetAddress(fromAddress, fromName);

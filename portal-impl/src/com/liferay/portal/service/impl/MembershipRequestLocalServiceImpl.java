@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -356,12 +357,12 @@ public class MembershipRequestLocalServiceImpl
 				fromAddress,
 				fromName,
 				company.getVirtualHostname(),
-				requestUser.getEmailAddress(),
-				requestUser.getFullName(),
+				HtmlUtil.escape(requestUser.getEmailAddress()),
+				HtmlUtil.escape(requestUser.getFullName()),
 				LanguageUtil.get(user.getLocale(), statusKey),
-				toName,
-				user.getEmailAddress(),
-				user.getFullName()
+				HtmlUtil.escape(toName),
+				HtmlUtil.escape(user.getEmailAddress()),
+				HtmlUtil.escape(user.getFullName())
 			});
 
 		body = StringUtil.replace(
@@ -393,12 +394,12 @@ public class MembershipRequestLocalServiceImpl
 				fromName,
 				company.getVirtualHostname(),
 				membershipRequest.getReplyComments(),
-				requestUser.getFullName(),
-				requestUser.getEmailAddress(),
+				HtmlUtil.escape(requestUser.getFullName()),
+				HtmlUtil.escape(requestUser.getEmailAddress()),
 				LanguageUtil.get(user.getLocale(), statusKey),
-				toName,
-				user.getEmailAddress(),
-				user.getFullName()
+				HtmlUtil.escape(toName),
+				HtmlUtil.escape(user.getEmailAddress()),
+				HtmlUtil.escape(user.getFullName())
 			});
 
 		InternetAddress from = new InternetAddress(fromAddress, fromName);

@@ -25,6 +25,7 @@ import java.util.List;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
+ * @author Eduardo Lundgren
  */
 public class WorkflowDefinitionManagerUtil {
 
@@ -34,6 +35,21 @@ public class WorkflowDefinitionManagerUtil {
 
 		return _workflowDefinitionManager.deployWorkflowDefinition(
 			companyId, userId, title, inputStream);
+	}
+
+	public static int getActiveWorkflowDefinitionCount(long companyId)
+		throws WorkflowException {
+
+		return _workflowDefinitionManager.getActiveWorkflowDefinitionCount(
+			companyId);
+	}
+
+	public static int getActiveWorkflowDefinitionCount(
+			long companyId, String name)
+		throws WorkflowException {
+
+		return _workflowDefinitionManager.getActiveWorkflowDefinitionCount(
+			companyId, name);
 	}
 
 	public static List<WorkflowDefinition> getActiveWorkflowDefinitions(
@@ -54,18 +70,11 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name, start, end,orderByComparator);
 	}
 
-	public static int getActiveWorkflowDefinitionCount(long companyId)
-		throws WorkflowException {
-
-		return _workflowDefinitionManager.getActiveWorkflowDefinitionCount(
-			companyId);
-	}
-
-	public static int getActiveWorkflowDefinitionCount(
+	public static WorkflowDefinition getLatestKaleoDefinition(
 			long companyId, String name)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.getActiveWorkflowDefinitionCount(
+		return _workflowDefinitionManager.getLatestKaleoDefinition(
 			companyId, name);
 	}
 

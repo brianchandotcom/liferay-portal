@@ -16,8 +16,10 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.service.base.AssetTagPropertyServiceBaseImpl;
+import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 
 import java.util.List;
 
@@ -30,12 +32,22 @@ public class AssetTagPropertyServiceImpl
 	public AssetTagProperty addTagProperty(long tagId, String key, String value)
 		throws PortalException, SystemException {
 
+		AssetTagPermission.check(
+			getPermissionChecker(), tagId, ActionKeys.UPDATE);
+
 		return assetTagPropertyLocalService.addTagProperty(
 			getUserId(), tagId, key, value);
 	}
 
 	public void deleteTagProperty(long tagPropertyId)
 		throws PortalException, SystemException {
+
+		AssetTagProperty assetTagProperty =
+			assetTagPropertyLocalService.getTagProperty(tagPropertyId);
+
+		AssetTagPermission.check(
+			getPermissionChecker(), assetTagProperty.getTagId(),
+			ActionKeys.UPDATE);
 
 		assetTagPropertyLocalService.deleteTagProperty(tagPropertyId);
 	}
@@ -57,6 +69,13 @@ public class AssetTagPropertyServiceImpl
 	public AssetTagProperty updateTagProperty(
 			long tagPropertyId, String key, String value)
 		throws PortalException, SystemException {
+
+		AssetTagProperty assetTagProperty =
+			assetTagPropertyLocalService.getTagProperty(tagPropertyId);
+
+		AssetTagPermission.check(
+			getPermissionChecker(), assetTagProperty.getTagId(),
+			ActionKeys.UPDATE);
 
 		return assetTagPropertyLocalService.updateTagProperty(
 			tagPropertyId, key, value);

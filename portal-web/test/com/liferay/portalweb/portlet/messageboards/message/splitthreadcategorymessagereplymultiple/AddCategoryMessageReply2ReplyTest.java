@@ -124,37 +124,5 @@ public class AddCategoryMessageReply2ReplyTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Reply2 Reply Body"),
 			selenium.getText("xPath=(//div[@class='thread-body'])[4]"));
-		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Message Boards Test Page",
-			RuntimeVariables.replace("Message Boards Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//td[1]/a/strong"));
-		selenium.clickAt("//td[1]/a/strong",
-			RuntimeVariables.replace("MB Category Name"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread Message Subject"),
-			selenium.getText("//td[1]/a"));
 	}
 }

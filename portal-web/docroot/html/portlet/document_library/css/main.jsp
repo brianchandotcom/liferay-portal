@@ -632,6 +632,10 @@
 			margin: 0 0 10px;
 		}
 
+		.taglib-custom-attributes-list {
+			margin-bottom: 0;
+		}
+
 		.asset-details-content {
 			padding: 10px;
 

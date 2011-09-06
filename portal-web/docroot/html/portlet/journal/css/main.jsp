@@ -240,11 +240,10 @@
 			padding-top: 5px;
 		}
 
-		.structure-field {
-			border-bottom: 1px #CCC solid;
-			border-left: 2px #CCC solid;
-			margin: 7px 3px 0 3px;
-			padding: 7px 2px 0 5px;
+		.structure-field .structure-field {
+			border-left: 10px solid #E0E0E0;
+			margin: 7px 0 0 5px;
+			padding: 7px 0 0 10px;
 		}
 	}
 
@@ -422,11 +421,15 @@
 	.structure-tree {
 		li {
 			background: url(<%= themeImagesPath %>/journal/form_builder_bg.png);
-			border: 1px #C6D9F0 solid;
+			border: 1px solid #C6D9F0;
 			margin: 15px;
 			padding: 10px 10px 10px 22px;
 
 			&.structure-field {
+				.structure-field {
+					border-left: 10px solid #C6D9F0;
+				}
+
 				&.repeated-field {
 					background: #F7FAFB;
 					border: 1px dashed #C6D9F0;
@@ -501,7 +504,6 @@
 		}
 
 		li {
-			border-top: 1px solid #CCC;
 			margin: 10px;
 			padding-top: 5px;
 			position: relative;

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.asset;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -30,9 +31,15 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -73,6 +80,26 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	public Map<Long, String> getClassTypes(long[] groupIds)
+		throws SystemException {
+
+		Map<Long, String> classTypes = new HashMap<Long, String>();
+
+		for (long groupId : groupIds) {
+			List<DLFileEntryType> dlFileEntryTypes =
+				DLFileEntryTypeServiceUtil.getFileEntryTypes(
+					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (DLFileEntryType dlFileEntryType: dlFileEntryTypes) {
+				classTypes.put(
+					dlFileEntryType.getFileEntryTypeId(),
+					dlFileEntryType.getName());
+			}
+		}
+
+		return classTypes;
 	}
 
 	public String getType() {

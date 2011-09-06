@@ -27,6 +27,8 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -76,6 +78,12 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 
 	public String getPortletId() {
 		return _portletId;
+	}
+
+	public Map<Long, String> getClassTypes(long[] groupId)
+		throws SystemException {
+
+		return  null;
 	}
 
 	@SuppressWarnings("unused")

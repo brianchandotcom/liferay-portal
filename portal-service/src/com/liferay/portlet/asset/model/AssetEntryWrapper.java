@@ -264,6 +264,24 @@ public class AssetEntryWrapper implements AssetEntry {
 	}
 
 	/**
+	* Returns the class type ID of this asset entry.
+	*
+	* @return the class type ID of this asset entry
+	*/
+	public long getClassTypeId() {
+		return _assetEntry.getClassTypeId();
+	}
+
+	/**
+	* Sets the class type ID of this asset entry.
+	*
+	* @param classTypeId the class type ID of this asset entry
+	*/
+	public void setClassTypeId(long classTypeId) {
+		_assetEntry.setClassTypeId(classTypeId);
+	}
+
+	/**
 	* Returns the visible of this asset entry.
 	*
 	* @return the visible of this asset entry

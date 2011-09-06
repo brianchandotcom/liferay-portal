@@ -30,11 +30,17 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
+import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
+import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -94,6 +100,23 @@ public class JournalArticleAssetRendererFactory
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	public Map<Long, String> getClassTypes(long[] groupIds)
+		throws SystemException {
+
+		Map<Long, String> classTypes = new HashMap<Long, String>();
+
+		for (long groupId : groupIds) {
+			List<JournalStructure> structures =
+				JournalStructureLocalServiceUtil.getStructures(groupId);
+
+			for (JournalStructure structure : structures) {
+				classTypes.put(structure.getId(), structure.getName());
+			}
+		}
+
+		return classTypes;
 	}
 
 	public String getType() {

@@ -534,28 +534,29 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		if (entry != null) {
 			return updateEntry(
 				userId, groupId, className, classPK, entry.getClassUuid(),
-				categoryIds, tagNames, entry.getVisible(), entry.getStartDate(),
-				entry.getEndDate(), entry.getPublishDate(),
-				entry.getExpirationDate(), entry.getMimeType(),
-				entry.getTitle(), entry.getDescription(), entry.getSummary(),
-				entry.getUrl(), entry.getLayoutUuid(), entry.getHeight(),
-				entry.getWidth(), GetterUtil.getInteger(entry.getPriority()),
-				false);
+				entry.getClassTypeId(), categoryIds, tagNames,
+				entry.getVisible(), entry.getStartDate(), entry.getEndDate(),
+				entry.getPublishDate(), entry.getExpirationDate(),
+				entry.getMimeType(), entry.getTitle(), entry.getDescription(),
+				entry.getSummary(), entry.getUrl(), entry.getLayoutUuid(),
+				entry.getHeight(), entry.getWidth(),
+				GetterUtil.getInteger(entry.getPriority()), false);
 		}
 
 		return updateEntry(
-			userId, groupId, className, classPK, null, categoryIds, tagNames,
+			userId, groupId, className, classPK, null, 0, categoryIds, tagNames,
 			true, null, null, null, null, null, null, null, null, null, null, 0,
 			0, null, false);
 	}
 
 	public AssetEntry updateEntry(
 			long userId, long groupId, String className, long classPK,
-			String classUuid, long[] categoryIds, String[] tagNames,
-			boolean visible, Date startDate, Date endDate, Date publishDate,
-			Date expirationDate, String mimeType, String title,
-			String description, String summary, String url, String layoutUuid,
-			int height, int width, Integer priority, boolean sync)
+			String classUuid, long classTypeId, long[] categoryIds,
+			String[] tagNames, boolean visible, Date startDate, Date endDate,
+			Date publishDate, Date expirationDate, String mimeType,
+			String title, String description, String summary, String url,
+			String layoutUuid, int height, int width, Integer priority,
+			boolean sync)
 		throws PortalException, SystemException {
 
 		// Entry
@@ -589,6 +590,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.setClassNameId(classNameId);
 			entry.setClassPK(classPK);
 			entry.setClassUuid(classUuid);
+			entry.setClassTypeId(classTypeId);
 			entry.setVisible(visible);
 			entry.setPublishDate(publishDate);
 			entry.setExpirationDate(expirationDate);

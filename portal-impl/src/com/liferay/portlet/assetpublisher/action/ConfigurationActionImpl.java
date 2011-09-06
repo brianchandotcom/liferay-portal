@@ -18,19 +18,24 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.service.ClassNameServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 
@@ -116,6 +121,71 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				}
 			}
 		}
+	}
+
+	protected String[] getClassTypeIds(
+		ActionRequest actionRequest, String[] classNameIds) throws Exception {
+
+		String[] classTypeIds = null;
+
+		String anyAssetTypeParam = getParameter(
+			actionRequest, "anyAssetType");
+
+		boolean anyAssetType = GetterUtil.getBoolean(anyAssetTypeParam);
+
+		if (!anyAssetType) {
+			long defaultAssetTypeId = GetterUtil.getLong(anyAssetTypeParam);
+
+			if (defaultAssetTypeId == 0 && classNameIds.length == 1) {
+				defaultAssetTypeId = GetterUtil.getLong(classNameIds[0]);
+			}
+
+			if (defaultAssetTypeId > 0 ) {
+				ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.
+				getAttribute(WebKeys.THEME_DISPLAY);
+
+				long[] groupdIds = new long[]{
+					themeDisplay.getCompanyGroupId(),
+					themeDisplay.getScopeGroupId()};
+
+				ClassName className = ClassNameServiceUtil.getClassName(
+					defaultAssetTypeId);
+
+				 AssetRendererFactory assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(
+							className.getClassName());
+
+				if (assetRendererFactory.getClassTypes(groupdIds) != null) {
+					String assetClassName = AssetPublisherUtil.getClassName(
+						assetRendererFactory);
+
+					String anyAssetClassTypeParam = getParameter(
+							actionRequest, "anyClassType" + assetClassName);
+
+					boolean anyAssetClassType = GetterUtil.getBoolean(
+						anyAssetClassTypeParam);
+
+					if (!anyAssetClassType) {
+						long defaultAssetClassTypeId = GetterUtil.getLong(
+							anyAssetClassTypeParam);
+
+						if (defaultAssetClassTypeId > 0) {
+							classTypeIds = new String[] {
+								String.valueOf(defaultAssetClassTypeId)};
+						}
+						else {
+							classTypeIds = StringUtil.split(
+								getParameter(
+									actionRequest,
+									"classTypeIds" + assetClassName));
+						}
+					}
+				}
+			}
+		}
+
+		return classTypeIds;
 	}
 
 	protected void moveSelectionDown(
@@ -267,9 +337,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String[] scopeIds = StringUtil.split(
 			getParameter(actionRequest, "scopeIds"));
 
+		String[] classTypeIds = getClassTypeIds(actionRequest, classNameIds);
+
 		setPreference(actionRequest, "classNameIds", classNameIds);
 		setPreference(actionRequest, "extensions", extensions);
 		setPreference(actionRequest, "scopeIds", scopeIds);
+		setPreference(actionRequest, "classTypeIds", classTypeIds);
 	}
 
 	protected void updateQueryLogic(

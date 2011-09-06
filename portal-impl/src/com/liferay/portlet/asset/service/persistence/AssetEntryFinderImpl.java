@@ -285,6 +285,12 @@ public class AssetEntryFinderImpl
 			sb.append(") ");
 		}
 
+		// Asset entry subtypes
+
+		if (entryQuery.getClassTypeIds().length > 0) {
+			buildClassTypeIdsSQL(entryQuery.getClassTypeIds(), sb);
+		}
+
 		// Tag conditions
 
 		if (entryQuery.getAllTagIds().length > 0) {
@@ -446,6 +452,23 @@ public class AssetEntryFinderImpl
 		}
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);
+	}
+
+	protected void buildClassTypeIdsSQL(long[] subtypeIds, StringBundler sb) {
+		sb.append(" AND (");
+
+		for (int i = 0; i < subtypeIds.length; i++) {
+
+			sb.append(" AssetEntry.classTypeId = ");
+			sb.append(subtypeIds[i]);
+
+			if ((i + 1) < subtypeIds.length) {
+				sb.append(" OR ");
+			}
+			else {
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+		}
 	}
 
 	protected String getCategoryIds(String sqlId, long[] categoryIds) {

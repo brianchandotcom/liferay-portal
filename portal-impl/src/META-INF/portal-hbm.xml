@@ -1197,6 +1197,7 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="visible" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />

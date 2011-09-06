@@ -90,6 +90,8 @@ boolean anyAssetType = GetterUtil.getBoolean(preferences.getValue("anyAssetType"
 
 long[] classNameIds = AssetPublisherUtil.getClassNameIds(preferences, availableClassNameIds);
 
+long[] classTypeIds = GetterUtil.getLongValues(portletPreferences.getValues("classTypeIds", null));
+
 String customUserAttributes = GetterUtil.getString(preferences.getValue("customUserAttributes", StringPool.BLANK));
 
 AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
@@ -105,6 +107,8 @@ if (selectionStyle.equals("dynamic")) {
 	}
 
 	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(preferences, scopeGroupId);
+
+	assetEntryQuery.setClassTypeIds(classTypeIds);
 
 	AssetPublisherUtil.addUserAttributes(user, StringUtil.split(customUserAttributes), assetEntryQuery);
 }

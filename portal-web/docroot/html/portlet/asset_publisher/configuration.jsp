@@ -24,6 +24,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 String typeSelection = ParamUtil.getString(request, "typeSelection", StringPool.BLANK);
 
 AssetRendererFactory rendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
+List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<AssetRendererFactory>();
 
 Group scopeGroup = themeDisplay.getScopeGroup();
 %>
@@ -123,6 +124,85 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 					rightList="<%= typesRightList %>"
 				/>
 			</div>
+
+			<%
+			for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
+				if (assetRendererFactory.getClassTypes(new long[]{themeDisplay.getCompanyGroupId(), scopeGroupId}) == null) {
+					continue;
+				}
+
+				classTypesAssetRendererFactories.add(assetRendererFactory);
+
+				Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(new long[]{themeDisplay.getCompanyGroupId(), scopeGroupId});
+
+				String className = AssetPublisherUtil.getClassName(assetRendererFactory);
+
+				Long[] assetAvailableClassTypeIds = ArrayUtil.toLongArray(assetAvailableClassTypes.keySet().toArray());
+				Long[] assetSelectedClassTypeIds = AssetPublisherUtil.getClassTypeIds(preferences, className, assetAvailableClassTypeIds);
+
+				// Left list
+
+				List<KeyValuePair> subTypesLeftList = new ArrayList<KeyValuePair>();
+
+				for (long subTypeId : assetSelectedClassTypeIds) {
+					subTypesLeftList.add(new KeyValuePair(String.valueOf(subTypeId), assetAvailableClassTypes.get(subTypeId)));
+				}
+
+				Arrays.sort(assetSelectedClassTypeIds);
+
+				// Right list
+
+				List<KeyValuePair> subTypesRightList = new ArrayList<KeyValuePair>();
+
+				boolean anyAssetSubType = GetterUtil.getBoolean(preferences.getValue("anyClassType" + className, Boolean.TRUE.toString()));
+			%>
+
+				<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? "" : "aui-helper-hidden" %>' id="<portlet:namespace /><%= className %>Options">
+					<aui:select label='<%= LanguageUtil.format(pageContext, "x-subtype", ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName())) %>' name='<%= "preferences--anyClassType" + className + "--" %>'>
+						<aui:option label="any" selected="<%= anyAssetSubType %>" value="<%= true %>" />
+						<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + "..." %>' selected="<%= !anyAssetSubType && (assetSelectedClassTypeIds.length > 1) %>" value="<%= false %>" />
+
+						<optgroup label="<liferay-ui:message key="subtype" />">
+
+							<%
+							for(Long classTypeId : assetAvailableClassTypes.keySet()) {
+								if (Arrays.binarySearch(assetSelectedClassTypeIds, classTypeId) < 0) {
+									subTypesRightList.add(new KeyValuePair(String.valueOf(classTypeId), assetAvailableClassTypes.get(classTypeId)));
+								}
+							%>
+
+								<aui:option label="<%= assetAvailableClassTypes.get(classTypeId) %>" selected="<%= !anyAssetSubType && (assetSelectedClassTypeIds.length == 1) && (classTypeId.equals(assetSelectedClassTypeIds[0])) %>" value="<%= classTypeId %>" />
+
+							<%
+							}
+							%>
+
+						</optgroup>
+					</aui:select>
+
+					<aui:input name='<%= "preferences--classTypeIds" + className + "--" %>' type="hidden" />
+
+					<%
+					typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
+					%>
+
+					<div class="<%= assetSelectedClassTypeIds.length > 1 ? "" : "aui-helper-hidden" %>" id="<portlet:namespace /><%= className %>Boxes">
+						<liferay-ui:input-move-boxes
+							leftTitle="selected"
+							rightTitle="available"
+							leftBoxName='<%= className + "currentClassTypeIds" %>'
+							rightBoxName='<%= className + "availableClassTypeIds" %>'
+							leftReorder="true"
+							leftList="<%= subTypesLeftList %>"
+							rightList="<%= subTypesRightList %>"
+						/>
+					</div>
+				</div>
+
+			<%
+			}
+			%>
+
 		</liferay-util:buffer>
 
 		<liferay-util:buffer var="selectScope">
@@ -677,6 +757,19 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
 			}
 
+			<%
+			for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
+				String className = AssetPublisherUtil.getClassName(curRendererFactory);
+			%>
+
+				if (document.<portlet:namespace />fm.<portlet:namespace />classTypeIds<%= className %>) {
+					document.<portlet:namespace />fm.<portlet:namespace />classTypeIds<%= className %>.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace /><%= className %>currentClassTypeIds);
+				}
+
+			<%
+			}
+			%>
+
 			document.<portlet:namespace />fm.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMetadataFields);
 
 			submitForm(document.<portlet:namespace />fm);
@@ -689,6 +782,70 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	Liferay.Util.toggleBoxes('<portlet:namespace />enableRssCheckbox','<portlet:namespace />rssOptions');
 
 	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />selectionStyle);
+</aui:script>
+
+<aui:script use="aui-base">
+	var assetSelector = A.one('#<portlet:namespace />anyAssetType');
+	var assetMulitpleSelector = A.one('#<portlet:namespace />currentClassNameIds');
+
+	<%
+	for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
+		String className = AssetPublisherUtil.getClassName(curRendererFactory);
+	%>
+
+		Liferay.Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>','false','<portlet:namespace /><%= className %>Boxes');
+
+	    var <portlet:namespace /><%= className %>Options = A.one('#<portlet:namespace /><%= className %>Options');
+
+		function <portlet:namespace />toggle<%= className %>() {
+			var assetOptions = assetMulitpleSelector.all('option');
+
+			if ((assetSelector.val() == '<%= curRendererFactory.getClassNameId() %>') ||
+				((assetSelector.val() == 'false') && (assetOptions.size() == 1) && (assetOptions.item(0).val() == '<%= curRendererFactory.getClassNameId() %>'))) {
+
+				<portlet:namespace /><%= className %>Options.show();
+			}
+			else {
+				<portlet:namespace /><%= className %>Options.hide();
+			}
+		}
+
+	<%
+	}
+	%>
+
+	function <portlet:namespace />toggleSubClasses() {
+
+		<%
+		for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
+			String className = AssetPublisherUtil.getClassName(curRendererFactory);
+		%>
+
+			<portlet:namespace />toggle<%= className %>();
+
+		<%
+		}
+		%>
+
+	}
+
+	<portlet:namespace />toggleSubClasses();
+
+	assetSelector.on(
+		'change',
+		function(event){
+			<portlet:namespace />toggleSubClasses();
+		}
+	);
+
+	Liferay.after(
+		'inputmoveboxes:moveItem',
+		function(event){
+	    	if ((event.fromBox.get('id') == '<portlet:namespace />currentClassNameIds') || ( event.toBox.get('id') == '<portlet:namespace />currentClassNameIds')) {
+				<portlet:namespace />toggleSubClasses();
+			}
+		}
+	);
 </aui:script>
 
 <%!

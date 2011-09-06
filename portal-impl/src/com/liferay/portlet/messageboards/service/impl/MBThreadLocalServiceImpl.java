@@ -101,7 +101,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if (categoryId >= 0) {
 			assetEntryLocalService.updateEntry(
 				message.getUserId(), message.getGroupId(),
-				MBThread.class.getName(), thread.getThreadId(), null,
+				MBThread.class.getName(), thread.getThreadId(), null, 0,
 				new long[0], new String[0], false, null, null, null, null, null,
 				String.valueOf(thread.getRootMessageId()), null, null, null,
 				null, 0, 0, null, false);

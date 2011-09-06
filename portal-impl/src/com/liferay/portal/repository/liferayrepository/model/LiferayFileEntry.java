@@ -96,6 +96,10 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return _dlFileEntry.getDescription();
 	}
 
+	public DLFileEntry getDLFileEntry() {
+		return _dlFileEntry;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlFileEntry.getExpandoBridge();

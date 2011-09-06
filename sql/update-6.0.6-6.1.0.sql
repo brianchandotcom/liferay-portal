@@ -1,5 +1,6 @@
 alter table AssetCategory add description STRING null;
 
+alter table AssetEntry add classTypeId LONG;
 alter table AssetEntry add layoutUuid VARCHAR(75) null;
 
 update AssetEntry set classUuid = (select uuid_ from JournalArticleResource where AssetEntry.classPK = JournalArticleResource.resourcePrimKey) where visible = TRUE and classNameId = (select classNameId from ClassName_ where value = 'com.liferay.portlet.journal.model.JournalArticle');

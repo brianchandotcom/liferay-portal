@@ -1145,7 +1145,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (addDraftAssetEntry) {
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, page.getGroupId(), WikiPage.class.getName(),
-				page.getPrimaryKey(), page.getUuid(), assetCategoryIds,
+				page.getPrimaryKey(), page.getUuid(), 0, assetCategoryIds,
 				assetTagNames, false, null, null, null, null,
 				ContentTypes.TEXT_HTML, page.getTitle(), null, null, null, null,
 				0, 0, null, false);
@@ -1153,7 +1153,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		else {
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, page.getGroupId(), WikiPage.class.getName(),
-				page.getResourcePrimKey(), page.getUuid(), assetCategoryIds,
+				page.getResourcePrimKey(), page.getUuid(), 0, assetCategoryIds,
 				assetTagNames, page.isApproved(), null, null, null, null,
 				ContentTypes.TEXT_HTML, page.getTitle(), null, null, null, null,
 				0, 0, null, false);
@@ -1357,7 +1357,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 					AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 						userId, page.getGroupId(), WikiPage.class.getName(),
-						page.getResourcePrimKey(), page.getUuid(),
+						page.getResourcePrimKey(), page.getUuid(), 0,
 						assetCategoryIds, assetTagNames, true, null, null, null,
 						null, ContentTypes.TEXT_HTML, page.getTitle(), null,
 						null, null, null, 0, 0, null, false);

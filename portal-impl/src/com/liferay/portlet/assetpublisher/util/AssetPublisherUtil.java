@@ -41,6 +41,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
@@ -317,6 +318,16 @@ public class AssetPublisherUtil {
 		return allAssetTagNames;
 	}
 
+	public static String getClassName(
+		AssetRendererFactory assetRendererFactory) {
+
+		String className = assetRendererFactory.getClass().getName();
+
+		int pos = className.lastIndexOf(StringPool.PERIOD);
+
+		return className.substring(pos + 1);
+	}
+
 	public static long[] getClassNameIds(
 		PortletPreferences portletPreferences, long[] availableClassNameIds) {
 
@@ -343,6 +354,38 @@ public class AssetPublisherUtil {
 		}
 		else {
 			return availableClassNameIds;
+		}
+	}
+
+	public static Long[] getClassTypeIds(
+		PortletPreferences portletPreferences, String className,
+		Long[] availableClassTypeIds) {
+
+		boolean anyAssetType = GetterUtil.getBoolean(
+			portletPreferences.getValue(
+				"anyClassType" + className, Boolean.TRUE.toString()));
+
+		if (anyAssetType) {
+			return availableClassTypeIds;
+		}
+
+		long defaultClassTypeId = GetterUtil.getLong(
+			portletPreferences.getValue("anyClassType" + className, null));
+
+		if (defaultClassTypeId > 0) {
+			return  new Long[] {defaultClassTypeId};
+		}
+
+		Long[] classTypeIds = ArrayUtil.toArray(
+			StringUtil.split(
+				portletPreferences.getValue(
+					"classTypeIds" + className, null), 0L));
+
+		if (classTypeIds != null) {
+			return classTypeIds;
+		}
+		else {
+			return availableClassTypeIds;
 		}
 	}
 

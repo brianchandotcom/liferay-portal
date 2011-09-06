@@ -14,12 +14,17 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.AssetEntryTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Juan Fernández
@@ -42,7 +47,67 @@ public class UpgradeAsset extends UpgradeProcess {
 			upgradeTable.updateTable();
 		}
 
+		upgradeAssetClassTypeId();
 		upgradeIGImageClassName();
+	}
+
+	protected long getJournalStructureId(String structureId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		long journalStructureId = 0;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select * from JournalStructure where structureId = ?");
+
+			ps.setString(1, structureId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				journalStructureId = rs.getLong("id_");
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return journalStructureId;
+	}
+
+	protected void upgradeAssetClassTypeId() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select * from JournalArticle where structureId > 0");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long resourcePrimKey = rs.getLong("resourcePrimKey");
+				String structureId = rs.getString("structureId");
+
+				long journalStructureId = getJournalStructureId(
+					structureId);
+
+				runSQL(
+					"update AssetEntry set classTypeId = " +
+						journalStructureId + " where classPK = " +
+						resourcePrimKey);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected void upgradeIGImageClassName() throws Exception {

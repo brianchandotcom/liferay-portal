@@ -299,6 +299,10 @@
 	.lfr-actions.select-existing-selector {
 		margin: 0 0 1em 1em;
 	}
+
+	.asset-subtype {
+		margin-left: 2em;
+	}
 }
 
 .ie {

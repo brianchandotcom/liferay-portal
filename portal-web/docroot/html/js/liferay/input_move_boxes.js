@@ -106,6 +106,14 @@ AUI().add(
 						}
 
 						Util.moveItem(from, to, sort);
+
+						Liferay.fire(
+							NAME + ':moveItem',
+							{
+								fromBox: from,
+								toBox: to
+							}
+						);
 					},
 
 					_afterOrderClick: function(event, box) {

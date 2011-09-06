@@ -212,7 +212,7 @@ public class DLFileShortcutLocalServiceImpl
 
 		assetEntryLocalService.updateEntry(
 			userId, fileShortcut.getGroupId(), DLFileShortcut.class.getName(),
-			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(),
+			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), 0,
 			assetCategoryIds, assetTagNames, false, null, null, null, null,
 			fileEntry.getMimeType(), fileEntry.getTitle(),
 			fileEntry.getDescription(), null, null, null, 0, 0, null, false);

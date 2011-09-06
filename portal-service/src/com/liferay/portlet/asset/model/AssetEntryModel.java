@@ -230,6 +230,20 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	public void setClassUuid(String classUuid);
 
 	/**
+	 * Returns the class type ID of this asset entry.
+	 *
+	 * @return the class type ID of this asset entry
+	 */
+	public long getClassTypeId();
+
+	/**
+	 * Sets the class type ID of this asset entry.
+	 *
+	 * @param classTypeId the class type ID of this asset entry
+	 */
+	public void setClassTypeId(long classTypeId);
+
+	/**
 	 * Returns the visible of this asset entry.
 	 *
 	 * @return the visible of this asset entry

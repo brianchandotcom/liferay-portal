@@ -1075,6 +1075,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="classUuid" type="String" />
+		<field name="classTypeId" type="long" />
 		<field name="visible" type="boolean" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />

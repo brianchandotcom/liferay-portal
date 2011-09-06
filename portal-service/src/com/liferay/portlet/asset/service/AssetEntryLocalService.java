@@ -376,7 +376,7 @@ public interface AssetEntryLocalService extends PersistedModelLocalService {
 
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(long userId,
 		long groupId, java.lang.String className, long classPK,
-		java.lang.String classUuid, long[] categoryIds,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
 		java.lang.String[] tagNames, boolean visible, java.util.Date startDate,
 		java.util.Date endDate, java.util.Date publishDate,
 		java.util.Date expirationDate, java.lang.String mimeType,

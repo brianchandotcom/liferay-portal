@@ -311,7 +311,7 @@ public class DDLRecordLocalServiceImpl
 		if (addDraftAssetEntry) {
 			assetEntryLocalService.updateEntry(
 				userId, record.getGroupId(), DDLRecordConstants.getClassName(),
-				recordVersion.getRecordVersionId(), record.getUuid(),
+				recordVersion.getRecordVersionId(), record.getUuid(), 0,
 				assetCategoryIds, assetTagNames, false, null, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
 				null, 0, 0, null, false);
@@ -319,7 +319,7 @@ public class DDLRecordLocalServiceImpl
 		else {
 			assetEntryLocalService.updateEntry(
 				userId, record.getGroupId(), DDLRecordConstants.getClassName(),
-				record.getRecordId(), record.getUuid(), assetCategoryIds,
+				record.getRecordId(), record.getUuid(), 0, assetCategoryIds,
 				assetTagNames, visible, null, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
 				null, 0, 0, null, false);

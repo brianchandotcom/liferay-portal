@@ -62,6 +62,7 @@ public class AssetEntryQuery {
 		setOrderByType2(assetEntryQuery.getOrderByType2());
 		setPublishDate(assetEntryQuery.getPublishDate());
 		setStart(assetEntryQuery.getStart());
+		setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		setVisible(assetEntryQuery.isVisible());
 	}
 
@@ -171,6 +172,10 @@ public class AssetEntryQuery {
 		return _classNameIds;
 	}
 
+	public long[] getClassTypeIds() {
+		return _classTypeIds;
+	}
+
 	public Layout getLayout() {
 		return _layout;
 	}
@@ -267,6 +272,10 @@ public class AssetEntryQuery {
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		_classNameIds = new long[] {classNameId};
+	}
+
+	public void setClassTypeIds(long[] classTypeIds) {
+		_classTypeIds = classTypeIds;
 	}
 
 	public void setClassNameIds(long[] classNameIds) {
@@ -370,6 +379,7 @@ public class AssetEntryQuery {
 	private long[] _anyCategoryIds = new long[0];
 	private long[] _anyTagIds = new long[0];
 	private long[] _classNameIds = new long[0];
+	private long[] _classTypeIds = new long[0];
 	private Layout _layout;
 	private int _end = QueryUtil.ALL_POS;
 	private boolean _excludeZeroViewCount;

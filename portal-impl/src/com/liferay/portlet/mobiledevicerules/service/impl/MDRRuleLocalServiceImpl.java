@@ -17,10 +17,8 @@ package com.liferay.portlet.mobiledevicerules.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleLocalServiceBaseImpl;
@@ -97,16 +95,6 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 			rule.getNameMap(), rule.getDescriptionMap(), rule.getType(),
 			rule.getTypeSettings(), serviceContext);
 
-		List<MDRAction> actions = mdrActionPersistence.findByRuleId(
-			rule.getRuleId());
-
-		for (MDRAction action : actions) {
-			serviceContext.setUuid(PortalUUIDUtil.generate());
-
-			mdrActionLocalService.copyAction(
-				action, newRule.getRuleId(), serviceContext);
-		}
-
 		return newRule;
 	}
 
@@ -114,26 +102,15 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 		MDRRule rule = mdrRulePersistence.fetchByPrimaryKey(ruleId);
 
 		if (rule != null) {
-			deleteRule(rule);
+			deleteMDRRule(rule);
 		}
-	}
-
-	public void deleteRule(MDRRule rule) throws SystemException {
-
-		// Rule
-
-		mdrRulePersistence.remove(rule);
-
-		// Actions
-
-		mdrActionLocalService.deleteActions(rule.getRuleId());
 	}
 
 	public void deleteRules(long ruleGroupId) throws SystemException {
 		List<MDRRule> rules = mdrRulePersistence.findByRuleGroupId(ruleGroupId);
 
 		for (MDRRule rule : rules) {
-			deleteRule(rule);
+			deleteMDRRule(rule);
 		}
 	}
 

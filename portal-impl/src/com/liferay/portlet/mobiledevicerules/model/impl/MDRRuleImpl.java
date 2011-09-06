@@ -30,15 +30,6 @@ public class MDRRuleImpl extends MDRRuleBaseImpl {
 	public MDRRuleImpl() {
 	}
 
-	public List<MDRAction> getActions() throws SystemException {
-		if (getRuleId() > 0) {
-			return MDRActionLocalServiceUtil.getActions(getRuleId());
-		}
-		else {
-			return Collections.emptyList();
-		}
-	}
-
 	public UnicodeProperties getTypeSettingsProperties() {
 		if (_typeSettingsProperties == null) {
 			_typeSettingsProperties = new UnicodeProperties(true);

@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
-import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRActionLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -34,7 +34,7 @@ import java.util.Map;
 public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 	public MDRAction addAction(
-			long groupId, long ruleGroupId, long ruleId,
+			long groupId, String className, long classPK, long ruleGroupId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -42,6 +42,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		Date now = new Date();
 
+		long classNameId = PortalUtil.getClassNameId(className);
 		long actionId = counterLocalService.increment();
 
 		MDRAction action = mdrActionLocalService.createMDRAction(actionId);
@@ -53,8 +54,9 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		action.setModifiedDate(serviceContext.getModifiedDate(now));
 		action.setUserId(serviceContext.getUserId());
 		action.setUserName(user.getFullName());
+		action.setClassNameId(classNameId);
+		action.setClassPK(classPK);
 		action.setRuleGroupId(ruleGroupId);
-		action.setRuleId(ruleId);
 		action.setNameMap(nameMap);
 		action.setDescriptionMap(descriptionMap);
 		action.setType(type);
@@ -64,55 +66,35 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 	}
 
 	public MDRAction addAction(
-			long groupId, long ruleGroupId, long ruleId,
+			long groupId, String className, long classPK, long ruleGroupId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return addAction(
-			groupId, ruleGroupId, ruleId, nameMap, descriptionMap, type,
-			typeSettingsProperties.toString(), serviceContext);
+			groupId, className, classPK, ruleGroupId, nameMap, descriptionMap,
+			type, typeSettingsProperties.toString(), serviceContext);
 	}
 
-	public MDRAction copyAction(
-			long actionId, long ruleId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		MDRAction action = mdrActionPersistence.findByPrimaryKey(actionId);
-
-		return copyAction(action, ruleId, serviceContext);
-	}
-
-	public MDRAction copyAction(
-			MDRAction action, long ruleId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		MDRRule rule = mdrRuleLocalService.getMDRRule(ruleId);
-
-		return addAction(
-			rule.getGroupId(), rule.getRuleGroupId(), rule.getRuleId(),
-			action.getNameMap(), action.getDescriptionMap(),
-			action.getType(), action.getTypeSettings(), serviceContext);
-	}
-
-	public void deleteAction(long ruleId) throws SystemException {
-		MDRAction action = mdrActionPersistence.fetchByPrimaryKey(ruleId);
+	public void deleteAction(long actionId) throws SystemException {
+		MDRAction action = mdrActionPersistence.fetchByPrimaryKey(actionId);
 
 		if (action != null) {
-			deleteAction(action);
+			deleteMDRAction(action);
 		}
 	}
 
-	public void deleteAction(MDRAction action) throws SystemException {
-		mdrActionPersistence.remove(action);
-	}
+	public void deleteActions(String className, long classPK)
+		throws SystemException {
 
-	public void deleteActions(long ruleId) throws SystemException {
-		List<MDRAction> actions = mdrActionPersistence.findByRuleId(ruleId);
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		List<MDRAction> actions = mdrActionPersistence.findByC_C(
+			classNameId, classPK);
 
 		for (MDRAction action : actions) {
-			deleteAction(action);
+			deleteMDRAction(action);
 		}
 	}
 
@@ -120,18 +102,28 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		return mdrActionPersistence.fetchByPrimaryKey(actionId);
 	}
 
-	public List<MDRAction> getActions(long ruleId) throws SystemException {
-		return mdrActionPersistence.findByRuleId(ruleId);
-	}
-
-	public List<MDRAction> getActions(long ruleId, int start, int end)
+	public List<MDRAction> getActions(String className, long classPK)
 		throws SystemException {
 
-		return mdrActionPersistence.findByRuleId(ruleId, start, end);
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return mdrActionPersistence.findByC_C(classNameId, classPK);
 	}
 
-	public int getActionsCount(long ruleId) throws SystemException {
-		return mdrActionPersistence.countByRuleId(ruleId);
+	public List<MDRAction> getActions(
+			String className, long classPK, int start, int end)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return mdrActionPersistence.findByC_C(
+			classNameId, classPK, start, end);
+	}
+
+	public int getActionsCount(String className, long classPK) throws SystemException {
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return mdrActionPersistence.countByC_C(classNameId, classPK);
 	}
 
 	public MDRAction updateAction(

@@ -219,39 +219,48 @@ public class MDRActionWrapper implements MDRAction {
 	}
 
 	/**
-	* Returns the rule group ID of this m d r action.
+	* Returns the fully qualified class name of this m d r action.
 	*
-	* @return the rule group ID of this m d r action
+	* @return the fully qualified class name of this m d r action
 	*/
-	public long getRuleGroupId() {
-		return _mdrAction.getRuleGroupId();
+	public java.lang.String getClassName() {
+		return _mdrAction.getClassName();
 	}
 
 	/**
-	* Sets the rule group ID of this m d r action.
+	* Returns the class name ID of this m d r action.
 	*
-	* @param ruleGroupId the rule group ID of this m d r action
+	* @return the class name ID of this m d r action
 	*/
-	public void setRuleGroupId(long ruleGroupId) {
-		_mdrAction.setRuleGroupId(ruleGroupId);
+	public long getClassNameId() {
+		return _mdrAction.getClassNameId();
 	}
 
 	/**
-	* Returns the rule ID of this m d r action.
+	* Sets the class name ID of this m d r action.
 	*
-	* @return the rule ID of this m d r action
+	* @param classNameId the class name ID of this m d r action
 	*/
-	public long getRuleId() {
-		return _mdrAction.getRuleId();
+	public void setClassNameId(long classNameId) {
+		_mdrAction.setClassNameId(classNameId);
 	}
 
 	/**
-	* Sets the rule ID of this m d r action.
+	* Returns the class p k of this m d r action.
 	*
-	* @param ruleId the rule ID of this m d r action
+	* @return the class p k of this m d r action
 	*/
-	public void setRuleId(long ruleId) {
-		_mdrAction.setRuleId(ruleId);
+	public long getClassPK() {
+		return _mdrAction.getClassPK();
+	}
+
+	/**
+	* Sets the class p k of this m d r action.
+	*
+	* @param classPK the class p k of this m d r action
+	*/
+	public void setClassPK(long classPK) {
+		_mdrAction.setClassPK(classPK);
 	}
 
 	/**
@@ -485,6 +494,24 @@ public class MDRActionWrapper implements MDRAction {
 	}
 
 	/**
+	* Returns the rule group ID of this m d r action.
+	*
+	* @return the rule group ID of this m d r action
+	*/
+	public long getRuleGroupId() {
+		return _mdrAction.getRuleGroupId();
+	}
+
+	/**
+	* Sets the rule group ID of this m d r action.
+	*
+	* @param ruleGroupId the rule group ID of this m d r action
+	*/
+	public void setRuleGroupId(long ruleGroupId) {
+		_mdrAction.setRuleGroupId(ruleGroupId);
+	}
+
+	/**
 	* Returns the type of this m d r action.
 	*
 	* @return the type of this m d r action
@@ -596,6 +623,12 @@ public class MDRActionWrapper implements MDRAction {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mdrAction.persist();
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getMDRRuleGroup()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrAction.getMDRRuleGroup();
 	}
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {

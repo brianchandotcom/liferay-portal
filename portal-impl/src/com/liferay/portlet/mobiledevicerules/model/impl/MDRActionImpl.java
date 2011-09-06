@@ -14,7 +14,11 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
 
 /**
  * @author Edward C. Han
@@ -22,6 +26,12 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public class MDRActionImpl extends MDRActionBaseImpl {
 
 	public MDRActionImpl() {
+	}
+
+	public MDRRuleGroup getMDRRuleGroup()
+		throws SystemException, PortalException {
+
+		return MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(getRuleGroupId());
 	}
 
 	public UnicodeProperties getTypeSettingsProperties() {

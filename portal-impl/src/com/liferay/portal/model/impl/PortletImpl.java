@@ -69,7 +69,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -275,10 +274,6 @@ public class PortletImpl extends PortletBaseImpl {
 		setPublishingEvents(publishingEvents);
 		setPublicRenderParameters(publicRenderParameters);
 		_portletApp = portletApp;
-
-		if (_instanceable) {
-			_clonedInstances = new Hashtable<String, Portlet>();
-		}
 	}
 
 	/**
@@ -3066,29 +3061,9 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return a cloned instance of the portlet
 	 */
 	public Portlet getClonedInstance(String portletId) {
-		if (_clonedInstances == null) {
+		Portlet	clonedInstance = (Portlet)clone();
 
-			// LEP-528
-
-			return null;
-		}
-
-		Portlet clonedInstance = _clonedInstances.get(portletId);
-
-		if (clonedInstance == null) {
-			clonedInstance = (Portlet)clone();
-
-			clonedInstance.setPortletId(portletId);
-
-			// Disable caching of cloned instances until we can figure out how
-			// to elegantly refresh the cache when the portlet is dynamically
-			// updated by the user. For example, the user might change the
-			// portlet from one column to the next. Cloned instances that are
-			// cached would not see the new change. We can then also cache
-			// static portlet instances.
-
-			//_clonedInstances.put(portletId, clonedInstance);
-		}
+		clonedInstance.setPortletId(portletId);
 
 		return clonedInstance;
 	}
@@ -3812,11 +3787,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The application to which this portlet belongs.
 	 */
 	private PortletApp _portletApp;
-
-	/**
-	 * The cloned instances of the portlet.
-	 */
-	private Map<String, Portlet> _clonedInstances;
 
 	/**
 	 * <code>True</code> if the portlet is a static portlet that is cannot be

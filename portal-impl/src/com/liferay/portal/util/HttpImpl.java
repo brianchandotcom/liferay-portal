@@ -1048,41 +1048,52 @@ public class HttpImpl implements Http {
 
 					entityEnclosingMethod.setRequestEntity(requestEntity);
 				}
-				else if (method.equals(Http.Method.POST) &&
-						 (((fileParts != null) && !fileParts.isEmpty()) ||
-						  ((parts != null) && !parts.isEmpty()))) {
-
+				else if (method.equals(Http.Method.POST)) {
 					PostMethod postMethod = (PostMethod)httpMethod;
 
-					List<Part> partsList = new ArrayList<Part>();
+					if ((fileParts == null) || fileParts.isEmpty()) {
+						if (parts != null) {
+							for (Map.Entry<String, String> entry :
+									parts.entrySet()) {
 
-					if (parts != null) {
-						for (Map.Entry<String, String> entry :
-								parts.entrySet()) {
+								String value = entry.getValue();
 
-							String value = entry.getValue();
-
-							if (value != null) {
-								StringPart stringPart = new StringPart(
-									entry.getKey(), value);
-
-								partsList.add(stringPart);
+								if (Validator.isNotNull(value)) {
+									postMethod.addParameter(
+										entry.getKey(), value);
+								}
 							}
 						}
 					}
+					else {
+						List<Part> partsList = new ArrayList<Part>();
 
-					if (fileParts != null) {
+						if (parts != null) {
+							for (Map.Entry<String, String> entry :
+									parts.entrySet()) {
+
+								String value = entry.getValue();
+
+								if (Validator.isNotNull(value)) {
+									StringPart stringPart = new StringPart(
+										entry.getKey(), value);
+
+									partsList.add(stringPart);
+								}
+							}
+						}
+
 						for (Http.FilePart filePart : fileParts) {
 							partsList.add(toCommonsFilePart(filePart));
 						}
+
+						MultipartRequestEntity multipartRequestEntity =
+							new MultipartRequestEntity(
+								partsList.toArray(new Part[0]),
+								postMethod.getParams());
+
+						postMethod.setRequestEntity(multipartRequestEntity);
 					}
-
-					MultipartRequestEntity multipartRequestEntity =
-						new MultipartRequestEntity(
-							partsList.toArray(new Part[0]),
-							postMethod.getParams());
-
-					postMethod.setRequestEntity(multipartRequestEntity);
 				}
 			}
 			else if (method.equals(Http.Method.DELETE)) {

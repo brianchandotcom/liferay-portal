@@ -474,8 +474,11 @@
 				}
 
 				if (!themeDisplay.layoutMaximized) {
-					A.setTimeout(
-						function() {
+					var interactionHandle = portlet.on(
+						['focus', 'mousedown'],
+						function(event) {
+							interactionHandle.detach();
+
 							var configurationLink = portlet.all('.portlet-configuration a');
 
 							configurationLink.on(
@@ -488,12 +491,7 @@
 									event.preventDefault();
 								}
 							);
-						},
-						50
-					);
 
-					A.setTimeout(
-						function() {
 							var minimizeLink = portlet.one('.portlet-minimize a');
 
 							if (minimizeLink) {
@@ -506,12 +504,7 @@
 									}
 								);
 							}
-						},
-						50
-					);
 
-					A.setTimeout(
-						function() {
 							var maximizeLink = portlet.one('.portlet-maximize a');
 
 							if (maximizeLink) {
@@ -524,12 +517,7 @@
 									}
 								);
 							}
-						},
-						50
-					);
 
-					A.setTimeout(
-						function() {
 							var closeLink = portlet.one('.portlet-close a');
 
 							if (closeLink) {
@@ -542,12 +530,7 @@
 									}
 								);
 							}
-						},
-						50
-					);
 
-					A.setTimeout(
-						function() {
 							var refreshLink = portlet.one('.portlet-refresh a');
 
 							if (refreshLink) {
@@ -556,12 +539,7 @@
 									A.bind(instance.refresh, instance, portlet)
 								);
 							}
-						},
-						50
-					);
 
-					A.setTimeout(
-						function() {
 							var printLink = portlet.one('.portlet-print a');
 
 							if (printLink) {
@@ -574,12 +552,7 @@
 									}
 								);
 							}
-						},
-						50
-					);
 
-					A.setTimeout(
-						function() {
 							var portletCSSLink = portlet.one('.portlet-css a');
 
 							if (portletCSSLink) {
@@ -590,8 +563,7 @@
 									}
 								);
 							}
-						},
-						50
+						}
 					);
 				}
 

@@ -875,7 +875,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						${finderCol.name},
 					</#list>
 
-					String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)
+					start, end, orderByComparator
 				};
 
 				List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs, this);
@@ -1266,7 +1266,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							</#if>
 						</#list>
 
-						String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)
+						start, end, orderByComparator
 					};
 
 					List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_${finder.name?upper_case}, finderArgs, this);
@@ -2239,7 +2239,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<${entity.name}> findAll(int start, int end, OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)};
+		Object[] finderArgs = new Object[] {start, end, orderByComparator};
 
 		List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL, finderArgs, this);
 
@@ -2873,7 +2873,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			 */
 			public List<${tempEntity.packagePath}.model.${tempEntity.name}> get${tempEntity.names}(${entity.PKClassName} pk, int start, int end, OrderByComparator orderByComparator) throws SystemException {
 				Object[] finderArgs = new Object[] {
-					pk, String.valueOf(start), String.valueOf(end), String.valueOf(orderByComparator)
+					pk, start, end, orderByComparator
 				};
 
 				List<${tempEntity.packagePath}.model.${tempEntity.name}> list = (List<${tempEntity.packagePath}.model.${tempEntity.name}>)FinderCacheUtil.getResult(FINDER_PATH_GET_${tempEntity.names?upper_case}, finderArgs, this);

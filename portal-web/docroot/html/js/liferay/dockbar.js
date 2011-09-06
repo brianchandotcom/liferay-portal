@@ -384,6 +384,8 @@ AUI().add(
 					}
 				);
 
+				Liferay.Util.toggleControls(dockBar);
+
 				var MenuManager = new A.OverlayManager(
 					{
 						zIndexBase: 100000

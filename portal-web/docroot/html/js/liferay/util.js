@@ -1447,11 +1447,14 @@
 	Liferay.provide(
 		Util,
 		'toggleControls',
-		function() {
-			var trigger = A.one('.toggle-controls');
+		function(node) {
+			var docBody = A.getBody();
+
+			node = node || docBody;
+
+			var trigger = node.one('.toggle-controls');
 
 			if (trigger) {
-				var docBody = A.getBody();
 				var hiddenClass = 'controls-hidden';
 				var visibleClass = 'controls-visible';
 				var currentClass = visibleClass;

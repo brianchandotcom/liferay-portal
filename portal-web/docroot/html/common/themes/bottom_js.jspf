@@ -156,10 +156,6 @@ if (layout != null) {
 			</c:otherwise>
 		</c:choose>
 
-		if (Liferay.Util) {
-			Liferay.Util.toggleControls();
-		}
-
 		Liferay.Poller.init(
 			{
 				encryptedUserId: '<%= Encryptor.encrypt(company.getKeyObj(), String.valueOf(themeDisplay.getUserId())) %>',

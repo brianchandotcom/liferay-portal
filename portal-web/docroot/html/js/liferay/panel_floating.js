@@ -271,7 +271,11 @@ AUI().add(
 					_setMaxPageHeight: function() {
 						var instance = this;
 
-						var sets = instance._container.all('.lfr-panel:not(.lfr-collapsed)');
+						var sets = instance._container.all('.lfr-panel').filter(
+							function (node) {
+								return !node.hasClass('lfr-collapsed');
+							}
+						);
 
 						var maxHeight = 0;
 
@@ -298,6 +302,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-paginator', 'liferay-panel', 'selector-css3']
+		requires: ['aui-paginator', 'liferay-panel']
 	}
 );

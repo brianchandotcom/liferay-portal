@@ -146,7 +146,19 @@ AUI().add(
 						var instance = this;
 
 						if (Lang.isNumber(obj) || Lang.isString(obj)) {
-							obj = instance._table.all('tr:not(.' + CSS_TEMPLATE + ')').item(obj);
+							var row = null;
+
+							instance._table.all('tr').some(
+								function (item, index, collection) {
+									if (!item.hasClass(CSS_TEMPLATE) && index == obj) {
+										row = item;
+									}
+
+									return row;
+								}
+							);
+
+							obj = row;
 						}
 						else {
 							obj = A.one(obj);
@@ -245,6 +257,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'selector-css3']
+		requires: ['aui-base']
 	}
 );

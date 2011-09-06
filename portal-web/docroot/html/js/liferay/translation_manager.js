@@ -530,6 +530,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'selector-css3']
+		requires: ['aui-base']
 	}
 );

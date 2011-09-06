@@ -441,7 +441,8 @@ public class MBUtil {
 		String editorImpl = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 
 		if (messageFormat.equals("bbcode") &&
-			!editorImpl.equals("ckeditor_bbcode")) {
+			!(editorImpl.equals("ckeditor_bbcode")
+				|| editorImpl.equals("bbcode"))) {
 
 			messageFormat = "html";
 		}

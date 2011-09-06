@@ -80,11 +80,12 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 		// Name and description
 
-		if (Validator.isNotNull(structure.getDescription(locale))) {
-			row.addText(structure.getName(locale).concat("<br />").concat(structure.getDescription(locale)), rowHREF);
+		if (Validator.isNotNull(structure.getName())) {
+			row.addText(HtmlUtil.escape(structure.getName(locale)), rowHREF);
 		}
-		else {
-			row.addText(structure.getName(locale), rowHREF);
+
+		if (Validator.isNotNull(structure.getDescription())) {
+			row.addText(HtmlUtil.escape(structure.getDescription(locale)), rowHREF);
 		}
 
 		// Add result row

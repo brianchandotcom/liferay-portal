@@ -404,7 +404,8 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService {
 
 	public void updatePreferences(long companyId,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_companyLocalService.updatePreferences(companyId, properties);
 	}
 

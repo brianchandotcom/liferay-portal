@@ -82,6 +82,10 @@ AUI().add(
 					dropNodes: Layout.getActiveDropNodes(),
 					lazyStart: true,
 					on: {
+						'drag:start': function(event) {
+							Liferay.fire('portletDragStart');
+						},
+
 						'drop:enter': function(event) {
 							Layout.updateOverNestedPortletInfo();
 						},

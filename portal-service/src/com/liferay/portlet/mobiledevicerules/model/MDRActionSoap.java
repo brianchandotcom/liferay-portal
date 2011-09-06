@@ -39,10 +39,11 @@ public class MDRActionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setRuleGroupId(model.getRuleGroupId());
-		soapModel.setRuleId(model.getRuleId());
+		soapModel.setClassNameId(model.getClassNameId());
+		soapModel.setClassPK(model.getClassPK());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setRuleGroupId(model.getRuleGroupId());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
 
@@ -161,20 +162,20 @@ public class MDRActionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getRuleGroupId() {
-		return _ruleGroupId;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public void setRuleGroupId(long ruleGroupId) {
-		_ruleGroupId = ruleGroupId;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
 	}
 
-	public long getRuleId() {
-		return _ruleId;
+	public long getClassPK() {
+		return _classPK;
 	}
 
-	public void setRuleId(long ruleId) {
-		_ruleId = ruleId;
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	public String getName() {
@@ -191,6 +192,14 @@ public class MDRActionSoap implements Serializable {
 
 	public void setDescription(String description) {
 		_description = description;
+	}
+
+	public long getRuleGroupId() {
+		return _ruleGroupId;
+	}
+
+	public void setRuleGroupId(long ruleGroupId) {
+		_ruleGroupId = ruleGroupId;
 	}
 
 	public String getType() {
@@ -217,10 +226,11 @@ public class MDRActionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _ruleGroupId;
-	private long _ruleId;
+	private long _classNameId;
+	private long _classPK;
 	private String _name;
 	private String _description;
+	private long _ruleGroupId;
 	private String _type;
 	private String _typeSettings;
 }

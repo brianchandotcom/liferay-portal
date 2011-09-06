@@ -16,6 +16,7 @@ package com.liferay.portlet.mobiledevicerules.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
@@ -42,7 +43,8 @@ import java.util.Map;
  * @see com.liferay.portlet.mobiledevicerules.model.impl.MDRActionModelImpl
  * @generated
  */
-public interface MDRActionModel extends BaseModel<MDRAction>, GroupedModel {
+public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
+	GroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -193,32 +195,39 @@ public interface MDRActionModel extends BaseModel<MDRAction>, GroupedModel {
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the rule group ID of this m d r action.
+	 * Returns the fully qualified class name of this m d r action.
 	 *
-	 * @return the rule group ID of this m d r action
+	 * @return the fully qualified class name of this m d r action
 	 */
-	public long getRuleGroupId();
+	public String getClassName();
 
 	/**
-	 * Sets the rule group ID of this m d r action.
+	 * Returns the class name ID of this m d r action.
 	 *
-	 * @param ruleGroupId the rule group ID of this m d r action
+	 * @return the class name ID of this m d r action
 	 */
-	public void setRuleGroupId(long ruleGroupId);
+	public long getClassNameId();
 
 	/**
-	 * Returns the rule ID of this m d r action.
+	 * Sets the class name ID of this m d r action.
 	 *
-	 * @return the rule ID of this m d r action
+	 * @param classNameId the class name ID of this m d r action
 	 */
-	public long getRuleId();
+	public void setClassNameId(long classNameId);
 
 	/**
-	 * Sets the rule ID of this m d r action.
+	 * Returns the class p k of this m d r action.
 	 *
-	 * @param ruleId the rule ID of this m d r action
+	 * @return the class p k of this m d r action
 	 */
-	public void setRuleId(long ruleId);
+	public long getClassPK();
+
+	/**
+	 * Sets the class p k of this m d r action.
+	 *
+	 * @param classPK the class p k of this m d r action
+	 */
+	public void setClassPK(long classPK);
 
 	/**
 	 * Returns the name of this m d r action.
@@ -395,6 +404,20 @@ public interface MDRActionModel extends BaseModel<MDRAction>, GroupedModel {
 	 */
 	public void setDescriptionMap(Map<Locale, String> descriptionMap,
 		Locale defaultLocale);
+
+	/**
+	 * Returns the rule group ID of this m d r action.
+	 *
+	 * @return the rule group ID of this m d r action
+	 */
+	public long getRuleGroupId();
+
+	/**
+	 * Sets the rule group ID of this m d r action.
+	 *
+	 * @param ruleGroupId the rule group ID of this m d r action
+	 */
+	public void setRuleGroupId(long ruleGroupId);
 
 	/**
 	 * Returns the type of this m d r action.

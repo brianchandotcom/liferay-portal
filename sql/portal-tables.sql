@@ -1180,10 +1180,11 @@ create table MDRAction (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	ruleGroupId LONG,
-	ruleId LONG,
+	classNameId LONG,
+	classPK LONG,
 	name STRING null,
 	description STRING null,
+	ruleGroupId LONG,
 	type_ VARCHAR(255) null,
 	typeSettings TEXT null
 );

@@ -32,7 +32,7 @@ import java.util.Date;
 public class MDRActionCacheModel implements CacheModel<MDRAction> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -50,14 +50,16 @@ public class MDRActionCacheModel implements CacheModel<MDRAction> {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", ruleGroupId=");
-		sb.append(ruleGroupId);
-		sb.append(", ruleId=");
-		sb.append(ruleId);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", ruleGroupId=");
+		sb.append(ruleGroupId);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", typeSettings=");
@@ -103,8 +105,8 @@ public class MDRActionCacheModel implements CacheModel<MDRAction> {
 			mdrActionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		mdrActionImpl.setRuleGroupId(ruleGroupId);
-		mdrActionImpl.setRuleId(ruleId);
+		mdrActionImpl.setClassNameId(classNameId);
+		mdrActionImpl.setClassPK(classPK);
 
 		if (name == null) {
 			mdrActionImpl.setName(StringPool.BLANK);
@@ -119,6 +121,8 @@ public class MDRActionCacheModel implements CacheModel<MDRAction> {
 		else {
 			mdrActionImpl.setDescription(description);
 		}
+
+		mdrActionImpl.setRuleGroupId(ruleGroupId);
 
 		if (type == null) {
 			mdrActionImpl.setType(StringPool.BLANK);
@@ -147,10 +151,11 @@ public class MDRActionCacheModel implements CacheModel<MDRAction> {
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long ruleGroupId;
-	public long ruleId;
+	public long classNameId;
+	public long classPK;
 	public String name;
 	public String description;
+	public long ruleGroupId;
 	public String type;
 	public String typeSettings;
 }

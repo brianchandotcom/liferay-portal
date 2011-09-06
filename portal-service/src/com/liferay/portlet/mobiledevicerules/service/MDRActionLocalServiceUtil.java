@@ -272,7 +272,8 @@ public class MDRActionLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction addAction(
-		long groupId, long ruleGroupId, long ruleId,
+		long groupId, java.lang.String className, long classPK,
+		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
@@ -280,12 +281,13 @@ public class MDRActionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addAction(groupId, ruleGroupId, ruleId, nameMap,
-			descriptionMap, type, typeSettings, serviceContext);
+				   .addAction(groupId, className, classPK, ruleGroupId,
+			nameMap, descriptionMap, type, typeSettings, serviceContext);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction addAction(
-		long groupId, long ruleGroupId, long ruleId,
+		long groupId, java.lang.String className, long classPK,
+		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type,
@@ -294,40 +296,19 @@ public class MDRActionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addAction(groupId, ruleGroupId, ruleId, nameMap,
-			descriptionMap, type, typeSettingsProperties, serviceContext);
+				   .addAction(groupId, className, classPK, ruleGroupId,
+			nameMap, descriptionMap, type, typeSettingsProperties,
+			serviceContext);
 	}
 
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction copyAction(
-		long actionId, long ruleId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().copyAction(actionId, ruleId, serviceContext);
-	}
-
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction copyAction(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction action,
-		long ruleId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().copyAction(action, ruleId, serviceContext);
-	}
-
-	public static void deleteAction(long ruleId)
+	public static void deleteAction(long actionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteAction(ruleId);
+		getService().deleteAction(actionId);
 	}
 
-	public static void deleteAction(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction action)
+	public static void deleteActions(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteAction(action);
-	}
-
-	public static void deleteActions(long ruleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteActions(ruleId);
+		getService().deleteActions(className, classPK);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchAction(
@@ -337,19 +318,20 @@ public class MDRActionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getActions(
-		long ruleId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getActions(ruleId);
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActions(className, classPK);
 	}
 
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getActions(
-		long ruleId, int start, int end)
+		java.lang.String className, long classPK, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getActions(ruleId, start, end);
+		return getService().getActions(className, classPK, start, end);
 	}
 
-	public static int getActionsCount(long ruleId)
+	public static int getActionsCount(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getActionsCount(ruleId);
+		return getService().getActionsCount(className, classPK);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction updateAction(

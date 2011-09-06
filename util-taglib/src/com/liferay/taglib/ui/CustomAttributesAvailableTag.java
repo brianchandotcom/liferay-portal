@@ -14,11 +14,11 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.TagSupport;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
-import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class CustomAttributesAvailableTag
-	extends ParamAndPropertyAncestorTagImpl {
+	extends TagSupport {
 
 	@Override
 	public int doStartTag() {

@@ -2586,10 +2586,11 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="ruleGroupId" />
-			<basic name="ruleId" />
+			<basic name="classNameId" />
+			<basic name="classPK" />
 			<basic name="name" />
 			<basic name="description" />
+			<basic name="ruleGroupId" />
 			<basic name="type">
 				<column name="TYPE_" />
 			</basic>

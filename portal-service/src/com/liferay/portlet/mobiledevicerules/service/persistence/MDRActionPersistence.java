@@ -250,105 +250,217 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the m d r actions where ruleId = &#63;.
+	* Returns all the m d r actions where ruleGroupId = &#63;.
 	*
-	* @param ruleId the rule ID
+	* @param ruleGroupId the rule group ID
 	* @return the matching m d r actions
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByRuleId(
-		long ruleId) throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByRuleGroupId(
+		long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the m d r actions where ruleId = &#63;.
+	* Returns a range of all the m d r actions where ruleGroupId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param ruleId the rule ID
+	* @param ruleGroupId the rule group ID
 	* @param start the lower bound of the range of m d r actions
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @return the range of matching m d r actions
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByRuleId(
-		long ruleId, int start, int end)
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByRuleGroupId(
+		long ruleGroupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the m d r actions where ruleId = &#63;.
+	* Returns an ordered range of all the m d r actions where ruleGroupId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param ruleId the rule ID
+	* @param ruleGroupId the rule group ID
 	* @param start the lower bound of the range of m d r actions
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r actions
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByRuleId(
-		long ruleId, int start, int end,
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByRuleGroupId(
+		long ruleGroupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first m d r action in the ordered set where ruleId = &#63;.
+	* Returns the first m d r action in the ordered set where ruleGroupId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param ruleId the rule ID
+	* @param ruleGroupId the rule group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.mobiledevicerules.model.MDRAction findByRuleId_First(
-		long ruleId,
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction findByRuleGroupId_First(
+		long ruleGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.mobiledevicerules.NoSuchActionException;
 
 	/**
-	* Returns the last m d r action in the ordered set where ruleId = &#63;.
+	* Returns the last m d r action in the ordered set where ruleGroupId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
-	* @param ruleId the rule ID
+	* @param ruleGroupId the rule group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.mobiledevicerules.model.MDRAction findByRuleId_Last(
-		long ruleId,
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction findByRuleGroupId_Last(
+		long ruleGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.mobiledevicerules.NoSuchActionException;
 
 	/**
-	* Returns the m d r actions before and after the current m d r action in the ordered set where ruleId = &#63;.
+	* Returns the m d r actions before and after the current m d r action in the ordered set where ruleGroupId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
 	* @param actionId the primary key of the current m d r action
-	* @param ruleId the rule ID
+	* @param ruleGroupId the rule group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.mobiledevicerules.model.MDRAction[] findByRuleId_PrevAndNext(
-		long actionId, long ruleId,
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction[] findByRuleGroupId_PrevAndNext(
+		long actionId, long ruleGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchActionException;
+
+	/**
+	* Returns all the m d r actions where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByC_C(
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the m d r actions where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of m d r actions
+	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @return the range of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByC_C(
+		long classNameId, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the m d r actions where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of m d r actions
+	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first m d r action in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching m d r action
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction findByC_C_First(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchActionException;
+
+	/**
+	* Returns the last m d r action in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching m d r action
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction findByC_C_Last(
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchActionException;
+
+	/**
+	* Returns the m d r actions before and after the current m d r action in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param actionId the primary key of the current m d r action
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next m d r action
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction[] findByC_C_PrevAndNext(
+		long actionId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.mobiledevicerules.NoSuchActionException;
@@ -417,12 +529,22 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 			com.liferay.portlet.mobiledevicerules.NoSuchActionException;
 
 	/**
-	* Removes all the m d r actions where ruleId = &#63; from the database.
+	* Removes all the m d r actions where ruleGroupId = &#63; from the database.
 	*
-	* @param ruleId the rule ID
+	* @param ruleGroupId the rule group ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByRuleId(long ruleId)
+	public void removeByRuleGroupId(long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the m d r actions where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -455,13 +577,24 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of m d r actions where ruleId = &#63;.
+	* Returns the number of m d r actions where ruleGroupId = &#63;.
 	*
-	* @param ruleId the rule ID
+	* @param ruleGroupId the rule group ID
 	* @return the number of matching m d r actions
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByRuleId(long ruleId)
+	public int countByRuleGroupId(long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of m d r actions where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

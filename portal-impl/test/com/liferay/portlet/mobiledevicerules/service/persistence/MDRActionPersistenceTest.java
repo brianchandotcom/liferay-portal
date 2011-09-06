@@ -84,13 +84,15 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 
 		newMDRAction.setModifiedDate(nextDate());
 
-		newMDRAction.setRuleGroupId(nextLong());
+		newMDRAction.setClassNameId(nextLong());
 
-		newMDRAction.setRuleId(nextLong());
+		newMDRAction.setClassPK(nextLong());
 
 		newMDRAction.setName(randomString());
 
 		newMDRAction.setDescription(randomString());
+
+		newMDRAction.setRuleGroupId(nextLong());
 
 		newMDRAction.setType(randomString());
 
@@ -111,12 +113,14 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 			Time.getShortTimestamp(newMDRAction.getCreateDate()));
 		assertEquals(Time.getShortTimestamp(existingMDRAction.getModifiedDate()),
 			Time.getShortTimestamp(newMDRAction.getModifiedDate()));
-		assertEquals(existingMDRAction.getRuleGroupId(),
-			newMDRAction.getRuleGroupId());
-		assertEquals(existingMDRAction.getRuleId(), newMDRAction.getRuleId());
+		assertEquals(existingMDRAction.getClassNameId(),
+			newMDRAction.getClassNameId());
+		assertEquals(existingMDRAction.getClassPK(), newMDRAction.getClassPK());
 		assertEquals(existingMDRAction.getName(), newMDRAction.getName());
 		assertEquals(existingMDRAction.getDescription(),
 			newMDRAction.getDescription());
+		assertEquals(existingMDRAction.getRuleGroupId(),
+			newMDRAction.getRuleGroupId());
 		assertEquals(existingMDRAction.getType(), newMDRAction.getType());
 		assertEquals(existingMDRAction.getTypeSettings(),
 			newMDRAction.getTypeSettings());
@@ -261,13 +265,15 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 
 		mdrAction.setModifiedDate(nextDate());
 
-		mdrAction.setRuleGroupId(nextLong());
+		mdrAction.setClassNameId(nextLong());
 
-		mdrAction.setRuleId(nextLong());
+		mdrAction.setClassPK(nextLong());
 
 		mdrAction.setName(randomString());
 
 		mdrAction.setDescription(randomString());
+
+		mdrAction.setRuleGroupId(nextLong());
 
 		mdrAction.setType(randomString());
 

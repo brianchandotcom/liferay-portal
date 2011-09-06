@@ -27,6 +27,7 @@ import java.util.List;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
+ * @author Eduardo Lundgren
  */
 @MessagingProxy(mode = ProxyMode.SYNC)
 public interface WorkflowDefinitionManager {
@@ -49,6 +50,10 @@ public interface WorkflowDefinitionManager {
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, String name, int start, int end,
 			OrderByComparator orderByComparator)
+		throws WorkflowException;
+
+	public WorkflowDefinition getLatestKaleoDefinition(
+			long companyId, String name)
 		throws WorkflowException;
 
 	public WorkflowDefinition getWorkflowDefinition(

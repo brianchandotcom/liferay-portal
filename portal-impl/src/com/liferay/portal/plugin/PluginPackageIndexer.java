@@ -108,7 +108,6 @@ public class PluginPackageIndexer extends BaseIndexer {
 
 		document.addKeyword(
 			Field.ENTRY_CLASS_NAME, PluginPackage.class.getName());
-		document.addKeyword(Field.ENTRY_CLASS_PK, pluginPackage.getModuleId());
 
 		ModuleId moduleIdObj = ModuleId.getInstance(
 			pluginPackage.getModuleId());

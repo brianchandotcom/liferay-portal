@@ -1929,8 +1929,6 @@ public interface PropsKeys {
 
 	public static final String USERS_LIST_VIEWS = "users.list.views";
 
-	public static final String USERS_LIST_VIEWS_DEFAULT = "users.list.views.default";
-
 	public static final String USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED = "users.reminder.queries.custom.question.enabled";
 
 	public static final String USERS_REMINDER_QUERIES_ENABLED = "users.reminder.queries.enabled";

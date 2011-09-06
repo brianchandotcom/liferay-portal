@@ -286,6 +286,13 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 				showUsers = true;
 			}
 			else {
+				LinkedHashMap userParams = new LinkedHashMap();
+
+				userParams.put("noOrganizations", Boolean.TRUE);
+				userParams.put("usersOrgsCount", 0);
+
+				usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
+
 				if (!PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER)) {
 					showOrganizations = true;
 				}
@@ -300,20 +307,93 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 			%>
 
 			<c:if test="<%= showOrganizations %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title='<%= (organization == null) ? "organizations" : (organizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount)) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(organizationsCount)) %>'>
+				<liferay-util:buffer var="organizationsPanelTitle">
+
+					<%
+					String organizationsTitle = null;
+
+					if (organization == null) {
+						organizationsTitle = LanguageUtil.get(pageContext,"top-level-organizations");
+					}
+					else if (organizationsCount == 1) {
+						organizationsTitle = LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount));
+					}
+					else {
+						organizationsTitle = LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(organizationsCount));
+					}
+					%>
+
+					<%= organizationsTitle %>
+
+					<c:if test="<%= organization == null %>">
+						<portlet:renderURL var="viewOrgsURL">
+							<portlet:param name="struts_action" value="/users_admin/view" />
+							<portlet:param name="tabs1" value="users" />
+							<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
+							<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+						</portlet:renderURL>
+
+						<span class="view-all-link">(<a href="<%= viewOrgsURL %>" id="<portlet:namespace />allOrganizationsLink"><liferay-ui:message key="view-all-organizations" /></a>)</span>
+					</c:if>
+				</liferay-util:buffer>
+			
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title='<%= organizationsPanelTitle %>'>
 					<%= organizationsTree %>
 				</liferay-ui:panel>
 			</c:if>
 
 			<c:if test="<%= showUsers %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title='<%= (organization == null) ? "users" : (usersCount == 1) ? LanguageUtil.format(pageContext, "x-user", String.valueOf(usersCount)) : LanguageUtil.format(pageContext, "x-users", String.valueOf(usersCount)) %>'>
+				<portlet:renderURL var="viewUsersURL">
+					<portlet:param name="struts_action" value="/users_admin/view" />
+					<portlet:param name="tabs1" value="users" />
+					<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
+					<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+				</portlet:renderURL>
 
+				<liferay-util:buffer var="usersPanelTitle">
+					
 					<%
-					boolean organizationContextView = true;
-					%>
+					String usersTitle = null;
 
-					<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
-				</liferay-ui:panel>
+					if (organization == null && organizationsCount == 0) {
+						usersTitle = LanguageUtil.get(pageContext, "users");
+					}
+					else if (organization == null) {
+						usersTitle = LanguageUtil.get(pageContext, "users-without-an-organization");
+					}
+					else if(usersCount == 0) {
+						usersTitle = StringPool.BLANK;
+					}
+					else if(usersCount == 1) {
+						usersTitle = LanguageUtil.format(pageContext, "x-user", String.valueOf(usersCount));
+					}
+					else {
+						usersTitle = LanguageUtil.format(pageContext, "x-users", String.valueOf(usersCount));
+					}
+					%>
+					
+					<%= usersTitle %>
+
+					<c:if test="<%= organization == null && showOrganizations %>">
+						<span class="view-all-link">(<a href="<%= viewUsersURL %>" id="<portlet:namespace />allUsersLink"><liferay-ui:message key="view-all-users" /></a>)</span>
+					</c:if>
+				</liferay-util:buffer>
+
+				<c:choose>
+					<c:when test="<%= (organization == null) && (usersCount == 0) %>">
+						<liferay-ui:icon image="group" label="<%= true %>" message="view-all-users" url="<%= viewUsersURL %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title='<%= usersPanelTitle %>'>
+
+							<%
+							boolean organizationContextView = true;
+							%>
+
+							<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
+						</liferay-ui:panel>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
 		</liferay-ui:panel-container>
 	</aui:column>
@@ -364,3 +444,40 @@ private Long[][] _filterSuborganizations(Long[][]leftAndRightOrganizationIds, Lo
 	return leftAndRightParentOrganizationIds;
 }
 %>
+<c:if test="<%= organization == null %>">
+	<aui:script use="liferay-panel">
+		var panelContainer = Liferay.Panel.get('usersAdminOrganizationPanelContainer');
+		
+		var organizationsTrigger = A.one('#<portlet:namespace />allOrganizationsLink');
+	
+		if (panelContainer && organizationsTrigger) {
+			organizationsTrigger.on(
+				'click',
+				function(event) {
+					panelContainer.once(
+						'collapse',
+						function(event) {
+							event.preventDefault();
+						}
+					);
+				}
+			);
+		}
+		
+		var usersTrigger = A.one('#<portlet:namespace />allUsersLink');
+		
+		if (panelContainer && usersTrigger) {
+			usersTrigger.on(
+				'click',
+				function(event) {
+					panelContainer.once(
+						'collapse',
+						function(event) {
+							event.preventDefault();
+						}
+					);
+				}
+			);
+		}
+	</aui:script>
+</c:if>

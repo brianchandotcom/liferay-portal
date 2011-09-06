@@ -43,6 +43,8 @@
 	if ((userOrganizationId > 0)) {
 		try {
 			userOrganization = OrganizationLocalServiceUtil.getOrganization(userOrganizationId);
+
+			searchContainer.setEmptyResultsMessage("this-organization-does-not-have-any-users");
 		}
 		catch (NoSuchOrganizationException nsoe) {
 		}
@@ -191,39 +193,36 @@
 	</liferay-ui:search-container-row>
 
 	<%
-	boolean hasButtons = false;
+	boolean showDeleteButton = (!results.isEmpty()) && (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && (searchTerms.isActive() || (!searchTerms.isActive() && PropsValues.USERS_DELETE));
+	boolean showRestoreButton = (!results.isEmpty()) && (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && !searchTerms.isActive();
 	%>
 
-	<c:if test="<%= (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && (searchTerms.isActive() || (!searchTerms.isActive() && PropsValues.USERS_DELETE)) %>">
+	<c:if test="<%= showDeleteButton || showRestoreButton %>">
+		<c:if test="<%= !organizationContextView %>">
+			<div class="separator"><!-- --></div>
+		</c:if>
 
-		<%
-		hasButtons = true;
+		<c:if test="<%= showDeleteButton %>">
 
-		String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE) + "');";
-		%>
+			<%
+			String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE) + "');";
+			%>
 
-		<aui:button onClick="<%= taglibOnClick %>" value='<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>' />
-	</c:if>
+			<aui:button onClick="<%= taglibOnClick %>" value='<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>' />
+		</c:if>
 
-	<c:if test="<%= (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && !searchTerms.isActive() %>">
+		<c:if test="<%= showRestoreButton %>">
 
-		<%
-		hasButtons = true;
+			<%
+			String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + Constants.RESTORE + "');";
+			%>
 
-		String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + Constants.RESTORE + "');";
-		%>
-
-		<aui:button onClick="<%= taglibOnClick %>" value="restore" />
-	</c:if>
-
-	<c:if test="<%= hasButtons %>">
-		<div>
-			<br />
-		</div>
+			<aui:button onClick="<%= taglibOnClick %>" value="restore" />
+		</c:if>
 	</c:if>
 
 	<%
-	if (!hasButtons) {
+	if (!showDeleteButton && !showRestoreButton) {
 		searchContainer.setRowChecker(null);
 	}
 	%>

@@ -25,39 +25,7 @@
 
 		<liferay-ui:icon
 			image="view_users"
-			message="hierarchy"
-			method="get"
-			url="<%= viewUsersURL %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= ArrayUtil.contains(PropsValues.USERS_LIST_VIEWS, UserConstants.LIST_VIEW_FLAT_USERS) %>">
-		<portlet:renderURL var="viewUsersURL">
-			<portlet:param name="struts_action" value="/users_admin/view" />
-			<portlet:param name="tabs1" value="users" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			image="user_icon"
-			message="all-users"
-			method="get"
-			url="<%= viewUsersURL %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= ArrayUtil.contains(PropsValues.USERS_LIST_VIEWS, UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
-		<portlet:renderURL var="viewUsersURL">
-			<portlet:param name="struts_action" value="/users_admin/view" />
-			<portlet:param name="tabs1" value="users" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS%>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			image="organization_icon"
-			message="all-organizations"
+			message="users-and-organizations"
 			method="get"
 			url="<%= viewUsersURL %>"
 		/>

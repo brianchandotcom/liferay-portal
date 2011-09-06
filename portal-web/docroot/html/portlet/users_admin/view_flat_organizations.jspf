@@ -89,7 +89,5 @@
 		<aui:button onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
 	</c:if>
 
-	<br />
-
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>

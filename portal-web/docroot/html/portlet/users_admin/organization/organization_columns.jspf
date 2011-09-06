@@ -38,180 +38,30 @@
 		buffer.append("</a>");
 	}
 
-	List<Organization> suborganizations = new ArrayList<Organization>();
-	int suborganizationsCount = 0;
-
-	boolean corruptIndex = false;
-
-	if (PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX) {
-		Sort sort = SortFactoryUtil.getSort(Organization.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
-
-		Hits hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), curOrganization.getOrganizationId(), null, organizationParams, 0, 5, sort);
-
-		Tuple tuple = UsersAdminUtil.getOrganizations(hits);
-
-		corruptIndex = (Boolean)tuple.getObject(1);
-
-		if (!corruptIndex) {
-			suborganizations = (List<Organization>)tuple.getObject(0);
-			suborganizationsCount = hits.getLength();
-		}
-	}
-
-	if (!PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX || corruptIndex) {
-		suborganizations = OrganizationLocalServiceUtil.search(company.getCompanyId(), curOrganization.getOrganizationId(), null, null, null, null, organizationParams, 0, 5, searchContainer.getOrderByComparator());
-		suborganizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), curOrganization.getOrganizationId(), null, null, null, null, organizationParams);
-	}
-
-	if (suborganizationsCount > 0) {
-	%>
-
-		<liferay-portlet:renderURL varImpl="viewOrganizationURL">
-			<portlet:param name="struts_action" value="/users_admin/view" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-		</liferay-portlet:renderURL>
-
-		<%
-		buffer.append("<br /><u>");
-		buffer.append((suborganizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(suborganizationsCount)) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(suborganizationsCount)));
-		buffer.append("</u>: ");
-
-		for (int k = 0; k < suborganizations.size(); k++) {
-			Organization suborganization = (Organization)suborganizations.get(k);
-
-			if (OrganizationPermissionUtil.contains(permissionChecker, suborganization.getOrganizationId(), ActionKeys.VIEW)) {
-				viewOrganizationURL.setParameter("organizationId", String.valueOf(suborganization.getOrganizationId()));
-
-				buffer.append("<a href=\"");
-				buffer.append(viewOrganizationURL);
-				buffer.append("\">");
-				buffer.append(suborganization.getName());
-				buffer.append("</a>");
-			}
-			else {
-				buffer.append(suborganization.getName());
-			}
-
-			if ((k + 1) < suborganizations.size()) {
-				buffer.append(", ");
-			}
-		}
-
-		if (suborganizationsCount > suborganizations.size()) {
-		%>
-
-			<liferay-portlet:renderURL varImpl="viewSuborganizationsURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
-				<portlet:param name="tabs1" value="users" />
-				<portlet:param name="viewUsersRedirect" value="<%= currentURL %>" />
-				<portlet:param name="parentOrganizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
-				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
-				<portlet:param name="saveUsersListView" value="<%= Boolean.FALSE.toString() %>" />
-			</liferay-portlet:renderURL>
-
-			<%
-			if (rowURL != null) {
-				viewSuborganizationsURL = rowURL;
-			}
-
-			buffer.append(", <a href=\"");
-			buffer.append(viewSuborganizationsURL);
-			buffer.append("\">");
-			buffer.append(LanguageUtil.get(pageContext, "more"));
-			buffer.append(" &raquo;");
-			buffer.append("</a>");
-		}
-	}
+	int suborganizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), curOrganization.getOrganizationId(), null, null, null, null, organizationParams);
 
 	LinkedHashMap userParams = new LinkedHashMap();
 
 	userParams.put("usersOrgs", curOrganization.getOrganizationId());
 
-	List<User> organizationUsers = new ArrayList<User>();
-	int organizationUserCount = 0;
+	int organizationUserCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, 0, userParams);
 
-	corruptIndex = false;
+	if (suborganizationsCount > 0 || organizationUserCount > 0) {
+		buffer.append("<br /><em>");
 
-	UserSearch userSearch = new UserSearch(renderRequest, portletURL);
-
-	if (PropsValues.USERS_SEARCH_WITH_INDEX) {
-		Sort sort = SortFactoryUtil.getSort(User.class, userSearch.getOrderByCol(), userSearch.getOrderByType());
-
-		Hits hits = UserLocalServiceUtil.search(company.getCompanyId(), null, 0, userParams, 0, 5, sort);
-
-		Tuple tuple = UsersAdminUtil.getUsers(hits);
-
-		corruptIndex = (Boolean)tuple.getObject(1);
-
-		if (!corruptIndex) {
-			organizationUsers = (List<User>)tuple.getObject(0);
-			organizationUserCount = hits.getLength();
-		}
-	}
-
-	if (!PropsValues.USERS_SEARCH_WITH_INDEX || corruptIndex) {
-		organizationUsers = UserLocalServiceUtil.search(company.getCompanyId(), null, 0, userParams, 0, 5, userSearch.getOrderByComparator());
-		organizationUserCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, 0, userParams);
-	}
-
-	if (organizationUserCount > 0) {
-	%>
-
-		<liferay-portlet:renderURL varImpl="viewUserURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user" />
-			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
-		</liferay-portlet:renderURL>
-
-		<%
-		buffer.append("<br /><u>");
-		buffer.append((organizationUserCount == 1) ? LanguageUtil.format(pageContext, "x-user", String.valueOf(organizationUserCount)) : LanguageUtil.format(pageContext, "x-users", String.valueOf(organizationUserCount)));
-		buffer.append("</u>: ");
-
-		for (int k = 0; k < organizationUsers.size(); k++) {
-			User organizationUser = (User)organizationUsers.get(k);
-
-			if (UserPermissionUtil.contains(permissionChecker, organizationUser.getUserId(), ActionKeys.UPDATE)) {
-				viewUserURL.setParameter("p_u_i_d", String.valueOf(organizationUser.getUserId()));
-
-				buffer.append("<a href=\"");
-				buffer.append(viewUserURL);
-				buffer.append("\">");
-				buffer.append(HtmlUtil.escape(organizationUser.getFullName()));
-				buffer.append("</a>");
-			}
-			else {
-				buffer.append(organizationUser.getFullName());
-			}
-
-			if ((k + 1) < organizationUsers.size()) {
-				buffer.append(", ");
-			}
+		if (suborganizationsCount > 0){
+			buffer.append((suborganizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(suborganizationsCount)) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(suborganizationsCount)));
 		}
 
-		if (organizationUserCount > organizationUsers.size()) {
-		%>
-
-			<liferay-portlet:renderURL varImpl="viewUsersURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
-				<portlet:param name="tabs1" value="users" />
-				<portlet:param name="viewUsersRedirect" value="<%= currentURL %>" />
-				<portlet:param name="organizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
-				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-				<portlet:param name="saveUsersListView" value="<%= Boolean.FALSE.toString() %>" />
-			</liferay-portlet:renderURL>
-
-			<%
-			if (rowURL != null) {
-				viewUsersURL = rowURL;
-			}
-
-			buffer.append(", <a href=\"");
-			buffer.append(viewUsersURL);
-			buffer.append("\">");
-			buffer.append(LanguageUtil.get(pageContext, "more"));
-			buffer.append(" &raquo;");
-			buffer.append("</a>");
+		if (suborganizationsCount > 0 && organizationUserCount > 0) {
+			buffer.append(StringPool.SPACE + LanguageUtil.get(pageContext, "and").toLowerCase() + StringPool.SPACE);
 		}
+
+		if (organizationUserCount > 0){
+			buffer.append((organizationUserCount == 1) ? LanguageUtil.format(pageContext, "x-user", String.valueOf(organizationUserCount)) : LanguageUtil.format(pageContext, "x-users", String.valueOf(organizationUserCount)));
+		}
+
+		buffer.append("</em>");
 	}
 	%>
 

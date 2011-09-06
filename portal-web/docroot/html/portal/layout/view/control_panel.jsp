@@ -49,14 +49,6 @@ if (ppid.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	}
 }
 
-if (ppid.equals(PortletKeys.EXPANDO)) {
-	String modelResource = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "modelResource");
-
-	if (modelResource.equals(User.class.getName()) || modelResource.equals(Organization.class.getName())) {
-		ppid = PortletKeys.USERS_ADMIN;
-	}
-}
-
 if (ppid.equals(PortletKeys.PLUGIN_INSTALLER)) {
 	ppid = PortletKeys.ADMIN_PLUGINS;
 }

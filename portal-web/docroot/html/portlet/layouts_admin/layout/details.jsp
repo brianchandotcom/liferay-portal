@@ -106,7 +106,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 					<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "for-example-x", "<em>/news</em>") %>' label="friendly-url" name="friendlyURL" prefix="<%= friendlyURLBase.toString() %>" />
 				</c:when>
 				<c:otherwise>
-					<aui:input name="friendlyURL" size="30" type="hidden" value="<%= HtmlUtil.escape(selLayout.getFriendlyURL()) %>" />
+					<aui:input name="friendlyURL" size="30" type="hidden" value="<%= HtmlUtil.escape((selLayout != null) ? selLayout.getFriendlyURL() : StringPool.BLANK) %>" />
 				</c:otherwise>
 			</c:choose>
 

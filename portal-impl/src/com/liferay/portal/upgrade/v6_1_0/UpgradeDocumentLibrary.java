@@ -21,13 +21,20 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.upgrade.v6_1_0.util.DLFileVersionTable;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
+import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,6 +51,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		updateFileShortcuts();
 		updateFileVersions();
 		updateLocks();
+		updateThumbnails();
 	}
 
 	protected long getFileEntryId(long groupId, long folderId, String name)
@@ -305,4 +313,107 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 	}
 
+	protected void updateThumbnails() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement("select fileEntryId from DLFileEntry");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long fileEntryId = rs.getLong("fileEntryId");
+
+				ResultSet rs2 = null;
+				PreparedStatement ps2 = null;
+				Connection con2 = null;
+
+				try {
+					con2 = DataAccess.getConnection();
+
+					ps2 = con2.prepareStatement(
+						"select fileVersionId, extension, userId, version " +
+							"from DLFileVersion " +
+								"where fileEntryId = " + fileEntryId +
+									" order by version asc");
+
+					rs2 = ps2.executeQuery();
+
+					long smallImageId = 0;
+					long largeImageId = 0;
+					long custom1ImageId = 0;
+					long custom2ImageId = 0;
+
+					while (rs2.next()) {
+						String extension = rs2.getString("extension");
+						long fileVersionId = rs2.getLong("fileVersionId");
+						long userId = rs2.getLong("userId");
+						String version = rs2.getString("version");
+
+						String mimeType = MimeTypesUtil.getContentType(
+							"A." + extension);
+
+						DLFileVersion dlFileVersion = new DLFileVersionImpl();
+
+						dlFileVersion.setFileEntryId(fileEntryId);
+						dlFileVersion.setFileVersionId(fileVersionId);
+						dlFileVersion.setMimeType(mimeType);
+						dlFileVersion.setUserId(userId);
+						dlFileVersion.setVersion(version);
+
+						smallImageId = increment();
+						largeImageId = increment();
+
+						dlFileVersion.setSmallImageId(smallImageId);
+						dlFileVersion.setLargeImageId(largeImageId);
+
+						if (PropsValues.IG_IMAGE_CUSTOM_1_MAX_DIMENSION > 0) {
+							custom1ImageId = increment();
+							dlFileVersion.setCustom1ImageId(custom1ImageId);
+						}
+
+						if (PropsValues.IG_IMAGE_CUSTOM_2_MAX_DIMENSION > 0) {
+							custom2ImageId = increment();
+							dlFileVersion.setCustom2ImageId(custom2ImageId);
+						}
+
+						if (_imageMimeTypes.contains(mimeType)) {
+							ImageProcessor.generateImages(
+								new LiferayFileVersion(dlFileVersion));
+						}
+
+						runSQL(
+							"update DLFileVersion set " +
+								"smallImageId = " + smallImageId +
+								", largeImageId = " + largeImageId +
+								", custom1ImageId = " + custom1ImageId +
+								", custom2ImageId = " + custom2ImageId +
+									" where fileVersionId = " +
+									fileVersionId);
+					}
+
+					runSQL(
+						"update DLFileEntry set " +
+							"smallImageId = " + smallImageId +
+							", largeImageId = " + largeImageId +
+							", custom1ImageId = " + custom1ImageId +
+							", custom2ImageId = " + custom2ImageId +
+								" where fileEntryId = " + fileEntryId);
+				}
+				finally {
+					DataAccess.cleanUp(con2, ps2, rs2);
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	private static Set<String> _imageMimeTypes = SetUtil.fromArray(
+		PropsValues.IG_IMAGE_THUMBNAIL_MIME_TYPES);
 }

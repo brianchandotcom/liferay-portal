@@ -336,12 +336,12 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 									<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 									<c:if test="<%= mountFoldersCount > 0 %>">
-										<a class="expand-folder" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFoldersURL.toString() %>" href="<%= viewURL.toString() %>">
+										<a class="expand-folder" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewFoldersURL.toString() %>" href="<%= viewURL.toString() %>">
 											<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" />
 										</a>
 									</c:if>
 
-									<a class="browse-folder" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= viewURL.toString() %>">
+									<a class="browse-folder" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= viewURL.toString() %>">
 										<liferay-ui:icon image="drive" />
 
 										<%= mountFolder.getName() %>

@@ -106,8 +106,8 @@ if (portletDisplay.isWebDAVEnabled()) {
 	webDavUrl = themeDisplay.getPortalURL() + "/tunnel-web/secure/webdav" + group.getFriendlyURL() + "/document_library" + sb.toString();
 }
 
-Image smallImage = ImageLocalServiceUtil.getImage(fileEntry.getSmallImageId());
-Image largeImage = ImageLocalServiceUtil.getImage(fileEntry.getLargeImageId());
+Image smallImage = ImageLocalServiceUtil.getImage(fileVersion.getSmallImageId());
+Image largeImage = ImageLocalServiceUtil.getImage(fileVersion.getLargeImageId());
 
 boolean hasAudio = AudioProcessor.hasAudio(fileEntry, fileVersion.getVersion());
 boolean hasImages = ImageProcessor.hasImages(fileVersion);

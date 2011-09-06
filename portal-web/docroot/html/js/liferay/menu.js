@@ -475,6 +475,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-live-search','aui-overlay', 'node-focusmanager', 'selector-css3']
+		requires: ['aui-live-search', 'aui-overlay', 'node-focusmanager']
 	}
 );

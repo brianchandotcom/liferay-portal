@@ -1133,6 +1133,12 @@ public interface PropsKeys {
 
 	public static final String LIFERAY_HOME = "liferay.home";
 
+	public static final String LIFERAY_LIB_GLOBAL_DIR = "liferay.lib.global.dir";
+
+	public static final String LIFERAY_LIB_PORTAL_DIR = "liferay.lib.portal.dir";
+
+	public static final String LIFERAY_WEB_PORTAL_DIR = "liferay.web.portal.dir";
+
 	public static final String LIVE_USERS_ENABLED = "live.users.enabled";
 
 	public static final String LOCALE_DEFAULT_REQUEST = "locale.default.request";

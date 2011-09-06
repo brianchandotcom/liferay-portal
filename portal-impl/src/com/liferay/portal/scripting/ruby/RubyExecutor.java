@@ -17,7 +17,6 @@ package com.liferay.portal.scripting.ruby;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
-import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
@@ -73,8 +72,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		rubyInstanceConfig.setJitThreshold(
 			PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD);
 
-		_basePath = WebDirDetector.getRootDir(
-			PortalClassLoaderUtil.getClassLoader());
+		_basePath = PropsValues.LIFERAY_LIB_PORTAL_DIR;
 
 		_loadPaths = new ArrayList<String>(
 			PropsValues.SCRIPTING_JRUBY_LOAD_PATHS.length);
@@ -82,10 +80,6 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		for (String gemLibPath : PropsValues.SCRIPTING_JRUBY_LOAD_PATHS) {
 			_loadPaths.add(gemLibPath);
 		}
-
-		_loadPaths.add(
-			"file:" + _basePath +
-				"WEB-INF/lib/ruby-gems.jar!/gems/haml-3.0.25/lib");
 
 		rubyInstanceConfig.setLoadPaths(_loadPaths);
 

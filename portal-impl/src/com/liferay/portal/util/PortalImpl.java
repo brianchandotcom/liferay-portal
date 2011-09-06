@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
-import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -54,7 +53,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
@@ -288,51 +286,6 @@ public class PortalImpl implements Portal {
 			}
 			catch (UnknownHostException uhe) {
 			}
-		}
-
-		// Global lib directory
-
-		_globalLibDir = ClassUtil.getParentPath(
-			ReleaseInfo.class.getClassLoader(), ReleaseInfo.class.getName());
-
-		int pos = _globalLibDir.lastIndexOf(".jar!");
-
-		if (pos == -1) {
-			pos = _globalLibDir.lastIndexOf(".jar/");
-		}
-
-		pos = _globalLibDir.lastIndexOf(CharPool.SLASH, pos);
-
-		_globalLibDir = _globalLibDir.substring(0, pos + 1);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Global lib directory " + _globalLibDir);
-		}
-
-		// Portal lib directory
-
-		ClassLoader classLoader = getClass().getClassLoader();
-
-		_portalLibDir = WebDirDetector.getLibDir(classLoader);
-
-		String portalLibDir = System.getProperty("liferay.lib.portal.dir");
-
-		if (portalLibDir != null) {
-			if (!portalLibDir.endsWith(StringPool.SLASH)) {
-				portalLibDir += StringPool.SLASH;
-			}
-
-			_portalLibDir = portalLibDir;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Portal lib directory " + _portalLibDir);
-		}
-
-		_portalWebDir = WebDirDetector.getRootDir(_portalLibDir);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Portal web directory " + _portalWebDir);
 		}
 
 		// Paths
@@ -1686,7 +1639,7 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getGlobalLibDir() {
-		return _globalLibDir;
+		return PropsValues.LIFERAY_LIB_GLOBAL_DIR;
 	}
 
 	public String getGoogleGadgetURL(
@@ -2702,7 +2655,7 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getPortalLibDir() {
-		return _portalLibDir;
+		return PropsValues.LIFERAY_LIB_PORTAL_DIR;
 	}
 
 	/**
@@ -2830,7 +2783,7 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getPortalWebDir() {
-		return _portalWebDir;
+		return PropsValues.LIFERAY_WEB_PORTAL_DIR;
 	}
 
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
@@ -5603,7 +5556,6 @@ public class PortalImpl implements Portal {
 	private String _computerName;
 	private String[] _customSqlKeys;
 	private String[] _customSqlValues;
-	private String _globalLibDir;
 	private String _pathContext;
 	private String _pathFriendlyURLPrivateGroup;
 	private String _pathFriendlyURLPrivateUser;
@@ -5613,11 +5565,9 @@ public class PortalImpl implements Portal {
 	private String _pathProxy;
 	private Map<String, Long> _plidToPortletIdMap =
 		new ConcurrentHashMap<String, Long>();
-	private String _portalLibDir;
 	private final AtomicInteger _portalPort = new AtomicInteger(-1);
 	private List<PortalPortEventListener> _portalPortEventListeners =
 		new ArrayList<PortalPortEventListener>();
-	private String _portalWebDir;
 	private Set<String> _portletAddDefaultResourceCheckWhitelist;
 	private Set<String> _portletAddDefaultResourceCheckWhitelistActions;
 	private Set<String> _reservedParams;

@@ -19,9 +19,12 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -88,6 +91,62 @@ public class PropsUtil {
 		try {
 			SystemProperties.set(
 				PropsKeys.DEFAULT_LIFERAY_HOME, _getDefaultLiferayHome());
+
+			// Global lib directory
+
+			String globalLibDir = ClassUtil.getParentPath(
+				ReleaseInfo.class.getClassLoader(),
+				ReleaseInfo.class.getName());
+
+			int pos = globalLibDir.lastIndexOf(".jar!");
+
+			if (pos == -1) {
+				pos = globalLibDir.lastIndexOf(".jar/");
+			}
+
+			pos = globalLibDir.lastIndexOf(CharPool.SLASH, pos);
+
+			globalLibDir = globalLibDir.substring(0, pos + 1);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Global lib directory " + globalLibDir);
+			}
+
+			SystemProperties.set(
+				PropsKeys.LIFERAY_LIB_GLOBAL_DIR, globalLibDir);
+
+			// Portal lib directory
+
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			String portalLibDir = WebDirDetector.getLibDir(classLoader);
+
+			String portalLibDirProperty = System.getProperty(
+				PropsKeys.LIFERAY_LIB_PORTAL_DIR);
+
+			if (portalLibDirProperty != null) {
+				if (!portalLibDirProperty.endsWith(StringPool.SLASH)) {
+					portalLibDirProperty += StringPool.SLASH;
+				}
+
+				portalLibDir = portalLibDirProperty;
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Portal lib directory " + portalLibDir);
+			}
+
+			SystemProperties.set(
+				PropsKeys.LIFERAY_LIB_PORTAL_DIR, portalLibDir);
+
+			String portalWebDir = WebDirDetector.getRootDir(portalLibDir);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Portal web directory " + portalWebDir);
+			}
+
+			SystemProperties.set(
+				PropsKeys.LIFERAY_WEB_PORTAL_DIR, portalWebDir);
 
 			_configuration = new ConfigurationImpl(
 				PropsUtil.class.getClassLoader(), PropsFiles.PORTAL);

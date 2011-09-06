@@ -678,12 +678,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 	 */
 	public List<SocialEquityLog> findByUserId(long userId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { userId, start, end, orderByComparator };
 
 		List<SocialEquityLog> list = (List<SocialEquityLog>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_USERID,
 				finderArgs, this);
@@ -1021,8 +1016,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 		Object[] finderArgs = new Object[] {
 				assetEntryId, type, active,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<SocialEquityLog> list = (List<SocialEquityLog>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_AEI_T_A,
@@ -1402,8 +1396,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 		Object[] finderArgs = new Object[] {
 				assetEntryId, actionId, active, extraData,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<SocialEquityLog> list = (List<SocialEquityLog>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_AEI_AID_A_E,
@@ -1857,8 +1850,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 		Object[] finderArgs = new Object[] {
 				userId, assetEntryId, actionId, active, extraData,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<SocialEquityLog> list = (List<SocialEquityLog>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_AEI_AID_A_E,
@@ -2333,8 +2325,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 		Object[] finderArgs = new Object[] {
 				userId, actionId, actionDate, active, type, extraData,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<SocialEquityLog> list = (List<SocialEquityLog>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_AID_AD_A_T_E,
@@ -2828,8 +2819,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 		Object[] finderArgs = new Object[] {
 				assetEntryId, actionId, actionDate, active, type, extraData,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<SocialEquityLog> list = (List<SocialEquityLog>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_AEI_AID_AD_A_T_E,
@@ -3526,10 +3516,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 	 */
 	public List<SocialEquityLog> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<SocialEquityLog> list = (List<SocialEquityLog>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);

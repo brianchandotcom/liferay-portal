@@ -910,12 +910,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	public List<MBMessage> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { uuid, start, end, orderByComparator };
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
 				finderArgs, this);
@@ -1430,8 +1425,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				groupId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_GROUPID,
@@ -2080,8 +2074,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				companyId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
@@ -2421,8 +2414,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				threadId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_THREADID,
@@ -2761,8 +2753,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				threadId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_THREADREPLIES,
@@ -3097,12 +3088,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	public List<MBMessage> findByUserId(long userId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				userId,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { userId, start, end, orderByComparator };
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_USERID,
 				finderArgs, this);
@@ -3443,8 +3429,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				groupId, userId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_U,
@@ -4127,8 +4112,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				groupId, categoryId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C,
@@ -4811,8 +4795,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				groupId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_S,
@@ -5494,8 +5477,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				companyId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_S,
@@ -5855,8 +5837,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				userId, classNameId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C,
@@ -6221,8 +6202,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				userId, StringUtil.merge(classNameIds),
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C,
@@ -6367,8 +6347,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				classNameId, classPK,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_C,
@@ -6729,8 +6708,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				threadId, parentMessageId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_T_P,
@@ -7090,8 +7068,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				threadId, answer,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_T_A,
@@ -7451,8 +7428,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				threadId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_T_S,
@@ -7812,8 +7788,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				threadId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_TR_S,
@@ -8177,8 +8152,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				groupId, userId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_U_S,
@@ -8896,8 +8870,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				groupId, categoryId, threadId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_T,
@@ -9615,8 +9588,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				groupId, categoryId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_S,
@@ -10334,8 +10306,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				userId, classNameId, classPK,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C_C,
@@ -10716,8 +10687,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				userId, classNameId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C_S,
@@ -11102,8 +11072,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				userId, StringUtil.merge(classNameIds), status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C_S,
@@ -11262,8 +11231,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				classNameId, classPK, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_C_S,
@@ -11650,8 +11618,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				groupId, categoryId, threadId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_T_S,
@@ -12407,8 +12374,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		Object[] finderArgs = new Object[] {
 				userId, classNameId, classPK, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_U_C_C_S,
@@ -12792,10 +12758,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	public List<MBMessage> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<MBMessage> list = (List<MBMessage>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);

@@ -568,8 +568,7 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 		Object[] finderArgs = new Object[] {
 				groupId, classNameId, actionId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<SocialEquitySetting> list = (List<SocialEquitySetting>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_A,
@@ -1130,10 +1129,7 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 	 */
 	public List<SocialEquitySetting> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<SocialEquitySetting> list = (List<SocialEquitySetting>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);

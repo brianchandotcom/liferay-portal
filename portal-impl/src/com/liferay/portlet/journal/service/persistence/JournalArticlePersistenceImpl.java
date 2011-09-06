@@ -972,12 +972,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public List<JournalArticle> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { uuid, start, end, orderByComparator };
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
 				finderArgs, this);
@@ -1494,8 +1489,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				resourcePrimKey,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_RESOURCEPRIMKEY,
@@ -1834,8 +1828,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_GROUPID,
@@ -2485,8 +2478,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				companyId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
@@ -2827,8 +2819,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				smallImageId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_SMALLIMAGEID,
@@ -3172,8 +3163,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				resourcePrimKey, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_R_ST,
@@ -3534,8 +3524,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, articleId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_A,
@@ -4268,8 +4257,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, urlTitle,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_UT,
@@ -5002,8 +4990,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, structureId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_S,
@@ -5736,8 +5723,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, templateId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_T,
@@ -6470,8 +6456,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, layoutUuid,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_L,
@@ -7203,8 +7188,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_ST,
@@ -7888,8 +7872,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				companyId, version,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_V,
@@ -8250,8 +8233,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				companyId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_ST,
@@ -8615,8 +8597,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, classNameId, classPK,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_C,
@@ -9503,8 +9484,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, classNameId, templateId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_T,
@@ -10273,8 +10253,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, classNameId, layoutUuid,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_L,
@@ -11208,8 +11187,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, articleId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_A_ST,
@@ -11977,8 +11955,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				groupId, urlTitle, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_UT_ST,
@@ -12746,8 +12723,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Object[] finderArgs = new Object[] {
 				companyId, version, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_V_ST,
@@ -13113,10 +13089,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public List<JournalArticle> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<JournalArticle> list = (List<JournalArticle>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);

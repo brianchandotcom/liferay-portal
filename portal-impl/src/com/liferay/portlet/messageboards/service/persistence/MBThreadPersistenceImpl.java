@@ -625,8 +625,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				groupId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_GROUPID,
@@ -1408,8 +1407,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				groupId, categoryId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C,
@@ -1774,8 +1772,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(categoryIds),
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C,
@@ -2398,8 +2395,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				groupId, categoryId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_NOTC,
@@ -3083,8 +3079,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				groupId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_S,
@@ -3766,8 +3761,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				categoryId, priority,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_P,
@@ -4128,8 +4122,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				lastPostDate, priority,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_L_P,
@@ -4507,8 +4500,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				groupId, categoryId, lastPostDate,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_L,
@@ -5255,8 +5247,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				groupId, categoryId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_S,
@@ -5641,8 +5632,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(categoryIds), status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C_S,
@@ -6306,8 +6296,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Object[] finderArgs = new Object[] {
 				groupId, categoryId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_NOTC_S,
@@ -7010,10 +6999,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	public List<MBThread> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);

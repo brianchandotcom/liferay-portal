@@ -584,8 +584,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		Object[] finderArgs = new Object[] {
 				companyId, portletId, repositoryId, path,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<DLContent> list = (List<DLContent>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_P_R_P,
@@ -1228,10 +1227,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 */
 	public List<DLContent> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<DLContent> list = (List<DLContent>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);

@@ -47,6 +47,7 @@ if (!corruptIndex) {
 	searchContainer.setTotal(total);
 }
 else {
+	journalParams.remove("expandoAttributes");
 %>
 
 	<%@ include file="/html/portlet/journal/article_search_results_database.jspf" %>

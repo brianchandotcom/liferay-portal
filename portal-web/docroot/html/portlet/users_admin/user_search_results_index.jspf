@@ -45,6 +45,7 @@ if (!corruptIndex) {
 	pageContext.setAttribute("total", total);
 }
 else {
+	userParams.remove("expandoAttributes");
 %>
 
 	<%@ include file="/html/portlet/users_admin/user_search_results_database.jspf" %>

@@ -2182,24 +2182,7 @@ public class JournalArticleLocalServiceImpl
 		// Get the earliest display date and latest expiration date among
 		// all article versions
 
-		long classTypeId = 0;
-
-		JournalStructure structure =
-			journalStructurePersistence.fetchByG_S(
-				article.getGroupId(), article.getStructureId());
-
-		if (structure == null) {
-			Group companyGroup =
-				groupLocalService.getCompanyGroup(article.getCompanyId());
-
-			structure =
-				journalStructurePersistence.fetchByG_S(
-					companyGroup.getGroupId(), article.getStructureId());
-		}
-
-		if (structure != null) {
-			classTypeId = structure.getId();
-		}
+		long classTypeId = getClassTypeId(article);
 
 		Date[] dateInterval = getDateInterval(
 			article.getGroupId(), article.getArticleId(),
@@ -2361,16 +2344,17 @@ public class JournalArticleLocalServiceImpl
 							visible = false;
 						}
 
+						long classTypeId = getClassTypeId(article);
+
 						AssetEntry assetEntry =
 							assetEntryLocalService.updateEntry(
 								userId, article.getGroupId(),
 								JournalArticle.class.getName(),
 								article.getResourcePrimKey(), article.getUuid(),
-								GetterUtil.getLong(article.getStructureId()),
-								assetCategoryIds, assetTagNames, visible, null,
-								null, displayDate, expirationDate,
-								ContentTypes.TEXT_HTML, article.getTitle(),
-								article.getDescription(),
+								classTypeId, assetCategoryIds, assetTagNames,
+								visible, null, null, displayDate,
+								expirationDate, ContentTypes.TEXT_HTML,
+								article.getTitle(), article.getDescription(),
 								article.getDescription(), null,
 								article.getLayoutUuid(), 0, 0, null, false);
 
@@ -2879,6 +2863,34 @@ public class JournalArticleLocalServiceImpl
 
 			dynamicContent.setText(StringPool.BLANK);
 		}
+	}
+
+	protected long getClassTypeId(JournalArticle article) {
+		long classTypeId = 0;
+
+		try {
+			JournalStructure structure = journalStructurePersistence.fetchByG_S(
+				article.getGroupId(), article.getStructureId());
+
+			if (structure == null) {
+				Group companyGroup =
+					groupLocalService.getCompanyGroup(
+						article.getCompanyId());
+
+				structure =
+					journalStructurePersistence.fetchByG_S(
+						companyGroup.getGroupId(),
+							article.getStructureId());
+			}
+
+			if (structure != null) {
+				classTypeId = structure.getId();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return classTypeId;
 	}
 
 	protected Date[] getDateInterval(

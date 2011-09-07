@@ -89,7 +89,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"select resourcePrimKey, structureId from JournalArticle " +
-					"where structureId > 0");
+					"where structureId != ''");
 
 			rs = ps.executeQuery();
 

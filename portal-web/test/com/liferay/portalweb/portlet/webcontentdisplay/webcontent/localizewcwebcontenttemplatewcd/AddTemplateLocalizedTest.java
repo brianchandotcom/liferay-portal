@@ -58,7 +58,7 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value=\"Add Template\"]",
+				selenium.clickAt("//input[@value='Add Template']",
 					RuntimeVariables.replace("Add Template"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();

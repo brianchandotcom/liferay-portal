@@ -53,7 +53,7 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value=\"Add Structure\"]",
+		selenium.clickAt("//input[@value='Add Structure']",
 			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -112,7 +112,7 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 			selenium.getValue("//input[@id='_15_structure_el0_name']"));
 		assertEquals("page-description",
 			selenium.getValue("//input[@id='_15_structure_el1_name']"));
-		selenium.clickAt("//input[@value=\"Save\"]",
+		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

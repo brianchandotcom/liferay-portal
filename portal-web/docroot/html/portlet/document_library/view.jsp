@@ -45,6 +45,9 @@ if (Validator.isNull(displayStyle)) {
 long entryStart = ParamUtil.getLong(request, "entryStart");
 long entryEnd = ParamUtil.getLong(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
 
+int folderStart = ParamUtil.getInteger(request, "folderStart");
+int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
+
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
@@ -217,15 +220,15 @@ if (folder != null) {
 			defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			entriesTotal: <%= entriesTotal %>,
-			entryEnd: <%= SearchContainer.DEFAULT_DELTA %>,
+			entryEnd: <%= entryEnd %>,
 			entryRowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
 			entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-			entryStart: 0,
-			folderEnd: <%= SearchContainer.DEFAULT_DELTA %>,
+			entryStart: <%= entryStart %>,
+			folderEnd: <%= folderEnd %>,
 			folderId: '<%= folderId %>',
 			folderRowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
 			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-			folderStart: 0,
+			folderStart: <%= folderStart %>,
 			foldersTotal: <%= foldersTotal %>,
 			mainUrl: '<%= mainURL %>',
 			namespace: '<portlet:namespace />',

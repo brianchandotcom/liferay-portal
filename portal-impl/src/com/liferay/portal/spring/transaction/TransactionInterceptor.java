@@ -17,23 +17,25 @@ package com.liferay.portal.spring.transaction;
 import com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Method;
+
+import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
 /**
  * @author Shuyang Zhou
  */
-public class TransactionInterceptor
-	extends TransactionAspectSupport implements MethodInterceptor {
+public class TransactionInterceptor implements MethodInterceptor {
 
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Method method = methodInvocation.getMethod();
@@ -46,9 +48,6 @@ public class TransactionInterceptor
 			targetClass = targetBean.getClass();
 		}
 
-		TransactionAttributeSource transactionAttributeSource =
-			getTransactionAttributeSource();
-
 		TransactionAttribute transactionAttribute =
 			transactionAttributeSource.getTransactionAttribute(
 				method, targetClass);
@@ -57,27 +56,14 @@ public class TransactionInterceptor
 			return methodInvocation.proceed();
 		}
 
-		Class<?> declaringClass = method.getDeclaringClass();
-
-		String joinPointIdentification = StringPool.BLANK;
-
-		if (_log.isDebugEnabled()) {
-			joinPointIdentification =
-				declaringClass.getName().concat(StringPool.PERIOD).concat(
-					method.getName());
-		}
-
-		TransactionInfo transactionInfo = createTransactionIfNecessary(
-			getTransactionManager(), transactionAttribute,
-			joinPointIdentification);
-
 		TransactionStatus transactionStatus =
-			transactionInfo.getTransactionStatus();
+			_platformTransactionManager.getTransaction(transactionAttribute);
 
 		boolean newTransaction = transactionStatus.isNewTransaction();
 
 		if (newTransaction) {
 			TransactionalPortalCacheHelper.begin();
+			TransactionCommitCallbackUtil.pushCallbackList();
 		}
 
 		Object returnValue = null;
@@ -86,28 +72,118 @@ public class TransactionInterceptor
 			returnValue = methodInvocation.proceed();
 		}
 		catch (Throwable throwable) {
-			if (newTransaction) {
-				TransactionalPortalCacheHelper.rollback();
+			if (transactionAttribute.rollbackOn(throwable)) {
+				try {
+					_platformTransactionManager.rollback(transactionStatus);
+				}
+				catch (TransactionSystemException tse) {
+					_log.error("Application exception overridden by rollback "
+						+ "exception", tse);
+					throw tse;
+				}
+				catch (RuntimeException re) {
+					_log.error("Application exception overridden by rollback "
+						+ "exception", re);
+					throw re;
+				}
+				catch (Error e) {
+					_log.error("Application exception overridden by rollback "
+						+ "error", e);
+					throw e;
+				}
+				finally {
+					if (newTransaction) {
+						TransactionalPortalCacheHelper.rollback();
+						TransactionCommitCallbackUtil.popCallbackList();
+					}
+				}
 			}
+			else {
+				boolean hasError = false;
 
-			completeTransactionAfterThrowing(transactionInfo, throwable);
+				try {
+					_platformTransactionManager.commit(transactionStatus);
+				}
+				catch (TransactionSystemException tse) {
+					_log.error("Application exception overridden by commit "
+						+ "exception", tse);
+
+					hasError = true;
+
+					throw tse;
+				}
+				catch (RuntimeException re) {
+					_log.error("Application exception overridden by commit "
+						+ "exception", re);
+
+					hasError = true;
+
+					throw re;
+				}
+				catch (Error e) {
+					_log.error("Application exception overridden by commit "
+						+ "error", e);
+
+					hasError = true;
+
+					throw e;
+				}
+				finally {
+					if (newTransaction) {
+						if (hasError) {
+							TransactionalPortalCacheHelper.rollback();
+							TransactionCommitCallbackUtil.popCallbackList();
+						}
+						else {
+							TransactionalPortalCacheHelper.commit();
+							invokeCallbacks();
+						}
+					}
+				}
+			}
 
 			throw throwable;
 		}
-		finally {
-			cleanupTransactionInfo(transactionInfo);
-		}
 
-		commitTransactionAfterReturning(transactionInfo);
+		_platformTransactionManager.commit(transactionStatus);
 
 		if (newTransaction) {
 			TransactionalPortalCacheHelper.commit();
+			invokeCallbacks();
 		}
 
 		return returnValue;
 	}
 
+	public void setTransactionManager(
+		PlatformTransactionManager platformTransactionManager) {
+		_platformTransactionManager = platformTransactionManager;
+	}
+
+	public void setTransactionAttributeSource(
+		TransactionAttributeSource transactionAttributeSource) {
+		this.transactionAttributeSource = transactionAttributeSource;
+	}
+
+	private void invokeCallbacks() {
+		List<Callable<?>> callbackList =
+			TransactionCommitCallbackUtil.popCallbackList();
+
+		for (Callable<?> callable : callbackList) {
+			try {
+				callable.call();
+			}
+			catch (Exception e) {
+				_log.error("Failed to execute transaction commit callback", e);
+			}
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		TransactionInterceptor.class);
+
+	protected TransactionAttributeSource transactionAttributeSource;
+
+	private PlatformTransactionManager _platformTransactionManager;
 
 }

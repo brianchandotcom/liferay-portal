@@ -342,6 +342,15 @@
 		<echo file="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
 	</target>
 
+	<target name="build-ckeditor-plugins-bbcode">
+		<concat destfile="docroot/html/js/editor/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
+			<filelist
+				dir="docroot/html/js/editor/ckeditor_diffs/plugins/bbcode"
+				files="lexer.js,parser.js,converter.js"
+			/>
+		</concat>
+	</target>
+
 	<target name="build-codepress">
 		<if>
 			<not>

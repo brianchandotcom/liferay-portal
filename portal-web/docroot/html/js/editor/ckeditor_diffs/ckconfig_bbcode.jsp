@@ -64,6 +64,8 @@ CKEDITOR.config.bodyClass = 'html-editor <%= cssClasses %>';
 
 CKEDITOR.config.contentsCss = '<%= HtmlUtil.escape(cssPath) %>/main.css';
 
+CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+
 CKEDITOR.config.extraPlugins = 'bbcode,wikilink';
 
 CKEDITOR.config.filebrowserBrowseUrl = '';

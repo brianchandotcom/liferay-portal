@@ -15,6 +15,7 @@
 package com.liferay.portal.upload;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -27,6 +28,7 @@ import com.liferay.portal.util.WebKeys;
 import java.io.File;
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -153,6 +155,32 @@ public class UploadServletRequestImpl
 		}
 	}
 
+	public InputStream getFileAsStream(String name)
+		throws IOException {
+
+		return getFileAsStream(name, true);
+	}
+
+	public InputStream getFileAsStream(String name, boolean deleteOnClose)
+		throws IOException {
+
+		if (getFileName(name) == null) {
+			return null;
+		}
+
+		InputStream inputStream = null;
+
+		LiferayFileItem[] liferayFileItems = _params.get(name);
+
+		if ((liferayFileItems != null) && (liferayFileItems.length > 0)) {
+			LiferayFileItem liferayFileItem = liferayFileItems[0];
+
+			inputStream = getInputStream(liferayFileItem, deleteOnClose);
+		}
+
+		return inputStream;
+	}
+
 	public File[] getFiles(String name) {
 		String[] fileNames = getFileNames(name);
 
@@ -208,6 +236,40 @@ public class UploadServletRequestImpl
 		else {
 			return null;
 		}
+	}
+
+	public InputStream[] getFilesAsStream(String name) throws IOException {
+		return getFilesAsStream(name, true);
+	}
+
+	public InputStream[] getFilesAsStream(String name, boolean deleteOnClose)
+		throws IOException {
+
+		String[] fileNames = getFileNames(name);
+
+		if (fileNames == null) {
+			return null;
+		}
+
+		InputStream[] inputStreams = null;
+
+		LiferayFileItem[] liferayFileItems = _params.get(name);
+
+		if ((liferayFileItems != null) && (liferayFileItems.length > 0)) {
+			inputStreams =
+				new InputStream[liferayFileItems.length];
+
+			for (int i = 0; i < liferayFileItems.length; i++) {
+				LiferayFileItem liferayFileItem = liferayFileItems[i];
+
+				if (Validator.isNotNull(liferayFileItem.getFileName())) {
+					inputStreams[i] = getInputStream(
+						liferayFileItem, deleteOnClose);
+				}
+			}
+		}
+
+		return inputStreams;
 	}
 
 	public String getFullFileName(String name) {
@@ -321,6 +383,17 @@ public class UploadServletRequestImpl
 		}
 	}
 
+	public Long getSize(String name) {
+		LiferayFileItem[] liferayFileItems = _params.get(name);
+
+		if ((liferayFileItems != null) && (liferayFileItems.length > 0)) {
+			return new Long(liferayFileItems[0].getSize());
+		}
+		else {
+			return null;
+		}
+	}
+
 	public Boolean isFormField(String name) {
 		LiferayFileItem[] liferayFileItems = _params.get(name);
 
@@ -330,6 +403,26 @@ public class UploadServletRequestImpl
 		else {
 			return null;
 		}
+	}
+
+	protected InputStream getInputStream(
+			LiferayFileItem liferayFileItem, boolean deleteOnClose)
+		throws IOException {
+
+		InputStream inputStream = null;
+
+		boolean isInMemory = liferayFileItem.isInMemory();
+
+		if (isInMemory && (liferayFileItem.getSize() > 0)) {
+			inputStream = liferayFileItem.getInputStream();
+		}
+		else if (!isInMemory) {
+			inputStream = new ByteArrayFileInputStream(
+				liferayFileItem.getStoreLocation(),
+				liferayFileItem.getSizeThreshold(), deleteOnClose);
+		}
+
+		return inputStream;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

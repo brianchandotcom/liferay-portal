@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.upload;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,13 +33,25 @@ public interface UploadServletRequest extends HttpServletRequest {
 
 	public File getFile(String name);
 
+	public InputStream getFileAsStream(String name) throws IOException;
+
+	public InputStream getFileAsStream(String name, boolean deleteOnClose)
+		throws IOException;
+
 	public File[] getFiles(String name);
+
+	public InputStream[] getFilesAsStream(String name) throws IOException;
+
+	public InputStream[] getFilesAsStream(String name, boolean deleteOnClose)
+		throws IOException;
 
 	public String getFileName(String name);
 
 	public String[] getFileNames(String name);
 
 	public String getFullFileName(String name);
+
+	public Long getSize(String name);
 
 	public Boolean isFormField(String name);
 

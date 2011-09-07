@@ -43,6 +43,7 @@ public class LiferayFileItem extends DiskFileItem {
 			repository);
 
 		_fileName = fileName;
+		_sizeThreshold = sizeThreshold;
 		_repository = repository;
 	}
 
@@ -75,6 +76,10 @@ public class LiferayFileItem extends DiskFileItem {
 
 	public String getFileNameExtension() {
 		return FileUtil.getExtension(_fileName);
+	}
+
+	public int getSizeThreshold() {
+		return _sizeThreshold;
 	}
 
 	@Override
@@ -139,6 +144,7 @@ public class LiferayFileItem extends DiskFileItem {
 
 	private static int _counter = 0;
 
+	private int _sizeThreshold;
 	private String _fileName;
 	private File _repository;
 	private String _encodedString;

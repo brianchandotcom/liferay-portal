@@ -118,8 +118,8 @@ public class UpgradeAsset extends UpgradeProcess {
 			"com.liferay.portlet.imagegallery.model.IGImage");
 
 		runSQL(
-			"update AssetEntry set classNameId = " + igImageClassNameId +
-				" where classNameId = " + dlFileEntryClassNameId);
+			"update AssetEntry set classNameId = " + dlFileEntryClassNameId +
+				" where classNameId = " + igImageClassNameId);
 	}
 
 }

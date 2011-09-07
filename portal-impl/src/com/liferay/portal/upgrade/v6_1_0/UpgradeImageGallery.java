@@ -40,6 +40,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Sergio González
  */
@@ -224,6 +227,43 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		}
 	}
 
+	protected boolean dlFolderExist(
+		long groupId, String name, long parentFolderId, long folderId,
+		Map<Long, Long> folderIds)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select folderId from DLFolder" +
+				" where parentFolderId = " + parentFolderId +
+				" and groupId = " + groupId +
+				" and name = '" + name + "'");
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				long newFolderId = rs.getLong("folderId");
+
+				updateIGFolderId(newFolderId, folderId);
+
+				folderIds.put(folderId, newFolderId);
+
+				return true;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return false;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateIGFolderEntries();
@@ -378,9 +418,12 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement("select * from IGFolder");
+			ps = con.prepareStatement(
+				"select * from IGFolder order by folderId asc");
 
 			rs = ps.executeQuery();
+
+			Map<Long, Long> folderIds = new HashMap<Long, Long>();
 
 			while (rs.next()) {
 				String uuid = rs.getString("uuid_");
@@ -395,13 +438,48 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				String name = rs.getString("name");
 				String description = rs.getString("description");
 
-				addDLFolderEntry(
-					uuid, folderId, groupId, companyId, userId, userName,
-					createDate, modifiedDate, groupId, parentFolderId, name,
-					description, modifiedDate);
+				if (folderIds.containsKey(parentFolderId)) {
+					parentFolderId = folderIds.get(parentFolderId);
+				}
+
+				boolean dlFolderExist = dlFolderExist(
+					groupId, name, parentFolderId, folderId, folderIds);
+
+				if (!dlFolderExist) {
+					addDLFolderEntry(
+						uuid, folderId, groupId, companyId, userId, userName,
+						createDate, modifiedDate, groupId, parentFolderId, name,
+						description, modifiedDate);
+				}
 			}
 
 			runSQL("drop table IGFolder");
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateIGFolderId(long newFolderId, long oldFolderId)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("update IGImage set folderId = ");
+			sb.append(newFolderId);
+			sb.append(" where folderId = ");
+			sb.append(oldFolderId);
+
+			ps = con.prepareStatement(sb.toString());
+
+			ps.executeUpdate();
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

@@ -104,7 +104,8 @@ public class ComboServlet extends HttpServlet {
 					modulePath = StringUtil.replaceFirst(
 						p.concat(modulePath), contextPath, StringPool.BLANK);
 
-					bytes = getFileContent(response, modulePath, minifierType);
+					bytes = getFileContent(
+						request, response, modulePath, minifierType);
 				}
 
 				bytesArray[--length] = bytes;
@@ -171,7 +172,8 @@ public class ComboServlet extends HttpServlet {
 	}
 
 	protected byte[] getFileContent(
-			HttpServletResponse response, String path, String minifierType)
+			HttpServletRequest request, HttpServletResponse response,
+			String path, String minifierType)
 		throws IOException {
 
 		String fileContentKey = path.concat(StringPool.QUESTION).concat(
@@ -216,7 +218,7 @@ public class ComboServlet extends HttpServlet {
 
 					try {
 						stringFileContent = DynamicCSSUtil.parseSass(
-							cssRealPath, stringFileContent);
+							request, cssRealPath, stringFileContent);
 					}
 					catch (Exception e) {
 						_log.error(

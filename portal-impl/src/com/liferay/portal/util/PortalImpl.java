@@ -985,6 +985,7 @@ public class PortalImpl implements Portal {
 	/**
 	 * @deprecated {@link #getCDNHost(boolean)}
 	 */
+	@Deprecated
 	public String getCDNHost() {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -3426,20 +3427,20 @@ public class PortalImpl implements Portal {
 
 		// Theme and color scheme
 
-		if (uri.endsWith(".jsp")) {
-			if ((parameterMap == null) ||
-				(!parameterMap.containsKey("themeId"))) {
+		if ((uri.endsWith(".css") || uri.endsWith(".jsp")) &&
+			((parameterMap == null) ||
+			 (!parameterMap.containsKey("themeId")))) {
 
-				sb.append("&themeId=");
-				sb.append(theme.getThemeId());
-			}
+			sb.append("&themeId=");
+			sb.append(theme.getThemeId());
+		}
 
-			if ((parameterMap == null) ||
-				(!parameterMap.containsKey("colorSchemeId"))) {
+		if (uri.endsWith(".jsp") &&
+			((parameterMap == null) ||
+			 (!parameterMap.containsKey("colorSchemeId")))) {
 
-				sb.append("&colorSchemeId=");
-				sb.append(colorScheme.getColorSchemeId());
-			}
+			sb.append("&colorSchemeId=");
+			sb.append(colorScheme.getColorSchemeId());
 		}
 
 		// Minifier

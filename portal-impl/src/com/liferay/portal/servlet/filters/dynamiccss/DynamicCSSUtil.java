@@ -14,19 +14,28 @@
 
 package com.liferay.portal.servlet.filters.dynamiccss;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Theme;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
+import com.liferay.portal.service.ThemeLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.ContentUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Raymond Augé
@@ -45,10 +54,13 @@ public class DynamicCSSUtil {
 		}
 	}
 
-	public static String parseSass(String cssRealPath, String content)
+	public static String parseSass(
+			HttpServletRequest request, String cssRealPath, String content)
 		throws ScriptingException {
 
-		if (!DynamicCSSFilter.ENABLED) {
+		String cssThemePath = getCssThemePath(request);
+
+		if (!DynamicCSSFilter.ENABLED || (cssThemePath == null)) {
 			return content;
 		}
 
@@ -56,6 +68,7 @@ public class DynamicCSSUtil {
 
 		inputObjects.put("content", content);
 		inputObjects.put("cssRealPath", cssRealPath);
+		inputObjects.put("cssThemePath", cssThemePath);
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -76,6 +89,39 @@ public class DynamicCSSUtil {
 		}
 
 		return content;
+	}
+
+	protected static String getCssThemePath(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = null;
+
+		if (request != null) {
+			themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		if (themeDisplay != null) {
+			return themeDisplay.getPathThemeCss();
+		}
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		String themeId = ParamUtil.getString(request, "themeId");
+
+		if (Validator.isNotNull(themeId)) {
+			try {
+				Theme theme = ThemeLocalServiceUtil.getTheme(
+					companyId, themeId, false);
+
+				String themeStaticResourcePath = theme.getStaticResourcePath();
+
+				return themeStaticResourcePath + theme.getCssPath();
+			}
+			catch (SystemException e) {
+				_log.error(e, e);
+			}
+		}
+
+		return null;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DynamicCSSUtil.class);

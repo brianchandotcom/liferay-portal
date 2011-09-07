@@ -144,7 +144,8 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 				content = FileUtil.read(file);
 
-				dynamicContent = DynamicCSSUtil.parseSass(cssRealPath, content);
+				dynamicContent = DynamicCSSUtil.parseSass(
+					request, cssRealPath, content);
 
 				response.setContentType(ContentTypes.TEXT_CSS);
 
@@ -169,7 +170,8 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 				content = stringResponse.getString();
 
-				dynamicContent = DynamicCSSUtil.parseSass(cssRealPath, content);
+				dynamicContent = DynamicCSSUtil.parseSass(
+					request, cssRealPath, content);
 
 				FileUtil.write(
 					cacheContentTypeFile, stringResponse.getContentType());

@@ -16,77 +16,39 @@ package com.liferay.portlet.expando.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 
 /**
- * @author Raymond Augé
+ * @author Michael C. Han
  */
-public class ExpandoColumnPermission {
-
-	public static void check(
+public interface ExpandoColumnPermission {
+	public void check(
 			PermissionChecker permissionChecker, ExpandoColumn column,
 			String actionId)
-		throws PortalException {
+		throws PortalException;
 
-		if (!contains(permissionChecker, column, actionId)) {
-			throw new PrincipalException();
-		}
-	}
-
-	public static void check(
+	public void check(
 			PermissionChecker permissionChecker, long columnId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException, SystemException;
 
-		if (!contains(permissionChecker, columnId, actionId)) {
-			throw new PrincipalException();
-		}
-	}
-
-	public static void check(
+	public void check(
 			PermissionChecker permissionChecker, long companyId,
 			String className, String tableName, String columnName,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException, SystemException;
 
-		if (!contains(
-				permissionChecker, companyId, className, tableName, columnName,
-				actionId)) {
-
-			throw new PrincipalException();
-		}
-	}
-
-	public static boolean contains(
+	public boolean contains(
 		PermissionChecker permissionChecker, ExpandoColumn column,
-		String actionId) {
+		String actionId);
 
-		return permissionChecker.hasPermission(
-			0, ExpandoColumn.class.getName(), column.getColumnId(), actionId);
-	}
-
-	public static boolean contains(
+	public boolean contains(
 			PermissionChecker permissionChecker, long columnId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException, SystemException;
 
-		ExpandoColumn column = ExpandoColumnLocalServiceUtil.getColumn(
-			columnId);
-
-		return contains(permissionChecker, column, actionId);
-	}
-
-	public static boolean contains(
+	public boolean contains(
 			PermissionChecker permissionChecker, long companyId,
 			String className, String tableName, String columnName,
 			String actionId)
-		throws SystemException {
-
-		ExpandoColumn column = ExpandoColumnLocalServiceUtil.getColumn(
-			companyId, className, tableName, columnName);
-
-		return contains(permissionChecker, column, actionId);
-	}
-
+		throws SystemException;
 }

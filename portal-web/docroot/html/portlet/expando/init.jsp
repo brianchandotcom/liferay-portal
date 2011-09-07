@@ -29,7 +29,7 @@
 <%@ page import="com.liferay.portlet.expando.model.ExpandoValue" %>
 <%@ page import="com.liferay.portlet.expando.model.impl.ExpandoValueImpl" %>
 <%@ page import="com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermission" %>
+<%@ page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" %>
 <%@ page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %>
 <%@ page import="com.liferay.portlet.expando.util.comparator.CustomAttributesDisplayComparator" %>
 

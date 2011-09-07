@@ -21,7 +21,7 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.service.base.ExpandoColumnServiceBaseImpl;
-import com.liferay.portlet.expando.service.permission.ExpandoColumnPermission;
+import com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -53,7 +53,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 	public void deleteColumn(long columnId)
 		throws PortalException, SystemException {
 
-		ExpandoColumnPermission.check(
+		ExpandoColumnPermissionUtil.check(
 			getPermissionChecker(), columnId, ActionKeys.DELETE);
 
 		expandoColumnLocalService.deleteColumn(columnId);
@@ -62,7 +62,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 	public ExpandoColumn updateColumn(long columnId, String name, int type)
 		throws PortalException, SystemException {
 
-		ExpandoColumnPermission.check(
+		ExpandoColumnPermissionUtil.check(
 			getPermissionChecker(), columnId, ActionKeys.UPDATE);
 
 		return expandoColumnLocalService.updateColumn(columnId, name, type);
@@ -72,7 +72,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 			long columnId, String name, int type, Object defaultData)
 		throws PortalException, SystemException {
 
-		ExpandoColumnPermission.check(
+		ExpandoColumnPermissionUtil.check(
 			getPermissionChecker(), columnId, ActionKeys.UPDATE);
 
 		return expandoColumnLocalService.updateColumn(
@@ -82,7 +82,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 	public ExpandoColumn updateTypeSettings(long columnId, String typeSettings)
 		throws PortalException, SystemException {
 
-		ExpandoColumnPermission.check(
+		ExpandoColumnPermissionUtil.check(
 			getPermissionChecker(), columnId, ActionKeys.UPDATE);
 
 		return expandoColumnLocalService.updateTypeSettings(

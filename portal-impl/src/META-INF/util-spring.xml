@@ -583,6 +583,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMXSDImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil">
+		<property name="expandoColumnPermission">
+			<bean class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil">
 		<property name="expandoBridgeFactory">
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryImpl" />

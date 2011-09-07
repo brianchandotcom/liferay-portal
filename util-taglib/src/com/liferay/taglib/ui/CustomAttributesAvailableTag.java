@@ -26,7 +26,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
-import com.liferay.portlet.expando.service.permission.ExpandoColumnPermission;
+import com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
@@ -102,7 +102,7 @@ public class CustomAttributesAvailableTag extends TagSupport {
 								PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION));
 
 				if (_editable && propertyVisibleWithUpdatePermission) {
-					if (ExpandoColumnPermission.contains(
+					if (ExpandoColumnPermissionUtil.contains(
 							permissionChecker, companyId, _className,
 							ExpandoTableConstants.DEFAULT_TABLE_NAME,
 							attributeName, ActionKeys.UPDATE)) {
@@ -115,7 +115,7 @@ public class CustomAttributesAvailableTag extends TagSupport {
 				}
 
 				if (!propertyHidden &&
-					ExpandoColumnPermission.contains(
+					ExpandoColumnPermissionUtil.contains(
 						permissionChecker, companyId, _className,
 						ExpandoTableConstants.DEFAULT_TABLE_NAME,
 						attributeName, ActionKeys.VIEW)) {

@@ -28,7 +28,7 @@ String modelResource = (String)row.getParameter("modelResource");
 %>
 
 <liferay-ui:icon-menu>
-	<c:if test="<%= ExpandoColumnPermission.contains(permissionChecker, expandoColumn, ActionKeys.UPDATE) %>">
+	<c:if test="<%= ExpandoColumnPermissionUtil.contains(permissionChecker, expandoColumn, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/expando/edit_expando" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -42,7 +42,7 @@ String modelResource = (String)row.getParameter("modelResource");
 		/>
 	</c:if>
 
-	<c:if test="<%= ExpandoColumnPermission.contains(permissionChecker, expandoColumn, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= ExpandoColumnPermissionUtil.contains(permissionChecker, expandoColumn, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= ExpandoColumn.class.getName() %>"
 			modelResourceDescription="<%= HtmlUtil.escape(expandoColumn.getName()) %>"
@@ -56,7 +56,7 @@ String modelResource = (String)row.getParameter("modelResource");
 		/>
 	</c:if>
 
-	<c:if test="<%= ExpandoColumnPermission.contains(permissionChecker, expandoColumn, ActionKeys.DELETE) %>">
+	<c:if test="<%= ExpandoColumnPermissionUtil.contains(permissionChecker, expandoColumn, ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/expando/edit_expando" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

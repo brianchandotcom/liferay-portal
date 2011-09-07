@@ -20,7 +20,7 @@
 <%@ page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %>
 <%@ page import="com.liferay.portlet.expando.model.ExpandoTableConstants" %>
 <%@ page import="com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermission" %>
+<%@ page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" %>
 <%@ page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %>
 
 <%
@@ -52,7 +52,9 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 	String propertyDisplayType = GetterUtil.getString(properties.getProperty(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE), ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX);
 
 	if (editable && propertyVisibleWithUpdatePermission) {
-		propertyHidden = !ExpandoColumnPermission.contains(permissionChecker, company.getCompanyId(), className, ExpandoTableConstants.DEFAULT_TABLE_NAME, name, ActionKeys.UPDATE);
+		propertyHidden = !ExpandoColumnPermissionUtil.contains(
+			permissionChecker, company.getCompanyId(), className,
+			ExpandoTableConstants.DEFAULT_TABLE_NAME, name, ActionKeys.UPDATE);
 	}
 
 	String localizedName = LanguageUtil.get(pageContext, name);
@@ -64,14 +66,14 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 	Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 	%>
 
-	<c:if test="<%= !propertyHidden && ExpandoColumnPermission.contains(permissionChecker, company.getCompanyId(), className, ExpandoTableConstants.DEFAULT_TABLE_NAME, name, ActionKeys.VIEW) %>">
+	<c:if test="<%= !propertyHidden && ExpandoColumnPermissionUtil.contains(permissionChecker, company.getCompanyId(), className, ExpandoTableConstants.DEFAULT_TABLE_NAME, name, ActionKeys.VIEW) %>">
 
 		<%
 		String escapedName = HtmlUtil.escape(name);
 		%>
 
 		<c:choose>
-			<c:when test="<%= editable && ExpandoColumnPermission.contains(permissionChecker, company.getCompanyId(), className, ExpandoTableConstants.DEFAULT_TABLE_NAME, name, ActionKeys.UPDATE) %>">
+			<c:when test="<%= editable && ExpandoColumnPermissionUtil.contains(permissionChecker, company.getCompanyId(), className, ExpandoTableConstants.DEFAULT_TABLE_NAME, name, ActionKeys.UPDATE) %>">
 				<aui:field-wrapper label="<%= label ? localizedName : StringPool.BLANK %>">
 					<input type="hidden" name="<portlet:namespace />ExpandoAttributeName--<%= escapedName %>--" value="<%= escapedName %>" />
 

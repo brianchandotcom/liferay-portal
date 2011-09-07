@@ -205,7 +205,8 @@ public class StripFilter extends BasePortalFilter {
 	}
 
 	protected void processCSS(
-			HttpServletResponse response, CharBuffer charBuffer, Writer writer)
+			HttpServletRequest request, HttpServletResponse response,
+			CharBuffer charBuffer, Writer writer)
 		throws IOException {
 
 		outputOpenTag(charBuffer, writer, _MARKER_STYLE_OPEN);
@@ -238,7 +239,7 @@ public class StripFilter extends BasePortalFilter {
 
 			if (minifiedContent == null) {
 				try {
-					content = DynamicCSSUtil.parseSass(key, content);
+					content = DynamicCSSUtil.parseSass(request, key, content);
 				}
 				catch (ScriptingException se) {
 					_log.error("Unable to parse SASS on CSS " + key, se);
@@ -321,7 +322,7 @@ public class StripFilter extends BasePortalFilter {
 					new UnsyncByteArrayOutputStream();
 
 				strip(
-					response, oldCharBuffer,
+					request, response, oldCharBuffer,
 					new OutputStreamWriter(unsyncByteArrayOutputStream));
 
 				response.setContentLength(unsyncByteArrayOutputStream.size());
@@ -329,7 +330,7 @@ public class StripFilter extends BasePortalFilter {
 				unsyncByteArrayOutputStream.writeTo(response.getOutputStream());
 			}
 			else {
-				strip(response, oldCharBuffer, response.getWriter());
+				strip(request, response, oldCharBuffer, response.getWriter());
 			}
 		}
 		else {
@@ -508,7 +509,8 @@ public class StripFilter extends BasePortalFilter {
 	}
 
 	protected void strip(
-			HttpServletResponse response, CharBuffer charBuffer, Writer writer)
+			HttpServletRequest request, HttpServletResponse response,
+			CharBuffer charBuffer, Writer writer)
 		throws IOException {
 
 		skipWhiteSpace(charBuffer, writer, false);
@@ -545,7 +547,7 @@ public class StripFilter extends BasePortalFilter {
 					continue;
 				}
 				else if (hasMarker(charBuffer, _MARKER_STYLE_OPEN)) {
-					processCSS(response, charBuffer, writer);
+					processCSS(request, response, charBuffer, writer);
 
 					continue;
 				}

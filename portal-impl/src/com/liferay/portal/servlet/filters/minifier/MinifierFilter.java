@@ -416,7 +416,8 @@ public class MinifierFilter extends BasePortalFilter {
 		String cssRealPath, String content) {
 
 		try {
-			content = DynamicCSSUtil.parseSass(cssRealPath, content);
+			content = DynamicCSSUtil.parseSass(
+				request, cssRealPath, content);
 		}
 		catch (Exception e) {
 			_log.error("Unable to parse SASS on CSS " + cssRealPath, e);

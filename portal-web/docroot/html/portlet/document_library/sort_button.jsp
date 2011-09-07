@@ -96,7 +96,7 @@ if (orderByType.equals("asc")) {
 						'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
 						'<portlet:namespace />viewSortButton': <%= Boolean.TRUE.toString() %>,
 						'<portlet:namespace />orderByCol': orderByCol,
-						'<portlet:namespace />reverseOrderByType': reverseOrderByType
+						'<portlet:namespace />orderByType': reverseOrderByType
 					}
 				}
 			);

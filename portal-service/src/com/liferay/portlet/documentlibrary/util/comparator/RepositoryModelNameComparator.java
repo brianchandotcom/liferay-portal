@@ -27,11 +27,11 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
  */
 public class RepositoryModelNameComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "name ASC";
+	public static String ORDER_BY_ASC = "title ASC";
 
-	public static String ORDER_BY_DESC = "name DESC";
+	public static String ORDER_BY_DESC = "title DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"name"};
+	public static String[] ORDER_BY_FIELDS = {"title"};
 
 	public RepositoryModelNameComparator() {
 		this(false);

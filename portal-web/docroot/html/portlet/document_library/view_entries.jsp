@@ -61,7 +61,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, nul
 
 List<String> headerNames = new ArrayList<String>();
 
-headerNames.add("name");
+headerNames.add("title");
 headerNames.add("description");
 headerNames.add("size");
 headerNames.add("create-date");
@@ -75,7 +75,7 @@ searchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayP
 
 Map<String, String> orderableHeaders = new HashMap<String, String>();
 
-orderableHeaders.put("name", "name");
+orderableHeaders.put("title", "title");
 orderableHeaders.put("size", "size");
 orderableHeaders.put("create-date", "creationDate");
 orderableHeaders.put("modified-date", "modifiedDate");

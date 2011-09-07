@@ -61,6 +61,10 @@ public class PortalPreferencesImpl
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
 		PortalPreferencesImpl portalPreferences = (PortalPreferencesImpl)obj;
 
 		if (this == portalPreferences) {

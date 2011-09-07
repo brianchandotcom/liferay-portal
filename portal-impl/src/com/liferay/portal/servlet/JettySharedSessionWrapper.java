@@ -16,7 +16,8 @@ package com.liferay.portal.servlet;
 
 import javax.servlet.http.HttpSession;
 
-import org.mortbay.jetty.servlet.AbstractSessionManager;
+import org.eclipse.jetty.server.session.AbstractSession;
+import org.eclipse.jetty.server.session.AbstractSessionManager;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,8 +31,8 @@ public class JettySharedSessionWrapper
 		super(portalSession, portletSession);
 	}
 
-	public AbstractSessionManager.Session getSession() {
-		return (AbstractSessionManager.Session)getSessionDelegate();
+	public AbstractSession getSession() {
+		return (AbstractSession)getSessionDelegate();
 	}
 
 }

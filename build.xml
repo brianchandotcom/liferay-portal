@@ -405,6 +405,34 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 
 				<if>
 					<not>
+						<available file="${app.server.bin.dir}/start.ini" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jetty/bin/start.ini"
+							tofile="${app.server.bin.dir}/start.ini"
+						/>
+						<replace file="${app.server.jetty.bin.dir}/start.ini">
+							<replacetoken>JETTY_EXTRA_CLASSPATH</replacetoken>
+							<replacevalue expandProperties="true">../lib/jetty-server-${app.server.jetty.version}.v${app.server.jetty.release.date}.jar,../lib/jetty-util.${app.server.jetty.version}-v${app.server.jetty.release.date}.jar,../lib/jetty-webapp-${app.server.jetty.version}.v${app.server.jetty.release.date}.jar</replacevalue>
+						</replace>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<available file="${app.server.dir}/contexts/root.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/jetty/contexts/root.xml"
+							tofile="${app.server.dir}/contexts/root.xml"
+						/>
+					</then>
+				</if>
+
+				<if>
+					<not>
 						<available file="${app.server.dir}/etc/start.config" />
 					</not>
 					<then>
@@ -414,7 +442,7 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 							</patternset>
 							<mapper
 								type="glob"
-								from="org/mortbay/start/*"
+								from="org/eclipse/jetty/start/*"
 								to="etc/*"
 							/>
 						</unjar>
@@ -429,7 +457,7 @@ $(jetty.home)/lib/liferay/*</echo>
 				<copy todir="${app.server.lib.global.dir}">
 					<fileset
 						dir="lib/development"
-						includes="activation.jar,jta.jar,persistence.jar"
+						includes="activation.jar,mail.jar,jta.jar,persistence.jar"
 					/>
 				</copy>
 			</then>

@@ -2,9 +2,9 @@
 
 if "" == "%JAVA_HOME%" goto errorJavaHome
 
-set "JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -DSTART=../etc/start.config -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+set "JAVA_OPTS=-Xmx1024m -XX:MaxPermSize=256m"
 
-"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar ../etc/jetty.xml
+"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar
 
 goto end
 

@@ -915,7 +915,12 @@ release was successful.</echo>
 			src="${app.server.parent.dir}/${app.server.jetty.zip.name}"
 		>
 			<patternset
-				excludes="jetty-${app.server.jetty.version}/bin/**,jetty-${app.server.jetty.version}/contexts/**,jetty-${app.server.jetty.version}/contrib/**,jetty-${app.server.jetty.version}/distribution/**,jetty-${app.server.jetty.version}/examples/**,jetty-${app.server.jetty.version}/extras/**,jetty-${app.server.jetty.version}/javadoc/**,jetty-${app.server.jetty.version}/jxr/**,jetty-${app.server.jetty.version}/modules/**,jetty-${app.server.jetty.version}/patches/**,jetty-${app.server.jetty.version}/patches/**,jetty-${app.server.jetty.version}/project-website/**,jetty-${app.server.jetty.version}/webapps/**"
+				excludes="jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.release.date}/bin/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.release.date}/contexts/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.release.date}/contexts-available/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.release.date}/contrib/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.release.date}/overlays/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.release.date}/webapps/**"
+			/>
+			<mapper
+				type="glob"
+				from="jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.release.date}/*"
+				to="jetty-${app.server.jetty.version}/*"
 			/>
 		</unzip>
 

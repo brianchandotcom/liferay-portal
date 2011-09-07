@@ -19,6 +19,9 @@ import com.liferay.portalweb.socialofficehome.notifications.requests.requestccad
 import com.liferay.portalweb.socialofficehome.notifications.requests.requestccaddasfriend.RequestCCAddAsFriendTests;
 import com.liferay.portalweb.socialofficehome.notifications.requests.requestprofileaddascoworker.RequestProfileAddAsCoworkerTests;
 import com.liferay.portalweb.socialofficehome.notifications.requests.requestprofileaddasfriend.RequestProfileAddAsFriendTests;
+import com.liferay.portalweb.socialofficehome.notifications.requests.sofrconfirmnotificationsjoinprivatesite.SOFr_ConfirmNotificationsJoinPrivateSiteTests;
+import com.liferay.portalweb.socialofficehome.notifications.requests.sofrconfirmnotificationsjoinrestrictedsite.SOFr_ConfirmNotificationsJoinRestrictedSiteTests;
+import com.liferay.portalweb.socialofficehome.notifications.requests.sofrconfirmnotificationsjoinsite.SOFr_ConfirmNotificationsJoinSiteTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -35,6 +38,11 @@ public class RequestsTests extends BaseTests {
 		testSuite.addTest(RequestCCAddAsFriendTests.suite());
 		testSuite.addTest(RequestProfileAddAsCoworkerTests.suite());
 		testSuite.addTest(RequestProfileAddAsFriendTests.suite());
+		testSuite.addTest(
+			SOFr_ConfirmNotificationsJoinPrivateSiteTests.suite());
+		testSuite.addTest(
+			SOFr_ConfirmNotificationsJoinRestrictedSiteTests.suite());
+		testSuite.addTest(SOFr_ConfirmNotificationsJoinSiteTests.suite());
 
 		return testSuite;
 	}

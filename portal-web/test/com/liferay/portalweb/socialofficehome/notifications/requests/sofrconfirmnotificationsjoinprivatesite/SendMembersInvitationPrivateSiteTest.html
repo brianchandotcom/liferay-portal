@@ -1,0 +1,123 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SendMembersInvitationPrivateSiteTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SendMembersInvitationPrivateSiteTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[contains(@class, 'social-office-enabled')]</td>
+	<td>Private Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>Private Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>Private Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h2/a/span</td>
+	<td>Private Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[7]/a/span</td>
+	<td>Members</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//nav/ul/li[7]/a/span</td>
+	<td>Members</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/section/header/h1/span</td>
+	<td>Invite Members</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section/div/div/div/a</td>
+	<td>Invite members to this site.</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//section/div/div/div/a</td>
+	<td>Invite members to this site.</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='search']</td>
+	<td>Find Members</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='user'][1]/span</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='user'][1]/span</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='user-invited']/div/div</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='user-invited']/div/div</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@value='Send Invitations']</td>
+	<td>Send Invitations</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Send Invitations']</td>
+	<td>Send Invitations</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+</tbody></table>
+</body>
+</html>

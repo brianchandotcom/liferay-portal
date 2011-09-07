@@ -74,6 +74,10 @@ public class ByteArrayFileInputStream extends InputStream {
 		}
 	}
 
+	public File getFile() {
+		return file;
+	}
+
 	@Override
 	public void mark(int readLimit) {
 		markIndex = index;

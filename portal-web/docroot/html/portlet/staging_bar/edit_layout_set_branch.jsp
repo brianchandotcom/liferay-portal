@@ -53,33 +53,21 @@ if (layoutSetBranchId > 0) {
 				List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 				%>
 
-				<c:choose>
-					<c:when test="<%= layoutSetBranches.size() > 1 %>">
-						<aui:select label="copy-pages-from-site-pages-variation" name="copyLayoutSetBranchId">
-							<aui:option label="all-site-pages-variations" selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
-							<aui:option label="none-empty-site-pages-variation" value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
+				<aui:select label="copy-pages-from-site-pages-variation" name="copyLayoutSetBranchId">
+					<aui:option label="all-site-pages-variations" selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
+					<aui:option label="none-empty-site-pages-variation" value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
 
-							<%
-							for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {
-							%>
+					<%
+					for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {
+					%>
 
-								<aui:option label="<%= curLayoutSetBranch.getName() %>" value="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" />
+						<aui:option label="<%= curLayoutSetBranch.getName() %>" value="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" />
 
-							<%
-							}
-							%>
+					<%
+					}
+					%>
 
-						</aui:select>
-					</c:when>
-					<c:otherwise>
-
-						<%
-						LayoutSetBranch masterLayoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(stagingGroup.getGroupId(), privateLayout);
-						%>
-
-						<aui:input name="copyLayoutSetBranchId" type="hidden" value="<%= masterLayoutSetBranch.getLayoutSetBranchId() %>" />
-					</c:otherwise>
-				</c:choose>
+				</aui:select>
 			</c:if>
 		</aui:fieldset>
 

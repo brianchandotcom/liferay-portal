@@ -10,7 +10,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/user/joebloggs/home/</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,24 +29,14 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>View All Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>View All Users</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -91,7 +81,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -121,7 +111,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -151,7 +141,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -181,7 +171,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -211,7 +201,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -229,24 +219,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>clickAtAndWait</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -269,8 +254,13 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td>user1Deleted</td>
 </tr>
 <tr>
@@ -280,12 +270,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -300,7 +290,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td>user2Deleted</td>
 </tr>
 <tr>
@@ -310,12 +300,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -330,7 +320,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td>user3Deleted</td>
 </tr>
 <tr>
@@ -340,12 +330,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -360,7 +350,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td>user4Deleted</td>
 </tr>
 <tr>
@@ -370,12 +360,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -405,7 +395,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -419,24 +409,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>clickAtAndWait</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
 </tr>
 <tr>
 	<td>store</td>

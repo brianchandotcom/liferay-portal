@@ -31,24 +31,6 @@ public class SOFr_ViewConfirmNotificationsAddAsFriendCCTest extends BaseTestCase
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
 				if (selenium.isVisible("//div/div/div/div[1]/ul/li[2]/a")) {
 					break;
 				}
@@ -65,7 +47,7 @@ public class SOFr_ViewConfirmNotificationsAddAsFriendCCTest extends BaseTestCase
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/a/img"));
-		assertEquals(RuntimeVariables.replace("View 1 friends."),
+		assertEquals(RuntimeVariables.replace("Manage 1 friends."),
 			selenium.getText("//div[1]/div/div/div/div[2]/a"));
 		selenium.mouseOver("//div[1]/a/img");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),

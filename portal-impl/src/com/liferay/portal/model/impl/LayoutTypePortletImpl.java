@@ -57,6 +57,7 @@ import com.liferay.portal.service.PluginSettingLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -1008,9 +1009,8 @@ public class LayoutTypePortletImpl
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			if (!PortletPermissionUtil.contains(
-					permissionChecker, getLayout(), portlet,
-					ActionKeys.ADD_TO_PAGE) &&
+			if (!LayoutPermissionUtil.contains(
+					permissionChecker, getLayout(), ActionKeys.UPDATE) &&
 				!isCustomizable()) {
 
 				return;

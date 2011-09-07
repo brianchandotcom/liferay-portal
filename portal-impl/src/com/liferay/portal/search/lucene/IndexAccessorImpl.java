@@ -489,8 +489,9 @@ public class IndexAccessorImpl implements IndexAccessor {
 		};
 
 		scheduledExecutorService.scheduleWithFixedDelay(
-			runnable, 0, PropsValues.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL,
-			TimeUnit.MINUTES);
+			runnable, 0,
+			PropsValues.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL * 60L,
+			TimeUnit.SECONDS);
 	}
 
 	private void _initDialect() {

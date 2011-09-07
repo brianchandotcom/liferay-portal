@@ -523,15 +523,6 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 
 					<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
-
-					<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
-						<liferay-ui:custom-attribute-list
-							className="<%= DLFileEntryConstants.getClassName() %>"
-							classPK="<%= fileVersionId %>"
-							editable="<%= false %>"
-							label="<%= true %>"
-						/>
-					</liferay-ui:custom-attributes-available>
 				</div>
 
 				<%
@@ -572,7 +563,20 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							catch (Exception e) {
 							}
 						}
+						%>
 
+						<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
+							<liferay-ui:panel collapsible="<%= true %>" cssClass="custom-fields" id="documentLibraryCustomAttributesPanel" persistState="<%= true %>" title="custom-fields">
+								<liferay-ui:custom-attribute-list
+									className="<%= DLFileEntryConstants.getClassName() %>"
+									classPK="<%= fileVersionId %>"
+									editable="<%= false %>"
+									label="<%= true %>"
+								/>
+							</liferay-ui:panel>
+						</liferay-ui:custom-attributes-available>
+
+						<%
 						try {
 							List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getClassStructures(PortalUtil.getClassNameId(DLFileEntry.class));
 

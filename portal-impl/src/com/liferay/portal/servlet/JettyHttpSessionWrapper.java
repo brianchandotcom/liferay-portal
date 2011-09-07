@@ -18,7 +18,8 @@ import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
 
 import javax.servlet.http.HttpSession;
 
-import org.mortbay.jetty.servlet.AbstractSessionManager;
+import org.eclipse.jetty.server.session.AbstractSession;
+import org.eclipse.jetty.server.session.AbstractSessionManager;
 
 /**
  * @author Brian Wing Shun Chan
@@ -32,7 +33,7 @@ public class JettyHttpSessionWrapper
 		_session = session;
 	}
 
-	public AbstractSessionManager.Session getSession() {
+	public AbstractSession getSession() {
 		HttpSessionWrapper sessionWrapper = (HttpSessionWrapper)_session;
 
 		JettySharedSessionWrapper jettySharedSessionWrapper =

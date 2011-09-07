@@ -352,23 +352,71 @@
 	</library>
 	<library>
 		<file-name>development/jetty.jar</file-name>
-		<version>6.1.26</version>
+		<version>7.5.0</version>
 		<project-name>Jetty</project-name>
-		<project-url>http://www.mortbay.org/jetty</project-url>
+		<project-url>http://www.eclipse.org/jetty/</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
+			</license>
+			<license>
+				<license-name>Eclipse Public License 1.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/jetty-io.jar</file-name>
+		<version>7.5.0</version>
+		<project-name>Jetty</project-name>
+		<project-url>http://www.eclipse.org/jetty/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+			<license>
+				<license-name>Eclipse Public License 1.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/jetty-servlet.jar</file-name>
+		<version>7.5.0</version>
+		<project-name>Jetty</project-name>
+		<project-url>http://www.eclipse.org/jetty/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+			<license>
+				<license-name>Eclipse Public License 1.0</license-name>
 			</license>
 		</licenses>
 	</library>
 	<library>
 		<file-name>development/jetty-util.jar</file-name>
-		<version>6.1.26</version>
+		<version>7.5.0</version>
 		<project-name>Jetty</project-name>
-		<project-url>http://www.mortbay.org/jetty</project-url>
+		<project-url>http://www.eclipse.org/jetty/</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
+			</license>
+			<license>
+				<license-name>Eclipse Public License 1.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/jetty-xml.jar</file-name>
+		<version>7.5.0</version>
+		<project-name>Jetty</project-name>
+		<project-url>http://www.eclipse.org/jetty/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+			<license>
+				<license-name>Eclipse Public License 1.0</license-name>
 			</license>
 		</licenses>
 	</library>

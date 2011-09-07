@@ -3727,6 +3727,8 @@ public class PortalImpl implements Portal {
 
 		if (path.equals("/portal/session_click") ||
 			strutsAction.equals("/document_library/edit_file_entry") ||
+			strutsAction.equals("/document_library_display/edit_file_entry") ||
+			strutsAction.equals("/image_gallery_display/edit_file_entry") ||
 			strutsAction.equals("/image_gallery_display/edit_image") ||
 			strutsAction.equals("/wiki/edit_page_attachment") ||
 			strutsAction.equals("/wiki_admin/edit_page_attachment") ||

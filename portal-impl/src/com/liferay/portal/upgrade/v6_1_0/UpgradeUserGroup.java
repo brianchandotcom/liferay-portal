@@ -77,9 +77,9 @@ public class UpgradeUserGroup extends UpgradeProcess {
 			ps.setLong(4, layoutSetPrototypeClassNameId);
 			ps.setLong(5, layoutSetPrototypeId);
 			ps.setString(6, groupId + StringPool.MINUS + groupName);
-			ps.setString(7, "/template-" + layoutSetPrototypeId);
+			ps.setString(7, StringPool.BLANK);
 			ps.setString(8, StringPool.BLANK);
-			ps.setString(9, StringPool.BLANK);
+			ps.setString(9, "/template-" + layoutSetPrototypeId);
 			ps.setBoolean(10, false);
 			ps.setBoolean(11, true);
 

@@ -58,53 +58,9 @@ public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
-		selenium.windowFocus();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Use the classic uploader.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.click("link=Use the classic uploader.");
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_36_file1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_36_file1']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledatalatest\\wiki\\usecase\\dependencies\\Wiki_Attachment.jpg"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_36_file1']",
-			RuntimeVariables.replace(
-				"G:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledatalatest\\wiki\\usecase\\dependencies\\Wiki_Attachment.jpg"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

@@ -441,6 +441,10 @@ public class BaseDeployer implements Deployer {
 		else if (appServerType.equals(ServerDetector.WEBSPHERE_ID)) {
 			copyDependencyXml("ibm-web-ext.xmi", srcFile + "/WEB-INF");
 		}
+		else if (appServerType.equals(ServerDetector.JBOSS_ID)) {
+			copyDependencyXml("jboss-deployment-structure.xml",
+				srcFile + "/WEB-INF");
+		}
 
 		copyDependencyXml("web.xml", srcFile + "/WEB-INF");
 	}
@@ -813,6 +817,13 @@ public class BaseDeployer implements Deployer {
 					}
 
 					PluginPackageUtil.endPluginPackageInstallation(context);
+				}
+				else {
+					if (appServerType.equals(ServerDetector.JBOSS_ID)) {
+						File dodeployFile = new File(deployDir + ".dodeploy");
+
+						FileUtil.write(dodeployFile, StringPool.BLANK);
+					}
 				}
 			}
 		}

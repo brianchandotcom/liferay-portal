@@ -21,13 +21,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.SocialEquityIncrement;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -48,6 +47,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.sql.DataSource;
 
@@ -132,7 +132,6 @@ public class SocialEquityLogLocalServiceImpl
 		addEquityLogs(userId, assetEntry.getEntryId(), actionId, extraData);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void addSocialEquityAssetEntry(AssetEntry assetEntry)
 		throws SystemException {
 
@@ -158,7 +157,6 @@ public class SocialEquityLogLocalServiceImpl
 		runSQL(sql);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void addSocialEquityUser(long groupId, User user)
 		throws SystemException {
 
@@ -336,7 +334,7 @@ public class SocialEquityLogLocalServiceImpl
 			long assetEntryId, SocialEquityIncrementPayload equityPayload)
 		throws SystemException {
 
-		AssetEntry assetEntry = equityPayload.getAssetEntry();
+		final AssetEntry assetEntry = equityPayload.getAssetEntry();
 
 		SocialEquityValue equityValue = equityPayload.getEquityValue();
 
@@ -346,12 +344,17 @@ public class SocialEquityLogLocalServiceImpl
 			assetEntryId);
 
 		if (count == 0) {
-			try {
-				socialEquityLogLocalService.addSocialEquityAssetEntry(
-					assetEntry);
-			}
-			catch (SystemException se) {
-			}
+			TransactionCommitCallbackUtil.registerCallback(
+				new Callable<Void>() {
+
+					public Void call() throws Exception {
+						socialEquityLogLocalService.addSocialEquityAssetEntry(
+							assetEntry);
+
+						return null;
+					}
+
+				});
 		}
 
 		String sql = CustomSQLUtil.get(_UPDATE_SOCIAL_EQUITY_ASSET_ENTRY_IQ);
@@ -374,20 +377,26 @@ public class SocialEquityLogLocalServiceImpl
 
 	@BufferedIncrement(incrementClass = SocialEquityIncrement.class)
 	public void incrementSocialEquityUser_CQ(
-			long groupId, long userId,
+			final long groupId, long userId,
 			SocialEquityIncrementPayload equityPayload)
 		throws SystemException {
 
-		User user = equityPayload.getUser();
+		final User user = equityPayload.getUser();
 
 		int count = socialEquityUserPersistence.countByG_U(groupId, userId);
 
 		if (count == 0) {
-			try {
-				socialEquityLogLocalService.addSocialEquityUser(groupId, user);
-			}
-			catch (SystemException se) {
-			}
+			TransactionCommitCallbackUtil.registerCallback(
+				new Callable<Void>() {
+
+					public Void call() throws Exception {
+						socialEquityLogLocalService.addSocialEquityUser(
+						groupId, user);
+
+						return null;
+					}
+
+				});
 		}
 
 		SocialEquityValue equityValue = equityPayload.getEquityValue();
@@ -416,20 +425,26 @@ public class SocialEquityLogLocalServiceImpl
 
 	@BufferedIncrement(incrementClass = SocialEquityIncrement.class)
 	public void incrementSocialEquityUser_PQ(
-			long groupId, long userId,
+			final long groupId, long userId,
 			SocialEquityIncrementPayload equityPayload)
 		throws SystemException {
 
-		User user = equityPayload.getUser();
+		final User user = equityPayload.getUser();
 
 		int count = socialEquityUserPersistence.countByG_U(groupId, userId);
 
 		if (count == 0) {
-			try {
-				socialEquityLogLocalService.addSocialEquityUser(groupId, user);
-			}
-			catch (SystemException se) {
-			}
+			TransactionCommitCallbackUtil.registerCallback(
+				new Callable<Void>() {
+
+					public Void call() throws Exception {
+						socialEquityLogLocalService.addSocialEquityUser(
+							groupId, user);
+
+						return null;
+					}
+
+				});
 		}
 
 		SocialEquityValue equityValue = equityPayload.getEquityValue();

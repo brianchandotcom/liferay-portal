@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * The document library local service. All portlets should interact with the
@@ -190,11 +192,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		FileEntry fileEntry = localRepository.addFileEntry(
+		final FileEntry fileEntry = localRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 
-		DLProcessorRegistryUtil.trigger(fileEntry);
+		TransactionCommitCallbackUtil.registerCallback(new Callable<Void>() {
+
+			public Void call() throws Exception {
+				DLProcessorRegistryUtil.trigger(fileEntry);
+
+				return null;
+			}
+
+		});
 
 		return fileEntry;
 	}
@@ -256,11 +266,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		FileEntry fileEntry = localRepository.addFileEntry(
+		final FileEntry fileEntry = localRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
 
-		DLProcessorRegistryUtil.trigger(fileEntry);
+		TransactionCommitCallbackUtil.registerCallback(new Callable<Void>() {
+
+			public Void call() throws Exception {
+				DLProcessorRegistryUtil.trigger(fileEntry);
+
+				return null;
+			}
+
+		});
 
 		return fileEntry;
 	}
@@ -1394,11 +1412,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
-		FileEntry fileEntry = localRepository.updateFileEntry(
+		final FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
-		DLProcessorRegistryUtil.trigger(fileEntry);
+		TransactionCommitCallbackUtil.registerCallback(new Callable<Void>() {
+
+			public Void call() throws Exception {
+				DLProcessorRegistryUtil.trigger(fileEntry);
+
+				return null;
+			}
+
+		});
 
 		return fileEntry;
 	}
@@ -1458,11 +1484,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
-		FileEntry fileEntry = localRepository.updateFileEntry(
+		final FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		DLProcessorRegistryUtil.trigger(fileEntry);
+		TransactionCommitCallbackUtil.registerCallback(new Callable<Void>() {
+
+			public Void call() throws Exception {
+				DLProcessorRegistryUtil.trigger(fileEntry);
+
+				return null;
+			}
+
+		});
 
 		return fileEntry;
 	}

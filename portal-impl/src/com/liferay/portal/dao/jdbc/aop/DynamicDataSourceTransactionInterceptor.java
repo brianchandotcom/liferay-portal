@@ -23,7 +23,6 @@ import java.lang.reflect.Method;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
-import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
 /**
  * @author Michael Young
@@ -31,7 +30,6 @@ import org.springframework.transaction.interceptor.TransactionAttributeSource;
 public class DynamicDataSourceTransactionInterceptor
 	extends TransactionInterceptor {
 
-	@Override
 	public void afterPropertiesSet() {
 		if (_dynamicDataSourceTargetSource == null) {
 			_dynamicDataSourceTargetSource =
@@ -55,9 +53,6 @@ public class DynamicDataSourceTransactionInterceptor
 		}
 
 		Method targetMethod = methodInvocation.getMethod();
-
-		TransactionAttributeSource transactionAttributeSource =
-			getTransactionAttributeSource();
 
 		TransactionAttribute transactionAttribute =
 			transactionAttributeSource.getTransactionAttribute(

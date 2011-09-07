@@ -330,10 +330,6 @@ create table LayoutRevision (
 
 drop index IX_5ABC2905 on LayoutSet;
 
-alter table LayoutSet add layoutSetPrototypeLinkEnabled BOOLEAN null;
-alter table LayoutSet add layoutSetPrototypeUuid VARCHAR(75) null;
-alter table LayoutSet drop column layoutSetPrototypeId;
-
 create table LayoutSetBranch (
 	layoutSetBranchId LONG not null primary key,
 	groupId LONG,

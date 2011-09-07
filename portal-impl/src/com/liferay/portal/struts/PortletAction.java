@@ -259,6 +259,10 @@ public class PortletAction extends Action {
 		}
 
 		if (Validator.isNull(redirect)) {
+			redirect = (String)actionRequest.getAttribute(WebKeys.REDIRECT);
+		}
+
+		if (Validator.isNull(redirect)) {
 			redirect = ParamUtil.getString(actionRequest, "redirect");
 		}
 

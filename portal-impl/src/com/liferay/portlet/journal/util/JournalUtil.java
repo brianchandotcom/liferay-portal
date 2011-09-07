@@ -354,8 +354,10 @@ public class JournalUtil {
 				corruptIndex = true;
 
 				_log.error(
-					"Article " + articleId +
-						" does not exist in the search index");
+					"Article " + articleId + " exists in the search index " +
+						"but not in the database. The search index is " +
+							"corrupt. Re-indexing of articles may be " +
+								"required.");
 			}
 		}
 

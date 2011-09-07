@@ -600,8 +600,10 @@ public class UsersAdminImpl implements UsersAdmin {
 				corruptIndex = true;
 
 				_log.error(
-					"Organization " + organizationId + " does not exist in " +
-						"the search index");
+					"Organization " + organizationId + " exists in the " +
+						"search index but not in the database. The search " +
+							"index is corrupt. Re-indexing of organizations " +
+								"may be required.");
 			}
 		}
 
@@ -866,7 +868,9 @@ public class UsersAdminImpl implements UsersAdmin {
 				corruptIndex = true;
 
 				_log.error(
-					"User " + userId + " does not exist in the search index");
+					"User " + userId + " exists in the search index but not " +
+						"in the database. The search index is corrupt. " +
+							"Re-indexing of users may be required.");
 			}
 		}
 

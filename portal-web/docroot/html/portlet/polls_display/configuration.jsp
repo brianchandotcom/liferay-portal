@@ -24,13 +24,11 @@ questionId = ParamUtil.getLong(request, "questionId", questionId);
 
 List<PollsQuestion> questions = new ArrayList<PollsQuestion>();
 
+questions.addAll(PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId));
+
 if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 	questions.addAll(PollsQuestionLocalServiceUtil.getQuestions(themeDisplay.getCompanyGroupId()));
 }
-
-questions.addAll(PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId));
-
-
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />

@@ -38,16 +38,16 @@ public interface UploadServletRequest extends HttpServletRequest {
 	public InputStream getFileAsStream(String name, boolean deleteOnClose)
 		throws IOException;
 
+	public String getFileName(String name);
+
+	public String[] getFileNames(String name);
+
 	public File[] getFiles(String name);
 
 	public InputStream[] getFilesAsStream(String name) throws IOException;
 
 	public InputStream[] getFilesAsStream(String name, boolean deleteOnClose)
 		throws IOException;
-
-	public String getFileName(String name);
-
-	public String[] getFileNames(String name);
 
 	public String getFullFileName(String name);
 

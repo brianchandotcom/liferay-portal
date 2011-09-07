@@ -181,33 +181,6 @@ public class UploadServletRequestImpl
 		return inputStream;
 	}
 
-	public File[] getFiles(String name) {
-		String[] fileNames = getFileNames(name);
-
-		if (fileNames == null) {
-			return null;
-		}
-
-		LiferayFileItem[] liferayFileItems = _params.get(name);
-
-		if ((liferayFileItems != null) && (liferayFileItems.length > 0)) {
-			File[] files = new File[liferayFileItems.length];
-
-			for (int i = 0; i < liferayFileItems.length; i++) {
-				LiferayFileItem liferayFileItem = liferayFileItems[i];
-
-				if (Validator.isNotNull(liferayFileItem.getFileName())) {
-					files[i] = liferayFileItem.getStoreLocation();
-				}
-			}
-
-			return files;
-		}
-		else {
-			return null;
-		}
-	}
-
 	public String getFileName(String name) {
 		LiferayFileItem[] liferayFileItems = _params.get(name);
 
@@ -232,6 +205,33 @@ public class UploadServletRequestImpl
 			}
 
 			return fileNames;
+		}
+		else {
+			return null;
+		}
+	}
+
+	public File[] getFiles(String name) {
+		String[] fileNames = getFileNames(name);
+
+		if (fileNames == null) {
+			return null;
+		}
+
+		LiferayFileItem[] liferayFileItems = _params.get(name);
+
+		if ((liferayFileItems != null) && (liferayFileItems.length > 0)) {
+			File[] files = new File[liferayFileItems.length];
+
+			for (int i = 0; i < liferayFileItems.length; i++) {
+				LiferayFileItem liferayFileItem = liferayFileItems[i];
+
+				if (Validator.isNotNull(liferayFileItem.getFileName())) {
+					files[i] = liferayFileItem.getStoreLocation();
+				}
+			}
+
+			return files;
 		}
 		else {
 			return null;

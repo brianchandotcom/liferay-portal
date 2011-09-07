@@ -27,6 +27,7 @@ import com.liferay.portal.upgrade.v6_1_0.UpgradeGroup;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeImageGallery;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeJournal;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeLayout;
+import com.liferay.portal.upgrade.v6_1_0.UpgradeLayoutSet;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeLock;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeNavigation;
@@ -78,6 +79,10 @@ public class UpgradeProcess_6_1_0 extends UpgradeProcess {
 		upgrade(UpgradeScopes.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeUserGroup.class);
+
+		// Needs to execute after UpgradeUserGroup
+		upgrade(UpgradeLayoutSet.class);
+
 		upgrade(UpgradeVirtualHost.class);
 		upgrade(UpgradeWorkflow.class);
 		upgrade(UpgradeAsset.class);

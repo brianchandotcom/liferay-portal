@@ -272,7 +272,6 @@
 		<portlet-data-handler-class>com.liferay.portlet.polls.lar.PollsPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>18.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.polls.PollsControlPanelEntry</control-panel-entry-class>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>

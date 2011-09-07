@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portal.security.auth.CompanyThreadLocal" %>
 <%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
@@ -21,7 +22,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 questionId = ParamUtil.getLong(request, "questionId", questionId);
 
-List<PollsQuestion> questions = PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId);
+List<PollsQuestion> questions = new ArrayList<PollsQuestion>();
+
+questions.addAll(PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId));
+
+if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
+	questions.addAll(PollsQuestionLocalServiceUtil.getQuestions(themeDisplay.getCompanyGroupId()));
+}
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />

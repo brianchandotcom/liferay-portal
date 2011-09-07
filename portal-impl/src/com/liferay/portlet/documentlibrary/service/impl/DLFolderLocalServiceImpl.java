@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -51,7 +49,6 @@ import java.util.List;
  */
 public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,
@@ -426,7 +423,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public DLFolder updateFolderAndFileEntryTypes(
 			long folderId, long parentFolderId, String name, String description,
 			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,

@@ -72,9 +72,9 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
 
 			for (long classNameId : classNameIds) {
-				ClassName className = ClassNameServiceUtil.getClassName(classNameId);
+				String className = PortalUtil.getClassName(classNameId);
 
-				typesLeftList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
+				typesLeftList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className)));
 			}
 
 			// Right list

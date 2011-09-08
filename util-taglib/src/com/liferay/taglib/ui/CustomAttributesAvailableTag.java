@@ -69,7 +69,7 @@ public class CustomAttributesAvailableTag extends TagSupport {
 
 			Enumeration<String> enu = expandoBridge.getAttributeNames();
 
-			if (enu.hasMoreElements()) {
+			if (!enu.hasMoreElements()) {
 				return SKIP_BODY;
 			}
 

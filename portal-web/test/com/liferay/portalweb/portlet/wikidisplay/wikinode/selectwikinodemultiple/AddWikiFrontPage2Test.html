@@ -14,44 +14,69 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>link=Wiki Test Page</td>
+	<td>Wiki Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Wiki Test Page</td>
+	<td>Wiki Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Wiki Node2 Name</td>
+	<td>Wiki Node2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/div/a</td>
+	<td>This page is empty. Edit it to add some text.</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='wiki-body']/div/a</td>
+	<td>This page is empty. Edit it to add some text.</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
-	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Wiki Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=WikiB NodeB TestB</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=This page is empty. Edit it to add some text.</td>
-	<td></td>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>IFrame</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_36_content</td>
-	<td>This is wiki frontpage article 2 test.</td>
+	<td>//body</td>
+	<td>Wiki Front Page2 Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[6]/div</td>
-	<td>This is wiki frontpage article 2 test.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Front Page2 Content</td>
 </tr>
 
 </tbody></table>

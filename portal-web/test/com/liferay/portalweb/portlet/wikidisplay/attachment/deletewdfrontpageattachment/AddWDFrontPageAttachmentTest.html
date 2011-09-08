@@ -14,34 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Wiki Display Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=0 Attachments</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=0 Attachments</td>
-	<td></td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='article-actions']/span[2]/a/span</td>
+	<td>0 Attachments</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='article-actions']/span[2]/a/span</td>
+	<td>0 Attachments</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>This page does not have any file attachments.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Attachments']</td>
-	<td></td>
+	<td>Add Attachments</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -60,38 +60,48 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
+	<td>//a[@class='use-fallback using-new-uploader']</td>
+	<td>Use the classic uploader.</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
+	<td>//a[@class='use-fallback using-new-uploader']</td>
+	<td>Use the classic uploader.</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div/span[1]/span/span/input</td>
-	<td></td>
+	<td>//fieldset/div/span[1]/span/span/input</td>
+	<td>File 1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div/span[1]/span/span/input</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\wikidisplay\attachment\deletewdfrontpageattachment\dependencies\Wiki_Attachment.jpg</td>
+	<td>//fieldset/div/span[1]/span/span/input</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\wiki\attachment\addfrontpageattachment\dependencies\Wiki_Attachment.jpg</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki_Attachment.jpg</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Wiki_Attachment.jpg</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>3.1k</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']/</td>
+	<td>Showing 1 result.</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -99,26 +109,25 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=1 Attachment</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='article-actions']/span[2]/a/span</td>
+	<td>1 Attachment</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=0 Attachments</td>
+	<td>assertTextNotPresent</td>
+	<td>0 Attachments</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

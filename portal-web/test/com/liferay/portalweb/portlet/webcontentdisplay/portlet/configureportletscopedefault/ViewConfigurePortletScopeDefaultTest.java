@@ -103,8 +103,7 @@ public class ViewConfigurePortletScopeDefaultTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=Web Content Display Test Page")) {
+				if (selenium.isVisible("link=Web Content Display Test Page")) {
 					break;
 				}
 			}

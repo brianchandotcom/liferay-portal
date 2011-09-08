@@ -29,7 +29,7 @@ public class LocalizeWCWebContentWCDTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
-		testSuite.addTestSuite(AddWebContentTest.class);
+		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(LocalizeWCWebContentWCDTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

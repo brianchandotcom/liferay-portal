@@ -46,77 +46,22 @@ public class ViewPortletShowLocalesWebContentWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//img[@alt='English (United States)']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//img[@alt='English (United States)']",
-			RuntimeVariables.replace(""));
+		assertTrue(selenium.isElementPresent(
+				"//img[@title='English (United States)']"));
+		selenium.clickAt("//img[@title='English (United States)']",
+			RuntimeVariables.replace("English (United States)"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Web Content Content")
-										.equals(selenium.getText("//p"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Web Content Content"),
-			selenium.getText("//p"));
-		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//img[@alt='\u4e2d\u6587 (\u4e2d\u56fd)']"));
-		selenium.clickAt("//img[@alt='\u4e2d\u6587 (\u4e2d\u56fd)']",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
+		assertTrue(selenium.isElementPresent(
+				"//img[@title='\u4e2d\u6587 (\u4e2d\u56fd)']"));
+		selenium.clickAt("//img[@title='\u4e2d\u6587 (\u4e2d\u56fd)']",
+			RuntimeVariables.replace("\u4e2d\u6587 (\u4e2d\u56fd)"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"\u4e16\u754c\u60a8\u597d Page Description")
-										.equals(selenium.getText("//p"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"\u4e16\u754c\u60a8\u597d Page Description"),
-			selenium.getText("//p"));
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

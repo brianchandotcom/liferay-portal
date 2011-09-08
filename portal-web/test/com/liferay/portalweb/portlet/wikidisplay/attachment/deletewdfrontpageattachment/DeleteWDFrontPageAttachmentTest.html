@@ -14,34 +14,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=1 Attachment</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='article-actions']/span[2]/a/span</td>
+	<td>1 Attachment</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=1 Attachment</td>
-	<td></td>
+	<td>//div[@class='article-actions']/span[2]/a/span</td>
+	<td>1 Attachment</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki_Attachment.jpg</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Wiki_Attachment.jpg</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/span/a/span</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
+	<td>//td[3]/span/a/span</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -49,13 +54,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Wiki_Attachment.jpg</td>
+	<td>assertTextNotPresent</td>
+	<td>Wiki_Attachment.jpg</td>
 	<td></td>
 </tr>
 <tr>
@@ -64,26 +69,25 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki Test Page</td>
-	<td></td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=0 Attachments</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='article-actions']/span[2]/a/span</td>
+	<td>0 Attachments</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
+	<td>assertTextNotPresent</td>
 	<td>link=1 Attachment</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

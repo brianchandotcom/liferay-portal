@@ -35,7 +35,7 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Welcome")) {
+						if (selenium.isElementPresent("link=Site Name")) {
 							break;
 						}
 					}
@@ -46,13 +46,13 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Welcome",
-					RuntimeVariables.replace("Welcome"));
+				selenium.clickAt("link=Site Name",
+					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
 				boolean page1Present = selenium.isElementPresent(
-						"link=Web Content Display Test Page");
+						"link=Web Content Display Test Page1");
 
 				if (!page1Present) {
 					label = 2;
@@ -60,8 +60,8 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=Web Content Display Test Page",
-					RuntimeVariables.replace("Web Content Display Test Page"));
+				selenium.clickAt("link=Web Content Display Test Page1",
+					RuntimeVariables.replace("Web Content Display Test Page1"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Options"),

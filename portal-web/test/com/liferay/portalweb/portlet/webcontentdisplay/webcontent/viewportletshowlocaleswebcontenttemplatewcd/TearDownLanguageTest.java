@@ -41,16 +41,15 @@ public class TearDownLanguageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Language Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Language Test Page",
+			RuntimeVariables.replace("Language Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//img[@alt='English (United States)']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//img[@title='English (United States)']",
+			RuntimeVariables.replace("English (United States)"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//img[@alt='English (United States)']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Language"),
+			selenium.getText("//span[@class='portlet-title-text']"));
 	}
 }

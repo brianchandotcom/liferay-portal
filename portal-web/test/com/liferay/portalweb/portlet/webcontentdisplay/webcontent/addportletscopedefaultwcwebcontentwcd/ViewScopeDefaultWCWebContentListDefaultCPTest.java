@@ -31,6 +31,27 @@ public class ViewScopeDefaultWCWebContentListDefaultCPTest extends BaseTestCase 
 			}
 
 			try {
+				if (selenium.isElementPresent("link=Site Name")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
@@ -50,32 +71,18 @@ public class ViewScopeDefaultWCWebContentListDefaultCPTest extends BaseTestCase 
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//div[2]/span"));
-		selenium.clickAt("//div[2]/span/a", RuntimeVariables.replace("Default"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Default")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Default", RuntimeVariables.replace("Default"));
+		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
+				"Scope: Default"));
+		selenium.clickAt("//div/span/ul/li/strong/a",
+			RuntimeVariables.replace("Scope: Default"));
+		assertEquals(RuntimeVariables.replace("Default"),
+			selenium.getText("//a"));
+		selenium.clickAt("//a", RuntimeVariables.replace("Default"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Scope Default"),
-			selenium.getText("//div[2]/span"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
+				"Scope: Default"));
+		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//td[4]/a"));

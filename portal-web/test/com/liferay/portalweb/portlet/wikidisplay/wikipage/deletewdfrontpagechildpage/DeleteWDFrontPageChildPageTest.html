@@ -14,34 +14,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Front Page Child Page Test</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Front Page Child Page Test</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Front Page Content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Details</td>
-	<td></td>
+	<td>//div[@class='child-pages']/ul/li/a</td>
+	<td>Wiki Front Page Child Page Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/ul/li[4]/a/span</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
+	<td>//td/ul/li[4]/a/span</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -49,8 +59,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Front Page Child Page Test</td>
+	<td>assertTextNotPresent</td>
+	<td>Wiki Front Page Child Page Title</td>
 	<td></td>
 </tr>
 

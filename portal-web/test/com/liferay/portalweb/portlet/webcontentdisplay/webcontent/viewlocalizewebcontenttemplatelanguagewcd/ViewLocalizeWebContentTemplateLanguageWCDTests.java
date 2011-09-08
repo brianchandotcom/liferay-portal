@@ -39,8 +39,6 @@ public class ViewLocalizeWebContentTemplateLanguageWCDTests extends BaseTests {
 			ViewLocalizeWebContentTemplateLanguageWCDTest.class);
 		testSuite.addTestSuite(TearDownLanguageTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
-		testSuite.addTestSuite(TearDownTemplateTest.class);
-		testSuite.addTestSuite(TearDownStructureTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

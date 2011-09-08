@@ -17,16 +17,16 @@ package com.liferay.portalweb.portlet.webcontentdisplay.webcontent;
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopecurrentpagewcwebcontentwcd.AddPortletScopeCurrentPageWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopedefaultwcwebcontentwcd.AddPortletScopeDefaultWCWebContentWCDTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addwcdwebcontent.AddWCDWebContentTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.deletethisversionwebcontentwcddetails.DeleteThisVersionWebContentWCDDetailsTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.editwebcontentwcddetails.EditWebContentWCDDetailsTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.expirethisversionwebcontentwcddetails.ExpireThisVersionWebContentWCDDetailsTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addwcwebcontentwcd.AddWCWebContentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.deletethisversionwcwebcontentwcdactions.DeleteThisVersionWCWebContentWCDActionsTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.editwcwebcontentwcddetails.EditWCWebContentWCDDetailsTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.expirethisversionwcwebcontentwcddetails.ExpireThisVersionWCWebContentWCDDetailsTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebcontenttemplatewcd.LocalizeWCWebContentTemplateWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebcontentwcd.LocalizeWCWebContentWCDTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.ratewcdwebcontent.RateWCDWebContentTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.searchwcdwebcontent.SearchWCDWebContentTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.ratewcwebcontentwcd.RateWCWebContentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.searchwcwebcontentwcd.SearchWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectportletscopepage2wcwebcontentwcd.SelectPortletScopePage2WCWebContentWCDTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectwcwebcontent.SelectWCWebContentTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectwcwebcontentwcd.SelectWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewlocalizewebcontentlanguagewcd.ViewLocalizeWebContentLanguageWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewlocalizewebcontenttemplatelanguagewcd.ViewLocalizeWebContentTemplateLanguageWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewportletshowlocaleswebcontenttemplatewcd.ViewPortletShowLocalesWebContentTemplateWCDTests;
@@ -46,16 +46,18 @@ public class WebContentTests extends BaseTests {
 		testSuite.addTest(
 			AddPortletScopeCurrentPageWCWebContentWCDTests.suite());
 		testSuite.addTest(AddPortletScopeDefaultWCWebContentWCDTests.suite());
-		testSuite.addTest(AddWCDWebContentTests.suite());
-		testSuite.addTest(DeleteThisVersionWebContentWCDDetailsTests.suite());
-		testSuite.addTest(EditWebContentWCDDetailsTests.suite());
-		testSuite.addTest(ExpireThisVersionWebContentWCDDetailsTests.suite());
+		testSuite.addTest(AddWCWebContentWCDTests.suite());
+		testSuite.addTest(
+			DeleteThisVersionWCWebContentWCDActionsTests.suite());
+		testSuite.addTest(EditWCWebContentWCDDetailsTests.suite());
+		testSuite.addTest(
+			ExpireThisVersionWCWebContentWCDDetailsTests.suite());
 		testSuite.addTest(LocalizeWCWebContentTemplateWCDTests.suite());
 		testSuite.addTest(LocalizeWCWebContentWCDTests.suite());
-		testSuite.addTest(RateWCDWebContentTests.suite());
-		testSuite.addTest(SearchWCDWebContentTests.suite());
+		testSuite.addTest(RateWCWebContentWCDTests.suite());
+		testSuite.addTest(SearchWCWebContentWCDTests.suite());
 		testSuite.addTest(SelectPortletScopePage2WCWebContentWCDTests.suite());
-		testSuite.addTest(SelectWCWebContentTests.suite());
+		testSuite.addTest(SelectWCWebContentWCDTests.suite());
 		testSuite.addTest(ViewLocalizeWebContentLanguageWCDTests.suite());
 		testSuite.addTest(
 			ViewLocalizeWebContentTemplateLanguageWCDTests.suite());

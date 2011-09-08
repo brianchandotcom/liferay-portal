@@ -27,8 +27,8 @@ public class ConfigurePortletScopePage2Tests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddPageWCDTest.class);
-		testSuite.addTestSuite(AddPortletWCDTest.class);
+		testSuite.addTestSuite(AddPageWCD1Test.class);
+		testSuite.addTestSuite(AddPortletWCD1Test.class);
 		testSuite.addTestSuite(AddPageWCD2Test.class);
 		testSuite.addTestSuite(AddPortletWCD2Test.class);
 		testSuite.addTestSuite(AddPageWCD3Test.class);

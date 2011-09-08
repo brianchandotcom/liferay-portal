@@ -14,59 +14,64 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//fieldset/div/span[1]/a/span</td>
+	<td>Add Comment</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Add Comment</td>
-	<td></td>
+	<td>//fieldset/div/span[1]/a/span</td>
+	<td>Add Comment</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//textarea</td>
+	<td>Comment (Required)</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea</td>
-	<td>This is a wiki page test3 comment3.</td>
+	<td>Wiki Front Page Comment3 Body</td>
 </tr>
 <tr>
-	<td>keyPress</td>
-	<td>//textarea</td>
-	<td>\48</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>//textarea</td>
-	<td>\8</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
+	<td>click</td>
 	<td>//input[@value='Reply']</td>
-	<td></td>
+	<td>Reply</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div/div[3]/div/div[1]</td>
-	<td>This is a wiki page test comment.</td>
+	<td>Wiki Front Page Comment1 Body</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[3]/div/div[3]/div/div[1]</td>
-	<td>This is a wiki page test2 comment2.</td>
+	<td>//div[2]/div[3]/div/div[1]</td>
+	<td>Wiki Front Page Comment2 Body</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[5]/div/div[3]/div/div[1]</td>
-	<td>This is a wiki page test3 comment3.</td>
+	<td>//div[3]/div[3]/div/div[1]</td>
+	<td>Wiki Front Page Comment3 Body</td>
 </tr>
 
 </tbody></table>

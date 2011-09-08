@@ -43,8 +43,6 @@ public class ViewPortletShowLocalesWebContentTemplateWCDTests
 		testSuite.addTestSuite(TearDownLanguageTest.class);
 		testSuite.addTestSuite(TearDownPortletSetupTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
-		testSuite.addTestSuite(TearDownTemplateTest.class);
-		testSuite.addTestSuite(TearDownStructureTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

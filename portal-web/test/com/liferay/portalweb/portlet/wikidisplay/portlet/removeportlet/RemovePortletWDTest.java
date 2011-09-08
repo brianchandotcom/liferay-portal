@@ -30,7 +30,7 @@ public class RemovePortletWDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -42,7 +42,7 @@ public class RemovePortletWDTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");
@@ -56,7 +56,7 @@ public class RemovePortletWDTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("//td[1]/div[1]/div")) {
+				if (!selenium.isElementPresent("//section")) {
 					break;
 				}
 			}
@@ -67,6 +67,6 @@ public class RemovePortletWDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent("//td[1]/div[1]/div"));
+		assertFalse(selenium.isElementPresent("//section"));
 	}
 }

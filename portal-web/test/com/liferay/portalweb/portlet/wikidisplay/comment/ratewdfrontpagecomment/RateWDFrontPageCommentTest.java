@@ -30,7 +30,7 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -42,9 +42,13 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
+			RuntimeVariables.replace("+1"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -52,9 +56,9 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[@class='taglib-ratings thumbs']/div/div/div",
-							"0 \\(0 Votes\\)")) {
+				if (RuntimeVariables.replace("+1 (1 Vote)")
+										.equals(selenium.getText(
+								"//div[3]/div/div[2]/div/div/div/div"))) {
 					break;
 				}
 			}
@@ -65,11 +69,10 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//div[@class='taglib-ratings thumbs']/div/div/div",
-				"0 \\(0 Votes\\)"));
-		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
+			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
+			RuntimeVariables.replace("+1"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -77,9 +80,9 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[@class='taglib-ratings thumbs']/div/div/div",
-							"\\+1 \\(1 Vote\\)")) {
+				if (RuntimeVariables.replace("0 (0 Votes)")
+										.equals(selenium.getText(
+								"//div[3]/div/div[2]/div/div/div/div"))) {
 					break;
 				}
 			}
@@ -90,36 +93,10 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//div[@class='taglib-ratings thumbs']/div/div/div",
-				"\\+1 \\(1 Vote\\)"));
-		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
-			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//div[@class='taglib-ratings thumbs']/div/div/div",
-							"0 \\(0 Votes\\)")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//div[@class='taglib-ratings thumbs']/div/div/div",
-				"0 \\(0 Votes\\)"));
+		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("-1"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -127,9 +104,9 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[@class='taglib-ratings thumbs']/div/div/div",
-							"-1 \\(1 Vote\\)")) {
+				if (RuntimeVariables.replace("-1 (1 Vote)")
+										.equals(selenium.getText(
+								"//div[3]/div/div[2]/div/div/div/div"))) {
 					break;
 				}
 			}
@@ -140,11 +117,10 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//div[@class='taglib-ratings thumbs']/div/div/div",
-				"-1 \\(1 Vote\\)"));
+		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
+			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("-1"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -152,9 +128,9 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[@class='taglib-ratings thumbs']/div/div/div",
-							"0 \\(0 Votes\\)")) {
+				if (RuntimeVariables.replace("0 (0 Votes)")
+										.equals(selenium.getText(
+								"//div[3]/div/div[2]/div/div/div/div"))) {
 					break;
 				}
 			}
@@ -165,8 +141,7 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//div[@class='taglib-ratings thumbs']/div/div/div",
-				"0 \\(0 Votes\\)"));
+		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 	}
 }

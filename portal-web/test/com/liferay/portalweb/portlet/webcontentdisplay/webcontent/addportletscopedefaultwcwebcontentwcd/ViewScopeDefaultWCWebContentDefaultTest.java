@@ -31,7 +31,7 @@ public class ViewScopeDefaultWCWebContentDefaultTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Web Content Display Test Page")) {
+				if (selenium.isElementPresent("link=Site Name")) {
 					break;
 				}
 			}
@@ -42,13 +42,34 @@ public class ViewScopeDefaultWCWebContentDefaultTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content Display Test Page",
-			RuntimeVariables.replace("Web Content Display Test Page"));
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Web Content Display Test Page1")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Web Content Display Test Page1",
+			RuntimeVariables.replace("Web Content Display Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Display"),
 			selenium.getText("//span[@class='portlet-title-text']"));
-		assertEquals(RuntimeVariables.replace("Web Content Content"),
-			selenium.getText("//p"));
+		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

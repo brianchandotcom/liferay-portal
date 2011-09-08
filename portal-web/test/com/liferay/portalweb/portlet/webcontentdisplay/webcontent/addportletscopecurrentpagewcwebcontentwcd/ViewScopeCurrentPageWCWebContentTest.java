@@ -31,6 +31,27 @@ public class ViewScopeCurrentPageWCWebContentTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isElementPresent("link=Site Name")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("link=Web Content Display Test Page2")) {
 					break;
 				}
@@ -49,7 +70,7 @@ public class ViewScopeCurrentPageWCWebContentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Display (Web Content Display Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
-		assertEquals(RuntimeVariables.replace("Web Content Content"),
-			selenium.getText("//p"));
+		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

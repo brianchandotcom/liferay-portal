@@ -31,8 +31,7 @@ public class ViewConfigurePortletScopeDefaultTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=Web Content Display Test Page")) {
+				if (selenium.isVisible("link=Web Content Display Test Page")) {
 					break;
 				}
 			}
@@ -47,6 +46,8 @@ public class ViewConfigurePortletScopeDefaultTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -103,8 +104,7 @@ public class ViewConfigurePortletScopeDefaultTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=Web Content Display Test Page")) {
+				if (selenium.isVisible("link=Web Content Display Test Page")) {
 					break;
 				}
 			}

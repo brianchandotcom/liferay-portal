@@ -31,12 +31,9 @@ public class ConfigurePortletShowAvailableLocalesTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletLanguageTest.class);
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
-		testSuite.addTestSuite(AddStructureLocalizedTest.class);
-		testSuite.addTestSuite(AddTemplateLocalizedTest.class);
-		testSuite.addTestSuite(AddWebContentLocalizedTest.class);
-		testSuite.addTestSuite(SelectWebContentLocalizedTest.class);
 		testSuite.addTestSuite(ConfigurePortletShowAvailableLocalesTest.class);
 		testSuite.addTestSuite(TearDownLanguageTest.class);
+		testSuite.addTestSuite(TearDownPortletSetupTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

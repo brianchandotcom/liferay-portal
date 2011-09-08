@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Web Content Display Test Page</td>
 	<td>Web Content Display Test Page</td>
 </tr>
@@ -36,7 +36,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']</td>
-	<td>Web Content Name</td>
+	<td>WCD Web Content Title</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -61,7 +61,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//body</td>
-	<td>Web Content Content</td>
+	<td>WCD Web Content Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -69,14 +69,39 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//select[@id='_15_languageIdSelect']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>Add Translation</td>
 </tr>
 <tr>
-	<td>selectAndWait</td>
-	<td>//select[@id='_15_languageIdSelect']</td>
-	<td>label=Chinese (China)</td>
+	<td>clickAt</td>
+	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>Add Translation</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Chinese (China)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Chinese (China)</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Chinese (China)</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_15_zh_CN']</td>
+	<td>Web Content Translation</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_15_zh_CN']</td>
+	<td>Web Content Translation</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -104,39 +129,29 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//span[2]/div/span/span/span/input[2]</td>
-	<td>Localized</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@id='_15_translateButton']</td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('//span[2]/div/span/span/span/input[2]'))</td>
-	<td>localizedPageDescriptionChecked</td>
+	<td>assertText</td>
+	<td>//a[@class='journal-article-translation journal-article-translation-zh_CN']</td>
+	<td>Chinese (China)</td>
 </tr>
 <tr>
-	<td>gotoIf</td>
-	<td>${localizedPageDescriptionChecked}</td>
-	<td>LocalizedPageDescriptionChecked</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[2]/div/span/span/span/input[2]</td>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>LocalizedPageDescriptionChecked</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//span[2]/div/span/span/span/input[2]</td>
-	<td>Localized</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='journal-content-article']/p</td>
+	<td>WCD Web Content Content</td>
 </tr>
 
 </tbody></table>

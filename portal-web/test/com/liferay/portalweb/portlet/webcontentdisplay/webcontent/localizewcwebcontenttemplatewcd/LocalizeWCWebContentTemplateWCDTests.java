@@ -34,8 +34,6 @@ public class LocalizeWCWebContentTemplateWCDTests extends BaseTests {
 		testSuite.addTestSuite(AddWCWebContentTemplateWCDTest.class);
 		testSuite.addTestSuite(LocalizeWCWebContentTemplateWCDTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
-		testSuite.addTestSuite(TearDownTemplateTest.class);
-		testSuite.addTestSuite(TearDownStructureTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

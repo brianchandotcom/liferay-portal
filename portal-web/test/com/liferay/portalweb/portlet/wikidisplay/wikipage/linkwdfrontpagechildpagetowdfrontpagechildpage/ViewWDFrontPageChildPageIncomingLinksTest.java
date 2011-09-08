@@ -31,7 +31,7 @@ public class ViewWDFrontPageChildPageIncomingLinksTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -43,20 +43,30 @@ public class ViewWDFrontPageChildPageIncomingLinksTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Front1 Page1 Child1 Page1 Test1",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page1 Title"),
+			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
+		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[1]",
+			RuntimeVariables.replace("Wiki Front Page Child Page1 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Details", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Details"),
+			selenium.getText("//div[3]/span[2]/a/span"));
+		selenium.clickAt("//div[3]/span[2]/a/span",
+			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Incoming Links", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Incoming Links",
+			RuntimeVariables.replace("Incoming Links"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent(
-				"link=Front2 Page2 Child2 Page2 Test2"));
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page2 Title"),
+			selenium.getText("//td[1]/a"));
+		assertFalse(selenium.isTextPresent(
+				"There are no pages that link to this page."));
 	}
 }

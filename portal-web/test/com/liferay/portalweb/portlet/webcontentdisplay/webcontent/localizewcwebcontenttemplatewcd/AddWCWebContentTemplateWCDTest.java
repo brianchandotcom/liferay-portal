@@ -30,8 +30,7 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=Web Content Display Test Page")) {
+				if (selenium.isVisible("link=Web Content Display Test Page")) {
 					break;
 				}
 			}
@@ -50,17 +49,8 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_15_title']",
-			RuntimeVariables.replace("Web Content Name"));
-		selenium.saveScreenShotAndSource();
-		selenium.click("//fieldset/div/div/span/span/input");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Selecting a template will change the structure, available input fields, and available templates[\\s\\S] Do you want to proceed[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
-		selenium.waitForPopUp("template", RuntimeVariables.replace("30000"));
-		selenium.selectWindow("template");
-		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
+		selenium.clickAt("//a[@id='_15_selectTemplateLink']",
+			RuntimeVariables.replace("Select Template"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -68,7 +58,7 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//td[1]/a")) {
+				if (selenium.isVisible("//td[2]/a")) {
 					break;
 				}
 			}
@@ -79,25 +69,71 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click("//td[1]/a");
-		selenium.selectWindow("null");
+		assertEquals(RuntimeVariables.replace(
+				"Web Content Localized Template Name"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a",
+			RuntimeVariables.replace("Web Content Localized Template Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if ("Selecting a template will change the structure, available input fields, and available templates? Do you want to proceed?".equals(
+							selenium.getConfirmation())) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Web Content Localized Structure Name")
+										.equals(selenium.getText(
+								"//span[@class='structure-name-label']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace(
+				"Web Content Localized Structure Name"),
+			selenium.getText("//span[@class='structure-name-label']"));
+		assertEquals(RuntimeVariables.replace(
+				"Web Content Localized Template Name"),
+			selenium.getText("//span[@class='template-name-label']"));
+		selenium.type("//input[@id='_15_title_en_US']",
+			RuntimeVariables.replace("Hello World Localized Article"));
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='page-name']",
-			RuntimeVariables.replace("Web Content Page Name"));
+			RuntimeVariables.replace("Hello World Page Name"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='page-description']",
-			RuntimeVariables.replace("Web Content Page Description"));
+			RuntimeVariables.replace("Hello World Page Description"));
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//fieldset/div/div/div/div/span",
-				"Test Localized Structure"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Web Content Page Name"),
-			selenium.getText("//td[1]"));
-		assertEquals(RuntimeVariables.replace("Web Content Page Description"),
-			selenium.getText("//td[2]"));
+		assertEquals(RuntimeVariables.replace("Hello World Page Name"),
+			selenium.getText("//td[@class='page-name']"));
+		assertEquals(RuntimeVariables.replace("Hello World Page Description"),
+			selenium.getText("//td[@class='page-description']"));
 	}
 }

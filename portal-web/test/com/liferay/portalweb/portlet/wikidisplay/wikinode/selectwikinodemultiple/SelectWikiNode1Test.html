@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -45,32 +50,32 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_nodeId</td>
+	<td>//select[@id='_86_nodeId']</td>
 	<td>Node</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_86_nodeId</td>
-	<td>label=WikiA NodeA TestA</td>
+	<td>//select[@id='_86_nodeId']</td>
+	<td>Wiki Node1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>_86_nodeId</td>
-	<td>WikiA NodeA TestA</td>
+	<td>assertVisible</td>
+	<td>//select[@id='_86_nodeId']</td>
+	<td>Wiki Node1 Name</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>_86_title</td>
+	<td>assertVisible</td>
+	<td>//select[@id='_86_title']</td>
 	<td>FrontPage</td>
 </tr>
 <tr>
@@ -79,19 +84,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']</td>
-	<td>This is wiki frontpage article 1 test.</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Wiki Front Page1 Content</td>
 </tr>
 
 </tbody></table>

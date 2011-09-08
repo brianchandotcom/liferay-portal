@@ -29,10 +29,11 @@ public class ConfigurePortletEnableCommentRatingsTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
-		testSuite.addTestSuite(AddWCDWebContentTest.class);
+		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(ConfigurePortletEnableCommentsTest.class);
-		testSuite.addTestSuite(AddWCDWebContentCommentTest.class);
+		testSuite.addTestSuite(AddWCWebContentCommentWCDTest.class);
 		testSuite.addTestSuite(ConfigurePortletEnableCommentRatingsTest.class);
+		testSuite.addTestSuite(TearDownPortletSetupTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

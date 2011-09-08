@@ -31,7 +31,7 @@ public class AddPortletScopeDefaultWCWebContentWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Web Content Display Test Page")) {
+				if (selenium.isElementPresent("link=Site Name")) {
 					break;
 				}
 			}
@@ -42,8 +42,29 @@ public class AddPortletScopeDefaultWCWebContentWCDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content Display Test Page",
-			RuntimeVariables.replace("Web Content Display Test Page"));
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Web Content Display Test Page1")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Web Content Display Test Page1",
+			RuntimeVariables.replace("Web Content Display Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Display"),
@@ -52,8 +73,8 @@ public class AddPortletScopeDefaultWCWebContentWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_15_title']",
-			RuntimeVariables.replace("Web Content Name"));
+		selenium.type("//input[@id='_15_title_en_US']",
+			RuntimeVariables.replace("WCD Web Content Title"));
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
@@ -77,7 +98,8 @@ public class AddPortletScopeDefaultWCWebContentWCDTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Web Content Content"));
+		selenium.type("//body",
+			RuntimeVariables.replace("WCD Web Content Content"));
 		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
@@ -86,7 +108,7 @@ public class AddPortletScopeDefaultWCWebContentWCDTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(
 				"Select existing web content or add some web content to be displayed in this portlet."));
-		assertEquals(RuntimeVariables.replace("Web Content Content"),
-			selenium.getText("//p"));
+		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

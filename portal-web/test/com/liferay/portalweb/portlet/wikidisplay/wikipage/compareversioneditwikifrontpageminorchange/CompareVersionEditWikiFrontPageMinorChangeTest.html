@@ -14,74 +14,104 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Details</td>
-	<td></td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=History</td>
-	<td></td>
+	<td>History</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>1.2 (Minor Edit)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/a</td>
+	<td>1.1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[4]/a</td>
+	<td>1.0 (Minor Edit)</td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>//tr[3]/td[1]/input</td>
-	<td></td>
+	<td>//td[1]/input</td>
+	<td>1.2 (Minor Edit)</td>
 </tr>
 <tr>
 	<td>check</td>
 	<td>//tr[4]/td[1]/input</td>
-	<td></td>
+	<td>1.1</td>
 </tr>
 <tr>
 	<td>uncheck</td>
 	<td>//tr[5]/td[1]/input</td>
-	<td></td>
+	<td>1.0 (Minor Edit)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Compare Versions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Comparing Versions 1.1 and 1.2 (Last Version)</td>
-	<td></td>
+	<td>Compare Versions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[4]</td>
-	<td>This is a an edited wiki frontpage article test. Minor edit.</td>
+	<td>//span[@class='central-title']/span</td>
+	<td>Comparing Versions 1.1 and 1.2 (Last Version)</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Text Mode</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//p</td>
+	<td>Wiki Front Page Content Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/a</td>
+	<td>Text Mode</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Text Mode</td>
-	<td></td>
+	<td>//div[3]/div/a</td>
+	<td>Text Mode</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='taglib-diff-context']</td>
-	<td></td>
+	<td>xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[1]</td>
+	<td>FrontPage 1.1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ins</td>
-	<td>This is an edited wiki frontpage article test. Minor edit.</td>
+	<td>xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[2]</td>
+	<td>FrontPage 1.2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[1]</td>
+	<td>Wiki Front Page Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[2]</td>
+	<td>Wiki Front Page Content Edit</td>
 </tr>
 
 </tbody></table>

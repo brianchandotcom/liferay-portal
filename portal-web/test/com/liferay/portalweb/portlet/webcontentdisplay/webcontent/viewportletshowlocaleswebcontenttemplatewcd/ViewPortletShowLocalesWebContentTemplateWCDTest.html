@@ -25,52 +25,42 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//img[@alt='English (United States)']</td>
-	<td></td>
+	<td>//img[@title='English (United States)']</td>
+	<td>English (United States)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//img[@alt='English (United States)']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//td[1]</td>
-	<td>Web Content Page Name</td>
+	<td>//img[@title='English (United States)']</td>
+	<td>English (United States)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]</td>
-	<td>Web Content Page Name</td>
+	<td>//td[@class='page-name']</td>
+	<td>Hello World Page Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]</td>
-	<td>Web Content Page Description</td>
+	<td>//td[@class='page-description']</td>
+	<td>Hello World Page Description</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//img[@alt='中文 (中国)']</td>
-	<td></td>
+	<td>assertElementPresent</td>
+	<td>//img[@title='中文 (中国)']</td>
+	<td>中文 (中国)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//img[@alt='中文 (中国)']</td>
-	<td></td>
+	<td>//img[@title='中文 (中国)']</td>
+	<td>中文 (中国)</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//td[1]</td>
+	<td>assertText</td>
+	<td>//td[@class='page-name']</td>
 	<td>世界您好 Page Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]</td>
-	<td>世界您好 Page Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[2]</td>
+	<td>//td[@class='page-description']</td>
 	<td>世界您好 Page Description</td>
 </tr>
 

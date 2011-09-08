@@ -14,33 +14,48 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='child-pages']/ul/li/a)[1]</td>
+	<td>Wiki Front Page Child Page1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Front1 Page1 Child1 Page1 Test1</td>
-	<td></td>
+	<td>xPath=(//div[@class='child-pages']/ul/li/a)[1]</td>
+	<td>Wiki Front Page Child Page1 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Details</td>
-	<td></td>
+	<td>//div[3]/span[2]/a/span</td>
+	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Incoming Links</td>
-	<td></td>
+	<td>Incoming Links</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Front2 Page2 Child2 Page2 Test2</td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Wiki Front Page Child Page2 Title</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>There are no pages that link to this page.</td>
 	<td></td>
 </tr>
 

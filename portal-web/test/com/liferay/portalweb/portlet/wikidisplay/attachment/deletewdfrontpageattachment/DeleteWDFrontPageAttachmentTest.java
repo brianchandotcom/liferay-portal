@@ -30,7 +30,7 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -41,22 +41,29 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Display Test Page",
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=1 Attachment"));
-		selenium.clickAt("link=1 Attachment", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("1 Attachment"),
+			selenium.getText("//div[@class='article-actions']/span[2]/a/span"));
+		selenium.clickAt("//div[@class='article-actions']/span[2]/a/span",
+			RuntimeVariables.replace("1 Attachment"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Wiki_Attachment.jpg"));
-		selenium.click(RuntimeVariables.replace("link=Delete"));
+		assertEquals(RuntimeVariables.replace("Wiki_Attachment.jpg"),
+			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText("//td[3]/span/a/span"));
+		selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isElementPresent("link=Wiki_Attachment.jpg"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isTextPresent("Wiki_Attachment.jpg"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -65,7 +72,7 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -76,10 +83,12 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Wiki Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Wiki Display Test Page",
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=0 Attachments"));
-		assertFalse(selenium.isElementPresent("link=1 Attachment"));
+		assertEquals(RuntimeVariables.replace("0 Attachments"),
+			selenium.getText("//div[@class='article-actions']/span[2]/a/span"));
+		assertFalse(selenium.isTextPresent("link=1 Attachment"));
 	}
 }

@@ -16,47 +16,47 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
-	<td>Web Content</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Structures</td>
-	<td></td>
+	<td>Structures</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value="Add Structure"]</td>
-	<td></td>
+	<td>//input[@value='Add Structure']</td>
+	<td>Add Structure</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_name</td>
-	<td>Test Localized Structure</td>
+	<td>//input[@id='_15_name_en_US']</td>
+	<td>Web Content Localized Structure Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_description</td>
-	<td>This is a test localized structure.</td>
+	<td>//textarea[@id='_15_description_en_US']</td>
+	<td>Web Content Localized Structure Description</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_15_editorButton</td>
-	<td></td>
+	<td>//input[@id='_15_editorButton']</td>
+	<td>Launch Editor</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//textarea[@id='_15_xsdContent']</td>
+	<td>Editor</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -64,44 +64,49 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>_15_xsdContent</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
-	<td>_15_xsdContent</td>
-	<td><root> <br /><br /> <dynamic-element name='page-name' type='text'></dynamic-element> <br /><br /> <dynamic-element name='page-description' type='text'></dynamic-element> <br /><br /></root></td>
+	<td>//textarea[@id='_15_xsdContent']</td>
+	<td><root><br /><br /><dynamic-element name='page-name' type='text'></dynamic-element> <br /><br /><dynamic-element name='page-description' type='text'></dynamic-element><br /><br /></root></td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//input[@value='Update']</td>
-	<td></td>
+	<td>Update</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>_15_structure_el0_name</td>
+	<td>waitForVisible</td>
+	<td>//input[@id='_15_structure_el0_name']</td>
 	<td>page-name</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_15_structure_el1_name</td>
+	<td>//input[@id='_15_structure_el0_name']</td>
+	<td>page-name</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_structure_el1_name']</td>
 	<td>page-description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value="Save"]</td>
-	<td></td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Test Localized Structure</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Web Content Localized Structure Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Web Content Localized Structure Description</td>
 </tr>
 
 </tbody></table>

@@ -47,10 +47,12 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Wiki", RuntimeVariables.replace(""));
+				assertEquals(RuntimeVariables.replace("Wiki"),
+					selenium.getText("//li[9]/a"));
+				selenium.clickAt("//li[9]/a", RuntimeVariables.replace("Wiki"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -63,6 +65,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -105,6 +109,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -147,6 +153,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -189,6 +197,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -231,6 +241,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -263,6 +275,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 6:
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 

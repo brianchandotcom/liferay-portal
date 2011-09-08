@@ -30,7 +30,7 @@ public class SelectMainNodeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -42,9 +42,11 @@ public class SelectMainNodeTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -76,7 +78,7 @@ public class SelectMainNodeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_86_nodeId")) {
+				if (selenium.isVisible("//select[@id='_86_nodeId']")) {
 					break;
 				}
 			}
@@ -87,38 +89,19 @@ public class SelectMainNodeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_86_nodeId", RuntimeVariables.replace("label=Main"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_86_nodeId']",
+			RuntimeVariables.replace("Main"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"You have successfully updated the setup.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Main"),
-			selenium.getText("_86_nodeId"));
+			selenium.getText("//select[@id='_86_nodeId']"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
-			selenium.getText("_86_title"));
+			selenium.getText("//select[@id='_86_title']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -127,7 +110,7 @@ public class SelectMainNodeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Wiki Display Test Page")) {
+				if (selenium.isVisible("link=Wiki Display Test Page")) {
 					break;
 				}
 			}
@@ -139,11 +122,10 @@ public class SelectMainNodeTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"This is a wiki frontpage article test."),
-			selenium.getText("//div[@class='wiki-body']"));
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
+			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

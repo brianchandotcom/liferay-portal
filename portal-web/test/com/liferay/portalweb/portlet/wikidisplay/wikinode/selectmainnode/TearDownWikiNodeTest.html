@@ -16,17 +16,22 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[9]/a</td>
+	<td>Wiki</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki</td>
-	<td></td>
+	<td>//li[9]/a</td>
+	<td>Wiki</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -37,6 +42,11 @@
 	<td>gotoIf</td>
 	<td>!${wikiNode1Present}</td>
 	<td>WikiNode1NotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -79,6 +89,11 @@
 	<td>WikiNode2NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//tr[4]/td[4]/span/ul/li/strong/a</td>
 	<td>Actions</td>
@@ -117,6 +132,11 @@
 	<td>gotoIf</td>
 	<td>!${wikiNode3Present}</td>
 	<td>WikiNode3NotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -159,6 +179,11 @@
 	<td>WikiNode4NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//tr[4]/td[4]/span/ul/li/strong/a</td>
 	<td>Actions</td>
@@ -199,6 +224,11 @@
 	<td>WikiNode5NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//tr[4]/td[4]/span/ul/li/strong/a</td>
 	<td>Actions</td>
@@ -227,6 +257,11 @@
 	<td>label</td>
 	<td>WikiNode5NotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>

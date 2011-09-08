@@ -41,30 +41,31 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-		selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Structures", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Structures",
+			RuntimeVariables.replace("Structures"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value=\"Add Structure\"]",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Add Structure']",
+			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_15_name",
-			RuntimeVariables.replace("Test Localized Structure"));
+		selenium.type("//input[@id='_15_name_en_US']",
+			RuntimeVariables.replace("Web Content Localized Structure Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_15_description",
-			RuntimeVariables.replace("This is a test localized structure."));
+		selenium.type("//textarea[@id='_15_description_en_US']",
+			RuntimeVariables.replace(
+				"Web Content Localized Structure Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_15_editorButton", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		selenium.clickAt("//input[@id='_15_editorButton']",
+			RuntimeVariables.replace("Launch Editor"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -72,7 +73,7 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_15_xsdContent")) {
+				if (selenium.isVisible("//textarea[@id='_15_xsdContent']")) {
 					break;
 				}
 			}
@@ -83,19 +84,46 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_15_xsdContent",
+		Thread.sleep(5000);
+		selenium.type("//textarea[@id='_15_xsdContent']",
 			RuntimeVariables.replace(
-				"<root> \n\n <dynamic-element name='page-name' type='text'></dynamic-element> \n\n <dynamic-element name='page-description' type='text'></dynamic-element> \n\n</root>"));
+				"<root>\n\n<dynamic-element name='page-name' type='text'></dynamic-element> \n\n<dynamic-element name='page-description' type='text'></dynamic-element>\n\n</root>"));
 		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@value='Update']");
-		Thread.sleep(5000);
-		assertEquals("page-name", selenium.getValue("_15_structure_el0_name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_15_structure_el0_name']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals("page-name",
+			selenium.getValue("//input[@id='_15_structure_el0_name']"));
 		assertEquals("page-description",
-			selenium.getValue("_15_structure_el1_name"));
-		selenium.clickAt("//input[@value=\"Save\"]",
-			RuntimeVariables.replace(""));
+			selenium.getValue("//input[@id='_15_structure_el1_name']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Test Localized Structure"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"Web Content Localized Structure Name"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"Web Content Localized Structure Description"),
+			selenium.getText("//td[4]/a"));
 	}
 }

@@ -42,11 +42,13 @@ public class AddPortletWCDTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -54,28 +56,7 @@ public class AddPortletWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("w"));
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
+				if (selenium.isElementPresent(
 							"//div[@title='Web Content Display']/p/a")) {
 					break;
 				}
@@ -88,7 +69,7 @@ public class AddPortletWCDTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@title='Web Content Display']/p/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content Display"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

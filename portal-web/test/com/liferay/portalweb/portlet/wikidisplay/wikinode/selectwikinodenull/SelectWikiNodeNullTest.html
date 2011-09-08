@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
-	<td></td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -45,33 +50,43 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_nodeId</td>
+	<td>//select[@id='_86_nodeId']</td>
 	<td>Node</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_86_nodeId</td>
+	<td>//select[@id='_86_nodeId']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//input[@value="Save"]</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@id='p_p_id_86_']/div/div[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>waitForVisible</td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div[1]</td>
-	<td>Your request failed to complete.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//form[@id='_86_fm']/div[1]</td>
-	<td>The node could not be found.</td>
+	<td>//div[@class='portlet-configuration portlet-msg-info']/a</td>
+	<td>Please configure this portlet to make it visible to all users.</td>
 </tr>
 
 </tbody></table>

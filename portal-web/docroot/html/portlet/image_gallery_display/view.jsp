@@ -192,6 +192,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				%>
 
 				<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
+
 			</aui:column>
 
 			<c:if test="<%= showFolderMenu %>">

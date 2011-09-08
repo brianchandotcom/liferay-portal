@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -32,9 +33,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import java.util.Locale;
 import java.util.Map;
@@ -76,8 +75,7 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof FileNotFoundException ||
-				e instanceof WorkflowDefinitionFileException) {
+			if (e instanceof WorkflowDefinitionFileException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
 			}
@@ -160,31 +158,41 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 
-		File file = uploadPortletRequest.getFile("file");
+		InputStream inputStream = null;
 
-		WorkflowDefinition workflowDefinition = null;
+		try {
+			inputStream = uploadPortletRequest.getFileAsStream("file");
 
-		if (!file.exists()) {
-			String name = ParamUtil.getString(actionRequest, "name");
-			int version = ParamUtil.getInteger(actionRequest, "version");
+			WorkflowDefinition workflowDefinition = null;
 
-			workflowDefinition =
-				WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-					themeDisplay.getCompanyId(), name, version);
+			if (inputStream != null) {
+				String name = ParamUtil.getString(actionRequest, "name");
+				int version = ParamUtil.getInteger(actionRequest, "version");
 
-			WorkflowDefinitionManagerUtil.updateTitle(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
-				version, getTitle(titleMap));
+				workflowDefinition =
+					WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+						themeDisplay.getCompanyId(), name, version);
+
+				WorkflowDefinitionManagerUtil.updateTitle(
+					themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
+					version, getTitle(titleMap));
+			}
+			else {
+				workflowDefinition =
+					WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
+						themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+						getTitle(titleMap), inputStream);
+			}
+
+			actionRequest.setAttribute(
+				WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
 		}
-		else {
-			workflowDefinition =
-				WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					getTitle(titleMap), new FileInputStream(file));
+		finally {
+			if (inputStream != null) {
+				StreamUtil.cleanUp(inputStream);
+			}
 		}
 
-		actionRequest.setAttribute(
-			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
 	}
 
 	protected String getTitle(Map<Locale, String> titleMap) {

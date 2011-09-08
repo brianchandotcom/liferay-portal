@@ -175,6 +175,15 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="Visible" return-type="Collection">
+			<finder-column name="visible" />
+		</finder>
+		<finder name="PublishDate" return-type="Collection">
+			<finder-column name="publishDate" />
+		</finder>
+		<finder name="ExpirationDate" return-type="Collection">
+			<finder-column name="expirationDate" />
+		</finder>
 
 		<!-- References -->
 

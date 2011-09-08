@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -43,7 +44,7 @@ import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.service.SCProductEntryServiceUtil;
 import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -160,38 +161,51 @@ public class EditProductEntryAction extends PortletAction {
 		for (String name :
 				getSortedParameterNames(uploadPortletRequest, imagePrefix)) {
 
-			int priority = GetterUtil.getInteger(
-				name.substring(imagePrefix.length(), name.length()));
+			InputStream inputStream = null;
 
-			File file = uploadPortletRequest.getFile(name);
-			byte[] bytes = FileUtil.getBytes(file);
+			try {
+				int priority = GetterUtil.getInteger(
+					name.substring(imagePrefix.length(), name.length()));
 
-			boolean preserveScreenshot = ParamUtil.getBoolean(
-				uploadPortletRequest, "preserveScreenshot" + priority);
+				boolean preserveScreenshot = ParamUtil.getBoolean(
+					uploadPortletRequest, "preserveScreenshot" + priority);
 
-			if (preserveScreenshot) {
-				SCProductScreenshot productScreenshot = getProductScreenshot(
-					uploadPortletRequest, priority);
+				byte[] bytes = null;
 
-				Image image = null;
+				if (preserveScreenshot) {
+					SCProductScreenshot productScreenshot =
+						getProductScreenshot(uploadPortletRequest, priority);
 
-				if (imagePrefix.equals("fullImage")) {
-					image = ImageLocalServiceUtil.getImage(
-						productScreenshot.getFullImageId());
+					Image image = null;
+
+					if (imagePrefix.equals("fullImage")) {
+						image = ImageLocalServiceUtil.getImage(
+							productScreenshot.getFullImageId());
+					}
+					else {
+						image = ImageLocalServiceUtil.getImage(
+							productScreenshot.getThumbnailId());
+					}
+
+					bytes = image.getTextObj();
 				}
 				else {
-					image = ImageLocalServiceUtil.getImage(
-						productScreenshot.getThumbnailId());
+					inputStream = uploadPortletRequest.getFileAsStream(name);
+
+					if (inputStream != null) {
+						bytes = FileUtil.getBytes(inputStream);
+					}
 				}
 
-				bytes = image.getTextObj();
+				if ((bytes != null) && (bytes.length > 0)) {
+					images.add(bytes);
+				}
+				else {
+					throw new ProductEntryScreenshotsException();
+				}
 			}
-
-			if ((bytes != null) && (bytes.length > 0)) {
-				images.add(bytes);
-			}
-			else {
-				throw new ProductEntryScreenshotsException();
+			finally {
+				StreamUtil.cleanUp(inputStream);
 			}
 		}
 

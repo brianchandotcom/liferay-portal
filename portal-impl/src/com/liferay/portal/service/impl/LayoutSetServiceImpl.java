@@ -22,7 +22,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.base.LayoutSetServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 
-import java.io.File;
+import java.io.InputStream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,13 +30,15 @@ import java.io.File;
 public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 
 	public void updateLogo(
-			long groupId, boolean privateLayout, boolean logo, File file)
+			long groupId, boolean privateLayout, boolean logo,
+			InputStream inputStream)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
 
-		layoutSetLocalService.updateLogo(groupId, privateLayout, logo, file);
+		layoutSetLocalService.updateLogo(
+			groupId, privateLayout, logo, inputStream);
 	}
 
 	public LayoutSet updateLookAndFeel(

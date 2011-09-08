@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
@@ -28,7 +29,7 @@ import com.liferay.portlet.calendar.ImportEventsException;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventServiceUtil;
 
-import java.io.File;
+import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -49,6 +50,8 @@ public class ImportEventsAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		InputStream inputStream = null;
+
 		try {
 			UploadPortletRequest uploadPortletRequest =
 				PortalUtil.getUploadPortletRequest(actionRequest);
@@ -56,12 +59,16 @@ public class ImportEventsAction extends PortletAction {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CalEvent.class.getName(), actionRequest);
 
-			File file = uploadPortletRequest.getFile("file");
+			inputStream = uploadPortletRequest.getFileAsStream(
+				"file");
 
-			validate(file);
+			String fileName = uploadPortletRequest.getFileName(
+				"file");
+
+			validate(fileName);
 
 			CalEventServiceUtil.importICal4j(
-				serviceContext.getScopeGroupId(), file);
+				serviceContext.getScopeGroupId(), inputStream);
 
 			sendRedirect(actionRequest, actionResponse);
 		}
@@ -74,10 +81,13 @@ public class ImportEventsAction extends PortletAction {
 
 			setForward(actionRequest, "portlet.calendar.error");
 		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
-	private void validate(File file) throws ImportEventsException {
-		String fileNameExtension = FileUtil.getExtension(file.getName());
+	private void validate(String fileName) throws ImportEventsException {
+		String fileNameExtension = FileUtil.getExtension(fileName);
 
 		if (!fileNameExtension.equals(CalendarUtil.ICAL_EXTENSION)) {
 			throw new ImportEventsException();

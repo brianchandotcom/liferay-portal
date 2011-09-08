@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,7 +36,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.util.servlet.UploadException;
 
-import java.io.File;
+import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -171,23 +170,23 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 		boolean useLogo = ParamUtil.getBoolean(actionRequest, "useLogo");
 
-		File file = uploadPortletRequest.getFile( "logoFileName");
-		byte[] bytes = FileUtil.getBytes(file);
+		InputStream inputStream = uploadPortletRequest.getFileAsStream(
+			"logoFileName");
 
-		if (useLogo && ((bytes == null) || (bytes.length == 0))) {
+		if (useLogo && (inputStream == null)) {
 			if (hasLogo) {
 				return;
 			}
 
-			throw new UploadException();
+			throw new UploadException("No logo uploaded for use");
 		}
 
 		LayoutSetServiceUtil.updateLogo(
-			liveGroupId, privateLayout, useLogo, file);
+			liveGroupId, privateLayout, useLogo, inputStream);
 
 		if (stagingGroupId > 0) {
 			LayoutSetServiceUtil.updateLogo(
-				stagingGroupId, privateLayout, useLogo, file);
+				stagingGroupId, privateLayout, useLogo, inputStream);
 		}
 	}
 

@@ -17,14 +17,14 @@ package com.liferay.portlet.portalsettings.action;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.servlet.UploadException;
 
-import java.io.File;
+import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -85,14 +85,21 @@ public class EditCompanyLogoAction extends PortletAction {
 
 		long companyId = PortalUtil.getCompanyId(actionRequest);
 
-		File file = uploadPortletRequest.getFile("fileName");
-		byte[] bytes = FileUtil.getBytes(file);
+		InputStream inputStream = null;
 
-		if ((bytes == null) || (bytes.length == 0)) {
-			throw new UploadException();
+		try {
+			 inputStream = uploadPortletRequest.getFileAsStream(
+				"fileName");
+
+			if (inputStream == null) {
+				throw new UploadException("No logo uploaded.");
+			}
+
+			CompanyServiceUtil.updateLogo(companyId, inputStream);
 		}
-
-		CompanyServiceUtil.updateLogo(companyId, file);
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
 }

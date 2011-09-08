@@ -70,8 +70,8 @@ import com.liferay.util.TimeZoneSensitive;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.text.Format;
@@ -688,18 +688,15 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 	}
 
-	public void importICal4j(long userId, long groupId, File file)
+	public void importICal4j(long userId, long groupId, InputStream inputStream)
 		throws PortalException, SystemException {
 
-		FileReader fileReader = null;
-
 		try {
-			fileReader = new FileReader(file);
 
 			CalendarBuilder builder = new CalendarBuilder();
 
 			net.fortuna.ical4j.model.Calendar calendar = builder.build(
-				fileReader);
+				inputStream);
 
 			Iterator<VEvent> itr = calendar.getComponents(
 				Component.VEVENT).iterator();
@@ -715,16 +712,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 		catch (ParserException pe) {
 			throw new SystemException(pe.getMessage(), pe);
-		}
-		finally {
-			try {
-				if (fileReader != null) {
-					fileReader.close();
-				}
-			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
-			}
 		}
 	}
 

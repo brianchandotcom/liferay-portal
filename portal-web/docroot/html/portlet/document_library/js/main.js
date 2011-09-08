@@ -81,6 +81,12 @@ AUI().add(
 						instance._displayStyle = namespace + 'displayStyle';
 						instance._folderId = namespace + 'folderId';
 
+						var entryPage = 0;
+
+						if (config.entriesTotal > 0) {
+							entryPage = config.entryEnd / config.entryRowsPerPage;
+						}
+
 						var entryPaginator = new A.Paginator(
 							{
 								circular: false,
@@ -88,7 +94,7 @@ AUI().add(
 								firstPageLinkLabel: '<<',
 								lastPageLinkLabel: '>>',
 								nextPageLinkLabel: '>',
-								page: config.entryEnd / config.entryRowsPerPage,
+								page: entryPage,
 								prevPageLinkLabel: '<',
 								rowsPerPage: config.entryRowsPerPage,
 								rowsPerPageOptions: config.entryRowsPerPageOptions,
@@ -98,6 +104,12 @@ AUI().add(
 
 						entryPaginator.on('changeRequest', instance._onEntryPaginatorChangeRequest, instance);
 
+						var folderPage = 0;
+
+						if (config.foldersTotal > 0) {
+							folderPage = config.folderEnd / config.folderRowsPerPage;
+						}
+
 						var folderPaginator = new A.Paginator(
 							{
 								alwaysVisible: false,
@@ -106,7 +118,7 @@ AUI().add(
 								firstPageLinkLabel: '<<',
 								lastPageLinkLabel: '>>',
 								nextPageLinkLabel: '>',
-								page: config.folderEnd / config.folderRowsPerPage,
+								page: folderPage,
 								prevPageLinkLabel: '<',
 								rowsPerPage: config.folderRowsPerPage,
 								rowsPerPageOptions: config.folderRowsPerPageOptions,

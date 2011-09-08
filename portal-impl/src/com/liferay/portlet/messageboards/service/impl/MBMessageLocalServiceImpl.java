@@ -90,9 +90,10 @@ import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.social.WikiActivityKeys;
 import com.liferay.util.SerializableUtil;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -157,8 +158,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			subject = body.substring(0, Math.min(body.length(), 50)) + "...";
 		}
 
-		List<ObjectValuePair<String, File>> files =
-			new ArrayList<ObjectValuePair<String, File>>();
+		List<ObjectValuePair<String, InputStream>> inputStreamEntries =
+			Collections.emptyList();
 		boolean anonymous = false;
 		double priority = 0.0;
 		boolean allowPingbacks = false;
@@ -170,8 +171,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = addMessage(
 			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, MBMessageConstants.DEFAULT_FORMAT, files, anonymous,
-			priority, allowPingbacks, serviceContext);
+			subject, body, MBMessageConstants.DEFAULT_FORMAT,
+			inputStreamEntries, anonymous, priority, allowPingbacks,
+			serviceContext);
 
 		// Discussion
 
@@ -193,7 +195,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			long threadId, long parentMessageId, String subject, String body,
-			String format, List<ObjectValuePair<String, File>> files,
+			String format,
+			List<ObjectValuePair<String, InputStream>> inputStreamEntries,
 			boolean anonymous, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -296,7 +299,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setSubject(subject);
 		message.setBody(body);
 		message.setFormat(format);
-		message.setAttachments(!files.isEmpty());
+		message.setAttachments(!inputStreamEntries.isEmpty());
 		message.setAnonymous(anonymous);
 
 		if (message.isDiscussion()) {
@@ -313,7 +316,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Attachments
 
-		if (!files.isEmpty()) {
+		if (!inputStreamEntries.isEmpty()) {
 			long companyId = message.getCompanyId();
 			long repositoryId = CompanyConstants.SYSTEM;
 			String dirName = message.getAttachmentsDir();
@@ -329,16 +332,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
 
-			for (int i = 0; i < files.size(); i++) {
-				ObjectValuePair<String, File> ovp = files.get(i);
+			for (int i = 0; i < inputStreamEntries.size(); i++) {
+				ObjectValuePair<String, InputStream> inputStreamEntry =
+					inputStreamEntries.get(i);
 
-				String fileName = ovp.getKey();
-				File file = ovp.getValue();
+				String fileName = inputStreamEntry.getKey();
+				InputStream inputStream = inputStreamEntry.getValue();
 
 				try {
 					DLStoreUtil.addFile(
 						companyId, repositoryId, dirName + "/" + fileName,
-						file);
+						inputStream);
 				}
 				catch (DuplicateFileException dfe) {
 					if (_log.isDebugEnabled()) {
@@ -400,8 +404,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			String subject, String body, String format,
-			List<ObjectValuePair<String, File>> files, boolean anonymous,
-			double priority, boolean allowPingbacks,
+			List<ObjectValuePair<String, InputStream>> inputStreamEntries,
+			boolean anonymous, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -410,8 +414,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return addMessage(
 			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, format, files, anonymous, priority, allowPingbacks,
-			serviceContext);
+			subject, body, format, inputStreamEntries, anonymous, priority,
+			allowPingbacks, serviceContext);
 	}
 
 	public void addMessageResources(
@@ -1326,8 +1330,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			subject = body.substring(0, Math.min(body.length(), 50)) + "...";
 		}
 
-		List<ObjectValuePair<String, File>> files =
-			new ArrayList<ObjectValuePair<String, File>>();
+		List<ObjectValuePair<String, InputStream>> inputStreamEntries =
+			Collections.emptyList();
 		List<String> existingFiles = new ArrayList<String>();
 		double priority = 0.0;
 		boolean allowPingbacks = false;
@@ -1336,13 +1340,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
 
 		return updateMessage(
-			userId, messageId, subject, body, files, existingFiles, priority,
-			allowPingbacks, serviceContext);
+			userId, messageId, subject, body, inputStreamEntries, existingFiles,
+			priority, allowPingbacks, serviceContext);
 	}
 
 	public MBMessage updateMessage(
 			long userId, long messageId, String subject, String body,
-			List<ObjectValuePair<String, File>> files,
+			List<ObjectValuePair<String, InputStream>> inputStreamEntries,
 			List<String> existingFiles, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1364,7 +1368,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setModifiedDate(serviceContext.getModifiedDate(now));
 		message.setSubject(subject);
 		message.setBody(body);
-		message.setAttachments(!files.isEmpty() || !existingFiles.isEmpty());
+		message.setAttachments(
+			!inputStreamEntries.isEmpty() || !existingFiles.isEmpty());
 		message.setAllowPingbacks(allowPingbacks);
 
 		if (priority != MBThreadConstants.PRIORITY_NOT_GIVEN) {
@@ -1384,7 +1389,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		long repositoryId = CompanyConstants.SYSTEM;
 		String dirName = message.getAttachmentsDir();
 
-		if (!files.isEmpty() || !existingFiles.isEmpty()) {
+		if (!inputStreamEntries.isEmpty() || !existingFiles.isEmpty()) {
 			try {
 				DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
 			}
@@ -1400,16 +1405,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				}
 			}
 
-			for (int i = 0; i < files.size(); i++) {
-				ObjectValuePair<String, File> ovp = files.get(i);
+			for (int i = 0; i < inputStreamEntries.size(); i++) {
+				ObjectValuePair<String, InputStream> inputStreamEntry =
+					inputStreamEntries.get(i);
 
-				String fileName = ovp.getKey();
-				File file = ovp.getValue();
+				String fileName = inputStreamEntry.getKey();
+				InputStream inputStream = inputStreamEntry.getValue();
 
 				try {
 					DLStoreUtil.addFile(
 						companyId, repositoryId, dirName + "/" + fileName,
-						file);
+						inputStream);
 				}
 				catch (DuplicateFileException dfe) {
 				}

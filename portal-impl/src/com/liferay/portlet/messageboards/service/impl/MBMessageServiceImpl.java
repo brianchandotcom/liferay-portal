@@ -56,9 +56,10 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.io.FeedException;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -91,8 +92,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	public MBMessage addMessage(
 			long groupId, long categoryId, long threadId, long parentMessageId,
 			String subject, String body, String format,
-			List<ObjectValuePair<String, File>> files, boolean anonymous,
-			double priority, boolean allowPingbacks,
+			List<ObjectValuePair<String, InputStream>> inputStreamEntries,
+			boolean anonymous, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -108,7 +109,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), groupId, categoryId,
 				ActionKeys.ADD_FILE)) {
 
-			files.clear();
+			inputStreamEntries = Collections.emptyList();
 		}
 
 		boolean preview = GetterUtil.getBoolean(
@@ -130,13 +131,14 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		return mbMessageLocalService.addMessage(
 			getGuestOrUserId(), null, groupId, categoryId, threadId,
-			parentMessageId, subject, body, format, files, anonymous, priority,
-			allowPingbacks, serviceContext);
+			parentMessageId, subject, body, format, inputStreamEntries,
+			anonymous, priority, allowPingbacks, serviceContext);
 	}
 
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
-			String format, List<ObjectValuePair<String, File>> files,
+			String format,
+			List<ObjectValuePair<String, InputStream>> inputStreamEntries,
 			boolean anonymous, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -149,7 +151,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), groupId, categoryId,
 				ActionKeys.ADD_FILE)) {
 
-			files.clear();
+			inputStreamEntries = Collections.emptyList();
 		}
 
 		if (!MBCategoryPermission.contains(
@@ -161,7 +163,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		return mbMessageLocalService.addMessage(
 			getGuestOrUserId(), null, groupId, categoryId, subject, body,
-			format, files, anonymous, priority, allowPingbacks, serviceContext);
+			format, inputStreamEntries, anonymous, priority, allowPingbacks,
+			serviceContext);
 	}
 
 	public void deleteDiscussionMessage(
@@ -577,7 +580,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	public MBMessage updateMessage(
 			long messageId, String subject, String body,
-			List<ObjectValuePair<String, File>> files,
+			List<ObjectValuePair<String, InputStream>> inputStreamEntries,
 			List<String> existingFiles, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -607,7 +610,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), message.getGroupId(),
 				message.getCategoryId(), ActionKeys.ADD_FILE)) {
 
-			files.clear();
+			inputStreamEntries = Collections.emptyList();
 		}
 
 		if (!MBCategoryPermission.contains(
@@ -621,8 +624,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		}
 
 		return mbMessageLocalService.updateMessage(
-			getGuestOrUserId(), messageId, subject, body, files, existingFiles,
-			priority, allowPingbacks, serviceContext);
+			getGuestOrUserId(), messageId, subject, body, inputStreamEntries,
+			existingFiles, priority, allowPingbacks, serviceContext);
 	}
 
 	protected void checkReplyToPermission(

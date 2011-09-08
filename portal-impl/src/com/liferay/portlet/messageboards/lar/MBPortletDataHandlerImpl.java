@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -55,11 +55,11 @@ import com.liferay.portlet.messageboards.service.persistence.MBMessageUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadFlagUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -428,59 +428,41 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 			threadFlagElement, path, threadFlag, _NAMESPACE);
 	}
 
-	protected List<ObjectValuePair<String, File>> getAttachments(
+	protected List<ObjectValuePair<String, InputStream>> getAttachments(
 			PortletDataContext portletDataContext, Element messageElement,
 			MBMessage message)
 		throws IOException {
 
-		List<ObjectValuePair<String, File>> ovps =
-			new ArrayList<ObjectValuePair<String, File>>();
-
 		if (!message.isAttachments() &&
 			portletDataContext.getBooleanParameter(_NAMESPACE, "attachments")) {
 
-			return ovps;
+			return Collections.emptyList();
 		}
 
-		List<File> files = new ArrayList<File>();
+		List<ObjectValuePair<String, InputStream>> ovps =
+			new ArrayList<ObjectValuePair<String, InputStream>>();
 
-		try {
-			List<Element> attachmentElements = messageElement.elements(
-				"attachment");
+		List<Element> attachmentElements = messageElement.elements(
+			"attachment");
 
-			for (Element attachmentElement : attachmentElements) {
-				String name = attachmentElement.attributeValue("name");
-				String binPath = attachmentElement.attributeValue(
-					"bin-path");
+		for (Element attachmentElement : attachmentElements) {
+			String name = attachmentElement.attributeValue("name");
+			String binPath = attachmentElement.attributeValue(
+				"bin-path");
 
-				InputStream is = portletDataContext.getZipEntryAsInputStream(
-					binPath);
+			InputStream is = portletDataContext.getZipEntryAsInputStream(
+				binPath);
 
-				File file = FileUtil.createTempFile(
-					FileUtil.getExtension(name));
-
-				files.add(file);
-
-				FileUtil.write(file, is);
-
-				ovps.add(new ObjectValuePair<String, File>(name, file));
-			}
-
-			if (ovps.isEmpty()) {
-				_log.error(
-					"Could not find attachments for message " +
-						message.getMessageId());
-			}
-
-			return ovps;
+			ovps.add(new ObjectValuePair<String, InputStream>(name, is));
 		}
-		catch (IOException ioe) {
-			for (File file : files) {
-				FileUtil.delete(file);
-			}
 
-			throw ioe;
+		if (ovps.isEmpty()) {
+			_log.error(
+				"Could not find attachments for message " +
+					message.getMessageId());
 		}
+
+		return ovps;
 	}
 
 	protected long getCategoryId(
@@ -750,7 +732,7 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		List<String> existingFiles = new ArrayList<String>();
 
-		List<ObjectValuePair<String, File>> files = getAttachments(
+		List<ObjectValuePair<String, InputStream>> files = getAttachments(
 			portletDataContext, messageElement, message);
 
 		try {
@@ -806,10 +788,10 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 				message, importedMessage, _NAMESPACE);
 		}
 		finally {
-			for (ObjectValuePair<String, File> ovp : files) {
-				File file = ovp.getValue();
+			for (ObjectValuePair<String, InputStream> ovp : files) {
+				InputStream inputStream = ovp.getValue();
 
-				FileUtil.delete(file);
+				StreamUtil.cleanUp(inputStream);
 			}
 		}
 	}

@@ -828,6 +828,8 @@
 
 		<action path="/journal/rss" type="com.liferay.portlet.journal.action.RSSAction" />
 
+		<action path="/journal/select_display_page" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction" />
+
 		<action path="/journal/select_document_library" type="com.liferay.portlet.documentlibrary.action.ViewAction">
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 			<forward name="portlet.document_library.view" path="portlet.journal.select_document_library" />

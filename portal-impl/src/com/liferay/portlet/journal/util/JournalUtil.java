@@ -369,24 +369,6 @@ public class JournalUtil {
 		return new Tuple(articles, corruptIndex);
 	}
 
-	public static List<Layout> getDefaultAssetPublisherLayouts(
-			long groupId, boolean privateLayout)
-		throws SystemException {
-
-		List<Layout> defaultAssetPublisherLayouts = new ArrayList<Layout>();
-
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout);
-
-		for (Layout layout : layouts) {
-			if (layout.isContentDisplayPage()) {
-				defaultAssetPublisherLayouts.add(layout);
-			}
-		}
-
-		return defaultAssetPublisherLayouts;
-	}
-
 	public static String getEmailArticleAddedBody(
 		PortletPreferences preferences) {
 

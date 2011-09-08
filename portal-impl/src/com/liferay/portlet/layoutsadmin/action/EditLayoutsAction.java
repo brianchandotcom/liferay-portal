@@ -327,6 +327,12 @@ public class EditLayoutsAction extends PortletAction {
 			portletRequestDispatcher = portletContext.getRequestDispatcher(
 				"/html/portlet/layouts_admin/scheduled_publishing_events.jsp");
 		}
+		else if (cmd.equals(ActionKeys.VIEW_TREE)) {
+			getGroup(resourceRequest);
+
+			portletRequestDispatcher = portletContext.getRequestDispatcher(
+				"/html/portlet/layouts_admin/tree_js.jsp");
+		}
 		else {
 			getGroup(resourceRequest);
 

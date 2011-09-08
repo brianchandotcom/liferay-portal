@@ -185,6 +185,10 @@ public class ThemeDisplay implements Serializable {
 		return _parentGroupId;
 	}
 
+	public Group getParentGroup() {
+		return _parentGroup;
+	}
+
 	public String getParentGroupName() throws PortalException, SystemException {
 		if (_parentGroup == null) {
 			return StringPool.BLANK;

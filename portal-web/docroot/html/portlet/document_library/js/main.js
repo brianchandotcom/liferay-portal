@@ -281,10 +281,10 @@ AUI().add(
 						var requestParams = {};
 
 						requestParams[namespace + STRUTS_ACTION] = config.strutsAction;
-						requestParams[namespace + STR_ENTRY_END] = instance._entryPaginator.get('rowsPerPage');
-						requestParams[namespace + STR_ENTRY_START] = config.entryStart;
-						requestParams[namespace + STR_FOLDER_END] = instance._folderPaginator.get('rowsPerPage');
-						requestParams[namespace + STR_FOLDER_START] = config.folderStart;
+						requestParams[namespace + STR_ENTRY_END] = config.entryRowsPerPage || instance._entryPaginator.get('rowsPerPage');
+						requestParams[namespace + STR_ENTRY_START] = 0;
+						requestParams[namespace + STR_FOLDER_END] = config.folderRowsPerPage || instance._folderPaginator.get('rowsPerPage');
+						requestParams[namespace + STR_FOLDER_START] = 0;
 						requestParams[namespace + 'refreshEntries'] = dataRefreshEntries;
 						requestParams[namespace + VIEW_ADD_BUTTON] = true;
 						requestParams[namespace + VIEW_ADD_BREADCRUMB] = true;

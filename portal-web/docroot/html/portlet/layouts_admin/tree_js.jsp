@@ -73,16 +73,11 @@ if (!selectableTree) {
 		createLink: function(data) {
 			var className = 'layout-tree';
 
-			var contentDisplayPage = data.contentDisplayPage;
-			var label = data.label;
-			var plid = data.plid;
-			var uuid = data.uuid;
-
-			if (<%= checkContentDisplayPage %> && !contentDisplayPage) {
-				className += ' layout-page-unacceptable';
+			if (<%= checkContentDisplayPage %> && !data.contentDisplayPage) {
+				className += ' layout-page-invalid';
 			}
 
-			return '<a class="' + className + '" data-uuid="' + uuid + '" href="' + LAYOUT_URL + plid + '">' + Liferay.Util.escapeHTML(label) + '</a>';
+			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + LAYOUT_URL + data.plid + '">' + Liferay.Util.escapeHTML(data.label) + '</a>';
 		},
 
 		extractLayoutId: function(node) {
@@ -101,13 +96,13 @@ if (!selectableTree) {
 				function(node) {
 					var newNode = {
 						<c:if test="<%= saveState %>">
-						after: {
-							checkedChange: function(event) {
-								var plid = TreeUtil.extractPlid(event.target);
+							after: {
+								checkedChange: function(event) {
+									var plid = TreeUtil.extractPlid(event.target);
 
-								TreeUtil.updateSessionTreeClick(plid, event.newVal, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
-							}
-						},
+									TreeUtil.updateSessionTreeClick(plid, event.newVal, '<%= HtmlUtil.escape(treeId) %>SelectedNode');
+								}
+							},
 						</c:if>
 						alwaysShowHitArea: node.hasChildren,
 						expanded : node.selLayoutAncestor,
@@ -187,23 +182,22 @@ if (!selectableTree) {
 		}
 
 		<c:if test="<%= saveState %>">
-		,
-		updateSessionTreeClick: function(id, open, treeId) {
-			var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_tree_js_click';
+			, updateSessionTreeClick: function(id, open, treeId) {
+				var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_tree_js_click';
 
-			var data = {
-				nodeId: id,
-				openNode: open || false,
-				treeId: treeId
-			};
+				var data = {
+					nodeId: id,
+					openNode: open || false,
+					treeId: treeId
+				};
 
-			A.io.request(
-				sessionClickURL,
-				{
-					data: data
-				}
-			);
-		}
+				A.io.request(
+					sessionClickURL,
+					{
+						data: data
+					}
+				);
+			}
 		</c:if>
 	};
 

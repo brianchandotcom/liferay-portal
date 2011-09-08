@@ -417,13 +417,13 @@
 	}
 
 	.display-page-item-container {
-		margin-top: 1em;
 		margin-bottom: 1em;
+		margin-top: 1em;
 
 		.display-page-item {
 			background-color: #DEE7F8;
-			border: 1px solid #CAD8F3;
 			border-radius: 14px;
+			border: 1px solid #CAD8F3;
 			padding: 5px 28px 5px 11px;
 			position: relative;
 
@@ -432,8 +432,8 @@
 				cursor: pointer;
 				display: block;
 				height: 16px;
-				position: absolute;
 				overflow: hidden;
+				position: absolute;
 				right: 8px;
 				top: 3px;
 				width: 16px;
@@ -445,7 +445,7 @@
 		}
 	}
 
-	.display-page-toolbar-container {
+	.display-page-toolbar {
 		margin-top: 0.5em;
 	}
 }
@@ -581,26 +581,19 @@
 }
 
 .display-page-dialog {
-	.aui-dialog-ft {
-		background-color: #EDF5FF;
-		border: 1px solid gray;
-		margin-left: 3px;
-		margin-right: 3px;
-	}
-
 	.aui-tree-label {
 		a {
 			color: black;
 		}
 
-		.layout-page-unacceptable {
-			color: gray;
+		.layout-page-invalid {
+			color: #AAA;
+			font-style: italic;
 		}
 	}
 
 	.selected-page-message {
-		font-weight: bold;
-		text-align: left;
+		margin: 5px 0;
 	}
 }
 

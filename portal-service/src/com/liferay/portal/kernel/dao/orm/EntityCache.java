@@ -28,8 +28,7 @@ public interface EntityCache {
 	public void clearLocalCache();
 
 	public Object getResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		SessionFactory sessionFactory);
+		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey);
 
 	public void invalidate();
 

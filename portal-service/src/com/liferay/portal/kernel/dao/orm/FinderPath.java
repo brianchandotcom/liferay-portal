@@ -30,13 +30,13 @@ public class FinderPath {
 
 	public FinderPath(
 		boolean entityCacheEnabled, boolean finderCacheEnabled,
-		Class<?> resultClass, String className, String methodName,
+		Class<?> resultClass, String cacheName, String methodName,
 		String[] params) {
 
 		_entityCacheEnabled = entityCacheEnabled;
 		_finderCacheEnabled = finderCacheEnabled;
 		_resultClass = resultClass;
-		_className = className;
+		_cacheName = cacheName;
 		_methodName = methodName;
 		_params = params;
 
@@ -82,8 +82,8 @@ public class FinderPath {
 		return cacheKeyGenerator.getCacheKey(sb);
 	}
 
-	public String getClassName() {
-		return _className;
+	public String getCacheName() {
+		return _cacheName;
 	}
 
 	public String getMethodName() {
@@ -123,7 +123,7 @@ public class FinderPath {
 	}
 
 	private void _initLocalCacheKeyPrefix() {
-		_localCacheKeyPrefix = _className.concat(StringPool.PERIOD).concat(
+		_localCacheKeyPrefix = _cacheName.concat(StringPool.PERIOD).concat(
 			_cacheKeyPrefix);
 	}
 
@@ -132,7 +132,7 @@ public class FinderPath {
 	private static final String _PARAMS_SEPARATOR = "_P_";
 
 	private String _cacheKeyPrefix;
-	private String _className;
+	private String _cacheName;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 	private String _localCacheKeyPrefix;

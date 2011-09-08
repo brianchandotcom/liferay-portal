@@ -80,8 +80,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 	}
 
 	public Object getResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		SessionFactory sessionFactory) {
+		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
 
 		if (!PropsValues.VALUE_OBJECT_ENTITY_CACHE_ENABLED ||
 			!entityCacheEnabled || !CacheRegistryUtil.isActive()) {

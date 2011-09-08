@@ -104,7 +104,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 
 		if (primaryKey == null) {
 			PortalCache portalCache = _getPortalCache(
-				finderPath.getClassName(), true);
+				finderPath.getCacheName(), true);
 
 			Serializable cacheKey = finderPath.encodeCacheKey(args);
 
@@ -149,7 +149,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		}
 
 		PortalCache portalCache = _getPortalCache(
-			finderPath.getClassName(), true);
+			finderPath.getCacheName(), true);
 
 		Serializable cacheKey = finderPath.encodeCacheKey(args);
 
@@ -181,7 +181,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		}
 
 		PortalCache portalCache = _getPortalCache(
-			finderPath.getClassName(), true);
+			finderPath.getCacheName(), true);
 
 		Serializable cacheKey = finderPath.encodeCacheKey(args);
 

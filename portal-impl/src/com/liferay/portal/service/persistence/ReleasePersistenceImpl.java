@@ -109,7 +109,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		for (Release release : releases) {
 			if (EntityCacheUtil.getResult(
 						ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-						ReleaseImpl.class, release.getPrimaryKey(), this) == null) {
+						ReleaseImpl.class, release.getPrimaryKey()) == null) {
 				cacheResult(release);
 			}
 		}
@@ -390,7 +390,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 */
 	public Release fetchByPrimaryKey(long releaseId) throws SystemException {
 		Release release = (Release)EntityCacheUtil.getResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-				ReleaseImpl.class, releaseId, this);
+				ReleaseImpl.class, releaseId);
 
 		if (release == _nullRelease) {
 			return null;

@@ -137,7 +137,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		for (LayoutSet layoutSet : layoutSets) {
 			if (EntityCacheUtil.getResult(
 						LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutSetImpl.class, layoutSet.getPrimaryKey(), this) == null) {
+						LayoutSetImpl.class, layoutSet.getPrimaryKey()) == null) {
 				cacheResult(layoutSet);
 			}
 		}
@@ -440,7 +440,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	public LayoutSet fetchByPrimaryKey(long layoutSetId)
 		throws SystemException {
 		LayoutSet layoutSet = (LayoutSet)EntityCacheUtil.getResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutSetImpl.class, layoutSetId, this);
+				LayoutSetImpl.class, layoutSetId);
 
 		if (layoutSet == _nullLayoutSet) {
 			return null;

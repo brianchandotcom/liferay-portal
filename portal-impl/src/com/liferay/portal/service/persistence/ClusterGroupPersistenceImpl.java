@@ -95,8 +95,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		for (ClusterGroup clusterGroup : clusterGroups) {
 			if (EntityCacheUtil.getResult(
 						ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-						ClusterGroupImpl.class, clusterGroup.getPrimaryKey(),
-						this) == null) {
+						ClusterGroupImpl.class, clusterGroup.getPrimaryKey()) == null) {
 				cacheResult(clusterGroup);
 			}
 		}
@@ -352,7 +351,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	public ClusterGroup fetchByPrimaryKey(long clusterGroupId)
 		throws SystemException {
 		ClusterGroup clusterGroup = (ClusterGroup)EntityCacheUtil.getResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-				ClusterGroupImpl.class, clusterGroupId, this);
+				ClusterGroupImpl.class, clusterGroupId);
 
 		if (clusterGroup == _nullClusterGroup) {
 			return null;

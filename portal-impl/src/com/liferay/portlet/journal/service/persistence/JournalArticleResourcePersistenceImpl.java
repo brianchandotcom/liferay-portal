@@ -166,7 +166,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			if (EntityCacheUtil.getResult(
 						JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 						JournalArticleResourceImpl.class,
-						journalArticleResource.getPrimaryKey(), this) == null) {
+						journalArticleResource.getPrimaryKey()) == null) {
 				cacheResult(journalArticleResource);
 			}
 		}
@@ -518,7 +518,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	public JournalArticleResource fetchByPrimaryKey(long resourcePrimKey)
 		throws SystemException {
 		JournalArticleResource journalArticleResource = (JournalArticleResource)EntityCacheUtil.getResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-				JournalArticleResourceImpl.class, resourcePrimKey, this);
+				JournalArticleResourceImpl.class, resourcePrimKey);
 
 		if (journalArticleResource == _nullJournalArticleResource) {
 			return null;

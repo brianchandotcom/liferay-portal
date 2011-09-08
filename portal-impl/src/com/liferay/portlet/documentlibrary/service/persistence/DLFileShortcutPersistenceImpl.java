@@ -181,8 +181,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
 			if (EntityCacheUtil.getResult(
 						DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileShortcutImpl.class,
-						dlFileShortcut.getPrimaryKey(), this) == null) {
+						DLFileShortcutImpl.class, dlFileShortcut.getPrimaryKey()) == null) {
 				cacheResult(dlFileShortcut);
 			}
 		}
@@ -500,7 +499,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut fetchByPrimaryKey(long fileShortcutId)
 		throws SystemException {
 		DLFileShortcut dlFileShortcut = (DLFileShortcut)EntityCacheUtil.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileShortcutImpl.class, fileShortcutId, this);
+				DLFileShortcutImpl.class, fileShortcutId);
 
 		if (dlFileShortcut == _nullDLFileShortcut) {
 			return null;

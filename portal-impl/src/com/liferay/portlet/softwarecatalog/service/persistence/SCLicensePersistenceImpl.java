@@ -136,7 +136,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		for (SCLicense scLicense : scLicenses) {
 			if (EntityCacheUtil.getResult(
 						SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-						SCLicenseImpl.class, scLicense.getPrimaryKey(), this) == null) {
+						SCLicenseImpl.class, scLicense.getPrimaryKey()) == null) {
 				cacheResult(scLicense);
 			}
 		}
@@ -402,7 +402,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public SCLicense fetchByPrimaryKey(long licenseId)
 		throws SystemException {
 		SCLicense scLicense = (SCLicense)EntityCacheUtil.getResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-				SCLicenseImpl.class, licenseId, this);
+				SCLicenseImpl.class, licenseId);
 
 		if (scLicense == _nullSCLicense) {
 			return null;

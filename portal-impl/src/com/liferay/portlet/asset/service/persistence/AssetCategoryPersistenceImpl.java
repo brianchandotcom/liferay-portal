@@ -256,8 +256,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		for (AssetCategory assetCategory : assetCategories) {
 			if (EntityCacheUtil.getResult(
 						AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetCategoryImpl.class, assetCategory.getPrimaryKey(),
-						this) == null) {
+						AssetCategoryImpl.class, assetCategory.getPrimaryKey()) == null) {
 				cacheResult(assetCategory);
 			}
 		}
@@ -642,7 +641,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public AssetCategory fetchByPrimaryKey(long categoryId)
 		throws SystemException {
 		AssetCategory assetCategory = (AssetCategory)EntityCacheUtil.getResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetCategoryImpl.class, categoryId, this);
+				AssetCategoryImpl.class, categoryId);
 
 		if (assetCategory == _nullAssetCategory) {
 			return null;

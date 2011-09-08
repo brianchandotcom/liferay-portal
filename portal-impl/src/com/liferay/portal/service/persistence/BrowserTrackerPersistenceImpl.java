@@ -111,8 +111,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		for (BrowserTracker browserTracker : browserTrackers) {
 			if (EntityCacheUtil.getResult(
 						BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-						BrowserTrackerImpl.class,
-						browserTracker.getPrimaryKey(), this) == null) {
+						BrowserTrackerImpl.class, browserTracker.getPrimaryKey()) == null) {
 				cacheResult(browserTracker);
 			}
 		}
@@ -395,7 +394,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	public BrowserTracker fetchByPrimaryKey(long browserTrackerId)
 		throws SystemException {
 		BrowserTracker browserTracker = (BrowserTracker)EntityCacheUtil.getResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-				BrowserTrackerImpl.class, browserTrackerId, this);
+				BrowserTrackerImpl.class, browserTrackerId);
 
 		if (browserTracker == _nullBrowserTracker) {
 			return null;

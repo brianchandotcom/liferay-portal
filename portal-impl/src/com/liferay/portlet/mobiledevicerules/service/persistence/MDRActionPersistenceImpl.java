@@ -155,7 +155,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		for (MDRAction mdrAction : mdrActions) {
 			if (EntityCacheUtil.getResult(
 						MDRActionModelImpl.ENTITY_CACHE_ENABLED,
-						MDRActionImpl.class, mdrAction.getPrimaryKey(), this) == null) {
+						MDRActionImpl.class, mdrAction.getPrimaryKey()) == null) {
 				cacheResult(mdrAction);
 			}
 		}
@@ -467,7 +467,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	public MDRAction fetchByPrimaryKey(long actionId) throws SystemException {
 		MDRAction mdrAction = (MDRAction)EntityCacheUtil.getResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
-				MDRActionImpl.class, actionId, this);
+				MDRActionImpl.class, actionId);
 
 		if (mdrAction == _nullMDRAction) {
 			return null;

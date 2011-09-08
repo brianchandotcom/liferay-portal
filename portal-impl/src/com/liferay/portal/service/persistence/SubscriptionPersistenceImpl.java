@@ -163,8 +163,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		for (Subscription subscription : subscriptions) {
 			if (EntityCacheUtil.getResult(
 						SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-						SubscriptionImpl.class, subscription.getPrimaryKey(),
-						this) == null) {
+						SubscriptionImpl.class, subscription.getPrimaryKey()) == null) {
 				cacheResult(subscription);
 			}
 		}
@@ -475,7 +474,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	public Subscription fetchByPrimaryKey(long subscriptionId)
 		throws SystemException {
 		Subscription subscription = (Subscription)EntityCacheUtil.getResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-				SubscriptionImpl.class, subscriptionId, this);
+				SubscriptionImpl.class, subscriptionId);
 
 		if (subscription == _nullSubscription) {
 			return null;

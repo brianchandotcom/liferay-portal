@@ -159,7 +159,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		for (MBStatsUser mbStatsUser : mbStatsUsers) {
 			if (EntityCacheUtil.getResult(
 						MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-						MBStatsUserImpl.class, mbStatsUser.getPrimaryKey(), this) == null) {
+						MBStatsUserImpl.class, mbStatsUser.getPrimaryKey()) == null) {
 				cacheResult(mbStatsUser);
 			}
 		}
@@ -453,7 +453,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	public MBStatsUser fetchByPrimaryKey(long statsUserId)
 		throws SystemException {
 		MBStatsUser mbStatsUser = (MBStatsUser)EntityCacheUtil.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				MBStatsUserImpl.class, statsUserId, this);
+				MBStatsUserImpl.class, statsUserId);
 
 		if (mbStatsUser == _nullMBStatsUser) {
 			return null;

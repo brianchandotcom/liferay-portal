@@ -140,7 +140,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			if (EntityCacheUtil.getResult(
 						AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 						AnnouncementsFlagImpl.class,
-						announcementsFlag.getPrimaryKey(), this) == null) {
+						announcementsFlag.getPrimaryKey()) == null) {
 				cacheResult(announcementsFlag);
 			}
 		}
@@ -444,7 +444,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	public AnnouncementsFlag fetchByPrimaryKey(long flagId)
 		throws SystemException {
 		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)EntityCacheUtil.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagImpl.class, flagId, this);
+				AnnouncementsFlagImpl.class, flagId);
 
 		if (announcementsFlag == _nullAnnouncementsFlag) {
 			return null;

@@ -111,7 +111,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		for (WebDAVProps webDAVProps : webDAVPropses) {
 			if (EntityCacheUtil.getResult(
 						WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
-						WebDAVPropsImpl.class, webDAVProps.getPrimaryKey(), this) == null) {
+						WebDAVPropsImpl.class, webDAVProps.getPrimaryKey()) == null) {
 				cacheResult(webDAVProps);
 			}
 		}
@@ -407,7 +407,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	public WebDAVProps fetchByPrimaryKey(long webDavPropsId)
 		throws SystemException {
 		WebDAVProps webDAVProps = (WebDAVProps)EntityCacheUtil.getResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
-				WebDAVPropsImpl.class, webDavPropsId, this);
+				WebDAVPropsImpl.class, webDavPropsId);
 
 		if (webDAVProps == _nullWebDAVProps) {
 			return null;

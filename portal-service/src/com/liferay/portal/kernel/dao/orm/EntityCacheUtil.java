@@ -38,11 +38,10 @@ public class EntityCacheUtil {
 	}
 
 	public static Object getResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		SessionFactory sessionFactory) {
+		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
 
 		return getEntityCache().getResult(
-			entityCacheEnabled, clazz, primaryKey, sessionFactory);
+			entityCacheEnabled, clazz, primaryKey);
 	}
 
 	public static void invalidate() {

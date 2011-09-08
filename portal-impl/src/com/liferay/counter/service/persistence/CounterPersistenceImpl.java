@@ -99,7 +99,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		for (Counter counter : counters) {
 			if (EntityCacheUtil.getResult(
 						CounterModelImpl.ENTITY_CACHE_ENABLED,
-						CounterImpl.class, counter.getPrimaryKey(), this) == null) {
+						CounterImpl.class, counter.getPrimaryKey()) == null) {
 				cacheResult(counter);
 			}
 		}
@@ -347,7 +347,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 */
 	public Counter fetchByPrimaryKey(String name) throws SystemException {
 		Counter counter = (Counter)EntityCacheUtil.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
-				CounterImpl.class, name, this);
+				CounterImpl.class, name);
 
 		if (counter == _nullCounter) {
 			return null;

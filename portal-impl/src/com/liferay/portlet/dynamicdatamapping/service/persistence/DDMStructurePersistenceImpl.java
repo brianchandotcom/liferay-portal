@@ -190,8 +190,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		for (DDMStructure ddmStructure : ddmStructures) {
 			if (EntityCacheUtil.getResult(
 						DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStructureImpl.class, ddmStructure.getPrimaryKey(),
-						this) == null) {
+						DDMStructureImpl.class, ddmStructure.getPrimaryKey()) == null) {
 				cacheResult(ddmStructure);
 			}
 		}
@@ -543,7 +542,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public DDMStructure fetchByPrimaryKey(long structureId)
 		throws SystemException {
 		DDMStructure ddmStructure = (DDMStructure)EntityCacheUtil.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStructureImpl.class, structureId, this);
+				DDMStructureImpl.class, structureId);
 
 		if (ddmStructure == _nullDDMStructure) {
 			return null;

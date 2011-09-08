@@ -163,7 +163,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			if (EntityCacheUtil.getResult(
 						AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
 						AssetCategoryPropertyImpl.class,
-						assetCategoryProperty.getPrimaryKey(), this) == null) {
+						assetCategoryProperty.getPrimaryKey()) == null) {
 				cacheResult(assetCategoryProperty);
 			}
 		}
@@ -474,7 +474,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	public AssetCategoryProperty fetchByPrimaryKey(long categoryPropertyId)
 		throws SystemException {
 		AssetCategoryProperty assetCategoryProperty = (AssetCategoryProperty)EntityCacheUtil.getResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetCategoryPropertyImpl.class, categoryPropertyId, this);
+				AssetCategoryPropertyImpl.class, categoryPropertyId);
 
 		if (assetCategoryProperty == _nullAssetCategoryProperty) {
 			return null;

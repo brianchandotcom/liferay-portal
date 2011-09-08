@@ -122,7 +122,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	public void cacheResult(List<Shard> shards) {
 		for (Shard shard : shards) {
 			if (EntityCacheUtil.getResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
-						ShardImpl.class, shard.getPrimaryKey(), this) == null) {
+						ShardImpl.class, shard.getPrimaryKey()) == null) {
 				cacheResult(shard);
 			}
 		}
@@ -431,7 +431,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 */
 	public Shard fetchByPrimaryKey(long shardId) throws SystemException {
 		Shard shard = (Shard)EntityCacheUtil.getResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
-				ShardImpl.class, shardId, this);
+				ShardImpl.class, shardId);
 
 		if (shard == _nullShard) {
 			return null;

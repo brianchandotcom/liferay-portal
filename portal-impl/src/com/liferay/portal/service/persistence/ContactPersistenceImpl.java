@@ -110,7 +110,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		for (Contact contact : contacts) {
 			if (EntityCacheUtil.getResult(
 						ContactModelImpl.ENTITY_CACHE_ENABLED,
-						ContactImpl.class, contact.getPrimaryKey(), this) == null) {
+						ContactImpl.class, contact.getPrimaryKey()) == null) {
 				cacheResult(contact);
 			}
 		}
@@ -387,7 +387,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	public Contact fetchByPrimaryKey(long contactId) throws SystemException {
 		Contact contact = (Contact)EntityCacheUtil.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-				ContactImpl.class, contactId, this);
+				ContactImpl.class, contactId);
 
 		if (contact == _nullContact) {
 			return null;

@@ -125,8 +125,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		for (ResourceAction resourceAction : resourceActions) {
 			if (EntityCacheUtil.getResult(
 						ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceActionImpl.class,
-						resourceAction.getPrimaryKey(), this) == null) {
+						ResourceActionImpl.class, resourceAction.getPrimaryKey()) == null) {
 				cacheResult(resourceAction);
 			}
 		}
@@ -425,7 +424,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	public ResourceAction fetchByPrimaryKey(long resourceActionId)
 		throws SystemException {
 		ResourceAction resourceAction = (ResourceAction)EntityCacheUtil.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceActionImpl.class, resourceActionId, this);
+				ResourceActionImpl.class, resourceActionId);
 
 		if (resourceAction == _nullResourceAction) {
 			return null;

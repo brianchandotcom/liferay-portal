@@ -233,8 +233,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		for (LayoutRevision layoutRevision : layoutRevisions) {
 			if (EntityCacheUtil.getResult(
 						LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutRevisionImpl.class,
-						layoutRevision.getPrimaryKey(), this) == null) {
+						LayoutRevisionImpl.class, layoutRevision.getPrimaryKey()) == null) {
 				cacheResult(layoutRevision);
 			}
 		}
@@ -563,7 +562,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public LayoutRevision fetchByPrimaryKey(long layoutRevisionId)
 		throws SystemException {
 		LayoutRevision layoutRevision = (LayoutRevision)EntityCacheUtil.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutRevisionImpl.class, layoutRevisionId, this);
+				LayoutRevisionImpl.class, layoutRevisionId);
 
 		if (layoutRevision == _nullLayoutRevision) {
 			return null;

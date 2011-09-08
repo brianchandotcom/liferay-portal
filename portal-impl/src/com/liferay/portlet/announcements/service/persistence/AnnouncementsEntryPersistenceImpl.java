@@ -171,7 +171,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			if (EntityCacheUtil.getResult(
 						AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 						AnnouncementsEntryImpl.class,
-						announcementsEntry.getPrimaryKey(), this) == null) {
+						announcementsEntry.getPrimaryKey()) == null) {
 				cacheResult(announcementsEntry);
 			}
 		}
@@ -451,7 +451,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	public AnnouncementsEntry fetchByPrimaryKey(long entryId)
 		throws SystemException {
 		AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)EntityCacheUtil.getResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsEntryImpl.class, entryId, this);
+				AnnouncementsEntryImpl.class, entryId);
 
 		if (announcementsEntry == _nullAnnouncementsEntry) {
 			return null;

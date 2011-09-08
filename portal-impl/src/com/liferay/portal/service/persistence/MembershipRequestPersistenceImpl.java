@@ -158,7 +158,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			if (EntityCacheUtil.getResult(
 						MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 						MembershipRequestImpl.class,
-						membershipRequest.getPrimaryKey(), this) == null) {
+						membershipRequest.getPrimaryKey()) == null) {
 				cacheResult(membershipRequest);
 			}
 		}
@@ -423,7 +423,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest fetchByPrimaryKey(long membershipRequestId)
 		throws SystemException {
 		MembershipRequest membershipRequest = (MembershipRequest)EntityCacheUtil.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
-				MembershipRequestImpl.class, membershipRequestId, this);
+				MembershipRequestImpl.class, membershipRequestId);
 
 		if (membershipRequest == _nullMembershipRequest) {
 			return null;

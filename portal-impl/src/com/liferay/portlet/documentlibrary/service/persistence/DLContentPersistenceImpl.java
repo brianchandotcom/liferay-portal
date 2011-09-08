@@ -146,7 +146,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		for (DLContent dlContent : dlContents) {
 			if (EntityCacheUtil.getResult(
 						DLContentModelImpl.ENTITY_CACHE_ENABLED,
-						DLContentImpl.class, dlContent.getPrimaryKey(), this) == null) {
+						DLContentImpl.class, dlContent.getPrimaryKey()) == null) {
 				cacheResult(dlContent);
 			}
 
@@ -484,7 +484,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	public DLContent fetchByPrimaryKey(long contentId)
 		throws SystemException {
 		DLContent dlContent = (DLContent)EntityCacheUtil.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-				DLContentImpl.class, contentId, this);
+				DLContentImpl.class, contentId);
 
 		if (dlContent == _nullDLContent) {
 			return null;

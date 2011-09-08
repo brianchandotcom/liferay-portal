@@ -126,7 +126,7 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 		for (Resource resource : resources) {
 			if (EntityCacheUtil.getResult(
 						ResourceModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceImpl.class, resource.getPrimaryKey(), this) == null) {
+						ResourceImpl.class, resource.getPrimaryKey()) == null) {
 				cacheResult(resource);
 			}
 		}
@@ -421,7 +421,7 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	public Resource fetchByPrimaryKey(long resourceId)
 		throws SystemException {
 		Resource resource = (Resource)EntityCacheUtil.getResult(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceImpl.class, resourceId, this);
+				ResourceImpl.class, resourceId);
 
 		if (resource == _nullResource) {
 			return null;

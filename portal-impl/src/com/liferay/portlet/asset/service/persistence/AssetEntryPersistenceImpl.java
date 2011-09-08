@@ -205,7 +205,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		for (AssetEntry assetEntry : assetEntries) {
 			if (EntityCacheUtil.getResult(
 						AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetEntryImpl.class, assetEntry.getPrimaryKey(), this) == null) {
+						AssetEntryImpl.class, assetEntry.getPrimaryKey()) == null) {
 				cacheResult(assetEntry);
 			}
 		}
@@ -576,7 +576,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	public AssetEntry fetchByPrimaryKey(long entryId) throws SystemException {
 		AssetEntry assetEntry = (AssetEntry)EntityCacheUtil.getResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetEntryImpl.class, entryId, this);
+				AssetEntryImpl.class, entryId);
 
 		if (assetEntry == _nullAssetEntry) {
 			return null;

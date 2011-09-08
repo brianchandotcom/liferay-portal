@@ -147,8 +147,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		for (PollsQuestion pollsQuestion : pollsQuestions) {
 			if (EntityCacheUtil.getResult(
 						PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-						PollsQuestionImpl.class, pollsQuestion.getPrimaryKey(),
-						this) == null) {
+						PollsQuestionImpl.class, pollsQuestion.getPrimaryKey()) == null) {
 				cacheResult(pollsQuestion);
 			}
 		}
@@ -462,7 +461,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	public PollsQuestion fetchByPrimaryKey(long questionId)
 		throws SystemException {
 		PollsQuestion pollsQuestion = (PollsQuestion)EntityCacheUtil.getResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-				PollsQuestionImpl.class, questionId, this);
+				PollsQuestionImpl.class, questionId);
 
 		if (pollsQuestion == _nullPollsQuestion) {
 			return null;

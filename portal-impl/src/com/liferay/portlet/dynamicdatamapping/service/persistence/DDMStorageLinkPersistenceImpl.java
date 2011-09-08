@@ -144,8 +144,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		for (DDMStorageLink ddmStorageLink : ddmStorageLinks) {
 			if (EntityCacheUtil.getResult(
 						DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStorageLinkImpl.class,
-						ddmStorageLink.getPrimaryKey(), this) == null) {
+						DDMStorageLinkImpl.class, ddmStorageLink.getPrimaryKey()) == null) {
 				cacheResult(ddmStorageLink);
 			}
 		}
@@ -439,7 +438,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	public DDMStorageLink fetchByPrimaryKey(long storageLinkId)
 		throws SystemException {
 		DDMStorageLink ddmStorageLink = (DDMStorageLink)EntityCacheUtil.getResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStorageLinkImpl.class, storageLinkId, this);
+				DDMStorageLinkImpl.class, storageLinkId);
 
 		if (ddmStorageLink == _nullDDMStorageLink) {
 			return null;

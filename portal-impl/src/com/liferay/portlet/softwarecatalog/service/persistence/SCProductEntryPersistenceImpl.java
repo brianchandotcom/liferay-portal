@@ -172,8 +172,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		for (SCProductEntry scProductEntry : scProductEntries) {
 			if (EntityCacheUtil.getResult(
 						SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
-						SCProductEntryImpl.class,
-						scProductEntry.getPrimaryKey(), this) == null) {
+						SCProductEntryImpl.class, scProductEntry.getPrimaryKey()) == null) {
 				cacheResult(scProductEntry);
 			}
 		}
@@ -498,7 +497,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	public SCProductEntry fetchByPrimaryKey(long productEntryId)
 		throws SystemException {
 		SCProductEntry scProductEntry = (SCProductEntry)EntityCacheUtil.getResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
-				SCProductEntryImpl.class, productEntryId, this);
+				SCProductEntryImpl.class, productEntryId);
 
 		if (scProductEntry == _nullSCProductEntry) {
 			return null;

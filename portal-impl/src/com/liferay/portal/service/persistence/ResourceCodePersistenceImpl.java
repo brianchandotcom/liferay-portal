@@ -145,8 +145,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 		for (ResourceCode resourceCode : resourceCodes) {
 			if (EntityCacheUtil.getResult(
 						ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceCodeImpl.class, resourceCode.getPrimaryKey(),
-						this) == null) {
+						ResourceCodeImpl.class, resourceCode.getPrimaryKey()) == null) {
 				cacheResult(resourceCode);
 			}
 		}
@@ -449,7 +448,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	public ResourceCode fetchByPrimaryKey(long codeId)
 		throws SystemException {
 		ResourceCode resourceCode = (ResourceCode)EntityCacheUtil.getResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceCodeImpl.class, codeId, this);
+				ResourceCodeImpl.class, codeId);
 
 		if (resourceCode == _nullResourceCode) {
 			return null;

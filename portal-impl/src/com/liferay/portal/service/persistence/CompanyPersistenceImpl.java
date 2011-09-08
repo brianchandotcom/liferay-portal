@@ -144,7 +144,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		for (Company company : companies) {
 			if (EntityCacheUtil.getResult(
 						CompanyModelImpl.ENTITY_CACHE_ENABLED,
-						CompanyImpl.class, company.getPrimaryKey(), this) == null) {
+						CompanyImpl.class, company.getPrimaryKey()) == null) {
 				cacheResult(company);
 			}
 		}
@@ -466,7 +466,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	public Company fetchByPrimaryKey(long companyId) throws SystemException {
 		Company company = (Company)EntityCacheUtil.getResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
-				CompanyImpl.class, companyId, this);
+				CompanyImpl.class, companyId);
 
 		if (company == _nullCompany) {
 			return null;

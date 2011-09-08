@@ -135,7 +135,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			if (EntityCacheUtil.getResult(
 						AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 						AnnouncementsDeliveryImpl.class,
-						announcementsDelivery.getPrimaryKey(), this) == null) {
+						announcementsDelivery.getPrimaryKey()) == null) {
 				cacheResult(announcementsDelivery);
 			}
 		}
@@ -442,7 +442,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	public AnnouncementsDelivery fetchByPrimaryKey(long deliveryId)
 		throws SystemException {
 		AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)EntityCacheUtil.getResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryImpl.class, deliveryId, this);
+				AnnouncementsDeliveryImpl.class, deliveryId);
 
 		if (announcementsDelivery == _nullAnnouncementsDelivery) {
 			return null;

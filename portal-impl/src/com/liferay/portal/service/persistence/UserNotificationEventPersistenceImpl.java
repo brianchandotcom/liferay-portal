@@ -130,7 +130,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			if (EntityCacheUtil.getResult(
 						UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 						UserNotificationEventImpl.class,
-						userNotificationEvent.getPrimaryKey(), this) == null) {
+						userNotificationEvent.getPrimaryKey()) == null) {
 				cacheResult(userNotificationEvent);
 			}
 		}
@@ -405,7 +405,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	public UserNotificationEvent fetchByPrimaryKey(long userNotificationEventId)
 		throws SystemException {
 		UserNotificationEvent userNotificationEvent = (UserNotificationEvent)EntityCacheUtil.getResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-				UserNotificationEventImpl.class, userNotificationEventId, this);
+				UserNotificationEventImpl.class, userNotificationEventId);
 
 		if (userNotificationEvent == _nullUserNotificationEvent) {
 			return null;

@@ -159,8 +159,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		for (MBMailingList mbMailingList : mbMailingLists) {
 			if (EntityCacheUtil.getResult(
 						MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-						MBMailingListImpl.class, mbMailingList.getPrimaryKey(),
-						this) == null) {
+						MBMailingListImpl.class, mbMailingList.getPrimaryKey()) == null) {
 				cacheResult(mbMailingList);
 			}
 		}
@@ -520,7 +519,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	public MBMailingList fetchByPrimaryKey(long mailingListId)
 		throws SystemException {
 		MBMailingList mbMailingList = (MBMailingList)EntityCacheUtil.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-				MBMailingListImpl.class, mailingListId, this);
+				MBMailingListImpl.class, mailingListId);
 
 		if (mbMailingList == _nullMBMailingList) {
 			return null;

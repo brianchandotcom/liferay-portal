@@ -131,8 +131,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		for (ExpandoColumn expandoColumn : expandoColumns) {
 			if (EntityCacheUtil.getResult(
 						ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoColumnImpl.class, expandoColumn.getPrimaryKey(),
-						this) == null) {
+						ExpandoColumnImpl.class, expandoColumn.getPrimaryKey()) == null) {
 				cacheResult(expandoColumn);
 			}
 		}
@@ -391,7 +390,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	public ExpandoColumn fetchByPrimaryKey(long columnId)
 		throws SystemException {
 		ExpandoColumn expandoColumn = (ExpandoColumn)EntityCacheUtil.getResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoColumnImpl.class, columnId, this);
+				ExpandoColumnImpl.class, columnId);
 
 		if (expandoColumn == _nullExpandoColumn) {
 			return null;

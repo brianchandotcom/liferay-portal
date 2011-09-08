@@ -109,7 +109,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		for (ClassName className : classNames) {
 			if (EntityCacheUtil.getResult(
 						ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-						ClassNameImpl.class, className.getPrimaryKey(), this) == null) {
+						ClassNameImpl.class, className.getPrimaryKey()) == null) {
 				cacheResult(className);
 			}
 		}
@@ -386,7 +386,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	public ClassName fetchByPrimaryKey(long classNameId)
 		throws SystemException {
 		ClassName className = (ClassName)EntityCacheUtil.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-				ClassNameImpl.class, classNameId, this);
+				ClassNameImpl.class, classNameId);
 
 		if (className == _nullClassName) {
 			return null;

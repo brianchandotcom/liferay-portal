@@ -110,7 +110,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		for (OrgLabor orgLabor : orgLabors) {
 			if (EntityCacheUtil.getResult(
 						OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-						OrgLaborImpl.class, orgLabor.getPrimaryKey(), this) == null) {
+						OrgLaborImpl.class, orgLabor.getPrimaryKey()) == null) {
 				cacheResult(orgLabor);
 			}
 		}
@@ -375,7 +375,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	public OrgLabor fetchByPrimaryKey(long orgLaborId)
 		throws SystemException {
 		OrgLabor orgLabor = (OrgLabor)EntityCacheUtil.getResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborImpl.class, orgLaborId, this);
+				OrgLaborImpl.class, orgLaborId);
 
 		if (orgLabor == _nullOrgLabor) {
 			return null;

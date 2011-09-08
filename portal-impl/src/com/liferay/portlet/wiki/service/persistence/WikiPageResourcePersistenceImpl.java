@@ -134,7 +134,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			if (EntityCacheUtil.getResult(
 						WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 						WikiPageResourceImpl.class,
-						wikiPageResource.getPrimaryKey(), this) == null) {
+						wikiPageResource.getPrimaryKey()) == null) {
 				cacheResult(wikiPageResource);
 			}
 		}
@@ -446,7 +446,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	public WikiPageResource fetchByPrimaryKey(long resourcePrimKey)
 		throws SystemException {
 		WikiPageResource wikiPageResource = (WikiPageResource)EntityCacheUtil.getResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
-				WikiPageResourceImpl.class, resourcePrimKey, this);
+				WikiPageResourceImpl.class, resourcePrimKey);
 
 		if (wikiPageResource == _nullWikiPageResource) {
 			return null;

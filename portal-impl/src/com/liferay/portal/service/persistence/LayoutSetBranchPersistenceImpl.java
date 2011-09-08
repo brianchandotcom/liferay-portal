@@ -152,7 +152,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			if (EntityCacheUtil.getResult(
 						LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 						LayoutSetBranchImpl.class,
-						layoutSetBranch.getPrimaryKey(), this) == null) {
+						layoutSetBranch.getPrimaryKey()) == null) {
 				cacheResult(layoutSetBranch);
 			}
 		}
@@ -467,7 +467,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	public LayoutSetBranch fetchByPrimaryKey(long layoutSetBranchId)
 		throws SystemException {
 		LayoutSetBranch layoutSetBranch = (LayoutSetBranch)EntityCacheUtil.getResult(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutSetBranchImpl.class, layoutSetBranchId, this);
+				LayoutSetBranchImpl.class, layoutSetBranchId);
 
 		if (layoutSetBranch == _nullLayoutSetBranch) {
 			return null;

@@ -139,7 +139,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 			if (EntityCacheUtil.getResult(
 						SCProductVersionModelImpl.ENTITY_CACHE_ENABLED,
 						SCProductVersionImpl.class,
-						scProductVersion.getPrimaryKey(), this) == null) {
+						scProductVersion.getPrimaryKey()) == null) {
 				cacheResult(scProductVersion);
 			}
 		}
@@ -444,7 +444,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	public SCProductVersion fetchByPrimaryKey(long productVersionId)
 		throws SystemException {
 		SCProductVersion scProductVersion = (SCProductVersion)EntityCacheUtil.getResult(SCProductVersionModelImpl.ENTITY_CACHE_ENABLED,
-				SCProductVersionImpl.class, productVersionId, this);
+				SCProductVersionImpl.class, productVersionId);
 
 		if (scProductVersion == _nullSCProductVersion) {
 			return null;

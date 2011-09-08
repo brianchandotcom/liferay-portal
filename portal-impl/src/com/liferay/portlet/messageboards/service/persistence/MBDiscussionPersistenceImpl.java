@@ -140,8 +140,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		for (MBDiscussion mbDiscussion : mbDiscussions) {
 			if (EntityCacheUtil.getResult(
 						MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-						MBDiscussionImpl.class, mbDiscussion.getPrimaryKey(),
-						this) == null) {
+						MBDiscussionImpl.class, mbDiscussion.getPrimaryKey()) == null) {
 				cacheResult(mbDiscussion);
 			}
 		}
@@ -455,7 +454,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	public MBDiscussion fetchByPrimaryKey(long discussionId)
 		throws SystemException {
 		MBDiscussion mbDiscussion = (MBDiscussion)EntityCacheUtil.getResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-				MBDiscussionImpl.class, discussionId, this);
+				MBDiscussionImpl.class, discussionId);
 
 		if (mbDiscussion == _nullMBDiscussion) {
 			return null;

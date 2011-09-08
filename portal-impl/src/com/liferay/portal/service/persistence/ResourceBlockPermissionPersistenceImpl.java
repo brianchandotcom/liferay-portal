@@ -130,7 +130,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			if (EntityCacheUtil.getResult(
 						ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 						ResourceBlockPermissionImpl.class,
-						resourceBlockPermission.getPrimaryKey(), this) == null) {
+						resourceBlockPermission.getPrimaryKey()) == null) {
 				cacheResult(resourceBlockPermission);
 			}
 		}
@@ -435,8 +435,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	public ResourceBlockPermission fetchByPrimaryKey(
 		long resourceBlockPermissionId) throws SystemException {
 		ResourceBlockPermission resourceBlockPermission = (ResourceBlockPermission)EntityCacheUtil.getResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceBlockPermissionImpl.class, resourceBlockPermissionId,
-				this);
+				ResourceBlockPermissionImpl.class, resourceBlockPermissionId);
 
 		if (resourceBlockPermission == _nullResourceBlockPermission) {
 			return null;

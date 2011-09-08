@@ -144,7 +144,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		for (Country country : countries) {
 			if (EntityCacheUtil.getResult(
 						CountryModelImpl.ENTITY_CACHE_ENABLED,
-						CountryImpl.class, country.getPrimaryKey(), this) == null) {
+						CountryImpl.class, country.getPrimaryKey()) == null) {
 				cacheResult(country);
 			}
 		}
@@ -465,7 +465,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	public Country fetchByPrimaryKey(long countryId) throws SystemException {
 		Country country = (Country)EntityCacheUtil.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-				CountryImpl.class, countryId, this);
+				CountryImpl.class, countryId);
 
 		if (country == _nullCountry) {
 			return null;

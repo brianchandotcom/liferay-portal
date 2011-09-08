@@ -248,7 +248,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		for (MBThread mbThread : mbThreads) {
 			if (EntityCacheUtil.getResult(
 						MBThreadModelImpl.ENTITY_CACHE_ENABLED,
-						MBThreadImpl.class, mbThread.getPrimaryKey(), this) == null) {
+						MBThreadImpl.class, mbThread.getPrimaryKey()) == null) {
 				cacheResult(mbThread);
 			}
 		}
@@ -539,7 +539,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	public MBThread fetchByPrimaryKey(long threadId) throws SystemException {
 		MBThread mbThread = (MBThread)EntityCacheUtil.getResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
-				MBThreadImpl.class, threadId, this);
+				MBThreadImpl.class, threadId);
 
 		if (mbThread == _nullMBThread) {
 			return null;

@@ -185,7 +185,7 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 			if (EntityCacheUtil.getResult(
 						SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
 						SocialEquityUserImpl.class,
-						socialEquityUser.getPrimaryKey(), this) == null) {
+						socialEquityUser.getPrimaryKey()) == null) {
 				cacheResult(socialEquityUser);
 			}
 		}
@@ -485,7 +485,7 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 	public SocialEquityUser fetchByPrimaryKey(long equityUserId)
 		throws SystemException {
 		SocialEquityUser socialEquityUser = (SocialEquityUser)EntityCacheUtil.getResult(SocialEquityUserModelImpl.ENTITY_CACHE_ENABLED,
-				SocialEquityUserImpl.class, equityUserId, this);
+				SocialEquityUserImpl.class, equityUserId);
 
 		if (socialEquityUser == _nullSocialEquityUser) {
 			return null;

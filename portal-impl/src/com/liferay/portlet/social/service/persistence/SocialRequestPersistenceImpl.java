@@ -258,8 +258,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		for (SocialRequest socialRequest : socialRequests) {
 			if (EntityCacheUtil.getResult(
 						SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-						SocialRequestImpl.class, socialRequest.getPrimaryKey(),
-						this) == null) {
+						SocialRequestImpl.class, socialRequest.getPrimaryKey()) == null) {
 				cacheResult(socialRequest);
 			}
 		}
@@ -626,7 +625,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public SocialRequest fetchByPrimaryKey(long requestId)
 		throws SystemException {
 		SocialRequest socialRequest = (SocialRequest)EntityCacheUtil.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestImpl.class, requestId, this);
+				SocialRequestImpl.class, requestId);
 
 		if (socialRequest == _nullSocialRequest) {
 			return null;

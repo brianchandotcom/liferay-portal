@@ -148,7 +148,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		for (UserGroup userGroup : userGroups) {
 			if (EntityCacheUtil.getResult(
 						UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-						UserGroupImpl.class, userGroup.getPrimaryKey(), this) == null) {
+						UserGroupImpl.class, userGroup.getPrimaryKey()) == null) {
 				cacheResult(userGroup);
 			}
 		}
@@ -479,7 +479,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public UserGroup fetchByPrimaryKey(long userGroupId)
 		throws SystemException {
 		UserGroup userGroup = (UserGroup)EntityCacheUtil.getResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-				UserGroupImpl.class, userGroupId, this);
+				UserGroupImpl.class, userGroupId);
 
 		if (userGroup == _nullUserGroup) {
 			return null;

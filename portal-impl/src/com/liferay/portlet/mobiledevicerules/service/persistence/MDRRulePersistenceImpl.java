@@ -141,7 +141,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		for (MDRRule mdrRule : mdrRules) {
 			if (EntityCacheUtil.getResult(
 						MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
-						MDRRuleImpl.class, mdrRule.getPrimaryKey(), this) == null) {
+						MDRRuleImpl.class, mdrRule.getPrimaryKey()) == null) {
 				cacheResult(mdrRule);
 			}
 		}
@@ -448,7 +448,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	public MDRRule fetchByPrimaryKey(long ruleId) throws SystemException {
 		MDRRule mdrRule = (MDRRule)EntityCacheUtil.getResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
-				MDRRuleImpl.class, ruleId, this);
+				MDRRuleImpl.class, ruleId);
 
 		if (mdrRule == _nullMDRRule) {
 			return null;

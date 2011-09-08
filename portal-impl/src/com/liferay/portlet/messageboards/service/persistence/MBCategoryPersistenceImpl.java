@@ -174,7 +174,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		for (MBCategory mbCategory : mbCategories) {
 			if (EntityCacheUtil.getResult(
 						MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-						MBCategoryImpl.class, mbCategory.getPrimaryKey(), this) == null) {
+						MBCategoryImpl.class, mbCategory.getPrimaryKey()) == null) {
 				cacheResult(mbCategory);
 			}
 		}
@@ -487,7 +487,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public MBCategory fetchByPrimaryKey(long categoryId)
 		throws SystemException {
 		MBCategory mbCategory = (MBCategory)EntityCacheUtil.getResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-				MBCategoryImpl.class, categoryId, this);
+				MBCategoryImpl.class, categoryId);
 
 		if (mbCategory == _nullMBCategory) {
 			return null;

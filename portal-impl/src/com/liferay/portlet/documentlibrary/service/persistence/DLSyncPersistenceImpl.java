@@ -129,7 +129,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		for (DLSync dlSync : dlSyncs) {
 			if (EntityCacheUtil.getResult(
 						DLSyncModelImpl.ENTITY_CACHE_ENABLED, DLSyncImpl.class,
-						dlSync.getPrimaryKey(), this) == null) {
+						dlSync.getPrimaryKey()) == null) {
 				cacheResult(dlSync);
 			}
 		}
@@ -410,7 +410,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 */
 	public DLSync fetchByPrimaryKey(long syncId) throws SystemException {
 		DLSync dlSync = (DLSync)EntityCacheUtil.getResult(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
-				DLSyncImpl.class, syncId, this);
+				DLSyncImpl.class, syncId);
 
 		if (dlSync == _nullDLSync) {
 			return null;

@@ -253,7 +253,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	public void cacheResult(List<Group> groups) {
 		for (Group group : groups) {
 			if (EntityCacheUtil.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
-						GroupImpl.class, group.getPrimaryKey(), this) == null) {
+						GroupImpl.class, group.getPrimaryKey()) == null) {
 				cacheResult(group);
 			}
 		}
@@ -791,7 +791,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 */
 	public Group fetchByPrimaryKey(long groupId) throws SystemException {
 		Group group = (Group)EntityCacheUtil.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
-				GroupImpl.class, groupId, this);
+				GroupImpl.class, groupId);
 
 		if (group == _nullGroup) {
 			return null;

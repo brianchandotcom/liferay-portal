@@ -147,7 +147,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			if (EntityCacheUtil.getResult(
 						DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 						DDLRecordVersionImpl.class,
-						ddlRecordVersion.getPrimaryKey(), this) == null) {
+						ddlRecordVersion.getPrimaryKey()) == null) {
 				cacheResult(ddlRecordVersion);
 			}
 		}
@@ -461,7 +461,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	public DDLRecordVersion fetchByPrimaryKey(long recordVersionId)
 		throws SystemException {
 		DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)EntityCacheUtil.getResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-				DDLRecordVersionImpl.class, recordVersionId, this);
+				DDLRecordVersionImpl.class, recordVersionId);
 
 		if (ddlRecordVersion == _nullDDLRecordVersion) {
 			return null;

@@ -191,7 +191,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			if (EntityCacheUtil.getResult(
 						BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 						BookmarksFolderImpl.class,
-						bookmarksFolder.getPrimaryKey(), this) == null) {
+						bookmarksFolder.getPrimaryKey()) == null) {
 				cacheResult(bookmarksFolder);
 			}
 		}
@@ -505,7 +505,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	public BookmarksFolder fetchByPrimaryKey(long folderId)
 		throws SystemException {
 		BookmarksFolder bookmarksFolder = (BookmarksFolder)EntityCacheUtil.getResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
-				BookmarksFolderImpl.class, folderId, this);
+				BookmarksFolderImpl.class, folderId);
 
 		if (bookmarksFolder == _nullBookmarksFolder) {
 			return null;

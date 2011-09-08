@@ -111,7 +111,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	public void cacheResult(List<Image> images) {
 		for (Image image : images) {
 			if (EntityCacheUtil.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-						ImageImpl.class, image.getPrimaryKey(), this) == null) {
+						ImageImpl.class, image.getPrimaryKey()) == null) {
 				cacheResult(image);
 			}
 		}
@@ -365,7 +365,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	public Image fetchByPrimaryKey(long imageId) throws SystemException {
 		Image image = (Image)EntityCacheUtil.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-				ImageImpl.class, imageId, this);
+				ImageImpl.class, imageId);
 
 		if (image == _nullImage) {
 			return null;

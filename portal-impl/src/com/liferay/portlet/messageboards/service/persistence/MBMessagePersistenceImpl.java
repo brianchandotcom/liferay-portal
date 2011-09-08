@@ -478,7 +478,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		for (MBMessage mbMessage : mbMessages) {
 			if (EntityCacheUtil.getResult(
 						MBMessageModelImpl.ENTITY_CACHE_ENABLED,
-						MBMessageImpl.class, mbMessage.getPrimaryKey(), this) == null) {
+						MBMessageImpl.class, mbMessage.getPrimaryKey()) == null) {
 				cacheResult(mbMessage);
 			}
 		}
@@ -827,7 +827,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage fetchByPrimaryKey(long messageId)
 		throws SystemException {
 		MBMessage mbMessage = (MBMessage)EntityCacheUtil.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
-				MBMessageImpl.class, messageId, this);
+				MBMessageImpl.class, messageId);
 
 		if (mbMessage == _nullMBMessage) {
 			return null;

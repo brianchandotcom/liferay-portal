@@ -128,8 +128,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		for (ShoppingCoupon shoppingCoupon : shoppingCoupons) {
 			if (EntityCacheUtil.getResult(
 						ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingCouponImpl.class,
-						shoppingCoupon.getPrimaryKey(), this) == null) {
+						ShoppingCouponImpl.class, shoppingCoupon.getPrimaryKey()) == null) {
 				cacheResult(shoppingCoupon);
 			}
 		}
@@ -425,7 +424,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	public ShoppingCoupon fetchByPrimaryKey(long couponId)
 		throws SystemException {
 		ShoppingCoupon shoppingCoupon = (ShoppingCoupon)EntityCacheUtil.getResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingCouponImpl.class, couponId, this);
+				ShoppingCouponImpl.class, couponId);
 
 		if (shoppingCoupon == _nullShoppingCoupon) {
 			return null;

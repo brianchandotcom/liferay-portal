@@ -158,7 +158,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 			if (EntityCacheUtil.getResult(
 						SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 						SCProductScreenshotImpl.class,
-						scProductScreenshot.getPrimaryKey(), this) == null) {
+						scProductScreenshot.getPrimaryKey()) == null) {
 				cacheResult(scProductScreenshot);
 			}
 		}
@@ -510,7 +510,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	public SCProductScreenshot fetchByPrimaryKey(long productScreenshotId)
 		throws SystemException {
 		SCProductScreenshot scProductScreenshot = (SCProductScreenshot)EntityCacheUtil.getResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-				SCProductScreenshotImpl.class, productScreenshotId, this);
+				SCProductScreenshotImpl.class, productScreenshotId);
 
 		if (scProductScreenshot == _nullSCProductScreenshot) {
 			return null;

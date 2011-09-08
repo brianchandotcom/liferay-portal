@@ -196,7 +196,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
 			if (EntityCacheUtil.getResult(
 						DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-						DDMTemplateImpl.class, ddmTemplate.getPrimaryKey(), this) == null) {
+						DDMTemplateImpl.class, ddmTemplate.getPrimaryKey()) == null) {
 				cacheResult(ddmTemplate);
 			}
 		}
@@ -510,7 +510,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public DDMTemplate fetchByPrimaryKey(long templateId)
 		throws SystemException {
 		DDMTemplate ddmTemplate = (DDMTemplate)EntityCacheUtil.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-				DDMTemplateImpl.class, templateId, this);
+				DDMTemplateImpl.class, templateId);
 
 		if (ddmTemplate == _nullDDMTemplate) {
 			return null;

@@ -109,7 +109,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		for (Ticket ticket : tickets) {
 			if (EntityCacheUtil.getResult(
 						TicketModelImpl.ENTITY_CACHE_ENABLED, TicketImpl.class,
-						ticket.getPrimaryKey(), this) == null) {
+						ticket.getPrimaryKey()) == null) {
 				cacheResult(ticket);
 			}
 		}
@@ -391,7 +391,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 */
 	public Ticket fetchByPrimaryKey(long ticketId) throws SystemException {
 		Ticket ticket = (Ticket)EntityCacheUtil.getResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-				TicketImpl.class, ticketId, this);
+				TicketImpl.class, ticketId);
 
 		if (ticket == _nullTicket) {
 			return null;

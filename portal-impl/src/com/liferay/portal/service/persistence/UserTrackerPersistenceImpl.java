@@ -136,7 +136,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		for (UserTracker userTracker : userTrackers) {
 			if (EntityCacheUtil.getResult(
 						UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-						UserTrackerImpl.class, userTracker.getPrimaryKey(), this) == null) {
+						UserTrackerImpl.class, userTracker.getPrimaryKey()) == null) {
 				cacheResult(userTracker);
 			}
 		}
@@ -395,7 +395,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker fetchByPrimaryKey(long userTrackerId)
 		throws SystemException {
 		UserTracker userTracker = (UserTracker)EntityCacheUtil.getResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-				UserTrackerImpl.class, userTrackerId, this);
+				UserTrackerImpl.class, userTrackerId);
 
 		if (userTracker == _nullUserTracker) {
 			return null;

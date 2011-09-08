@@ -232,7 +232,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			if (EntityCacheUtil.getResult(
 						JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 						JournalContentSearchImpl.class,
-						journalContentSearch.getPrimaryKey(), this) == null) {
+						journalContentSearch.getPrimaryKey()) == null) {
 				cacheResult(journalContentSearch);
 			}
 		}
@@ -565,7 +565,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch fetchByPrimaryKey(long contentSearchId)
 		throws SystemException {
 		JournalContentSearch journalContentSearch = (JournalContentSearch)EntityCacheUtil.getResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-				JournalContentSearchImpl.class, contentSearchId, this);
+				JournalContentSearchImpl.class, contentSearchId);
 
 		if (journalContentSearch == _nullJournalContentSearch) {
 			return null;

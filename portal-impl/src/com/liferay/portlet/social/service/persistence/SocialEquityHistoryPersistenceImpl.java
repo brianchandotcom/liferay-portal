@@ -102,7 +102,7 @@ public class SocialEquityHistoryPersistenceImpl extends BasePersistenceImpl<Soci
 			if (EntityCacheUtil.getResult(
 						SocialEquityHistoryModelImpl.ENTITY_CACHE_ENABLED,
 						SocialEquityHistoryImpl.class,
-						socialEquityHistory.getPrimaryKey(), this) == null) {
+						socialEquityHistory.getPrimaryKey()) == null) {
 				cacheResult(socialEquityHistory);
 			}
 		}
@@ -362,7 +362,7 @@ public class SocialEquityHistoryPersistenceImpl extends BasePersistenceImpl<Soci
 	public SocialEquityHistory fetchByPrimaryKey(long equityHistoryId)
 		throws SystemException {
 		SocialEquityHistory socialEquityHistory = (SocialEquityHistory)EntityCacheUtil.getResult(SocialEquityHistoryModelImpl.ENTITY_CACHE_ENABLED,
-				SocialEquityHistoryImpl.class, equityHistoryId, this);
+				SocialEquityHistoryImpl.class, equityHistoryId);
 
 		if (socialEquityHistory == _nullSocialEquityHistory) {
 			return null;

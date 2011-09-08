@@ -179,7 +179,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			if (EntityCacheUtil.getResult(
 						AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 						AssetVocabularyImpl.class,
-						assetVocabulary.getPrimaryKey(), this) == null) {
+						assetVocabulary.getPrimaryKey()) == null) {
 				cacheResult(assetVocabulary);
 			}
 		}
@@ -531,7 +531,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	public AssetVocabulary fetchByPrimaryKey(long vocabularyId)
 		throws SystemException {
 		AssetVocabulary assetVocabulary = (AssetVocabulary)EntityCacheUtil.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetVocabularyImpl.class, vocabularyId, this);
+				AssetVocabularyImpl.class, vocabularyId);
 
 		if (assetVocabulary == _nullAssetVocabulary) {
 			return null;

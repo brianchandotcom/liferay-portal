@@ -164,8 +164,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		for (Organization organization : organizations) {
 			if (EntityCacheUtil.getResult(
 						OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-						OrganizationImpl.class, organization.getPrimaryKey(),
-						this) == null) {
+						OrganizationImpl.class, organization.getPrimaryKey()) == null) {
 				cacheResult(organization);
 			}
 		}
@@ -505,7 +504,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public Organization fetchByPrimaryKey(long organizationId)
 		throws SystemException {
 		Organization organization = (Organization)EntityCacheUtil.getResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-				OrganizationImpl.class, organizationId, this);
+				OrganizationImpl.class, organizationId);
 
 		if (organization == _nullOrganization) {
 			return null;

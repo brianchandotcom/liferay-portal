@@ -155,7 +155,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		for (DDMContent ddmContent : ddmContents) {
 			if (EntityCacheUtil.getResult(
 						DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-						DDMContentImpl.class, ddmContent.getPrimaryKey(), this) == null) {
+						DDMContentImpl.class, ddmContent.getPrimaryKey()) == null) {
 				cacheResult(ddmContent);
 			}
 		}
@@ -464,7 +464,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	public DDMContent fetchByPrimaryKey(long contentId)
 		throws SystemException {
 		DDMContent ddmContent = (DDMContent)EntityCacheUtil.getResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-				DDMContentImpl.class, contentId, this);
+				DDMContentImpl.class, contentId);
 
 		if (ddmContent == _nullDDMContent) {
 			return null;

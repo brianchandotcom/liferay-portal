@@ -153,8 +153,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		for (RatingsEntry ratingsEntry : ratingsEntries) {
 			if (EntityCacheUtil.getResult(
 						RatingsEntryModelImpl.ENTITY_CACHE_ENABLED,
-						RatingsEntryImpl.class, ratingsEntry.getPrimaryKey(),
-						this) == null) {
+						RatingsEntryImpl.class, ratingsEntry.getPrimaryKey()) == null) {
 				cacheResult(ratingsEntry);
 			}
 		}
@@ -458,7 +457,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	public RatingsEntry fetchByPrimaryKey(long entryId)
 		throws SystemException {
 		RatingsEntry ratingsEntry = (RatingsEntry)EntityCacheUtil.getResult(RatingsEntryModelImpl.ENTITY_CACHE_ENABLED,
-				RatingsEntryImpl.class, entryId, this);
+				RatingsEntryImpl.class, entryId);
 
 		if (ratingsEntry == _nullRatingsEntry) {
 			return null;

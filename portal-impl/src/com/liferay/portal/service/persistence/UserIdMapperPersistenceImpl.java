@@ -141,8 +141,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		for (UserIdMapper userIdMapper : userIdMappers) {
 			if (EntityCacheUtil.getResult(
 						UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-						UserIdMapperImpl.class, userIdMapper.getPrimaryKey(),
-						this) == null) {
+						UserIdMapperImpl.class, userIdMapper.getPrimaryKey()) == null) {
 				cacheResult(userIdMapper);
 			}
 		}
@@ -483,7 +482,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	public UserIdMapper fetchByPrimaryKey(long userIdMapperId)
 		throws SystemException {
 		UserIdMapper userIdMapper = (UserIdMapper)EntityCacheUtil.getResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-				UserIdMapperImpl.class, userIdMapperId, this);
+				UserIdMapperImpl.class, userIdMapperId);
 
 		if (userIdMapper == _nullUserIdMapper) {
 			return null;

@@ -155,8 +155,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		for (ResourceBlock resourceBlock : resourceBlocks) {
 			if (EntityCacheUtil.getResult(
 						ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceBlockImpl.class, resourceBlock.getPrimaryKey(),
-						this) == null) {
+						ResourceBlockImpl.class, resourceBlock.getPrimaryKey()) == null) {
 				cacheResult(resourceBlock);
 			}
 		}
@@ -477,7 +476,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	public ResourceBlock fetchByPrimaryKey(long resourceBlockId)
 		throws SystemException {
 		ResourceBlock resourceBlock = (ResourceBlock)EntityCacheUtil.getResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceBlockImpl.class, resourceBlockId, this);
+				ResourceBlockImpl.class, resourceBlockId);
 
 		if (resourceBlock == _nullResourceBlock) {
 			return null;

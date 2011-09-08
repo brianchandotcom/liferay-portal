@@ -185,7 +185,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		for (Address address : addresses) {
 			if (EntityCacheUtil.getResult(
 						AddressModelImpl.ENTITY_CACHE_ENABLED,
-						AddressImpl.class, address.getPrimaryKey(), this) == null) {
+						AddressImpl.class, address.getPrimaryKey()) == null) {
 				cacheResult(address);
 			}
 		}
@@ -450,7 +450,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	public Address fetchByPrimaryKey(long addressId) throws SystemException {
 		Address address = (Address)EntityCacheUtil.getResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
-				AddressImpl.class, addressId, this);
+				AddressImpl.class, addressId);
 
 		if (address == _nullAddress) {
 			return null;

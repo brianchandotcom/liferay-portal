@@ -160,8 +160,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		for (ShoppingOrder shoppingOrder : shoppingOrders) {
 			if (EntityCacheUtil.getResult(
 						ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey(),
-						this) == null) {
+						ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey()) == null) {
 				cacheResult(shoppingOrder);
 			}
 		}
@@ -510,7 +509,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	public ShoppingOrder fetchByPrimaryKey(long orderId)
 		throws SystemException {
 		ShoppingOrder shoppingOrder = (ShoppingOrder)EntityCacheUtil.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingOrderImpl.class, orderId, this);
+				ShoppingOrderImpl.class, orderId);
 
 		if (shoppingOrder == _nullShoppingOrder) {
 			return null;

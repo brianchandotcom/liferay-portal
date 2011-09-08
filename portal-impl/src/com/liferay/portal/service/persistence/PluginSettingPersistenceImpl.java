@@ -136,8 +136,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		for (PluginSetting pluginSetting : pluginSettings) {
 			if (EntityCacheUtil.getResult(
 						PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
-						PluginSettingImpl.class, pluginSetting.getPrimaryKey(),
-						this) == null) {
+						PluginSettingImpl.class, pluginSetting.getPrimaryKey()) == null) {
 				cacheResult(pluginSetting);
 			}
 		}
@@ -452,7 +451,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	public PluginSetting fetchByPrimaryKey(long pluginSettingId)
 		throws SystemException {
 		PluginSetting pluginSetting = (PluginSetting)EntityCacheUtil.getResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
-				PluginSettingImpl.class, pluginSettingId, this);
+				PluginSettingImpl.class, pluginSettingId);
 
 		if (pluginSetting == _nullPluginSetting) {
 			return null;

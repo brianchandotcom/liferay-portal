@@ -91,12 +91,12 @@ public class DynamicCSSUtil {
 	}
 
 	protected static String getCssThemePath(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = null;
-
-		if (request != null) {
-			themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (request == null) {
+			return null;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			return themeDisplay.getPathThemeCss();

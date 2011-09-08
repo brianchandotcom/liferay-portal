@@ -46,8 +46,8 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1 Attachment"),
-			selenium.getText("//div[6]/div[1]/span[2]/a/span"));
-		selenium.clickAt("//div[6]/div[1]/span[2]/a/span",
+			selenium.getText("//div[@class='article-actions']/span[2]/a/span"));
+		selenium.clickAt("//div[@class='article-actions']/span[2]/a/span",
 			RuntimeVariables.replace("1 Attachment"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -88,7 +88,7 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("0 Attachments"),
-			selenium.getText("//div[6]/div[1]/span[2]/a/span"));
+			selenium.getText("//div[@class='article-actions']/span[2]/a/span"));
 		assertFalse(selenium.isTextPresent("link=1 Attachment"));
 	}
 }

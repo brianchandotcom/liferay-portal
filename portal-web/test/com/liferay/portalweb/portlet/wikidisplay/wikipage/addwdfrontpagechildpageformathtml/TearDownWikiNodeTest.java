@@ -65,6 +65,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -107,6 +109,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -149,6 +153,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -191,6 +197,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -233,6 +241,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//tr[4]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[4]/td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -265,6 +275,8 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 6:
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[4]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 

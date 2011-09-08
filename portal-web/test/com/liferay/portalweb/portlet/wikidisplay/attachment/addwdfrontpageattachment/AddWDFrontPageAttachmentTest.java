@@ -46,8 +46,8 @@ public class AddWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("0 Attachments"),
-			selenium.getText("//div[6]/div[1]/span[2]/a/span"));
-		selenium.clickAt("//div[6]/div[1]/span[2]/a/span",
+			selenium.getText("//div[@class='article-actions']/span[2]/a/span"));
+		selenium.clickAt("//div[@class='article-actions']/span[2]/a/span",
 			RuntimeVariables.replace("0 Attachments"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -113,6 +113,8 @@ public class AddWDFrontPageAttachmentTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki_Attachment.jpg"),
 			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("3.1k"),
+			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']/"));
 		selenium.open("/web/guest/home/");
@@ -139,7 +141,7 @@ public class AddWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1 Attachment"),
-			selenium.getText("//div[6]/div[1]/span[2]/a/span"));
+			selenium.getText("//div[@class='article-actions']/span[2]/a/span"));
 		assertFalse(selenium.isTextPresent("0 Attachments"));
 	}
 }

@@ -181,9 +181,11 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 			throw new UploadException("No logo uploaded for use");
 		}
 
+		inputStream.mark(0);
 		LayoutSetServiceUtil.updateLogo(
 			liveGroupId, privateLayout, useLogo, inputStream);
 
+		inputStream.reset();
 		if (stagingGroupId > 0) {
 			LayoutSetServiceUtil.updateLogo(
 				stagingGroupId, privateLayout, useLogo, inputStream);

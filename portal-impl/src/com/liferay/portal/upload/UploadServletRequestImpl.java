@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -143,20 +144,38 @@ public class UploadServletRequestImpl
 	}
 
 	public File getFile(String name) {
+		return getFile(name, false);
+	}
+
+	public File getFile(String name, boolean forceCreate) {
 		if (getFileName(name) == null) {
 			return null;
 		}
 
 		LiferayFileItem[] liferayFileItems = _params.get(name);
 
+		File file = null;
+
 		if ((liferayFileItems != null) && (liferayFileItems.length > 0)) {
 			LiferayFileItem liferayFileItem = liferayFileItems[0];
 
-			return liferayFileItem.getStoreLocation();
+			file = liferayFileItem.getStoreLocation();
+
+			if (liferayFileItem.isInMemory() && forceCreate) {
+				try {
+					FileUtil.write(file, liferayFileItem.getInputStream());
+				}
+				catch (IOException ie) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to write temporary file " +
+							file.getAbsolutePath(), ie);
+					}
+				}
+			}
 		}
-		else {
-			return null;
-		}
+
+		return file;
 	}
 
 	public InputStream getFileAsStream(String name) throws IOException {

@@ -939,7 +939,7 @@ AUI().add(
 							var originalConfig = instance._originalConfig;
 
 							var config = {
-								alwaysVisible: true,
+								alwaysVisible: false,
 								containers: '.vocabularies-paginator',
 								firstPageLinkLabel: '<<',
 								lastPageLinkLabel: '>>',

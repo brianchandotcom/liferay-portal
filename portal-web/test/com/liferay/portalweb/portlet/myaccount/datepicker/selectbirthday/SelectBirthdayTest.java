@@ -62,6 +62,7 @@ public class SelectBirthdayTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		selenium.click("//select[@id='_2_birthdayMonth']");
 		selenium.select("//select[@id='_2_birthdayMonth']",
 			RuntimeVariables.replace("March"));

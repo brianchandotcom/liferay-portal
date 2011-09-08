@@ -46,7 +46,7 @@ public class DLContentLocalServiceTest extends BaseServiceTestCase {
 
 		DLContent dlContent = _dlContentLocalService.addContent(
 			companyId, randomString(), nextLong(), repositoryId, path,
-			Store.DEFAULT_VERSION, new byte[1024]);
+			Store.VERSION_DEFAULT, new byte[1024]);
 
 		DLContent newDlContent = _dlContentLocalService.getContent(
 			companyId, repositoryId, path);
@@ -61,14 +61,11 @@ public class DLContentLocalServiceTest extends BaseServiceTestCase {
 
 		DLContent dlContent = _dlContentLocalService.addContent(
 			companyId, randomString(), nextLong(), repositoryId, path,
-			Store.DEFAULT_VERSION, new ByteArrayInputStream(new byte[1024]),
+			Store.VERSION_DEFAULT, new ByteArrayInputStream(new byte[1024]),
 			1024);
 
 		DLContent newDlContent = _dlContentLocalService.getContent(
 			companyId, repositoryId, path);
-
-		dlContent.setData(
-			new OutputBlob(new ByteArrayInputStream(new byte[1024]), 1024));
 
 		assertEquals(dlContent, newDlContent);
 	}
@@ -82,7 +79,7 @@ public class DLContentLocalServiceTest extends BaseServiceTestCase {
 
 		DLContent dlContent = _dlContentLocalService.addContent(
 			companyId, randomString(), nextLong(), oldRepositoryId, oldPath,
-			Store.DEFAULT_VERSION, new byte[1024]);
+			Store.VERSION_DEFAULT, new byte[1024]);
 
 		_dlContentLocalService.updateDLContent(
 			companyId, oldRepositoryId, newRepositoryId, oldPath, newPath);
@@ -92,9 +89,6 @@ public class DLContentLocalServiceTest extends BaseServiceTestCase {
 
 		dlContent.setPath(newPath);
 		dlContent.setRepositoryId(newRepositoryId);
-
-		dlContent.setData(
-			new OutputBlob(new ByteArrayInputStream(new byte[1024]), 1024));
 
 		assertEquals(dlContent, newDlContent);
 

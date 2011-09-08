@@ -904,16 +904,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateLocales(String locales)
-		throws InvalidLocaleException{
-
+	protected void validateLocales(String locales) throws PortalException {
 		String[] newLocales = StringUtil.split(locales, StringPool.COMMA);
 
 		for (String locale : newLocales) {
 			if (!ArrayUtil.contains(PropsValues.LOCALES, locale)) {
 				throw new InvalidLocaleException();
 			}
-
 		}
 	}
 

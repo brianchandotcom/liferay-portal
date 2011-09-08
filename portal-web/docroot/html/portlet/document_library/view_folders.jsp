@@ -403,6 +403,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 							request.setAttribute("view_entries.jsp-folder", curFolder);
 							request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
 							request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
+							request.setAttribute("view_entries.jsp-selected", String.valueOf(folderId == curFolder.getFolderId()));
 						%>
 
 							<liferay-portlet:renderURL varImpl="viewURL">

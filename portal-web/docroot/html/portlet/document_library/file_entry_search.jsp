@@ -17,11 +17,14 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 %>
 
 <liferay-portlet:resourceURL var="searchURL">
 	<portlet:param name="struts_action" value="/document_library/search" />
+	<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 	<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
 </liferay-portlet:resourceURL>
@@ -46,6 +49,7 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 			{
 				requestParams: {
 					'<portlet:namespace />struts_action': '/document_library/search',
+					'<portlet:namespace />repositoryId': '<%= String.valueOf(repositoryId) %>',
 					'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
 					'<portlet:namespace />searchFolderId': '<%= String.valueOf(folderId) %>',
 					'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,

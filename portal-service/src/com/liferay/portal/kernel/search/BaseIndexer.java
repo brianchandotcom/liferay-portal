@@ -149,6 +149,38 @@ public abstract class BaseIndexer implements Indexer {
 		return facetQuery;
 	}
 
+	public BooleanQuery getFullQuery(SearchContext searchContext)
+		throws SearchException {
+
+		try {
+			searchContext.setSearchEngineId(getSearchEngineId());
+
+			searchContext.setEntryClassNames(
+				new String[] {getClassName(searchContext)});
+
+			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			addSearchAssetCategoryIds(contextQuery, searchContext);
+			addSearchAssetTagNames(contextQuery, searchContext);
+			addSearchEntryClassNames(contextQuery, searchContext);
+			addSearchGroupId(contextQuery, searchContext);
+
+			BooleanQuery fullQuery = createFullQuery(
+				contextQuery, searchContext);
+
+			fullQuery.setQueryConfig(searchContext.getQueryConfig());
+
+			return fullQuery;
+		}
+		catch (SearchException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+	}
+
 	public IndexerPostProcessor[] getIndexerPostProcessors() {
 		return _indexerPostProcessors;
 	}
@@ -280,21 +312,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	public Hits search(SearchContext searchContext) throws SearchException {
 		try {
-			searchContext.setSearchEngineId(getSearchEngineId());
-
-			searchContext.setEntryClassNames(
-				new String[] {getClassName(searchContext)});
-
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			addSearchAssetCategoryIds(contextQuery, searchContext);
-			addSearchAssetTagNames(contextQuery, searchContext);
-			addSearchEntryClassNames(contextQuery, searchContext);
-			addSearchGroupId(contextQuery, searchContext);
-
-			BooleanQuery fullQuery = createFullQuery(
-				contextQuery, searchContext);
+			BooleanQuery fullQuery = getFullQuery(searchContext);
 
 			fullQuery.setQueryConfig(searchContext.getQueryConfig());
 

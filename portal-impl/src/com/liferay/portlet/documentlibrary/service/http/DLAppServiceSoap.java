@@ -743,6 +743,23 @@ public class DLAppServiceSoap {
 
 	public static com.liferay.portal.kernel.search.Hits search(
 		long repositoryId,
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.search.Hits returnValue = DLAppServiceUtil.search(repositoryId,
+					searchContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		long repositoryId,
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		com.liferay.portal.kernel.search.Query query) throws RemoteException {
 		try {

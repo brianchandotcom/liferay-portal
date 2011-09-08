@@ -33,7 +33,8 @@ import java.util.List;
 public interface WorkflowDefinitionManager {
 
 	public WorkflowDefinition deployWorkflowDefinition(
-			long companyId, long userId, String title, InputStream inputStream)
+			long companyId, long userId, String title, InputStream inputStream,
+			long scope)
 		throws WorkflowException;
 
 	public int getActiveWorkflowDefinitionCount(long companyId)
@@ -74,6 +75,15 @@ public interface WorkflowDefinitionManager {
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, String name, int start, int end,
 			OrderByComparator orderByComparator)
+		throws WorkflowException;
+
+	public List<WorkflowDefinition> search(
+			long companyId, String name, Boolean active, Long scope,
+			int start, int end, OrderByComparator orderByComparator)
+		throws WorkflowException;
+
+	public int searchCount(
+			long companyId, String name, Boolean active, Long scope)
 		throws WorkflowException;
 
 	public void undeployWorkflowDefinition(

@@ -68,6 +68,8 @@ public class WorkflowConstants {
 
 	public static final String LABEL_PENDING = "pending";
 
+	public static final long SCOPE_DEFAULT = -4804948676066606023L;
+
 	public static final int STATUS_ANY = -1;
 
 	public static final int STATUS_APPROVED = 0;

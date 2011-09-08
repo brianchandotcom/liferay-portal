@@ -1154,6 +1154,7 @@ Liferay.Service.registerClass(
 		addNode: true,
 		deleteNode: true,
 		getNode: true,
+		importPages: true,
 		subscribeNode: true,
 		unsubscribeNode: true,
 		updateNode: true

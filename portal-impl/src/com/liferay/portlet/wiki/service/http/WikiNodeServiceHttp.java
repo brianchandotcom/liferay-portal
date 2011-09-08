@@ -198,7 +198,7 @@ public class WikiNodeServiceHttp {
 	}
 
 	public static void importPages(HttpPrincipal httpPrincipal, long nodeId,
-		java.lang.String importer, java.io.File[] files,
+		java.lang.String importer, java.io.InputStream[] inputStreams,
 		java.util.Map<java.lang.String, java.lang.String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -207,7 +207,7 @@ public class WikiNodeServiceHttp {
 					"importPages", _importPagesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
-					importer, files, options);
+					importer, inputStreams, options);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -347,7 +347,7 @@ public class WikiNodeServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _importPagesParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.io.File[].class,
+			long.class, java.lang.String.class, java.io.InputStream[].class,
 			java.util.Map.class
 		};
 	private static final Class<?>[] _subscribeNodeParameterTypes5 = new Class[] {

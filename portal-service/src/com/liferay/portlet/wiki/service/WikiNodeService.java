@@ -65,7 +65,7 @@ public interface WikiNodeService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void importPages(long nodeId, java.lang.String importer,
-		java.io.File[] files,
+		java.io.InputStream[] inputStreams,
 		java.util.Map<java.lang.String, java.lang.String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

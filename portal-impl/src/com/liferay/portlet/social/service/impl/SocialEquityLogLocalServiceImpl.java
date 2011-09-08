@@ -672,6 +672,10 @@ public class SocialEquityLogLocalServiceImpl
 			String extraData)
 		throws SystemException {
 
+		if (equitySetting.getLifespan() == 0) {
+			return false;
+		}
+
 		if (equitySetting.getDailyLimit() < 0) {
 			return false;
 		}

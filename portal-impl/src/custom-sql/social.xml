@@ -130,38 +130,44 @@
 				SocialEquityUser
 			SET
 				contributionK =
-					contributionK -
-						(
-							SELECT
-								SUM(informationK)
-							FROM
-								SocialEquityAssetEntry
-							WHERE
-								(SocialEquityAssetEntry.groupId = SocialEquityUser.groupId) AND
-								(SocialEquityAssetEntry.userId = SocialEquityUser.userId)
-						),
+					(
+						SELECT
+							SUM(informationK)
+						FROM
+							SocialEquityAssetEntry
+						WHERE
+							(SocialEquityAssetEntry.groupId = SocialEquityUser.groupId) AND
+							(SocialEquityAssetEntry.userId = SocialEquityUser.userId)
+					),
 				contributionB =
-					contributionB -
-						(
-							SELECT
-								SUM(informationB)
-							FROM
-								SocialEquityAssetEntry
-							WHERE
-								(SocialEquityAssetEntry.groupId = SocialEquityUser.groupId) AND
-								(SocialEquityAssetEntry.userId = SocialEquityUser.userId)
-						)
+					(
+						SELECT
+							SUM(informationB)
+						FROM
+							SocialEquityAssetEntry
+						WHERE
+							(SocialEquityAssetEntry.groupId = SocialEquityUser.groupId) AND
+							(SocialEquityAssetEntry.userId = SocialEquityUser.userId)
+					)
 			WHERE
 				userId IN
 					(
 						SELECT
 							userId
 						FROM
-							SocialEquityLog
+							SocialEquityAssetEntry
 						WHERE
-							(expiration <= [$EXPIRATION$]) AND
-							(active_ = [$TRUE$]) AND
-							(type_ = [$TYPE_INFORMATION$])
+							assetEntryId IN
+								(
+									SELECT
+										assetEntryId
+									FROM
+										SocialEquityLog
+									WHERE
+										(expiration <= [$EXPIRATION$]) AND
+										(active_ = [$TRUE$]) AND
+										(type_ = [$TYPE_INFORMATION$])
+								)
 					)
 		]]>
 	</sql>

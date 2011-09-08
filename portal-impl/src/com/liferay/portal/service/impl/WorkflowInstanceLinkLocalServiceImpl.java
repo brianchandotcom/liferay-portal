@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.WorkflowInstanceLink;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.base.WorkflowInstanceLinkLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
@@ -238,6 +239,10 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_ENTRY_TYPE,
 			workflowHandler.getType(LocaleUtil.getDefault()));
+
+		if (userId == 0) {
+			userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		}
 
 		WorkflowInstance workflowInstance =
 			WorkflowInstanceManagerUtil.startWorkflowInstance(

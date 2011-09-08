@@ -30,6 +30,15 @@ public class ChannelHubManagerUtil {
 			companyId, userId, notificationEventUuid);
 	}
 
+	public static void confirmDelivery(
+			long companyId, long userId, String notificationEventUuid,
+			boolean archived)
+		throws ChannelException {
+
+		getChannelHubManager().confirmDelivery(
+			companyId, userId, notificationEventUuid, archived);
+	}
+
 	public static Channel createChannel(long companyId, long userId)
 		throws ChannelException {
 

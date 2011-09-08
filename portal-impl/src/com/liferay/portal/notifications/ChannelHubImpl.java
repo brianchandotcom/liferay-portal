@@ -64,17 +64,32 @@ public class ChannelHubImpl implements ChannelHub {
 			long userId, Collection<String> notificationEventUuids)
 		throws ChannelException {
 
-		Channel channel = getChannel(userId);
-
-		channel.confirmDelivery(notificationEventUuids);
+		confirmDelivery(userId, notificationEventUuids, false);
 	}
 
 	public void confirmDelivery(long userId, String notificationEventUuid)
 		throws ChannelException {
 
+		confirmDelivery(userId, notificationEventUuid, false);
+	}
+
+	public void confirmDelivery(
+			long userId, Collection<String> notificationEventUuids,
+			boolean archive)
+		throws ChannelException {
+
 		Channel channel = getChannel(userId);
 
-		channel.confirmDelivery(notificationEventUuid);
+		channel.confirmDelivery(notificationEventUuids, archive);
+	}
+
+	public void confirmDelivery(
+			long userId, String notificationEventUuid, boolean archive)
+		throws ChannelException {
+
+		Channel channel = getChannel(userId);
+
+		channel.confirmDelivery(notificationEventUuid, archive);
 	}
 
 	public Channel createChannel(long userId) throws ChannelException {
@@ -88,6 +103,24 @@ public class ChannelHubImpl implements ChannelHub {
 		channel.init();
 
 		return channel;
+	}
+
+	public void deleteUserNotificiationEvent(
+			long userId, String notificationEventUuid)
+		throws ChannelException {
+
+		Channel channel = getChannel(userId);
+
+		channel.deleteUserNotificiationEvent(notificationEventUuid);
+	}
+
+	public void deleteUserNotificiationEvents(
+			long userId, Collection<String> notificationEventUuids)
+		throws ChannelException {
+
+		Channel channel = getChannel(userId);
+
+		channel.deleteUserNotificiationEvents(notificationEventUuids);
 	}
 
 	public void destroy() throws ChannelException {
@@ -216,7 +249,7 @@ public class ChannelHubImpl implements ChannelHub {
 			long userId, NotificationEvent notificationEvent)
 		throws ChannelException {
 
-		Channel channel = getChannel(userId);
+		Channel channel = getChannel(userId, true);
 
 		channel.sendNotificationEvent(notificationEvent);
 	}

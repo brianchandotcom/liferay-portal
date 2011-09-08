@@ -45,6 +45,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author Edward Han
  * @author Brian Wing Shun Chan
+ * @author Jonathan Lee
  */
 public class ChannelImpl extends BaseChannelImpl {
 
@@ -63,6 +64,20 @@ public class ChannelImpl extends BaseChannelImpl {
 	public void confirmDelivery(Collection<String> notificationEventUuids)
 		throws ChannelException {
 
+		confirmDelivery(notificationEventUuids, false);
+	}
+
+
+	public void confirmDelivery(String notificationEventUuid)
+		throws ChannelException {
+
+		confirmDelivery(notificationEventUuid, false);
+	}
+
+	public void confirmDelivery(
+			Collection<String> notificationEventUuids, boolean archive)
+		throws ChannelException {
+
 		_reentrantLock.lock();
 
 		try {
@@ -74,8 +89,15 @@ public class ChannelImpl extends BaseChannelImpl {
 			}
 
 			if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED) {
-				UserNotificationEventLocalServiceUtil.
-					deleteUserNotificationEvents(notificationEventUuids);
+				if (archive) {
+					UserNotificationEventLocalServiceUtil.
+						updateUserNotificationEvents(
+							notificationEventUuids, archive);
+				}
+				else {
+					UserNotificationEventLocalServiceUtil.
+						deleteUserNotificationEvents(notificationEventUuids);
+				}
 			}
 		}
 		catch (Exception e) {
@@ -87,7 +109,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 	}
 
-	public void confirmDelivery(String notificationEventUuid)
+	public void confirmDelivery(String notificationEventUuid, boolean archive)
 		throws ChannelException {
 
 		_reentrantLock.lock();
@@ -96,19 +118,62 @@ public class ChannelImpl extends BaseChannelImpl {
 			Map<String, NotificationEvent> unconfirmedNotificationEvents =
 				_getUnconfirmedNotificationEvents();
 
-			NotificationEvent notificationEvent =
 				unconfirmedNotificationEvents.remove(notificationEventUuid);
 
-			if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED &&
-				(notificationEvent != null)) {
-
-				UserNotificationEventLocalServiceUtil.
-					deleteUserNotificationEvent(notificationEvent.getUuid());
+			if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED) {
+				if (archive) {
+					UserNotificationEventLocalServiceUtil.
+						updateUserNotificationEvent(
+							notificationEventUuid, archive);
+				}
+				else {
+					UserNotificationEventLocalServiceUtil.
+						deleteUserNotificationEvent(notificationEventUuid);
+				}
 			}
 		}
 		catch (Exception e) {
 			throw new ChannelException(
 				"Uanble to confirm delivery for " + notificationEventUuid , e);
+		}
+		finally {
+			_reentrantLock.unlock();
+		}
+	}
+
+	public void deleteUserNotificiationEvent (String notificationEventUuid)
+		throws ChannelException {
+
+		_reentrantLock.lock();
+
+		try {
+			UserNotificationEventLocalServiceUtil.
+				deleteUserNotificationEvent(notificationEventUuid);
+		}
+		catch (Exception e) {
+			throw new ChannelException(
+				"Uanble to delete Notification for " + notificationEventUuid ,
+				e);
+		}
+		finally {
+			_reentrantLock.unlock();
+		}
+	}
+
+	public void deleteUserNotificiationEvents (
+			Collection<String> notificationEventUuids)
+		throws ChannelException {
+
+		_reentrantLock.lock();
+
+		try {
+			UserNotificationEventLocalServiceUtil.
+				deleteUserNotificationEvents(notificationEventUuids);
+		}
+		catch (Exception e) {
+			throw new ChannelException(
+				"Uanble to delete Notifications for user " + getUserId() ,
+				e);
 		}
 		finally {
 			_reentrantLock.unlock();
@@ -410,7 +475,9 @@ public class ChannelImpl extends BaseChannelImpl {
 
 			NotificationEvent notificationEvent = entry.getValue();
 
-			if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
+			if ((isRemoveNotificationEvent(notificationEvent, currentTime)) &&
+				!(notificationEvent.isArchived())) {
+
 				invalidNotificationEventUuids.add(
 					notificationEvent.getUuid());
 
@@ -438,7 +505,7 @@ public class ChannelImpl extends BaseChannelImpl {
 
 		List<UserNotificationEvent> userNotificationEvents =
 			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
-				getUserId());
+				getUserId(), false);
 
 		Map<String, NotificationEvent> unconfirmedNotificationEvents =
 			_getUnconfirmedNotificationEvents();
@@ -464,8 +531,9 @@ public class ChannelImpl extends BaseChannelImpl {
 				notificationEvent.setDeliveryRequired(
 					persistedNotificationEvent.getDeliverBy());
 
-				if (isRemoveNotificationEvent(
-						notificationEvent, currentTime)) {
+				notificationEvent.setUuid(persistedNotificationEvent.getUuid());
+
+				if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
 
 					invalidNotificationEventUuids.add(
 						notificationEvent.getUuid());

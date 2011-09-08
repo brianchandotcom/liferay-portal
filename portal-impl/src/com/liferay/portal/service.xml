@@ -2252,10 +2252,11 @@
 		<column name="timestamp" type="long" />
 		<column name="deliverBy" type="long" />
 		<column name="payload" type="String" />
+		<column name="archived" type="boolean" />
 
 		<!-- Order -->
 
-		<order by="asc">
+		<order by="desc">
 			<order-column name="timestamp" />
 		</order>
 
@@ -2263,6 +2264,10 @@
 
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
+		</finder>
+		<finder name="U_A" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="archived" />
 		</finder>
 	</entity>
 	<entity name="UserTracker" local-service="true" remote-service="false">

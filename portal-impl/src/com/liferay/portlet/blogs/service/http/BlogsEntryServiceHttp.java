@@ -61,7 +61,8 @@ public class BlogsEntryServiceHttp {
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
 		boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile,
+		java.io.InputStream smallFileInputStream,
+		java.lang.String smallFileName,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -73,7 +74,8 @@ public class BlogsEntryServiceHttp {
 					description, content, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-					smallImageURL, smallFile, serviceContext);
+					smallImageURL, smallFileInputStream, smallFileName,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -607,7 +609,8 @@ public class BlogsEntryServiceHttp {
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
 		boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile,
+		java.io.InputStream smallFileInputStream,
+		java.lang.String smallFileName,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -619,8 +622,8 @@ public class BlogsEntryServiceHttp {
 					title, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, smallImage, smallImageURL, smallFile,
-					serviceContext);
+					trackbacks, smallImage, smallImageURL,
+					smallFileInputStream, smallFileName, serviceContext);
 
 			Object returnObj = null;
 
@@ -653,7 +656,8 @@ public class BlogsEntryServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class, int.class, int.class,
 			int.class, boolean.class, boolean.class, java.lang.String[].class,
-			boolean.class, java.lang.String.class, java.io.File.class,
+			boolean.class, java.lang.String.class, java.io.InputStream.class,
+			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteEntryParameterTypes1 = new Class[] {
@@ -708,7 +712,8 @@ public class BlogsEntryServiceHttp {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class, int.class, int.class,
 			int.class, boolean.class, boolean.class, java.lang.String[].class,
-			boolean.class, java.lang.String.class, java.io.File.class,
+			boolean.class, java.lang.String.class, java.io.InputStream.class,
+			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 }

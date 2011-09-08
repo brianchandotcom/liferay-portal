@@ -132,10 +132,10 @@ public class CompanyServiceWrapper implements CompanyService {
 		_companyService.updateDisplay(companyId, languageId, timeZoneId);
 	}
 
-	public void updateLogo(long companyId, java.io.File file)
+	public void updateLogo(long companyId, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_companyService.updateLogo(companyId, file);
+		_companyService.updateLogo(companyId, inputStream);
 	}
 
 	public void updatePreferences(long companyId,

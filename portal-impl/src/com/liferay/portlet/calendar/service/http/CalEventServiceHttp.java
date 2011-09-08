@@ -563,7 +563,7 @@ public class CalEventServiceHttp {
 	}
 
 	public static void importICal4j(HttpPrincipal httpPrincipal, long groupId,
-		java.io.File file)
+		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -571,7 +571,7 @@ public class CalEventServiceHttp {
 					"importICal4j", _importICal4jParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					file);
+					inputStream);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -696,7 +696,7 @@ public class CalEventServiceHttp {
 			long.class, java.util.Calendar.class, java.lang.String[].class
 		};
 	private static final Class<?>[] _importICal4jParameterTypes14 = new Class[] {
-			long.class, java.io.File.class
+			long.class, java.io.InputStream.class
 		};
 	private static final Class<?>[] _updateEventParameterTypes15 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,

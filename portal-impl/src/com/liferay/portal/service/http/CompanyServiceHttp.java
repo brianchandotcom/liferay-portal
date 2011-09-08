@@ -507,7 +507,7 @@ public class CompanyServiceHttp {
 	}
 
 	public static void updateLogo(HttpPrincipal httpPrincipal, long companyId,
-		java.io.File file)
+		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -515,7 +515,7 @@ public class CompanyServiceHttp {
 					"updateLogo", _updateLogoParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, file);
+					companyId, inputStream);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -663,7 +663,7 @@ public class CompanyServiceHttp {
 			long.class, java.lang.String.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateLogoParameterTypes12 = new Class[] {
-			long.class, java.io.File.class
+			long.class, java.io.InputStream.class
 		};
 	private static final Class<?>[] _updatePreferencesParameterTypes13 = new Class[] {
 			long.class, com.liferay.portal.kernel.util.UnicodeProperties.class

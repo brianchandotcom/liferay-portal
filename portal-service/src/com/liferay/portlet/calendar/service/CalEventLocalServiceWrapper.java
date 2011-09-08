@@ -442,10 +442,11 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService {
 		return _calEventLocalService.hasEvents(groupId, cal, types);
 	}
 
-	public void importICal4j(long userId, long groupId, java.io.File file)
+	public void importICal4j(long userId, long groupId,
+		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_calEventLocalService.importICal4j(userId, groupId, file);
+		_calEventLocalService.importICal4j(userId, groupId, inputStream);
 	}
 
 	public void updateAsset(long userId,

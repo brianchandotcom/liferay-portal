@@ -29,10 +29,10 @@ public class LayoutSetServiceWrapper implements LayoutSetService {
 	}
 
 	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		java.io.File file)
+		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_layoutSetService.updateLogo(groupId, privateLayout, logo, file);
+		_layoutSetService.updateLogo(groupId, privateLayout, logo, inputStream);
 	}
 
 	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,

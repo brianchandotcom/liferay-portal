@@ -379,7 +379,8 @@ public interface CalEventLocalService extends PersistedModelLocalService {
 		java.lang.String[] types)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void importICal4j(long userId, long groupId, java.io.File file)
+	public void importICal4j(long userId, long groupId,
+		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

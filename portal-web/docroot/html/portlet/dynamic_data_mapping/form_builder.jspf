@@ -109,57 +109,36 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 	</div>
 </div>
 
-<div class="yui3-widget aui-component aui-form-builder" id="<portlet:namespace />formBuilder">
-	<div class="aui-form-builder-content">
-		<div class="yui3-widget-bd aui-helper-clearfix">
-			<ul class="aui-form-builder-drop-container">
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(script) %>">
-						<li class="form-fields-loading">
-							<div class="aui-loadingmask-message">
-								<div class="aui-loadingmask-message-content"><liferay-ui:message key="loading" />...</div>
-							</div>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li class="aui-form-builder-default-message"><liferay-ui:message key="drop-fields-here" /></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-
-			<div class="aui-form-builder-tabs-container">
-				<ul class="aui-tabview-list yui3-widget-hd">
-					<li class="aui-component aui-form-builder-tab-add aui-state-active aui-state-default aui-tab aui-tab-active yui3-widget">
+<div id="<portlet:namespace />formBuilder" class="aui-diagram-builder">
+	<div id="<portlet:namespace />formBuilderContent" class="aui-diagram-builder-content aui-helper-clearfix">
+		<div class="aui-diagram-builder-tabs">
+			<div class="aui-diagram-builder-tabs-content">
+				<ul class="aui-tabview-list aui-widget-hd">
+					<li class="aui-state-active aui-state-default aui-tab aui-tab-active">
 						<span class="aui-tab-content">
-							<a class="aui-tab-label" href="javascript:;"><liferay-ui:message key="add-field" /></a>
+							<a class="aui-tab-label" href="javascript:;">
+								<liferay-ui:message key="fields" />
+							</a>
 						</span>
 					</li>
-					<li class="aui-component aui-form-builder-tab-settings aui-tab aui-state-default yui3-widget">
+					<li class="aui-state-default aui-tab">
 						<span class="aui-tab-content">
-							<a class="aui-tab-label" href="javascript:;"><liferay-ui:message key="field-settings" /></a>
+							<a class="aui-tab-label" href="javascript:;">
+								<liferay-ui:message key="settings" />
+							</a>
 						</span>
 					</li>
 				</ul>
 
-				<div class="aui-tabview-content yui3-widget-bd">
-					<div class="aui-tabview-content-item">
-						<ul class="aui-form-builder-drag-container"></ul>
-					</div>
+				<div class="aui-tabview-content aui-widget-bd">
+					<div class="aui-tabview-content-item"></div>
 
-					<div class="aui-helper-hidden aui-tabview-content-item">
-						<form class="aui-form-builder-settings"></form>
-
-						<div class="aui-button-row aui-form-builder-settings-buttons">
-							<span class="aui-button aui-button-submit aui-priority-secondary aui-state-positive">
-								<span class="aui-button-content">
-									<input class="aui-button-input aui-form-builder-button-close" type="button" value="<liferay-ui:message key="close" />">
-								</span>
-							</span>
-						</div>
-					</div>
+					<div class="aui-helper-hidden aui-tabview-content-item"></div>
 				</div>
 			</div>
 		</div>
+
+		<div class="aui-diagram-builder-content-container"></div>
 	</div>
 </div>
 
@@ -206,7 +185,7 @@ for (int i = 0; i < locales.length; i++) {
 				srcNode: '#<portlet:namespace />translationManager .lfr-translation-manager-content'
 			},
 
-			srcNode: '#<portlet:namespace />formBuilder .aui-form-builder-content'
+			srcNode: '#<portlet:namespace />formBuilderContent'
 		}
 	).render();
 </aui:script>

@@ -47,13 +47,7 @@ while (itr.hasNext()) {
 
 	JSONObject fieldJSONObject = JSONFactoryUtil.createJSONObject();
 
-	fieldJSONObject.put("entryLabel", sb.toString());
-
-	if (structure.getFieldRequired(fieldName)) {
-		fieldJSONObject.put("fixed", true);
-	}
-
-	fieldJSONObject.put("key", fieldName);
+	fieldJSONObject.put("id", fieldName);
 	fieldJSONObject.put("label", structure.getFieldLabel(fieldName));
 	fieldJSONObject.put("name", fieldName);
 	fieldJSONObject.put("readOnlyAttributes", readOnlyAttributesJSONArray);
@@ -74,7 +68,16 @@ if (Validator.isNotNull(portletResourceNamespace)){
 <aui:input name="script" type="hidden" />
 
 <aui:script use="liferay-portlet-dynamic-data-mapping">
-	window.<%= namespace %>structureAvailableFields = A.Array(<%= structureAvailableFieldsJSONArray.toString() %>).concat(Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
+	var availableFields = A.Array(<%= structureAvailableFieldsJSONArray.toString() %>);
+
+	A.Array.each(
+		availableFields,
+		function(item, index, collection) {
+			availableFields[index].iconClass = Liferay.FormBuilder.DEFAULT_ICON_CLASS;
+		}
+	);
+
+	window.<%= namespace %>structureAvailableFields = availableFields.concat(Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
 
 	Liferay.provide(
 		window,

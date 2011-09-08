@@ -258,7 +258,7 @@ public class DDMXSDImpl implements DDMXSD {
 			}
 
 			jsonObject.put(
-				"key", dynamicElementElement.attributeValue("name"));
+				"id", dynamicElementElement.attributeValue("name"));
 
 			String type = jsonObject.getString("type");
 

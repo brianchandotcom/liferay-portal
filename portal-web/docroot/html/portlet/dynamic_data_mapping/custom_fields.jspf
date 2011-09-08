@@ -21,9 +21,9 @@
 	var camelize = Liferay.Util.camelize;
 	var trim = A.Lang.trim;
 
-	var TPL_SEPARATOR = '<div class="separator"></div>';
+	var TPL_PARAGRAPH = '<p></p>';
 
-	var TPL_TEMPLATE_NODE = '<p></p>';
+	var TPL_SEPARATOR = '<div class="separator"></div>';
 
 	var DDMTextField = A.Component.create(
 		{
@@ -52,20 +52,22 @@
 			},
 
 			prototype: {
-				renderSettings: function() {
+				getPropertyModel: function() {
 					var instance = this;
 
-					DDMDateField.superclass.renderSettings.apply(instance, arguments);
+					var model = DDMDateField.superclass.getPropertyModel.apply(instance, arguments);
 
-					var settingsNodesMap = instance.settingsNodesMap;
-
-					var predefinedValueNode = settingsNodesMap['predefinedValueSettingNode'];
-
-					instance.predefinedValueDatePicker = new A.DatePicker(
-						{
-							trigger: predefinedValueNode
+					A.Array.each(model, function(item, index, collection) {
+						if (item.attributeName === 'predefinedValue') {
+							collection[index] = {
+								attributeName: item.attributeName,
+								editor: new A.DateCellEditor(),
+								name: Liferay.Language.get('predefined-value')
+							};
 						}
-					).render();
+					});
+
+					return model;
 				},
 
 				renderUI: function() {
@@ -132,20 +134,15 @@
 				dataType: {
 					value: undefined
 				},
-				disabled: {
-					readOnly: true,
-					value: false
-				},
 				fieldNamespace: {
 					value: 'ddm'
 				},
+				showLabel: {
+					readOnly: true,
+					value: false
+				},
 				style: {
 					value: ''
-				},
-				templateNode: {
-					valueFn: function() {
-						return A.Node.create(TPL_TEMPLATE_NODE);
-					}
 				}
 			},
 
@@ -156,37 +153,30 @@
 			NAME: 'ddm-paragraph',
 
 			prototype: {
-				renderSettings: function() {
+				getHTML: function() {
+					return TPL_PARAGRAPH;
+				},
+
+				getPropertyModel: function() {
 					var instance = this;
 
-					var settingsNodesMap = instance.settingsNodesMap;
-
-					var formBuilder = instance.get('formBuilder');
-					var formNode = formBuilder.get('settingsFormNode');
-
-					formNode.empty();
-
-					instance._renderSettingsFields(
-						[
-							{
-								labelText: Liferay.Language.get('label'),
-								name: 'label',
-								type: 'textarea',
-								value: instance.get('label')
-							},
-							{
-								labelText: Liferay.Language.get('style'),
-								name: 'style',
-								type: 'textarea',
-								value: instance.get('style')
-							}
-						],
-						formNode
-					);
-
-					var labelNode = settingsNodesMap.labelSettingNode;
-
-					labelNode.on('input', instance._onLabelInput, instance);
+					return [
+						{
+							attributeName: 'type',
+							editor: false,
+							name: Liferay.Language.get('type')
+						},
+						{
+							attributeName: 'label',
+							editor: new A.TextAreaCellEditor(),
+							name: Liferay.Language.get('text')
+						},
+						{
+							attributeName: 'style',
+							editor: new A.TextAreaCellEditor(),
+							name: Liferay.Language.get('style')
+						}
+					];
 				},
 
 				_uiSetLabel: function(val) {
@@ -230,11 +220,6 @@
 				fieldNamespace: {
 					value: 'ddm'
 				},
-				templateNode: {
-					valueFn: function() {
-						return A.Node.create(TPL_SEPARATOR);
-					}
-				},
 				showLabel: {
 					readOnly: true,
 					value: false
@@ -246,11 +231,18 @@
 			NAME: 'ddm-separator',
 
 			prototype: {
-				renderSettings: function() {
-					var formBuilder = this.get('formBuilder');
-					var formNode = formBuilder.get('settingsFormNode');
+				getHTML: function() {
+					return TPL_SEPARATOR;
+				},
 
-					formNode.empty();
+				getPropertyModel: function() {
+					return [
+						{
+							attributeName: 'type',
+							editor: false,
+							name: Liferay.Language.get('type')
+						}
+					];
 				}
 			}
 		}

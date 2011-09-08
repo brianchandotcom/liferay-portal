@@ -78,13 +78,13 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 		row.addText(structure.getStructureId(), rowHREF);
 
-		// Name and description
+		// Name
 
-		if (Validator.isNotNull(structure.getName())) {
-			row.addText(HtmlUtil.escape(structure.getName(locale)), rowHREF);
-		}
+		row.addText(HtmlUtil.escape(structure.getName(locale)), rowHREF);
 
-		if (Validator.isNotNull(structure.getDescription())) {
+		// Description
+
+		if (Validator.isNotNull(structure.getDescription(locale))) {
 			row.addText(HtmlUtil.escape(structure.getDescription(locale)), rowHREF);
 		}
 

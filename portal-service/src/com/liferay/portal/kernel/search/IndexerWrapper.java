@@ -48,6 +48,12 @@ public class IndexerWrapper implements Indexer {
 		return _indexer.getFacetQuery(className, searchContext);
 	}
 
+	public BooleanQuery getFullQuery(SearchContext searchContext)
+		throws SearchException {
+
+		return _indexer.getFullQuery(searchContext);
+	}
+
 	public IndexerPostProcessor[] getIndexerPostProcessors() {
 		return _indexer.getIndexerPostProcessors();
 	}

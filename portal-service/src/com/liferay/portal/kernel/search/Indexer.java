@@ -39,6 +39,9 @@ public interface Indexer {
 			String className, SearchContext searchContext)
 		throws Exception;
 
+	public BooleanQuery getFullQuery(SearchContext searchContext)
+		throws SearchException;
+
 	public IndexerPostProcessor[] getIndexerPostProcessors();
 
 	public String getSearchEngineId();

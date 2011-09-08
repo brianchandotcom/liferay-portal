@@ -21,6 +21,12 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 long breadcrumbsFolderId = ParamUtil.getLong(request, "breadcrumbsFolderId");
 
+long repositoryId = ParamUtil.getLong(request, "repositoryId");
+
+if (repositoryId == 0) {
+	repositoryId = scopeGroupId;
+}
+
 long folderId = ParamUtil.getLong(request, "folderId");
 
 long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
@@ -133,8 +139,6 @@ int total = 0;
 			searchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
 
 			try {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
-
 				SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 				searchContext.setAttribute("paginationType", "regular");
@@ -143,7 +147,7 @@ int total = 0;
 				searchContext.setKeywords(keywords);
 				searchContext.setStart(entryStart);
 
-				Hits hits = indexer.search(searchContext);
+				Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
 
 				List results = new ArrayList();
 

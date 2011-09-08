@@ -10,9 +10,10 @@
 			<param name="simple.server.deploy.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/server/default/deploy" />
 			<param name="simple.server.lib.global.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/server/default/lib" />
 			<param name="simple.server.portal.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/server/default/deploy/ROOT.war" />
-			<param name="simple.server.start.executable" value="run${file.suffix.bat}" />
-			<param name="simple.server.stop.executable" value="shutdown${file.suffix.bat}" />
-			<param name="simple.server.stop.executable.arg.line" value="-S" />
+			<param name="simple.server.start.executable" value="standalone${file.suffix.bat}" />
+			<param name="simple.server.start.executable.arg.line" value="" />
+			<param name="simple.server.stop.executable" value="jboss-admin${file.suffix.bat}" />
+			<param name="simple.server.stop.executable.arg.line" value="--connect command=:shutdown" />
 		</antcall>
 	</target>
 

@@ -114,7 +114,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			if (EntityCacheUtil.getResult(
 						UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 						UserTrackerPathImpl.class,
-						userTrackerPath.getPrimaryKey(), this) == null) {
+						userTrackerPath.getPrimaryKey()) == null) {
 				cacheResult(userTrackerPath);
 			}
 		}
@@ -371,7 +371,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	public UserTrackerPath fetchByPrimaryKey(long userTrackerPathId)
 		throws SystemException {
 		UserTrackerPath userTrackerPath = (UserTrackerPath)EntityCacheUtil.getResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
-				UserTrackerPathImpl.class, userTrackerPathId, this);
+				UserTrackerPathImpl.class, userTrackerPathId);
 
 		if (userTrackerPath == _nullUserTrackerPath) {
 			return null;

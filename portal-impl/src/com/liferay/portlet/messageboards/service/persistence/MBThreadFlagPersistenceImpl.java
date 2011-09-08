@@ -141,8 +141,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		for (MBThreadFlag mbThreadFlag : mbThreadFlags) {
 			if (EntityCacheUtil.getResult(
 						MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
-						MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey(),
-						this) == null) {
+						MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey()) == null) {
 				cacheResult(mbThreadFlag);
 			}
 		}
@@ -435,7 +434,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	public MBThreadFlag fetchByPrimaryKey(long threadFlagId)
 		throws SystemException {
 		MBThreadFlag mbThreadFlag = (MBThreadFlag)EntityCacheUtil.getResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
-				MBThreadFlagImpl.class, threadFlagId, this);
+				MBThreadFlagImpl.class, threadFlagId);
 
 		if (mbThreadFlag == _nullMBThreadFlag) {
 			return null;

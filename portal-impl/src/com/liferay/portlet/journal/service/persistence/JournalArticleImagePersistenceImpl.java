@@ -183,7 +183,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			if (EntityCacheUtil.getResult(
 						JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 						JournalArticleImageImpl.class,
-						journalArticleImage.getPrimaryKey(), this) == null) {
+						journalArticleImage.getPrimaryKey()) == null) {
 				cacheResult(journalArticleImage);
 			}
 		}
@@ -533,7 +533,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	public JournalArticleImage fetchByPrimaryKey(long articleImageId)
 		throws SystemException {
 		JournalArticleImage journalArticleImage = (JournalArticleImage)EntityCacheUtil.getResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-				JournalArticleImageImpl.class, articleImageId, this);
+				JournalArticleImageImpl.class, articleImageId);
 
 		if (journalArticleImage == _nullJournalArticleImage) {
 			return null;

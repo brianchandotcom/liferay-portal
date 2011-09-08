@@ -115,7 +115,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			if (EntityCacheUtil.getResult(
 						PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 						PortalPreferencesImpl.class,
-						portalPreferences.getPrimaryKey(), this) == null) {
+						portalPreferences.getPrimaryKey()) == null) {
 				cacheResult(portalPreferences);
 			}
 		}
@@ -414,7 +414,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	public PortalPreferences fetchByPrimaryKey(long portalPreferencesId)
 		throws SystemException {
 		PortalPreferences portalPreferences = (PortalPreferences)EntityCacheUtil.getResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-				PortalPreferencesImpl.class, portalPreferencesId, this);
+				PortalPreferencesImpl.class, portalPreferencesId);
 
 		if (portalPreferences == _nullPortalPreferences) {
 			return null;

@@ -225,7 +225,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		for (CalEvent calEvent : calEvents) {
 			if (EntityCacheUtil.getResult(
 						CalEventModelImpl.ENTITY_CACHE_ENABLED,
-						CalEventImpl.class, calEvent.getPrimaryKey(), this) == null) {
+						CalEventImpl.class, calEvent.getPrimaryKey()) == null) {
 				cacheResult(calEvent);
 			}
 		}
@@ -574,7 +574,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	public CalEvent fetchByPrimaryKey(long eventId) throws SystemException {
 		CalEvent calEvent = (CalEvent)EntityCacheUtil.getResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
-				CalEventImpl.class, eventId, this);
+				CalEventImpl.class, eventId);
 
 		if (calEvent == _nullCalEvent) {
 			return null;

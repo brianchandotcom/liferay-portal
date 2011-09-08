@@ -259,7 +259,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		for (Layout layout : layouts) {
 			if (EntityCacheUtil.getResult(
 						LayoutModelImpl.ENTITY_CACHE_ENABLED, LayoutImpl.class,
-						layout.getPrimaryKey(), this) == null) {
+						layout.getPrimaryKey()) == null) {
 				cacheResult(layout);
 			}
 		}
@@ -681,7 +681,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	public Layout fetchByPrimaryKey(long plid) throws SystemException {
 		Layout layout = (Layout)EntityCacheUtil.getResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutImpl.class, plid, this);
+				LayoutImpl.class, plid);
 
 		if (layout == _nullLayout) {
 			return null;

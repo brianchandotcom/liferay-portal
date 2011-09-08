@@ -160,7 +160,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 			if (EntityCacheUtil.getResult(
 						AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
 						AssetTagPropertyImpl.class,
-						assetTagProperty.getPrimaryKey(), this) == null) {
+						assetTagProperty.getPrimaryKey()) == null) {
 				cacheResult(assetTagProperty);
 			}
 		}
@@ -466,7 +466,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	public AssetTagProperty fetchByPrimaryKey(long tagPropertyId)
 		throws SystemException {
 		AssetTagProperty assetTagProperty = (AssetTagProperty)EntityCacheUtil.getResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagPropertyImpl.class, tagPropertyId, this);
+				AssetTagPropertyImpl.class, tagPropertyId);
 
 		if (assetTagProperty == _nullAssetTagProperty) {
 			return null;

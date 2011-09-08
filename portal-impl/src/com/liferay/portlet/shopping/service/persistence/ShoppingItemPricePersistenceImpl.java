@@ -118,7 +118,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 			if (EntityCacheUtil.getResult(
 						ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingItemPriceImpl.class,
-						shoppingItemPrice.getPrimaryKey(), this) == null) {
+						shoppingItemPrice.getPrimaryKey()) == null) {
 				cacheResult(shoppingItemPrice);
 			}
 		}
@@ -381,7 +381,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	public ShoppingItemPrice fetchByPrimaryKey(long itemPriceId)
 		throws SystemException {
 		ShoppingItemPrice shoppingItemPrice = (ShoppingItemPrice)EntityCacheUtil.getResult(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingItemPriceImpl.class, itemPriceId, this);
+				ShoppingItemPriceImpl.class, itemPriceId);
 
 		if (shoppingItemPrice == _nullShoppingItemPrice) {
 			return null;

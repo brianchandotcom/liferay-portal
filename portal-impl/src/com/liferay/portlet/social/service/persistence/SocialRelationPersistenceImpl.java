@@ -245,8 +245,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		for (SocialRelation socialRelation : socialRelations) {
 			if (EntityCacheUtil.getResult(
 						SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-						SocialRelationImpl.class,
-						socialRelation.getPrimaryKey(), this) == null) {
+						SocialRelationImpl.class, socialRelation.getPrimaryKey()) == null) {
 				cacheResult(socialRelation);
 			}
 		}
@@ -559,7 +558,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public SocialRelation fetchByPrimaryKey(long relationId)
 		throws SystemException {
 		SocialRelation socialRelation = (SocialRelation)EntityCacheUtil.getResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRelationImpl.class, relationId, this);
+				SocialRelationImpl.class, relationId);
 
 		if (socialRelation == _nullSocialRelation) {
 			return null;

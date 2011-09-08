@@ -157,7 +157,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			if (EntityCacheUtil.getResult(
 						WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 						WorkflowDefinitionLinkImpl.class,
-						workflowDefinitionLink.getPrimaryKey(), this) == null) {
+						workflowDefinitionLink.getPrimaryKey()) == null) {
 				cacheResult(workflowDefinitionLink);
 			}
 		}
@@ -490,7 +490,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	public WorkflowDefinitionLink fetchByPrimaryKey(
 		long workflowDefinitionLinkId) throws SystemException {
 		WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)EntityCacheUtil.getResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowDefinitionLinkImpl.class, workflowDefinitionLinkId, this);
+				WorkflowDefinitionLinkImpl.class, workflowDefinitionLinkId);
 
 		if (workflowDefinitionLink == _nullWorkflowDefinitionLink) {
 			return null;

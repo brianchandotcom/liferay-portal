@@ -168,8 +168,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		for (EmailAddress emailAddress : emailAddresses) {
 			if (EntityCacheUtil.getResult(
 						EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-						EmailAddressImpl.class, emailAddress.getPrimaryKey(),
-						this) == null) {
+						EmailAddressImpl.class, emailAddress.getPrimaryKey()) == null) {
 				cacheResult(emailAddress);
 			}
 		}
@@ -432,7 +431,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	public EmailAddress fetchByPrimaryKey(long emailAddressId)
 		throws SystemException {
 		EmailAddress emailAddress = (EmailAddress)EntityCacheUtil.getResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-				EmailAddressImpl.class, emailAddressId, this);
+				EmailAddressImpl.class, emailAddressId);
 
 		if (emailAddress == _nullEmailAddress) {
 			return null;

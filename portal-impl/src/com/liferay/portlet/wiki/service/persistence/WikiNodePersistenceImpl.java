@@ -170,7 +170,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		for (WikiNode wikiNode : wikiNodes) {
 			if (EntityCacheUtil.getResult(
 						WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-						WikiNodeImpl.class, wikiNode.getPrimaryKey(), this) == null) {
+						WikiNodeImpl.class, wikiNode.getPrimaryKey()) == null) {
 				cacheResult(wikiNode);
 			}
 		}
@@ -510,7 +510,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 */
 	public WikiNode fetchByPrimaryKey(long nodeId) throws SystemException {
 		WikiNode wikiNode = (WikiNode)EntityCacheUtil.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-				WikiNodeImpl.class, nodeId, this);
+				WikiNodeImpl.class, nodeId);
 
 		if (wikiNode == _nullWikiNode) {
 			return null;

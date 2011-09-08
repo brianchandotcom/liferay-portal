@@ -168,7 +168,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		for (Website website : websites) {
 			if (EntityCacheUtil.getResult(
 						WebsiteModelImpl.ENTITY_CACHE_ENABLED,
-						WebsiteImpl.class, website.getPrimaryKey(), this) == null) {
+						WebsiteImpl.class, website.getPrimaryKey()) == null) {
 				cacheResult(website);
 			}
 		}
@@ -426,7 +426,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	public Website fetchByPrimaryKey(long websiteId) throws SystemException {
 		Website website = (Website)EntityCacheUtil.getResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
-				WebsiteImpl.class, websiteId, this);
+				WebsiteImpl.class, websiteId);
 
 		if (website == _nullWebsite) {
 			return null;

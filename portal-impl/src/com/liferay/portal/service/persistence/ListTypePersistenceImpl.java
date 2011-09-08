@@ -110,7 +110,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		for (ListType listType : listTypes) {
 			if (EntityCacheUtil.getResult(
 						ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-						ListTypeImpl.class, listType.getPrimaryKey(), this) == null) {
+						ListTypeImpl.class, listType.getPrimaryKey()) == null) {
 				cacheResult(listType);
 			}
 		}
@@ -360,7 +360,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	public ListType fetchByPrimaryKey(int listTypeId) throws SystemException {
 		ListType listType = (ListType)EntityCacheUtil.getResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-				ListTypeImpl.class, listTypeId, this);
+				ListTypeImpl.class, listTypeId);
 
 		if (listType == _nullListType) {
 			return null;

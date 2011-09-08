@@ -131,7 +131,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	public void cacheResult(List<Team> teams) {
 		for (Team team : teams) {
 			if (EntityCacheUtil.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-						TeamImpl.class, team.getPrimaryKey(), this) == null) {
+						TeamImpl.class, team.getPrimaryKey()) == null) {
 				cacheResult(team);
 			}
 		}
@@ -442,7 +442,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	public Team fetchByPrimaryKey(long teamId) throws SystemException {
 		Team team = (Team)EntityCacheUtil.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-				TeamImpl.class, teamId, this);
+				TeamImpl.class, teamId);
 
 		if (team == _nullTeam) {
 			return null;

@@ -160,7 +160,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		for (JournalFeed journalFeed : journalFeeds) {
 			if (EntityCacheUtil.getResult(
 						JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-						JournalFeedImpl.class, journalFeed.getPrimaryKey(), this) == null) {
+						JournalFeedImpl.class, journalFeed.getPrimaryKey()) == null) {
 				cacheResult(journalFeed);
 			}
 		}
@@ -520,7 +520,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 */
 	public JournalFeed fetchByPrimaryKey(long id) throws SystemException {
 		JournalFeed journalFeed = (JournalFeed)EntityCacheUtil.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-				JournalFeedImpl.class, id, this);
+				JournalFeedImpl.class, id);
 
 		if (journalFeed == _nullJournalFeed) {
 			return null;

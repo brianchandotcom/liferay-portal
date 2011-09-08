@@ -118,7 +118,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 			if (EntityCacheUtil.getResult(
 						WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 						WorkflowInstanceLinkImpl.class,
-						workflowInstanceLink.getPrimaryKey(), this) == null) {
+						workflowInstanceLink.getPrimaryKey()) == null) {
 				cacheResult(workflowInstanceLink);
 			}
 		}
@@ -383,7 +383,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	public WorkflowInstanceLink fetchByPrimaryKey(long workflowInstanceLinkId)
 		throws SystemException {
 		WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)EntityCacheUtil.getResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowInstanceLinkImpl.class, workflowInstanceLinkId, this);
+				WorkflowInstanceLinkImpl.class, workflowInstanceLinkId);
 
 		if (workflowInstanceLink == _nullWorkflowInstanceLink) {
 			return null;

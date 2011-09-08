@@ -359,7 +359,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		for (BlogsEntry blogsEntry : blogsEntries) {
 			if (EntityCacheUtil.getResult(
 						BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-						BlogsEntryImpl.class, blogsEntry.getPrimaryKey(), this) == null) {
+						BlogsEntryImpl.class, blogsEntry.getPrimaryKey()) == null) {
 				cacheResult(blogsEntry);
 			}
 		}
@@ -748,7 +748,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	public BlogsEntry fetchByPrimaryKey(long entryId) throws SystemException {
 		BlogsEntry blogsEntry = (BlogsEntry)EntityCacheUtil.getResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsEntryImpl.class, entryId, this);
+				BlogsEntryImpl.class, entryId);
 
 		if (blogsEntry == _nullBlogsEntry) {
 			return null;

@@ -130,7 +130,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			if (EntityCacheUtil.getResult(
 						ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 						ServiceComponentImpl.class,
-						serviceComponent.getPrimaryKey(), this) == null) {
+						serviceComponent.getPrimaryKey()) == null) {
 				cacheResult(serviceComponent);
 			}
 		}
@@ -431,7 +431,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	public ServiceComponent fetchByPrimaryKey(long serviceComponentId)
 		throws SystemException {
 		ServiceComponent serviceComponent = (ServiceComponent)EntityCacheUtil.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-				ServiceComponentImpl.class, serviceComponentId, this);
+				ServiceComponentImpl.class, serviceComponentId);
 
 		if (serviceComponent == _nullServiceComponent) {
 			return null;

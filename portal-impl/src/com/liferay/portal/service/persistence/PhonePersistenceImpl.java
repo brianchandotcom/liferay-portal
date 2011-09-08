@@ -167,7 +167,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	public void cacheResult(List<Phone> phones) {
 		for (Phone phone : phones) {
 			if (EntityCacheUtil.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-						PhoneImpl.class, phone.getPrimaryKey(), this) == null) {
+						PhoneImpl.class, phone.getPrimaryKey()) == null) {
 				cacheResult(phone);
 			}
 		}
@@ -426,7 +426,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	public Phone fetchByPrimaryKey(long phoneId) throws SystemException {
 		Phone phone = (Phone)EntityCacheUtil.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-				PhoneImpl.class, phoneId, this);
+				PhoneImpl.class, phoneId);
 
 		if (phone == _nullPhone) {
 			return null;

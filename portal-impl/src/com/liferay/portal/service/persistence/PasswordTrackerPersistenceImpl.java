@@ -113,7 +113,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			if (EntityCacheUtil.getResult(
 						PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
 						PasswordTrackerImpl.class,
-						passwordTracker.getPrimaryKey(), this) == null) {
+						passwordTracker.getPrimaryKey()) == null) {
 				cacheResult(passwordTracker);
 			}
 		}
@@ -370,7 +370,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	public PasswordTracker fetchByPrimaryKey(long passwordTrackerId)
 		throws SystemException {
 		PasswordTracker passwordTracker = (PasswordTracker)EntityCacheUtil.getResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
-				PasswordTrackerImpl.class, passwordTrackerId, this);
+				PasswordTrackerImpl.class, passwordTrackerId);
 
 		if (passwordTracker == _nullPasswordTracker) {
 			return null;

@@ -164,8 +164,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		for (UserGroupRole userGroupRole : userGroupRoles) {
 			if (EntityCacheUtil.getResult(
 						UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-						UserGroupRoleImpl.class, userGroupRole.getPrimaryKey(),
-						this) == null) {
+						UserGroupRoleImpl.class, userGroupRole.getPrimaryKey()) == null) {
 				cacheResult(userGroupRole);
 			}
 		}
@@ -421,7 +420,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole fetchByPrimaryKey(UserGroupRolePK userGroupRolePK)
 		throws SystemException {
 		UserGroupRole userGroupRole = (UserGroupRole)EntityCacheUtil.getResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-				UserGroupRoleImpl.class, userGroupRolePK, this);
+				UserGroupRoleImpl.class, userGroupRolePK);
 
 		if (userGroupRole == _nullUserGroupRole) {
 			return null;

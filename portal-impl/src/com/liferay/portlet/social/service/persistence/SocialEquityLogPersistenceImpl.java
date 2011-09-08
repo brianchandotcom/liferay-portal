@@ -246,7 +246,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			if (EntityCacheUtil.getResult(
 						SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 						SocialEquityLogImpl.class,
-						socialEquityLog.getPrimaryKey(), this) == null) {
+						socialEquityLog.getPrimaryKey()) == null) {
 				cacheResult(socialEquityLog);
 			}
 		}
@@ -593,7 +593,7 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 	public SocialEquityLog fetchByPrimaryKey(long equityLogId)
 		throws SystemException {
 		SocialEquityLog socialEquityLog = (SocialEquityLog)EntityCacheUtil.getResult(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
-				SocialEquityLogImpl.class, equityLogId, this);
+				SocialEquityLogImpl.class, equityLogId);
 
 		if (socialEquityLog == _nullSocialEquityLog) {
 			return null;

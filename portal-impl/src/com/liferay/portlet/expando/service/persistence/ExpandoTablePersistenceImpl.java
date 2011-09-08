@@ -137,8 +137,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		for (ExpandoTable expandoTable : expandoTables) {
 			if (EntityCacheUtil.getResult(
 						ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoTableImpl.class, expandoTable.getPrimaryKey(),
-						this) == null) {
+						ExpandoTableImpl.class, expandoTable.getPrimaryKey()) == null) {
 				cacheResult(expandoTable);
 			}
 		}
@@ -443,7 +442,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	public ExpandoTable fetchByPrimaryKey(long tableId)
 		throws SystemException {
 		ExpandoTable expandoTable = (ExpandoTable)EntityCacheUtil.getResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableImpl.class, tableId, this);
+				ExpandoTableImpl.class, tableId);
 
 		if (expandoTable == _nullExpandoTable) {
 			return null;

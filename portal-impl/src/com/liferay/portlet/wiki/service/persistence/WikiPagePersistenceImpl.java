@@ -411,7 +411,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		for (WikiPage wikiPage : wikiPages) {
 			if (EntityCacheUtil.getResult(
 						WikiPageModelImpl.ENTITY_CACHE_ENABLED,
-						WikiPageImpl.class, wikiPage.getPrimaryKey(), this) == null) {
+						WikiPageImpl.class, wikiPage.getPrimaryKey()) == null) {
 				cacheResult(wikiPage);
 			}
 		}
@@ -834,7 +834,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	public WikiPage fetchByPrimaryKey(long pageId) throws SystemException {
 		WikiPage wikiPage = (WikiPage)EntityCacheUtil.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
-				WikiPageImpl.class, pageId, this);
+				WikiPageImpl.class, pageId);
 
 		if (wikiPage == _nullWikiPage) {
 			return null;

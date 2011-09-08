@@ -146,7 +146,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			if (EntityCacheUtil.getResult(
 						DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 						DDMStructureLinkImpl.class,
-						ddmStructureLink.getPrimaryKey(), this) == null) {
+						ddmStructureLink.getPrimaryKey()) == null) {
 				cacheResult(ddmStructureLink);
 			}
 		}
@@ -431,7 +431,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	public DDMStructureLink fetchByPrimaryKey(long structureLinkId)
 		throws SystemException {
 		DDMStructureLink ddmStructureLink = (DDMStructureLink)EntityCacheUtil.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStructureLinkImpl.class, structureLinkId, this);
+				DDMStructureLinkImpl.class, structureLinkId);
 
 		if (ddmStructureLink == _nullDDMStructureLink) {
 			return null;

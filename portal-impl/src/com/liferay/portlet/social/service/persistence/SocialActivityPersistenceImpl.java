@@ -241,8 +241,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		for (SocialActivity socialActivity : socialActivities) {
 			if (EntityCacheUtil.getResult(
 						SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivityImpl.class,
-						socialActivity.getPrimaryKey(), this) == null) {
+						SocialActivityImpl.class, socialActivity.getPrimaryKey()) == null) {
 				cacheResult(socialActivity);
 			}
 		}
@@ -600,7 +599,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	public SocialActivity fetchByPrimaryKey(long activityId)
 		throws SystemException {
 		SocialActivity socialActivity = (SocialActivity)EntityCacheUtil.getResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-				SocialActivityImpl.class, activityId, this);
+				SocialActivityImpl.class, activityId);
 
 		if (socialActivity == _nullSocialActivity) {
 			return null;

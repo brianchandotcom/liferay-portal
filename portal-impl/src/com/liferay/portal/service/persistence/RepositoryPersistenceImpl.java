@@ -115,7 +115,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		for (Repository repository : repositories) {
 			if (EntityCacheUtil.getResult(
 						RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-						RepositoryImpl.class, repository.getPrimaryKey(), this) == null) {
+						RepositoryImpl.class, repository.getPrimaryKey()) == null) {
 				cacheResult(repository);
 			}
 		}
@@ -376,7 +376,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	public Repository fetchByPrimaryKey(long repositoryId)
 		throws SystemException {
 		Repository repository = (Repository)EntityCacheUtil.getResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-				RepositoryImpl.class, repositoryId, this);
+				RepositoryImpl.class, repositoryId);
 
 		if (repository == _nullRepository) {
 			return null;

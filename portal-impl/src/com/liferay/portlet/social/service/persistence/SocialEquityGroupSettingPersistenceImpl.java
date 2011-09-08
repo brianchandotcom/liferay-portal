@@ -128,7 +128,7 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 			if (EntityCacheUtil.getResult(
 						SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 						SocialEquityGroupSettingImpl.class,
-						socialEquityGroupSetting.getPrimaryKey(), this) == null) {
+						socialEquityGroupSetting.getPrimaryKey()) == null) {
 				cacheResult(socialEquityGroupSetting);
 			}
 		}
@@ -440,7 +440,7 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 	public SocialEquityGroupSetting fetchByPrimaryKey(long equityGroupSettingId)
 		throws SystemException {
 		SocialEquityGroupSetting socialEquityGroupSetting = (SocialEquityGroupSetting)EntityCacheUtil.getResult(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
-				SocialEquityGroupSettingImpl.class, equityGroupSettingId, this);
+				SocialEquityGroupSettingImpl.class, equityGroupSettingId);
 
 		if (socialEquityGroupSetting == _nullSocialEquityGroupSetting) {
 			return null;

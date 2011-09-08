@@ -267,7 +267,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			if (EntityCacheUtil.getResult(
 						DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileEntryImpl.class, dlFileEntry.getPrimaryKey(), this) == null) {
+						DLFileEntryImpl.class, dlFileEntry.getPrimaryKey()) == null) {
 				cacheResult(dlFileEntry);
 			}
 		}
@@ -681,7 +681,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public DLFileEntry fetchByPrimaryKey(long fileEntryId)
 		throws SystemException {
 		DLFileEntry dlFileEntry = (DLFileEntry)EntityCacheUtil.getResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileEntryImpl.class, fileEntryId, this);
+				DLFileEntryImpl.class, fileEntryId);
 
 		if (dlFileEntry == _nullDLFileEntry) {
 			return null;

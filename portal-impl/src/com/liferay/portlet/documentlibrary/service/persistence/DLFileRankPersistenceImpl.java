@@ -160,7 +160,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		for (DLFileRank dlFileRank : dlFileRanks) {
 			if (EntityCacheUtil.getResult(
 						DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileRankImpl.class, dlFileRank.getPrimaryKey(), this) == null) {
+						DLFileRankImpl.class, dlFileRank.getPrimaryKey()) == null) {
 				cacheResult(dlFileRank);
 			}
 		}
@@ -460,7 +460,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	public DLFileRank fetchByPrimaryKey(long fileRankId)
 		throws SystemException {
 		DLFileRank dlFileRank = (DLFileRank)EntityCacheUtil.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileRankImpl.class, fileRankId, this);
+				DLFileRankImpl.class, fileRankId);
 
 		if (dlFileRank == _nullDLFileRank) {
 			return null;

@@ -137,7 +137,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	public void cacheResult(List<Lock> locks) {
 		for (Lock lock : locks) {
 			if (EntityCacheUtil.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-						LockImpl.class, lock.getPrimaryKey(), this) == null) {
+						LockImpl.class, lock.getPrimaryKey()) == null) {
 				cacheResult(lock);
 			}
 		}
@@ -435,7 +435,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	public Lock fetchByPrimaryKey(long lockId) throws SystemException {
 		Lock lock = (Lock)EntityCacheUtil.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-				LockImpl.class, lockId, this);
+				LockImpl.class, lockId);
 
 		if (lock == _nullLock) {
 			return null;

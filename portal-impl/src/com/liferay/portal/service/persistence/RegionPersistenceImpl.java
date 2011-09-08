@@ -136,7 +136,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		for (Region region : regions) {
 			if (EntityCacheUtil.getResult(
 						RegionModelImpl.ENTITY_CACHE_ENABLED, RegionImpl.class,
-						region.getPrimaryKey(), this) == null) {
+						region.getPrimaryKey()) == null) {
 				cacheResult(region);
 			}
 		}
@@ -388,7 +388,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public Region fetchByPrimaryKey(long regionId) throws SystemException {
 		Region region = (Region)EntityCacheUtil.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-				RegionImpl.class, regionId, this);
+				RegionImpl.class, regionId);
 
 		if (region == _nullRegion) {
 			return null;

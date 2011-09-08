@@ -133,7 +133,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			if (EntityCacheUtil.getResult(
 						ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 						ShoppingCategoryImpl.class,
-						shoppingCategory.getPrimaryKey(), this) == null) {
+						shoppingCategory.getPrimaryKey()) == null) {
 				cacheResult(shoppingCategory);
 			}
 		}
@@ -396,7 +396,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	public ShoppingCategory fetchByPrimaryKey(long categoryId)
 		throws SystemException {
 		ShoppingCategory shoppingCategory = (ShoppingCategory)EntityCacheUtil.getResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingCategoryImpl.class, categoryId, this);
+				ShoppingCategoryImpl.class, categoryId);
 
 		if (shoppingCategory == _nullShoppingCategory) {
 			return null;

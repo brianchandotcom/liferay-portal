@@ -154,7 +154,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			if (EntityCacheUtil.getResult(
 						SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 						SCFrameworkVersionImpl.class,
-						scFrameworkVersion.getPrimaryKey(), this) == null) {
+						scFrameworkVersion.getPrimaryKey()) == null) {
 				cacheResult(scFrameworkVersion);
 			}
 		}
@@ -430,7 +430,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	public SCFrameworkVersion fetchByPrimaryKey(long frameworkVersionId)
 		throws SystemException {
 		SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)EntityCacheUtil.getResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
-				SCFrameworkVersionImpl.class, frameworkVersionId, this);
+				SCFrameworkVersionImpl.class, frameworkVersionId);
 
 		if (scFrameworkVersion == _nullSCFrameworkVersion) {
 			return null;

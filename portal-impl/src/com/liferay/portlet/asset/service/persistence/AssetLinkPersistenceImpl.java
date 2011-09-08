@@ -187,7 +187,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		for (AssetLink assetLink : assetLinks) {
 			if (EntityCacheUtil.getResult(
 						AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-						AssetLinkImpl.class, assetLink.getPrimaryKey(), this) == null) {
+						AssetLinkImpl.class, assetLink.getPrimaryKey()) == null) {
 				cacheResult(assetLink);
 			}
 		}
@@ -489,7 +489,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public AssetLink fetchByPrimaryKey(long linkId) throws SystemException {
 		AssetLink assetLink = (AssetLink)EntityCacheUtil.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-				AssetLinkImpl.class, linkId, this);
+				AssetLinkImpl.class, linkId);
 
 		if (assetLink == _nullAssetLink) {
 			return null;

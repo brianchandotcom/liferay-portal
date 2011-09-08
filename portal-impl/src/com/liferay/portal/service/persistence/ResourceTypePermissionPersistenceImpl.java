@@ -158,7 +158,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			if (EntityCacheUtil.getResult(
 						ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 						ResourceTypePermissionImpl.class,
-						resourceTypePermission.getPrimaryKey(), this) == null) {
+						resourceTypePermission.getPrimaryKey()) == null) {
 				cacheResult(resourceTypePermission);
 			}
 		}
@@ -483,7 +483,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	public ResourceTypePermission fetchByPrimaryKey(
 		long resourceTypePermissionId) throws SystemException {
 		ResourceTypePermission resourceTypePermission = (ResourceTypePermission)EntityCacheUtil.getResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceTypePermissionImpl.class, resourceTypePermissionId, this);
+				ResourceTypePermissionImpl.class, resourceTypePermissionId);
 
 		if (resourceTypePermission == _nullResourceTypePermission) {
 			return null;

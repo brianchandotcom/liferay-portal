@@ -245,7 +245,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		for (DLFolder dlFolder : dlFolders) {
 			if (EntityCacheUtil.getResult(
 						DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-						DLFolderImpl.class, dlFolder.getPrimaryKey(), this) == null) {
+						DLFolderImpl.class, dlFolder.getPrimaryKey()) == null) {
 				cacheResult(dlFolder);
 			}
 		}
@@ -631,7 +631,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	public DLFolder fetchByPrimaryKey(long folderId) throws SystemException {
 		DLFolder dlFolder = (DLFolder)EntityCacheUtil.getResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-				DLFolderImpl.class, folderId, this);
+				DLFolderImpl.class, folderId);
 
 		if (dlFolder == _nullDLFolder) {
 			return null;

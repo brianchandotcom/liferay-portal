@@ -146,8 +146,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			if (EntityCacheUtil.getResult(
 						DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileVersionImpl.class, dlFileVersion.getPrimaryKey(),
-						this) == null) {
+						DLFileVersionImpl.class, dlFileVersion.getPrimaryKey()) == null) {
 				cacheResult(dlFileVersion);
 			}
 		}
@@ -469,7 +468,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion fetchByPrimaryKey(long fileVersionId)
 		throws SystemException {
 		DLFileVersion dlFileVersion = (DLFileVersion)EntityCacheUtil.getResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileVersionImpl.class, fileVersionId, this);
+				DLFileVersionImpl.class, fileVersionId);
 
 		if (dlFileVersion == _nullDLFileVersion) {
 			return null;

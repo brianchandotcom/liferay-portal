@@ -276,7 +276,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void cacheResult(List<User> users) {
 		for (User user : users) {
 			if (EntityCacheUtil.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-						UserImpl.class, user.getPrimaryKey(), this) == null) {
+						UserImpl.class, user.getPrimaryKey()) == null) {
 				cacheResult(user);
 			}
 		}
@@ -873,7 +873,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	public User fetchByPrimaryKey(long userId) throws SystemException {
 		User user = (User)EntityCacheUtil.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserImpl.class, userId, this);
+				UserImpl.class, userId);
 
 		if (user == _nullUser) {
 			return null;

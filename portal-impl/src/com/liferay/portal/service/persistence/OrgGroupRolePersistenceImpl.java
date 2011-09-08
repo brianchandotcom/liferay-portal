@@ -123,8 +123,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		for (OrgGroupRole orgGroupRole : orgGroupRoles) {
 			if (EntityCacheUtil.getResult(
 						OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-						OrgGroupRoleImpl.class, orgGroupRole.getPrimaryKey(),
-						this) == null) {
+						OrgGroupRoleImpl.class, orgGroupRole.getPrimaryKey()) == null) {
 				cacheResult(orgGroupRole);
 			}
 		}
@@ -379,7 +378,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	public OrgGroupRole fetchByPrimaryKey(OrgGroupRolePK orgGroupRolePK)
 		throws SystemException {
 		OrgGroupRole orgGroupRole = (OrgGroupRole)EntityCacheUtil.getResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-				OrgGroupRoleImpl.class, orgGroupRolePK, this);
+				OrgGroupRoleImpl.class, orgGroupRolePK);
 
 		if (orgGroupRole == _nullOrgGroupRole) {
 			return null;

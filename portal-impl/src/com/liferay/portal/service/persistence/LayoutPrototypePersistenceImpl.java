@@ -144,7 +144,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			if (EntityCacheUtil.getResult(
 						LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 						LayoutPrototypeImpl.class,
-						layoutPrototype.getPrimaryKey(), this) == null) {
+						layoutPrototype.getPrimaryKey()) == null) {
 				cacheResult(layoutPrototype);
 			}
 		}
@@ -414,7 +414,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	public LayoutPrototype fetchByPrimaryKey(long layoutPrototypeId)
 		throws SystemException {
 		LayoutPrototype layoutPrototype = (LayoutPrototype)EntityCacheUtil.getResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutPrototypeImpl.class, layoutPrototypeId, this);
+				LayoutPrototypeImpl.class, layoutPrototypeId);
 
 		if (layoutPrototype == _nullLayoutPrototype) {
 			return null;

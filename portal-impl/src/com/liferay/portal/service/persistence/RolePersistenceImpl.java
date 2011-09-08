@@ -189,7 +189,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void cacheResult(List<Role> roles) {
 		for (Role role : roles) {
 			if (EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-						RoleImpl.class, role.getPrimaryKey(), this) == null) {
+						RoleImpl.class, role.getPrimaryKey()) == null) {
 				cacheResult(role);
 			}
 		}
@@ -548,7 +548,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	public Role fetchByPrimaryKey(long roleId) throws SystemException {
 		Role role = (Role)EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-				RoleImpl.class, roleId, this);
+				RoleImpl.class, roleId);
 
 		if (role == _nullRole) {
 			return null;

@@ -133,7 +133,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		for (Permission permission : permissions) {
 			if (EntityCacheUtil.getResult(
 						PermissionModelImpl.ENTITY_CACHE_ENABLED,
-						PermissionImpl.class, permission.getPrimaryKey(), this) == null) {
+						PermissionImpl.class, permission.getPrimaryKey()) == null) {
 				cacheResult(permission);
 			}
 		}
@@ -457,7 +457,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	public Permission fetchByPrimaryKey(long permissionId)
 		throws SystemException {
 		Permission permission = (Permission)EntityCacheUtil.getResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-				PermissionImpl.class, permissionId, this);
+				PermissionImpl.class, permissionId);
 
 		if (permission == _nullPermission) {
 			return null;

@@ -161,8 +161,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		for (DDLRecordSet ddlRecordSet : ddlRecordSets) {
 			if (EntityCacheUtil.getResult(
 						DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-						DDLRecordSetImpl.class, ddlRecordSet.getPrimaryKey(),
-						this) == null) {
+						DDLRecordSetImpl.class, ddlRecordSet.getPrimaryKey()) == null) {
 				cacheResult(ddlRecordSet);
 			}
 		}
@@ -514,7 +513,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	public DDLRecordSet fetchByPrimaryKey(long recordSetId)
 		throws SystemException {
 		DDLRecordSet ddlRecordSet = (DDLRecordSet)EntityCacheUtil.getResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-				DDLRecordSetImpl.class, recordSetId, this);
+				DDLRecordSetImpl.class, recordSetId);
 
 		if (ddlRecordSet == _nullDDLRecordSet) {
 			return null;

@@ -144,8 +144,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		for (AssetTagStats assetTagStats : assetTagStatses) {
 			if (EntityCacheUtil.getResult(
 						AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-						AssetTagStatsImpl.class, assetTagStats.getPrimaryKey(),
-						this) == null) {
+						AssetTagStatsImpl.class, assetTagStats.getPrimaryKey()) == null) {
 				cacheResult(assetTagStats);
 			}
 		}
@@ -440,7 +439,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	public AssetTagStats fetchByPrimaryKey(long tagStatsId)
 		throws SystemException {
 		AssetTagStats assetTagStats = (AssetTagStats)EntityCacheUtil.getResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagStatsImpl.class, tagStatsId, this);
+				AssetTagStatsImpl.class, tagStatsId);
 
 		if (assetTagStats == _nullAssetTagStats) {
 			return null;

@@ -169,7 +169,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if (EntityCacheUtil.getResult(
 						PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 						PortletPreferencesImpl.class,
-						portletPreferences.getPrimaryKey(), this) == null) {
+						portletPreferences.getPrimaryKey()) == null) {
 				cacheResult(portletPreferences);
 			}
 		}
@@ -488,7 +488,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences fetchByPrimaryKey(long portletPreferencesId)
 		throws SystemException {
 		PortletPreferences portletPreferences = (PortletPreferences)EntityCacheUtil.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-				PortletPreferencesImpl.class, portletPreferencesId, this);
+				PortletPreferencesImpl.class, portletPreferencesId);
 
 		if (portletPreferences == _nullPortletPreferences) {
 			return null;

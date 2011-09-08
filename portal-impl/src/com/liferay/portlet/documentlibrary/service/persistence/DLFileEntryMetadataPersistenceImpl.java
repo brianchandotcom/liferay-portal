@@ -193,7 +193,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			if (EntityCacheUtil.getResult(
 						DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
 						DLFileEntryMetadataImpl.class,
-						dlFileEntryMetadata.getPrimaryKey(), this) == null) {
+						dlFileEntryMetadata.getPrimaryKey()) == null) {
 				cacheResult(dlFileEntryMetadata);
 			}
 		}
@@ -539,7 +539,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata fetchByPrimaryKey(long fileEntryMetadataId)
 		throws SystemException {
 		DLFileEntryMetadata dlFileEntryMetadata = (DLFileEntryMetadata)EntityCacheUtil.getResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileEntryMetadataImpl.class, fileEntryMetadataId, this);
+				DLFileEntryMetadataImpl.class, fileEntryMetadataId);
 
 		if (dlFileEntryMetadata == _nullDLFileEntryMetadata) {
 			return null;

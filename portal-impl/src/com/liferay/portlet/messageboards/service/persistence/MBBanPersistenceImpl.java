@@ -153,7 +153,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	public void cacheResult(List<MBBan> mbBans) {
 		for (MBBan mbBan : mbBans) {
 			if (EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-						MBBanImpl.class, mbBan.getPrimaryKey(), this) == null) {
+						MBBanImpl.class, mbBan.getPrimaryKey()) == null) {
 				cacheResult(mbBan);
 			}
 		}
@@ -446,7 +446,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	public MBBan fetchByPrimaryKey(long banId) throws SystemException {
 		MBBan mbBan = (MBBan)EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-				MBBanImpl.class, banId, this);
+				MBBanImpl.class, banId);
 
 		if (mbBan == _nullMBBan) {
 			return null;

@@ -128,7 +128,7 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 			if (EntityCacheUtil.getResult(
 						OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 						OrgGroupPermissionImpl.class,
-						orgGroupPermission.getPrimaryKey(), this) == null) {
+						orgGroupPermission.getPrimaryKey()) == null) {
 				cacheResult(orgGroupPermission);
 			}
 		}
@@ -387,7 +387,7 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	public OrgGroupPermission fetchByPrimaryKey(
 		OrgGroupPermissionPK orgGroupPermissionPK) throws SystemException {
 		OrgGroupPermission orgGroupPermission = (OrgGroupPermission)EntityCacheUtil.getResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
-				OrgGroupPermissionImpl.class, orgGroupPermissionPK, this);
+				OrgGroupPermissionImpl.class, orgGroupPermissionPK);
 
 		if (orgGroupPermission == _nullOrgGroupPermission) {
 			return null;

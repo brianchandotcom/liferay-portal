@@ -123,7 +123,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		for (VirtualHost virtualHost : virtualHosts) {
 			if (EntityCacheUtil.getResult(
 						VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-						VirtualHostImpl.class, virtualHost.getPrimaryKey(), this) == null) {
+						VirtualHostImpl.class, virtualHost.getPrimaryKey()) == null) {
 				cacheResult(virtualHost);
 			}
 		}
@@ -436,7 +436,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	public VirtualHost fetchByPrimaryKey(long virtualHostId)
 		throws SystemException {
 		VirtualHost virtualHost = (VirtualHost)EntityCacheUtil.getResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-				VirtualHostImpl.class, virtualHostId, this);
+				VirtualHostImpl.class, virtualHostId);
 
 		if (virtualHost == _nullVirtualHost) {
 			return null;

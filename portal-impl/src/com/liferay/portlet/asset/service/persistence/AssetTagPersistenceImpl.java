@@ -123,7 +123,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		for (AssetTag assetTag : assetTags) {
 			if (EntityCacheUtil.getResult(
 						AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-						AssetTagImpl.class, assetTag.getPrimaryKey(), this) == null) {
+						AssetTagImpl.class, assetTag.getPrimaryKey()) == null) {
 				cacheResult(assetTag);
 			}
 		}
@@ -390,7 +390,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	public AssetTag fetchByPrimaryKey(long tagId) throws SystemException {
 		AssetTag assetTag = (AssetTag)EntityCacheUtil.getResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagImpl.class, tagId, this);
+				AssetTagImpl.class, tagId);
 
 		if (assetTag == _nullAssetTag) {
 			return null;

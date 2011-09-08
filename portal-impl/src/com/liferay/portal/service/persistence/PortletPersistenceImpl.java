@@ -126,7 +126,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		for (Portlet portlet : portlets) {
 			if (EntityCacheUtil.getResult(
 						PortletModelImpl.ENTITY_CACHE_ENABLED,
-						PortletImpl.class, portlet.getPrimaryKey(), this) == null) {
+						PortletImpl.class, portlet.getPrimaryKey()) == null) {
 				cacheResult(portlet);
 			}
 		}
@@ -422,7 +422,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	public Portlet fetchByPrimaryKey(long id) throws SystemException {
 		Portlet portlet = (Portlet)EntityCacheUtil.getResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
-				PortletImpl.class, id, this);
+				PortletImpl.class, id);
 
 		if (portlet == _nullPortlet) {
 			return null;

@@ -28,7 +28,7 @@
 	</bean>
 	<bean id="transactionAdvice" class="com.liferay.portal.spring.transaction.TransactionInterceptor">
 		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
-		<property name="transactionManager" ref="liferayTransactionManager" />
+		<property name="platformTransactionManager" ref="liferayTransactionManager" />
 	</bean>
 	<bean id="transactionAttributeSource" class="com.liferay.portal.spring.transaction.AnnotationTransactionAttributeSource" />
 </beans>

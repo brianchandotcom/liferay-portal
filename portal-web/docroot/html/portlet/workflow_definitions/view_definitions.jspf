@@ -15,7 +15,7 @@
 --%>
 
 <%
-List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
+List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.search(company.getCompanyId(), null, null, WorkflowConstants.SCOPE_DEFAULT, 0, 100, null);
 
 portletURL.setParameter("struts_action", "/workflow_definitions/view");
 %>

@@ -121,7 +121,7 @@ if (Validator.isNotNull(ddmStructureId)) {
 				<aui:option><%= LanguageUtil.get(pageContext, "no-workflow") %></aui:option>
 
 				<%
-				List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
+				List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.search(company.getCompanyId(), null, true, WorkflowConstants.SCOPE_DEFAULT, 0, 100, null);
 
 				for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 					boolean selected = false;

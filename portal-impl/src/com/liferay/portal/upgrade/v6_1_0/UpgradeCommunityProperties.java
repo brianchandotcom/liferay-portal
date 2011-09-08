@@ -43,8 +43,9 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 
 		runSQL(
 			"update " + tableName + " set preferences = " +
-				"replace(preferences, '" + oldValue + "', '" + newValue +
-					"') where preferences like '%" + oldValue + "%'");
+				"replace(CAST_TEXT(preferences), '" + oldValue + "', '" +
+					newValue + "') where preferences like '%" + oldValue +
+						"%'");
 	}
 
 	private static final String[] _NEW_PORTAL_PREFERENCES = {

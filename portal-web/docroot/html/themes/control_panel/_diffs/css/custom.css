@@ -1,3 +1,4 @@
+@import "compass";
 @import url(../../classic/css/custom_common.css);
 
 /* ---------- Base styles ---------- */
@@ -724,108 +725,72 @@ body.portal-popup:after, body.portal-popup:before {
 /*----- Extras -----*/
 
 input[type="text"], input[type="password"], select, textarea, .textarea, .aui-tagselector-content .aui-textboxlistentry-holder {
-	-moz-box-shadow: 0 1px 0 #FFF, 0 1px 2px #CCC inset;
-	-webkit-box-shadow: 0 1px 0 #FFF, 0 1px 2px #CCC inset;
-	box-shadow: 0 1px 0 #FFF, 0 1px 2px #CCC inset;
+	@include box-shadow(0 1px 0 #FFF, 0 1px 2px #CCC inset);
 }
 
 .lfr-search-combobox .aui-field-input {
-	-moz-box-shadow: 0 1px 2px #CCC inset;
-	-webkit-box-shadow: 0 1px 2px #CCC inset;
-	box-shadow: 0 1px 2px #CCC inset;
+	@include box-shadow(0 1px 2px #CCC inset);
 }
 
 input[type="text"], input[type="password"], select, textarea, .textarea, #breadcrumbs, .form-navigation, .lfr-panel.lfr-extended, .portlet-enterprise-admin .form-navigation, .lfr-asset-column-actions-content, .lfr-ctrl-panel-content .aui-column-content-center, .taglib-search-toggle, .portlet-communities .layout-breadcrumb ul, .portlet-enterprise-admin .layout-breadcrumb ul, .aui-textboxlistentry-holder, .aui-field-element {
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
+	@include border-radius(4px);
 }
 
 .portlet-description .aui-icon, .hide-notices-hover .hide-all-notices {
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
+	@include border-radius(10px);
 }
 
 #breadcrumbs, .form-navigation, .lfr-panel.lfr-extended, .portlet-enterprise-admin .form-navigation, .lfr-asset-column-actions-content, .lfr-ctrl-panel-content .aui-column-content-center, .taglib-search-toggle {
-	-moz-box-shadow: 0 0 8px #CECECE inset;
-	-webkit-box-shadow: 0 0 8px #CECECE inset;
-	box-shadow: 0 0 8px #CECECE inset;
+	@include box-shadow(0 0 8px #CECECE inset);
 }
 
 #minimize-panels {
-	-moz-border-radius: 0 2px 2px 0;
-	-webkit-border-radius: 0 2px 2px 0;
-	border-radius: 0 2px 2px 0;
+	@include border-radius(0 2px 2px 0);
 }
 
 .panels-minimized #controlPanelMenuAddContentPanelContainer .lfr-panel-content {
-	-moz-border-radius: 0 6px 6px 0;
-	-webkit-border-radius: 0 6px 6px 0;
-	border-radius: 0 6px 6px 0;
+	@include border-radius(0 6px 6px 0);
 }
 
 .panels-minimized #controlPanelMenuAddContentPanelContainer .lfr-panel-content:before {
-	-moz-border-radius: 6px 0 0 6px;
-	-webkit-border-radius: 6px 0 0 6px;
-	border-radius: 6px 0 0 6px;
+	@include border-radius(6px 0 0 6px);
 }
 
 .search-panel-active #controlPanelMenuAddContentPanelContainer .lfr-panel .lfr-panel-content, .search-panel-active #controlPanelMenuAddContentPanelContainer .lfr-panel.lfr-extended, #controlPanelMenuAddContentPanelContainer a.lfr-panel-button:focus, .aui-tagselector .lfr-tag-selector-input {
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	box-shadow: none;
+	@include box-shadow(none);
 }
 
 .search-panel-active #controlPanelMenuAddContentPanelContainer {
-	-moz-box-shadow: 0 0 5px #111 inset;
-	-webkit-box-shadow: 0 0 5px #111 inset;
-	box-shadow: 0 0 5px #111 inset;
+	@include box-shadow(0 0 5px #111 inset);
 }
 
 #controlPanelMenuAddContentPanelContainer a:focus {
-	-moz-box-shadow: 0 0 6px #3e9ae1;
-	-webkit-box-shadow: 0 0 6px #3e9ae1;
-	box-shadow: 0 0 6px #3e9ae1;
+	@include box-shadow(0 0 6px #3e9ae1);
 }
 
 .search-panel-active #controlPanelMenuAddContentPanelContainer .lfr-panel.lfr-extended {
-	-moz-border-radius: 0;
-	-webkit-border-radius: 0;
-	border-radius: 0;
+	@include border-radius(0);
 }
 
 .lfr-preview-file-toolbar, .lfr-preview-file-index, .lfr-preview-file-info, .panel-page-menu #panel-manage-content .lfr-panel-title span {
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	@include border-radius(5px);
 }
 
 .panel-page-menu .lfr-panel.lfr-extended, .panel-page-menu .lfr-panel-container, .panel-page-menu .lfr-floating-container, .panel-page-menu .lfr-panel-container .lfr-extended.lfr-collapsible .lfr-panel-titlebar, .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar, .panel-page-application .lfr-document-library-comments.lfr-panel.lfr-extended {
-	-moz-border-radius: 0;
-	-webkit-border-radius: 0;
-	border-radius: 0;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	box-shadow: none;
+	@include border-radius(0);
+	@include box-shadow(none);
 }
 
 .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar {
-	background-image: -moz-linear-gradient(top, #d2dbe4, #bdc8d6);
-	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #d2dbe4),color-stop(1, #bdc8d6));
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#d2dbe4', EndColorStr='#bdc8d6');
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#d2dbe4', EndColorStr='#bdc8d6')";
+	@include filter-gradient(#d2dbe4, #bdc8d6);
+	@include background-image(linear-gradient(#d2dbe4, #bdc8d6));
 }
 
 .panel-page-menu .lfr-panel.lfr-collapsed .lfr-panel-titlebar, .panels-minimized .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar {
-	background-image: none;
-	filter: none;
-	-ms-filter: none;
+	@include background-image(none);
 }
 
 .panel-page-menu .lfr-panel-content ul li.selected-portlet a {
-	background-image: -moz-linear-gradient(top, #427ead, #154b75);
-	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #427ead),color-stop(1, #154b75));
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#427ead', EndColorStr='#154b75');
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#427ead', EndColorStr='#154b75')";
+	@include filter-gradient(#427ead, #154b75);
+	@include background-image(linear-gradient(#427ead, #154b75));
 }

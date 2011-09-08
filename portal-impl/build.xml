@@ -336,18 +336,32 @@ public class Creole10Parser]]></replacevalue>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>
 
-		<mkdir dir="${tstamp.value}/haml" />
+		<mkdir dir="${tstamp.value}/sass" />
 
 		<get
-			dest="${tstamp.value}/haml/haml-3.0.25.gem"
-			src="http://rubygems.org/downloads/haml-3.0.25.gem"
+			dest="${tstamp.value}/sass/sass-3.1.7.gem"
+			src="http://rubygems.org/downloads/sass-3.1.7.gem"
+		/>
+
+		<mkdir dir="${tstamp.value}/compass" />
+
+		<get
+			dest="${tstamp.value}/compass/compass-0.11.5.gem"
+			src="http://rubygems.org/downloads/compass-0.11.5.gem"
 		/>
 
 		<java
 			fork="true"
 			jar="${project.dir}/lib/portal/jruby.jar"
 		>
-			<arg line="-S gem install -i ./${tstamp.value}/output ${tstamp.value}/haml/haml-3.0.25.gem" />
+			<arg line="-S gem install -i ./${tstamp.value}/output ${tstamp.value}/sass/sass-3.1.7.gem --no-rdoc --no-ri" />
+		</java>
+
+		<java
+			fork="true"
+			jar="${project.dir}/lib/portal/jruby.jar"
+		>
+			<arg line="-S gem install -i ./${tstamp.value}/output ${tstamp.value}/compass/compass-0.11.5.gem --no-rdoc --no-ri" />
 		</java>
 
 		<jar

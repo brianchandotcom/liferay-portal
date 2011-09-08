@@ -36,6 +36,10 @@ public class StreamUtil {
 		System.getProperty(StreamUtil.class.getName() + ".buffer.size"),
 		8192);
 
+	public static final boolean FORCE_TIO = GetterUtil.getBoolean(
+		System.getProperty(StreamUtil.class.getName() + ".force.tio"),
+		false);
+
 	public static void cleanUp(Channel channel) {
 		try {
 			if (channel != null) {
@@ -136,7 +140,7 @@ public class StreamUtil {
 			bufferSize = BUFFER_SIZE;
 		}
 
-		if ((inputStream instanceof FileInputStream) &&
+		if ((!FORCE_TIO) && (inputStream instanceof FileInputStream) &&
 			(outputStream instanceof FileOutputStream)) {
 
 			FileInputStream fileInputStream = (FileInputStream)inputStream;

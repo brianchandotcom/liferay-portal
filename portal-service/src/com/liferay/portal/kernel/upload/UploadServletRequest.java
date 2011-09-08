@@ -33,6 +33,8 @@ public interface UploadServletRequest extends HttpServletRequest {
 
 	public File getFile(String name);
 
+	public File getFile(String name, boolean forceCreate);
+
 	public InputStream getFileAsStream(String name) throws IOException;
 
 	public InputStream getFileAsStream(String name, boolean deleteOnClose)

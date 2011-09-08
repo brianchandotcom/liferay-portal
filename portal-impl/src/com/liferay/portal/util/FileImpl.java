@@ -369,6 +369,10 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	public byte[] getBytes(InputStream inputStream, int bufferSize)
 		throws IOException {
 
+		if (inputStream == null) {
+			return null;
+		}
+
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 

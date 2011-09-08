@@ -109,7 +109,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		byte[] smallBytes = null;
 
 		try {
-			smallBytes = FileUtil.getBytes(smallImageInputStream);
+			if ((smallImageInputStream != null) && smallImage) {
+				smallBytes = FileUtil.getBytes(smallImageInputStream);
+			}
 		}
 		catch (IOException ioe) {
 		}
@@ -118,7 +120,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		validate(
 			title, content, smallImage, smallImageURL, smallImageFileName,
-			smallImageInputStream, smallBytes);
+			smallBytes);
 
 		long entryId = counterLocalService.increment();
 
@@ -165,8 +167,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		// Small image
 
 		saveImages(
-			smallImage, entry.getSmallImageId(), smallImageInputStream,
-			smallBytes);
+			smallImage, entry.getSmallImageId(), smallBytes);
 
 		// Asset
 
@@ -553,14 +554,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		byte[] smallImageBytes = null;
 
 		try {
-			smallImageBytes = FileUtil.getBytes(smallImageInputStream);
+			if ((smallImageInputStream != null) && smallImage) {
+				smallImageBytes = FileUtil.getBytes(smallImageInputStream);
+			}
 		}
 		catch (IOException ioe) {
 		}
 
 		validate(
 			title, content, smallImage, smallImageURL, smallImageFileName,
-			smallImageInputStream, smallImageBytes);
+			smallImageBytes);
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
@@ -604,8 +607,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		// Small image
 
 		saveImages(
-			smallImage, entry.getSmallImageId(), smallImageInputStream,
-			smallImageBytes);
+			smallImage, entry.getSmallImageId(), smallImageBytes);
 
 		// Asset
 
@@ -1031,12 +1033,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected void saveImages(
-			boolean smallImage, long smallImageId,
-			InputStream smallFileInputStream, byte[] smallBytes)
+			boolean smallImage, long smallImageId, byte[] smallBytes)
 		throws PortalException, SystemException {
 
 		if (smallImage) {
-			if ((smallFileInputStream != null) && (smallBytes != null)) {
+			if (smallBytes != null) {
 				imageLocalService.updateImage(smallImageId, smallBytes);
 			}
 		}
@@ -1047,8 +1048,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	protected void validate(
 			String title, String content, boolean smallImage,
-			String smallImageURL, String smallImageFileName,
-			InputStream smallImageInputStream, byte[] smallBytes)
+			String smallImageURL, String smallImageFileName, byte[] smallBytes)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(title)) {
@@ -1062,7 +1062,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
 
 		if (smallImage && Validator.isNull(smallImageURL) &&
-			(smallImageInputStream != null) && (smallBytes != null)) {
+			(smallBytes != null)) {
 
 			if (smallImageFileName != null) {
 				boolean validSmallImageExtension = false;

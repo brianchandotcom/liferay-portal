@@ -71,10 +71,15 @@ public class UploadPortletRequestImpl
 	}
 
 	public File getFile(String name) {
-		File file = _uploadServletRequest.getFile(_namespace.concat(name));
+		return getFile(name, false);
+	}
+
+	public File getFile(String name, boolean forceCreate) {
+		File file = _uploadServletRequest.getFile(
+			_namespace.concat(name), forceCreate);
 
 		if (file == null) {
-			file = _uploadServletRequest.getFile(name);
+			file = _uploadServletRequest.getFile(name, forceCreate);
 		}
 
 		return file;

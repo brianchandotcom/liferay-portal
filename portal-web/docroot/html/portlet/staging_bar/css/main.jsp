@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-staging-bar {
-	.aui-tabview-list {
+	.staging-tabview-list {
 		a, .taglib-text {
 			text-decoration: none
 		}
@@ -33,12 +33,13 @@
 
 	.staging-tabview-list {
 		border-width: 0;
-		font-size: 1.2em;
+		font-size: 1.3em;
 		margin-bottom: 0;
 
 		.aui-tab, .aui-tab-content {
 			background: none;
 			border-width: 0;
+			box-shadow: none;
 		}
 
 		.aui-tab-active .aui-tab-content {
@@ -50,9 +51,78 @@
 		}
 	}
 
+	.site-variations-tabview-list {
+		background-image: none;
+		background-color: #666;
+		-moz-box-shadow: 0px 10px 15px #333 inset, 1px 3px 8px #333;
+		-webkit-box-shadow: 0px 10px 15px #333 inset, 1px 3px 8px #333;
+		box-shadow: 0px 10px 15px #333 inset, 1px 3px 8px #333;
+		border-width: 0;
+		font-size: 1.2em;
+		margin-bottom: 0;
+
+		.aui-tab, .aui-tab-content {
+			background: none;
+			border-width: 0;
+			-moz-box-shadow: none;
+			-webkit-box-shadow: none;
+			box-shadow: none;
+			-moz-border-radius: 0;
+			-webkit-border-radius: 0;
+			border-radius: 0;
+
+			.aui-tab-label {
+				padding: 8px 10px 2px;
+
+				a {
+					color: #BBB;
+					text-shadow: none;
+					text-decoration: underline;
+
+					&:hover {
+						text-decoration: none;
+					}
+				}
+			}
+		}
+
+		.aui-tab-active .aui-tab-content {
+			.aui-tab-label {
+				color: #FFF;
+				font-weight: bold;
+				text-shadow: -1px -1px 0 #333;
+			}
+		}
+
+		.manage-layout-set-branches-tab .manage-layout-set-branches a {
+			border-left: 1px solid #999;
+			color: #DDD;
+			font-size: 0.9em;
+			margin-left: 10px;
+			padding-left: 10px;
+			text-decoration: none;
+
+			.taglib-text {
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.go-to-layout-set-branches-tab .lfr-trigger strong a {
+			background-image: url(<%= themeImagesPath %>/arrows/06_down.png);
+			text-decoration: none;
+
+			.taglib-text{
+				color: #EEE;
+			}
+		}
+	}
+
 	.staging-icon-menu-container {
 		display: inline-block;
-		left: 5px;
 		margin-top: -0.1em;
 		overflow: hidden;
 		position: relative;
@@ -69,10 +139,11 @@
 			padding: 0;
 
 			a {
-				background-color: #555;
 				background-image: url(<%= themeImagesPath %>/arrows/06_down.png);
-				background-position: 50% 4px;
-				padding: 0 14px 0 0;
+				background-position: 0% 4px;
+				padding: 0 5px;
+				opacity: .5;
+				filter: alpha(opacity=50);
 			}
 		}
 	}
@@ -89,8 +160,8 @@
 		}
 
 		.staging-icon-menu.lfr-actions .lfr-trigger strong a {
-			background-color: #EEE;
-			background-image: url(<%= themeImagesPath %>/arrows/05_down.png);
+			opacity: 1;
+			filter: alpha(opacity=100);
 		}
 	}
 
@@ -159,12 +230,8 @@
 						color: #EEE;
 					}
 
-					.layout-actions:after {
-						clear: both;
-						content: ".";
-						display: block;
-						height: 0;
-						visibility: hidden;
+					.layout-actions {
+						float: left;
 					}
 
 					.layout-revision-details {

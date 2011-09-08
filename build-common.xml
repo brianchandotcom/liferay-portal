@@ -329,6 +329,19 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<echo message="${current.time}" />
 	</target>
 
+	<target name="stub-javadoc">
+		<echo message="Run &quot;ant compile-test&quot; or &quot;ant compile&quot; in before using to generate @Override tags." />
+
+		<java
+			classname="com.liferay.portal.tools.JavadocStubber"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg line="--file ${file}" />
+		</java>
+	</target>
+
 	<target name="setproxy" if="setproxy.proxy.host">
 		<setproxy proxyhost="${setproxy.proxy.host}" proxyport="${setproxy.proxy.port}" />
 	</target>
@@ -399,5 +412,16 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<fileset dir="test-classes" includes="**/${class}.class" />
 			</batchtest>
 		</junit>
+	</target>
+
+	<target name="verify-javadoc">
+		<java
+			classname="com.liferay.portal.tools.JavadocVerifier"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg line="--file ${file}" />
+		</java>
 	</target>
 </project>

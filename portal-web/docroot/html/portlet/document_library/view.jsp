@@ -42,11 +42,15 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
 }
 
-long entryStart = ParamUtil.getLong(request, "entryStart");
-long entryEnd = ParamUtil.getLong(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
+int entryStart = ParamUtil.getInteger(request, "entryStart");
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
+
+int entryRowsPerPage = entryEnd - entryStart;
 
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
+
+int folderRowsPerPage = folderEnd - folderStart;
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -221,12 +225,12 @@ if (folder != null) {
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			entriesTotal: <%= entriesTotal %>,
 			entryEnd: <%= entryEnd %>,
-			entryRowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
+			entryRowsPerPage: <%= entryRowsPerPage %>,
 			entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 			entryStart: <%= entryStart %>,
 			folderEnd: <%= folderEnd %>,
 			folderId: '<%= folderId %>',
-			folderRowsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
+			folderRowsPerPage: <%= folderRowsPerPage %>,
 			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 			folderStart: <%= folderStart %>,
 			foldersTotal: <%= foldersTotal %>,

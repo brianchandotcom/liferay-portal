@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -98,7 +99,17 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 			boolean validateFileExtension, InputStream is)
 		throws PortalException, SystemException {
 
+		if (is instanceof ByteArrayFileInputStream) {
+			File file = ((ByteArrayFileInputStream) is).getFile();
+
+			addFile(
+				companyId, repositoryId, fileName, validateFileExtension, file);
+
+			return;
+		}
+
 		validate(fileName, validateFileExtension, is);
+
 
 		if (!AntivirusScannerUtil.isActive()) {
 			store.addFile(companyId, repositoryId, fileName, is);
@@ -400,6 +411,16 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 			String fileExtension, boolean validateFileExtension,
 			String versionLabel, String sourceFileName, InputStream is)
 		throws PortalException, SystemException {
+
+		if (is instanceof ByteArrayFileInputStream) {
+			File file = ((ByteArrayFileInputStream) is).getFile();
+
+			updateFile(
+				companyId, repositoryId, fileName, fileExtension,
+				validateFileExtension, versionLabel, sourceFileName, file);
+
+			return;
+		}
 
 		validate(
 			fileName, fileExtension, sourceFileName,

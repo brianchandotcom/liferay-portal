@@ -378,6 +378,41 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getUserId(), fileName, tempFolderName, file);
 	}
 
+/**
+	 * Adds a temporary file entry.
+	 *
+	 * <p>
+	 * This allows a client to upload a file into a temporary location and
+	 * manipulate its metadata prior to making it available for public usage.
+	 * This is different from checking in and checking out a file entry.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the folder where the file entry will
+	 *         eventually reside
+	 * @param  fileName the file's original name
+	 * @param  tempFolderName the temporary folder's name
+	 * @param  inputStream the file's data in stream format
+	 * @return the file's name
+	 * @throws IOException if a problem occurred in the access or storage of the
+	 *         file
+	 * @throws PortalException if the file name was invalid
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.kernel.util.TempFileUtil
+	 */
+	public String addTempFileEntry(
+			long groupId, long folderId, String fileName, String tempFolderName,
+			InputStream inputStream)
+		throws IOException, PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_DOCUMENT);
+
+		return TempFileUtil.addTempFile(
+			getUserId(), fileName, tempFolderName, inputStream);
+	}
+
+
 	/**
 	 * Cancels the check out of the file entry. If a user has not checked out
 	 * the specified file entry, invoking this method will result in no changes.

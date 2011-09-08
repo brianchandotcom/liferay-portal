@@ -23,7 +23,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.List;
 
@@ -43,8 +43,8 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 
 	@Override
 	protected String fileUpload(
-		CommandArgument commandArgument, String fileName, File file,
-		String extension) {
+		CommandArgument commandArgument, String fileName,
+		InputStream inputStream, String extension, long size) {
 
 		return "0";
 	}

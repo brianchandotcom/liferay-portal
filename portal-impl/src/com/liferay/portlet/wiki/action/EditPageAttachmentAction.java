@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.ActionConstants;
@@ -37,6 +38,7 @@ import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,36 +145,51 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 
 		int numOfFiles = ParamUtil.getInteger(actionRequest, "numOfFiles");
 
-		List<ObjectValuePair<String, File>> files =
-			new ArrayList<ObjectValuePair<String, File>>();
+		List<ObjectValuePair<String, InputStream>> inputStreamEntries =
+			new ArrayList<ObjectValuePair<String, InputStream>>();
 
-		if (numOfFiles == 0) {
-			File file = uploadPortletRequest.getFile("file");
-			String fileName = uploadPortletRequest.getFileName("file");
+		try {
+			if (numOfFiles == 0) {
+				InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"file");
+				String fileName = uploadPortletRequest.getFileName("file");
 
-			if ((file != null) && file.exists()) {
-				ObjectValuePair<String, File> ovp =
-					new ObjectValuePair<String, File>(fileName, file);
+				if (inputStream != null) {
+					ObjectValuePair<String, InputStream> ovp =
+						new ObjectValuePair<String, InputStream>(
+							fileName, inputStream);
 
-				files.add(ovp);
-			}
-		}
-		else {
-			for (int i = 1; i <= numOfFiles; i++) {
-				File file = uploadPortletRequest.getFile("file" + i);
-
-				String fileName = uploadPortletRequest.getFileName("file" + i);
-
-				if ((file != null) && file.exists()) {
-					ObjectValuePair<String, File> ovp =
-						new ObjectValuePair<String, File>(fileName, file);
-
-					files.add(ovp);
+					inputStreamEntries.add(ovp);
 				}
 			}
-		}
+			else {
+				for (int i = 1; i <= numOfFiles; i++) {
+					InputStream inputStream = uploadPortletRequest.getFileAsStream(
+						"file" + i);
+					String fileName = uploadPortletRequest.getFileName("file" + i);
 
-		WikiPageServiceUtil.addPageAttachments(nodeId, title, files);
+					if (inputStream != null) {
+						ObjectValuePair<String, InputStream> ovp =
+							new ObjectValuePair<String, InputStream>(
+								fileName, inputStream);
+
+						inputStreamEntries.add(ovp);
+					}
+				}
+			}
+
+			WikiPageServiceUtil.addPageAttachments(
+				nodeId, title, inputStreamEntries);
+		}
+		finally {
+			for (ObjectValuePair<String, InputStream> inputStreamEntry :
+					inputStreamEntries) {
+
+				InputStream inputStream = inputStreamEntry.getValue();
+
+				StreamUtil.cleanUp(inputStream);
+			}
+		}
 	}
 
 	@Override
@@ -221,11 +238,20 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 
-		File file = uploadPortletRequest.getFile("file");
-		String sourceFileName = uploadPortletRequest.getFileName("file");
+		InputStream inputStream = null;
 
-		WikiPageServiceUtil.addTempPageAttachment(
-			nodeId, sourceFileName, _TEMP_FOLDER_NAME, file);
+		try {
+			inputStream = uploadPortletRequest.getFileAsStream("file");
+			String sourceFileName = uploadPortletRequest.getFileName("file");
+
+			WikiPageServiceUtil.addTempPageAttachment(
+				nodeId, sourceFileName, _TEMP_FOLDER_NAME, inputStream);
+		}
+		finally {
+			if (inputStream != null) {
+				StreamUtil.cleanUp(inputStream);
+			}
+		}
 	}
 
 	protected void deleteAttachment(ActionRequest actionRequest)

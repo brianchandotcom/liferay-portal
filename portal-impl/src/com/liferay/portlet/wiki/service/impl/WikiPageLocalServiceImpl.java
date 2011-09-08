@@ -280,22 +280,55 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			companyId, repositoryId, dirName + "/" + fileName, file);
 	}
 
-	public void addPageAttachments(
-			long userId, long nodeId, String title,
-			List<ObjectValuePair<String, File>> files)
+	public void addPageAttachment(
+			long userId, long nodeId, String title, String fileName,
+			InputStream inputStream)
 		throws PortalException, SystemException {
 
-		if (files.size() == 0) {
+		if (Validator.isNull(fileName)) {
 			return;
 		}
 
-		for (int i = 0; i < files.size(); i++) {
-			ObjectValuePair<String, File> ovp = files.get(i);
+		WikiPage page = getPage(nodeId, title);
+
+		if (userId == 0) {
+			userId = page.getUserId();
+		}
+
+		long companyId = page.getCompanyId();
+		long repositoryId = CompanyConstants.SYSTEM;
+		String dirName = page.getAttachmentsDir();
+
+		try {
+			DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
+		}
+		catch (DuplicateDirectoryException dde) {
+		}
+
+		socialEquityLogLocalService.addEquityLogs(
+			userId, WikiPage.class.getName(), page.getResourcePrimKey(),
+			ActionKeys.ADD_ATTACHMENT, dirName + "/" + fileName);
+
+		DLStoreUtil.addFile(
+			companyId, repositoryId, dirName + "/" + fileName, inputStream);
+	}
+
+	public void addPageAttachments(
+			long userId, long nodeId, String title,
+			List<ObjectValuePair<String, InputStream>> inputStreams)
+		throws PortalException, SystemException {
+
+		if (inputStreams.size() == 0) {
+			return;
+		}
+
+		for (int i = 0; i < inputStreams.size(); i++) {
+			ObjectValuePair<String, InputStream> ovp = inputStreams.get(i);
 
 			String fileName = ovp.getKey();
-			File file = ovp.getValue();
+			InputStream inputStream = ovp.getValue();
 
-			addPageAttachment(userId, nodeId, title, fileName, file);
+			addPageAttachment(userId, nodeId, title, fileName, inputStream);
 		}
 	}
 
@@ -341,10 +374,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	public String addTempPageAttachment(
-			long userId, String fileName, String tempFolderName, File file)
+			long userId, String fileName, String tempFolderName,
+			InputStream inputStream)
 		throws IOException, PortalException, SystemException {
 
-		return TempFileUtil.addTempFile(userId, fileName, tempFolderName, file);
+		return TempFileUtil.addTempFile(
+			userId, fileName, tempFolderName, inputStream);
 	}
 
 	public void changeParent(

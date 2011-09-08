@@ -37,7 +37,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.List;
 import java.util.StringTokenizer;
@@ -82,8 +82,8 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 
 	@Override
 	protected String fileUpload(
-		CommandArgument commandArgument, String fileName, File file,
-		String contentType) {
+		CommandArgument commandArgument, String fileName,
+		InputStream inputStream, String contentType, long size) {
 
 		try {
 			Group group = commandArgument.getCurrentGroup();
@@ -103,7 +103,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 
 			DLAppServiceUtil.addFileEntry(
 				group.getGroupId(), folderId, title, contentType, title,
-				description, changeLog, file, serviceContext);
+				description, changeLog, inputStream, size, serviceContext);
 		}
 		catch (Exception e) {
 			throw new FCKException(e);

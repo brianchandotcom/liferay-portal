@@ -18,6 +18,7 @@ import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.editor.fckeditor.exception.FCKException;
 import com.liferay.portal.editor.fckeditor.receiver.CommandReceiver;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,6 +38,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.upload.LiferayFileItem;
 import com.liferay.portal.upload.LiferayFileItemFactory;
 import com.liferay.portal.upload.LiferayFileUpload;
 import com.liferay.portal.upload.LiferayServletRequest;
@@ -43,7 +46,7 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.File;
+import java.io.InputStream;
 import java.io.PrintWriter;
 
 import java.util.HashMap;
@@ -157,6 +160,7 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 		CommandArgument commandArgument, HttpServletRequest request,
 		HttpServletResponse response) {
 
+		InputStream inputStream = null;
 		String returnValue = null;
 
 		try {
@@ -201,9 +205,19 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 					diskFileItem.getStoreLocation());
 			}
 
+			if (diskFileItem.isInMemory()) {
+				inputStream = diskFileItem.getInputStream();
+			}
+			else {
+				inputStream = new ByteArrayFileInputStream(
+					diskFileItem.getStoreLocation(),
+					LiferayFileItem.THRESHOLD_SIZE);
+			}
+
+			long size = diskFileItem.getSize();
+
 			returnValue = fileUpload(
-				commandArgument, fileName, diskFileItem.getStoreLocation(),
-				contentType);
+				commandArgument, fileName, inputStream, contentType, size);
 		}
 		catch (Exception e) {
 			FCKException fcke = null;
@@ -253,6 +267,9 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 
 			_writeUploadResponse(returnValue, response);
 		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 
 		_writeUploadResponse(returnValue, response);
 	}
@@ -260,8 +277,8 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 	protected abstract String createFolder(CommandArgument commandArgument);
 
 	protected abstract String fileUpload(
-		CommandArgument commandArgument, String fileName, File file,
-		String contentType);
+		CommandArgument commandArgument, String fileName,
+		InputStream inputStream, String contentType, long size);
 
 	protected abstract void getFolders(
 		CommandArgument commandArgument, Document document, Node rootNode);

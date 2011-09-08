@@ -191,14 +191,14 @@ portletURL.setParameter("tabs1", tabs1);
 
 				row.addText(structure.getStructureId(), rowURL);
 
-				// Name and description
+				// Name
 
-				if (Validator.isNotNull(structure.getName())) {
-					row.addText(structure.getName(locale), rowURL);
-				}
+				row.addText(HtmlUtil.escape(structure.getName(locale)), rowURL);
 
-				if (Validator.isNotNull(structure.getDescription())) {
-					row.addText(structure.getDescription(locale), rowURL);
+				// Description
+
+				if (Validator.isNotNull(structure.getDescription(locale))) {
+					row.addText(HtmlUtil.escape(structure.getDescription(locale)), rowURL);
 				}
 
 				// Action
@@ -277,7 +277,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 				// Name
 
-				row.addText(template.getName(locale), rowURL);
+				row.addText(HtmlUtil.escape(template.getName(locale)), rowURL);
 
 				// Description and image
 

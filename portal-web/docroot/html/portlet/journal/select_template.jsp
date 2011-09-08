@@ -87,7 +87,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 		// Name
 
-		row.addText(template.getName(locale), rowHREF);
+		row.addText(HtmlUtil.escape(template.getName(locale)), rowHREF);
 
 		// Description and image
 

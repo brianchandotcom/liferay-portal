@@ -174,7 +174,7 @@ if (template == null) {
 						<portlet:param name="structureId" value="<%= structureId %>" />
 					</portlet:renderURL>
 
-					<aui:a href="<%= editStructureURL %>" label="<%= structureName %>" id="structureName" />
+					<aui:a href="<%= editStructureURL %>" label="<%= HtmlUtil.escape(structureName) %>" id="structureName" />
 				</c:when>
 				<c:otherwise>
 					<aui:a href="" id="structureName" />

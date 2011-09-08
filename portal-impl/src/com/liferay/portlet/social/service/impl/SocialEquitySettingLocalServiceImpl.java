@@ -35,15 +35,37 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * The social equity setting local service. This service is responsible for
+ * retrieving and updating the settings for social equity actions.
+ *
+ * <p>
+ * This service stores settings for social equity actions in the database. Only
+ * settings that are different from the default ones are stored. When reading
+ * settings, this service reads user settings from the database and merges them
+ * with the default values.
+ * </p>
+ *
+ * <p>
+ * Social equity actions are identified by an action ID and a
+ * <code>className</code> that is the model name of the asset on which the
+ * action can be executed.
+ * </p>
+ *
  * @author Zsolt Berentey
  * @author Brian Wing Shun Chan
  */
 public class SocialEquitySettingLocalServiceImpl
 	extends SocialEquitySettingLocalServiceBaseImpl {
 
-	public static final String CACHE_NAME =
-		SocialEquitySettingLocalServiceImpl.class.getName();
-
+	/**
+	 * Returns all the settings for the social equity action.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  className the class name for the target asset
+	 * @param  actionId the ID of the action
+	 * @return the settings for the social equity action
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<SocialEquitySetting> getEquitySettings(
 			long groupId, String className, String actionId)
 		throws SystemException {
@@ -53,6 +75,15 @@ public class SocialEquitySettingLocalServiceImpl
 		return getEquitySettings(groupId, classNameId, actionId);
 	}
 
+	/**
+	 * Returns all the settings for the social equity action.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the ID of the target asset's class
+	 * @param  actionId the ID of the action
+	 * @return the settings for the social equity action
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<SocialEquitySetting> getEquitySettings(
 			long groupId, long classNameId, String actionId)
 		throws SystemException {
@@ -137,6 +168,24 @@ public class SocialEquitySettingLocalServiceImpl
 		return equitySettings;
 	}
 
+	/**
+	 * Updates settings for the model (asset type) in the group.
+	 *
+	 * <p>
+	 * This method accepts a list of social equity action mappings. A
+	 * <code>SocialEquityActionMapping</code> contains both participation and
+	 * information settings for an action. The
+	 * <code>SocialEquityActionMapping</code> class is used by the portal to
+	 * store the default settings for social equity actions.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  className the class name of the target asset
+	 * @param  equityActionMappings the equity action mappings containing the
+	 *         settings to be stored
+	 * @throws PortalException if the group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void updateEquitySettings(
 			long groupId, String className,
 			List<SocialEquityActionMapping> equityActionMappings)
@@ -152,7 +201,7 @@ public class SocialEquitySettingLocalServiceImpl
 	protected String encodeKey(long classNameId, String actionId) {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(CACHE_NAME);
+		sb.append(_CACHE_NAME);
 		sb.append(StringPool.POUND);
 		sb.append(StringUtil.toHexString(classNameId));
 		sb.append(StringPool.POUND);
@@ -270,7 +319,10 @@ public class SocialEquitySettingLocalServiceImpl
 		_portalCache.remove(key);
 	}
 
+	private static final String _CACHE_NAME =
+		SocialEquitySettingLocalServiceImpl.class.getName();
+
 	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(
-		CACHE_NAME);
+		_CACHE_NAME);
 
 }

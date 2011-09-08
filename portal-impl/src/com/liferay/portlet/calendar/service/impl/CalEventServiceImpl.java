@@ -27,6 +27,7 @@ import com.liferay.portlet.calendar.service.permission.CalEventPermission;
 import com.liferay.portlet.calendar.service.permission.CalendarPermission;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.Iterator;
@@ -192,13 +193,13 @@ public class CalEventServiceImpl extends CalEventServiceBaseImpl {
 		}
 	}
 
-	public void importICal4j(long groupId, File file)
+	public void importICal4j(long groupId, InputStream inputStream)
 		throws PortalException, SystemException {
 
 		CalendarPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_EVENT);
 
-		calEventLocalService.importICal4j(getUserId(), groupId, file);
+		calEventLocalService.importICal4j(getUserId(), groupId, inputStream);
 	}
 
 	public CalEvent updateEvent(

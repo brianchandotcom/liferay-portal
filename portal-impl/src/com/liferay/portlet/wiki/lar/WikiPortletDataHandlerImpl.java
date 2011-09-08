@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -231,13 +232,20 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 				String name = attachmentElement.attributeValue("name");
 				String binPath = attachmentElement.attributeValue("bin-path");
 
-				InputStream inputStream =
-					portletDataContext.getZipEntryAsInputStream(binPath);
+				InputStream inputStream = null;
 
-				WikiPageLocalServiceUtil.addPageAttachment(
-					importedPage.getCompanyId(),
-					importedPage.getAttachmentsDir(),
-					importedPage.getModifiedDate(), name, inputStream);
+				try {
+					inputStream =
+						portletDataContext.getZipEntryAsInputStream(binPath);
+
+					WikiPageLocalServiceUtil.addPageAttachment(
+						importedPage.getCompanyId(),
+						importedPage.getAttachmentsDir(),
+						importedPage.getModifiedDate(), name, inputStream);
+				}
+				finally {
+					StreamUtil.cleanUp(inputStream);
+				}
 			}
 		}
 

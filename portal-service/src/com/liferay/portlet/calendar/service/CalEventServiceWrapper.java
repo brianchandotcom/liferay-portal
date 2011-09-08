@@ -129,10 +129,10 @@ public class CalEventServiceWrapper implements CalEventService {
 		return _calEventService.hasEvents(groupId, cal, types);
 	}
 
-	public void importICal4j(long groupId, java.io.File file)
+	public void importICal4j(long groupId, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_calEventService.importICal4j(groupId, file);
+		_calEventService.importICal4j(groupId, inputStream);
 	}
 
 	public com.liferay.portlet.calendar.model.CalEvent updateEvent(

@@ -28,7 +28,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.List;
 
@@ -182,7 +182,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		companyLocalService.updateDisplay(companyId, languageId, timeZoneId);
 	}
 
-	public void updateLogo(long companyId, File file)
+	public void updateLogo(long companyId, InputStream inputStream)
 		throws PortalException, SystemException {
 
 		if (!roleLocalService.hasUserRole(
@@ -191,7 +191,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			throw new PrincipalException();
 		}
 
-		companyLocalService.updateLogo(companyId, file);
+		companyLocalService.updateLogo(companyId, inputStream);
 	}
 
 	public void updatePreferences(long companyId, UnicodeProperties properties)

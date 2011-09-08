@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
@@ -58,6 +59,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -324,10 +326,6 @@ public class EditFileEntryAction extends PortletAction {
 			file = TempFileUtil.getTempFile(
 				themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
 
-			if (Validator.isNotNull(selectedFileName) && !file.exists()) {
-				file.createNewFile();
-			}
-
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
@@ -410,12 +408,21 @@ public class EditFileEntryAction extends PortletAction {
 			WebKeys.THEME_DISPLAY);
 
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
-		File file = uploadPortletRequest.getFile("file");
-		String sourceFileName = uploadPortletRequest.getFileName("file");
 
-		DLAppServiceUtil.addTempFileEntry(
-			themeDisplay.getScopeGroupId(), folderId, sourceFileName,
-			_TEMP_FOLDER_NAME, file);
+		InputStream inputStream = null;
+
+		try {
+			inputStream = uploadPortletRequest.getFileAsStream("file");
+
+			String sourceFileName = uploadPortletRequest.getFileName("file");
+
+			DLAppServiceUtil.addTempFileEntry(
+				themeDisplay.getScopeGroupId(), folderId, sourceFileName,
+				_TEMP_FOLDER_NAME, inputStream);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
 	protected void cancelFileEntriesCheckOut(ActionRequest actionRequest)
@@ -586,53 +593,60 @@ public class EditFileEntryAction extends PortletAction {
 		boolean majorVersion = ParamUtil.getBoolean(
 			uploadPortletRequest, "majorVersion");
 
-		File file = uploadPortletRequest.getFile("file");
+		InputStream inputStream = null;
 
-		if (Validator.isNotNull(sourceFileName) && !file.exists()) {
-			file.createNewFile();
-		}
+		try {
+			inputStream = uploadPortletRequest.getFileAsStream("file");
 
-		String contentType = uploadPortletRequest.getContentType("file");
+			String contentType = uploadPortletRequest.getContentType("file");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), actionRequest);
+			long size = uploadPortletRequest.getSize("file");
 
-		FileEntry fileEntry = null;
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), actionRequest);
 
-		if (cmd.equals(Constants.ADD)) {
-			if (Validator.isNull(title)) {
-				title = sourceFileName;
+			FileEntry fileEntry = null;
+
+			if (cmd.equals(Constants.ADD)) {
+				if (Validator.isNull(title)) {
+					title = sourceFileName;
+				}
+
+				// Add file entry
+
+				fileEntry = DLAppServiceUtil.addFileEntry(
+					repositoryId, folderId, sourceFileName, contentType, title,
+					description, changeLog, inputStream, size, serviceContext);
+
+				AssetPublisherUtil.addAndStoreSelection(
+					actionRequest, DLFileEntry.class.getName(),
+					fileEntry.getFileEntryId(), -1);
+			}
+			else if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
+
+				// Update file entry and checkin
+
+				fileEntry = DLAppServiceUtil.updateFileEntryAndCheckIn(
+					fileEntryId, sourceFileName, contentType, title,
+					description, changeLog, majorVersion, inputStream,
+					size, serviceContext);
+			}
+			else {
+
+				// Update file entry
+
+				fileEntry = DLAppServiceUtil.updateFileEntry(
+					fileEntryId, sourceFileName, contentType, title,
+					description, changeLog, majorVersion, inputStream,
+					size, serviceContext);
 			}
 
-			// Add file entry
-
-			fileEntry = DLAppServiceUtil.addFileEntry(
-				repositoryId, folderId, sourceFileName, contentType, title,
-				description, changeLog, file, serviceContext);
-
-			AssetPublisherUtil.addAndStoreSelection(
-				actionRequest, DLFileEntry.class.getName(),
-				fileEntry.getFileEntryId(), -1);
+			AssetPublisherUtil.addRecentFolderId(
+				actionRequest, DLFileEntry.class.getName(), folderId);
 		}
-		else if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
-
-			// Update file entry and checkin
-
-			fileEntry = DLAppServiceUtil.updateFileEntryAndCheckIn(
-				fileEntryId, sourceFileName, contentType, title, description,
-				changeLog, majorVersion, file, serviceContext);
+		finally {
+			StreamUtil.cleanUp(inputStream);
 		}
-		else {
-
-			// Update file entry
-
-			fileEntry = DLAppServiceUtil.updateFileEntry(
-				fileEntryId, sourceFileName, contentType, title, description,
-				changeLog, majorVersion, file, serviceContext);
-		}
-
-		AssetPublisherUtil.addRecentFolderId(
-			actionRequest, DLFileEntry.class.getName(), folderId);
 	}
 
 	private static final String _TEMP_FOLDER_NAME =

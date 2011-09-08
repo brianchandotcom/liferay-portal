@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -55,7 +56,7 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -323,108 +324,127 @@ public class EditMessageAction extends PortletAction {
 		boolean attachments = ParamUtil.getBoolean(
 			actionRequest, "attachments");
 
-		List<ObjectValuePair<String, File>> files =
-			new ArrayList<ObjectValuePair<String, File>>();
+		List<ObjectValuePair<String, InputStream>> inputStreamEntries =
+				new ArrayList<ObjectValuePair<String, InputStream>>(5);
 
-		if (attachments) {
-			UploadPortletRequest uploadPortletRequest =
-				PortalUtil.getUploadPortletRequest(actionRequest);
+		try {
+			if (attachments) {
+				UploadPortletRequest uploadPortletRequest =
+					PortalUtil.getUploadPortletRequest(actionRequest);
 
-			for (int i = 1; i <= 5; i++) {
-				File file = uploadPortletRequest.getFile("msgFile" + i);
-				String fileName = uploadPortletRequest.getFileName(
-					"msgFile" + i);
+				for (int i = 1; i <= 5; i++) {
+					InputStream inputStream =
+						uploadPortletRequest.getFileAsStream("msgFile" + i);
 
-				if ((file != null) && file.exists()) {
-					ObjectValuePair<String, File> ovp =
-						new ObjectValuePair<String, File>(fileName, file);
+					String fileName = uploadPortletRequest.getFileName(
+						"msgFile" + i);
 
-					files.add(ovp);
+					if (inputStream != null) {
+						ObjectValuePair<String, InputStream> ovp =
+								new ObjectValuePair<String, InputStream>(
+									fileName, inputStream);
+
+						inputStreamEntries.add(ovp);
+					}
 				}
 			}
-		}
 
-		boolean question = ParamUtil.getBoolean(actionRequest, "question");
-		boolean anonymous = ParamUtil.getBoolean(actionRequest, "anonymous");
-		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		boolean allowPingbacks = ParamUtil.getBoolean(
-			actionRequest, "allowPingbacks");
+			boolean question = ParamUtil.getBoolean(actionRequest, "question");
+			boolean anonymous = ParamUtil.getBoolean(
+				actionRequest, "anonymous");
+			double priority = ParamUtil.getDouble(actionRequest, "priority");
+			boolean allowPingbacks = ParamUtil.getBoolean(
+				actionRequest, "allowPingbacks");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBMessage.class.getName(), actionRequest);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				MBMessage.class.getName(), actionRequest);
 
-		boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
+			boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
 
-		serviceContext.setAttribute("preview", preview);
+			serviceContext.setAttribute("preview", preview);
 
-		MBMessage message = null;
+			MBMessage message = null;
 
-		if (messageId <= 0) {
-			if (PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE) {
-				CaptchaUtil.check(actionRequest);
-			}
+			if (messageId <= 0) {
+				if (PropsValues.
+						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE) {
+					CaptchaUtil.check(actionRequest);
+				}
 
-			if (threadId <= 0) {
+				if (threadId <= 0) {
 
-				// Post new thread
+					// Post new thread
 
-				message = MBMessageServiceUtil.addMessage(
-					groupId, categoryId, subject, body, format, files,
-					anonymous, priority, allowPingbacks, serviceContext);
+					message = MBMessageServiceUtil.addMessage(
+						groupId, categoryId, subject, body, format,
+						inputStreamEntries, anonymous, priority, allowPingbacks,
+						serviceContext);
 
-				if (question) {
-					MBThreadLocalServiceUtil.updateQuestion(
-						message.getThreadId(), true);
+					if (question) {
+						MBThreadLocalServiceUtil.updateQuestion(
+							message.getThreadId(), true);
+					}
+				}
+				else {
+
+					// Post reply
+
+					message = MBMessageServiceUtil.addMessage(
+						groupId, categoryId, threadId, parentMessageId, subject,
+						body, format, inputStreamEntries, anonymous, priority,
+						allowPingbacks, serviceContext);
 				}
 			}
 			else {
+				List<String> existingFiles = new ArrayList<String>();
 
-				// Post reply
+				for (int i = 1; i <= 5; i++) {
+					String path = ParamUtil.getString(
+						actionRequest, "existingPath" + i);
 
-				message = MBMessageServiceUtil.addMessage(
-					groupId, categoryId, threadId, parentMessageId, subject,
-					body, format, files, anonymous, priority, allowPingbacks,
-					serviceContext);
-			}
-		}
-		else {
-			List<String> existingFiles = new ArrayList<String>();
+					if (Validator.isNotNull(path)) {
+						existingFiles.add(path);
+					}
+				}
 
-			for (int i = 1; i <= 5; i++) {
-				String path = ParamUtil.getString(
-					actionRequest, "existingPath" + i);
+				// Update message
 
-				if (Validator.isNotNull(path)) {
-					existingFiles.add(path);
+				message = MBMessageServiceUtil.updateMessage(
+					messageId, subject, body, inputStreamEntries, existingFiles,
+					priority, allowPingbacks, serviceContext);
+
+				if (message.isRoot()) {
+					MBThreadLocalServiceUtil.updateQuestion(
+						message.getThreadId(), question);
 				}
 			}
 
-			// Update message
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
 
-			message = MBMessageServiceUtil.updateMessage(
-				messageId, subject, body, files, existingFiles, priority,
-				allowPingbacks, serviceContext);
+			boolean subscribe = ParamUtil.getBoolean(
+				actionRequest, "subscribe");
 
-			if (message.isRoot()) {
-				MBThreadLocalServiceUtil.updateQuestion(
-					message.getThreadId(), question);
+			if (subscribe &&
+				MBMessagePermission.contains(
+					permissionChecker, message,	ActionKeys.SUBSCRIBE)) {
+
+				MBMessageServiceUtil.subscribeMessage(message.getMessageId());
+			}
+
+			return message;
+		}
+		finally {
+			if (attachments) {
+				for (ObjectValuePair<String, InputStream> inputStreamEntry :
+						inputStreamEntries) {
+
+					InputStream inputStream = inputStreamEntry.getValue();
+
+					StreamUtil.cleanUp(inputStream);
+				}
 			}
 		}
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		boolean subscribe = ParamUtil.getBoolean(
-			actionRequest, "subscribe");
-
-		if (subscribe &&
-			MBMessagePermission.contains(
-				permissionChecker, message,	ActionKeys.SUBSCRIBE)) {
-
-			MBMessageServiceUtil.subscribeMessage(message.getMessageId());
-		}
-
-		return message;
 	}
 
 }

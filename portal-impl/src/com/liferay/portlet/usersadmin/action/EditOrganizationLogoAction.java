@@ -18,15 +18,15 @@ import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.servlet.UploadException;
 
-import java.io.File;
+import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -90,15 +90,21 @@ public class EditOrganizationLogoAction extends PortletAction {
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 
-		File file = uploadPortletRequest.getFile("fileName");
-		byte[] bytes = FileUtil.getBytes(file);
+		InputStream inputStream = null;
+		try {
+			inputStream = uploadPortletRequest.getFileAsStream(
+				"fileName");
 
-		if ((bytes == null) || (bytes.length == 0)) {
-			throw new UploadException();
+			if (inputStream == null) {
+				throw new UploadException("No logo uploaded");
+			}
+
+			LayoutSetServiceUtil.updateLogo(groupId, true, true, inputStream);
+			LayoutSetServiceUtil.updateLogo(groupId, false, true, inputStream);
 		}
-
-		LayoutSetServiceUtil.updateLogo(groupId, true, true, file);
-		LayoutSetServiceUtil.updateLogo(groupId, false, true, file);
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
 }

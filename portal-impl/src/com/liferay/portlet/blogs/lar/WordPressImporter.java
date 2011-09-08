@@ -296,7 +296,7 @@ public class WordPressImporter {
 				userId, title, StringPool.BLANK, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks,
-				null, false, null, null, serviceContext);
+				null, false, null, null, null, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error("Add entry " + title, e);

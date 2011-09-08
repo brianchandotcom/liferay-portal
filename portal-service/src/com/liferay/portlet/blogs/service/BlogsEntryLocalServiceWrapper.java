@@ -268,15 +268,17 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService {
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		boolean allowPingbacks, boolean allowTrackbacks,
 		java.lang.String[] trackbacks, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallFile,
+		java.lang.String smallImageURL,
+		java.io.InputStream smallFileInputStream,
+		java.lang.String smallFileName,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.addEntry(userId, title, description,
 			content, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, allowPingbacks,
-			allowTrackbacks, trackbacks, smallImage, smallImageURL, smallFile,
-			serviceContext);
+			allowTrackbacks, trackbacks, smallImage, smallImageURL,
+			smallFileInputStream, smallFileName, serviceContext);
 	}
 
 	public void addEntryResources(
@@ -465,7 +467,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService {
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		boolean allowPingbacks, boolean allowTrackbacks,
 		java.lang.String[] trackbacks, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallFile,
+		java.lang.String smallImageURL,
+		java.io.InputStream smallFileInputStream,
+		java.lang.String smallFileName,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -473,7 +477,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService {
 			description, content, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-			smallImageURL, smallFile, serviceContext);
+			smallImageURL, smallFileInputStream, smallFileName, serviceContext);
 	}
 
 	public void updateEntryResources(

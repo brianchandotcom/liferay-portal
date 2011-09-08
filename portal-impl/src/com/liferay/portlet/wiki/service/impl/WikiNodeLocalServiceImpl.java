@@ -38,7 +38,7 @@ import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.base.WikiNodeLocalServiceBaseImpl;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -268,15 +268,15 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	}
 
 	public void importPages(
-			long userId, long nodeId, String importer, File[] files,
-			Map<String, String[]> options)
+			long userId, long nodeId, String importer,
+			InputStream[] inputStreams, Map<String, String[]> options)
 		throws PortalException, SystemException {
 
 		WikiNode node = getNode(nodeId);
 
 		WikiImporter wikiImporter = getWikiImporter(importer);
 
-		wikiImporter.importPages(userId, node, files, options);
+		wikiImporter.importPages(userId, node, inputStreams, options);
 	}
 
 	public void subscribeNode(long userId, long nodeId)

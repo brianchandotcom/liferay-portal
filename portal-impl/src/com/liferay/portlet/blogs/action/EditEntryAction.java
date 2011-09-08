@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,7 +50,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.Calendar;
 
@@ -371,67 +372,81 @@ public class EditEntryAction extends PortletAction {
 
 		boolean	smallImage = false;
 		String smallImageURL = null;
-		File smallFile = null;
-
-		boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
-
-		if (!ajax) {
-			boolean attachments = ParamUtil.getBoolean(
-				actionRequest, "attachments", false);
-
-			if (attachments) {
-				UploadPortletRequest uploadPortletRequest =
-					PortalUtil.getUploadPortletRequest(actionRequest);
-
-				smallImage = ParamUtil.getBoolean(
-					uploadPortletRequest, "smallImage");
-				smallImageURL = ParamUtil.getString(
-					uploadPortletRequest, "smallImageURL");
-				smallFile = uploadPortletRequest.getFile("smallFile");
-			}
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			BlogsEntry.class.getName(), actionRequest);
+		InputStream smallFileInputStream = null;
+		String smallFileName = null;
 
 		BlogsEntry entry = null;
-		String oldUrlTitle = StringPool.BLANK;
+		String oldUrlTitle = null;
 
-		if (entryId <= 0) {
+		try {
+			boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
-			// Add entry
+			if (!ajax) {
+				boolean attachments = ParamUtil.getBoolean(
+					actionRequest, "attachments", false);
 
-			entry = BlogsEntryServiceUtil.addEntry(
-				title, description, content, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-				smallImageURL, smallFile, serviceContext);
+				if (attachments) {
+					UploadPortletRequest uploadPortletRequest =
+						PortalUtil.getUploadPortletRequest(actionRequest);
 
-			AssetPublisherUtil.addAndStoreSelection(
-				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
-				-1);
-		}
-		else {
-
-			// Update entry
-
-			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
-
-			String tempOldUrlTitle = entry.getUrlTitle();
-
-			entry = BlogsEntryServiceUtil.updateEntry(
-				entryId, title, description, content, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				smallImage, smallImageURL, smallFile, serviceContext);
-
-			if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
-				oldUrlTitle = tempOldUrlTitle;
+					smallImage = ParamUtil.getBoolean(
+						uploadPortletRequest, "smallImage");
+					smallImageURL = ParamUtil.getString(
+						uploadPortletRequest, "smallImageURL");
+					smallFileInputStream = uploadPortletRequest.getFileAsStream(
+						"smallFile");
+					smallFileName = uploadPortletRequest.getFileName(
+						"smallFile");
+				}
 			}
 
-			AssetPublisherUtil.addAndStoreSelection(
-				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
-				-1);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				BlogsEntry.class.getName(), actionRequest);
+
+			entry = null;
+			oldUrlTitle = StringPool.BLANK;
+
+			if (entryId <= 0) {
+
+				// Add entry
+
+				entry = BlogsEntryServiceUtil.addEntry(
+					title, description, content, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, allowPingbacks, allowTrackbacks,
+					trackbacks, smallImage, smallImageURL, smallFileInputStream,
+					smallFileName, serviceContext);
+
+				AssetPublisherUtil.addAndStoreSelection(
+					actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
+					-1);
+			}
+			else {
+
+				// Update entry
+
+				entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+
+				String tempOldUrlTitle = entry.getUrlTitle();
+
+				entry = BlogsEntryServiceUtil.updateEntry(
+					entryId, title, description, content, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, allowPingbacks, allowTrackbacks,
+					trackbacks, smallImage, smallImageURL, smallFileInputStream,
+					smallFileName, serviceContext);
+
+				if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
+					oldUrlTitle = tempOldUrlTitle;
+				}
+
+				AssetPublisherUtil.addAndStoreSelection(
+					actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
+					-1);
+			}
+		}
+		finally {
+			StreamUtil.cleanUp(smallFileInputStream);
 		}
 
 		return new Object[] {entry, oldUrlTitle};

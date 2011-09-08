@@ -297,30 +297,30 @@ public class MBMessageLocalServiceUtil {
 		long userId, java.lang.String userName, long groupId, long categoryId,
 		long threadId, long parentMessageId, java.lang.String subject,
 		java.lang.String body, java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.File>> files,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamEntries,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addMessage(userId, userName, groupId, categoryId, threadId,
-			parentMessageId, subject, body, format, files, anonymous, priority,
-			allowPingbacks, serviceContext);
+			parentMessageId, subject, body, format, inputStreamEntries,
+			anonymous, priority, allowPingbacks, serviceContext);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long userId, java.lang.String userName, long groupId, long categoryId,
 		java.lang.String subject, java.lang.String body,
 		java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.File>> files,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamEntries,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addMessage(userId, userName, groupId, categoryId, subject,
-			body, format, files, anonymous, priority, allowPingbacks,
-			serviceContext);
+			body, format, inputStreamEntries, anonymous, priority,
+			allowPingbacks, serviceContext);
 	}
 
 	public static void addMessageResources(long messageId,
@@ -679,15 +679,16 @@ public class MBMessageLocalServiceUtil {
 	public static com.liferay.portlet.messageboards.model.MBMessage updateMessage(
 		long userId, long messageId, java.lang.String subject,
 		java.lang.String body,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.File>> files,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamEntries,
 		java.util.List<java.lang.String> existingFiles, double priority,
 		boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateMessage(userId, messageId, subject, body, files,
-			existingFiles, priority, allowPingbacks, serviceContext);
+				   .updateMessage(userId, messageId, subject, body,
+			inputStreamEntries, existingFiles, priority, allowPingbacks,
+			serviceContext);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage updateMessage(

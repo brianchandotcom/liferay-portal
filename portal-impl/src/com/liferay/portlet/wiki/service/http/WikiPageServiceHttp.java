@@ -137,7 +137,7 @@ public class WikiPageServiceHttp {
 
 	public static void addPageAttachments(HttpPrincipal httpPrincipal,
 		long nodeId, java.lang.String title,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.File>> files)
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -145,7 +145,7 @@ public class WikiPageServiceHttp {
 					"addPageAttachments", _addPageAttachmentsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
-					title, files);
+					title, inputStream);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -205,7 +205,7 @@ public class WikiPageServiceHttp {
 
 	public static java.lang.String addTempPageAttachment(
 		HttpPrincipal httpPrincipal, long nodeId, java.lang.String fileName,
-		java.lang.String tempFolderName, java.io.File file)
+		java.lang.String tempFolderName, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException,
 			java.io.IOException {
@@ -215,7 +215,7 @@ public class WikiPageServiceHttp {
 					_addTempPageAttachmentParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
-					fileName, tempFolderName, file);
+					fileName, tempFolderName, inputStream);
 
 			Object returnObj = null;
 
@@ -921,7 +921,7 @@ public class WikiPageServiceHttp {
 		};
 	private static final Class<?>[] _addTempPageAttachmentParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.io.File.class
+			java.io.InputStream.class
 		};
 	private static final Class<?>[] _changeParentParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,

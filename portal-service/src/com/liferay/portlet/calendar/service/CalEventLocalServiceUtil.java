@@ -454,10 +454,11 @@ public class CalEventLocalServiceUtil {
 		return getService().hasEvents(groupId, cal, types);
 	}
 
-	public static void importICal4j(long userId, long groupId, java.io.File file)
+	public static void importICal4j(long userId, long groupId,
+		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().importICal4j(userId, groupId, file);
+		getService().importICal4j(userId, groupId, inputStream);
 	}
 
 	public static void updateAsset(long userId,

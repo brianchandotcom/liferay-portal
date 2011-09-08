@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.UserServiceUtil;
@@ -30,7 +31,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.portlet.PortletRequestUtil;
 import com.liferay.util.servlet.UploadException;
 
-import java.io.File;
+import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -101,14 +102,23 @@ public class EditUserPortraitAction extends PortletAction {
 
 		User user = PortalUtil.getSelectedUser(uploadPortletRequest);
 
-		File file = uploadPortletRequest.getFile("fileName");
-		byte[] bytes = FileUtil.getBytes(file);
+		InputStream inputStream = null;
 
-		if ((bytes == null) || (bytes.length == 0)) {
-			throw new UploadException();
+		try {
+			 inputStream = uploadPortletRequest.getFileAsStream(
+				"fileName");
+
+			if (inputStream == null) {
+				throw new UploadException("No logo uploaded.");
+			}
+
+			byte[] bytes = FileUtil.getBytes(inputStream);
+
+			UserServiceUtil.updatePortrait(user.getUserId(), bytes);
 		}
-
-		UserServiceUtil.updatePortrait(user.getUserId(), bytes);
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

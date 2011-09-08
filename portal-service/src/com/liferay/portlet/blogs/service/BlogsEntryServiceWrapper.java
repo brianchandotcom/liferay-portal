@@ -34,14 +34,17 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService {
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		boolean allowPingbacks, boolean allowTrackbacks,
 		java.lang.String[] trackbacks, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallFile,
+		java.lang.String smallImageURL,
+		java.io.InputStream smallFileInputStream,
+		java.lang.String smallFileName,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryService.addEntry(title, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, smallFile, serviceContext);
+			smallImage, smallImageURL, smallFileInputStream, smallFileName,
+			serviceContext);
 	}
 
 	public void deleteEntry(long entryId)
@@ -155,15 +158,17 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService {
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		boolean allowPingbacks, boolean allowTrackbacks,
 		java.lang.String[] trackbacks, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallFile,
+		java.lang.String smallImageURL,
+		java.io.InputStream smallFileInputStream,
+		java.lang.String smallFileName,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryService.updateEntry(entryId, title, description,
 			content, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, allowPingbacks,
-			allowTrackbacks, trackbacks, smallImage, smallImageURL, smallFile,
-			serviceContext);
+			allowTrackbacks, trackbacks, smallImage, smallImageURL,
+			smallFileInputStream, smallFileName, serviceContext);
 	}
 
 	public BlogsEntryService getWrappedBlogsEntryService() {

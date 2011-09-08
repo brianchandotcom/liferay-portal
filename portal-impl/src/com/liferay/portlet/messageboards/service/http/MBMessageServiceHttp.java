@@ -101,7 +101,7 @@ public class MBMessageServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		long threadId, long parentMessageId, java.lang.String subject,
 		java.lang.String body, java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.File>> files,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamEntries,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -112,8 +112,8 @@ public class MBMessageServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, threadId, parentMessageId, subject, body,
-					format, files, anonymous, priority, allowPingbacks,
-					serviceContext);
+					format, inputStreamEntries, anonymous, priority,
+					allowPingbacks, serviceContext);
 
 			Object returnObj = null;
 
@@ -145,7 +145,7 @@ public class MBMessageServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		java.lang.String subject, java.lang.String body,
 		java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.File>> files,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamEntries,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -155,8 +155,8 @@ public class MBMessageServiceHttp {
 					"addMessage", _addMessageParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					categoryId, subject, body, format, files, anonymous,
-					priority, allowPingbacks, serviceContext);
+					categoryId, subject, body, format, inputStreamEntries,
+					anonymous, priority, allowPingbacks, serviceContext);
 
 			Object returnObj = null;
 
@@ -849,7 +849,7 @@ public class MBMessageServiceHttp {
 	public static com.liferay.portlet.messageboards.model.MBMessage updateMessage(
 		HttpPrincipal httpPrincipal, long messageId, java.lang.String subject,
 		java.lang.String body,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.File>> files,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamEntries,
 		java.util.List<java.lang.String> existingFiles, double priority,
 		boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -860,8 +860,8 @@ public class MBMessageServiceHttp {
 					"updateMessage", _updateMessageParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					messageId, subject, body, files, existingFiles, priority,
-					allowPingbacks, serviceContext);
+					messageId, subject, body, inputStreamEntries,
+					existingFiles, priority, allowPingbacks, serviceContext);
 
 			Object returnObj = null;
 

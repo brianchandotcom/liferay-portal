@@ -121,7 +121,7 @@ public interface CalEventService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void importICal4j(long groupId, java.io.File file)
+	public void importICal4j(long groupId, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

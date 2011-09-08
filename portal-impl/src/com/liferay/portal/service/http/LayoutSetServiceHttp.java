@@ -53,7 +53,7 @@ import com.liferay.portal.service.LayoutSetServiceUtil;
  */
 public class LayoutSetServiceHttp {
 	public static void updateLogo(HttpPrincipal httpPrincipal, long groupId,
-		boolean privateLayout, boolean logo, java.io.File file)
+		boolean privateLayout, boolean logo, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -61,7 +61,7 @@ public class LayoutSetServiceHttp {
 					"updateLogo", _updateLogoParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, logo, file);
+					privateLayout, logo, inputStream);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -202,7 +202,7 @@ public class LayoutSetServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetServiceHttp.class);
 	private static final Class<?>[] _updateLogoParameterTypes0 = new Class[] {
-			long.class, boolean.class, boolean.class, java.io.File.class
+			long.class, boolean.class, boolean.class, java.io.InputStream.class
 		};
 	private static final Class<?>[] _updateLookAndFeelParameterTypes1 = new Class[] {
 			long.class, boolean.class, java.lang.String.class,

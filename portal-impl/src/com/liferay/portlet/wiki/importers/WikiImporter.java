@@ -17,7 +17,7 @@ package com.liferay.portlet.wiki.importers;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.wiki.model.WikiNode;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ import java.util.Map;
 public interface WikiImporter {
 
 	public void importPages(
-			long userId, WikiNode node, File[] files,
+			long userId, WikiNode node, InputStream[] inputStream,
 			Map<String, String[]> options)
 		throws PortalException;
 

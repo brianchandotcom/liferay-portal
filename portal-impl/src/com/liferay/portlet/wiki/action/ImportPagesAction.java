@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.ProgressTrackerThreadLocal;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
@@ -29,7 +30,7 @@ import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
 import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
 import com.liferay.portlet.wiki.util.WikiCacheUtil;
 
-import java.io.File;
+import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -123,17 +124,27 @@ public class ImportPagesAction extends PortletAction {
 		int filesCount = ParamUtil.getInteger(
 			uploadPortletRequest, "filesCount", 10);
 
-		File[] files = new File[filesCount];
+		InputStream[] inputStreams = new InputStream[filesCount];
 
-		for (int i = 0; i < filesCount; i++) {
-			files[i] = uploadPortletRequest.getFile("file" + i);
+		try {
+			for (int i = 0; i < filesCount; i++) {
+				inputStreams[i] = uploadPortletRequest.getFileAsStream(
+					"file" + i);
+			}
+
+			NotificationThreadLocal.setEnabled(false);
+			WikiCacheThreadLocal.setClearCache(false);
+
+			WikiNodeServiceUtil.importPages(
+				nodeId, importer, inputStreams,
+				actionRequest.getParameterMap());
 		}
-
-		NotificationThreadLocal.setEnabled(false);
-		WikiCacheThreadLocal.setClearCache(false);
-
-		WikiNodeServiceUtil.importPages(
-			nodeId, importer, files, actionRequest.getParameterMap());
+		finally {
+			for (int i = 0; i < inputStreams.length; i++) {
+				if (inputStreams[i] != null)
+				StreamUtil.cleanUp(inputStreams[i]);
+			}
+		}
 
 		WikiCacheUtil.clearCache(nodeId);
 

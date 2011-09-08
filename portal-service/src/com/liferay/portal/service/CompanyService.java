@@ -121,7 +121,7 @@ public interface CompanyService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void updateLogo(long companyId, java.io.File file)
+	public void updateLogo(long companyId, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

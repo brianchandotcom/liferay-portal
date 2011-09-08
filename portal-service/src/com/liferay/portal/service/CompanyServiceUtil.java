@@ -148,10 +148,11 @@ public class CompanyServiceUtil {
 		getService().updateDisplay(companyId, languageId, timeZoneId);
 	}
 
-	public static void updateLogo(long companyId, java.io.File file)
+	public static void updateLogo(long companyId,
+		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateLogo(companyId, file);
+		getService().updateLogo(companyId, inputStream);
 	}
 
 	public static void updatePreferences(long companyId,

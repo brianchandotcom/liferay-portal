@@ -139,10 +139,11 @@ public class CalEventServiceUtil {
 		return getService().hasEvents(groupId, cal, types);
 	}
 
-	public static void importICal4j(long groupId, java.io.File file)
+	public static void importICal4j(long groupId,
+		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().importICal4j(groupId, file);
+		getService().importICal4j(groupId, inputStream);
 	}
 
 	public static com.liferay.portlet.calendar.model.CalEvent updateEvent(

@@ -379,11 +379,11 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	public static void importPages(long userId, long nodeId,
-		java.lang.String importer, java.io.File[] files,
+		java.lang.String importer, java.io.InputStream[] inputStreams,
 		java.util.Map<java.lang.String, java.lang.String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().importPages(userId, nodeId, importer, files, options);
+		getService().importPages(userId, nodeId, importer, inputStreams, options);
 	}
 
 	public static void subscribeNode(long userId, long nodeId)

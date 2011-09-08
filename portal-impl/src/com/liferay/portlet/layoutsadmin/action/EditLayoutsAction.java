@@ -28,6 +28,8 @@ import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.RequiredLayoutException;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -86,6 +89,9 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.action.ActionUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.util.servlet.UploadException;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Iterator;
 import java.util.Locale;
@@ -690,8 +696,7 @@ public class EditLayoutsAction extends PortletAction {
 			uploadPortletRequest, "friendlyURL");
 		boolean iconImage = ParamUtil.getBoolean(
 			uploadPortletRequest, "iconImage");
-		byte[] iconBytes = FileUtil.getBytes(
-			uploadPortletRequest.getFile("iconFileName"));
+		byte[] iconBytes = getIconBytes(uploadPortletRequest, "iconFileName");
 		boolean locked = ParamUtil.getBoolean(uploadPortletRequest, "locked");
 		long layoutPrototypeId = ParamUtil.getLong(
 			uploadPortletRequest, "layoutPrototypeId");
@@ -865,6 +870,31 @@ public class EditLayoutsAction extends PortletAction {
 		return new Object[] {layout, oldFriendlyURL};
 	}
 
+	private byte[] getIconBytes(
+		UploadPortletRequest uploadPortletRequest, String iconFileName) {
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = uploadPortletRequest.getFileAsStream(
+				iconFileName);
+
+			if (inputStream != null) {
+				return FileUtil.getBytes(inputStream);
+			}
+		}
+		catch (IOException e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to retrieve icon", e);
+			}
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+
+		return new byte[0];
+	}
+
 	protected void updateLayoutRevision(ActionRequest actionRequest)
 		throws Exception {
 
@@ -938,5 +968,7 @@ public class EditLayoutsAction extends PortletAction {
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
+
+	private static Log _log = LogFactoryUtil.getLog(EditLayoutsAction.class);
 
 }

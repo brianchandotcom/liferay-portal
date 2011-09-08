@@ -56,11 +56,11 @@ public class WikiNodeServiceWrapper implements WikiNodeService {
 	}
 
 	public void importPages(long nodeId, java.lang.String importer,
-		java.io.File[] files,
+		java.io.InputStream[] inputStreams,
 		java.util.Map<java.lang.String, java.lang.String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_wikiNodeService.importPages(nodeId, importer, files, options);
+		_wikiNodeService.importPages(nodeId, importer, inputStreams, options);
 	}
 
 	public void subscribeNode(long nodeId)

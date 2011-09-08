@@ -169,19 +169,21 @@
 						);
 					}
 				}
-				<c:if test="<%= showActions %>">,
-					request: function(event) {
+				<c:if test="<%= showActions %>">
+					, request: function(event) {
 						var instance = this;
-	
+
 						var currentLink = instance.getCurrentLink();
+
 						var largeImageId = currentLink.attr('largeImageId');
+
 						var actions = instance._actions;
-	
+
 						if (actions) {
 							var action = A.one('#<portlet:namespace />buttonsContainer_' + largeImageId);
-	
+
 							actions.empty();
-	
+
 							actions.append(
 								action.clone().show()
 							);

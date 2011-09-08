@@ -31,104 +31,118 @@
 
 	<%
 	for (int i = 0; i < results.size(); i++) {
-		FileEntry fileEntry = null;
-
-		if (useAssetEntryQuery) {
-			AssetEntry assetEntry = (AssetEntry)results.get(i);
-
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(assetEntry.getClassPK());
-		}
-		else {
-			fileEntry = (FileEntry)results.get(i);
-		}
+		Object result = results.get(i);
 	%>
 
+		<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
+
 		<c:choose>
-			<c:when test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+			<c:when test="<%= fileEntry != null %>">
+				<c:choose>
+					<c:when test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
-				<%
-				FileVersion fileVersion = fileEntry.getFileVersion();
+						<%
+						FileVersion fileVersion = fileEntry.getFileVersion();
 
-				Image smallImage = ImageLocalServiceUtil.getImage(fileVersion.getSmallImageId());
+						Image smallImage = ImageLocalServiceUtil.getImage(fileVersion.getSmallImageId());
 
-				long smallImageId = 0;
-				int smallImageHeight = 100;
-				int smallImageWidth = 100;
+						long smallImageId = 0;
+						int smallImageHeight = 100;
+						int smallImageWidth = 100;
 
-				if (smallImage != null) {
-					smallImageId = smallImage.getImageId();
-					smallImageHeight = smallImage.getHeight();
-					smallImageWidth = smallImage.getWidth();
-				}
+						if (smallImage != null) {
+							smallImageId = smallImage.getImageId();
+							smallImageHeight = smallImage.getHeight();
+							smallImageWidth = smallImage.getWidth();
+						}
 
-				int topMargin = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageHeight;
-				int sideMargin = (PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageWidth) / 2;
+						int topMargin = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageHeight;
+						int sideMargin = (PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageWidth) / 2;
 
-				String href = StringPool.BLANK;
-				String src = StringPool.BLANK;
-				String style = StringPool.BLANK;
+						String href = StringPool.BLANK;
+						String src = StringPool.BLANK;
+						String style = StringPool.BLANK;
 
-				Image largeImage = ImageLocalServiceUtil.getImage(fileVersion.getLargeImageId());
+						Image largeImage = ImageLocalServiceUtil.getImage(fileVersion.getLargeImageId());
 
-				if (largeImage != null) {
-					href = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&fileName=" + HttpUtil.encodeURL(fileEntry.getTitle()) + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
-					src = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId + "&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
-					style = "height: " + smallImageHeight + "; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; width: " + smallImageWidth + ";";
-				}
-				else if (PDFProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
-					href = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";
-					src = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";
-				}
-				else {
-					href = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-					src = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-				}
-				%>
+						if (largeImage != null) {
+							href = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId()) + "&fileName=" + HttpUtil.encodeURL(fileEntry.getTitle() + StringPool.PERIOD + largeImage.getType());
+							src = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId + "&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
+							style = "height: " + smallImageHeight + "; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; width: " + smallImageWidth + ";";
+						}
+						else if (PDFProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
+							href = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";
+							src = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";
+						}
+						else {
+							href = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
+							src = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
+						}
+						%>
 
-				<a class="image-thumbnail" href="<%= href %>" largeImageId="<%= (largeImage != null) ? largeImage.getImageId() : 0 %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
-					<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="<%= style %>" />
+						<a class="image-thumbnail" href="<%= href %>" largeImageId="<%= (largeImage != null) ? largeImage.getImageId() : 0 %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
+							<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="<%= style %>" />
 
-					<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
+							<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
 
-					<c:if test="<%= scores != null %>">
-						<span class="image-score">
+							<c:if test="<%= scores != null %>">
+								<span class="image-score">
 
-							<%
-							double score = ((Double)scores.get(i)).doubleValue();
+									<%
+									double score = ((Double)scores.get(i)).doubleValue();
 
-							score = MathUtils.round((score * 10) / 2, 1, BigDecimal.ROUND_HALF_UP);
-							%>
+									score = MathUtils.round((score * 10) / 2, 1, BigDecimal.ROUND_HALF_UP);
+									%>
 
-							<liferay-ui:ratings-score score="<%= score %>" />
-						</span>
-					</c:if>
-				</a>
+									<liferay-ui:ratings-score score="<%= score %>" />
+								</span>
+							</c:if>
+						</a>
 
-				<c:if test="<%= showActions %>">
-					<div class="aui-helper-hidden" id="<portlet:namespace />buttonsContainer_<%= (largeImage != null) ? largeImage.getImageId() : 0 %>">
-						<div class="buttons-container float-container" id="<portlet:namespace />buttons_<%= (largeImage != null) ? largeImage.getImageId() : 0 %>">
-							<%@ include file="/html/portlet/image_gallery_display/image_action.jspf" %>
+						<c:if test="<%= showActions %>">
+							<div class="aui-helper-hidden" id="<portlet:namespace />buttonsContainer_<%= (largeImage != null) ? largeImage.getImageId() : 0 %>">
+								<div class="buttons-container float-container" id="<portlet:namespace />buttons_<%= (largeImage != null) ? largeImage.getImageId() : 0 %>">
+									<%@ include file="/html/portlet/image_gallery_display/image_action.jspf" %>
+								</div>
+							</div>
+						</c:if>
+
+						<%
+						List assetTags = AssetTagServiceUtil.getTags(DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+						%>
+
+						<div id="<portlet:namespace />categorizacionContainer_<%= (largeImage != null) ? largeImage.getImageId() : 0 %>" style="display: none;">
+							<span <%= !assetTags.isEmpty() ? "class=\"has-tags\"" : "" %>>
+								<liferay-ui:asset-categories-summary
+									className="<%= DLFileEntryConstants.getClassName() %>"
+									classPK="<%= fileEntry.getFileEntryId() %>"
+								/>
+							</span>
+
+							<liferay-ui:asset-tags-summary
+								className="<%= DLFileEntryConstants.getClassName() %>"
+								classPK="<%= fileEntry.getFileEntryId() %>"
+							/>
 						</div>
-					</div>
-				</c:if>
+					</c:when>
+				</c:choose>
+			</c:when>
+
+			<c:when test="<%= curFolder != null %>">
 
 				<%
-				List assetTags = AssetTagServiceUtil.getTags(DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+				PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
+
+				viewFolderURL.setParameter("struts_action", "/document_library/view");
+				viewFolderURL.setParameter("redirect", currentURL);
+				viewFolderURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 				%>
 
-				<div id="<portlet:namespace />categorizacionContainer_<%= (largeImage != null) ? largeImage.getImageId() : 0 %>" style="display: none;">
-					<span <%= !assetTags.isEmpty() ? "class=\"has-tags\"" : "" %>>
-						<liferay-ui:asset-categories-summary
-							className="<%= DLFileEntryConstants.getClassName() %>"
-							classPK="<%= fileEntry.getFileEntryId() %>"
-						/>
-					</span>
+				<a class="image-thumbnail" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
+					<img alt="" border="no" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_document.png" %>" style="height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT %>; width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
 
-					<liferay-ui:asset-tags-summary
-						className="<%= DLFileEntryConstants.getClassName() %>"
-						classPK="<%= fileEntry.getFileEntryId() %>"
-					/>
-				</div>
+					<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
+				</a>
 			</c:when>
 			<c:otherwise>
 				<div style="float: left; margin: 100px 10px 0px;">

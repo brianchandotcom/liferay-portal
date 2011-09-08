@@ -40,10 +40,12 @@
 	.image-thumbnail {
 		border: 2px solid #eee;
 		float: left;
+		height: 162px;
 		margin: 20px 4px 0;
 		padding: 5px 5px 0;
 		text-align: center;
 		text-decoration: none;
+		width: 150px;
 
 		&:hover {
 			border-color: #ccc;

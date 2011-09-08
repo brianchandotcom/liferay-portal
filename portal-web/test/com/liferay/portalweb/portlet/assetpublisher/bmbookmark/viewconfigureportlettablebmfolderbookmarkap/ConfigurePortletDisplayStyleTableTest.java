@@ -47,8 +47,9 @@ public class ConfigurePortletDisplayStyleTableTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -92,6 +93,8 @@ public class ConfigurePortletDisplayStyleTableTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_displayStyle']",
 			RuntimeVariables.replace("label=Table"));
+		assertEquals("Table",
+			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

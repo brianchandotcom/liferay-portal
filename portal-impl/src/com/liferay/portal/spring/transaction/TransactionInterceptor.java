@@ -99,7 +99,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 	}
 
 	/**
-	 * @deprecated {@link #setPlatformTransactionManager(boolean)}
+	 * @deprecated {@link #setPlatformTransactionManager(PlatformTransactionManager)}
 	 */
 	public void setTransactionManager(
 		PlatformTransactionManager platformTransactionManager) {

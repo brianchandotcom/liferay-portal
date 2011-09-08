@@ -1703,6 +1703,10 @@ public class SourceFormatter {
 
 		String content = _jspContents.get(fileName);
 
+		if (Validator.isNull(content)) {
+			return false;
+		}
+
 		if (checkFile && content.contains(importLine)) {
 			return true;
 		}

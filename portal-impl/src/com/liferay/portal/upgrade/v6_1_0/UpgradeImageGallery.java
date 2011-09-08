@@ -45,6 +45,7 @@ import java.util.Map;
 
 /**
  * @author Sergio González
+ *  @author Miguel Pastor
  */
 public class UpgradeImageGallery extends UpgradeProcess {
 
@@ -235,6 +236,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		updateIGImagePermissions();
 
 		migrateImageFiles();
+
+		upgrade(UpgradeDLSync.class);
 	}
 
 	protected Object[] getImage(long imageId) throws Exception {

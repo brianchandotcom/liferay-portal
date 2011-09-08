@@ -52,6 +52,9 @@ int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAU
 
 int folderRowsPerPage = folderEnd - folderStart;
 
+int folderStart = ParamUtil.getInteger(request, "folderStart");
+int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
+
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 

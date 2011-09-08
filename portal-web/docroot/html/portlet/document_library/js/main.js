@@ -84,7 +84,7 @@ AUI().add(
 						var entryPage = 0;
 
 						if (config.entriesTotal > 0) {
-							entryPage = config.entryEnd / config.entryRowsPerPage;
+							entryPage = (config.entryEnd / config.entryRowsPerPage);
 						}
 
 						var entryPaginator = new A.Paginator(
@@ -107,7 +107,7 @@ AUI().add(
 						var folderPage = 0;
 
 						if (config.foldersTotal > 0) {
-							folderPage = config.folderEnd / config.folderRowsPerPage;
+							folderPage = (config.folderEnd / config.folderRowsPerPage);
 						}
 
 						var folderPaginator = new A.Paginator(

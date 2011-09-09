@@ -53,27 +53,26 @@ public class RESTProxyAction extends Action {
 
 		String url = ParamUtil.getString(request, "url");
 
-		String location = url;
-		String queryString = StringPool.BLANK;
-
-		int pos = location.indexOf(CharPool.QUESTION);
-
-		if (pos != -1) {
-			location = url.substring(0, pos);
-			queryString = url.substring(pos + 1);
-		}
-
-		Http.Body body = new Http.Body(queryString,
-			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED, StringPool.UTF8);
-
-		Http.Options options = new Http.Options();
-
-		options.setLocation(location);
-		options.setBody(body);
-		options.setPost(true);
-
 		if (validate(url)) {
-			String content = HttpUtil.URLtoString(options);
+			String location = url;
+			String content = StringPool.BLANK;
+
+			int pos = location.indexOf(CharPool.QUESTION);
+
+			if (pos != -1) {
+				location = url.substring(0, pos);
+				content = url.substring(pos + 1);
+			}
+
+			Http.Options options = new Http.Options();
+
+			options.setBody(
+				content, ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED,
+				StringPool.UTF8);
+			options.setLocation(location);
+			options.setPost(true);
+
+			content = HttpUtil.URLtoString(options);
 
 			ServletResponseUtil.write(response, content);
 		}

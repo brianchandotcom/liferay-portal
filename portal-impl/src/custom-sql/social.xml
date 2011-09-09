@@ -24,8 +24,8 @@
 			UPDATE
 				SocialEquityAssetEntry
 			SET
-				informationK = informationK + [$INFORMATION_K$],
-				informationB = informationB + [$INFORMATION_B$]
+				informationK = COALESCE(informationK, 0) + [$INFORMATION_K$],
+				informationB = COALESCE(informationB, 0) + [$INFORMATION_B$]
 			WHERE
 				assetEntryId = [$ASSET_ENTRY_ID$]
 		]]>
@@ -35,8 +35,8 @@
 			UPDATE
 				SocialEquityUser
 			SET
-				contributionK = contributionK + [$CONTRIBUTION_K$],
-				contributionB = contributionB + [$CONTRIBUTION_B$]
+				contributionK = COALESCE(contributionK, 0) + [$CONTRIBUTION_K$],
+				contributionB = COALESCE(contributionB, 0) + [$CONTRIBUTION_B$]
 			WHERE
 				(groupId = [$GROUP_ID$]) AND
 				(userId = [$USER_ID$])
@@ -47,8 +47,8 @@
 			UPDATE
 				SocialEquityUser
 			SET
-				participationK = participationK + [$PARTICIPATION_K$],
-				participationB = participationB + [$PARTICIPATION_B$]
+				participationK = COALESCE(participationK, 0) + [$PARTICIPATION_K$],
+				participationB = COALESCE(participationB, 0) + [$PARTICIPATION_B$]
 			WHERE
 				(groupId = [$GROUP_ID$]) AND
 				(userId = [$USER_ID$])
@@ -68,6 +68,7 @@
 								SocialEquityLog
 							WHERE
 								(SocialEquityLog.assetEntryId = SocialEquityAssetEntry.assetEntryId) AND
+								(type_ = [$TYPE_INFORMATION$]) AND
 								(expiration <= [$EXPIRATION$]) AND
 								(active_ = [$TRUE$])
 						),
@@ -80,6 +81,7 @@
 								SocialEquityLog
 							WHERE
 								(SocialEquityLog.assetEntryId = SocialEquityAssetEntry.assetEntryId) AND
+								(type_ = [$TYPE_INFORMATION$]) AND
 								(expiration <= [$EXPIRATION$]) AND
 								(active_ = [$TRUE$])
 						)
@@ -132,7 +134,7 @@
 				contributionK =
 					(
 						SELECT
-							SUM(informationK)
+							COALESCE(SUM(informationK), 0)
 						FROM
 							SocialEquityAssetEntry
 						WHERE
@@ -142,7 +144,7 @@
 				contributionB =
 					(
 						SELECT
-							SUM(informationB)
+							COALESCE(SUM(informationB), 0)
 						FROM
 							SocialEquityAssetEntry
 						WHERE
@@ -221,7 +223,7 @@
 	<sql id="com.liferay.portlet.social.service.impl.SocialEquityLogLocalServiceImpl.findSocialEquityUser">
 		<![CDATA[
 			SELECT
-				equityUserId, SocialEquityUser.groupId, ([$ACTION_DATE$] * (contributionK + participationK) + contributionB + participationB) AS equityValue, status
+				equityUserId, SocialEquityUser.groupId, ([$ACTION_DATE$] * (COALESCE(contributionK, 0) + COALESCE(participationK, 0)) + COALESCE(contributionB, 0) + COALESCE(participationB, 0)) AS equityValue, status
 			FROM
 				SocialEquityUser
 			INNER JOIN
@@ -233,7 +235,7 @@
 	<sql id="com.liferay.portlet.social.service.impl.SocialEquityLogLocalServiceImpl.findSocialEquityUserByGroup">
 		<![CDATA[
 			SELECT
-				equityUserId, SocialEquityUser.groupId, ([$ACTION_DATE$] * (contributionK + participationK) + contributionB + participationB) AS equityValue, status
+				equityUserId, SocialEquityUser.groupId, ([$ACTION_DATE$] * (COALESCE(contributionK, 0) + COALESCE(participationK, 0)) + COALESCE(contributionB, 0) + COALESCE(participationB, 0)) AS equityValue, status
 			FROM
 				SocialEquityUser
 			INNER JOIN

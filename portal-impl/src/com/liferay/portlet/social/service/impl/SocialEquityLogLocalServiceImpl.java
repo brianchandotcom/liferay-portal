@@ -832,7 +832,9 @@ public class SocialEquityLogLocalServiceImpl
 			double equityValue = rs.getDouble("equityValue");
 			int status = rs.getInt("status");
 
-			if (status != WorkflowConstants.STATUS_APPROVED) {
+			if (status != WorkflowConstants.STATUS_APPROVED ||
+				equityValue == 0) {
+
 				_updateRanksSetter.add(equityUserId, 0);
 			}
 			else {

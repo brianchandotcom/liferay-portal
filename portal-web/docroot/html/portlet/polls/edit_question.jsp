@@ -178,6 +178,9 @@ if (choiceName > 0) {
 		function(date, checked) {
 			var A = AUI();
 
+			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"].disabled = checked;
+			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Day"].disabled = checked;
+			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Year"].disabled = checked;
 			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Hour"].disabled = checked;
 			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Minute"].disabled = checked;
 			document.<portlet:namespace />fm["<portlet:namespace />" + date + "AmPm"].disabled = checked;

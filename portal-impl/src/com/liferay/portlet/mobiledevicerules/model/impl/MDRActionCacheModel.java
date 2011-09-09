@@ -54,8 +54,8 @@ public class MDRActionCacheModel implements CacheModel<MDRAction> {
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", ruleGroupId=");
-		sb.append(ruleGroupId);
+		sb.append(", ruleGroupInstanceId=");
+		sb.append(ruleGroupInstanceId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -107,7 +107,7 @@ public class MDRActionCacheModel implements CacheModel<MDRAction> {
 
 		mdrActionImpl.setClassNameId(classNameId);
 		mdrActionImpl.setClassPK(classPK);
-		mdrActionImpl.setRuleGroupId(ruleGroupId);
+		mdrActionImpl.setRuleGroupInstanceId(ruleGroupInstanceId);
 
 		if (name == null) {
 			mdrActionImpl.setName(StringPool.BLANK);
@@ -152,7 +152,7 @@ public class MDRActionCacheModel implements CacheModel<MDRAction> {
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public long ruleGroupId;
+	public long ruleGroupInstanceId;
 	public String name;
 	public String description;
 	public String type;

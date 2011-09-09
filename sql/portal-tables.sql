@@ -1183,7 +1183,7 @@ create table MDRAction (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	ruleGroupId LONG,
+	ruleGroupInstanceId LONG,
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(255) null,
@@ -1217,6 +1217,21 @@ create table MDRRuleGroup (
 	modifiedDate DATE null,
 	name STRING null,
 	description STRING null
+);
+
+create table MDRRuleGroupInstance (
+	uuid_ VARCHAR(75) null,
+	ruleGroupInstanceId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	ruleGroupId LONG,
+	priority INTEGER
 );
 
 create table MembershipRequest (

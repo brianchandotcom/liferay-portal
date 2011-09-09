@@ -34,12 +34,15 @@ import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalService;
 import com.liferay.portlet.mobiledevicerules.service.MDRActionService;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalService;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalService;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalService;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleService;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistence;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder;
+import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupInstancePersistence;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistence;
 import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRulePersistence;
 
@@ -247,6 +250,63 @@ public abstract class MDRRuleServiceBaseImpl extends PrincipalBean
 	 */
 	public void setMDRRuleGroupFinder(MDRRuleGroupFinder mdrRuleGroupFinder) {
 		this.mdrRuleGroupFinder = mdrRuleGroupFinder;
+	}
+
+	/**
+	 * Returns the m d r rule group instance local service.
+	 *
+	 * @return the m d r rule group instance local service
+	 */
+	public MDRRuleGroupInstanceLocalService getMDRRuleGroupInstanceLocalService() {
+		return mdrRuleGroupInstanceLocalService;
+	}
+
+	/**
+	 * Sets the m d r rule group instance local service.
+	 *
+	 * @param mdrRuleGroupInstanceLocalService the m d r rule group instance local service
+	 */
+	public void setMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+		this.mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	/**
+	 * Returns the m d r rule group instance remote service.
+	 *
+	 * @return the m d r rule group instance remote service
+	 */
+	public MDRRuleGroupInstanceService getMDRRuleGroupInstanceService() {
+		return mdrRuleGroupInstanceService;
+	}
+
+	/**
+	 * Sets the m d r rule group instance remote service.
+	 *
+	 * @param mdrRuleGroupInstanceService the m d r rule group instance remote service
+	 */
+	public void setMDRRuleGroupInstanceService(
+		MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
+		this.mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
+	}
+
+	/**
+	 * Returns the m d r rule group instance persistence.
+	 *
+	 * @return the m d r rule group instance persistence
+	 */
+	public MDRRuleGroupInstancePersistence getMDRRuleGroupInstancePersistence() {
+		return mdrRuleGroupInstancePersistence;
+	}
+
+	/**
+	 * Sets the m d r rule group instance persistence.
+	 *
+	 * @param mdrRuleGroupInstancePersistence the m d r rule group instance persistence
+	 */
+	public void setMDRRuleGroupInstancePersistence(
+		MDRRuleGroupInstancePersistence mdrRuleGroupInstancePersistence) {
+		this.mdrRuleGroupInstancePersistence = mdrRuleGroupInstancePersistence;
 	}
 
 	/**
@@ -483,6 +543,12 @@ public abstract class MDRRuleServiceBaseImpl extends PrincipalBean
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;
 	@BeanReference(type = MDRRuleGroupFinder.class)
 	protected MDRRuleGroupFinder mdrRuleGroupFinder;
+	@BeanReference(type = MDRRuleGroupInstanceLocalService.class)
+	protected MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;
+	@BeanReference(type = MDRRuleGroupInstanceService.class)
+	protected MDRRuleGroupInstanceService mdrRuleGroupInstanceService;
+	@BeanReference(type = MDRRuleGroupInstancePersistence.class)
+	protected MDRRuleGroupInstancePersistence mdrRuleGroupInstancePersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

@@ -21,18 +21,19 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.mobiledevicerules.service.http.MDRActionServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.mobiledevicerules.service.http.MDRRuleGroupInstanceServiceSoap}.
  *
  * @author    Edward C. Han
- * @see       com.liferay.portlet.mobiledevicerules.service.http.MDRActionServiceSoap
+ * @see       com.liferay.portlet.mobiledevicerules.service.http.MDRRuleGroupInstanceServiceSoap
  * @generated
  */
-public class MDRActionSoap implements Serializable {
-	public static MDRActionSoap toSoapModel(MDRAction model) {
-		MDRActionSoap soapModel = new MDRActionSoap();
+public class MDRRuleGroupInstanceSoap implements Serializable {
+	public static MDRRuleGroupInstanceSoap toSoapModel(
+		MDRRuleGroupInstance model) {
+		MDRRuleGroupInstanceSoap soapModel = new MDRRuleGroupInstanceSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setActionId(model.getActionId());
+		soapModel.setRuleGroupInstanceId(model.getRuleGroupInstanceId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -41,17 +42,15 @@ public class MDRActionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setRuleGroupInstanceId(model.getRuleGroupInstanceId());
-		soapModel.setName(model.getName());
-		soapModel.setDescription(model.getDescription());
-		soapModel.setType(model.getType());
-		soapModel.setTypeSettings(model.getTypeSettings());
+		soapModel.setRuleGroupId(model.getRuleGroupId());
+		soapModel.setPriority(model.getPriority());
 
 		return soapModel;
 	}
 
-	public static MDRActionSoap[] toSoapModels(MDRAction[] models) {
-		MDRActionSoap[] soapModels = new MDRActionSoap[models.length];
+	public static MDRRuleGroupInstanceSoap[] toSoapModels(
+		MDRRuleGroupInstance[] models) {
+		MDRRuleGroupInstanceSoap[] soapModels = new MDRRuleGroupInstanceSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -60,14 +59,15 @@ public class MDRActionSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static MDRActionSoap[][] toSoapModels(MDRAction[][] models) {
-		MDRActionSoap[][] soapModels = null;
+	public static MDRRuleGroupInstanceSoap[][] toSoapModels(
+		MDRRuleGroupInstance[][] models) {
+		MDRRuleGroupInstanceSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new MDRActionSoap[models.length][models[0].length];
+			soapModels = new MDRRuleGroupInstanceSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new MDRActionSoap[0][0];
+			soapModels = new MDRRuleGroupInstanceSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -77,25 +77,26 @@ public class MDRActionSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static MDRActionSoap[] toSoapModels(List<MDRAction> models) {
-		List<MDRActionSoap> soapModels = new ArrayList<MDRActionSoap>(models.size());
+	public static MDRRuleGroupInstanceSoap[] toSoapModels(
+		List<MDRRuleGroupInstance> models) {
+		List<MDRRuleGroupInstanceSoap> soapModels = new ArrayList<MDRRuleGroupInstanceSoap>(models.size());
 
-		for (MDRAction model : models) {
+		for (MDRRuleGroupInstance model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new MDRActionSoap[soapModels.size()]);
+		return soapModels.toArray(new MDRRuleGroupInstanceSoap[soapModels.size()]);
 	}
 
-	public MDRActionSoap() {
+	public MDRRuleGroupInstanceSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _actionId;
+		return _ruleGroupInstanceId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setActionId(pk);
+		setRuleGroupInstanceId(pk);
 	}
 
 	public String getUuid() {
@@ -106,12 +107,12 @@ public class MDRActionSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getActionId() {
-		return _actionId;
+	public long getRuleGroupInstanceId() {
+		return _ruleGroupInstanceId;
 	}
 
-	public void setActionId(long actionId) {
-		_actionId = actionId;
+	public void setRuleGroupInstanceId(long ruleGroupInstanceId) {
+		_ruleGroupInstanceId = ruleGroupInstanceId;
 	}
 
 	public long getGroupId() {
@@ -178,48 +179,24 @@ public class MDRActionSoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public long getRuleGroupInstanceId() {
-		return _ruleGroupInstanceId;
+	public long getRuleGroupId() {
+		return _ruleGroupId;
 	}
 
-	public void setRuleGroupInstanceId(long ruleGroupInstanceId) {
-		_ruleGroupInstanceId = ruleGroupInstanceId;
+	public void setRuleGroupId(long ruleGroupId) {
+		_ruleGroupId = ruleGroupId;
 	}
 
-	public String getName() {
-		return _name;
+	public int getPriority() {
+		return _priority;
 	}
 
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public String getDescription() {
-		return _description;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
-	}
-
-	public String getType() {
-		return _type;
-	}
-
-	public void setType(String type) {
-		_type = type;
-	}
-
-	public String getTypeSettings() {
-		return _typeSettings;
-	}
-
-	public void setTypeSettings(String typeSettings) {
-		_typeSettings = typeSettings;
+	public void setPriority(int priority) {
+		_priority = priority;
 	}
 
 	private String _uuid;
-	private long _actionId;
+	private long _ruleGroupInstanceId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -228,9 +205,6 @@ public class MDRActionSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _ruleGroupInstanceId;
-	private String _name;
-	private String _description;
-	private String _type;
-	private String _typeSettings;
+	private long _ruleGroupId;
+	private int _priority;
 }

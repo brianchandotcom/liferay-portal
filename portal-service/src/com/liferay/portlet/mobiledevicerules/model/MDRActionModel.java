@@ -230,18 +230,18 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the rule group ID of this m d r action.
+	 * Returns the rule group instance ID of this m d r action.
 	 *
-	 * @return the rule group ID of this m d r action
+	 * @return the rule group instance ID of this m d r action
 	 */
-	public long getRuleGroupId();
+	public long getRuleGroupInstanceId();
 
 	/**
-	 * Sets the rule group ID of this m d r action.
+	 * Sets the rule group instance ID of this m d r action.
 	 *
-	 * @param ruleGroupId the rule group ID of this m d r action
+	 * @param ruleGroupInstanceId the rule group instance ID of this m d r action
 	 */
-	public void setRuleGroupId(long ruleGroupId);
+	public void setRuleGroupInstanceId(long ruleGroupInstanceId);
 
 	/**
 	 * Returns the name of this m d r action.

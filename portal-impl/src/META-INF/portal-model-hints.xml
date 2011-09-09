@@ -1955,7 +1955,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="ruleGroupId" type="long" />
+		<field name="ruleGroupInstanceId" type="long" />
 		<field name="name" type="String" localized="true">
 			<hint name="display-width">150</hint>
 			<hint name="max-length">255</hint>
@@ -2013,6 +2013,20 @@
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 		</field>
+	</model>
+	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance">
+		<field name="uuid" type="String" />
+		<field name="ruleGroupInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="ruleGroupId" type="long" />
+		<field name="priority" type="int" />
 	</model>
 	<model name="com.liferay.portlet.polls.model.PollsChoice">
 		<field name="uuid" type="String" />

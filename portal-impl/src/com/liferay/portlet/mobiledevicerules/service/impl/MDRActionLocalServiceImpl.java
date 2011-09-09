@@ -34,9 +34,10 @@ import java.util.Map;
 public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 	public MDRAction addAction(
-			long groupId, String className, long classPK, long ruleGroupId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String type, String typeSettings, ServiceContext serviceContext)
+			long groupId, String className, long classPK,
+			long ruleGroupInstanceId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String type,
+			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -54,9 +55,9 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		action.setModifiedDate(serviceContext.getModifiedDate(now));
 		action.setUserId(serviceContext.getUserId());
 		action.setUserName(user.getFullName());
+		action.setRuleGroupInstanceId(ruleGroupInstanceId);
 		action.setClassNameId(classNameId);
 		action.setClassPK(classPK);
-		action.setRuleGroupId(ruleGroupId);
 		action.setNameMap(nameMap);
 		action.setDescriptionMap(descriptionMap);
 		action.setType(type);
@@ -66,15 +67,17 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 	}
 
 	public MDRAction addAction(
-			long groupId, String className, long classPK, long ruleGroupId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String type, UnicodeProperties typeSettingsProperties,
+			long groupId, String className, long classPK,
+			long ruleGroupInstanceId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String type,
+			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return addAction(
-			groupId, className, classPK, ruleGroupId, nameMap, descriptionMap,
-			type, typeSettingsProperties.toString(), serviceContext);
+			groupId, className, classPK, ruleGroupInstanceId, nameMap,
+			descriptionMap, type, typeSettingsProperties.toString(),
+			serviceContext);
 	}
 
 	public void deleteAction(long actionId) throws SystemException {
@@ -89,16 +92,14 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		mdrActionPersistence.remove(action);
 	}
 
-	public void deleteActions(String className, long classPK)
+	public void deleteActions(long ruleGroupInstanceId)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		List<MDRAction> actions = mdrActionPersistence.findByC_C(
-			classNameId, classPK);
+		List<MDRAction> actions =
+			mdrActionPersistence.findByRuleGroupInstanceId(ruleGroupInstanceId);
 
 		for (MDRAction action : actions) {
-			deleteMDRAction(action);
+			deleteAction(action);
 		}
 	}
 
@@ -106,30 +107,26 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		return mdrActionPersistence.fetchByPrimaryKey(actionId);
 	}
 
-	public List<MDRAction> getActions(String className, long classPK)
+	public List<MDRAction> getActions(long ruleGroupInstanceId)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		return mdrActionPersistence.findByC_C(classNameId, classPK);
+		return mdrActionPersistence.findByRuleGroupInstanceId(
+			ruleGroupInstanceId);
 	}
 
 	public List<MDRAction> getActions(
-			String className, long classPK, int start, int end)
+			long ruleGroupInstanceId, int start, int end)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		return mdrActionPersistence.findByC_C(
-			classNameId, classPK, start, end);
+		return mdrActionPersistence.findByRuleGroupInstanceId(
+			ruleGroupInstanceId, start, end);
 	}
 
-	public int getActionsCount(String className, long classPK)
+	public int getActionsCount(long ruleGroupInstanceId)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		return mdrActionPersistence.countByC_C(classNameId, classPK);
+		return mdrActionPersistence.countByRuleGroupInstanceId(
+			ruleGroupInstanceId);
 	}
 
 	public MDRAction updateAction(

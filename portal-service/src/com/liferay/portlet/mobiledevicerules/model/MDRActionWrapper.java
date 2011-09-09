@@ -264,21 +264,21 @@ public class MDRActionWrapper implements MDRAction {
 	}
 
 	/**
-	* Returns the rule group ID of this m d r action.
+	* Returns the rule group instance ID of this m d r action.
 	*
-	* @return the rule group ID of this m d r action
+	* @return the rule group instance ID of this m d r action
 	*/
-	public long getRuleGroupId() {
-		return _mdrAction.getRuleGroupId();
+	public long getRuleGroupInstanceId() {
+		return _mdrAction.getRuleGroupInstanceId();
 	}
 
 	/**
-	* Sets the rule group ID of this m d r action.
+	* Sets the rule group instance ID of this m d r action.
 	*
-	* @param ruleGroupId the rule group ID of this m d r action
+	* @param ruleGroupInstanceId the rule group instance ID of this m d r action
 	*/
-	public void setRuleGroupId(long ruleGroupId) {
-		_mdrAction.setRuleGroupId(ruleGroupId);
+	public void setRuleGroupInstanceId(long ruleGroupInstanceId) {
+		_mdrAction.setRuleGroupInstanceId(ruleGroupInstanceId);
 	}
 
 	/**
@@ -623,12 +623,6 @@ public class MDRActionWrapper implements MDRAction {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mdrAction.persist();
-	}
-
-	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getMDRRuleGroup()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _mdrAction.getMDRRuleGroup();
 	}
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {

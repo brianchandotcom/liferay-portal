@@ -366,6 +366,9 @@
 	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupServiceImpl" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder" class="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupInstanceLocalServiceImpl" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupInstanceServiceImpl" />
+	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupInstancePersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupInstancePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.polls.service.PollsChoiceLocalService" class="com.liferay.portlet.polls.service.impl.PollsChoiceLocalServiceImpl" />
 	<bean id="com.liferay.portlet.polls.service.persistence.PollsChoicePersistence" class="com.liferay.portlet.polls.service.persistence.PollsChoicePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.polls.service.persistence.PollsChoiceFinder" class="com.liferay.portlet.polls.service.persistence.PollsChoiceFinderImpl" parent="basePersistence" />

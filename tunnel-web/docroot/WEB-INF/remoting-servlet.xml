@@ -949,6 +949,18 @@
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
 		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
 	</bean>
+	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupInstanceService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
+		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
+	</bean>
+	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupInstanceService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
+		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
+	</bean>
+	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupInstanceService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
+		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
+	</bean>
 	<bean name="/com_liferay_portlet_polls_service_spring_PollsQuestionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.polls.service.PollsQuestionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsQuestionService" />

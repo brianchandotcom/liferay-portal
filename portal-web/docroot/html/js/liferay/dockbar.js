@@ -1,6 +1,8 @@
 AUI().add(
 	'liferay-dockbar',
 	function(A) {
+		var Lang = A.Lang;
+
 		var LayoutConfiguration = Liferay.LayoutConfiguration;
 		var Portlet = Liferay.Portlet;
 		var Util = Liferay.Util;
@@ -680,14 +682,26 @@ AUI().add(
 						function(event) {
 							event.preventDefault();
 
+							var currentTarget = event.currentTarget;
+
+							var controlPanelCategory = Lang.trim(currentTarget.attr('data-controlPanelCategory'));
+
+							var uri = currentTarget.attr('href');
+							var title = currentTarget.attr('title');
+
+							if (controlPanelCategory) {
+								uri = Liferay.Util.addParams('controlPanelCategory=' + controlPanelCategory, uri) || uri;
+							}
+
 							instance._openWindow(
 								{
 									dialog: {
 										align: Util.Window.ALIGN_CENTER,
 										width: 960
-									}
-								},
-								event.currentTarget
+									},
+									title: title,
+									uri: uri
+								}
 							);
 						},
 						'a.use-dialog'
@@ -739,13 +753,16 @@ AUI().add(
 			},
 
 			_openWindow: function(config, item) {
-				var defaultParams = {
-					id: item.guid(),
-					title: item.attr('title'),
-					uri: item.attr('href')
-				};
-
-				A.mix(config, defaultParams);
+				if (item) {
+					A.mix(
+						config,
+						{
+							id: item.guid(),
+							title: item.attr('title'),
+							uri: item.attr('href')
+						}
+					);
+				}
 
 				Util.openWindow(config);
 			},

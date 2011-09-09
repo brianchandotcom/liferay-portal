@@ -40,7 +40,6 @@
 		.results-header {
 			background: #F0F5F7;
 			font-weight: bold;
-			margin: 2px 0;
 			padding: 5px 10px;
 			position: relative;
 		}

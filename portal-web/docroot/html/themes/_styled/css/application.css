@@ -28,6 +28,14 @@
 	th {
 		background: #D9D9D9 url(../images/application/subheader_bg.png) 0 0 repeat-x;
 		border: 1px solid #ccc;
+
+		&.first {
+			border-left-width: 0;
+		}
+
+		&.last {
+			border-right-width: 0;
+		}
 	}
 
 	th, td {

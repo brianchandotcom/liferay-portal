@@ -39,6 +39,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.util.portlet.PortletRequestUtil;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -97,18 +98,25 @@ public class DDLUtil {
 			Field field = itr.next();
 
 			String fieldName = field.getName();
-			String fieldValue = String.valueOf(field.getValue());
+			Object fieldValue = field.getValue();
 
-			if (ddmStructure.getFieldDisplayChildLabelAsValue(fieldName)) {
-				Map<String, String> childFields = ddmStructure.getFields(
-					fieldName, FieldConstants.VALUE, fieldValue);
-
-				if (childFields != null) {
-					fieldValue = childFields.get(FieldConstants.LABEL);
-				}
+			if (fieldValue instanceof Date) {
+				jsonObject.put(fieldName, ((Date)fieldValue).getTime());
 			}
+			else {
+				fieldValue = String.valueOf(fieldValue);
 
-			jsonObject.put(fieldName, fieldValue);
+				if (ddmStructure.getFieldDisplayChildLabelAsValue(fieldName)) {
+					Map<String, String> childFields = ddmStructure.getFields(
+							fieldName, FieldConstants.VALUE, (String)fieldValue);
+
+					if (childFields != null) {
+						fieldValue = childFields.get(FieldConstants.LABEL);
+					}
+				}
+
+				jsonObject.put(fieldName, (String)fieldValue);
+			}
 		}
 
 		return jsonObject;

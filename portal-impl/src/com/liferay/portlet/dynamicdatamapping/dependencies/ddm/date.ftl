@@ -5,7 +5,9 @@
 </#if>
 
 <div class="aui-field-wrapper-content lfr-forms-field-wrapper">
-	<@aui.input cssClass=cssClass helpMessage=field.tip label=label name=namespacedFieldName type="text" value=fieldValue>
+	<@aui.input label=label name=namespacedFieldName type="hidden" value=fieldValue />
+
+	<@aui.input cssClass=cssClass helpMessage=field.tip label=label name="${namespacedFieldName}dateFormat" type="text">
 		<@aui.validator name="date" />
 
 		<#if required>
@@ -26,9 +28,14 @@
 					<#if (fieldValue != "")>
 						'${fieldValue}'
 					</#if>
-				]
+				],
+				on: {
+					select: function(event) {
+						A.one('#${portletNamespace}${namespacedFieldName}').val(A.DataType.Date.parse(event.date.formatted).getTime());
+					}
+				},
 			},
-			trigger: '#${portletNamespace}${namespacedFieldName}'
+			trigger: '#${portletNamespace}${namespacedFieldName}dateFormat'
 		}
 	).render();
 </@aui.script>

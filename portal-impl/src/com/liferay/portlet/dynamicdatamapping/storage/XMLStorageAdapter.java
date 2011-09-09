@@ -43,6 +43,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -72,8 +73,14 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 		while (itr.hasNext()) {
 			Field field = itr.next();
 
+			Object value = field.getValue();
+
+			if (value instanceof Date) {
+				value = ((Date)value).getTime();
+			}
+
 			_appendField(
-				rootElement, field.getName(), String.valueOf(field.getValue()));
+				rootElement, field.getName(), String.valueOf(value));
 		}
 
 		DDMContent ddmContent = DDMContentLocalServiceUtil.addContent(

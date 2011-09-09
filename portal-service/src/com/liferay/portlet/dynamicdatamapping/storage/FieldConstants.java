@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.Date;
 
 /**
@@ -71,15 +68,7 @@ public class FieldConstants {
 			return GetterUtil.getBoolean(value);
 		}
 		else if (type.equals(DATE)) {
-			Date date = GetterUtil.getDate(
-				value, _getDateFormat("MM/dd/yyyy"), null);
-
-			if (date == null) {
-				date = GetterUtil.getDate(
-					value, _getDateFormat("EEE MMM dd HH:mm:ss zzz yyyy"));
-			}
-
-			return date;
+			return new Date(GetterUtil.getLong(value));
 		}
 		else if (type.equals(DOUBLE)) {
 			return GetterUtil.getDouble(value);
@@ -99,10 +88,6 @@ public class FieldConstants {
 		else {
 			return value;
 		}
-	}
-
-	private static DateFormat _getDateFormat(String format) {
-		return new SimpleDateFormat(format);
 	}
 
 }

@@ -1124,31 +1124,34 @@
 		'portletTitleEdit',
 		function(options) {
 			var obj = options.obj;
-			var title = obj.one('#portlet_title_text_' + options.portletId);
 
-			if (title && !title.hasClass('not-editable')) {
-				title.setData('portletTitleEditOptions', options);
+			if (obj && !obj.hasClass('portlet-borderless')) {
+				var title = obj.one('.portlet-title-text');
 
-				title.on(
-					'click',
-					function(event) {
-						var editable = Util._getEditableInstance(title);
+				if (title && !title.hasClass('not-editable')) {
+					title.setData('portletTitleEditOptions', options);
 
-						var rendered = editable.get('rendered');
+					title.on(
+						'click',
+						function(event) {
+							var editable = Util._getEditableInstance(title);
 
-						if (rendered) {
-							editable.fire('stopEditing');
+							var rendered = editable.get('rendered');
+
+							if (rendered) {
+								editable.fire('stopEditing');
+							}
+
+							editable.set('node', event.currentTarget);
+
+							if (rendered) {
+								editable.syncUI();
+							}
+
+							editable._startEditing(event);
 						}
-
-						editable.set('node', event.currentTarget);
-
-						if (rendered) {
-							editable.syncUI();
-						}
-
-						editable._startEditing(event);
-					}
-				);
+					);
+				}
 			}
 		},
 		['aui-editable']

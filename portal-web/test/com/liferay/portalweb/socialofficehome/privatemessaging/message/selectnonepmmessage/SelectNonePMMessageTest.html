@@ -1,0 +1,174 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SelectNonePMMessageTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SelectNonePMMessageTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[2]/div[1]/ul/li[4]/a</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/div[1]/ul/li[4]/a</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span[2]</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/div[1]/div/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Message3 Subject<br /> Message3 Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[3]/div[1]/div/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/a</td>
+	<td>Message2 Subject<br /> Message2 Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[3]/div[1]/div/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[4]/a</td>
+	<td>Message Subject<br /> Message Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[2]/div/div</td>
+	<td>Showing 3 results.</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//td[1]/span/span/span/input[2]</td>
+	<td>Message</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('//td[1]/span/span/span/input[2]'))</td>
+	<td>message1Checked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${message1Checked}</td>
+	<td>Message1Checked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[1]/span/span/span/input[2]</td>
+	<td>Uncheck</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Message1Checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//tr[4]/td[1]/span/span/span/input[2]</td>
+	<td>Message</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('//tr[4]/td[1]/span/span/span/input[2]'))</td>
+	<td>message2Checked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${message2Checked}</td>
+	<td>Message2Checked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//tr[4]/td[1]/span/span/span/input[2]</td>
+	<td>Uncheck</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Message2Checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//tr[5]/td[1]/span/span/span/input[2]</td>
+	<td>Message</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('//tr[5]/td[1]/span/span/span/input[2]'))</td>
+	<td>message3Checked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${message3Checked}</td>
+	<td>Message3Checked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//tr[5]/td[1]/span/span/span/input[2]</td>
+	<td>Uncheck</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Message3Checked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//td[1]/span/span/span/input[2]</td>
+	<td>Message1</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[4]/td[1]/span/span/span/input[2]</td>
+	<td>Message2</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[5]/td[1]/span/span/span/input[2]</td>
+	<td>Message3</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/span[2]/a</td>
+	<td>None</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div/span[2]/a</td>
+	<td>None</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

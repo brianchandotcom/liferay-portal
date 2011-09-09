@@ -1,0 +1,169 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddPMMessage3Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddPMMessage3Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[2]/div[1]/ul/li[4]/a</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/div[1]/ul/li[4]/a</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span[2]</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/div[1]/div/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Message2 Subject<br /> Message2 Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[3]/div[1]/div/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/a</td>
+	<td>Message Subject<br /> Message Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[2]/div/div</td>
+	<td>Showing 2 results.</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@value='New Message']</td>
+	<td>New Message</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='New Message']</td>
+	<td>New Message</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[2]/span/button</td>
+	<td>Dropdown</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[2]/span/button</td>
+	<td>Dropdown</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[8]/div/div/ul/li[1]</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[8]/div/div/ul/li[1]</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//span/input</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln <socialofficefriendsn>,</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[1]/span/span/input</td>
+	<td>Subject</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//span[1]/span/span/input</td>
+	<td>Message3 Subject</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//textarea</td>
+	<td>Message</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea</td>
+	<td>Message3 Body</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Send']</td>
+	<td>Send</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/div[1]/div/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Message3 Subject<br /> Message3 Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[3]/div[1]/div/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]/a</td>
+	<td>Message2 Subject<br /> Message2 Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[3]/div[1]/div/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[4]/a</td>
+	<td>Message Subject<br /> Message Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[2]/div/div</td>
+	<td>Showing 3 results.</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

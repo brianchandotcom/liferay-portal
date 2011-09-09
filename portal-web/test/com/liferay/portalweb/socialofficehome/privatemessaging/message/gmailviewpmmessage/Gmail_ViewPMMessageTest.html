@@ -1,0 +1,244 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Gmail_ViewPMMessageTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Gmail_ViewPMMessageTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>openWindow</td>
+	<td>http://www.gmail.com/</td>
+	<td>gmail</td>
+</tr>
+<tr>
+	<td>waitForPopUp</td>
+	<td>gmail</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>gmail</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>60000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//div[2]/div/nobr/a[2]'))</td>
+	<td>signedIn1</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signedIn1}</td>
+	<td>signedOut1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/nobr/a[2]</td>
+	<td>Sign out</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[2]/div/nobr/a[2]</td>
+	<td>Sign out</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>signedOut1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
+	<td>signedIn2</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signedIn2}</td>
+	<td>signedOut2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/a</td>
+	<td>Sign out</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td/a</td>
+	<td>Sign out</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>signedOut2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='Email']</td>
+	<td>Username:</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='Email']</td>
+	<td>liferay.qa.testing.trunk</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='Passwd']</td>
+	<td>loveispatient</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('PersistentCookie'))</td>
+	<td>staySignedInChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${staySignedInChecked}</td>
+	<td>StaySignedInChecked</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='PersistentCookie']</td>
+	<td>Stay signed in</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='PersistentCookie']</td>
+	<td>Stay signed in</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>StaySignedInChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='PersistentCookie']</td>
+	<td>Stay signed in</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@id='signIn']</td>
+	<td>Sign In</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPartialText</td>
+	<td>//td[3]/div/span</td>
+	<td>liferay.qa</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//td[3]/div/span</td>
+	<td>liferay.qa</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[3]/div/span</td>
+	<td>liferay.qa</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//h1/span[1]</td>
+	<td>Joe Bloggs sent you a message on Liferay</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[5]/div/div/div/div[3]</td>
+	<td>Message Subject <br /> Message Body</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//div[2]/div[2]/div/nobr/a[2]'))</td>
+	<td>signedIn3</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signedIn3}</td>
+	<td>signedOut3</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[2]/div/nobr/a[2]</td>
+	<td>Sign out</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[2]/div[2]/div/nobr/a[2]</td>
+	<td>Sign out</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>signedOut3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//span[2]/span/span[1]'))</td>
+	<td>signedIn4</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signedIn4}</td>
+	<td>signedOut4</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[2]/span/span[1]</td>
+	<td>liferay.qa.testing.trunk@gmail.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Sign out</td>
+	<td>Sign out</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Sign out</td>
+	<td>Sign out</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>signedOut4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>close</td>
+	<td>gmail</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

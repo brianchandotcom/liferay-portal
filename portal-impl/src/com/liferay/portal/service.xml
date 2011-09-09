@@ -486,6 +486,7 @@
 		<column name="priority" type="int" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
+		<column name="templateLayoutUuid" type="String" />
 
 		<!-- Order -->
 

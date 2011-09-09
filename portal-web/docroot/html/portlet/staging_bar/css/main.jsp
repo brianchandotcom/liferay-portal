@@ -39,7 +39,6 @@
 		.aui-tab, .aui-tab-content {
 			background: none;
 			border-width: 0;
-			box-shadow: none;
 		}
 
 		.aui-tab-active .aui-tab-content {
@@ -53,10 +52,7 @@
 
 	.site-variations-tabview-list {
 		background-image: none;
-		background-color: #666;
-		-moz-box-shadow: 0px 10px 15px #333 inset, 1px 3px 8px #333;
-		-webkit-box-shadow: 0px 10px 15px #333 inset, 1px 3px 8px #333;
-		box-shadow: 0px 10px 15px #333 inset, 1px 3px 8px #333;
+		background-color: #999;
 		border-width: 0;
 		font-size: 1.2em;
 		margin-bottom: 0;
@@ -64,24 +60,14 @@
 		.aui-tab, .aui-tab-content {
 			background: none;
 			border-width: 0;
-			-moz-box-shadow: none;
-			-webkit-box-shadow: none;
-			box-shadow: none;
-			-moz-border-radius: 0;
-			-webkit-border-radius: 0;
-			border-radius: 0;
 
-			.aui-tab-label {
-				padding: 8px 10px 2px;
+			.aui-tab-label a {
+				color: #DDD;
+				text-shadow: none;
+				text-decoration: underline;
 
-				a {
-					color: #BBB;
-					text-shadow: none;
-					text-decoration: underline;
-
-					&:hover {
-						text-decoration: none;
-					}
+				&:hover {
+					text-decoration: none;
 				}
 			}
 		}
@@ -140,10 +126,9 @@
 
 			a {
 				background-image: url(<%= themeImagesPath %>/arrows/06_down.png);
-				background-position: 0% 4px;
+				background-position: 0 4px;
 				padding: 0 5px;
-				opacity: .5;
-				filter: alpha(opacity=50);
+				opacity: 0.5;
 			}
 		}
 	}
@@ -151,8 +136,9 @@
 	.aui-tab-active {
 		.layoutset-branches-menu.lfr-actions {
 			li .taglib-text {
-				color: #FFFFFF;
+				color: #FFF;
 			}
+
 			.lfr-trigger strong {
 				padding: 0;
 				text-shadow: 1px 1px #000;
@@ -161,7 +147,6 @@
 
 		.staging-icon-menu.lfr-actions .lfr-trigger strong a {
 			opacity: 1;
-			filter: alpha(opacity=100);
 		}
 	}
 
@@ -230,11 +215,7 @@
 						color: #EEE;
 					}
 
-					.layout-actions {
-						float: left;
-					}
-
-					.layout-revision-details {
+					.layout-actions, .layout-revision-details {
 						float: left;
 					}
 
@@ -326,6 +307,18 @@
 				float: left;
 				padding-left: 1em;
 			}
+		}
+	}
+}
+
+.ie6, .ie7 {
+	.portlet-staging-bar {
+		.staging-icon-menu-container .staging-icon-menu.lfr-actions .lfr-trigger strong a {
+		  filter: alpha(opacity=50);
+		}
+
+		.aui-tab-active .staging-icon-menu.lfr-actions .lfr-trigger strong a {
+		  filter: alpha(opacity=100);
 		}
 	}
 }

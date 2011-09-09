@@ -7,7 +7,7 @@
 <section class="portlet" id="portlet_$portlet_id">
 	<header class="portlet-topper">
 		<h1 class="portlet-title">
-			$theme.iconPortlet() <span class="portlet-title-text">$portlet_title</span>
+			$theme.iconPortlet() <span id="portlet_title_text_$portlet_id" class="portlet-title-text">$portlet_title</span>
 		</h1>
 
 		<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_$portlet_id" type="toolbar">

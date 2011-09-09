@@ -1124,7 +1124,7 @@
 		'portletTitleEdit',
 		function(options) {
 			var obj = options.obj;
-			var title = obj.one('.portlet-title-text');
+			var title = obj.one('#portlet_title_text_' + options.portletId);
 
 			if (title && !title.hasClass('not-editable')) {
 				title.setData('portletTitleEditOptions', options);

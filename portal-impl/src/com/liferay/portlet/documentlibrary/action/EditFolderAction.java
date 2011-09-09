@@ -16,11 +16,15 @@ package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SortedArrayList;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -29,7 +33,11 @@ import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -65,6 +73,9 @@ public class EditFolderAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.MOVE)) {
 				moveFolders(actionRequest);
+			}
+			else if (cmd.equals("set-root-workflow-definition-link")) {
+				setRootWorkflowDefinitionLink(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -128,11 +139,11 @@ public class EditFolderAction extends PortletAction {
 			long[] folderIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-			for (int i = 0; i < folderIds.length; i++) {
-				DLAppServiceUtil.deleteFolder(folderIds[i]);
+			for (long curFolderId : folderIds) {
+				DLAppServiceUtil.deleteFolder(curFolderId);
 
 				AssetPublisherUtil.removeRecentFolderId(
-					actionRequest, DLFileEntry.class.getName(), folderIds[i]);
+					actionRequest, DLFileEntry.class.getName(), curFolderId);
 			}
 		}
 	}
@@ -154,11 +165,56 @@ public class EditFolderAction extends PortletAction {
 			long[] folderIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-			for (int i = 0; i < folderIds.length; i++) {
+			for (long curFolderId : folderIds) {
 				DLAppServiceUtil.moveFolder(
-					folderIds[i], parentFolderId, serviceContext);
+					curFolderId, parentFolderId, serviceContext);
 			}
 		}
+	}
+
+	protected void setRootWorkflowDefinitionLink(ActionRequest actionRequest)
+		throws Exception {
+
+		String value = ParamUtil.getString(
+			actionRequest, "fileEntryTypeSearchContainerPrimaryKeys");
+
+		SortedArrayList<Long> fileEntryTypeIds = new SortedArrayList<Long>();
+
+		long[] longArray = StringUtil.split(value, 0L);
+
+		for (long longValue : longArray) {
+			fileEntryTypeIds.add(longValue);
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), actionRequest);
+
+		List<ObjectValuePair<Long, String>> workflowDefinitions =
+			new ArrayList<ObjectValuePair<Long, String>>();
+
+		if (fileEntryTypeIds.isEmpty()) {
+			fileEntryTypeIds.add(new Long(0));
+		}
+		else {
+			workflowDefinitions.add(
+				new ObjectValuePair<Long, String>(
+					new Long(0), StringPool.BLANK));
+		}
+
+		for (long fileEntryTypeId : fileEntryTypeIds) {
+			String workflowDefinition = ParamUtil.getString(
+				serviceContext, "workflowDefinition" + fileEntryTypeId);
+
+			workflowDefinitions.add(
+				new ObjectValuePair<Long, String>(
+					fileEntryTypeId, workflowDefinition));
+		}
+
+		WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLinks(
+			serviceContext.getUserId(), serviceContext.getCompanyId(),
+			serviceContext.getScopeGroupId(), DLFolder.class.getName(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			workflowDefinitions);
 	}
 
 	protected void updateFolder(ActionRequest actionRequest) throws Exception {

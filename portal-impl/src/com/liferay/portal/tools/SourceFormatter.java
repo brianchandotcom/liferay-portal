@@ -1850,6 +1850,7 @@ public class SourceFormatter {
 
 		if (fileName.endsWith("html/common/init.jsp") ||
 			fileName.endsWith("html/portal/init.jsp") ||
+			fileName.endsWith("init-ext.jsp") ||
 			!fileName.contains("docroot")) {
 
 			return content;

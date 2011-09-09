@@ -50,7 +50,7 @@ public class AddMBCategoryNameUtf8Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_19_name']",
-			RuntimeVariables.replace("MB Cate'gory Name"));
+			RuntimeVariables.replace("MB Cat\u00e8gory Name"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -59,7 +59,7 @@ public class AddMBCategoryNameUtf8Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("MB Cate'gory Name"),
+		assertEquals(RuntimeVariables.replace("MB Cat\u00e8gory Name"),
 			selenium.getText("//a/strong"));
 	}
 }

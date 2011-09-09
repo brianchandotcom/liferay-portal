@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards.message.addsubcategorymessagebodynull;
+package com.liferay.portalweb.portlet.messageboards.message.addcategorymessageutf8;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddSubcategoryTest extends BaseTestCase {
-	public void testAddSubcategory() throws Exception {
+public class AddPortletMBTest extends BaseTestCase {
+	public void testAddPortletMB() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -45,29 +45,49 @@ public class AddSubcategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//td[1]/a/strong"));
-		selenium.clickAt("//td[1]/a/strong",
-			RuntimeVariables.replace("MB Category Name"));
-		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//div[@title='Message Boards']/p/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Add Subcategory']",
-			RuntimeVariables.replace("Add Subcategory"));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@title='Message Boards']/p/a",
+			RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//section")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_19_name']",
-			RuntimeVariables.replace("MB Subcategory Name"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
-			selenium.getText("//td[1]/a/strong"));
+		assertTrue(selenium.isVisible("//section"));
 	}
 }

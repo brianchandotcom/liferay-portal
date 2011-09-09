@@ -120,6 +120,8 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 				selenium.close();
 				selenium.selectWindow("null");
 				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
+				Thread.sleep(5000);
 				selenium.openWindow("http://groups.google.com/",
 					RuntimeVariables.replace("Google Groups"));
 				selenium.waitForPopUp("Google Groups",

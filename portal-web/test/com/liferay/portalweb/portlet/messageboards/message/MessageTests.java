@@ -22,6 +22,7 @@ import com.liferay.portalweb.portlet.messageboards.message.addcategorymessageque
 import com.liferay.portalweb.portlet.messageboards.message.addcategorymessagereply.AddCategoryMessageReplyTests;
 import com.liferay.portalweb.portlet.messageboards.message.addcategorymessagereplymultiple.AddCategoryMessageReplyMultipleTests;
 import com.liferay.portalweb.portlet.messageboards.message.addcategorymessagesubjectnull.AddCategoryMessageSubjectNullTests;
+import com.liferay.portalweb.portlet.messageboards.message.addcategorymessageutf8.AddCategoryMessageUTF8Tests;
 import com.liferay.portalweb.portlet.messageboards.message.addmessage.AddMessageTests;
 import com.liferay.portalweb.portlet.messageboards.message.addsubcategorymessage.AddSubcategoryMessageTests;
 import com.liferay.portalweb.portlet.messageboards.message.addsubcategorymessagebodynull.AddSubcategoryMessageBodyNullTests;
@@ -69,6 +70,7 @@ public class MessageTests extends BaseTests {
 		testSuite.addTest(AddCategoryMessageReplyTests.suite());
 		testSuite.addTest(AddCategoryMessageReplyMultipleTests.suite());
 		testSuite.addTest(AddCategoryMessageSubjectNullTests.suite());
+		testSuite.addTest(AddCategoryMessageUTF8Tests.suite());
 		testSuite.addTest(AddMessageTests.suite());
 		testSuite.addTest(AddSubcategoryMessageTests.suite());
 		testSuite.addTest(AddSubcategoryMessageBodyNullTests.suite());

@@ -64,9 +64,9 @@ public class AddSubcategory2Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//div[4]/h1/span"));
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("MB Subcategory1 Name"),
 			selenium.getText("//tr[3]/td[1]/a/strong"));
 		assertEquals(RuntimeVariables.replace("MB Subcategory2 Name"),

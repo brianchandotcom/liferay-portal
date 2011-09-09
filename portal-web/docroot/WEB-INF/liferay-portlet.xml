@@ -1678,6 +1678,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/sites_admin/css/main.jsp</header-portlet-css>
 		<css-class-wrapper>portlet-site-settings</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>

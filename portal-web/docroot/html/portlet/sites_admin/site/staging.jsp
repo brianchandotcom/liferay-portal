@@ -33,7 +33,7 @@ UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribut
 			<liferay-ui:message key="<%= se.getMessage() %>" />
 		</liferay-ui:error>
 
-		<div class="portlet-msg-info">
+		<liferay-util:buffer var="stagingTypeHelp">
 			<liferay-ui:message key="staging-type-help-1" />
 
 			<ul>
@@ -44,15 +44,15 @@ UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribut
 					<liferay-ui:message key="staging-type-help-3" />
 				</li>
 			</ul>
-		</div>
+		</liferay-util:buffer>
 
-		<aui:select label="staging-type" name="stagingType">
+		<aui:select helpMessage="<%= stagingTypeHelp %>" label="staging-type" name="stagingType">
 			<aui:option selected="<%= !liveGroup.isStaged() %>" value="<%= StagingConstants.TYPE_NOT_STAGED %>"><liferay-ui:message key="none" /></aui:option>
 			<aui:option selected="<%= liveGroup.isStaged() && !liveGroup.isStagedRemotely() %>" value="<%= StagingConstants.TYPE_LOCAL_STAGING %>"><liferay-ui:message key="local-live" /></aui:option>
 			<aui:option selected="<%= liveGroup.isStaged() && liveGroup.isStagedRemotely() %>" value="<%= StagingConstants.TYPE_REMOTE_STAGING %>"><liferay-ui:message key="remote-live" /></aui:option>
 		</aui:select>
 
-		<div class='<%= (liveGroup.isStaged() && liveGroup.isStagedRemotely() ? StringPool.BLANK : "aui-helper-hidden") %>' id="<portlet:namespace />remoteStagingOptions">
+		<div class="<%= (liveGroup.isStaged() && liveGroup.isStagedRemotely() ? StringPool.BLANK : "aui-helper-hidden") %> staging-section" id="<portlet:namespace />remoteStagingOptions">
 			<br />
 
 			<liferay-ui:error exception="<%= RemoteExportException.class %>">
@@ -104,7 +104,7 @@ UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribut
 			</aui:fieldset>
 		</div>
 
-		<div class='<%= (liveGroup.isStaged() ? StringPool.BLANK : "aui-helper-hidden") %>' id="<portlet:namespace />stagedPortlets">
+		<div class="<%= (liveGroup.isStaged() ? StringPool.BLANK : "aui-helper-hidden") %> staging-section" id="<portlet:namespace />stagedPortlets">
 			<br />
 
 			<aui:fieldset helpMessage="page-versioning-help" label="page-versioning">

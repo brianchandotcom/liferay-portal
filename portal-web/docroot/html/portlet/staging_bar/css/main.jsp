@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-staging-bar {
-	.aui-tabview-list {
+	.staging-tabview-list {
 		a, .taglib-text {
 			text-decoration: none
 		}
@@ -33,7 +33,7 @@
 
 	.staging-tabview-list {
 		border-width: 0;
-		font-size: 1.2em;
+		font-size: 1.3em;
 		margin-bottom: 0;
 
 		.aui-tab, .aui-tab-content {
@@ -50,9 +50,65 @@
 		}
 	}
 
+	.site-variations-tabview-list {
+		background-image: none;
+		background-color: #999;
+		border-width: 0;
+		font-size: 1.2em;
+		margin-bottom: 0;
+
+		.aui-tab, .aui-tab-content {
+			background: none;
+			border-width: 0;
+
+			.aui-tab-label a {
+				color: #DDD;
+				text-shadow: none;
+				text-decoration: underline;
+
+				&:hover {
+					text-decoration: none;
+				}
+			}
+		}
+
+		.aui-tab-active .aui-tab-content {
+			.aui-tab-label {
+				color: #FFF;
+				font-weight: bold;
+				text-shadow: -1px -1px 0 #333;
+			}
+		}
+
+		.manage-layout-set-branches-tab .manage-layout-set-branches a {
+			border-left: 1px solid #999;
+			color: #DDD;
+			font-size: 0.9em;
+			margin-left: 10px;
+			padding-left: 10px;
+			text-decoration: none;
+
+			.taglib-text {
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.go-to-layout-set-branches-tab .lfr-trigger strong a {
+			background-image: url(<%= themeImagesPath %>/arrows/06_down.png);
+			text-decoration: none;
+
+			.taglib-text{
+				color: #EEE;
+			}
+		}
+	}
+
 	.staging-icon-menu-container {
 		display: inline-block;
-		left: 5px;
 		margin-top: -0.1em;
 		overflow: hidden;
 		position: relative;
@@ -69,10 +125,10 @@
 			padding: 0;
 
 			a {
-				background-color: #555;
 				background-image: url(<%= themeImagesPath %>/arrows/06_down.png);
-				background-position: 50% 4px;
-				padding: 0 14px 0 0;
+				background-position: 0 4px;
+				padding: 0 5px;
+				opacity: 0.5;
 			}
 		}
 	}
@@ -80,8 +136,9 @@
 	.aui-tab-active {
 		.layoutset-branches-menu.lfr-actions {
 			li .taglib-text {
-				color: #FFFFFF;
+				color: #FFF;
 			}
+
 			.lfr-trigger strong {
 				padding: 0;
 				text-shadow: 1px 1px #000;
@@ -89,8 +146,7 @@
 		}
 
 		.staging-icon-menu.lfr-actions .lfr-trigger strong a {
-			background-color: #EEE;
-			background-image: url(<%= themeImagesPath %>/arrows/05_down.png);
+			opacity: 1;
 		}
 	}
 
@@ -159,15 +215,7 @@
 						color: #EEE;
 					}
 
-					.layout-actions:after {
-						clear: both;
-						content: ".";
-						display: block;
-						height: 0;
-						visibility: hidden;
-					}
-
-					.layout-revision-details {
+					.layout-actions, .layout-revision-details {
 						float: left;
 					}
 
@@ -259,6 +307,18 @@
 				float: left;
 				padding-left: 1em;
 			}
+		}
+	}
+}
+
+.ie6, .ie7 {
+	.portlet-staging-bar {
+		.staging-icon-menu-container .staging-icon-menu.lfr-actions .lfr-trigger strong a {
+		  filter: alpha(opacity=50);
+		}
+
+		.aui-tab-active .staging-icon-menu.lfr-actions .lfr-trigger strong a {
+		  filter: alpha(opacity=100);
 		}
 	}
 }

@@ -273,6 +273,82 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance addRuleGroupInstance(
+		long groupId, java.lang.String className, long classPK,
+		long ruleGroupId, int priority,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addRuleGroupInstance(groupId, className, classPK,
+			ruleGroupId, priority, serviceContext);
+	}
+
+	public static void deleteRuleGroupInstance(long ruleGroupInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRuleGroupInstance(ruleGroupInstanceId);
+	}
+
+	public static void deleteRuleGroupInstance(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance ruleGroupInstance)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRuleGroupInstance(ruleGroupInstance);
+	}
+
+	public static void deleteRuleGroupInstances(long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRuleGroupInstances(ruleGroupId);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRuleGroupInstances(className, classPK);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getSortedRuleGroupInstances(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSortedRuleGroupInstances(className, classPK);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
+		java.lang.String className, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRuleGroupInstances(className, classPK, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
+		long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRuleGroupInstances(ruleGroupId);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
+		long ruleGroupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRuleGroupInstances(ruleGroupId, start, end);
+	}
+
+	public static int getRuleGroupInstancesCount(java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRuleGroupInstancesCount(className, classPK);
+	}
+
+	public static int getRuleGroupInstancesCount(long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRuleGroupInstancesCount(ruleGroupId);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance updateRuleGroupInstance(
+		long ruleGroupInstanceId, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateRuleGroupInstance(ruleGroupInstanceId, priority);
+	}
+
 	public static MDRRuleGroupInstanceLocalService getService() {
 		if (_service == null) {
 			_service = (MDRRuleGroupInstanceLocalService)PortalBeanLocatorUtil.locate(MDRRuleGroupInstanceLocalService.class.getName());

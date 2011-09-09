@@ -139,7 +139,5 @@ public class AddDLDocumentTest extends BaseTestCase {
 			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Download (0.5k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		assertEquals(RuntimeVariables.replace("0.5k"),
-			selenium.getText("//td[4]/a"));
 	}
 }

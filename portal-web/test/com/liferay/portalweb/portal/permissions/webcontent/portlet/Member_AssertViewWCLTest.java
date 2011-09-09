@@ -30,7 +30,8 @@ public class Member_AssertViewWCLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Web Content List Test Page")) {
+				if (selenium.isElementPresent(
+							"link=Web Content List Permissions Page")) {
 					break;
 				}
 			}
@@ -41,8 +42,8 @@ public class Member_AssertViewWCLTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content List Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Web Content List Permissions Page",
+			RuntimeVariables.replace("Web Content List Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(

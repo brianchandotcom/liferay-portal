@@ -17,8 +17,6 @@ package com.liferay.portalweb.portal.permissions.webcontent;
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.permissions.webcontent.assertactions.AssertActionsTests;
 import com.liferay.portalweb.portal.permissions.webcontent.portlet.PortletTests;
-import com.liferay.portalweb.portal.permissions.webcontent.setup.SetupTests;
-import com.liferay.portalweb.portal.permissions.webcontent.teardown.TearDownTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,11 +29,8 @@ public class WebContentTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(SetupTests.suite());
-		testSuite.addTest(AssertActionsTests.suite());
+//		testSuite.addTest(AssertActionsTests.suite());
 		testSuite.addTest(PortletTests.suite());
-		//testSuite.addTest(WorkFlowTests.suite());
-		testSuite.addTest(TearDownTests.suite());
 
 		return testSuite;
 	}

@@ -425,7 +425,7 @@ public class SourceFormatter {
 				x = 0;
 			}
 			else {
-				x = x + 5;
+				x = x + 4;
 			}
 		}
 		else if (fileName.endsWith("-hook/build.xml")) {

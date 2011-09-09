@@ -219,6 +219,33 @@ public class UserNotificationEventWrapper implements UserNotificationEvent {
 		_userNotificationEvent.setPayload(payload);
 	}
 
+	/**
+	* Returns the archived of this user notification event.
+	*
+	* @return the archived of this user notification event
+	*/
+	public boolean getArchived() {
+		return _userNotificationEvent.getArchived();
+	}
+
+	/**
+	* Returns <code>true</code> if this user notification event is archived.
+	*
+	* @return <code>true</code> if this user notification event is archived; <code>false</code> otherwise
+	*/
+	public boolean isArchived() {
+		return _userNotificationEvent.isArchived();
+	}
+
+	/**
+	* Sets whether this user notification event is archived.
+	*
+	* @param archived the archived of this user notification event
+	*/
+	public void setArchived(boolean archived) {
+		_userNotificationEvent.setArchived(archived);
+	}
+
 	public boolean isNew() {
 		return _userNotificationEvent.isNew();
 	}

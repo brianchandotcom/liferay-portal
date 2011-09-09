@@ -523,7 +523,8 @@ create table UserNotificationEvent (
 	type_ VARCHAR(75) null,
 	timestamp LONG,
 	deliverBy LONG,
-	payload TEXT null
+	payload TEXT null,
+	archived BOOLEAN
 );
 
 create table VirtualHost (

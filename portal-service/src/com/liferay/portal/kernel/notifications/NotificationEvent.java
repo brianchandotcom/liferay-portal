@@ -70,6 +70,10 @@ public class NotificationEvent implements Serializable {
 	}
 
 	public String getUuid() {
+		if (_uuid == null) {
+			_uuid = PortalUUIDUtil.generate();
+		}
+
 		return _uuid;
 	}
 
@@ -83,16 +87,25 @@ public class NotificationEvent implements Serializable {
 		}
 	}
 
+	public boolean isArchived() {
+		return _archived;
+	}
+
 	public boolean isDeliveryRequired() {
 		return _deliveryRequired;
+	}
+
+	public void setArchived(boolean archived) {
+		_archived = archived;
 	}
 
 	public void setDeliverBy(long deliverBy)
 		throws IllegalArgumentException {
 
-		if ((deliverBy <= 0) && _deliveryRequired) {
+		if ((deliverBy < 0) && _deliveryRequired) {
 			throw new IllegalArgumentException(
-				"Deliver by must be greater than 0 if delivery is required");
+				"Deliver by must be greater than or equal to 0 " +
+				"if delivery is required");
 		}
 
 		_deliverBy = deliverBy;
@@ -101,9 +114,10 @@ public class NotificationEvent implements Serializable {
 	public void setDeliveryRequired(long deliverBy)
 		throws IllegalArgumentException {
 
-		if (deliverBy <= 0) {
+		if (deliverBy < 0) {
 			throw new IllegalArgumentException(
-				"Deliver by must be greater than 0 if delivery is required");
+				"Deliver by must be greater than or equal to 0 " +
+				"if delivery is required");
 		}
 
 		_deliverBy = deliverBy;
@@ -112,6 +126,10 @@ public class NotificationEvent implements Serializable {
 
 	public void setTimestamp(long timestamp) {
 		_timestamp = timestamp;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public JSONObject toJSONObject() {
@@ -136,11 +154,12 @@ public class NotificationEvent implements Serializable {
 
 	private static final String _KEY_UUID = "uuid";
 
+	private boolean _archived = false;
 	private long _deliverBy;
 	private boolean _deliveryRequired;
 	private JSONObject _payloadJSONObject;
 	private long _timestamp;
 	private String _type;
-	private String _uuid = PortalUUIDUtil.generate();
+	private String _uuid;
 
 }

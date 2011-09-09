@@ -737,6 +737,7 @@ create index IX_E60EA987 on UserIdMapper (userId);
 create unique index IX_D1C44A6E on UserIdMapper (userId, type_);
 
 create index IX_3E5D78C4 on UserNotificationEvent (userId);
+create index IX_3DBB361A on UserNotificationEvent (userId, archived);
 create index IX_ECD8CFEA on UserNotificationEvent (uuid_);
 
 create index IX_29BA1CF5 on UserTracker (companyId);

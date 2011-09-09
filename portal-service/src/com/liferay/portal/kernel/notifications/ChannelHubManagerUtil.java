@@ -30,6 +30,15 @@ public class ChannelHubManagerUtil {
 			companyId, userId, notificationEventUuid);
 	}
 
+	public static void confirmDelivery(
+			long companyId, long userId, String notificationEventUuid,
+			boolean archived)
+		throws ChannelException {
+
+		getChannelHubManager().confirmDelivery(
+			companyId, userId, notificationEventUuid, archived);
+	}
+
 	public static Channel createChannel(long companyId, long userId)
 		throws ChannelException {
 
@@ -52,6 +61,17 @@ public class ChannelHubManagerUtil {
 		throws ChannelException {
 
 		getChannelHubManager().destroyChannelHub(companyId);
+	}
+
+	public ChannelHub fetchChannelHub(long companyId) throws ChannelException {
+		return getChannelHubManager().fetchChannelHub(companyId);
+	}
+
+	public ChannelHub fetchChannelHub(long companyId, boolean createIfAbsent)
+		throws ChannelException {
+
+		return getChannelHubManager().fetchChannelHub(
+			companyId, createIfAbsent);
 	}
 
 	public static void flush() throws ChannelException {

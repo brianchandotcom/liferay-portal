@@ -1134,6 +1134,7 @@
 			<basic name="timestamp" />
 			<basic name="deliverBy" />
 			<basic name="payload" />
+			<basic name="archived" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />

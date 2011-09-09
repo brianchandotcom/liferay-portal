@@ -29,7 +29,7 @@ import com.liferay.portal.model.UserNotificationEvent;
 public class UserNotificationEventCacheModel implements CacheModel<UserNotificationEvent> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -47,6 +47,8 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		sb.append(deliverBy);
 		sb.append(", payload=");
 		sb.append(payload);
+		sb.append(", archived=");
+		sb.append(archived);
 		sb.append("}");
 
 		return sb.toString();
@@ -83,6 +85,8 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 			userNotificationEventImpl.setPayload(payload);
 		}
 
+		userNotificationEventImpl.setArchived(archived);
+
 		userNotificationEventImpl.resetOriginalValues();
 
 		return userNotificationEventImpl;
@@ -96,4 +100,5 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	public long timestamp;
 	public long deliverBy;
 	public String payload;
+	public boolean archived;
 }

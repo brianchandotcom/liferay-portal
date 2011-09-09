@@ -81,49 +81,49 @@ public class Duration implements Cloneable, Serializable {
 	/**
 	 * Field SECONDS_PER_MINUTE
 	 */
-	private final static int SECONDS_PER_MINUTE = 60;
+	private static final int SECONDS_PER_MINUTE = 60;
 
 	/**
 	 * Field MINUTES_PER_HOUR
 	 */
-	private final static int MINUTES_PER_HOUR = 60;
+	private static final int MINUTES_PER_HOUR = 60;
 
 	/**
 	 * Field HOURS_PER_DAY
 	 */
-	private final static int HOURS_PER_DAY = 24;
+	private static final int HOURS_PER_DAY = 24;
 
 	/**
 	 * Field DAYS_PER_WEEK
 	 */
-	private final static int DAYS_PER_WEEK = 7;
+	private static final int DAYS_PER_WEEK = 7;
 
 	/**
 	 * Field MILLIS_PER_SECOND
 	 */
-	private final static int MILLIS_PER_SECOND = 1000;
+	private static final long MILLIS_PER_SECOND = 1000;
 
 	/**
 	 * Field MILLIS_PER_MINUTE
 	 */
-	private final static int MILLIS_PER_MINUTE = SECONDS_PER_MINUTE
+	private static final long MILLIS_PER_MINUTE = SECONDS_PER_MINUTE
 												 * MILLIS_PER_SECOND;
 
 	/**
 	 * Field MILLIS_PER_HOUR
 	 */
-	private final static int MILLIS_PER_HOUR = MINUTES_PER_HOUR
+	private static final long MILLIS_PER_HOUR = MINUTES_PER_HOUR
 											   * MILLIS_PER_MINUTE;
 
 	/**
 	 * Field MILLIS_PER_DAY
 	 */
-	private final static int MILLIS_PER_DAY = HOURS_PER_DAY * MILLIS_PER_HOUR;
+	private static final long MILLIS_PER_DAY = HOURS_PER_DAY * MILLIS_PER_HOUR;
 
 	/**
 	 * Field MILLIS_PER_WEEK
 	 */
-	private final static int MILLIS_PER_WEEK = DAYS_PER_WEEK * MILLIS_PER_DAY;
+	private static final long MILLIS_PER_WEEK = DAYS_PER_WEEK * MILLIS_PER_DAY;
 
 	/**
 	 * Constructor Duration

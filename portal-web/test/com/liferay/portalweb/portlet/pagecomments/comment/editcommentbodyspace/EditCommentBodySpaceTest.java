@@ -124,5 +124,7 @@ public class EditCommentBodySpaceTest extends BaseTestCase {
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("PC Comment"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

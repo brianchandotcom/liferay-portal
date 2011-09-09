@@ -81,6 +81,6 @@ public class DeleteCommentReplyTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent("This is a test reply comment."));
+		assertFalse(selenium.isTextPresent("PC Comment Reply"));
 	}
 }

@@ -45,7 +45,9 @@ public class AddCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Be the first.",
+		assertEquals(RuntimeVariables.replace("Be the first."),
+			selenium.getText("//fieldset/div/a"));
+		selenium.clickAt("//fieldset/div/a",
 			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {

@@ -888,8 +888,8 @@ public class Recurrence implements Serializable {
 		// Calculate the "week epoch" -- the weekstart day closest to January 1,
 		// 1970 (which was a Thursday)
 
-		long weekEpoch = (tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24
-						 * 60 * 60 * 1000L;
+		long weekEpoch = (tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24L
+						 * 60 * 60 * 1000;
 
 		return (tempCal.getTime().getTime() - weekEpoch)
 			   / (7 * 24 * 60 * 60 * 1000);
@@ -901,7 +901,7 @@ public class Recurrence implements Serializable {
 	 * @return long
 	 */
 	protected static long getMonthNumber(Calendar cal) {
-		return (cal.get(Calendar.YEAR) - 1970) * 12
+		return (cal.get(Calendar.YEAR) - 1970) * 12L
 			   + (cal.get(Calendar.MONTH) - Calendar.JANUARY);
 	}
 

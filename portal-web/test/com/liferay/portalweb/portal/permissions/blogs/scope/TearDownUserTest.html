@@ -29,62 +29,22 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
 	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basic1Visible</td>
+	<td>eval(selenium.isElementPresent('//form/div[2]/div/div/div/div/div[2]'))</td>
+	<td>usersPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${basic1Visible}</td>
-	<td>Basic1NotVisible</td>
+	<td>!${usersPresent}</td>
+	<td>UsersNotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td>« Basic</td>
+	<td>//div[@id='usersAdminUsersPanel']/div[2]/div/div/table/tbody/tr/th/input</td>
+	<td>Select All</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Basic1NotVisible</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>scope@liferay.com</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
+	<td>click</td>
 	<td>//input[@value='Deactivate']</td>
 	<td>Deactivate</td>
 </tr>
@@ -94,29 +54,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>label</td>
+	<td>UsersNotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=View All Users</td>
+	<td>View All Users</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=Advanced »'))</td>
+	<td>advancedVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${advancedVisible}</td>
+	<td>AdvancedNotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
-	<td>Advanced »</td>
+	<td>Advanced</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AdvancedNotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -130,28 +105,23 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/div[2]/div[2]/div/table/tbody/tr/th/input</td>
+	<td>//input[@name='_125_allRowIds']</td>
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>

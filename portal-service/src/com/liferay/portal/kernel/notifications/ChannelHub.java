@@ -58,6 +58,12 @@ public interface ChannelHub {
 
 	public Channel destroyChannel(long userId) throws ChannelException;
 
+	public Channel fetchChannel(long userId)
+			throws ChannelException;
+
+	public Channel fetchChannel(long userId, boolean createIfAbsent)
+		throws ChannelException;
+
 	public void flush() throws ChannelException;
 
 	public void flush(long userId) throws ChannelException;

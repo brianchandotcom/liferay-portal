@@ -14,6 +14,7 @@
 
 package com.liferay.portal.notifications;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -144,8 +145,6 @@ public class ChannelImpl extends BaseChannelImpl {
 	public void deleteUserNotificiationEvent (String notificationEventUuid)
 		throws ChannelException {
 
-		_reentrantLock.lock();
-
 		try {
 			UserNotificationEventLocalServiceUtil.
 				deleteUserNotificationEvent(notificationEventUuid);
@@ -155,16 +154,11 @@ public class ChannelImpl extends BaseChannelImpl {
 				"Uanble to delete Notification for " + notificationEventUuid ,
 				e);
 		}
-		finally {
-			_reentrantLock.unlock();
-		}
 	}
 
 	public void deleteUserNotificiationEvents (
 			Collection<String> notificationEventUuids)
 		throws ChannelException {
-
-		_reentrantLock.lock();
 
 		try {
 			UserNotificationEventLocalServiceUtil.
@@ -174,9 +168,6 @@ public class ChannelImpl extends BaseChannelImpl {
 			throw new ChannelException(
 				"Uanble to delete Notifications for user " + getUserId() ,
 				e);
-		}
-		finally {
-			_reentrantLock.unlock();
 		}
 	}
 
@@ -241,10 +232,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		try {
 			doInit();
 		}
-		catch (ChannelException ce) {
-			throw ce;
-		}
-		catch (Exception e) {
+		catch (SystemException e) {
 			throw new ChannelException(
 				"Unable to init channel " + getUserId(), e);
 		}
@@ -478,8 +466,7 @@ public class ChannelImpl extends BaseChannelImpl {
 			if ((isRemoveNotificationEvent(notificationEvent, currentTime)) &&
 				!(notificationEvent.isArchived())) {
 
-				invalidNotificationEventUuids.add(
-					notificationEvent.getUuid());
+				invalidNotificationEventUuids.add(notificationEvent.getUuid());
 
 				itr.remove();
 			}
@@ -498,7 +485,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		return notificationEvents;
 	}
 
-	protected void doInit() throws Exception {
+	protected void doInit() throws SystemException {
 		if (!PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED) {
 			return;
 		}

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.notifications.Channel;
 import com.liferay.portal.kernel.notifications.ChannelException;
 import com.liferay.portal.kernel.notifications.ChannelHub;
 import com.liferay.portal.kernel.notifications.ChannelListener;
-import com.liferay.portal.kernel.notifications.DuplicateChannelException;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.UnknownChannelException;
 import com.liferay.portal.model.CompanyConstants;
@@ -93,11 +92,16 @@ public class ChannelHubImpl implements ChannelHub {
 	}
 
 	public Channel createChannel(long userId) throws ChannelException {
+		if (_channels.containsKey(userId)) {
+			return _channels.get(userId);
+		}
+
 		Channel channel = _channel.clone(_companyId, userId);
 
-		if (_channels.putIfAbsent(userId, channel) != null) {
-			throw new DuplicateChannelException(
-				"Channel already exists with user id " + userId);
+		Channel storedChannel = _channels.putIfAbsent(userId, channel);
+		if (storedChannel != null) {
+			channel.sendNotificationEvents(
+				storedChannel.getNotificationEvents());
 		}
 
 		channel.init();
@@ -147,29 +151,12 @@ public class ChannelHubImpl implements ChannelHub {
 		return channel;
 	}
 
-	public void flush() throws ChannelException {
-		for (Channel channel : _channels.values()) {
-			channel.flush();
-		}
+	public Channel fetchChannel(long userId) throws ChannelException {
+
+		return fetchChannel(userId, false);
 	}
 
-	public void flush(long userId) throws ChannelException {
-		Channel channel = getChannel(userId);
-
-		channel.flush();
-	}
-
-	public void flush(long userId, long timestamp) throws ChannelException {
-		Channel channel = getChannel(userId);
-
-		channel.flush(timestamp);
-	}
-
-	public Channel getChannel(long userId) throws ChannelException {
-		return getChannel(userId, false);
-	}
-
-	public Channel getChannel(long userId, boolean createIfAbsent)
+	public Channel fetchChannel(long userId, boolean createIfAbsent)
 		throws ChannelException {
 
 		Channel channel = _channels.get(userId);
@@ -182,12 +169,47 @@ public class ChannelHubImpl implements ChannelHub {
 					if (createIfAbsent) {
 						channel = createChannel(userId);
 					}
-					else {
-						throw new UnknownChannelException(
-							"No channel exists with user id " + userId);
-					}
 				}
 			}
+		}
+
+		return channel;
+	}
+
+	public void flush() throws ChannelException {
+		for (Channel channel : _channels.values()) {
+			channel.flush();
+		}
+	}
+
+	public void flush(long userId) throws ChannelException {
+		Channel channel = fetchChannel(userId);
+
+		if (channel == null) {
+			channel.flush();
+		}
+	}
+
+	public void flush(long userId, long timestamp) throws ChannelException {
+		Channel channel = fetchChannel(userId);
+
+		if (channel == null) {
+			channel.flush(timestamp);
+		}
+	}
+
+	public Channel getChannel(long userId) throws ChannelException {
+		return getChannel(userId, false);
+	}
+
+	public Channel getChannel(long userId, boolean createIfAbsent)
+		throws ChannelException {
+
+		Channel channel = fetchChannel(userId, createIfAbsent);
+
+		if (channel == null) {
+			throw new UnknownChannelException(
+				"No channel exists with user id " + userId);
 		}
 
 		return channel;
@@ -200,9 +222,7 @@ public class ChannelHubImpl implements ChannelHub {
 	public List<NotificationEvent> getNotificationEvents(long userId)
 		throws ChannelException {
 
-		Channel channel = getChannel(userId);
-
-		return channel.getNotificationEvents();
+		return getNotificationEvents(userId, false);
 	}
 
 	public List<NotificationEvent> getNotificationEvents(
@@ -231,25 +251,30 @@ public class ChannelHubImpl implements ChannelHub {
 			long userId, Collection<NotificationEvent> notificationEvents)
 		throws ChannelException {
 
-		Channel channel = getChannel(userId);
+		Channel channel = fetchChannel(userId);
 
-		channel.removeTransientNotificationEvents(notificationEvents);
+		if (channel != null) {
+			channel.removeTransientNotificationEvents(notificationEvents);
+		}
 	}
 
 	public void removeTransientNotificationEventsByUuid(
 			long userId, Collection<String> notificationEventUuids)
 		throws ChannelException {
 
-		Channel channel = getChannel(userId);
+		Channel channel = fetchChannel(userId);
 
-		channel.removeTransientNotificationEventsByUuid(notificationEventUuids);
+		if (channel != null) {
+			channel.removeTransientNotificationEventsByUuid(
+				notificationEventUuids);
+		}
 	}
 
 	public void sendNotificationEvent(
 			long userId, NotificationEvent notificationEvent)
 		throws ChannelException {
 
-		Channel channel = getChannel(userId, true);
+		Channel channel = getChannel(userId);
 
 		channel.sendNotificationEvent(notificationEvent);
 	}

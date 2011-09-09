@@ -109,6 +109,30 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		}
 	}
 
+	public ChannelHub fetchChannelHub(long companyId) throws ChannelException {
+		return fetchChannelHub(companyId, false);
+	}
+
+	public ChannelHub fetchChannelHub(long companyId, boolean createIfAbsent)
+		throws ChannelException {
+
+		ChannelHub channelHub = _channelHubs.get(companyId);
+
+		if (channelHub == null) {
+			synchronized(_channelHubs) {
+				channelHub = _channelHubs.get(companyId);
+
+				if (channelHub == null) {
+					if (createIfAbsent) {
+						channelHub = createChannelHub(companyId);
+					}
+				}
+			}
+		}
+
+		return channelHub;
+	}
+
 	public void flush() throws ChannelException {
 		for (ChannelHub channelHub : _channelHubs.values()) {
 			channelHub.flush();
@@ -116,17 +140,21 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 	}
 
 	public void flush(long companyId) throws ChannelException {
-		ChannelHub channelHub = getChannelHub(companyId);
+		ChannelHub channelHub = fetchChannelHub(companyId);
 
-		channelHub.flush();
+		if (channelHub != null) {
+			channelHub.flush();
+		}
 	}
 
 	public void flush(long companyId, long userId, long timestamp)
 		throws ChannelException {
 
-		ChannelHub channelHub = getChannelHub(companyId);
+		ChannelHub channelHub = fetchChannelHub(companyId);
 
-		channelHub.flush(userId, timestamp);
+		if (channelHub != null) {
+			channelHub.flush(userId, timestamp);
+		}
 	}
 
 	public Channel getChannel(long companyId, long userId)
@@ -151,22 +179,11 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 	public ChannelHub getChannelHub(long companyId, boolean createIfAbsent)
 		throws ChannelException {
 
-		ChannelHub channelHub = _channelHubs.get(companyId);
+		ChannelHub channelHub = fetchChannelHub(companyId, createIfAbsent);
 
 		if (channelHub == null) {
-			synchronized(_channelHubs) {
-				channelHub = _channelHubs.get(companyId);
-
-				if (channelHub == null) {
-					if (createIfAbsent) {
-						channelHub = createChannelHub(companyId);
-					}
-					else {
-						throw new UnknownChannelHubException(
-							"No channel exists with company id " + companyId);
-					}
-				}
-			}
+			throw new UnknownChannelHubException(
+				"No channel exists with company id " + companyId);
 		}
 
 		return channelHub;

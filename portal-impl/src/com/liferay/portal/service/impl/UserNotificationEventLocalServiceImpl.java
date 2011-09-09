@@ -131,7 +131,7 @@ public class UserNotificationEventLocalServiceImpl
 
 	public UserNotificationEvent updateUserNotificationEvent(
 			String uuid, boolean archive)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		List<UserNotificationEvent> userNotificationEvents =
 			userNotificationEventPersistence.findByUuid(uuid);
@@ -152,7 +152,7 @@ public class UserNotificationEventLocalServiceImpl
 
 	public List<UserNotificationEvent> updateUserNotificationEvents(
 			Collection<String> uuids, boolean archive)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		List<UserNotificationEvent> userNotificationEvents =
 			new ArrayList<UserNotificationEvent>();

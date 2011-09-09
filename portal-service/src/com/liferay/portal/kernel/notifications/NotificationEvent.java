@@ -70,6 +70,10 @@ public class NotificationEvent implements Serializable {
 	}
 
 	public String getUuid() {
+		if (_uuid == null) {
+			_uuid = PortalUUIDUtil.generate();
+		}
+
 		return _uuid;
 	}
 
@@ -100,7 +104,8 @@ public class NotificationEvent implements Serializable {
 
 		if ((deliverBy < 0) && _deliveryRequired) {
 			throw new IllegalArgumentException(
-				"Deliver by must be greater than or equal to 0 if delivery is required");
+				"Deliver by must be greater than or equal to 0 " +
+				"if delivery is required");
 		}
 
 		_deliverBy = deliverBy;
@@ -111,7 +116,8 @@ public class NotificationEvent implements Serializable {
 
 		if (deliverBy < 0) {
 			throw new IllegalArgumentException(
-				"Deliver by must be greater than or equal to 0 if delivery is required");
+				"Deliver by must be greater than or equal to 0 " +
+				"if delivery is required");
 		}
 
 		_deliverBy = deliverBy;
@@ -154,6 +160,6 @@ public class NotificationEvent implements Serializable {
 	private JSONObject _payloadJSONObject;
 	private long _timestamp;
 	private String _type;
-	private String _uuid = PortalUUIDUtil.generate();
+	private String _uuid;
 
 }

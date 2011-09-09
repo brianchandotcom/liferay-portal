@@ -160,7 +160,7 @@
 		<column name="logoId" type="long" />
 		<column name="system" type="boolean" />
 		<column name="maxUsers" type="int" />
-        <column name="active" type="boolean" />
+		<column name="active" type="boolean" />
 
 		<!-- Finder methods -->
 
@@ -564,7 +564,7 @@
 
 		<!-- Finder methods -->
 
-        <finder name="LayoutSetBranchId" return-type="Collection">
+		<finder name="LayoutSetBranchId" return-type="Collection">
 			<finder-column name="layoutSetBranchId" />
 		</finder>
 		<finder name="L_P" return-type="Collection">
@@ -2119,8 +2119,8 @@
 		<column name="parentUserGroupId" type="long" />
 		<column name="name" type="String" accessor="true" />
 		<column name="description" type="String" />
-        <column name="publicLayoutSetPrototypeId" type="long" />
-        <column name="privateLayoutSetPrototypeId" type="long" />
+		<column name="publicLayoutSetPrototypeId" type="long" />
+		<column name="privateLayoutSetPrototypeId" type="long" />
 		<column name="addedByLDAPImport" type="boolean" />
 
 		<!-- Relationships -->

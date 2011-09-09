@@ -685,7 +685,9 @@ AUI().add(
 									dialog: {
 										align: Util.Window.ALIGN_CENTER,
 										width: 960
-									}
+									},
+									title: event.currentTarget.attr('title'),
+									url: Liferay.Util.addParams('controlPanelCategory=my', event.currentTarget.attr('href'))
 								},
 								event.currentTarget
 							);

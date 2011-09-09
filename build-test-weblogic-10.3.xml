@@ -84,7 +84,7 @@
 				</waitfor>
 
 				<exec executable="${plink.executable}">
-					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} C:\Oracle\Middleware\jdk160_14_R27.6.5-32\bin\java.exe -cp C:\Oracle\Middleware\wlserver_10.3\server\lib\weblogic.jar -Xmx256m weblogic.Deployer -adminurl t3://localhost:7001 -user system -password password1 -deploy -upload C:\liferay-portal-${lp.version}.war" />
+					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} C:\Oracle\Middleware\jdk160_14_R27.6.5-32\bin\java.exe -cp C:\Oracle\Middleware\wlserver_10.3\server\lib\weblogic.jar -Xmx512m weblogic.Deployer -adminurl t3://localhost:7001 -user system -password password1 -deploy -upload C:\liferay-portal-${lp.version}.war" />
 				</exec>
 
 				<exec executable="${plink.executable}">

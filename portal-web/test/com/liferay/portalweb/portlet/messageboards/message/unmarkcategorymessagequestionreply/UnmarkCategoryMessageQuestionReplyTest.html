@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UnmarkCategoryMessageQuestionReplyTest</title>
 </head>
 <body>
@@ -17,19 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -39,7 +46,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
-	<td></td>
+	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -49,17 +56,22 @@
 <tr>
 	<td>clickAt</td>
 	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/div[2]/a</td>
-	<td></td>
+	<td>Unmark</td>
 </tr>
 <tr>
 	<td>waitForNotVisible</td>
 	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/div[2]/a</td>
-	<td></td>
+	<td>Unmark</td>
 </tr>
 <tr>
 	<td>assertNotVisible</td>
 	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/div[2]/a</td>
-	<td></td>
+	<td>Unmark</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[1]/span/a/span</td>
+	<td>Mark as an Answer</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -67,19 +79,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>

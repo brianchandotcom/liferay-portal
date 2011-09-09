@@ -106,12 +106,9 @@ public class TearDownSitesTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				Thread.sleep(5000);
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();

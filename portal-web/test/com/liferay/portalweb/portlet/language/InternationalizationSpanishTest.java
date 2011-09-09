@@ -22,14 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class InternationalizationSpanishTest extends BaseTestCase {
 	public void testInternationalizationSpanish() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//img[@alt='espa\u00f1ol (Espa\u00f1a)']")) {
+				if (selenium.isVisible("link=Language Test Page")) {
 					break;
 				}
 			}
@@ -40,23 +41,45 @@ public class InternationalizationSpanishTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Language Test Page",
+			RuntimeVariables.replace("Language Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//img[@alt='espa\u00f1ol (Espa\u00f1a)']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("espa\u00f1ol (Espa\u00f1a)"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		selenium.clickAt("//nav/ul/li[2]/a/span", RuntimeVariables.replace(""));
-		selenium.typeKeys("//input",
+		selenium.clickAt("//nav/ul/li[2]/a/span",
+			RuntimeVariables.replace("Edit Page Name"));
+		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("P\u00e1gina de la prueba de lengua"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input",
-			RuntimeVariables.replace("P\u00e1gina de la prueba de lengua"));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"link=P\u00e1gina de la prueba de lengua")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("save", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isVisible("link=P\u00e1gina de la prueba de lengua"));
 		selenium.clickAt("//img[@alt='English (United States)']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("English (United States)"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isVisible("link=Language Test Page"));
 	}
 }

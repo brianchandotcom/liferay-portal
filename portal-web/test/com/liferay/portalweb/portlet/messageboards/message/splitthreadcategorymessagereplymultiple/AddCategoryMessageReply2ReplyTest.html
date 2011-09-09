@@ -1,0 +1,139 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddCategoryMessageReply2ReplyTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddCategoryMessageReply2ReplyTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[1]/a</td>
+	<td>MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[6]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[6]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_19_subject']</td>
+	<td>RE: MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//body</td>
+	<td>MB Category Thread Message Reply2 Reply Body</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>RE: MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>RE: MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='subject']/a/strong)[2]</td>
+	<td>RE: MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='thread-body'])[2]</td>
+	<td>MB Category Thread Message Reply1 Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='subject']/a/strong)[3]</td>
+	<td>RE: MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='thread-body'])[3]</td>
+	<td>MB Category Thread Message Reply2 Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='subject']/a/strong)[4]</td>
+	<td>RE: MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='thread-body'])[4]</td>
+	<td>MB Category Thread Message Reply2 Reply Body</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

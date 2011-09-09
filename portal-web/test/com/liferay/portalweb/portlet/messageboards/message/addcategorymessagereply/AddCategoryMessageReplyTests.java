@@ -32,6 +32,7 @@ public class AddCategoryMessageReplyTests extends BaseTests {
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryMessageTest.class);
 		testSuite.addTestSuite(AddCategoryMessageReplyTest.class);
+		testSuite.addTestSuite(ViewMBCategoryMessageReplyTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

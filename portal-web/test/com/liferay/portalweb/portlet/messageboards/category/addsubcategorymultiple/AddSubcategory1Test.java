@@ -30,8 +30,7 @@ public class AddSubcategory1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,27 +41,33 @@ public class AddSubcategory1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//td[1]/a/strong"));
+		selenium.clickAt("//td[1]/a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Subcategory']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Subcategory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_name",
-			RuntimeVariables.replace("T\u00e9st1 Subcat\u00e9gory1"));
+		selenium.type("//input[@id='_19_name']",
+			RuntimeVariables.replace("MB Subcategory1 Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
-		assertEquals(RuntimeVariables.replace("T\u00e9st1 Subcat\u00e9gory1"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("MB Subcategory1 Name"),
+			selenium.getText("//td[1]/a/strong"));
 	}
 }

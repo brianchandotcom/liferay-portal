@@ -14,34 +14,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//a/strong</td>
-	<td>Tést Catégory</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//td[5]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td></td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -50,15 +60,14 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Tést Catégory</td>
+	<td>assertTextNotPresent</td>
+	<td>MB Category Name</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

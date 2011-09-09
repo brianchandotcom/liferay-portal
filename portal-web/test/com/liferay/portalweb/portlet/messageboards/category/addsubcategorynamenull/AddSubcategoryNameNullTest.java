@@ -30,8 +30,7 @@ public class AddSubcategoryNameNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,27 +41,87 @@ public class AddSubcategoryNameNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//td[1]/a/strong"));
+		selenium.clickAt("//td[1]/a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Subcategory']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Subcategory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_description",
-			RuntimeVariables.replace("This is a t\u00e9st1 subcat\u00e9gory1."));
+		selenium.type("//textarea[@id='_19_description']",
+			RuntimeVariables.replace("MB Subcategory Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='aui-form-validator-message required']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-form-validator-message required']"));
+		assertEquals(RuntimeVariables.replace("This field is required."),
+			selenium.getText(
+				"//div[@class='aui-form-validator-message required']"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace("Please enter a valid name."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//td[1]/a/strong"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//td[4]/a"));
+		selenium.clickAt("//td[1]/a/strong",
+			RuntimeVariables.replace("MB Category Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//div[3]/h1/span"));
+		assertFalse(selenium.isTextPresent("MB Category Description"));
+		assertFalse(selenium.isElementPresent("//td[5]/span/ul/li/strong/a"));
 	}
 }

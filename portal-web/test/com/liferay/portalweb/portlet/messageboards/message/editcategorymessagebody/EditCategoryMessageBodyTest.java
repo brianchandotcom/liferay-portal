@@ -30,8 +30,7 @@ public class EditCategoryMessageBodyTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,41 +41,74 @@ public class EditCategoryMessageBodyTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//div[1]/h1/span"));
 		assertEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st m\u00e9ssag\u00e9."),
-			selenium.getText("//td[2]/div[2]"));
-		selenium.clickAt("//td/ul/li[2]/span/a/span",
-			RuntimeVariables.replace(""));
+				"MB Category Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_textArea",
-			RuntimeVariables.replace(
-				"This is a t\u00e9st m\u00e9ssag\u00e9. Edit\u00e9d."));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//div[@class='subject']/a/strong"));
+		assertEquals(RuntimeVariables.replace("MB Category Thread Message Body"),
+			selenium.getText("//div[@class='thread-body']"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("//td/ul/li[2]/span/a/span"));
+		selenium.clickAt("//td/ul/li[2]/span/a/span",
+			RuntimeVariables.replace("Edit"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__19_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("MB Category Thread Message Body Edit"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st m\u00e9ssag\u00e9. Edit\u00e9d."),
-			selenium.getText("//td[2]/div[2]"));
+				"MB Category Thread Message Body Edit"),
+			selenium.getText("//div[@class='thread-body']"));
 		assertNotEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st m\u00e9ssag\u00e9."),
-			selenium.getText("//td[2]/div[2]"));
+				"MB Category Thread Message Body"),
+			selenium.getText("//div[@class='thread-body']"));
 	}
 }

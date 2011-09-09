@@ -14,18 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[5]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
 	<td>category1Present</td>
 </tr>
 <tr>
@@ -34,6 +34,11 @@
 	<td>Category1NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//td[5]/span/ul/li/strong/a</td>
 	<td>Actions</td>
@@ -64,8 +69,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[5]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
 	<td>category2Present</td>
 </tr>
 <tr>
@@ -74,6 +79,11 @@
 	<td>Category2NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//td[5]/span/ul/li/strong/a</td>
 	<td>Actions</td>
@@ -104,8 +114,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[5]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
 	<td>category3Present</td>
 </tr>
 <tr>
@@ -114,6 +124,11 @@
 	<td>Category3NotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//td[5]/span/ul/li/strong/a</td>
 	<td>Actions</td>
@@ -144,14 +159,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[5]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
 	<td>category4Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
 	<td>!${category4Present}</td>
 	<td>Category4NotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -184,14 +204,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[5]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
 	<td>category5Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
 	<td>!${category5Present}</td>
 	<td>Category5NotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>

@@ -35,7 +35,7 @@ public class TearDownMBMessageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
+						if (selenium.isVisible(
 									"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
 							break;
 						}
@@ -48,7 +48,8 @@ public class TearDownMBMessageTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace(
+						"M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -61,6 +62,8 @@ public class TearDownMBMessageTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[7]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[7]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 

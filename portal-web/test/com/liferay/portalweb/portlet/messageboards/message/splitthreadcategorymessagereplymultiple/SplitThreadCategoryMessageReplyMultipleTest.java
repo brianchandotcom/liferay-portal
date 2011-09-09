@@ -31,8 +31,7 @@ public class SplitThreadCategoryMessageReplyMultipleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -43,39 +42,57 @@ public class SplitThreadCategoryMessageReplyMultipleTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent(
-				"link=RE: T\u00e9st M\u00e9ssag\u00e9"));
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
+		assertFalse(selenium.isTextPresent(
+				"RE: MB Category Thread Message Subject"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
 			selenium.getText("//tr[2]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
+			selenium.getText("xPath=(//div[@class='subject']/a/strong)[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply1 Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
+			selenium.getText("xPath=(//div[@class='subject']/a/strong)[3]"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply2 Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[3]"));
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
+			selenium.getText("xPath=(//div[@class='subject']/a/strong)[4]"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply2 Reply Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[4]"));
+		assertEquals(RuntimeVariables.replace("Split Thread"),
 			selenium.getText(
-				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong"));
-		assertEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st1 r\u00e9ply1 m\u00e9ssag\u00e91."),
-			selenium.getText("//div[5]/table/tbody/tr[1]/td[2]/div[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st2 r\u00e9ply2 m\u00e9ssag\u00e92."),
-			selenium.getText("//div[6]/table/tbody/tr[1]/td[2]/div[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st3 r\u00e9ply3 m\u00e9ssag\u00e93."),
-			selenium.getText("//div[7]/table/tbody/tr[1]/td[2]/div[2]"));
+				"//div[5]/table/tbody/tr[2]/td/ul/li[4]/span/a/span"));
 		selenium.clickAt("//div[5]/table/tbody/tr[2]/td/ul/li[4]/span/a/span",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Split Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -84,8 +101,7 @@ public class SplitThreadCategoryMessageReplyMultipleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -96,25 +112,131 @@ public class SplitThreadCategoryMessageReplyMultipleTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		selenium.clickAt("//tr[3]/td[1]/a",
+			RuntimeVariables.replace("MB Category Thread Message Subject"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isTextPresent(
+				"MB Category Thread Message Reply1 Body"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply2 Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply2 Reply Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[3]"));
+		assertEquals(RuntimeVariables.replace("Split Thread"),
+			selenium.getText(
+				"//div[5]/table/tbody/tr[2]/td/ul/li[4]/span/a/span"));
+		selenium.clickAt("//div[5]/table/tbody/tr[2]/td/ul/li[4]/span/a/span",
+			RuntimeVariables.replace("Split Thread"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		selenium.clickAt("//tr[3]/td[1]/a",
+			RuntimeVariables.replace("MB Category Thread Message Subject"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isTextPresent(
+				"RE: MB Category Thread Message Subject"));
+		assertFalse(selenium.isTextPresent(
+				"MB Category Thread Message Reply1 Body"));
+		assertFalse(selenium.isTextPresent(
+				"MB Category Thread Message Reply2 Body"));
+		assertFalse(selenium.isTextPresent(
+				"MB Category Thread Message Reply2 Reply Body"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
 			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[3]/td[1]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//tr[4]/td[1]/a",
+			RuntimeVariables.replace("RE: MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("RE: T\u00e9st M\u00e9ssag\u00e9"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply2 Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply2 Reply Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[2]"));
+		assertFalse(selenium.isTextPresent("MB Category Thread Message Body"));
 		assertFalse(selenium.isTextPresent(
-				"This is a t\u00e9st1 r\u00e9ply1 m\u00e9ssag\u00e91."));
-		assertFalse(selenium.isTextPresent(
-				"This is a t\u00e9st2 r\u00e9ply2 m\u00e9ssag\u00e92."));
-		assertFalse(selenium.isTextPresent(
-				"This is a t\u00e9st3 r\u00e9ply3 m\u00e9ssag\u00e93."));
+				"MB Category Thread Message Reply1 Body"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -123,8 +245,7 @@ public class SplitThreadCategoryMessageReplyMultipleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -135,24 +256,30 @@ public class SplitThreadCategoryMessageReplyMultipleTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//tr[4]/td[1]/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st1 r\u00e9ply1 m\u00e9ssag\u00e91."),
-			selenium.getText("//td[2]/div[2]"));
+				"RE: MB Category Thread Message Subject"),
+			selenium.getText("//tr[5]/td[1]/a"));
+		selenium.clickAt("//tr[5]/td[1]/a",
+			RuntimeVariables.replace("RE: MB Category Thread Message Subject"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st2 r\u00e9ply2 m\u00e9ssag\u00e92."),
-			selenium.getText("//div[5]/table/tbody/tr[1]/td[2]/div[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st3 r\u00e9ply3 m\u00e9ssag\u00e93."),
-			selenium.getText("//div[6]/table/tbody/tr[1]/td[2]/div[2]"));
+				"MB Category Thread Message Reply1 Body"),
+			selenium.getText("//div[@class='thread-body']"));
+		assertFalse(selenium.isTextPresent("MB Category Thread Message Body"));
+		assertFalse(selenium.isTextPresent(
+				"MB Category Thread Message Reply2 Body"));
+		assertFalse(selenium.isTextPresent(
+				"MB Category Thread Message Reply2 Reply Body"));
 	}
 }

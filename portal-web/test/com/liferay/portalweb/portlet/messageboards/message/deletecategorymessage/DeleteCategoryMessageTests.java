@@ -32,6 +32,7 @@ public class DeleteCategoryMessageTests extends BaseTests {
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryMessageTest.class);
 		testSuite.addTestSuite(DeleteCategoryMessageTest.class);
+		testSuite.addTestSuite(ViewDeleteMBCategoryMessageTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

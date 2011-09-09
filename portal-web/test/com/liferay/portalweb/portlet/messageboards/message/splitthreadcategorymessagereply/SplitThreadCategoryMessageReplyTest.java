@@ -30,8 +30,7 @@ public class SplitThreadCategoryMessageReplyTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,30 +41,45 @@ public class SplitThreadCategoryMessageReplyTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent(
-				"link=RE: T\u00e9st M\u00e9ssag\u00e9"));
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
+		assertFalse(selenium.isTextPresent(
+				"RE: MB Category Thread Message Subject"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
 			selenium.getText("//tr[2]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st r\u00e9ply m\u00e9ssag\u00e9."),
-			selenium.getText("//div[5]/table/tbody/tr[1]/td[2]/div[2]"));
+				"RE: MB Category Thread Message Subject"),
+			selenium.getText("xPath=(//div[@class='subject']/a/strong)[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[2]"));
+		assertEquals(RuntimeVariables.replace("Split Thread"),
+			selenium.getText(
+				"//div[5]/table/tbody/tr[2]/td/ul/li[4]/span/a/span"));
 		selenium.clickAt("//div[5]/table/tbody/tr[2]/td/ul/li[4]/span/a/span",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Split Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -74,8 +88,7 @@ public class SplitThreadCategoryMessageReplyTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -86,23 +99,31 @@ public class SplitThreadCategoryMessageReplyTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//td[1]/a/strong"));
+		selenium.clickAt("//td[1]/a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[3]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
 			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[3]/td[1]/a",
-			RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"));
+		selenium.clickAt("//tr[4]/td[1]/a",
+			RuntimeVariables.replace("RE: MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("RE: T\u00e9st M\u00e9ssag\u00e9"));
-		assertFalse(selenium.isTextPresent(
-				"This is a t\u00e9st r\u00e9ply m\u00e9ssag\u00e9."));
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace(
+				"RE: MB Category Thread Message Subject"),
+			selenium.getText("//div[@class='subject']/a/strong"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Reply Body"),
+			selenium.getText("//div[@class='thread-body']"));
 	}
 }

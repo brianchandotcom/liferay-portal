@@ -30,8 +30,7 @@ public class RateCategoryMessageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,29 +41,36 @@ public class RateCategoryMessageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=T\u00e9st M\u00e9ssag\u00e9",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//div[@class='taglib-ratings thumbs']/div/div/div", "0 Votes"));
-		assertTrue(selenium.isElementPresent(
+		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+			selenium.getText(
+				"//div[@class='taglib-ratings thumbs']/div/div/div"));
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 		assertFalse(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
 		assertFalse(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Thumb Up"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -90,14 +96,14 @@ public class RateCategoryMessageTest extends BaseTestCase {
 				"//div[@class='taglib-ratings thumbs']/div/div/div"));
 		assertFalse(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
 		assertFalse(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Thumb Down"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -121,16 +127,16 @@ public class RateCategoryMessageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText(
 				"//div[@class='taglib-ratings thumbs']/div/div/div"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
 		assertFalse(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 		assertFalse(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Thumb Down"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -154,9 +160,9 @@ public class RateCategoryMessageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText(
 				"//div[@class='taglib-ratings thumbs']/div/div/div"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 		assertFalse(selenium.isElementPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));

@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ConfirmEnglishTest</title>
 </head>
 <body>
@@ -12,14 +9,44 @@
 <tr><td rowspan="1" colspan="3">ConfirmEnglishTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>clickAt</td>
-	<td>//img[@alt='English (United States)']</td>
+	<td>open</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>link=Language Test Page</td>
+	<td>Language Test Page</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//img[@alt='English (United States)']</td>
-	<td></td>
+	<td>link=Language Test Page</td>
+	<td>Language Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='sign-out']</td>
+	<td>(Sign Out)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a</td>
+	<td>Language Test Page</td>
 </tr>
 
 </tbody></table>

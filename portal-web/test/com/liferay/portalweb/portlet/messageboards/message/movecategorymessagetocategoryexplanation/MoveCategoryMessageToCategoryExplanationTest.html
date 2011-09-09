@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>MoveCategoryMessageToCategoryExplanationTest</title>
 </head>
 <body>
@@ -17,49 +14,64 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[1]/a</td>
-	<td>Tést Méssagé</td>
+	<td>MB Category1 Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//td[7]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td></td>
+	<td>Move Thread</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_19_categoryName</td>
-	<td>Tést1 Catégory1</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Move Thread</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Move Thread</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_19_categoryName']</td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForPopUp</td>
@@ -72,14 +84,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//tr[4]/td[5]/input</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>MB Category1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>MB Category1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>MB Category2 Name</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//tr[4]/td[5]/input</td>
-	<td></td>
+	<td>xPath=(//input[@value='Choose'])[2]</td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -88,43 +110,63 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_19_categoryName</td>
-	<td>Tést2 Catégory2</td>
+	<td>//a[@id='_19_categoryName']</td>
+	<td>MB Category2 Name</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>_19_addExplanationPostCheckbox</td>
-	<td></td>
+	<td>//input[@id='_19_addExplanationPostCheckbox']</td>
+	<td>Add explanation post.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_19_addExplanationPostCheckbox</td>
-	<td></td>
+	<td>//input[@id='_19_addExplanationPostCheckbox']</td>
+	<td>Add explanation post.</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>_19_addExplanationPostCheckbox</td>
+	<td>//input[@id='_19_addExplanationPostCheckbox']</td>
+	<td>Add explanation post.</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_19_subject']</td>
+	<td>Subject Field</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_19_subject']</td>
+	<td>MB Explanation Post Subject</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_19_subject</td>
-	<td></td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_19_subject</td>
-	<td>Move Thread Explanation Post</td>
+	<td>//body</td>
+	<td>MB Explanation Post Body</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>_19_textArea</td>
-	<td>This is a move thread explanation post.</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Move Thread']</td>
-	<td></td>
+	<td>Move thread</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -132,23 +174,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Tést Méssagé</td>
+	<td>assertTextNotPresent</td>
+	<td>MB Category1 Thread Message Subject</td>
 	<td></td>
 </tr>
 <tr>
@@ -157,44 +204,49 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a/strong</td>
+	<td>MB Category2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//tr[4]/td[1]/a/strong</td>
-	<td></td>
+	<td>MB Category2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[1]/a</td>
-	<td>Tést Méssagé</td>
+	<td>MB Category1 Thread Message Subject</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
-	<td></td>
+	<td>MB Category1 Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr[2]/td[1]/a</td>
-	<td>Move Thread Explanation Post</td>
+	<td>MB Explanation Post Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong</td>
-	<td>Move Thread Explanation Post</td>
+	<td>xPath=(//div[@class='subject']/a/strong)[2]</td>
+	<td>MB Explanation Post Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[5]/table/tbody/tr[1]/td[2]/div[2]</td>
-	<td>This is a move thread explanation post.</td>
+	<td>xPath=(//div[@class='thread-body'])[2]</td>
+	<td>MB Explanation Post Body</td>
 </tr>
 
 </tbody></table>

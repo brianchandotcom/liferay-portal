@@ -18,6 +18,7 @@ import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portlet.messageboards.category.addcategory.AddCategoryTests;
 import com.liferay.portalweb.portlet.messageboards.category.addcategorymultiple.AddCategoryMultipleTests;
 import com.liferay.portalweb.portlet.messageboards.category.addcategorynamenull.AddCategoryNameNullTests;
+import com.liferay.portalweb.portlet.messageboards.category.addmbcategorynameutf8.AddMBCategoryNameUtf8Tests;
 import com.liferay.portalweb.portlet.messageboards.category.addsubcategory.AddSubcategoryTests;
 import com.liferay.portalweb.portlet.messageboards.category.addsubcategorymultiple.AddSubcategoryMultipleTests;
 import com.liferay.portalweb.portlet.messageboards.category.addsubcategorynamenull.AddSubcategoryNameNullTests;
@@ -38,6 +39,7 @@ public class CategoryTests extends BaseTests {
 		testSuite.addTest(AddCategoryTests.suite());
 		testSuite.addTest(AddCategoryMultipleTests.suite());
 		testSuite.addTest(AddCategoryNameNullTests.suite());
+		testSuite.addTest(AddMBCategoryNameUtf8Tests.suite());
 		testSuite.addTest(AddSubcategoryTests.suite());
 		testSuite.addTest(AddSubcategoryMultipleTests.suite());
 		testSuite.addTest(AddSubcategoryNameNullTests.suite());

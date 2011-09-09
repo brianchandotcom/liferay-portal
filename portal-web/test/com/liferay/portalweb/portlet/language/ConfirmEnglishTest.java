@@ -22,11 +22,39 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConfirmEnglishTest extends BaseTestCase {
 	public void testConfirmEnglish() throws Exception {
-		selenium.clickAt("//img[@alt='English (United States)']",
-			RuntimeVariables.replace(""));
-		selenium.clickAt("//img[@alt='English (United States)']",
-			RuntimeVariables.replace(""));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Language Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Language Test Page",
+			RuntimeVariables.replace("Language Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//li[@id='_145_manageContent']/a/span"));
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		assertEquals(RuntimeVariables.replace("(Sign Out)"),
+			selenium.getText("//span[@class='sign-out']"));
+		assertEquals(RuntimeVariables.replace("Language Test Page"),
+			selenium.getText(
+				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a"));
 	}
 }

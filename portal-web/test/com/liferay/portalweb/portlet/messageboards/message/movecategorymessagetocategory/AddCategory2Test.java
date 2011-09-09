@@ -30,8 +30,7 @@ public class AddCategory2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,24 +41,27 @@ public class AddCategory2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Category']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Category"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_name",
-			RuntimeVariables.replace("T\u00e9st2 Cat\u00e9gory2"));
+		selenium.type("//input[@id='_19_name']",
+			RuntimeVariables.replace("MB Category2 Name"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
-		assertEquals(RuntimeVariables.replace("T\u00e9st2 Cat\u00e9gory2"),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("MB Category1 Name"),
+			selenium.getText("//tr[3]/td[1]/a/strong"));
+		assertEquals(RuntimeVariables.replace("MB Category2 Name"),
 			selenium.getText("//tr[4]/td[1]/a/strong"));
 	}
 }

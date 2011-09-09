@@ -35,8 +35,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+						if (selenium.isVisible("link=Message Boards Test Page")) {
 							break;
 						}
 					}
@@ -47,8 +46,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Message Boards Test Page",
+					RuntimeVariables.replace("Message Boards Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -61,6 +60,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -103,6 +104,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -145,6 +148,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -187,6 +192,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -229,6 +236,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 

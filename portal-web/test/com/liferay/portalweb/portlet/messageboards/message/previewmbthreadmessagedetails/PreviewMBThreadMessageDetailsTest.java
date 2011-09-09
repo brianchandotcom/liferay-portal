@@ -81,7 +81,7 @@ public class PreviewMBThreadMessageDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("Preview"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
+		assertEquals(RuntimeVariables.replace("New Message"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
 			selenium.getText("//div[@class='subject']/a/strong"));

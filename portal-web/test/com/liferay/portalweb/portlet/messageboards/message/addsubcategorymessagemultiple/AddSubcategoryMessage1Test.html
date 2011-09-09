@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AddSubcategoryMessage1Test</title>
 </head>
 <body>
@@ -17,69 +14,94 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Category Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Subcategory Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Subcategory Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Post New Thread']</td>
+	<td>Post New Thread</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_19_subject']</td>
+	<td>MB Subcategory Thread1 Message Subject</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>_19_subject</td>
-	<td>Tést1 Méssagé1</td>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_19_textArea</td>
-	<td>This is a tést1 méssagé1.</td>
+	<td>//body</td>
+	<td>MB Subcategory Thread1 Message Body</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Tést1 Méssagé1</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td></td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/h1/span</td>
-	<td>Tést1 Méssagé1</td>
+	<td>//div[@class='subject']/a/strong</td>
+	<td>MB Subcategory Thread1 Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Tést1 Méssagé1</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[2]/div[2]</td>
-	<td>This is a tést1 méssagé1.</td>
+	<td>//div[@class='thread-body']</td>
+	<td>MB Subcategory Thread1 Message Body</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -87,29 +109,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/a</td>
-	<td>Tést1 Méssagé1</td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Subcategory Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[1]/a/strong</td>
+	<td>MB Subcategory Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>MB Subcategory Thread1 Message Subject</td>
 </tr>
 
 </tbody></table>

@@ -30,8 +30,7 @@ public class AddPortletMBDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,12 +41,14 @@ public class AddPortletMBDuplicateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -55,7 +56,8 @@ public class AddPortletMBDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
+				if (selenium.isVisible(
+							"//input[@id='layout_configuration_content']")) {
 					break;
 				}
 			}
@@ -66,7 +68,7 @@ public class AddPortletMBDuplicateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("layout_configuration_content",
+		selenium.typeKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("m"));
 		selenium.saveScreenShotAndSource();
 

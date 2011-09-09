@@ -14,49 +14,84 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[1]/a</td>
-	<td>Tést Méssagé</td>
+	<td>MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_19_textArea</td>
+	<td>//body</td>
 	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>

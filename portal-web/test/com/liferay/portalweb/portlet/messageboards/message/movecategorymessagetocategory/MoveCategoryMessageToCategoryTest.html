@@ -14,49 +14,64 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[1]/a</td>
-	<td>Tést Méssagé</td>
+	<td>MB Category1 Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//td[7]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td></td>
+	<td>Move Thread</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_19_categoryName</td>
-	<td>Tést1 Catégory1</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Move Thread</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Move Thread</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_19_categoryName']</td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForPopUp</td>
@@ -69,14 +84,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//tr[4]/td[5]/input</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>MB Category1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>MB Category1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>MB Category2 Name</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//tr[4]/td[5]/input</td>
-	<td></td>
+	<td>xPath=(//input[@value='Choose'])[2]</td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -85,13 +110,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_19_categoryName</td>
-	<td>Tést2 Catégory2</td>
+	<td>//a[@id='_19_categoryName']</td>
+	<td>MB Category2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Move Thread']</td>
-	<td></td>
+	<td>Move Thread</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -99,23 +124,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category1 Name</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Tést Méssagé</td>
+	<td>assertTextNotPresent</td>
+	<td>MB Category1 Thread Message Subject</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,24 +154,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a/strong</td>
+	<td>MB Category2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//tr[4]/td[1]/a/strong</td>
-	<td></td>
+	<td>MB Category2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[1]/a</td>
-	<td>Tést Méssagé</td>
+	<td>MB Category1 Thread Message Subject</td>
 </tr>
 
 </tbody></table>

@@ -35,7 +35,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
+						if (selenium.isVisible(
 									"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
 							break;
 						}
@@ -48,7 +48,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace(
+						"M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -61,6 +62,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -103,6 +106,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -145,6 +150,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -187,6 +194,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -229,6 +238,8 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 

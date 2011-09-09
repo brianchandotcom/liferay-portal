@@ -30,8 +30,7 @@ public class EditCategoryMessageSubjectNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,17 +41,23 @@ public class EditCategoryMessageSubjectNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[7]/span/ul/li/strong/a"));
 		selenium.clickAt("//td[7]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -60,7 +65,7 @@ public class EditCategoryMessageSubjectNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
@@ -72,20 +77,70 @@ public class EditCategoryMessageSubjectNullTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace(
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_subject", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_19_subject']", RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='aui-form-validator-message required']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("This field is required."),
+			selenium.getText(
+				"//div[@class='aui-form-validator-message required']"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace("Please enter a valid subject."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+				"MB Category Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
 	}
 }

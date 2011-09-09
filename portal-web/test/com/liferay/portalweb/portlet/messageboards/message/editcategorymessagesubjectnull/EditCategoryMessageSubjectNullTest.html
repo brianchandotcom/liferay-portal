@@ -14,59 +14,104 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Méssagé Boards Tést Pagé</td>
-	<td></td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>MB Category Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[1]/a</td>
-	<td>Tést Méssagé</td>
+	<td>MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//td[7]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_19_subject</td>
-	<td></td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Publish']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_19_subject']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>clickAt</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-form-validator-message required']</td>
+	<td>This field is required.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>Please enter a valid subject.</td>
+	<td>//div[@class='aui-form-validator-message required']</td>
+	<td>This field is required.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a/strong</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>MB Category Thread Message Subject</td>
 </tr>
 
 </tbody></table>

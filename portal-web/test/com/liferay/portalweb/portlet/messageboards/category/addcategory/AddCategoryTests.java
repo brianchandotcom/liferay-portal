@@ -30,6 +30,7 @@ public class AddCategoryTests extends BaseTests {
 		testSuite.addTestSuite(AddPageMBTest.class);
 		testSuite.addTestSuite(AddPortletMBTest.class);
 		testSuite.addTestSuite(AddCategoryTest.class);
+		testSuite.addTestSuite(ViewMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

@@ -31,8 +31,7 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -43,17 +42,23 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category1 Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category1 Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
+		assertEquals(RuntimeVariables.replace(
+				"MB Category1 Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[7]/span/ul/li/strong/a"));
 		selenium.clickAt("//td[7]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -61,7 +66,7 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
 					break;
 				}
@@ -73,14 +78,17 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace(
+		assertEquals(RuntimeVariables.replace("Move Thread"),
+			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
+			RuntimeVariables.replace("Move Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st1 Cat\u00e9gory1"),
-			selenium.getText("_19_categoryName"));
+		assertEquals(RuntimeVariables.replace("MB Category1 Name"),
+			selenium.getText("//a[@id='_19_categoryName']"));
 		selenium.clickAt("//input[@value='Select']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("category", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=category");
 		selenium.saveScreenShotAndSource();
@@ -91,7 +99,7 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//tr[4]/td[5]/input")) {
+				if (selenium.isVisible("//tr[3]/td[1]/a")) {
 					break;
 				}
 			}
@@ -102,16 +110,22 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click("//tr[4]/td[5]/input");
+		assertEquals(RuntimeVariables.replace("MB Category1 Name"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("MB Category2 Name"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		selenium.click("xPath=(//input[@value='Choose'])[2]");
 		selenium.selectWindow("null");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st2 Cat\u00e9gory2"),
-			selenium.getText("_19_categoryName"));
-		assertFalse(selenium.isChecked("_19_addExplanationPostCheckbox"));
+		assertEquals(RuntimeVariables.replace("MB Category2 Name"),
+			selenium.getText("//a[@id='_19_categoryName']"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_19_addExplanationPostCheckbox']"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_19_addExplanationPostCheckbox",
-			RuntimeVariables.replace(""));
-		assertTrue(selenium.isChecked("_19_addExplanationPostCheckbox"));
+		selenium.clickAt("//input[@id='_19_addExplanationPostCheckbox']",
+			RuntimeVariables.replace("Add explanation post."));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_19_addExplanationPostCheckbox']"));
 		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
@@ -120,7 +134,7 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_19_subject")) {
+				if (selenium.isVisible("//input[@id='_19_subject']")) {
 					break;
 				}
 			}
@@ -131,11 +145,33 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_subject",
-			RuntimeVariables.replace("Move Thread Explanation Post"));
+		selenium.type("//input[@id='_19_subject']",
+			RuntimeVariables.replace("MB Explanation Post Subject"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_textArea",
-			RuntimeVariables.replace("This is a move thread explanation post."));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__19_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("MB Explanation Post Body"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Move Thread']"));
 		selenium.waitForPageToLoad("30000");
@@ -148,8 +184,7 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -160,15 +195,18 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category1 Name"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category1 Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isElementPresent(
-				"link=T\u00e9st M\u00e9ssag\u00e9"));
+		assertFalse(selenium.isTextPresent(
+				"MB Category1 Thread Message Subject"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -177,8 +215,7 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -189,25 +226,28 @@ public class MoveCategoryMessageToCategoryExplanationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//tr[4]/td[1]/a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MB Category2 Name"),
+			selenium.getText("//tr[4]/td[1]/a/strong"));
+		selenium.clickAt("//tr[4]/td[1]/a/strong",
+			RuntimeVariables.replace("MB Category2 Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Move Thread Explanation Post"),
-			selenium.getText("//tr[2]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Move Thread Explanation Post"),
-			selenium.getText(
-				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong"));
 		assertEquals(RuntimeVariables.replace(
-				"This is a move thread explanation post."),
-			selenium.getText("//div[5]/table/tbody/tr[1]/td[2]/div[2]"));
+				"MB Category1 Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("MB Category1 Thread Message Subject"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("MB Explanation Post Subject"),
+			selenium.getText("//tr[2]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("MB Explanation Post Subject"),
+			selenium.getText("xPath=(//div[@class='subject']/a/strong)[2]"));
+		assertEquals(RuntimeVariables.replace("MB Explanation Post Body"),
+			selenium.getText("xPath=(//div[@class='thread-body'])[2]"));
 	}
 }

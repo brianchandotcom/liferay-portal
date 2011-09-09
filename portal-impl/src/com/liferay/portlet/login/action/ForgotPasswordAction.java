@@ -17,6 +17,7 @@ package com.liferay.portlet.login.action;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.RequiredReminderQueryException;
 import com.liferay.portal.SendPasswordException;
+import com.liferay.portal.UserActiveException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
@@ -75,6 +76,7 @@ public class ForgotPasswordAction extends PortletAction {
 				e instanceof NoSuchUserException ||
 				e instanceof RequiredReminderQueryException ||
 				e instanceof SendPasswordException ||
+				e instanceof UserActiveException ||
 				e instanceof UserEmailAddressException ||
 				e instanceof UserReminderQueryException) {
 
@@ -170,28 +172,32 @@ public class ForgotPasswordAction extends PortletAction {
 		if (Validator.isNotNull(sessionEmailAddress)) {
 			user = UserLocalServiceUtil.getUserByEmailAddress(
 				themeDisplay.getCompanyId(), sessionEmailAddress);
-
-			return user;
-		}
-
-		long userId = ParamUtil.getLong(actionRequest, "userId");
-		String screenName = ParamUtil.getString(actionRequest, "screenName");
-		String emailAddress = ParamUtil.getString(
-			actionRequest, "emailAddress");
-
-		if (Validator.isNotNull(emailAddress)) {
-			user = UserLocalServiceUtil.getUserByEmailAddress(
-				themeDisplay.getCompanyId(), emailAddress);
-		}
-		else if (Validator.isNotNull(screenName)) {
-			user = UserLocalServiceUtil.getUserByScreenName(
-				themeDisplay.getCompanyId(), screenName);
-		}
-		else if (userId > 0) {
-			user = UserLocalServiceUtil.getUserById(userId);
 		}
 		else {
-			throw new NoSuchUserException();
+			long userId = ParamUtil.getLong(actionRequest, "userId");
+			String screenName = ParamUtil.getString(
+				actionRequest, "screenName");
+			String emailAddress = ParamUtil.getString(
+				actionRequest, "emailAddress");
+
+			if (Validator.isNotNull(emailAddress)) {
+				user = UserLocalServiceUtil.getUserByEmailAddress(
+					themeDisplay.getCompanyId(), emailAddress);
+			}
+			else if (Validator.isNotNull(screenName)) {
+				user = UserLocalServiceUtil.getUserByScreenName(
+					themeDisplay.getCompanyId(), screenName);
+			}
+			else if (userId > 0) {
+				user = UserLocalServiceUtil.getUserById(userId);
+			}
+			else {
+				throw new NoSuchUserException();
+			}
+		}
+
+		if (!user.isActive()) {
+			throw new UserActiveException();
 		}
 
 		return user;

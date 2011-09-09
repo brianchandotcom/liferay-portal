@@ -40,6 +40,7 @@
 <%@ page import="com.liferay.portal.ReservedUserScreenNameException" %>
 <%@ page import="com.liferay.portal.SendPasswordException" %>
 <%@ page import="com.liferay.portal.TermsOfUseException" %>
+<%@ page import="com.liferay.portal.UserActiveException" %>
 <%@ page import="com.liferay.portal.UserEmailAddressException" %>
 <%@ page import="com.liferay.portal.UserIdException" %>
 <%@ page import="com.liferay.portal.UserLockoutException" %>

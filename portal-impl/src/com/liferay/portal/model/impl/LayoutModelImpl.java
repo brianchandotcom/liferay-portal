@@ -95,9 +95,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "css", Types.VARCHAR },
 			{ "priority", Types.INTEGER },
 			{ "layoutPrototypeUuid", Types.VARCHAR },
-			{ "layoutPrototypeLinkEnabled", Types.BOOLEAN }
+			{ "layoutPrototypeLinkEnabled", Types.BOOLEAN },
+			{ "templateLayoutUuid", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,templateLayoutUuid VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -148,6 +149,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setPriority(soapModel.getPriority());
 		model.setLayoutPrototypeUuid(soapModel.getLayoutPrototypeUuid());
 		model.setLayoutPrototypeLinkEnabled(soapModel.getLayoutPrototypeLinkEnabled());
+		model.setTemplateLayoutUuid(soapModel.getTemplateLayoutUuid());
 
 		return model;
 	}
@@ -979,6 +981,20 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_layoutPrototypeLinkEnabled = layoutPrototypeLinkEnabled;
 	}
 
+	@JSON
+	public String getTemplateLayoutUuid() {
+		if (_templateLayoutUuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _templateLayoutUuid;
+		}
+	}
+
+	public void setTemplateLayoutUuid(String templateLayoutUuid) {
+		_templateLayoutUuid = templateLayoutUuid;
+	}
+
 	@Override
 	public Layout toEscapedModel() {
 		if (isEscapedModel()) {
@@ -1042,6 +1058,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setPriority(getPriority());
 		layoutImpl.setLayoutPrototypeUuid(getLayoutPrototypeUuid());
 		layoutImpl.setLayoutPrototypeLinkEnabled(getLayoutPrototypeLinkEnabled());
+		layoutImpl.setTemplateLayoutUuid(getTemplateLayoutUuid());
 
 		layoutImpl.resetOriginalValues();
 
@@ -1302,12 +1319,20 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutCacheModel.layoutPrototypeLinkEnabled = getLayoutPrototypeLinkEnabled();
 
+		layoutCacheModel.templateLayoutUuid = getTemplateLayoutUuid();
+
+		String templateLayoutUuid = layoutCacheModel.templateLayoutUuid;
+
+		if ((templateLayoutUuid != null) && (templateLayoutUuid.length() == 0)) {
+			layoutCacheModel.templateLayoutUuid = null;
+		}
+
 		return layoutCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1365,13 +1390,15 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getLayoutPrototypeUuid());
 		sb.append(", layoutPrototypeLinkEnabled=");
 		sb.append(getLayoutPrototypeLinkEnabled());
+		sb.append(", templateLayoutUuid=");
+		sb.append(getTemplateLayoutUuid());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Layout");
@@ -1489,6 +1516,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			"<column><column-name>layoutPrototypeLinkEnabled</column-name><column-value><![CDATA[");
 		sb.append(getLayoutPrototypeLinkEnabled());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>templateLayoutUuid</column-name><column-value><![CDATA[");
+		sb.append(getTemplateLayoutUuid());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1537,6 +1568,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private int _priority;
 	private String _layoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;
+	private String _templateLayoutUuid;
 	private transient ExpandoBridge _expandoBridge;
 	private Layout _escapedModelProxy;
 }

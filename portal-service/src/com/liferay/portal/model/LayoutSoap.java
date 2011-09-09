@@ -59,6 +59,7 @@ public class LayoutSoap implements Serializable {
 		soapModel.setPriority(model.getPriority());
 		soapModel.setLayoutPrototypeUuid(model.getLayoutPrototypeUuid());
 		soapModel.setLayoutPrototypeLinkEnabled(model.getLayoutPrototypeLinkEnabled());
+		soapModel.setTemplateLayoutUuid(model.getTemplateLayoutUuid());
 
 		return soapModel;
 	}
@@ -352,6 +353,14 @@ public class LayoutSoap implements Serializable {
 		_layoutPrototypeLinkEnabled = layoutPrototypeLinkEnabled;
 	}
 
+	public String getTemplateLayoutUuid() {
+		return _templateLayoutUuid;
+	}
+
+	public void setTemplateLayoutUuid(String templateLayoutUuid) {
+		_templateLayoutUuid = templateLayoutUuid;
+	}
+
 	private String _uuid;
 	private long _plid;
 	private long _groupId;
@@ -380,4 +389,5 @@ public class LayoutSoap implements Serializable {
 	private int _priority;
 	private String _layoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;
+	private String _templateLayoutUuid;
 }

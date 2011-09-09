@@ -617,6 +617,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		layoutImpl.setPriority(layout.getPriority());
 		layoutImpl.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
 		layoutImpl.setLayoutPrototypeLinkEnabled(layout.isLayoutPrototypeLinkEnabled());
+		layoutImpl.setTemplateLayoutUuid(layout.getTemplateLayoutUuid());
 
 		return layoutImpl;
 	}

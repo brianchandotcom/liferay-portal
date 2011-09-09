@@ -922,7 +922,8 @@ create table Layout (
 	css STRING null,
 	priority INTEGER,
 	layoutPrototypeUuid VARCHAR(75) null,
-	layoutPrototypeLinkEnabled BOOLEAN
+	layoutPrototypeLinkEnabled BOOLEAN,
+	templateLayoutUuid VARCHAR(75) null
 );
 
 create table LayoutBranch (

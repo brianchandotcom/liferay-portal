@@ -31,7 +31,7 @@ import java.util.Date;
 public class LayoutCacheModel implements CacheModel<Layout> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,6 +89,8 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 		sb.append(layoutPrototypeUuid);
 		sb.append(", layoutPrototypeLinkEnabled=");
 		sb.append(layoutPrototypeLinkEnabled);
+		sb.append(", templateLayoutUuid=");
+		sb.append(templateLayoutUuid);
 		sb.append("}");
 
 		return sb.toString();
@@ -233,6 +235,13 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 
 		layoutImpl.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 
+		if (templateLayoutUuid == null) {
+			layoutImpl.setTemplateLayoutUuid(StringPool.BLANK);
+		}
+		else {
+			layoutImpl.setTemplateLayoutUuid(templateLayoutUuid);
+		}
+
 		layoutImpl.resetOriginalValues();
 
 		return layoutImpl;
@@ -266,4 +275,5 @@ public class LayoutCacheModel implements CacheModel<Layout> {
 	public int priority;
 	public String layoutPrototypeUuid;
 	public boolean layoutPrototypeLinkEnabled;
+	public String templateLayoutUuid;
 }

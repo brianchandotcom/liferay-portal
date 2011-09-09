@@ -858,6 +858,21 @@ public interface LayoutModel extends BaseModel<Layout> {
 	public void setLayoutPrototypeLinkEnabled(
 		boolean layoutPrototypeLinkEnabled);
 
+	/**
+	 * Returns the template layout uuid of this layout.
+	 *
+	 * @return the template layout uuid of this layout
+	 */
+	@AutoEscape
+	public String getTemplateLayoutUuid();
+
+	/**
+	 * Sets the template layout uuid of this layout.
+	 *
+	 * @param templateLayoutUuid the template layout uuid of this layout
+	 */
+	public void setTemplateLayoutUuid(String templateLayoutUuid);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

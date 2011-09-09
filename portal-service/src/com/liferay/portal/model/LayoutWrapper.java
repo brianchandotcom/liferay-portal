@@ -1079,6 +1079,24 @@ public class LayoutWrapper implements Layout {
 		_layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 	}
 
+	/**
+	* Returns the template layout uuid of this layout.
+	*
+	* @return the template layout uuid of this layout
+	*/
+	public java.lang.String getTemplateLayoutUuid() {
+		return _layout.getTemplateLayoutUuid();
+	}
+
+	/**
+	* Sets the template layout uuid of this layout.
+	*
+	* @param templateLayoutUuid the template layout uuid of this layout
+	*/
+	public void setTemplateLayoutUuid(java.lang.String templateLayoutUuid) {
+		_layout.setTemplateLayoutUuid(templateLayoutUuid);
+	}
+
 	public boolean isNew() {
 		return _layout.isNew();
 	}

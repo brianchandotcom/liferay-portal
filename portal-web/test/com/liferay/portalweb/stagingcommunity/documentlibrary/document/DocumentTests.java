@@ -15,21 +15,19 @@
 package com.liferay.portalweb.stagingcommunity.documentlibrary.document;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.addstaginglocallivedldocumentdocx.AddStagingLocalLiveDLDocumentDocxTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.addstaginglocallivedldocumentdocxnodl.AddStagingLocalLiveDLDocumentDocxNoDLTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.copyfromliveaddstaginglivedldocumentdocxmp.CopyFromLiveAddStagingLiveDLDocumentDocxMPTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.copyfromlivedeletedlstaginglivedocumentdocxmp.CopyFromLiveDeleteDLStagingLiveDocumentDocxMPTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.deletedlstaginglocallivedocumentdocxactions.DeleteDLStagingLocalLiveDocumentDocxActionsTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.deletelivepagestaginglocallivedldocumentdocxdock.DeleteLivePageStagingLocalLiveDLDocumentDocxDockTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.deletestaginglocallivedldocumentdocxactions.DeleteStagingLocalLiveDLDocumentDocxActionsTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdldocumentdocxdock.PublishToLiveNowDLDocumentDocxDockTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdldocumentdocxnodatadock.PublishToLiveNowDLDocumentDocxNoDataDockTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdldocumentdocxnodldock.PublishToLiveNowDLDocumentDocxNoDLDockTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdldocumentdocxnopagesdock.PublishToLiveNowDLDocumentDocxNoPagesDockTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdlpagedocumentdocxdock.PublishToLiveNowDLPageDocumentDocxDockTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdlpagedocumentdocxnopagedock.PublishToLiveNowDLPageDocumentDocxNoPageDockTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdlportletdocumentdocxdock.PublishToLiveNowDLPortletDocumentDocxDockTests;
-import com.liferay.portalweb.stagingcommunity.documentlibrary.document.viewstaginglivenonelivedldocumentdocx.ViewStagingLiveNoneLiveDLDocumentDocxTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.adddldocumentsitestaginglocallivedl.AddDLDocumentSiteStagingLocalLiveDLTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.adddldocumentsitestaginglocallivenodl.AddDLDocumentSiteStagingLocalLiveNoDLTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.deletedldocumentsitestaginglocallivedlactions.DeleteDLDocumentSiteStagingLocalLiveDLActionsTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.deletelivepagesitestaginglocallivedl.DeleteLivePageSiteStagingLocalLiveDLTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.deletesitestaginglocallivedldldocumentactions.DeleteSiteStagingLocalLiveDLDLDocumentActionsTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdldocumentdock.PublishToLiveNowDLDocumentDockTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdldocumentnodatadock.PublishToLiveNowDLDocumentNoDataDockTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdldocumentnodldock.PublishToLiveNowDLDocumentNoDLDockTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowdldocumentnopagesdock.PublishToLiveNowDLDocumentNoPagesDockTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowpagedldock.PublishToLiveNowPageDLDockTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowpagedlnopagesdock.PublishToLiveNowPageDLNoPagesDockTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.publishtolivenowportletdldock.PublishToLiveNowPortletDLDockTests;
+import com.liferay.portalweb.stagingcommunity.documentlibrary.document.viewactivatedeactivatesitestaginglocallivedl.ViewActivateDeactivateSiteStagingLocalLiveDLTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -42,30 +40,22 @@ public class DocumentTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddStagingLocalLiveDLDocumentDocxTests.suite());
-		testSuite.addTest(AddStagingLocalLiveDLDocumentDocxNoDLTests.suite());
+		testSuite.addTest(AddDLDocumentSiteStagingLocalLiveDLTests.suite());
+		testSuite.addTest(AddDLDocumentSiteStagingLocalLiveNoDLTests.suite());
 		testSuite.addTest(
-			CopyFromLiveAddStagingLiveDLDocumentDocxMPTests.suite());
+			DeleteDLDocumentSiteStagingLocalLiveDLActionsTests.suite());
+		testSuite.addTest(DeleteLivePageSiteStagingLocalLiveDLTests.suite());
 		testSuite.addTest(
-			CopyFromLiveDeleteDLStagingLiveDocumentDocxMPTests.suite());
+			DeleteSiteStagingLocalLiveDLDLDocumentActionsTests.suite());
+		testSuite.addTest(PublishToLiveNowDLDocumentDockTests.suite());
+		testSuite.addTest(PublishToLiveNowDLDocumentNoDataDockTests.suite());
+		testSuite.addTest(PublishToLiveNowDLDocumentNoDLDockTests.suite());
+		testSuite.addTest(PublishToLiveNowDLDocumentNoPagesDockTests.suite());
+		testSuite.addTest(PublishToLiveNowPageDLDockTests.suite());
+		testSuite.addTest(PublishToLiveNowPageDLNoPagesDockTests.suite());
+		testSuite.addTest(PublishToLiveNowPortletDLDockTests.suite());
 		testSuite.addTest(
-			DeleteDLStagingLocalLiveDocumentDocxActionsTests.suite());
-		testSuite.addTest(
-			DeleteLivePageStagingLocalLiveDLDocumentDocxDockTests.suite());
-		testSuite.addTest(
-			DeleteStagingLocalLiveDLDocumentDocxActionsTests.suite());
-		testSuite.addTest(PublishToLiveNowDLDocumentDocxDockTests.suite());
-		testSuite.addTest(
-			PublishToLiveNowDLDocumentDocxNoDataDockTests.suite());
-		testSuite.addTest(PublishToLiveNowDLDocumentDocxNoDLDockTests.suite());
-		testSuite.addTest(
-			PublishToLiveNowDLDocumentDocxNoPagesDockTests.suite());
-		testSuite.addTest(PublishToLiveNowDLPageDocumentDocxDockTests.suite());
-		testSuite.addTest(
-			PublishToLiveNowDLPageDocumentDocxNoPageDockTests.suite());
-		testSuite.addTest(
-			PublishToLiveNowDLPortletDocumentDocxDockTests.suite());
-		testSuite.addTest(ViewStagingLiveNoneLiveDLDocumentDocxTests.suite());
+			ViewActivateDeactivateSiteStagingLocalLiveDLTests.suite());
 
 		return testSuite;
 	}

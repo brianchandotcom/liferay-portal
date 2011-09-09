@@ -165,7 +165,7 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 
 			WorkflowDefinition workflowDefinition = null;
 
-			if (inputStream != null) {
+			if (inputStream == null) {
 				String name = ParamUtil.getString(actionRequest, "name");
 				int version = ParamUtil.getInteger(actionRequest, "version");
 

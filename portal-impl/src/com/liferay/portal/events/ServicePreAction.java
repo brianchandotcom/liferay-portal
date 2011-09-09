@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mobile.device.Device;
-import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -1005,16 +1003,6 @@ public class ServicePreAction extends Action {
 			timeZone = company.getTimeZone();
 		}
 
-		// Device
-
-		Device device = (Device)session.getAttribute(WebKeys.DEVICE);
-
-		if (device == null) {
-			device = DeviceDetectionUtil.detectDevice(request);
-
-			session.setAttribute(WebKeys.DEVICE, device);
-		}
-
 		// Layouts
 
 		if (signedIn) {
@@ -1390,7 +1378,6 @@ public class ServicePreAction extends Action {
 		themeDisplay.setI18nLanguageId(i18nLanguageId);
 		themeDisplay.setI18nPath(i18nPath);
 		themeDisplay.setTimeZone(timeZone);
-		themeDisplay.setDevice(device);
 		themeDisplay.setLookAndFeel(contextPath, theme, colorScheme);
 		themeDisplay.setThemeCssFastLoad(themeCssFastLoad);
 		themeDisplay.setThemeImagesFastLoad(themeImagesFastLoad);

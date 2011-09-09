@@ -722,6 +722,18 @@ if (group.isControlPanel()) {
 	}
 }
 
+// Portlet decorate
+
+boolean portletDecorateDefault = GetterUtil.getBoolean(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), PropsValues.THEME_PORTLET_DECORATE_DEFAULT);
+
+boolean portletDecorate = GetterUtil.getBoolean(portletSetup.getValue("portletSetupShowBorders", String.valueOf(portletDecorateDefault)));
+
+Boolean portletDecorateObj = (Boolean)renderRequestImpl.getAttribute(WebKeys.PORTLET_DECORATE);
+
+if (portletDecorateObj != null) {
+	portletDecorate = portletDecorateObj.booleanValue();
+}
+
 // Make sure the Tiles context is reset for the next portlet
 
 if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
@@ -815,6 +827,10 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 		else if (portlet.isStaticEnd()) {
 			cssClasses += " portlet-static portlet-static-end";
 		}
+	}
+
+	if (!portletDecorate) {
+		cssClasses += " portlet-borderless";
 	}
 
 	cssClasses = "portlet-boundary portlet-boundary" + HtmlUtil.escapeAttribute(PortalUtil.getPortletNamespace(rootPortletId)) + StringPool.SPACE + cssClasses + StringPool.SPACE + portlet.getCssClassWrapper() + StringPool.SPACE + customCSSClassName;
@@ -983,7 +999,7 @@ else {
 			<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>' use="<%= modules %>">
 				Liferay.Portlet.onLoad(
 					{
-						canEditTitle: <%= showConfigurationIcon %>,
+						canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
 						columnPos: <%= columnPos %>,
 						isStatic: '<%= staticVar %>',
 						namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',

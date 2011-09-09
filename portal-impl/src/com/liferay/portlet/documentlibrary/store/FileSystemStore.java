@@ -123,7 +123,11 @@ public class FileSystemStore extends BaseStore {
 			throw new NoSuchDirectoryException(dirNameDir.getPath());
 		}
 
+		File parentFile = dirNameDir.getParentFile();
+
 		FileUtil.deltree(dirNameDir);
+
+		deleteEmptyAncestors(parentFile);
 	}
 
 	@Override
@@ -136,7 +140,11 @@ public class FileSystemStore extends BaseStore {
 			throw new NoSuchFileException(fileNameDir.getPath());
 		}
 
+		File parentFile = fileNameDir.getParentFile();
+
 		FileUtil.deltree(fileNameDir);
+
+		deleteEmptyAncestors(parentFile);
 	}
 
 	@Override
@@ -152,7 +160,11 @@ public class FileSystemStore extends BaseStore {
 			throw new NoSuchFileException(fileNameVersionFile.getPath());
 		}
 
+		File parentFile = fileNameVersionFile.getParentFile();
+
 		fileNameVersionFile.delete();
+
+		deleteEmptyAncestors(parentFile);
 	}
 
 	@Override
@@ -284,7 +296,11 @@ public class FileSystemStore extends BaseStore {
 
 			FileUtil.copyDirectory(fileNameDir, newFileNameDir);
 
+			File parentFile = fileNameDir.getParentFile();
+
 			FileUtil.deltree(fileNameDir);
+
+			deleteEmptyAncestors(parentFile);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -304,7 +320,11 @@ public class FileSystemStore extends BaseStore {
 
 			FileUtil.copyDirectory(fileNameDir, newFileNameDir);
 
+			File parentFile = fileNameDir.getParentFile();
+
 			FileUtil.deltree(fileNameDir);
+
+			deleteEmptyAncestors(parentFile);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -349,6 +369,16 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		fromFileNameVersionFile.renameTo(toFileNameVersionFile);
+	}
+
+	protected void deleteEmptyAncestors(File file) {
+		if (file.list().length == 0) {
+			File parentFile = file.getParentFile();
+
+			file.delete();
+
+			deleteEmptyAncestors(parentFile);
+		}
 	}
 
 	protected File getCompanyDir(long companyId) {

@@ -20,7 +20,10 @@ AUI().add(
 
 		var Notice = function(options) {
 			var instance = this;
+
 			options = options || {};
+
+			instance._node = options.node;
 			instance._noticeType = options.type || 'notice';
 			instance._noticeClass = 'popup-alert-notice';
 			instance._useCloseButton = true;
@@ -95,12 +98,24 @@ AUI().add(
 			_createHTML: function() {
 				var instance = this;
 
-				var notice = A.Node.create('<div class="' + instance._noticeClass + '" dynamic="true">' + instance._content + '</div>');
+				var content = instance._content;
+				var node = A.one(instance._node);
+
+				var notice = node || A.Node.create('<div dynamic="true"></div>');
+
+				if (content) {
+					notice.html(content);
+				}
+
+				notice.addClass(instance._noticeClass);
 
 				instance._addCloseButton(notice);
 				instance._addToggleButton(notice);
 
-				instance._body.append(notice);
+				if (!node || (node && !node.inDoc())) {
+					instance._body.append(notice);
+				}
+
 				instance._body.addClass('has-alerts');
 
 				instance._notice = notice;

@@ -144,7 +144,11 @@ if (layout != null) {
 <aui:script use="liferay-menu,liferay-notice,liferay-poller">
 	new Liferay.Menu();
 
-	Liferay.Notice.prototype.setClosing();
+	var liferayNotices = Liferay.Data.notices;
+
+	for (var i = 1; i < liferayNotices.length; i++) {
+		new Liferay.Notice(liferayNotices[i]);
+	}
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
 		<c:choose>

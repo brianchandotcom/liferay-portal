@@ -92,7 +92,25 @@
 			Data: {
 				isCustomizationView: function() {
 					return <%= (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>;
-				}
+				},
+
+				notices: [
+					null
+
+					<c:if test= "<%= themeDisplay.getPermissionChecker().isOmniadmin() && PortalUtil.isUpdateAvailable() %>">
+						,{
+							content: '<a class="update-available" href="<%= themeDisplay.getURLUpdateManager().toString() %>"><%= LanguageUtil.format(pageContext, "updates-are-available-for-liferay", false) %></a>',
+							toggleText: false
+						}
+					</c:if>
+
+					<c:if test="<%= ShutdownUtil.isInProcess() %>">
+						,{
+							node: '#lfrShutdownMessage',
+							toggleText: false
+						}
+					</c:if>
+				]
 			},
 
 			ThemeDisplay: {

@@ -1474,6 +1474,59 @@ public class LayoutUtil {
 	}
 
 	/**
+	* Returns the layout where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param templateLayoutUuid the template layout uuid
+	* @return the matching layout
+	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Layout findByG_P_TU(long groupId,
+		boolean privateLayout, java.lang.String templateLayoutUuid)
+		throws com.liferay.portal.NoSuchLayoutException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_P_TU(groupId, privateLayout, templateLayoutUuid);
+	}
+
+	/**
+	* Returns the layout where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param templateLayoutUuid the template layout uuid
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Layout fetchByG_P_TU(long groupId,
+		boolean privateLayout, java.lang.String templateLayoutUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_P_TU(groupId, privateLayout, templateLayoutUuid);
+	}
+
+	/**
+	* Returns the layout where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param templateLayoutUuid the template layout uuid
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Layout fetchByG_P_TU(long groupId,
+		boolean privateLayout, java.lang.String templateLayoutUuid,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_P_TU(groupId, privateLayout, templateLayoutUuid,
+			retrieveFromCache);
+	}
+
+	/**
 	* Returns all the layouts.
 	*
 	* @return the layouts
@@ -1648,6 +1701,22 @@ public class LayoutUtil {
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeByG_P_T(groupId, privateLayout, type);
+	}
+
+	/**
+	* Removes the layout where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param templateLayoutUuid the template layout uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_P_TU(long groupId, boolean privateLayout,
+		java.lang.String templateLayoutUuid)
+		throws com.liferay.portal.NoSuchLayoutException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByG_P_TU(groupId, privateLayout, templateLayoutUuid);
 	}
 
 	/**
@@ -1849,6 +1918,22 @@ public class LayoutUtil {
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().filterCountByG_P_T(groupId, privateLayout, type);
+	}
+
+	/**
+	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63;.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param templateLayoutUuid the template layout uuid
+	* @return the number of matching layouts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_P_TU(long groupId, boolean privateLayout,
+		java.lang.String templateLayoutUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByG_P_TU(groupId, privateLayout, templateLayoutUuid);
 	}
 
 	/**

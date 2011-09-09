@@ -530,6 +530,11 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="G_P_TU" return-type="Layout">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="templateLayoutUuid" />
+		</finder>
 
 		<!-- References -->
 

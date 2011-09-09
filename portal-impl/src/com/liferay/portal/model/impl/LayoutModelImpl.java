@@ -992,7 +992,15 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public void setTemplateLayoutUuid(String templateLayoutUuid) {
+		if (_originalTemplateLayoutUuid == null) {
+			_originalTemplateLayoutUuid = _templateLayoutUuid;
+		}
+
 		_templateLayoutUuid = templateLayoutUuid;
+	}
+
+	public String getOriginalTemplateLayoutUuid() {
+		return GetterUtil.getString(_originalTemplateLayoutUuid);
 	}
 
 	@Override
@@ -1152,6 +1160,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutModelImpl._originalIconImageId = layoutModelImpl._iconImageId;
 
 		layoutModelImpl._setOriginalIconImageId = false;
+
+		layoutModelImpl._originalTemplateLayoutUuid = layoutModelImpl._templateLayoutUuid;
 	}
 
 	@Override
@@ -1569,6 +1579,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _layoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;
 	private String _templateLayoutUuid;
+	private String _originalTemplateLayoutUuid;
 	private transient ExpandoBridge _expandoBridge;
 	private Layout _escapedModelProxy;
 }

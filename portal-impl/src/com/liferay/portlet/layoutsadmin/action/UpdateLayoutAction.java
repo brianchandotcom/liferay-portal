@@ -206,8 +206,6 @@ public class UpdateLayoutAction extends JSONAction {
 					getLayoutSetsByLayoutSetPrototypeUuid(
 						layoutSetPrototype.getUuid());
 
-				serviceContext.setUuid(layout.getUuid());
-
 				for (LayoutSet layoutSet : layoutSets) {
 					Layout addedLayout = LayoutServiceUtil.addLayout(
 						layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
@@ -215,6 +213,7 @@ public class UpdateLayoutAction extends JSONAction {
 						friendlyURL, locked, serviceContext);
 
 					addedLayout.setModifiedDate(layout.getModifiedDate());
+					addedLayout.setTemplateLayoutUuid(layout.getUuid());
 
 					UnicodeProperties typeSettingsProperties =
 						addedLayout.getTypeSettingsProperties();

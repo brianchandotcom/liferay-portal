@@ -304,6 +304,14 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 			existingLayoutModelImpl.getOriginalPrivateLayout());
 		assertTrue(Validator.equals(existingLayoutModelImpl.getFriendlyURL(),
 				existingLayoutModelImpl.getOriginalFriendlyURL()));
+
+		assertEquals(existingLayoutModelImpl.getGroupId(),
+			existingLayoutModelImpl.getOriginalGroupId());
+		assertEquals(existingLayoutModelImpl.getPrivateLayout(),
+			existingLayoutModelImpl.getOriginalPrivateLayout());
+		assertTrue(Validator.equals(
+				existingLayoutModelImpl.getTemplateLayoutUuid(),
+				existingLayoutModelImpl.getOriginalTemplateLayoutUuid()));
 	}
 
 	protected Layout addLayout() throws Exception {

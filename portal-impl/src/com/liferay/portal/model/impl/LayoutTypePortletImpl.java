@@ -124,7 +124,7 @@ public class LayoutTypePortletImpl
 			}
 
 			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layout.getUuid(), group.getGroupId());
+				layout.getTemplateLayoutUuid(), group.getGroupId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.mobiledevicerules.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,54 @@ package com.liferay.portlet.mobiledevicerules.service.http;
  * @generated
  */
 public class MDRRuleGroupInstanceServiceSoap {
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap addRuleGroupInstance(
+		long groupId, java.lang.String className, long classPK,
+		long ruleGroupId, int priority,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance returnValue =
+				MDRRuleGroupInstanceServiceUtil.addRuleGroupInstance(groupId,
+					className, classPK, ruleGroupId, priority, serviceContext);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteRuleGroupInstance(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap ruleGroupInstance)
+		throws RemoteException {
+		try {
+			MDRRuleGroupInstanceServiceUtil.deleteRuleGroupInstance(com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupInstanceModelImpl.toModel(
+					ruleGroupInstance));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap updateRuleGroupInstance(
+		long ruleGroupInstanceId, int priority) throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance returnValue =
+				MDRRuleGroupInstanceServiceUtil.updateRuleGroupInstance(ruleGroupInstanceId,
+					priority);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MDRRuleGroupInstanceServiceSoap.class);
 }

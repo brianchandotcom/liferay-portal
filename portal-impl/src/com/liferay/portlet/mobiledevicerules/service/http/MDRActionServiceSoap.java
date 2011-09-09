@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.mobiledevicerules.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.portlet.mobiledevicerules.service.MDRActionServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,47 @@ package com.liferay.portlet.mobiledevicerules.service.http;
  * @generated
  */
 public class MDRActionServiceSoap {
+	public static void deleteAction(
+		com.liferay.portlet.mobiledevicerules.model.MDRActionSoap action)
+		throws RemoteException {
+		try {
+			MDRActionServiceUtil.deleteAction(com.liferay.portlet.mobiledevicerules.model.impl.MDRActionModelImpl.toModel(
+					action));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRActionSoap fetchAction(
+		long actionId) throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRAction returnValue = MDRActionServiceUtil.fetchAction(actionId);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRActionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRActionSoap getAction(
+		long actionId) throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRAction returnValue = MDRActionServiceUtil.getAction(actionId);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRActionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MDRActionServiceSoap.class);
 }

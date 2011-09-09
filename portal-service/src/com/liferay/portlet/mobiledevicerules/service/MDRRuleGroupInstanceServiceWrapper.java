@@ -30,6 +30,31 @@ public class MDRRuleGroupInstanceServiceWrapper
 		_mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
 	}
 
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance addRuleGroupInstance(
+		long groupId, java.lang.String className, long classPK,
+		long ruleGroupId, int priority,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
+			className, classPK, ruleGroupId, priority, serviceContext);
+	}
+
+	public void deleteRuleGroupInstance(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance ruleGroupInstance)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mdrRuleGroupInstanceService.deleteRuleGroupInstance(ruleGroupInstance);
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance updateRuleGroupInstance(
+		long ruleGroupInstanceId, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupInstanceService.updateRuleGroupInstance(ruleGroupInstanceId,
+			priority);
+	}
+
 	public MDRRuleGroupInstanceService getWrappedMDRRuleGroupInstanceService() {
 		return _mdrRuleGroupInstanceService;
 	}

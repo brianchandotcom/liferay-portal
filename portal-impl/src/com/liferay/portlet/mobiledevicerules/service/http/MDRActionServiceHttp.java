@@ -14,6 +14,15 @@
 
 package com.liferay.portlet.mobiledevicerules.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.service.http.TunnelUtil;
+
+import com.liferay.portlet.mobiledevicerules.service.MDRActionServiceUtil;
+
 /**
  * <p>
  * This class provides a HTTP utility for the
@@ -45,4 +54,313 @@ package com.liferay.portlet.mobiledevicerules.service.http;
  * @generated
  */
 public class MDRActionServiceHttp {
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction addMDRAction(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
+		long classPK, long ruleGroupInstanceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+					"addMDRAction", _addMDRActionParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					className, classPK, ruleGroupInstanceId, nameMap,
+					descriptionMap, type, typeSettingsProperties, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.mobiledevicerules.model.MDRAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction addMDRAction(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
+		long classPK, long ruleGroupInstanceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+					"addMDRAction", _addMDRActionParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					className, classPK, ruleGroupInstanceId, nameMap,
+					descriptionMap, type, typeSettings, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.mobiledevicerules.model.MDRAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void deleteAction(HttpPrincipal httpPrincipal,
+		com.liferay.portlet.mobiledevicerules.model.MDRAction action)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+					"deleteAction", _deleteActionParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, action);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchAction(
+		HttpPrincipal httpPrincipal, long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+					"fetchAction", _fetchActionParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, actionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.mobiledevicerules.model.MDRAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction getAction(
+		HttpPrincipal httpPrincipal, long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+					"getAction", _getActionParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, actionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.mobiledevicerules.model.MDRAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction updateAction(
+		HttpPrincipal httpPrincipal, long actionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+					"updateAction", _updateActionParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					actionId, nameMap, descriptionMap, type,
+					typeSettingsProperties, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.mobiledevicerules.model.MDRAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction updateMDRAction(
+		HttpPrincipal httpPrincipal, long actionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+					"updateMDRAction", _updateMDRActionParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					actionId, nameMap, descriptionMap, type, typeSettings,
+					serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.mobiledevicerules.model.MDRAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MDRActionServiceHttp.class);
+	private static final Class<?>[] _addMDRActionParameterTypes0 = new Class[] {
+			long.class, java.lang.String.class, long.class, long.class,
+			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _addMDRActionParameterTypes1 = new Class[] {
+			long.class, java.lang.String.class, long.class, long.class,
+			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			java.lang.String.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteActionParameterTypes2 = new Class[] {
+			com.liferay.portlet.mobiledevicerules.model.MDRAction.class
+		};
+	private static final Class<?>[] _fetchActionParameterTypes3 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getActionParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateActionParameterTypes5 = new Class[] {
+			long.class, java.util.Map.class, java.util.Map.class,
+			java.lang.String.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateMDRActionParameterTypes6 = new Class[] {
+			long.class, java.util.Map.class, java.util.Map.class,
+			java.lang.String.class, java.lang.String.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
 }

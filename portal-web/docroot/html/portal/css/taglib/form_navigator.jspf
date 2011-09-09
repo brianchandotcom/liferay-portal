@@ -111,6 +111,7 @@
 }
 
 .taglib-form-navigator .form-section {
+	display: table;
 	float: left;
 	width: 63%;
 }

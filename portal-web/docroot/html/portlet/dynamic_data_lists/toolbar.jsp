@@ -51,7 +51,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		Liferay.Util.openDDMPortlet(
 			{
 				dialog: {
-					stack: false,
 					width:820
 				},
 				storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',

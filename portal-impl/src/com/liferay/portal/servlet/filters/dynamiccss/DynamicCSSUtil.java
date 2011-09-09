@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -119,6 +121,9 @@ public class DynamicCSSUtil {
 		if (portalThemeMatcher.find()) {
 			String themePathId = portalThemeMatcher.group(1);
 
+			themePathId = StringUtil.replace(
+				themePathId, StringPool.UNDERLINE, StringPool.BLANK);
+
 			themeId = PortalUtil.getJsSafePortletId(themePathId);
 		}
 		else {
@@ -127,6 +132,9 @@ public class DynamicCSSUtil {
 
 			if (pluginThemeMatcher.find()) {
 				String themePathId = pluginThemeMatcher.group(1);
+
+				themePathId = StringUtil.replace(
+					themePathId, StringPool.UNDERLINE, StringPool.BLANK);
 
 				StringBundler sb = new StringBundler(4);
 

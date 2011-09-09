@@ -902,6 +902,7 @@
 		<field name="payload" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="archived" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.UserTracker">
 		<field name="userTrackerId" type="long" />

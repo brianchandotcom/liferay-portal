@@ -38,6 +38,7 @@ public class UserNotificationEventSoap implements Serializable {
 		soapModel.setTimestamp(model.getTimestamp());
 		soapModel.setDeliverBy(model.getDeliverBy());
 		soapModel.setPayload(model.getPayload());
+		soapModel.setArchived(model.getArchived());
 
 		return soapModel;
 	}
@@ -157,6 +158,18 @@ public class UserNotificationEventSoap implements Serializable {
 		_payload = payload;
 	}
 
+	public boolean getArchived() {
+		return _archived;
+	}
+
+	public boolean isArchived() {
+		return _archived;
+	}
+
+	public void setArchived(boolean archived) {
+		_archived = archived;
+	}
+
 	private String _uuid;
 	private long _userNotificationEventId;
 	private long _companyId;
@@ -165,4 +178,5 @@ public class UserNotificationEventSoap implements Serializable {
 	private long _timestamp;
 	private long _deliverBy;
 	private String _payload;
+	private boolean _archived;
 }

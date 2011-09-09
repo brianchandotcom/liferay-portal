@@ -266,13 +266,13 @@ public class UserNotificationEventLocalServiceUtil {
 
 	public static com.liferay.portal.model.UserNotificationEvent addUserNotificationEvent(
 		long userId, java.lang.String type, long timestamp, long deliverBy,
-		java.lang.String payload,
+		java.lang.String payload, boolean archived,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addUserNotificationEvent(userId, type, timestamp,
-			deliverBy, payload, serviceContext);
+			deliverBy, payload, archived, serviceContext);
 	}
 
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> addUserNotificationEvents(
@@ -297,6 +297,31 @@ public class UserNotificationEventLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserNotificationEvents(userId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
+		long userId, boolean archived)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserNotificationEvents(userId, archived);
+	}
+
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
+		long userId, boolean archived, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserNotificationEvents(userId, archived, start, end);
+	}
+
+	public static com.liferay.portal.model.UserNotificationEvent updateUserNotificationEvent(
+		java.lang.String uuid, boolean archive)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateUserNotificationEvent(uuid, archive);
+	}
+
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> updateUserNotificationEvents(
+		java.util.Collection<java.lang.String> uuids, boolean archive)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateUserNotificationEvents(uuids, archive);
 	}
 
 	public static UserNotificationEventLocalService getService() {

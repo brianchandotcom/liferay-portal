@@ -80,6 +80,8 @@ public class UserNotificationEventPersistenceTest
 
 		newUserNotificationEvent.setPayload(randomString());
 
+		newUserNotificationEvent.setArchived(randomBoolean());
+
 		_persistence.update(newUserNotificationEvent, false);
 
 		UserNotificationEvent existingUserNotificationEvent = _persistence.findByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
@@ -100,6 +102,8 @@ public class UserNotificationEventPersistenceTest
 			newUserNotificationEvent.getDeliverBy());
 		assertEquals(existingUserNotificationEvent.getPayload(),
 			newUserNotificationEvent.getPayload());
+		assertEquals(existingUserNotificationEvent.getArchived(),
+			newUserNotificationEvent.getArchived());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -228,6 +232,8 @@ public class UserNotificationEventPersistenceTest
 		userNotificationEvent.setDeliverBy(nextLong());
 
 		userNotificationEvent.setPayload(randomString());
+
+		userNotificationEvent.setArchived(randomBoolean());
 
 		_persistence.update(userNotificationEvent, false);
 

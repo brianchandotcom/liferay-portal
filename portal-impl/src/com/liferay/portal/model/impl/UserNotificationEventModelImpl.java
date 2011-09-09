@@ -63,12 +63,13 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			{ "type_", Types.VARCHAR },
 			{ "timestamp", Types.BIGINT },
 			{ "deliverBy", Types.BIGINT },
-			{ "payload", Types.CLOB }
+			{ "payload", Types.CLOB },
+			{ "archived", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliverBy LONG,payload TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliverBy LONG,payload TEXT null,archived BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationEvent";
-	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationEvent.timestamp ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationEvent.timestamp ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationEvent.timestamp DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationEvent.timestamp DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -196,6 +197,18 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		_payload = payload;
 	}
 
+	public boolean getArchived() {
+		return _archived;
+	}
+
+	public boolean isArchived() {
+		return _archived;
+	}
+
+	public void setArchived(boolean archived) {
+		_archived = archived;
+	}
+
 	@Override
 	public UserNotificationEvent toEscapedModel() {
 		if (isEscapedModel()) {
@@ -239,6 +252,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		userNotificationEventImpl.setTimestamp(getTimestamp());
 		userNotificationEventImpl.setDeliverBy(getDeliverBy());
 		userNotificationEventImpl.setPayload(getPayload());
+		userNotificationEventImpl.setArchived(getArchived());
 
 		userNotificationEventImpl.resetOriginalValues();
 
@@ -257,6 +271,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		else {
 			value = 0;
 		}
+
+		value = value * -1;
 
 		if (value != 0) {
 			return value;
@@ -337,12 +353,14 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			userNotificationEventCacheModel.payload = null;
 		}
 
+		userNotificationEventCacheModel.archived = getArchived();
+
 		return userNotificationEventCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -360,13 +378,15 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append(getDeliverBy());
 		sb.append(", payload=");
 		sb.append(getPayload());
+		sb.append(", archived=");
+		sb.append(getArchived());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserNotificationEvent");
@@ -404,6 +424,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			"<column><column-name>payload</column-name><column-value><![CDATA[");
 		sb.append(getPayload());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>archived</column-name><column-value><![CDATA[");
+		sb.append(getArchived());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -423,6 +447,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private long _timestamp;
 	private long _deliverBy;
 	private String _payload;
+	private boolean _archived;
 	private transient ExpandoBridge _expandoBridge;
 	private UserNotificationEvent _escapedModelProxy;
 }

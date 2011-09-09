@@ -1013,6 +1013,7 @@
 		<property name="timestamp" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="deliverBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="payload" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="archived" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserTrackerImpl" table="UserTracker">
 		<cache usage="read-write" />

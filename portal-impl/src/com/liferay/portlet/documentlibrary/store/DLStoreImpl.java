@@ -77,7 +77,9 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 		validate(fileName, validateFileExtension, bytes);
 
-		AntivirusScannerUtil.scan(bytes);
+		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
+			AntivirusScannerUtil.scan(bytes);
+		}
 
 		store.addFile(companyId, repositoryId, fileName, bytes);
 	}
@@ -89,7 +91,9 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 		validate(fileName, validateFileExtension, file);
 
-		AntivirusScannerUtil.scan(file);
+		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
+			AntivirusScannerUtil.scan(file);
+		}
 
 		store.addFile(companyId, repositoryId, fileName, file);
 	}
@@ -113,7 +117,9 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 
 		validate(fileName, validateFileExtension, is);
 
-		if (!AntivirusScannerUtil.isActive()) {
+		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
+			!AntivirusScannerUtil.isActive()) {
+
 			store.addFile(companyId, repositoryId, fileName, is);
 		}
 		else {
@@ -403,7 +409,9 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 			fileName, fileExtension, sourceFileName,
 			validateFileExtension, file);
 
-		AntivirusScannerUtil.scan(file);
+		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
+			AntivirusScannerUtil.scan(file);
+		}
 
 		store.updateFile(companyId, repositoryId, fileName, versionLabel, file);
 	}
@@ -431,7 +439,9 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 			fileName, fileExtension, sourceFileName,
 			validateFileExtension, is);
 
-		if (!AntivirusScannerUtil.isActive()) {
+		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
+			!AntivirusScannerUtil.isActive()) {
+
 			store.updateFile(
 				companyId, repositoryId, fileName, versionLabel, is);
 		}

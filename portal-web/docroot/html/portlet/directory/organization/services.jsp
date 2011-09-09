@@ -80,10 +80,14 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 					for (int j = 0; j < days.length; j++) {
 						int curOpen = openArray[j];
 
+						cal.set(Calendar.HOUR_OF_DAY, curOpen / 100);
+						cal.set(Calendar.MINUTE, curOpen % 100);
+						cal.set(Calendar.SECOND, 0);
+						cal.set(Calendar.MILLISECOND, 0);
 					%>
 
 						<td>
-							<%= curOpen != -1 ? timeFormat.format(curOpen) : "" %>
+							<%= curOpen != -1 ? timeFormat.format(cal.getTime()) : "" %>
 						</td>
 
 					<%
@@ -100,10 +104,15 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 					for (int j = 0; j < days.length; j++) {
 						String curParam = paramPrefixes[j];
 						int curClose = closeArray[j];
+
+						cal.set(Calendar.HOUR_OF_DAY, curClose / 100);
+						cal.set(Calendar.MINUTE, curClose % 100);
+						cal.set(Calendar.SECOND, 0);
+						cal.set(Calendar.MILLISECOND, 0);
 					%>
 
 						<td>
-							<%= curClose != -1 ? timeFormat.format(curClose) : "" %>
+							<%= curClose != -1 ? timeFormat.format(cal.getTime()) : "" %>
 						</td>
 
 					<%

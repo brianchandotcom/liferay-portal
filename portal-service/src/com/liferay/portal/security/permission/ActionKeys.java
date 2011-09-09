@@ -102,6 +102,11 @@ public class ActionKeys {
 
 	public static final String ADD_ROLE = "ADD_ROLE";
 
+	public static final String ADD_RULE_GROUP = "ADD_RULE_GROUP";
+
+	public static final String ADD_RULE_GROUP_INSTANCE =
+		"ADD_RULE_GROUP_INSTANCE";
+
 	public static final String ADD_SHORTCUT = "ADD_SHORTCUT";
 
 	public static final String ADD_STRUCTURE = "ADD_STRUCTURE";

@@ -264,7 +264,7 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction addAction(
 		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId,
+		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
@@ -272,13 +272,13 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mdrActionLocalService.addAction(groupId, className, classPK,
-			ruleGroupId, nameMap, descriptionMap, type, typeSettings,
+			ruleGroupInstanceId, nameMap, descriptionMap, type, typeSettings,
 			serviceContext);
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction addAction(
 		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId,
+		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type,
@@ -287,8 +287,8 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mdrActionLocalService.addAction(groupId, className, classPK,
-			ruleGroupId, nameMap, descriptionMap, type, typeSettingsProperties,
-			serviceContext);
+			ruleGroupInstanceId, nameMap, descriptionMap, type,
+			typeSettingsProperties, serviceContext);
 	}
 
 	public void deleteAction(long actionId)
@@ -302,9 +302,9 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
 		_mdrActionLocalService.deleteAction(action);
 	}
 
-	public void deleteActions(java.lang.String className, long classPK)
+	public void deleteActions(long ruleGroupInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_mdrActionLocalService.deleteActions(className, classPK);
+		_mdrActionLocalService.deleteActions(ruleGroupInstanceId);
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction fetchAction(
@@ -314,20 +314,20 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
 	}
 
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getActions(
-		java.lang.String className, long classPK)
+		long ruleGroupInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mdrActionLocalService.getActions(className, classPK);
+		return _mdrActionLocalService.getActions(ruleGroupInstanceId);
 	}
 
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getActions(
-		java.lang.String className, long classPK, int start, int end)
+		long ruleGroupInstanceId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mdrActionLocalService.getActions(className, classPK, start, end);
+		return _mdrActionLocalService.getActions(ruleGroupInstanceId, start, end);
 	}
 
-	public int getActionsCount(java.lang.String className, long classPK)
+	public int getActionsCount(long ruleGroupInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mdrActionLocalService.getActionsCount(className, classPK);
+		return _mdrActionLocalService.getActionsCount(ruleGroupInstanceId);
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction updateAction(

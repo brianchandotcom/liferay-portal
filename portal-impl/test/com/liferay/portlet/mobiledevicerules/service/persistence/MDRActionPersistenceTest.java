@@ -88,7 +88,7 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 
 		newMDRAction.setClassPK(nextLong());
 
-		newMDRAction.setRuleGroupId(nextLong());
+		newMDRAction.setRuleGroupInstanceId(nextLong());
 
 		newMDRAction.setName(randomString());
 
@@ -116,8 +116,8 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingMDRAction.getClassNameId(),
 			newMDRAction.getClassNameId());
 		assertEquals(existingMDRAction.getClassPK(), newMDRAction.getClassPK());
-		assertEquals(existingMDRAction.getRuleGroupId(),
-			newMDRAction.getRuleGroupId());
+		assertEquals(existingMDRAction.getRuleGroupInstanceId(),
+			newMDRAction.getRuleGroupInstanceId());
 		assertEquals(existingMDRAction.getName(), newMDRAction.getName());
 		assertEquals(existingMDRAction.getDescription(),
 			newMDRAction.getDescription());
@@ -269,7 +269,7 @@ public class MDRActionPersistenceTest extends BasePersistenceTestCase {
 
 		mdrAction.setClassPK(nextLong());
 
-		mdrAction.setRuleGroupId(nextLong());
+		mdrAction.setRuleGroupInstanceId(nextLong());
 
 		mdrAction.setName(randomString());
 

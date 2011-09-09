@@ -26,7 +26,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="ruleGroupId" type="long" />
+		<column name="ruleGroupInstanceId" type="long" />
 		<column name="name" type="String"  localized="true" />
 		<column name="description" type="String" localized="true"/>
 		<column name="type" type="String" />
@@ -34,12 +34,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="RuleGroupId" return-type="Collection">
-			<finder-column name="ruleGroupId" />
-		</finder>
-		<finder name="C_C" return-type="Collection">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+		<finder name="RuleGroupInstanceId" return-type="Collection">
+			<finder-column name="ruleGroupInstanceId" />
 		</finder>
 	</entity>
 	<entity name="MDRRule" local-service="true" remote-service="true" uuid="true">
@@ -106,5 +102,45 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
+	</entity>
+	<entity name="MDRRuleGroupInstance" local-service="true" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="ruleGroupInstanceId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="ruleGroupId" type="long"/>
+		<column name="priority" type="int"/>
+
+		<!-- Finder methods -->
+
+		<finder name="RuleGroupId" return-type="Collection">
+			<finder-column name="ruleGroupId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_R" return-type="MDRRuleGroupInstance">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="ruleGroupId" />
+		</finder>
 	</entity>
 </service-builder>

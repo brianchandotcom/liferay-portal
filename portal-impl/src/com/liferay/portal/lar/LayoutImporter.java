@@ -785,10 +785,7 @@ public class LayoutImporter {
 		String friendlyURL = layout.getFriendlyURL();
 
 		if (layoutsImportMode.equals(
-				PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_ADD_AS_NEW) ||
-			layoutsImportMode.equals(
-				PortletDataHandlerKeys.
-					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+				PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_ADD_AS_NEW)) {
 
 			layoutId = LayoutLocalServiceUtil.getNextLayoutId(
 				groupId, privateLayout);
@@ -816,6 +813,13 @@ public class LayoutImporter {
 				layoutId = LayoutLocalServiceUtil.getNextLayoutId(
 					groupId, privateLayout);
 			}
+		}
+		else if (layoutsImportMode.equals(
+					PortletDataHandlerKeys.
+						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			existingLayout = LayoutUtil.fetchByG_P_TU(
+				groupId, privateLayout, layout.getUuid());
 		}
 		else {
 

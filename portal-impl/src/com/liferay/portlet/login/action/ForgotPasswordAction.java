@@ -196,7 +196,7 @@ public class ForgotPasswordAction extends PortletAction {
 			}
 		}
 
-		if ((user != null) && !user.isActive()) {
+		if (!user.isActive()) {
 			throw new UserActiveException();
 		}
 

@@ -298,6 +298,7 @@
 			<basic name="priority" />
 			<basic name="layoutPrototypeUuid" />
 			<basic name="layoutPrototypeLinkEnabled" />
+			<basic name="templateLayoutUuid" />
 			<transient name="descriptionMap" />
 			<transient name="keywordsMap" />
 			<transient name="nameMap" />

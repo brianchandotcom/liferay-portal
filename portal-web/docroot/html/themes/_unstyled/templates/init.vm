@@ -152,10 +152,6 @@
 	#set ($toggle_controls_url = "javascript:;")
 #end
 
-#if ($permissionChecker.isOmniadmin() && $portalUtil.isUpdateAvailable())
-	#set ($update_available_url = $htmlUtil.escape($theme_display.getURLUpdateManager().toString()))
-#end
-
 ## ---------- Page ---------- ##
 
 #set ($the_title = "")

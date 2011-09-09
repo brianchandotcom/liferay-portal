@@ -526,11 +526,11 @@ public class AssetCategoryLocalServiceImpl
 			throw new AssetCategoryNameException();
 		}
 
-		List<AssetCategory> categories = assetCategoryPersistence.findByP_N(
-			parentCategoryId, name);
+		AssetCategory category = assetCategoryPersistence.fetchByP_N_V(
+			parentCategoryId, name, vocabularyId);
 
-		if ((categories.size() > 0) &&
-			(categories.get(0).getCategoryId() != categoryId)) {
+		if ((category != null) &&
+			(category.getCategoryId() != categoryId)) {
 
 			StringBundler sb = new StringBundler(4);
 

@@ -320,10 +320,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		StringBundler sb = null;
 
 		if (fileVersionId > 0) {
-			sb = new StringBundler(6);
+			sb = new StringBundler(5);
 		}
 		else {
-			sb = new StringBundler(4);
+			sb = new StringBundler(3);
 		}
 
 		if (preview) {
@@ -334,8 +334,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 
 		sb.append(groupId);
-		sb.append(StringPool.SLASH);
-		sb.append(fileEntryId);
+		sb.append(DLUtil.getScalablePath(fileEntryId));
 
 		if (fileVersionId > 0) {
 			sb.append(StringPool.SLASH);

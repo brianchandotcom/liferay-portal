@@ -51,9 +51,11 @@ public class MicroblogsEntryTests extends BaseTests {
 		testSuite.addTest(AddMicroblogsContentViewableByFollowersTests.suite());
 		testSuite.addTest(AddMicroblogsContentViewableByFriendsTests.suite());
 		testSuite.addTest(DeleteMicroblogsContentTests.suite());
-		testSuite.addTest(EditMicroblogsContentViewableByCoworkersTests.suite());
+		testSuite.addTest(
+			EditMicroblogsContentViewableByCoworkersTests.suite());
 		testSuite.addTest(EditMicroblogsContentViewableByEveryoneTests.suite());
-		testSuite.addTest(EditMicroblogsContentViewableByFollowersTests.suite());
+		testSuite.addTest(
+			EditMicroblogsContentViewableByFollowersTests.suite());
 		testSuite.addTest(EditMicroblogsContentViewableByFriendsTests.suite());
 		testSuite.addTest(SOFr_DeleteReplyMicroblogsContentTests.suite());
 		testSuite.addTest(SOFr_DeleteRepostMicroblogsContentTests.suite());

@@ -20,12 +20,6 @@
 User selUser = (User)request.getAttribute("user.selUser");
 Contact selContact = (Contact)request.getAttribute("user.selContact");
 
-String displayEmailAddress = StringPool.BLANK;
-
-if (selUser != null) {
-	displayEmailAddress = selUser.getDisplayEmailAddress();
-}
-
 Calendar birthday = CalendarFactoryUtil.getCalendar();
 
 birthday.set(Calendar.MONTH, Calendar.JANUARY);
@@ -88,13 +82,30 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 	<c:choose>
 		<c:when test="<%= (selUser != null) && !UsersAdminUtil.hasUpdateEmailAddress(permissionChecker, selUser) %>">
 			<aui:field-wrapper name="emailAddress">
-				<%= displayEmailAddress %>
+				<%= selUser.getDisplayEmailAddress() %>
 
 				<aui:input name="emailAddress" type="hidden" value="<%= selUser.getEmailAddress() %>" />
 			</aui:field-wrapper>
 		</c:when>
+		<c:when test="<%= (selUser != null) %>">
+			<%
+				User selUserDisplayEmailAddress = (User)selUser.clone();
+
+				selUserDisplayEmailAddress.setEmailAddress(selUserDisplayEmailAddress.getDisplayEmailAddress());
+			%>
+
+			<aui:input bean="<%= selUserDisplayEmailAddress %>" model="<%= User.class %>" name="emailAddress">
+				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
+					<aui:validator name="required" />
+				</c:if>
+			</aui:input>
+		</c:when>
 		<c:otherwise>
-			<aui:input name="emailAddress" />
+			<aui:input name="emailAddress">
+				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
+					<aui:validator name="required" />
+				</c:if>
+			</aui:input>
 		</c:otherwise>
 	</c:choose>
 

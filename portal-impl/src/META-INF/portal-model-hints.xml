@@ -823,7 +823,6 @@
 		</field>
 		<field name="emailAddress" type="String">
 			<validator name="email" />
-			<validator name="required" />
 		</field>
 		<field name="facebookId" type="long" />
 		<field name="openId" type="String">

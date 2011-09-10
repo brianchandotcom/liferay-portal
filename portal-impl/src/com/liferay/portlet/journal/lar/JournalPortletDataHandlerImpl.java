@@ -309,8 +309,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append(portletDataContext.getPortletPath(
-			PortletKeys.JOURNAL, isScopedArticle));
+		sb.append(
+			portletDataContext.getPortletPath(
+				PortletKeys.JOURNAL, isScopedArticle));
 		sb.append("/articles/");
 		sb.append(article.getArticleResourceUuid());
 		sb.append(StringPool.SLASH);

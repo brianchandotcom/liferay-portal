@@ -46,6 +46,8 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",

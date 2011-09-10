@@ -45,6 +45,10 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//h3[@class='asset-title']/a"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
+			selenium.getText("//div[@class='asset-summary']"));
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -127,7 +131,7 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("//h3[@class='asset-title']/a"));
-		assertFalse(selenium.isTextPresent("//div[@class='asset-summary']"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 	}
 }

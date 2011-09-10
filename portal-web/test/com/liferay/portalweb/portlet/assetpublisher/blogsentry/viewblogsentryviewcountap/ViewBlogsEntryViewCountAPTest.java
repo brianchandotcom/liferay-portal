@@ -75,10 +75,6 @@ public class ViewBlogsEntryViewCountAPTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//span[@class='metadata-entry metadata-view-count']",
 				RuntimeVariables.getValue("viewCount")));
-
-		String viewCount2 = selenium.getFirstNumberIncrement(
-				"//span[@class='metadata-entry metadata-view-count']");
-		RuntimeVariables.setValue("viewCount2", viewCount2);
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -111,6 +107,6 @@ public class ViewBlogsEntryViewCountAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//span[@class='view-count']",
-				RuntimeVariables.getValue("viewCount2")));
+				RuntimeVariables.getValue("viewCount")));
 	}
 }

@@ -122,6 +122,24 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//h3[@class='asset-title']/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),

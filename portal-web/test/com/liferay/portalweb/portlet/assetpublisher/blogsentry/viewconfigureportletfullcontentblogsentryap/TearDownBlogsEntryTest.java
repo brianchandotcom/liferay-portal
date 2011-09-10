@@ -60,6 +60,8 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
@@ -75,6 +77,8 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
@@ -90,6 +94,8 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
@@ -105,6 +111,8 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
@@ -120,6 +128,8 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()

@@ -73,7 +73,6 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("Blogs Entry"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -121,6 +120,8 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -128,7 +129,7 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//h3/a")) {
+				if (selenium.isVisible("//h3[@class='asset-title']/a")) {
 					break;
 				}
 			}
@@ -140,7 +141,7 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//h3/a"));
+			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='asset-summary']"));
 	}

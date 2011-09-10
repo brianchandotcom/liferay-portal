@@ -303,6 +303,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		repository.setPortletId(portletId);
 		repository.setTypeSettingsProperties(typeSettingsProperties);
 
+
 		if (classNameId != getDefaultClassNameId()) {
 			try {
 				createRepositoryImpl(repository, classNameId);
@@ -385,6 +386,18 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		long repositoryId = repositoryEntry.getRepositoryId();
 
 		return (BaseRepository)getRepositoryImpl(repositoryId);
+	}
+
+	/**
+	 * @deprecated Replaced by {@link #createRepositoryImpl(Repository, long)}
+	 */
+	protected BaseRepository createRepositoryImpl(
+			long repositoryId, long classNameId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return createRepositoryImpl(repository.getRepositoryId(), classNameId);
 	}
 
 	protected BaseRepository createRepositoryImpl(

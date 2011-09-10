@@ -90,10 +90,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				dlFolderLocalService, dlFolderService, repositoryId);
 		}
 		else {
-			Repository repository = getRepository(repositoryId);
-
 			BaseRepository baseRepository = createRepositoryImpl(
-				repository, classNameId);
+				repositoryId, classNameId);
 
 			localRepositoryImpl = baseRepository.getLocalRepository();
 		}
@@ -173,9 +171,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				dlFolderLocalService, dlFolderService, repositoryId);
 		}
 		else {
-			Repository repository = getRepository(repositoryId);
-
-			repositoryImpl = createRepositoryImpl(repository, classNameId);
+			repositoryImpl = createRepositoryImpl(repositoryId, classNameId);
 		}
 
 		checkRepository(repositoryId);
@@ -302,11 +298,16 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		repository.setDescription(description);
 		repository.setPortletId(portletId);
 		repository.setTypeSettingsProperties(typeSettingsProperties);
+		repository.setDlFolderId(
+			getDLFolderId(
+				user, groupId, repositoryId, parentFolderId, name, description,
+				serviceContext));
 
+		repositoryPersistence.update(repository, false);
 
 		if (classNameId != getDefaultClassNameId()) {
 			try {
-				createRepositoryImpl(repository, classNameId);
+				createRepositoryImpl(repositoryId, classNameId);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -314,13 +315,6 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				throw new InvalidRepositoryException(e);
 			}
 		}
-
-		repository.setDlFolderId(
-			getDLFolderId(
-				user, groupId, repositoryId, parentFolderId, name, description,
-				serviceContext));
-
-		repositoryPersistence.update(repository, false);
 
 		return repositoryId;
 	}
@@ -388,7 +382,6 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		return (BaseRepository)getRepositoryImpl(repositoryId);
 	}
 
-	@Deprecated
 	protected BaseRepository createRepositoryImpl(
 			long repositoryId, long classNameId)
 		throws PortalException, SystemException {
@@ -443,65 +436,6 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		}
 
 		setupRepository(repositoryId, repository, baseRepository);
-
-		baseRepository.initRepository();
-
-		return baseRepository;
-	}
-
-
-	protected BaseRepository createRepositoryImpl(
-			Repository repository, long classNameId)
-		throws PortalException, SystemException {
-
-		BaseRepository baseRepository = null;
-
-		try {
-			String repositoryImplClassName = PortalUtil.getClassName(
-				classNameId);
-
-			baseRepository = RepositoryFactoryUtil.getInstance(
-				repositoryImplClassName);
-		}
-		catch (Exception e) {
-			throw new RepositoryException(
-				"There is no valid repository class with class name id " +
-					classNameId,
-				e);
-		}
-
-		CMISRepositoryHandler cmisRepositoryHandler = null;
-
-		if (baseRepository instanceof CMISRepositoryHandler) {
-			cmisRepositoryHandler = (CMISRepositoryHandler)baseRepository;
-		}
-		else if (baseRepository instanceof BaseRepositoryProxyBean) {
-			BaseRepositoryProxyBean baseRepositoryProxyBean =
-				(BaseRepositoryProxyBean) baseRepository;
-
-			ClassLoaderBeanHandler classLoaderBeanHandler =
-				(ClassLoaderBeanHandler)Proxy.getInvocationHandler(
-					baseRepositoryProxyBean.getProxyBean());
-
-			Object bean = classLoaderBeanHandler.getBean();
-
-			if (bean instanceof CMISRepositoryHandler) {
-				cmisRepositoryHandler = (CMISRepositoryHandler)bean;
-			}
-		}
-
-		if (cmisRepositoryHandler != null) {
-			CMISRepository cmisRepository = new CMISRepository(
-				cmisRepositoryHandler);
-
-			cmisRepositoryHandler.setCmisRepository(cmisRepository);
-
-			setupRepository(
-				repository.getRepositoryId(), repository, cmisRepository);
-		}
-
-		setupRepository(
-			repository.getRepositoryId(), repository, baseRepository);
 
 		baseRepository.initRepository();
 

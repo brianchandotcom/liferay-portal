@@ -737,7 +737,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public String getPortletPath(String portletId) {
-		return getRootPath() + ROOT_PATH_PORTLETS + portletId;
+		return getPortletPath(portletId, false);
+	}
+
+	public String getPortletPath(String portletId, boolean isScoped) {
+		return getRootPath(isScoped) + ROOT_PATH_PORTLETS + portletId;
 	}
 
 	public Set<String> getPrimaryKeys() {
@@ -749,7 +753,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public String getRootPath() {
-		return ROOT_PATH_GROUPS + getScopeGroupId();
+		return getRootPath(false);
+	}
+
+	public String getRootPath(boolean isScoped) {
+		if (isScoped) {
+			return ROOT_PATH_GROUPS + getScopeGroupId();
+		}
+
+		return ROOT_PATH_GROUPS + getGroupId();
 	}
 
 	public long getScopeGroupId() {

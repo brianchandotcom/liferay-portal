@@ -309,6 +309,7 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Repository",
 	{
+		addRepository: true,
 		checkRepository: true,
 		getLocalRepositoryImpl: true,
 		getRepository: true,
@@ -316,7 +317,6 @@ Liferay.Service.registerClass(
 		getSupportedConfigurations: true,
 		getSupportedParameters: true,
 		getTypeSettingsProperties: true,
-		mountRepository: true,
 		unmountRepositories: true,
 		unmountRepository: true,
 		updateRepository: true

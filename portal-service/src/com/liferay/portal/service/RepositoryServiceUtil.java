@@ -37,6 +37,18 @@ public class RepositoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static long addRepository(long groupId, long classNameId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, java.lang.String portletId,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addRepository(groupId, classNameId, parentFolderId, name,
+			description, portletId, typeSettingsProperties, serviceContext);
+	}
+
 	public static void checkRepository(long repositoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().checkRepository(repositoryId);
@@ -96,18 +108,6 @@ public class RepositoryServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTypeSettingsProperties(repositoryId);
-	}
-
-	public static long mountRepository(long groupId, long classNameId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, java.lang.String portletId,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .mountRepository(groupId, classNameId, parentFolderId, name,
-			description, portletId, typeSettingsProperties, serviceContext);
 	}
 
 	public static void unmountRepositories(long groupId)

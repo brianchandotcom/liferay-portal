@@ -56,6 +56,50 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
+	public long addRepository(
+			long groupId, long classNameId, long parentFolderId, String name,
+			String description, String portletId,
+			UnicodeProperties typeSettingsProperties,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		User user = getUser();
+		Date now = new Date();
+
+		long repositoryId = counterLocalService.increment();
+
+		Repository repository = repositoryPersistence.create(repositoryId);
+
+		repository.setGroupId(groupId);
+		repository.setCompanyId(user.getCompanyId());
+		repository.setCreateDate(now);
+		repository.setModifiedDate(now);
+		repository.setClassNameId(classNameId);
+		repository.setName(name);
+		repository.setDescription(description);
+		repository.setPortletId(portletId);
+		repository.setTypeSettingsProperties(typeSettingsProperties);
+		repository.setDlFolderId(
+			getDLFolderId(
+				user, groupId, repositoryId, parentFolderId, name, description,
+				serviceContext));
+
+		repositoryPersistence.update(repository, false);
+
+		if (classNameId != getDefaultClassNameId()) {
+			try {
+				createRepositoryImpl(repositoryId, classNameId);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				throw new InvalidRepositoryException(e);
+			}
+		}
+
+		return repositoryId;
+	}
+
 	public void checkRepository(long repositoryId) throws SystemException {
 		Group group = groupPersistence.fetchByPrimaryKey(repositoryId);
 
@@ -273,50 +317,6 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			repositoryId);
 
 		return repository.getTypeSettingsProperties();
-	}
-
-	public long mountRepository(
-			long groupId, long classNameId, long parentFolderId, String name,
-			String description, String portletId,
-			UnicodeProperties typeSettingsProperties,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		User user = getUser();
-		Date now = new Date();
-
-		long repositoryId = counterLocalService.increment();
-
-		Repository repository = repositoryPersistence.create(repositoryId);
-
-		repository.setGroupId(groupId);
-		repository.setCompanyId(user.getCompanyId());
-		repository.setCreateDate(now);
-		repository.setModifiedDate(now);
-		repository.setClassNameId(classNameId);
-		repository.setName(name);
-		repository.setDescription(description);
-		repository.setPortletId(portletId);
-		repository.setTypeSettingsProperties(typeSettingsProperties);
-		repository.setDlFolderId(
-			getDLFolderId(
-				user, groupId, repositoryId, parentFolderId, name, description,
-				serviceContext));
-
-		repositoryPersistence.update(repository, false);
-
-		if (classNameId != getDefaultClassNameId()) {
-			try {
-				createRepositoryImpl(repositoryId, classNameId);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-
-				throw new InvalidRepositoryException(e);
-			}
-		}
-
-		return repositoryId;
 	}
 
 	public void unmountRepositories(long groupId)

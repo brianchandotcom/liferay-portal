@@ -314,11 +314,10 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			}
 		}
 
-		long dlFolderId = getDLFolderId(
-			user, groupId, repositoryId, parentFolderId, name, description,
-			serviceContext);
-
-		repository.setDlFolderId(dlFolderId);
+		repository.setDlFolderId(
+			getDLFolderId(
+				user, groupId, repositoryId, parentFolderId, name, description,
+				serviceContext));
 
 		repositoryPersistence.update(repository, false);
 

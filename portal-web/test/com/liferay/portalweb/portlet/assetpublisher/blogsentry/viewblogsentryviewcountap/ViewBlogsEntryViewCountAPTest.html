@@ -49,11 +49,6 @@
 	<td>${viewCount}</td>
 </tr>
 <tr>
-	<td>storeFirstNumberIncrement</td>
-	<td>//span[@class='metadata-entry metadata-view-count']</td>
-	<td>viewCount2</td>
-</tr>
-<tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
@@ -70,7 +65,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
@@ -80,15 +75,14 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='entry-title']/a</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
 	<td>//span[@class='view-count']</td>
-	<td>${viewCount2}</td>
+	<td>${viewCount}</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

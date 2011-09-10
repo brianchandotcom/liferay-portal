@@ -47,8 +47,9 @@ public class ConfigurePortletAvailableBlogsEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -91,7 +92,7 @@ public class ConfigurePortletAvailableBlogsEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_anyAssetType']",
-			RuntimeVariables.replace("label=Filter..."));
+			RuntimeVariables.replace("label=Select More Than One..."));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

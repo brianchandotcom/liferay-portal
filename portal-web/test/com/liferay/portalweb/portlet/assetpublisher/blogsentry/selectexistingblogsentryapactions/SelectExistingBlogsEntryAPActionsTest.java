@@ -46,9 +46,12 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -80,7 +83,8 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/span/ul/li/strong/a")) {
+				if (selenium.isVisible(
+							"//span[@title='Select Existing']/ul/li/strong/a")) {
 					break;
 				}
 			}
@@ -92,8 +96,8 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Select Existing"),
-			selenium.getText("//div[2]/span/ul/li/strong/a"));
-		selenium.clickAt("//div[2]/span/ul/li/strong/a",
+			selenium.getText("//span[@title='Select Existing']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Select Existing']/ul/li/strong/a",
 			RuntimeVariables.replace("Select Existing"));
 
 		for (int second = 0;; second++) {
@@ -103,7 +107,7 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a[@id='_86_bqvz']")) {
 					break;
 				}
 			}
@@ -116,9 +120,9 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a[@id='_86_bqvz']"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a[@id='_86_bqvz']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),

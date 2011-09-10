@@ -24,9 +24,14 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>storeFirstNumberIncrement</td>
+	<td>waitForVisible</td>
 	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
-	<td>voteCount</td>
+	<td>rateCount</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
+	<td>Average (0 Votes)</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -34,19 +39,14 @@
 	<td>5 Stars</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
+	<td>waitForText</td>
+	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
+	<td>Average (1 Vote)</td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
+	<td>assertText</td>
 	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
-	<td>${voteCount}</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>xPath=(//div[@class='aui-rating-label-element'])[2]</td>
-	<td>${voteCount}</td>
+	<td>Average (1 Vote)</td>
 </tr>
 
 </tbody></table>

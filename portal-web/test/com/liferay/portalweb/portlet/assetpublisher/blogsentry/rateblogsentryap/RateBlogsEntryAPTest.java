@@ -46,22 +46,14 @@ public class RateBlogsEntryAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
-		String voteCount = selenium.getFirstNumberIncrement(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]");
-		RuntimeVariables.setValue("voteCount", voteCount);
-		selenium.clickAt("//a[5]", RuntimeVariables.replace("5 Stars"));
-		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
 			if (second >= 60) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"xPath=(//div[@class='aui-rating-label-element'])[2]",
-							RuntimeVariables.getValue("voteCount"))) {
+				if (selenium.isVisible(
+							"xPath=(//div[@class='aui-rating-label-element'])[2]")) {
 					break;
 				}
 			}
@@ -72,8 +64,32 @@ public class RateBlogsEntryAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]",
-				RuntimeVariables.getValue("voteCount")));
+		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
+			selenium.getText(
+				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+		selenium.clickAt("//a[5]", RuntimeVariables.replace("5 Stars"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Average (1 Vote)")
+										.equals(selenium.getText(
+								"xPath=(//div[@class='aui-rating-label-element'])[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
+			selenium.getText(
+				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 	}
 }

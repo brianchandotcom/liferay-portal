@@ -62,5 +62,6 @@ public class DeleteBlogsEntry2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isTextPresent("Blogs Entry2 Title"));
 	}
 }

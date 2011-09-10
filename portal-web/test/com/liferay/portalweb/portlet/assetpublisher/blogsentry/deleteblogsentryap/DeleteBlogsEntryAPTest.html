@@ -25,12 +25,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//h3[@class='asset-title']/a</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='asset-summary']</td>
+	<td>Blogs Entry Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -108,7 +118,6 @@
 	<td>Blogs Entry Content</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

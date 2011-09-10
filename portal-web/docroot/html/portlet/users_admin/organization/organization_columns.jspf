@@ -38,6 +38,8 @@
 		buffer.append("</a>");
 	}
 
+	organizationParams.remove("expandoAttributes");
+
 	int suborganizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), curOrganization.getOrganizationId(), null, null, null, null, organizationParams);
 
 	LinkedHashMap userParams = new LinkedHashMap();

@@ -1,0 +1,124 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewMicroblogsTimelineTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewMicroblogsTimelineTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//ul[2]/li[2]/a</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//ul[2]/li[2]/a</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/div/section/header/h1</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Timeline</td>
+	<td>Timeline</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Timeline</td>
+	<td>Timeline</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//div[@class='my-entry-bubble '])[1]</td>
+	<td>Micoblogs post</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//div/span/a/img)[1]</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='user-name'])[1]</td>
+	<td>Joe Bloggs test@liferay.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='content'])[1]</td>
+	<td>Microblogs Content</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//div[@class='my-entry-bubble '])[2]</td>
+	<td>Micoblogs post</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//div/span/a/img)[2]</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='user-name'])[2]</td>
+	<td>Joe Bloggs test@liferay.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='content'])[2]</td>
+	<td>Microblogs Content</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//div[@class='my-entry-bubble '])[3]</td>
+	<td>Micoblogs post</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//div/span/a/img)[3]</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='user-name'])[3]</td>
+	<td>Joe Bloggs test@liferay.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='content'])[3]</td>
+	<td>Microblogs Content</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//div[@class='my-entry-bubble '])[4]</td>
+	<td>Micoblogs post</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//div/span/a/img)[4]</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='user-name'])[4]</td>
+	<td>Joe Bloggs test@liferay.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='content'])[4]</td>
+	<td>Microblogs Content</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

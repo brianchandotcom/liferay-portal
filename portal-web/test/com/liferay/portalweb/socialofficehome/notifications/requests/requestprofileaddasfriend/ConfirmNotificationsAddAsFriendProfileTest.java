@@ -46,10 +46,8 @@ public class ConfirmNotificationsAddAsFriendProfileTest extends BaseTestCase {
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//li[@class='home selected']/a/span"));
 		assertEquals(RuntimeVariables.replace("Notifications"),
-			selenium.getText("//header/h1/span"));
+			selenium.getText("//div[2]/div/section/header/h1/span"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -104,7 +102,7 @@ public class ConfirmNotificationsAddAsFriendProfileTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/a/img"));
-		assertEquals(RuntimeVariables.replace("View 1 friends."),
+		assertEquals(RuntimeVariables.replace("Manage 1 friends."),
 			selenium.getText("//div[1]/div/div/div/div[2]/a"));
 		selenium.mouseOver("//div[1]/a/img");
 		assertEquals(RuntimeVariables.replace(

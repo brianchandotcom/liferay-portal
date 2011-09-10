@@ -24,7 +24,7 @@ public class SOFr_AddAsFriendProfileTest extends BaseTestCase {
 	public void testSOFr_AddAsFriendProfile() throws Exception {
 		selenium.open("/web/joebloggs/profile/");
 		assertEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//div[2]/div/div/section/header/h1/span[2]"));
+			selenium.getText("//nav[@id='navigation']/ul/li/a/span"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//div[1]/h1/span"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),

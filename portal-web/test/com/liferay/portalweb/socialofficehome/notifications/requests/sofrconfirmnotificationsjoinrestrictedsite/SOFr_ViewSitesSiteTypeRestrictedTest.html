@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SOFr_ViewSitesSiteTypeRestrictedTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOFr_ViewSitesSiteTypeRestrictedTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/socialofficefriendsn/home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[contains(@class, 'social-office-enabled')]</td>
+	<td>Restricted Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>Restricted Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>Restricted Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h2/a/span</td>
+	<td>Restricted Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[2]/a/span</td>
+	<td>Calendar</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[3]/a/span</td>
+	<td>Documents</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[4]/a/span</td>
+	<td>Forums</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[5]/a/span</td>
+	<td>Blog</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[6]/a/span</td>
+	<td>Wiki</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[7]/a/span</td>
+	<td>Members</td>
+</tr>
+</tbody></table>
+</body>
+</html>

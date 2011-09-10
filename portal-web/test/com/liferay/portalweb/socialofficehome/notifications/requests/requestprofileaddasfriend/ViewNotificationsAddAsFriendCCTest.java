@@ -45,10 +45,8 @@ public class ViewNotificationsAddAsFriendCCTest extends BaseTestCase {
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//li[@class='home selected']/a/span"));
 		assertEquals(RuntimeVariables.replace("Notifications"),
-			selenium.getText("//header/h1/span"));
+			selenium.getText("//div[2]/div/section/header/h1/span"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

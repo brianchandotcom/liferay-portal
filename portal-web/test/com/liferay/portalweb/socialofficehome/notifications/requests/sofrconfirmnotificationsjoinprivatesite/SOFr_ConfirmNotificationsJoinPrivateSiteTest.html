@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SOFr_ConfirmNotificationsJoinPrivateSiteTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOFr_ConfirmNotificationsJoinPrivateSiteTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/socialofficefriendsn/home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div[1]/ul/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div[1]/ul/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/section/header/h1/span</td>
+	<td>Notifications</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//section/div/div/div/div/div[2]</td>
+	<td>Notifications</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section/div/div/div/div/div[2]/div[1]</td>
+	<td>Joe Bloggs has invited you to join Private Site Name.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/span[1]/a</td>
+	<td>Confirm</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/span[1]/a</td>
+	<td>Confirm</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/user/socialofficefriendsn/home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div[1]/ul/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div[1]/ul/li[1]/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[contains(@class, 'social-office-enabled')]</td>
+	<td>Private Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>Private Site Name</td>
+</tr>
+</tbody></table>
+</body>
+</html>

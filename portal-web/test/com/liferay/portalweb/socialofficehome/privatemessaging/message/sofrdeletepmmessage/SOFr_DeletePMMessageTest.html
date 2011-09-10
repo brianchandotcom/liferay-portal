@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SOFr_DeletePMMessageTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOFr_DeletePMMessageTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/socialofficefriendsn/home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[2]/div[1]/ul/li[4]/a</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/div[1]/ul/li[4]/a</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span[2]</td>
+	<td>Private Messaging</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/div[1]/div/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>Message Subject<br /> Message Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[2]/div/div</td>
+	<td>Showing 1 result.</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//td[1]/span/span/span/input[2]</td>
+	<td>Message</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[1]/span/span/span/input[2]</td>
+	<td>Message</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No messages found.</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

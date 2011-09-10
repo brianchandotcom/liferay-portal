@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -57,6 +56,10 @@ public class OrganizationIndexer extends BaseIndexer {
 
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	public String getPortletId() {
+		return PORTLET_ID;
 	}
 
 	@Override
@@ -126,12 +129,9 @@ public class OrganizationIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		Organization organization = (Organization)obj;
 
-		Document document = new DocumentImpl();
-
-		document.addUID(PORTLET_ID, organization.getOrganizationId());
-
-		SearchEngineUtil.deleteDocument(
-			organization.getCompanyId(), document.get(Field.UID));
+		doDelete(
+			organization.getCompanyId(),
+			String.valueOf(organization.getOrganizationId()));
 	}
 
 	@Override

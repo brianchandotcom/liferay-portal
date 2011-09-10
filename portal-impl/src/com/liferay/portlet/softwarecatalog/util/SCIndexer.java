@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -65,16 +64,17 @@ public class SCIndexer extends BaseIndexer {
 		return CLASS_NAMES;
 	}
 
+	public String getPortletId() {
+		return PORTLET_ID;
+	}
+
 	@Override
 	protected void doDelete(Object obj) throws Exception {
 		SCProductEntry productEntry = (SCProductEntry)obj;
 
-		Document document = new DocumentImpl();
-
-		document.addUID(PORTLET_ID, productEntry.getProductEntryId());
-
-		SearchEngineUtil.deleteDocument(
-			productEntry.getCompanyId(), document.get(Field.UID));
+		doDelete(
+			productEntry.getCompanyId(),
+			String.valueOf(productEntry.getProductEntryId()));
 	}
 
 	@Override

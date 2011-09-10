@@ -81,6 +81,18 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static final boolean _FILTER_SEARCH = false;
 
+	public void delete(long companyId, String classPK) throws SearchException {
+		try {
+			doDelete(companyId, classPK);
+		}
+		catch (SearchException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+	}
+
 	public void delete(Object obj) throws SearchException {
 		try {
 			doDelete(obj);
@@ -586,6 +598,14 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		return fullQuery;
+	}
+
+	protected void doDelete(long companyId, String classPK) throws Exception {
+		Document document = new DocumentImpl();
+
+		document.addUID(getPortletId(), classPK);
+
+		SearchEngineUtil.deleteDocument(companyId, document.get(Field.UID));
 	}
 
 	protected abstract void doDelete(Object obj) throws Exception;

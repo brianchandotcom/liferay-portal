@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -70,6 +69,10 @@ public class JournalIndexer extends BaseIndexer {
 
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	public String getPortletId() {
+		return PORTLET_ID;
 	}
 
 	@Override
@@ -141,13 +144,11 @@ public class JournalIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		JournalArticle article = (JournalArticle)obj;
 
-		Document document = new DocumentImpl();
+		String classPK =
+			String.valueOf(article.getGroupId()) + _UID_FIELD +
+			article.getArticleId();
 
-		document.addUID(
-			PORTLET_ID, article.getGroupId(), article.getArticleId());
-
-		SearchEngineUtil.deleteDocument(
-			article.getCompanyId(), document.get(Field.UID));
+		doDelete(article.getCompanyId(), classPK);
 	}
 
 	@Override
@@ -525,6 +526,8 @@ public class JournalIndexer extends BaseIndexer {
 	}
 
 	private static final String _FIELD_NAMESPACE = "web_content";
+
+	private static final String _UID_FIELD = "_FIELD_";
 
 	private static Log _log = LogFactoryUtil.getLog(JournalIndexer.class);
 

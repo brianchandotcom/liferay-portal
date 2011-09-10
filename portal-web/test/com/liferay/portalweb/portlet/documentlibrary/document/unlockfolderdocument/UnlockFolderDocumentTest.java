@@ -30,7 +30,8 @@ public class UnlockFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -41,16 +42,47 @@ public class UnlockFolderDocumentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//td[5]/span/ul/li/strong/a",
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']",
+			RuntimeVariables.replace("Entry Check Box"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -60,7 +92,7 @@ public class UnlockFolderDocumentTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -71,17 +103,66 @@ public class UnlockFolderDocumentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Unlock"),
+		assertEquals(RuntimeVariables.replace("Checkin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Checkin"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText("//td[4]/a"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a"));
+		assertFalse(selenium.isElementPresent("//img[@class='locked-icon']"));
 	}
 }

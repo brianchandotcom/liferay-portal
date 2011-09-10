@@ -32,7 +32,7 @@ public class DeleteSubfolderTests extends BaseTests {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddSubfolderTest.class);
 		testSuite.addTestSuite(DeleteSubfolderTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

@@ -36,8 +36,8 @@ public class ConfigurePortletShowFolderSubfoldersTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"link=Document Library Test Page")) {
+						if (selenium.isVisible(
+									"link=Documents and Media Library Test Page")) {
 							break;
 						}
 					}
@@ -48,12 +48,15 @@ public class ConfigurePortletShowFolderSubfoldersTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Document Library Test Page",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Documents and Media Library Test Page",
+					RuntimeVariables.replace(
+						"Documents and Media Library Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertFalse(selenium.isElementPresent("link=Test1 Subfolder1"));
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//strong/a"));
+				selenium.clickAt("//strong/a",
+					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -73,9 +76,11 @@ public class ConfigurePortletShowFolderSubfoldersTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+					RuntimeVariables.replace("Configuration"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -83,7 +88,8 @@ public class ConfigurePortletShowFolderSubfoldersTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_86_showSubfoldersCheckbox")) {
+						if (selenium.isVisible(
+									"//input[@id='_86_showSubfoldersCheckbox']")) {
 							break;
 						}
 					}
@@ -104,17 +110,26 @@ public class ConfigurePortletShowFolderSubfoldersTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_86_showSubfoldersCheckbox",
-					RuntimeVariables.replace(""));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_showSubfoldersCheckbox']"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//input[@id='_86_showSubfoldersCheckbox']",
+					RuntimeVariables.replace("Show Subfolders"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_showSubfoldersCheckbox']"));
+				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
-					selenium.getText("//div[@id='p_p_id_86_']/div/div"));
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_showSubfoldersCheckbox']"));
+				selenium.saveScreenShotAndSource();
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
@@ -123,8 +138,8 @@ public class ConfigurePortletShowFolderSubfoldersTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"link=Document Library Test Page")) {
+						if (selenium.isVisible(
+									"link=Documents and Media Library Test Page")) {
 							break;
 						}
 					}
@@ -135,14 +150,12 @@ public class ConfigurePortletShowFolderSubfoldersTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Document Library Test Page",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Documents and Media Library Test Page",
+					RuntimeVariables.replace(
+						"Documents and Media Library Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Subfolders"),
-					selenium.getText("//u"));
-				assertEquals(RuntimeVariables.replace("Test1 Subfolder1"),
-					selenium.getText("//a[3]"));
+				assertTrue(selenium.isTextPresent("DML Subfolder Name"));
 
 			case 100:
 				label = -1;

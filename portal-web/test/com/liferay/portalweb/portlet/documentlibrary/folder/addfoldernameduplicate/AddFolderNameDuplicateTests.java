@@ -31,7 +31,7 @@ public class AddFolderNameDuplicateTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderNameDuplicateTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

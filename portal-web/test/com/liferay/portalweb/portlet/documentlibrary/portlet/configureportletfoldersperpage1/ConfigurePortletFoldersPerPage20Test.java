@@ -31,7 +31,8 @@ public class ConfigurePortletFoldersPerPage20Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -42,11 +43,37 @@ public class ConfigurePortletFoldersPerPage20Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -74,7 +101,7 @@ public class ConfigurePortletFoldersPerPage20Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_86_foldersPerPage")) {
+				if (selenium.isVisible("//input[@id='_86_foldersPerPage']")) {
 					break;
 				}
 			}
@@ -85,14 +112,16 @@ public class ConfigurePortletFoldersPerPage20Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_foldersPerPage", RuntimeVariables.replace("20"));
+		selenium.type("//input[@id='_86_foldersPerPage']",
+			RuntimeVariables.replace("20"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -101,7 +130,8 @@ public class ConfigurePortletFoldersPerPage20Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -112,12 +142,15 @@ public class ConfigurePortletFoldersPerPage20Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("This is test1 folder1."));
-		assertTrue(selenium.isTextPresent("This is test2 folder2."));
-		assertTrue(selenium.isTextPresent("This is test3 folder3."));
+		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
+		assertEquals(RuntimeVariables.replace("DML Folder2 Name"),
+			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
+		assertEquals(RuntimeVariables.replace("DML Folder3 Name"),
+			selenium.getText("xPath=(//span[@class='document-title'])[3]"));
 	}
 }

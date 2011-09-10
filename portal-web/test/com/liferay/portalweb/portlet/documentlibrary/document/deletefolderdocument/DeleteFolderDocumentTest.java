@@ -30,7 +30,8 @@ public class DeleteFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -41,16 +42,14 @@ public class DeleteFolderDocumentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("This is test1 document1."));
-		selenium.clickAt("//td[5]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -58,8 +57,9 @@ public class DeleteFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+				if (RuntimeVariables.replace("DML Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a"))) {
 					break;
 				}
 			}
@@ -70,11 +70,47 @@ public class DeleteFolderDocumentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']",
+			RuntimeVariables.replace("Entry Check Box"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
+			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
@@ -83,8 +119,10 @@ public class DeleteFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
+				if (RuntimeVariables.replace(
+							"Your request completed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-success']"))) {
 					break;
 				}
 			}
@@ -95,8 +133,9 @@ public class DeleteFolderDocumentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isTextPresent("This is test1 document1."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isTextPresent("DML Folder Document Title"));
 	}
 }

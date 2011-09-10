@@ -30,7 +30,7 @@ public class AddFolderNameNullTests extends BaseTests {
 		testSuite.addTestSuite(AddPageDLTest.class);
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddFolderNameNullTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

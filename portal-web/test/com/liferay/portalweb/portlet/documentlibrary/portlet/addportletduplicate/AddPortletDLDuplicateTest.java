@@ -30,7 +30,8 @@ public class AddPortletDLDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -41,12 +42,14 @@ public class AddPortletDLDuplicateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -54,7 +57,8 @@ public class AddPortletDLDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
+				if (selenium.isVisible(
+							"//input[@id='layout_configuration_content']")) {
 					break;
 				}
 			}
@@ -75,7 +79,8 @@ public class AddPortletDLDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='Document Library']")) {
+				if (selenium.isVisible(
+							"//div[@title='Documents and Media Library']")) {
 					break;
 				}
 			}
@@ -86,6 +91,7 @@ public class AddPortletDLDuplicateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isVisible("//div[@title='Document Library']/p/a"));
+		assertFalse(selenium.isVisible(
+				"//div[@title='Documents and Media Library']/p/a"));
 	}
 }

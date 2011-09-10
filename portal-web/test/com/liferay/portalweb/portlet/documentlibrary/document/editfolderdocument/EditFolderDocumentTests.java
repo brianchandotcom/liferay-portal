@@ -32,8 +32,7 @@ public class EditFolderDocumentTests extends BaseTests {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderDocumentTest.class);
 		testSuite.addTestSuite(EditFolderDocumentTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

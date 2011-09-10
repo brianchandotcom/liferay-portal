@@ -14,29 +14,74 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a[2]/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div/div/div[3]/div/div[1]</td>
-	<td>This is a test1 comment1.</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder1 Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder1 Name</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>DML Folder1 Document Title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='document-title'])[2]</td>
+	<td>DML Folder2 Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>xPath=(//span[@class='document-title'])[2]</td>
+	<td>DML Folder2 Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder1 Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder1 Document Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder1 Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td>DML Folder1 Document Comment</td>
 </tr>
 
 </tbody></table>

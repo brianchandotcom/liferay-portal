@@ -14,19 +14,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//strong/a</td>
-	<td></td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -34,24 +39,14 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_86_currentFileEntryColumns</td>
-	<td></td>
-</tr>
-<tr>
-	<td>addSelection</td>
-	<td>_86_currentFileEntryColumns</td>
-	<td>label=Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/div[2]/fieldset/div/div/div/div/div/div/div/div[2]/div/span/span/button[1]</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -59,13 +54,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//select[@id='_86_currentFileEntryColumns']</td>
+	<td>Current</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>//select[@id='_86_currentFileEntryColumns']</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>xPath=(//button[@title='Move selected items from Current to Available.'])[2]</td>
+	<td>Move selected items from Current to Available.</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
@@ -74,24 +84,59 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//button[@title='List View']</td>
+	<td>List View</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//a/span/span</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/span/span</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a/span/span</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//td[3]/a</td>
+	<td>DML Folder Document Description</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Name</td>
+	<td>DML Folder Document Title</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@title='Icon View']</td>
+	<td>Icon View</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document Title</td>
 </tr>
 
 </tbody></table>

@@ -31,8 +31,7 @@ public class AddFolderDocumentNullTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderDocumentNullTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

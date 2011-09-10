@@ -31,7 +31,8 @@ public class ConfigurePortletDocumentsPerPage1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -42,10 +43,12 @@ public class ConfigurePortletDocumentsPerPage1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -69,7 +72,8 @@ public class ConfigurePortletDocumentsPerPage1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -77,7 +81,7 @@ public class ConfigurePortletDocumentsPerPage1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_86_fileEntriesPerPage")) {
+				if (selenium.isVisible("//input[@id='_86_fileEntriesPerPage']")) {
 					break;
 				}
 			}
@@ -88,10 +92,11 @@ public class ConfigurePortletDocumentsPerPage1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_fileEntriesPerPage", RuntimeVariables.replace("1"));
+		selenium.type("//input[@id='_86_fileEntriesPerPage']",
+			RuntimeVariables.replace("1"));
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -105,7 +110,8 @@ public class ConfigurePortletDocumentsPerPage1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -116,27 +122,111 @@ public class ConfigurePortletDocumentsPerPage1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("This is test1 document1."));
-		assertFalse(selenium.isTextPresent("This is test2 document2."));
-		assertFalse(selenium.isTextPresent("This is test3 document3."));
-		selenium.clickAt("link=Next", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Document1 Title")
+										.equals(selenium.getText(
+								"//span[@class='document-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("This is test1 document1."));
-		assertTrue(selenium.isTextPresent("This is test2 document2."));
-		assertFalse(selenium.isTextPresent("This is test3 document3."));
-		selenium.clickAt("link=Next", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DML Folder Document1 Title"),
+			selenium.getText("//span[@class='document-title']"));
+		assertFalse(selenium.isTextPresent("DML Folder Document2 Title"));
+		assertFalse(selenium.isTextPresent("DML Folder Document3 Title"));
+		selenium.clickAt("//div[2]/a[@class='aui-paginator-link aui-paginator-next-link']",
+			RuntimeVariables.replace("Next"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Document2 Title")
+										.equals(selenium.getText(
+								"//span[@class='document-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("This is test1 document1."));
-		assertFalse(selenium.isTextPresent("This is test2 document2."));
-		assertTrue(selenium.isTextPresent("This is test3 document3."));
+		assertFalse(selenium.isTextPresent("DML Folder Document1 Title"));
+		assertEquals(RuntimeVariables.replace("DML Folder Document2 Title"),
+			selenium.getText("//span[@class='document-title']"));
+		assertFalse(selenium.isTextPresent("DML Folder Document3 Title"));
+		selenium.clickAt("//div[2]/a[@class='aui-paginator-link aui-paginator-next-link']",
+			RuntimeVariables.replace("Next"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Document3 Title")
+										.equals(selenium.getText(
+								"//span[@class='document-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isTextPresent("DML Folder Document1 Title"));
+		assertFalse(selenium.isTextPresent("DML Folder Document2 Title"));
+		assertEquals(RuntimeVariables.replace("DML Folder Document3 Title"),
+			selenium.getText("//span[@class='document-title']"));
 	}
 }

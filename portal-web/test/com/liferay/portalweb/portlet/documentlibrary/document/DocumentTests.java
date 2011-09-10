@@ -22,6 +22,7 @@ import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocumentn
 import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocumenttitleduplicate.AddFolderDocumentTitleDuplicateTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocumenttitlenull.AddFolderDocumentTitleNullTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.addsubfolderdocument.AddSubfolderDocumentTests;
+import com.liferay.portalweb.portlet.documentlibrary.document.comparefolderdocumentversion.CompareFolderDocumentVersionTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.deletefolderdocument.DeleteFolderDocumentTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.editdlfolderdocumenttitleapostrophe.EditDLFolderDocumentTitleApostropheTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.editdlfolderdocumenttitlebackslash.EditDLFolderDocumentTitleBackSlashTests;
@@ -38,6 +39,8 @@ import com.liferay.portalweb.portlet.documentlibrary.document.editdlfolderdocume
 import com.liferay.portalweb.portlet.documentlibrary.document.editfolderdocument.EditFolderDocumentTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.guestviewpermissionsdldocumentguestviewoff.Guest_ViewPermissionsDLDocumentGuestViewOffTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.lockfolderdocument.LockFolderDocumentTests;
+import com.liferay.portalweb.portlet.documentlibrary.document.movefolderdocumentduplicatetofolder.MoveFolderDocumentDuplicateToFolderTests;
+import com.liferay.portalweb.portlet.documentlibrary.document.movefolderdocumenttofolder.MoveFolderDocumentToFolderTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.searchfolderdocument.SearchFolderDocumentTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.unlockfolderdocument.UnlockFolderDocumentTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.viewfolderdocumentmydocuments.ViewFolderDocumentMyDocumentsTests;
@@ -61,7 +64,7 @@ public class DocumentTests extends BaseTests {
 		testSuite.addTest(AddFolderDocumentTitleDuplicateTests.suite());
 		testSuite.addTest(AddFolderDocumentTitleNullTests.suite());
 		testSuite.addTest(AddSubfolderDocumentTests.suite());
-		//testSuite.addTest(CompareFolderDocumentVersionTests.suite());
+		testSuite.addTest(CompareFolderDocumentVersionTests.suite());
 		testSuite.addTest(DeleteFolderDocumentTests.suite());
 		testSuite.addTest(EditDLFolderDocumentTitleApostropheTests.suite());
 		testSuite.addTest(EditDLFolderDocumentTitleBackSlashTests.suite());
@@ -79,8 +82,8 @@ public class DocumentTests extends BaseTests {
 		testSuite.addTest(
 			Guest_ViewPermissionsDLDocumentGuestViewOffTests.suite());
 		testSuite.addTest(LockFolderDocumentTests.suite());
-		//testSuite.addTest(MoveFolderDocumentDuplicateToFolderTests.suite());
-		//testSuite.addTest(MoveFolderDocumentToFolderTests.suite());
+		testSuite.addTest(MoveFolderDocumentDuplicateToFolderTests.suite());
+		testSuite.addTest(MoveFolderDocumentToFolderTests.suite());
 		testSuite.addTest(SearchFolderDocumentTests.suite());
 		testSuite.addTest(UnlockFolderDocumentTests.suite());
 		testSuite.addTest(ViewFolderDocumentMyDocumentsTests.suite());

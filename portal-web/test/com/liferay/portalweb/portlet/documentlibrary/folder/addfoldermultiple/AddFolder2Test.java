@@ -30,7 +30,8 @@ public class AddFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -41,22 +42,14 @@ public class AddFolder2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/ul/li[2]/a",
-			RuntimeVariables.replace("Add Folder"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_20_name", RuntimeVariables.replace("Test2 Folder2"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_20_description",
-			RuntimeVariables.replace("This is test2 folder2."));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -64,10 +57,8 @@ public class AddFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"//section/div/div/div/div[1]"))) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -78,9 +69,26 @@ public class AddFolder2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Folder"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+			RuntimeVariables.replace("Folder"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_20_name']",
+			RuntimeVariables.replace("DML Folder2 Name"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
-		assertTrue(selenium.isTextPresent("This is test2 folder2."));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
+		assertEquals(RuntimeVariables.replace("DML Folder2 Name"),
+			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
 	}
 }

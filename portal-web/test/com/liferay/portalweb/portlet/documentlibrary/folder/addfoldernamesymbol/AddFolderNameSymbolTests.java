@@ -30,7 +30,7 @@ public class AddFolderNameSymbolTests extends BaseTests {
 		testSuite.addTestSuite(AddPageDLTest.class);
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddFolderNameSymbolTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

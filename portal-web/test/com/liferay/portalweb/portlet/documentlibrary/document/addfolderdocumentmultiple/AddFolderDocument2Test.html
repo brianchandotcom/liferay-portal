@@ -14,94 +14,99 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[4]/a</td>
-	<td>Add Document</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Basic Document</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[4]/a</td>
-	<td>Add Document</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>windowFocus</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_20_file</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_file</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\documentlibrary\document\addfolderdocumentmultiple\dependencies\test_document.txt</td>
+	<td>//input[@id='_20_file']</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\documentlibrary\dependencies\test_document.txt</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_title</td>
-	<td>Test2 Document2</td>
+	<td>//input[@id='_20_title']</td>
+	<td>DML Folder Document2 Title</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_description</td>
-	<td>This is test2 document2.</td>
+	<td>//textarea[@id='_20_description']</td>
+	<td>DML Folder Document2 Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//tr[4]/td[1]/a/div</td>
-	<td>This is test2 document2.</td>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='document-title'])[1]</td>
+	<td>DML Folder Document1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a/div</td>
-	<td>This is test2 document2.</td>
+	<td>xPath=(//span[@class='document-title'])[2]</td>
+	<td>DML Folder Document2 Title</td>
 </tr>
 
 </tbody></table>

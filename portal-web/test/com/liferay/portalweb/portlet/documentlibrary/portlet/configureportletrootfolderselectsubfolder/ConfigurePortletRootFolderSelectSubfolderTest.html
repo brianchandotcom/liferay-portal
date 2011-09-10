@@ -14,19 +14,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//strong/a</td>
-	<td></td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -34,7 +39,12 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
@@ -46,12 +56,12 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForPopUp</td>
@@ -64,19 +74,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Test1 Folder1</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//td[1]/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Test1 Folder1</td>
-	<td></td>
+	<td>//td[1]/a</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//input[@value='Choose']</td>
-	<td></td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -85,17 +100,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_86_rootFolderName</td>
-	<td>Test1 Subfolder1</td>
+	<td>//a[@id='_86_rootFolderName']</td>
+	<td>DML Subfolder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
@@ -104,34 +119,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-asset-name']/h4</td>
-	<td>Test1 Subfolder1</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-asset-description']</td>
-	<td>This is test1 subfolder1.</td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Documents Home</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>link=Documents Home</td>
-	<td></td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='document-library-breadcrumb']/ul/li/span/a</td>
+	<td>Documents Home</td>
 </tr>
 
 </tbody></table>

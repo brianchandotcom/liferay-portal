@@ -14,44 +14,74 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>No</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']</td>
+	<td>Entry Check Box</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']</td>
+	<td>Entry Check Box</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']</td>
+	<td>Entry Check Box</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>Lock</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Checkout</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>Lock</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Checkout</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>Lock</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Checkout</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -59,9 +89,44 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Yes</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//img[@class='locked-icon']</td>
+	<td>Locked Icon</td>
 </tr>
 
 </tbody></table>

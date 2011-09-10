@@ -14,64 +14,84 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Be the first.</td>
-	<td></td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//fieldset/div/a</td>
+	<td>Be the first.</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//fieldset/div/a</td>
+	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_20_postReplyBody0</td>
-	<td></td>
+	<td>//textarea[@name='_20_postReplyBody0']</td>
+	<td>Comment Text Area</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_postReplyBody0</td>
-	<td>This is a test1 comment1.</td>
+	<td>//textarea[@name='_20_postReplyBody0']</td>
+	<td>DML Folder Document Comment</td>
 </tr>
 <tr>
-	<td>keyPress</td>
-	<td>_20_postReplyBody0</td>
-	<td>\48</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>_20_postReplyBody0</td>
-	<td>\8</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Reply']</td>
-	<td></td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[3]/div/div[1]</td>
-	<td>This is a test1 comment1.</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td>DML Folder Document Comment</td>
 </tr>
 
 </tbody></table>

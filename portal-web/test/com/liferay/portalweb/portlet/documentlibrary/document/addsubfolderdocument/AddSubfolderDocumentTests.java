@@ -32,8 +32,7 @@ public class AddSubfolderDocumentTests extends BaseTests {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddSubfolderTest.class);
 		testSuite.addTestSuite(AddSubfolderDocumentTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

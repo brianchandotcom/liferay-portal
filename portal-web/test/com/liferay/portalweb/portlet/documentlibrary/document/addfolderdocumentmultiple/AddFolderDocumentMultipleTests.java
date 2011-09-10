@@ -33,8 +33,7 @@ public class AddFolderDocumentMultipleTests extends BaseTests {
 		testSuite.addTestSuite(AddFolderDocument1Test.class);
 		testSuite.addTestSuite(AddFolderDocument2Test.class);
 		testSuite.addTestSuite(AddFolderDocument3Test.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

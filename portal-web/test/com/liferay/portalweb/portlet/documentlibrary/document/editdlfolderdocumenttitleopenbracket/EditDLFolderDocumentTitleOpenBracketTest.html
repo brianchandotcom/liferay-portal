@@ -15,63 +15,63 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a/span/span</td>
-	<td>Test1 Document1</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
-	<td>Actions</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
-	<td>Actions</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Edit</td>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[1]</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//button[1]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_title</td>
+	<td>//input[@id='_20_title']</td>
 	<td>[</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -81,7 +81,7 @@
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>Document names must end with one of the following extensions: *.</td>
+	<td>Please enter a file with a valid file name.</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -90,28 +90,38 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
+	<td>clickAt</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/span/span</td>
-	<td>Test1 Document1</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document Title</td>
 </tr>
 
 </tbody></table>

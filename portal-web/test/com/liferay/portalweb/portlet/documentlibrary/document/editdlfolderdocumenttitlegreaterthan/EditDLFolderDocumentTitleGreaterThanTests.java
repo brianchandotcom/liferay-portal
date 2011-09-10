@@ -32,8 +32,7 @@ public class EditDLFolderDocumentTitleGreaterThanTests extends BaseTests {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderDocumentTest.class);
 		testSuite.addTestSuite(EditDLFolderDocumentTitleGreaterThanTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

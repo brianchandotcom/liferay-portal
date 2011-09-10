@@ -30,7 +30,8 @@ public class AddSubfolder3Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -41,25 +42,14 @@ public class AddSubfolder3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/ul/li[4]/a",
-			RuntimeVariables.replace("Add Subfolder"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_20_name", RuntimeVariables.replace("Test3 Subfolder3"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_20_description",
-			RuntimeVariables.replace("This is test3 subfolder3."));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -67,10 +57,9 @@ public class AddSubfolder3Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
+				if (RuntimeVariables.replace("DML Folder Name")
 										.equals(selenium.getText(
-								"//section/div/div/div/div[1]"))) {
+								"//li[@class='folder selected']/a[2]"))) {
 					break;
 				}
 			}
@@ -80,30 +69,57 @@ public class AddSubfolder3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a[2]"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Subfolder"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+			RuntimeVariables.replace("Subfolder"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_20_name']",
+			RuntimeVariables.replace("DML Subfolder3 Name"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//textarea[@id='_20_description']",
+			RuntimeVariables.replace("DML Subfolder3 Description"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent(
-							"Test3 Subfolder3\nThis is test3 subfolder3.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Test3 Subfolder3\nThis is test3 subfolder3."));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("DML Subfolder1 Name"),
+			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
+		assertEquals(RuntimeVariables.replace("DML Subfolder2 Name"),
+			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
+		assertEquals(RuntimeVariables.replace("DML Subfolder3 Name"),
+			selenium.getText("xPath=(//span[@class='document-title'])[3]"));
 	}
 }

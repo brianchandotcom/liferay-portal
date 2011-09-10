@@ -32,7 +32,7 @@ public class AddPageDLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[@id='addPage']")) {
+				if (selenium.isElementPresent("//a[@id='addPage']")) {
 					break;
 				}
 			}
@@ -64,9 +64,10 @@ public class AddPageDLTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Document Library Test Page"));
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -74,7 +75,8 @@ public class AddPageDLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -85,8 +87,8 @@ public class AddPageDLTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

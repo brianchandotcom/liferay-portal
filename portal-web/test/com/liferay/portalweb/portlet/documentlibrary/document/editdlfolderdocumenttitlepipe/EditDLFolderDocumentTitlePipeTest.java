@@ -30,7 +30,8 @@ public class EditDLFolderDocumentTitlePipeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -41,21 +42,14 @@ public class EditDLFolderDocumentTitlePipeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test1 Folder1"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test1 Document1"),
-			selenium.getText("//a/span/span"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//td[5]/span/ul/li/strong/a",
-			RuntimeVariables.replace("Actions"));
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -63,8 +57,9 @@ public class EditDLFolderDocumentTitlePipeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+				if (RuntimeVariables.replace("DML Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a"))) {
 					break;
 				}
 			}
@@ -75,24 +70,30 @@ public class EditDLFolderDocumentTitlePipeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a"));
+		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_20_title", RuntimeVariables.replace("|"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("//button[1]"));
+		selenium.clickAt("//button[1]", RuntimeVariables.replace("Edit"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_20_title']", RuntimeVariables.replace("|"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"Document names must end with one of the following extensions: *."),
+				"Please enter a file with a valid file name."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		selenium.open("/web/guest/home/");
 
@@ -102,7 +103,8 @@ public class EditDLFolderDocumentTitlePipeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -113,16 +115,37 @@ public class EditDLFolderDocumentTitlePipeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test1 Folder1"));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test1 Document1"),
-			selenium.getText("//a/span/span"));
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a"));
+		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+			selenium.getText("//span[@class='document-title']"));
 	}
 }

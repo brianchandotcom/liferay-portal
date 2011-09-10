@@ -36,7 +36,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"link=Document Library Test Page")) {
+									"link=Documents and Media Library Test Page")) {
 							break;
 						}
 					}
@@ -47,22 +47,23 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Document Library Test Page",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Documents and Media Library Test Page",
+					RuntimeVariables.replace(
+						"Documents and Media Library Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
-				boolean document1Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
+				boolean iconViewNotSelected = selenium.isElementPresent(
+						"aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active");
 
-				if (!document1Present) {
+				if (iconViewNotSelected) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace("Actions"));
+				selenium.clickAt("//button[@title='Icon View']",
+					RuntimeVariables.replace("Icon View"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -70,8 +71,8 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+						if (selenium.isElementPresent(
+									"//button[@class='aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item aui-buttonitem-focused aui-state-active']")) {
 							break;
 						}
 					}
@@ -82,28 +83,30 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
-				boolean document2Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
+				boolean dmlDocumentPresent = selenium.isElementPresent(
+						"//div[1]/a/span[1]/img");
 
-				if (!document2Present) {
+				if (!dmlDocumentPresent) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("//td[5]/span/ul/li/strong/a",
+				assertFalse(selenium.isChecked(
+						"//input[@id='_20_allRowIdsCheckbox']"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
+					RuntimeVariables.replace("All Entries Check Box"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_20_allRowIdsCheckbox']"));
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -113,7 +116,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 							break;
 						}
 					}
@@ -126,141 +129,19 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
 			case 3:
+				assertEquals(RuntimeVariables.replace(
+						"There are no documents in this folder."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 
-				boolean document3Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
-
-				if (!document3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
-
-			case 4:
-
-				boolean document4Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
-
-				if (!document4Present) {
-					label = 5;
-
-					continue;
-				}
-
-				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
-
-			case 5:
-
-				boolean document5Present = selenium.isElementPresent(
-						"//td[5]/span/ul/li/strong/a");
-
-				if (!document5Present) {
-					label = 6;
-
-					continue;
-				}
-
-				selenium.clickAt("//td[5]/span/ul/li/strong/a",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
-
-			case 6:
 			case 100:
 				label = -1;
 			}

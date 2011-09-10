@@ -31,7 +31,7 @@ public class DeleteFolderTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(DeleteFolderTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

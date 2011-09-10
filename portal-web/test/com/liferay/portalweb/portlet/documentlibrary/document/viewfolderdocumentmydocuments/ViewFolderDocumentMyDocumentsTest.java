@@ -30,7 +30,8 @@ public class ViewFolderDocumentMyDocumentsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -41,20 +42,109 @@ public class ViewFolderDocumentMyDocumentsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Documents", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("My Documents"),
+			selenium.getText("//ul[@class='lfr-component']/li[3]/a"));
+		selenium.clickAt("//ul[@class='lfr-component']/li[3]/a",
+			RuntimeVariables.replace("My Documents"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Document Title")
+										.equals(selenium.getText(
+								"//span[@class='document-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"Test1 Document1.txt This is test1 document1."),
-			selenium.getText("//td[1]/a"));
-		assertTrue(selenium.isElementPresent("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
+		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//button[@title='List View']",
+			RuntimeVariables.replace("List View"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Name")
+										.equals(selenium.getText(
+								"//a/span/span"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//a/span/span"));
+		selenium.clickAt("//a/span/span",
+			RuntimeVariables.replace("DML Folder Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Document Title")
+										.equals(selenium.getText(
+								"//td[2]/a/span/span"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+			selenium.getText("//td[2]/a/span/span"));
+		assertEquals(RuntimeVariables.replace("DML Folder Document Description"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText("//td[4]/a"));
+		selenium.clickAt("//button[@title='Icon View']",
+			RuntimeVariables.replace("Icon View"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder Document Title")
+										.equals(selenium.getText(
+								"//span[@class='document-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+			selenium.getText("//span[@class='document-title']"));
 	}
 }

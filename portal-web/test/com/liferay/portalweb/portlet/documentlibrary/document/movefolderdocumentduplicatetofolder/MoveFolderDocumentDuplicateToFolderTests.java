@@ -31,12 +31,11 @@ public class MoveFolderDocumentDuplicateToFolderTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddFolder1Test.class);
 		testSuite.addTestSuite(AddFolder2Test.class);
-		testSuite.addTestSuite(AddFolderDocument1Test.class);
-		testSuite.addTestSuite(AddFolderDocument2Test.class);
+		testSuite.addTestSuite(AddFolder1DocumentTest.class);
+		testSuite.addTestSuite(AddFolder2DocumentDuplicateTest.class);
 		testSuite.addTestSuite(
 			MoveFolderDocumentDuplicateToFolderTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

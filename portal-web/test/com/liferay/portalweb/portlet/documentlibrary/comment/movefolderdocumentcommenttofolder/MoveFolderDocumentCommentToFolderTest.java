@@ -31,7 +31,8 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -42,14 +43,45 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test1 Folder1"));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder1 Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DML Folder1 Document Title")
+										.equals(selenium.getText(
+								"//span[@class='document-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[5]/span/ul/li/strong/a",
+		assertFalse(selenium.isChecked(
+				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']",
+			RuntimeVariables.replace("Document Entry Check Box"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -58,8 +90,8 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
 					break;
 				}
 			}
@@ -70,15 +102,20 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+		assertEquals(RuntimeVariables.replace("Move"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click("//input[@value='Select']");
+		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+			selenium.getText("//a[@id='_20_folderName']"));
+		selenium.clickAt("//input[@value='Select']",
+			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=folder");
 		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -86,7 +123,7 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//span/a")) {
+				if (selenium.isVisible("//span/a")) {
 					break;
 				}
 			}
@@ -97,6 +134,8 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Documents Home"),
+			selenium.getText("//span/a"));
 		selenium.clickAt("//span/a", RuntimeVariables.replace("Documents Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -107,7 +146,7 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//tr[4]/td[4]/input")) {
+				if (selenium.isVisible("xPath=(//input[@value='Choose'])[2]")) {
 					break;
 				}
 			}
@@ -118,8 +157,7 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click("//tr[4]/td[4]/input");
-		Thread.sleep(5000);
+		selenium.click("xPath=(//input[@value='Choose'])[2]");
 		selenium.selectWindow("null");
 		selenium.saveScreenShotAndSource();
 
@@ -129,9 +167,9 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Test2 Folder2")
+				if (RuntimeVariables.replace("DML Folder2 Name")
 										.equals(selenium.getText(
-								"_20_folderName"))) {
+								"//a[@id='_20_folderName']"))) {
 					break;
 				}
 			}
@@ -142,65 +180,14 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test2 Folder2"),
-			selenium.getText("_20_folderName"));
-		selenium.clickAt("//input[@value='Move']", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("DML Folder2 Name"),
+			selenium.getText("//a[@id='_20_folderName']"));
+		selenium.clickAt("//input[@value='Move']",
+			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isTextPresent("Test1 Document1"));
-		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//tr[4]/td[1]/a[2]/strong",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("Test1 Document1"));
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("This is a test1 comment1."),
-			selenium.getText("//div/div/div/div/div[3]/div/div[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

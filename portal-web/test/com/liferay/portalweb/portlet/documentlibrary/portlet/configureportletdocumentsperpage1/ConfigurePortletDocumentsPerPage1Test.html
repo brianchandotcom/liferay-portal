@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -39,29 +44,24 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_fileEntriesPerPage</td>
-	<td></td>
+	<td>//input[@id='_86_fileEntriesPerPage']</td>
+	<td>Documents per Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_fileEntriesPerPage</td>
+	<td>//input[@id='_86_fileEntriesPerPage']</td>
 	<td>1</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -74,74 +74,104 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Library Test Page</td>
+	<td>Documents and Media Library Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>This is test1 document1.</td>
+	<td>clickAt</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='folder selected']/a</td>
+	<td>DML Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document1 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document1 Title</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>DML Folder Document2 Title</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>This is test2 document2.</td>
+	<td>DML Folder Document3 Title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[2]/a[@class='aui-paginator-link aui-paginator-next-link']</td>
+	<td>Next</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document2 Title</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>DML Folder Document1 Title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document2 Title</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>DML Folder Document3 Title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[2]/a[@class='aui-paginator-link aui-paginator-next-link']</td>
+	<td>Next</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document3 Title</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>DML Folder Document1 Title</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>This is test3 document3.</td>
+	<td>DML Folder Document2 Title</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Next</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>This is test1 document1.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>This is test2 document2.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>This is test3 document3.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Next</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>This is test1 document1.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>This is test2 document2.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>This is test3 document3.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@class='document-title']</td>
+	<td>DML Folder Document3 Title</td>
 </tr>
 
 </tbody></table>

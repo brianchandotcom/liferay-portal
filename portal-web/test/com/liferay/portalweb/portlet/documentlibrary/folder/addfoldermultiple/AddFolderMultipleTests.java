@@ -32,7 +32,7 @@ public class AddFolderMultipleTests extends BaseTests {
 		testSuite.addTestSuite(AddFolder1Test.class);
 		testSuite.addTestSuite(AddFolder2Test.class);
 		testSuite.addTestSuite(AddFolder3Test.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

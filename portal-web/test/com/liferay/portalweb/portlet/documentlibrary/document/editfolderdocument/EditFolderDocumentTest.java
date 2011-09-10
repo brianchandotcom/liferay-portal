@@ -30,7 +30,8 @@ public class EditFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -41,16 +42,14 @@ public class EditFolderDocumentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("This is test1 document1."));
-		selenium.clickAt("//td[5]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -58,8 +57,9 @@ public class EditFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+				if (RuntimeVariables.replace("DML Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a"))) {
 					break;
 				}
 			}
@@ -70,18 +70,31 @@ public class EditFolderDocumentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a"));
+		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DML Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_20_title",
-			RuntimeVariables.replace("Test1 Document1 Edited1"));
+		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+			selenium.getText("//h2[@class='document-title']"));
+		assertEquals(RuntimeVariables.replace("DML Folder Document Description"),
+			selenium.getText("//span[@class='document-description']"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("//button[1]"));
+		selenium.clickAt("//button[1]", RuntimeVariables.replace("Edit"));
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_20_description",
-			RuntimeVariables.replace("This is test1 document1. Edited1."));
+		selenium.type("//input[@id='_20_title']",
+			RuntimeVariables.replace("DML Folder Document Title Edit"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//textarea[@id='_20_description']",
+			RuntimeVariables.replace("DML Folder Document Description Edit"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -91,30 +104,7 @@ public class EditFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"This is test1 document1. Edited1.")
-										.equals(selenium.getText("//a/div"))) {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -126,7 +116,12 @@ public class EditFolderDocumentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"This is test1 document1. Edited1."),
-			selenium.getText("//a/div"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("DML Folder Document Title Edit"),
+			selenium.getText("//h2[@class='document-title']"));
+		assertEquals(RuntimeVariables.replace(
+				"DML Folder Document Description Edit"),
+			selenium.getText("//span[@class='document-description']"));
 	}
 }

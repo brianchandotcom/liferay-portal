@@ -31,7 +31,8 @@ public class ConfigurePortletShowFolderColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -42,11 +43,13 @@ public class ConfigurePortletShowFolderColumnsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -66,7 +69,11 @@ public class ConfigurePortletShowFolderColumnsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -75,7 +82,8 @@ public class ConfigurePortletShowFolderColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_86_availableFolderColumns")) {
+				if (selenium.isVisible(
+							"//select[@id='_86_availableFolderColumns']")) {
 					break;
 				}
 			}
@@ -86,17 +94,18 @@ public class ConfigurePortletShowFolderColumnsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.addSelection("_86_availableFolderColumns",
-			RuntimeVariables.replace("label=# of Folders"));
-		selenium.clickAt("//div[2]/div/span/span/button[2]",
-			RuntimeVariables.replace(""));
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.addSelection("//select[@id='_86_availableFolderColumns']",
+			RuntimeVariables.replace("# of Folders"));
+		selenium.clickAt("//button[@title='Move selected items from Available to Current.']",
+			RuntimeVariables.replace(
+				"Move selected items from Available to Current."));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -105,7 +114,8 @@ public class ConfigurePortletShowFolderColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Library Test Page")) {
 					break;
 				}
 			}
@@ -116,8 +126,8 @@ public class ConfigurePortletShowFolderColumnsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Library Test Page",
+			RuntimeVariables.replace("Documents and Media Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("# of Folders"));

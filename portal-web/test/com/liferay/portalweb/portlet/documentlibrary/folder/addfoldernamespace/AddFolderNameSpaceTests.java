@@ -30,7 +30,7 @@ public class AddFolderNameSpaceTests extends BaseTests {
 		testSuite.addTestSuite(AddPageDLTest.class);
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddFolderNameSpaceTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

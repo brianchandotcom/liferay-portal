@@ -143,6 +143,8 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 
 		BundleContext bundleContext = _framework.getBundleContext();
 
+		bundleContext.addBundleListener(new BundleListener(bundleContext));
+
 		bundleContext.addServiceListener(
 			new ServiceListener(bundleContext), _PORTAL_SERVICE_FILTER);
 

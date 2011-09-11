@@ -63,16 +63,15 @@ public class PluginPackageIndexer extends BaseIndexer {
 		return CLASS_NAMES;
 	}
 
+	public String getPortletId() {
+		return PORTLET_ID;
+	}
+
 	@Override
 	protected void doDelete(Object obj) throws Exception {
 		PluginPackage pluginPackage = (PluginPackage)obj;
 
-		Document document = new DocumentImpl();
-
-		document.addUID(PORTLET_ID, pluginPackage.getModuleId());
-
-		SearchEngineUtil.deleteDocument(
-			CompanyConstants.SYSTEM, document.get(Field.UID));
+		doDelete(CompanyConstants.SYSTEM, pluginPackage.getModuleId());
 	}
 
 	@Override

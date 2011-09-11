@@ -29,6 +29,10 @@ public class IndexerWrapper implements Indexer {
 		_indexer = indexer;
 	}
 
+	public void delete(long companyId, String classPK) throws SearchException {
+		_indexer.delete(companyId, classPK);
+	}
+
 	public void delete(Object obj) throws SearchException {
 		_indexer.delete(obj);
 	}
@@ -56,6 +60,10 @@ public class IndexerWrapper implements Indexer {
 
 	public IndexerPostProcessor[] getIndexerPostProcessors() {
 		return _indexer.getIndexerPostProcessors();
+	}
+
+	public String getPortletId() {
+		return _indexer.getPortletId();
 	}
 
 	public String getSearchEngineId() {

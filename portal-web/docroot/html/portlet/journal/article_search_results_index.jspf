@@ -27,30 +27,25 @@ journalParams.put("expandoAttributes", searchTerms.getKeywords());
 Sort sort = SortFactoryUtil.getSort(JournalArticle.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
 Hits hits = null;
+Tuple tuple = null;
 
-if (searchTerms.isAdvancedSearch()) {
-	hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), 0, searchTerms.getArticleId(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getType(), StringUtil.valueOf(searchTerms.getStatusCode()), searchTerms.getStructureId(), searchTerms.getTemplateId(), journalParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+boolean corruptIndex = true;
+
+while (corruptIndex) {
+	if (searchTerms.isAdvancedSearch()) {
+		hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), 0, searchTerms.getArticleId(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getType(), StringUtil.valueOf(searchTerms.getStatusCode()), searchTerms.getStructureId(), searchTerms.getTemplateId(), journalParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+	else {
+		hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), 0, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getKeywords(), journalParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+
+	tuple = JournalUtil.getArticles(hits);
+
+	corruptIndex = (Boolean)tuple.getObject(1);
 }
-else {
-	hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), 0, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getKeywords(), journalParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
-}
+results = (List<JournalArticle>)tuple.getObject(0);
+int total = hits.getLength();
 
-Tuple tuple = JournalUtil.getArticles(hits);
-
-boolean corruptIndex = (Boolean)tuple.getObject(1);
-
-if (!corruptIndex) {
-	results = (List<JournalArticle>)tuple.getObject(0);
-	int total = hits.getLength();
-
-	searchContainer.setResults(results);
-	searchContainer.setTotal(total);
-}
-else {
-%>
-
-	<%@ include file="/html/portlet/journal/article_search_results_database.jspf" %>
-
-<%
-}
+searchContainer.setResults(results);
+searchContainer.setTotal(total);
 %>

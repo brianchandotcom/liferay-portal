@@ -29,6 +29,8 @@ public interface Indexer {
 
 	public static final int DEFAULT_INTERVAL = 1000;
 
+	public void delete(long companyId, String classPK) throws SearchException;
+
 	public void delete(Object obj) throws SearchException;
 
 	public String[] getClassNames();
@@ -43,6 +45,8 @@ public interface Indexer {
 		throws SearchException;
 
 	public IndexerPostProcessor[] getIndexerPostProcessors();
+
+	public String getPortletId();
 
 	public String getSearchEngineId();
 

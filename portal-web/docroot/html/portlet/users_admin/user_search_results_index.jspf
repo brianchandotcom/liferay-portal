@@ -25,30 +25,26 @@ userParams.put("expandoAttributes", searchTerms.getKeywords());
 Sort sort = SortFactoryUtil.getSort(User.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
 Hits hits = null;
+Tuple tuple = null;
 
-if (searchTerms.isAdvancedSearch()) {
-	hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+boolean corruptIndex = true;
+
+while (corruptIndex) {
+	if (searchTerms.isAdvancedSearch()) {
+		hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+	else {
+		hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+
+	tuple = UsersAdminUtil.getUsers(hits);
+
+	corruptIndex = (Boolean)tuple.getObject(1);
 }
-else {
-	hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
-}
 
-Tuple tuple = UsersAdminUtil.getUsers(hits);
+results = (List<User>)tuple.getObject(0);
+total = hits.getLength();
 
-boolean corruptIndex = (Boolean)tuple.getObject(1);
-
-if (!corruptIndex) {
-	results = (List<User>)tuple.getObject(0);
-	total = hits.getLength();
-
-	pageContext.setAttribute("results", results);
-	pageContext.setAttribute("total", total);
-}
-else {
-%>
-
-	<%@ include file="/html/portlet/users_admin/user_search_results_database.jspf" %>
-
-<%
-}
+pageContext.setAttribute("results", results);
+pageContext.setAttribute("total", total);
 %>

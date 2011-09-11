@@ -143,7 +143,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		clearFilteredPropertyDescriptorsCache(autowireCapableBeanFactory);
 
 		try {
-			AdaptorUtil.init(servletContext, applicationContext);
+			AdaptorUtil.init(applicationContext);
 
 			AdaptorUtil.start();
 		}

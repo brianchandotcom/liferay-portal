@@ -16,12 +16,18 @@ package com.liferay.portal.adaptor.osgi;
 
 import com.liferay.portal.kernel.adaptor.Adaptor;
 import com.liferay.portal.kernel.adaptor.AdaptorUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.Hashtable;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +35,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.launch.Framework;
 
@@ -38,9 +45,55 @@ import org.osgi.framework.launch.Framework;
 public class OSGiHttpServiceServlet extends HttpServlet {
 
 	@Override
+	public void init(ServletConfig servletConfig) throws ServletException {
+		super.init(servletConfig);
+
+		BundleContext bundleContext = getBundleContext();
+
+		if (bundleContext == null) {
+			_log.warn("No framework provided!");
+
+			return;
+		}
+
+		registerServletConfig(servletConfig);
+
+		_serviceReference = bundleContext.getServiceReference(
+			_HTTP_SERVICE_SERVLET_WRAPPER);
+
+		if (_serviceReference == null) {
+			_log.warn("No HttpService available!");
+
+			return;
+		}
+
+		HttpServlet httpServlet = (HttpServlet)bundleContext.getService(
+			_serviceReference);
+
+		// Make sure that the implementation doesn't have to be initialised
+		// all the time, but since the service might come and go at any time
+		// we always have to assume that we need to re-initialise it here.
+
+		httpServlet.init(servletConfig);
+	}
+
+	@Override
 	public void service(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
+
+		BundleContext bundleContext = getBundleContext();
+
+		if (bundleContext == null) {
+			PortalUtil.sendError(
+				HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+				new IllegalStateException("No framework provided!"),
+				request, response);
+
+			return;
+		}
+
+		String servletPath = request.getServletPath();
 
 		String pathInfo = request.getPathInfo();
 
@@ -62,58 +115,43 @@ public class OSGiHttpServiceServlet extends HttpServlet {
 				_INCLUDE_PATH_INFO_ATTRIBUTE);
 
 			if (Validator.isNull(includePathInfo)) {
-				String servletPath = (String)request.getAttribute(
+				String servletPathAttribute = (String)request.getAttribute(
 					_INCLUDE_SERVLET_PATH_ATTRIBUTE);
 
-				if (servletPath.contains(_OSGI_PATH)) {
-					servletPath = servletPath.substring(_OSGI_PATH.length());
+				if (servletPathAttribute.contains(servletPath)) {
+					servletPathAttribute = servletPathAttribute.substring(
+						servletPath.length());
 				}
 
-				if (isExtensionMapping(servletPath)) {
-					request = new IncludedExtensionMappingRequest(request);
+				if (isExtensionMapping(servletPathAttribute)) {
+					request = new IncludedExtensionMappingRequest(
+						request, servletPath);
 				}
 			}
 		}
 
-		try {
-			BundleContext bundleContext = getBundleContext();
+		_serviceReference = bundleContext.getServiceReference(
+			_HTTP_SERVICE_SERVLET_WRAPPER);
 
-			if (bundleContext == null) {
-				PortalUtil.sendError(
-					HttpServletResponse.SC_SERVICE_UNAVAILABLE,
-					new IllegalStateException("No framework provided!"),
-					request, response);
-
-				return;
-			}
-
-			_serviceReference = bundleContext.getServiceReference(
-				_HTTP_SERVICE_SERVLET_WRAPPER);
-
-			if (_serviceReference == null) {
-				PortalUtil.sendError(
-					HttpServletResponse.SC_SERVICE_UNAVAILABLE,
-					new IllegalStateException("No HttpService available!"),
-					request, response);
-
-				return;
-			}
-
-			HttpServlet httpServlet = (HttpServlet)bundleContext.getService(
-				_serviceReference);
-
-			// Make sure that the implementation doesn't have to be initialized
-			// all the time, but since the service might come and go at any time
-			// we always have to assume that we need to re-initlaize it here.
-
-			httpServlet.init(getServletConfig());
-
-			httpServlet.service(request, response);
-		}
-		catch (Exception e) {
+		if (_serviceReference == null) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, e, request, response);
+				HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+				new IllegalStateException("No HttpService available!"),
+				request, response);
+
+			return;
 		}
+
+		HttpServlet httpServlet = (HttpServlet)bundleContext.getService(
+			_serviceReference);
+
+		// Make sure that the implementation doesn't have to be initialised
+		// all the time, but since the service might come and go at any time
+		// we always have to assume that we need to re-initialise it here.
+
+		httpServlet.init(getServletConfig());
+
+		httpServlet.service(request, response);
 	}
 
 	protected BundleContext getBundleContext() {
@@ -148,6 +186,20 @@ public class OSGiHttpServiceServlet extends HttpServlet {
 		return lastSegment.indexOf(StringPool.PERIOD) != -1;
 	}
 
+	protected void registerServletConfig(ServletConfig servletConfig) {
+		Hashtable<String,Object> properties = new Hashtable<String, Object>();
+
+		properties.put(Constants.SERVICE_VENDOR, ReleaseInfo.getVendor());
+
+		properties.put(
+			OSGiConstants.PORTAL_SERVICE_BEAN_NAME,
+			ServletConfig.class.getName());
+
+		_bundleContext.registerService(
+			new String[] {ServletConfig.class.getName()}, servletConfig,
+			properties);
+	}
+
 	static class ExtensionMappingRequest extends HttpServletRequestWrapper {
 
 		public ExtensionMappingRequest(HttpServletRequest request) {
@@ -164,8 +216,12 @@ public class OSGiHttpServiceServlet extends HttpServlet {
 	static class IncludedExtensionMappingRequest
 		extends ExtensionMappingRequest {
 
-		public IncludedExtensionMappingRequest(HttpServletRequest request) {
+		public IncludedExtensionMappingRequest(
+			HttpServletRequest request, String servletPath) {
+
 			super(request);
+
+			_servletPath = servletPath;
 		}
 
 		@Override
@@ -174,18 +230,21 @@ public class OSGiHttpServiceServlet extends HttpServlet {
 				return StringPool.BLANK;
 			}
 			else if (attributeName.equals(_INCLUDE_PATH_INFO_ATTRIBUTE)) {
-				String servletPath = (String)super.getAttribute(
+				String servletPathAttribute = (String)super.getAttribute(
 					_INCLUDE_SERVLET_PATH_ATTRIBUTE);
 
-				if (servletPath.contains(_OSGI_PATH)) {
-					servletPath = servletPath.substring(_OSGI_PATH.length());
+				if (servletPathAttribute.contains(_servletPath)) {
+					servletPathAttribute = servletPathAttribute.substring(
+						_servletPath.length());
 				}
 
-				return servletPath;
+				return servletPathAttribute;
 			}
 
 			return super.getAttribute(attributeName);
 		}
+
+		private String _servletPath;
 
 	}
 
@@ -197,7 +256,9 @@ public class OSGiHttpServiceServlet extends HttpServlet {
 		"javax.servlet.include.servlet_path";
 	private static final String _INCLUDE_PATH_INFO_ATTRIBUTE =
 		"javax.servlet.include.path_info";
-	private static final String _OSGI_PATH = "/osgi";
+
+	private static Log _log = LogFactoryUtil.getLog(
+		OSGiHttpServiceServlet.class);
 
 	private BundleContext _bundleContext;
 	private ServiceReference _serviceReference;

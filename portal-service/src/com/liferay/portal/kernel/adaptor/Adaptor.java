@@ -14,15 +14,12 @@
 
 package com.liferay.portal.kernel.adaptor;
 
-import javax.servlet.ServletContext;
-
 /**
  * @author Raymond Augé
  */
 public interface Adaptor {
 
-	public void init(ServletContext servletContext, Object beanContext)
-		throws AdaptorException;
+	public void init(Object applicationContext) throws AdaptorException;
 
 	public void start() throws AdaptorException;
 

@@ -18,7 +18,6 @@ import aQute.libg.header.OSGiHeader;
 
 import com.liferay.portal.kernel.adaptor.Adaptor;
 import com.liferay.portal.kernel.adaptor.AdaptorException;
-import com.liferay.portal.kernel.adaptor.AdaptorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -45,8 +44,6 @@ import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import javax.servlet.ServletContext;
-
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.osgi.framework.BundleContext;
@@ -67,12 +64,9 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 		return _framework;
 	}
 
-	public void init(
-			ServletContext servletContext, Object applicationContext)
-		throws AdaptorException {
-
+	public void init(Object applicationContext) throws AdaptorException {
 		try {
-			doInit(servletContext, applicationContext);
+			doInit(applicationContext);
 		}
 		catch (Exception e) {
 			throw new AdaptorException(e);
@@ -131,10 +125,7 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 		return properties;
 	}
 
-	protected void doInit(
-			ServletContext servletContext, Object applicationContext)
-		throws Exception {
-
+	protected void doInit(Object applicationContext) throws Exception {
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
 			FrameworkFactory.class);
 
@@ -155,7 +146,6 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 		bundleContext.addServiceListener(
 			new ServiceListener(bundleContext), _PORTAL_SERVICE_FILTER);
 
-		registerServletContext(servletContext);
 		registerApplicationContext((ApplicationContext)applicationContext);
 	}
 
@@ -297,27 +287,11 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 			names.toArray(new String[names.size()]), bean, properties);
 	}
 
-	protected void registerServletContext(ServletContext servletContext) {
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		Hashtable<String,Object> properties = new Hashtable<String, Object>();
-
-		properties.put(Constants.SERVICE_VENDOR, ReleaseInfo.getVendor());
-
-		properties.put(
-			OSGiConstants.PORTAL_SERVICE_BEAN_NAME,
-			ServletContext.class.getName());
-
-		bundleContext.registerService(
-			new String[] {ServletContext.class.getName()}, servletContext,
-			properties);
-	}
-
 	private static final String _PORTAL_SERVICE_FILTER =
 		"(&(portal.service=*)(!(portal.service.core=*))" +
 			"(!(portal.service.previous=*)))";
 
-	private static Log _log = LogFactoryUtil.getLog(AdaptorUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(OSGiAdaptorImpl.class);
 
 	private Framework _framework;
 

@@ -152,7 +152,7 @@ public class EditRepositoryAction extends PortletAction {
 
 			// Add repository
 
-			RepositoryServiceUtil.mountRepository(
+			RepositoryServiceUtil.addRepository(
 				themeDisplay.getScopeGroupId(), classNameId, folderId, name,
 				description, portletDisplay.getId(), typeSettingsProperties,
 				serviceContext);

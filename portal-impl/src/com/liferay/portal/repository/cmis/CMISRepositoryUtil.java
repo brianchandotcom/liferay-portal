@@ -101,7 +101,8 @@ public class CMISRepositoryUtil {
 		String value = typeSettingsProperties.getProperty(typeSettingsKey);
 
 		if (Validator.isNull(value)) {
-			throw new InvalidRepositoryException();
+			throw new InvalidRepositoryException(
+				"Properties value cannot be null for key " + typeSettingsKey);
 		}
 
 		return value;

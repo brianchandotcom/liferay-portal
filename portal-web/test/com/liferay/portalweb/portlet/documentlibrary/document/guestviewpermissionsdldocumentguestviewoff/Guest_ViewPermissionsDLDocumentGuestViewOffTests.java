@@ -22,8 +22,8 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class
-	Guest_ViewPermissionsDLDocumentGuestViewOffTests extends BaseTests {
+public class Guest_ViewPermissionsDLDocumentGuestViewOffTests
+	extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
@@ -31,6 +31,9 @@ public class
 		testSuite.addTestSuite(AddPageDLTest.class);
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddDLDocumentTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(Guest_ViewDLDocumentTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(PermissionsDLDocumentGuestViewOffTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(

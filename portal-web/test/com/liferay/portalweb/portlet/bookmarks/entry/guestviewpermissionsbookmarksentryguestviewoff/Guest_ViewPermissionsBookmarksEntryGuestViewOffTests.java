@@ -22,8 +22,8 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class
-	Guest_ViewPermissionsBookmarksEntryGuestViewOffTests extends BaseTests {
+public class Guest_ViewPermissionsBookmarksEntryGuestViewOffTests
+	extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
@@ -31,8 +31,10 @@ public class
 		testSuite.addTestSuite(AddPageBookmarksTest.class);
 		testSuite.addTestSuite(AddPortletBookmarksTest.class);
 		testSuite.addTestSuite(AddBookmarksEntryTest.class);
-		testSuite.addTestSuite(
-			PermissionsBookmarksEntryGuestViewOffTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(Guest_ViewBookmarksEntryTest.class);
+		testSuite.addTestSuite(SignInTest.class);
+		testSuite.addTestSuite(PermissionsBookmarksEntryGuestViewOffTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(
 			Guest_ViewPermissionsBookmarksEntryGuestViewOffTest.class);

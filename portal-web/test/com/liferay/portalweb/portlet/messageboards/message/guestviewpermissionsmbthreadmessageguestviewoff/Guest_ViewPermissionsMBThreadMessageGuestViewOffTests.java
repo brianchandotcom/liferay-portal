@@ -31,6 +31,9 @@ public class
 		testSuite.addTestSuite(AddPageMBTest.class);
 		testSuite.addTestSuite(AddPortletMBTest.class);
 		testSuite.addTestSuite(PostNewMBThreadMessageTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(Guest_ViewMBThreadMessageTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(
 			PermissionsMBThreadMessageGuestViewOffTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

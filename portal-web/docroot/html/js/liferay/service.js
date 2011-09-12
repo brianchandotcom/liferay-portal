@@ -1194,6 +1194,7 @@ Liferay.Service.registerClass(
 		getBundleContext: true,
 		getFramework: true,
 		getState: true,
+		setBundleStartLevel: true,
 		startBundle: true,
 		stopBundle: true,
 		uninstallBundle: true,

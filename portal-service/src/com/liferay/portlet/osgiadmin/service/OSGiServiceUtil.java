@@ -64,6 +64,12 @@ public class OSGiServiceUtil {
 		return getService().getState(bundleId);
 	}
 
+	public static void setBundleStartLevel(long bundleId, int startLevel)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().setBundleStartLevel(bundleId, startLevel);
+	}
+
 	public static void startBundle(long bundleId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

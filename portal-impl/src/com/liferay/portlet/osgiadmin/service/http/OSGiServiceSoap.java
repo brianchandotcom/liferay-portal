@@ -108,6 +108,18 @@ public class OSGiServiceSoap {
 		}
 	}
 
+	public static void setBundleStartLevel(long bundleId, int startLevel)
+		throws RemoteException {
+		try {
+			OSGiServiceUtil.setBundleStartLevel(bundleId, startLevel);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void startBundle(long bundleId) throws RemoteException {
 		try {
 			OSGiServiceUtil.startBundle(bundleId);

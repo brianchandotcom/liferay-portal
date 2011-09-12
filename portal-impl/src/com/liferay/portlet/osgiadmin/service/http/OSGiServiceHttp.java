@@ -215,12 +215,45 @@ public class OSGiServiceHttp {
 		}
 	}
 
+	public static void setBundleStartLevel(HttpPrincipal httpPrincipal,
+		long bundleId, int startLevel)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(OSGiServiceUtil.class.getName(),
+					"setBundleStartLevel", _setBundleStartLevelParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					bundleId, startLevel);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void startBundle(HttpPrincipal httpPrincipal, long bundleId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(OSGiServiceUtil.class.getName(),
-					"startBundle", _startBundleParameterTypes5);
+					"startBundle", _startBundleParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, bundleId);
 
@@ -252,7 +285,7 @@ public class OSGiServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(OSGiServiceUtil.class.getName(),
-					"startBundle", _startBundleParameterTypes6);
+					"startBundle", _startBundleParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					bundleId, options);
@@ -284,7 +317,7 @@ public class OSGiServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(OSGiServiceUtil.class.getName(),
-					"stopBundle", _stopBundleParameterTypes7);
+					"stopBundle", _stopBundleParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, bundleId);
 
@@ -316,7 +349,7 @@ public class OSGiServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(OSGiServiceUtil.class.getName(),
-					"stopBundle", _stopBundleParameterTypes8);
+					"stopBundle", _stopBundleParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					bundleId, options);
@@ -349,7 +382,7 @@ public class OSGiServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(OSGiServiceUtil.class.getName(),
-					"uninstallBundle", _uninstallBundleParameterTypes9);
+					"uninstallBundle", _uninstallBundleParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, bundleId);
 
@@ -380,7 +413,7 @@ public class OSGiServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(OSGiServiceUtil.class.getName(),
-					"updateBundle", _updateBundleParameterTypes10);
+					"updateBundle", _updateBundleParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, bundleId);
 
@@ -412,7 +445,7 @@ public class OSGiServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(OSGiServiceUtil.class.getName(),
-					"updateBundle", _updateBundleParameterTypes11);
+					"updateBundle", _updateBundleParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					bundleId, inputStream);
@@ -453,25 +486,28 @@ public class OSGiServiceHttp {
 	private static final Class<?>[] _getStateParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _startBundleParameterTypes5 = new Class[] {
-			long.class
+	private static final Class<?>[] _setBundleStartLevelParameterTypes5 = new Class[] {
+			long.class, int.class
 		};
 	private static final Class<?>[] _startBundleParameterTypes6 = new Class[] {
-			long.class, int.class
-		};
-	private static final Class<?>[] _stopBundleParameterTypes7 = new Class[] {
 			long.class
+		};
+	private static final Class<?>[] _startBundleParameterTypes7 = new Class[] {
+			long.class, int.class
 		};
 	private static final Class<?>[] _stopBundleParameterTypes8 = new Class[] {
-			long.class, int.class
-		};
-	private static final Class<?>[] _uninstallBundleParameterTypes9 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateBundleParameterTypes10 = new Class[] {
+	private static final Class<?>[] _stopBundleParameterTypes9 = new Class[] {
+			long.class, int.class
+		};
+	private static final Class<?>[] _uninstallBundleParameterTypes10 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _updateBundleParameterTypes11 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateBundleParameterTypes12 = new Class[] {
 			long.class, java.io.InputStream.class
 		};
 }

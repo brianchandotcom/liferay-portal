@@ -55,6 +55,12 @@ public class OSGiServiceWrapper implements OSGiService {
 		return _osGiService.getState(bundleId);
 	}
 
+	public void setBundleStartLevel(long bundleId, int startLevel)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_osGiService.setBundleStartLevel(bundleId, startLevel);
+	}
+
 	public void startBundle(long bundleId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

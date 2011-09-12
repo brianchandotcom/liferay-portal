@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddTasksTaskAssignedToMeTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddTasksTaskAssignedToMeTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/div[1]/ul/li[5]/a</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span[2]</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No tasks were found.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Add Task</td>
+	<td>Add Task</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Add Task</td>
+	<td>Add Task</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//h1/span</td>
+	<td>Add Task</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span</td>
+	<td>Add Task</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[2]/input</td>
+	<td>Description</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[2]/input</td>
+	<td>Task Description</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select</td>
+	<td>label=Joe Bloggs</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//tr[4]/td[2]/select</td>
+	<td>label=Normal</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/input[2]</td>
+	<td>Never Due</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//h1/span</td>
+	<td>Task Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span</td>
+	<td>Task Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[2]/div[1]</td>
+	<td>Assigned to Joe Bloggs</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

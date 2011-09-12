@@ -45,14 +45,40 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace(
+				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("link=View Staged Page"));
+		selenium.clickAt("//li[2]/span/a",
+			RuntimeVariables.replace("Staged Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Publish to Live Now",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//strong/a",
+			RuntimeVariables.replace("Staging Dropdown"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Publish to Live Now"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+			RuntimeVariables.replace("Publish to Live Now"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -73,7 +99,7 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));

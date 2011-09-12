@@ -52,8 +52,7 @@ public class AddOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("_126_name",
-			RuntimeVariables.replace(
-				"Organization Staging Organization Web Content Display"));
+			RuntimeVariables.replace("Organization Staging Organization WCD"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
@@ -61,7 +60,7 @@ public class AddOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[2]/div/div/div"));
-		assertEquals("Organization Staging Organization Web Content Display",
+		assertEquals("Organization Staging Organization WCD",
 			selenium.getValue("_126_name"));
 		selenium.open("/web/guest/home/");
 
@@ -88,8 +87,7 @@ public class AddOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Organizations", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_126_keywords",
-			RuntimeVariables.replace("Web Content Display"));
+		selenium.type("_126_keywords", RuntimeVariables.replace("WCD"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));

@@ -966,7 +966,7 @@ release was successful.</echo>
 			/>
 			<fileset
 				dir="${app.server.parent.dir}/jonas-${app.server.jonas.version}/deploy"
-				includes="ctxroot.xml,doc.xml,jonasAdmin.xml"
+				includes="ctxroot.xml,doc.xml,jonasAdmin.xml,jdbc-ds.xml"
 			/>
 			<fileset
 				dir="${app.server.parent.dir}/jonas-${app.server.jonas.version}/repositories/maven2-internal"
@@ -982,8 +982,8 @@ release was successful.</echo>
 
 		<replace
 			file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/jonas.properties"
-			token="web,ear,depmonitor"
-			value="web,ear,validation,depmonitor"
+			token="jtm,db,resource,ejb3,jaxws,web,ear,depmonitor"
+			value="jtm,resource,ejb3,jaxws,web,ear,validation,depmonitor"
 		/>
 
 		<replace file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/tomcat6-server.xml">

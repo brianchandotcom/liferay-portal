@@ -470,13 +470,6 @@ $(jetty.home)/lib/liferay/*</echo>
 
 				<delete failonerror="false">
 					<fileset
-						dir="${app.server.lib.global.dir}"
-						includes="hsql.jar"
-					/>
-				</delete>
-
-				<delete failonerror="false">
-					<fileset
 						dir="${app.server.lib.portal.dir}"
 						includes="osgi.core.jar,xalan.jar,xercesImpl.jar,xml-apis.jar"
 					/>

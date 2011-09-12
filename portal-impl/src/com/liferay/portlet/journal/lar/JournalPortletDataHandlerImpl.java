@@ -354,7 +354,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				JournalArticle.class + ".articleId");
 
 		String newArticleId = articleIds.get(articleId);
-		boolean doMapping = true;
 
 		if (Validator.isNotNull(newArticleId)) {
 
@@ -363,7 +362,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			articleId = newArticleId;
 			autoArticleId = false;
-			doMapping = false;
 		}
 
 		String content = article.getContent();
@@ -742,7 +740,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		portletDataContext.importClassedModel(
 			article, importedArticle, _NAMESPACE);
 
-		if (doMapping) {
+		if (Validator.isNull(newArticleId)) {
 			articleIds.put(
 				article.getArticleId(), importedArticle.getArticleId());
 		}

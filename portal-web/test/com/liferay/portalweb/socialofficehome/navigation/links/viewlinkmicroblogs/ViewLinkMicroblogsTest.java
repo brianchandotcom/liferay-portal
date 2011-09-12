@@ -51,7 +51,7 @@ public class ViewLinkMicroblogsTest extends BaseTestCase {
 			selenium.getText("//div[2]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
 		assertEquals(RuntimeVariables.replace("Timeline"),
-			selenium.getText("//li[1]/span/span"));
+			selenium.getText("//div/div/ul/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Mentions"),
 			selenium.getText("//div/div/ul/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),

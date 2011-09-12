@@ -48,7 +48,7 @@ public class ViewLinkTasksTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Tasks"),
 			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
-			selenium.getText("//li[1]/span/span"));
+			selenium.getText("//div/div/ul/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("I Have Created"),
 			selenium.getText("//div/div/ul/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("Add Task"),

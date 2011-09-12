@@ -64,13 +64,13 @@
 
 	var REGEX_LASTCHAR_NEWLINE = /(\r?\n)$/;
 
-	var REGEX_NEW_LINE = /r?\n/g;
+	var REGEX_NEW_LINE = /\r?\n/g;
 
-	var REGEX_NUMBER = /^[\\.0-9]{1,8}$/i;
+	var REGEX_NUMBER = /^[\\.0-9]{1,8}$/;
 
 	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
 
-	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/;
+	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
 	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,512}$/i;
 
@@ -314,7 +314,7 @@
 						(nextToken.type == TOKEN_TAG_END) &&
 						(nextToken.value == STR_TAG_LIST_ITEM_SHORT)) {
 
-						value = value.replace(REGEX_LASTCHAR_NEWLINE, '');
+						value = value.replace(REGEX_LASTCHAR_NEWLINE, STR_BLANK);
 					}
 				}
 

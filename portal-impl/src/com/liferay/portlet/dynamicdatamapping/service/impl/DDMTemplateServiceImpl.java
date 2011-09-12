@@ -57,6 +57,15 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		ddmTemplateLocalService.deleteTemplate(templateId);
 	}
 
+	public DDMTemplate getTemplate(long templateId)
+		throws PortalException, SystemException {
+
+		DDMTemplatePermission.check(
+			getPermissionChecker(), templateId, ActionKeys.VIEW);
+
+		return ddmTemplateLocalService.getTemplate(templateId);
+	}
+
 	public List<DDMTemplate> getTemplates(long structureId, String type)
 		throws SystemException {
 

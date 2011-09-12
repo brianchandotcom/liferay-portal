@@ -77,6 +77,21 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap getTemplate(
+		long templateId) throws RemoteException {
+		try {
+			com.liferay.portlet.dynamicdatamapping.model.DDMTemplate returnValue =
+				DDMTemplateServiceUtil.getTemplate(templateId);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] getTemplates(
 		long structureId, java.lang.String type) throws RemoteException {
 		try {

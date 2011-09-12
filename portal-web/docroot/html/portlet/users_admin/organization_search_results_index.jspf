@@ -25,30 +25,26 @@ organizationParams.put("expandoAttributes", searchTerms.getKeywords());
 Sort sort = SortFactoryUtil.getSort(Organization.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
 Hits hits = null;
+Tuple tuple = null;
 
-if (searchTerms.isAdvancedSearch()) {
-	hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+boolean corruptIndex = true;
+
+while (corruptIndex) {
+	if (searchTerms.isAdvancedSearch()) {
+		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+	else {
+		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+	}
+
+	tuple = UsersAdminUtil.getOrganizations(hits);
+
+	corruptIndex = (Boolean)tuple.getObject(1);
 }
-else {
-	hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
-}
 
-Tuple tuple = UsersAdminUtil.getOrganizations(hits);
+results = (List<User>)tuple.getObject(0);
+total = hits.getLength();
 
-boolean corruptIndex = (Boolean)tuple.getObject(1);
-
-if (!corruptIndex) {
-	results = (List<User>)tuple.getObject(0);
-	total = hits.getLength();
-
-	pageContext.setAttribute("results", results);
-	pageContext.setAttribute("total", total);
-}
-else {
-%>
-
-	<%@ include file="/html/portlet/users_admin/organization_search_results_database.jspf" %>
-
-<%
-}
+pageContext.setAttribute("results", results);
+pageContext.setAttribute("total", total);
 %>

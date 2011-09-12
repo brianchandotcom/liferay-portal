@@ -79,6 +79,10 @@ public class DLIndexer extends BaseIndexer {
 		return CLASS_NAMES;
 	}
 
+	public String getPortletId() {
+		return PORTLET_ID;
+	}
+
 	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long entryClassPK,

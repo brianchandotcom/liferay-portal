@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -58,6 +57,10 @@ public class BookmarksIndexer extends BaseIndexer {
 		return CLASS_NAMES;
 	}
 
+	public String getPortletId() {
+		return PORTLET_ID;
+	}
+
 	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
@@ -94,12 +97,7 @@ public class BookmarksIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		BookmarksEntry entry = (BookmarksEntry)obj;
 
-		Document document = new DocumentImpl();
-
-		document.addUID(PORTLET_ID, entry.getEntryId());
-
-		SearchEngineUtil.deleteDocument(
-			entry.getCompanyId(), document.get(Field.UID));
+		doDelete(entry.getCompanyId(), String.valueOf(entry.getEntryId()));
 	}
 
 	@Override

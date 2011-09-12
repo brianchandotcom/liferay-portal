@@ -14,20 +14,17 @@
 
 package com.liferay.portlet.flags.messaging;
 
-import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -43,7 +40,9 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.util.UniqueList;
 
 import java.io.IOException;
@@ -52,8 +51,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import javax.mail.internet.InternetAddress;
 
 /**
  * @author Julio Camarero
@@ -223,107 +220,34 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		Date now = new Date();
 
-		subject = StringUtil.replace(
-			subject,
-			new String[] {
-				"[$COMPANY_ID$]",
-				"[$COMPANY_MX$]",
-				"[$COMPANY_NAME$]",
-				"[$CONTENT_ID$]",
-				"[$CONTENT_TITLE$]",
-				"[$CONTENT_TYPE$]",
-				"[$CONTENT_URL$]",
-				"[$DATE$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$REASON$]",
-				"[$REPORTED_USER_ADDRESS$]",
-				"[$REPORTED_USER_NAME$]",
-				"[$REPORTED_USER_URL$]",
-				"[$REPORTER_USER_ADDRESS$]",
-				"[$REPORTER_USER_NAME$]",
-				"[$SITE_NAME$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				String.valueOf(company.getCompanyId()),
-				company.getMx(),
-				company.getName(),
-				String.valueOf(contentId),
-				contentTitle,
-				contentType,
-				contentURL,
-				now.toString(),
-				fromAddress,
-				fromName,
-				serviceContext.getPortalURL(),
-				reason,
-				reportedEmailAddress,
-				reportedUserName,
-				reportedUserURL,
-				reporterEmailAddress,
-				reporterUserName,
-				groupName,
-				toAddress,
-				toName
-			});
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		body = StringUtil.replace(
-			body,
-			new String[] {
-				"[$COMPANY_ID$]",
-				"[$COMPANY_MX$]",
-				"[$COMPANY_NAME$]",
-				"[$CONTENT_ID$]",
-				"[$CONTENT_TITLE$]",
-				"[$CONTENT_TYPE$]",
-				"[$CONTENT_URL$]",
-				"[$DATE$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$REASON$]",
-				"[$REPORTED_USER_ADDRESS$]",
-				"[$REPORTED_USER_NAME$]",
-				"[$REPORTED_USER_URL$]",
-				"[$REPORTER_USER_ADDRESS$]",
-				"[$REPORTER_USER_NAME$]",
-				"[$SITE_NAME$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				String.valueOf(company.getCompanyId()),
-				company.getMx(),
-				company.getName(),
-				String.valueOf(contentId),
-				contentTitle,
-				contentType,
-				contentURL,
-				now.toString(),
-				fromAddress,
-				fromName,
-				serviceContext.getPortalURL(),
-				reason,
-				reportedEmailAddress,
-				reportedUserName,
-				reportedUserURL,
-				reporterEmailAddress,
-				reporterUserName,
-				groupName,
-				toAddress,
-				toName
-			});
+		subscriptionSender.setBody(body);
+		subscriptionSender.setCompanyId(company.getCompanyId());
+		subscriptionSender.setContextAttributes(
+			"[$CONTENT_ID$]", String.valueOf(contentId),
+			"[$CONTENT_TITLE$]", contentTitle,
+			"[$CONTENT_TYPE$]", contentType,
+			"[$CONTENT_URL$]", contentURL,
+			"[$DATE$]", now.toString(),
+			"[$REASON$]", reason,
+			"[$REPORTED_USER_ADDRESS$]", reportedEmailAddress,
+			"[$REPORTED_USER_NAME$]", reportedUserName,
+			"[$REPORTED_USER_URL$]", reportedUserURL,
+			"[$REPORTER_USER_ADDRESS$]", reporterEmailAddress,
+			"[$REPORTER_USER_NAME$]", reporterUserName);
+		subscriptionSender.setContextUserPrefix("FLAG");
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setMailId("flagsrequest", contentId);
+		subscriptionSender.setPortletId(PortletKeys.FLAGS);
+		subscriptionSender.setScopeGroupId(serviceContext.getScopeGroupId());
+		subscriptionSender.setSubject(subject);
+		subscriptionSender.setUserId(serviceContext.getUserId());
 
-		InternetAddress from = new InternetAddress(fromAddress, fromName);
+		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
-		InternetAddress to = new InternetAddress(toAddress, toName);
-
-		MailMessage message = new MailMessage(from, to, subject, body, true);
-
-		MailServiceUtil.sendEmail(message);
+		subscriptionSender.flushNotificationsAsync();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

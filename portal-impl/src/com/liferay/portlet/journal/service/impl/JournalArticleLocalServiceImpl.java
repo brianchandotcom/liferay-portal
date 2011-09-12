@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -118,8 +117,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import javax.mail.internet.InternetAddress;
 
 import javax.portlet.PortletPreferences;
 
@@ -3149,71 +3146,28 @@ public class JournalArticleLocalServiceImpl
 			body = JournalUtil.getEmailArticleReviewBody(preferences);
 		}
 
-		subject = StringUtil.replace(
-			subject,
-			new String[] {
-				"[$ARTICLE_ID$]",
-				"[$ARTICLE_TITLE$]",
-				"[$ARTICLE_URL$]",
-				"[$ARTICLE_USER_NAME$]",
-				"[$ARTICLE_VERSION$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$PORTLET_NAME$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				article.getArticleId(),
-				article.getTitle(),
-				articleURL,
-				article.getUserName(),
-				String.valueOf(article.getVersion()),
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				portletName,
-				toAddress,
-				toName,
-			});
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		body = StringUtil.replace(
-			body,
-			new String[] {
-				"[$ARTICLE_ID$]",
-				"[$ARTICLE_TITLE$]",
-				"[$ARTICLE_URL$]",
-				"[$ARTICLE_USER_NAME$]",
-				"[$ARTICLE_VERSION$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$PORTLET_NAME$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				article.getArticleId(),
-				article.getTitle(),
-				articleURL,
-				article.getUserName(),
-				String.valueOf(article.getVersion()),
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				portletName,
-				toAddress,
-				toName,
-			});
+		subscriptionSender.setBody(body);
+		subscriptionSender.setCompanyId(company.getCompanyId());
+		subscriptionSender.setContextAttributes(
+			"[$ARTICLE_ID$]", article.getArticleId(),
+			"[$ARTICLE_TITLE$]", article.getTitle(),
+			"[$ARTICLE_URL$]", articleURL,
+			"[$ARTICLE_USER_NAME$]", article.getUserName(),
+			"[$ARTICLE_VERSION$]", String.valueOf(article.getVersion()));
+		subscriptionSender.setContextUserPrefix("ARTICLE");
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setMailId("journal_article", article.getId());
+		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
+		subscriptionSender.setScopeGroupId(article.getGroupId());
+		subscriptionSender.setSubject(subject);
+		subscriptionSender.setUserId(article.getUserId());
 
-		InternetAddress from = new InternetAddress(fromAddress, fromName);
+		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
-		InternetAddress to = new InternetAddress(toAddress, toName);
-
-		MailMessage message = new MailMessage(from, to, subject, body, true);
-
-		mailService.sendEmail(message);
+		subscriptionSender.flushNotificationsAsync();
 	}
 
 	protected void updatePreviousApprovedArticle(JournalArticle article)

@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -34,7 +32,9 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.announcements.EntryContentException;
 import com.liferay.portlet.announcements.EntryDisplayDateException;
 import com.liferay.portlet.announcements.EntryExpirationDateException;
@@ -51,8 +51,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import javax.mail.internet.InternetAddress;
 
 /**
  * @author Brian Wing Shun Chan
@@ -421,7 +419,8 @@ public class AnnouncementsEntryLocalServiceImpl
 			_log.debug("Notifying " + users.size() + " users");
 		}
 
-		List<InternetAddress> bulkAddresses = new ArrayList<InternetAddress>();
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		boolean sendAnnouncements = false;
 
 		for (User user : users) {
 			AnnouncementsDelivery announcementsDelivery =
@@ -429,23 +428,23 @@ public class AnnouncementsEntryLocalServiceImpl
 					user.getUserId(), entry.getType());
 
 			if (announcementsDelivery.isEmail()) {
-				InternetAddress address = new InternetAddress(
+				subscriptionSender.addRuntimeSubscribers(
 					user.getEmailAddress(), user.getFullName());
 
-				bulkAddresses.add(address);
+				sendAnnouncements = true;
 			}
 
 			if (announcementsDelivery.isSms()) {
 				String smsSn = user.getContact().getSmsSn();
 
-				InternetAddress address = new InternetAddress(
+				subscriptionSender.addRuntimeSubscribers(
 					smsSn, user.getFullName());
 
-				bulkAddresses.add(address);
+				sendAnnouncements = true;
 			}
 		}
 
-		if (bulkAddresses.size() == 0) {
+		if (!sendAnnouncements) {
 			return;
 		}
 
@@ -453,81 +452,30 @@ public class AnnouncementsEntryLocalServiceImpl
 			PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT);
 		String body = ContentUtil.get(PropsValues.ANNOUNCEMENTS_EMAIL_BODY);
 
-		subject = StringUtil.replace(
-			subject,
-			new String[] {
-				"[$ENTRY_CONTENT$]",
-				"[$ENTRY_ID$]",
-				"[$ENTRY_TITLE$]",
-				"[$ENTRY_TYPE$]",
-				"[$ENTRY_URL$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$PORTLET_NAME$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				entry.getContent(),
-				String.valueOf(entry.getEntryId()),
-				entry.getTitle(),
-				LanguageUtil.get(company.getLocale(), entry.getType()),
-				entry.getUrl(),
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				LanguageUtil.get(
-					company.getLocale(),
-					(entry.isAlert() ? "alert" : "announcement")),
-				toAddress,
-				toName
-			});
+		subscriptionSender.setBody(body);
+		subscriptionSender.setCompanyId(company.getCompanyId());
+		subscriptionSender.setContextAttributes(
+			"[$ENTRY_CONTENT$]", entry.getContent(),
+			"[$ENTRY_ID$]", String.valueOf(entry.getEntryId()),
+			"[$ENTRY_TITLE$]", entry.getTitle(),
+			"[$ENTRY_TYPE$]", LanguageUtil.get(
+				company.getLocale(), entry.getType()),
+			"[$ENTRY_URL$]", entry.getUrl(),
+			"[$PORTLET_NAME$]", LanguageUtil.get(
+				company.getLocale(),
+				(entry.isAlert() ? "alert" : "announcement")));
+		subscriptionSender.setContextUserPrefix("ANNOUNCEMENT");
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setMailId("announcement_entry", entry.getEntryId());
+		subscriptionSender.setPortletId(PortletKeys.ANNOUNCEMENTS);
+		subscriptionSender.setScopeGroupId(entry.getGroupId());
+		subscriptionSender.setSubject(subject);
+		subscriptionSender.setUserId(entry.getUserId());
 
-		body = StringUtil.replace(
-			body,
-			new String[] {
-				"[$ENTRY_CONTENT$]",
-				"[$ENTRY_ID$]",
-				"[$ENTRY_TITLE$]",
-				"[$ENTRY_TYPE$]",
-				"[$ENTRY_URL$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$PORTLET_NAME$]",
-				"[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				entry.getContent(),
-				String.valueOf(entry.getEntryId()),
-				entry.getTitle(),
-				LanguageUtil.get(company.getLocale(), entry.getType()),
-				entry.getUrl(),
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				LanguageUtil.get(
-					company.getLocale(),
-					(entry.isAlert() ? "alert" : "announcement")),
-				toAddress,
-				toName
-			});
+		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
-		InternetAddress from = new InternetAddress(fromAddress, fromName);
-
-		InternetAddress to = new InternetAddress(toAddress, toName);
-
-		InternetAddress[] bulkAddressesArray = bulkAddresses.toArray(
-			new InternetAddress[bulkAddresses.size()]);
-
-		MailMessage message = new MailMessage(
-			from, to, subject, body, true);
-
-		message.setBulkAddresses(bulkAddressesArray);
-
-		mailService.sendEmail(message);
+		subscriptionSender.flushNotificationsAsync();
 	}
 
 	protected void validate(String title, String content, String url)

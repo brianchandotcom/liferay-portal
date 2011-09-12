@@ -18,9 +18,7 @@ import com.liferay.portal.MembershipRequestCommentsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -31,15 +29,15 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.service.base.MembershipRequestLocalServiceBaseImpl;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.util.UniqueList;
 
 import java.io.IOException;
 
 import java.util.Date;
 import java.util.List;
-
-import javax.mail.internet.InternetAddress;
 
 /**
  * @author Jorge Ferrer
@@ -331,83 +329,30 @@ public class MembershipRequestLocalServiceImpl
 			statusKey = "pending";
 		}
 
-		subject = StringUtil.replace(
-			subject,
-			new String[] {
-				"[$SITE_NAME$]",
-				"[$COMPANY_ID$]",
-				"[$COMPANY_MX$]",
-				"[$COMPANY_NAME$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$REQUEST_USER_ADDRESS$]",
-				"[$REQUEST_USER_NAME$]",
-				"[$STATUS$]",
-				"[$TO_NAME$]",
-				"[$USER_ADDRESS$]",
-				"[$USER_NAME$]",
-			},
-			new String[] {
-				group.getName(),
-				String.valueOf(company.getCompanyId()),
-				company.getMx(),
-				company.getName(),
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				requestUser.getEmailAddress(),
-				requestUser.getFullName(),
-				LanguageUtil.get(user.getLocale(), statusKey),
-				toName,
-				user.getEmailAddress(),
-				user.getFullName()
-			});
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		body = StringUtil.replace(
-			body,
-			new String[] {
-				"[$COMMENTS$]",
-				"[$SITE_NAME$]",
-				"[$COMPANY_ID$]",
-				"[$COMPANY_MX$]",
-				"[$COMPANY_NAME$]",
-				"[$FROM_ADDRESS$]",
-				"[$FROM_NAME$]",
-				"[$PORTAL_URL$]",
-				"[$REPLY_COMMENTS$]",
-				"[$REQUEST_USER_NAME$]",
-				"[$REQUEST_USER_ADDRESS$]",
-				"[$STATUS$]",
-				"[$TO_NAME$]",
-				"[$USER_ADDRESS$]",
-				"[$USER_NAME$]",
-			},
-			new String[] {
-				membershipRequest.getComments(),
-				group.getName(),
-				String.valueOf(company.getCompanyId()),
-				company.getMx(),
-				company.getName(),
-				fromAddress,
-				fromName,
-				company.getVirtualHostname(),
-				membershipRequest.getReplyComments(),
-				requestUser.getFullName(),
-				requestUser.getEmailAddress(),
-				LanguageUtil.get(user.getLocale(), statusKey),
-				toName,
-				user.getEmailAddress(),
-				user.getFullName()
-			});
+		subscriptionSender.setBody(body);
+		subscriptionSender.setCompanyId(company.getLogoId());
+		subscriptionSender.setContextAttributes(
+			"[$REQUEST_USER_ADDRESS$]", requestUser.getEmailAddress(),
+			"[$REQUEST_USER_NAME$]", requestUser.getFullName(),
+			"[$STATUS$]", LanguageUtil.get(user.getLocale(), statusKey),
+			"[$USER_ADDRESS$]", user.getEmailAddress(),
+			"[$USER_NAME$]", user.getFullName(),
+			"[$COMMENTS$]", membershipRequest.getComments(),
+			"[$REPLY_COMMENTS$]", membershipRequest.getReplyComments());
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setMailId(
+			"membership_request", membershipRequest.getMembershipRequestId());
+		subscriptionSender.setPortletId(PortletKeys.PORTAL);
+		subscriptionSender.setScopeGroupId(group.getGroupId());
+		subscriptionSender.setSubject(subject);
+		subscriptionSender.setUserId(userId);
 
-		InternetAddress from = new InternetAddress(fromAddress, fromName);
+		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
-		InternetAddress to = new InternetAddress(toAddress, toName);
-
-		MailMessage message = new MailMessage(from, to, subject, body, true);
-
-		mailService.sendEmail(message);
+		subscriptionSender.flushNotificationsAsync();
 	}
 
 	protected void notifyGroupAdministrators(

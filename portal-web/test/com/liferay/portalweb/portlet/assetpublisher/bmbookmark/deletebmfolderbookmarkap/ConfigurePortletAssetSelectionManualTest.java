@@ -125,7 +125,7 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Selection"),
-			selenium.getText("//div[@class='lfr-panel-title']/span"));
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[1]/span"));
 		assertEquals(RuntimeVariables.replace("Display Settings"),
 			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[2]/span"));
 	}

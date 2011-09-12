@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.whatshappening;
+package com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontent150character;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.socialofficehome.whatshappening.whentry.WHEntryTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,12 +22,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WhatsHappeningTests extends BaseTests {
+public class AddWHEntryContent150CharacterTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WHEntryTests.suite());
+		testSuite.addTestSuite(AddWHEntryContent150CharacterTest.class);
+		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 
 		return testSuite;
 	}

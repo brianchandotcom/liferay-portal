@@ -17,4 +17,23 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-osgi-admin {
+	.lfr-asset-column-details .results-grid .taglib-search-iterator {
+		table-layout: fixed;
+		width: 100%;
+
+		.col-1 {
+			width: 24em;
+		}
+
+		.col-2 {
+			.container {
+				max-height: 30em;
+				overflow: auto;
+
+				code {
+					word-wrap: break-word;
+				}
+			}
+		}
+	}
 }

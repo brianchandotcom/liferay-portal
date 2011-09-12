@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
+<%@ page import="aQute.libg.header.OSGiHeader" %>
+
 <%@ page import="com.liferay.portal.util.PropsValues" %>
 <%@ page import="com.liferay.portlet.osgiadmin.OSGiException" %>
 <%@ page import="com.liferay.portlet.osgiadmin.service.OSGiServiceUtil" %>

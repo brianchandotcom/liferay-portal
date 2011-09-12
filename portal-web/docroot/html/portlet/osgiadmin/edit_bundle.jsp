@@ -129,6 +129,8 @@ if (Validator.isNull(bundleUpdateLocation)) {
 						<liferay-ui:search-container>
 							<%
 							List<String> keys = Collections.list(headers.keys());
+
+							Collections.sort(keys);
 							%>
 
 							<liferay-ui:search-container-results
@@ -153,6 +155,8 @@ if (Validator.isNull(bundleUpdateLocation)) {
 								>
 
 									<%
+									sb.append("<div class=\"container\"><code> ");
+
 									if (headerKey.equals(org.osgi.framework.Constants.BUNDLE_DOCURL)) {
 										sb.append("<a href=\"");
 										sb.append(headers.get(headerKey));
@@ -161,16 +165,37 @@ if (Validator.isNull(bundleUpdateLocation)) {
 										sb.append("</a>");
 									}
 									else {
-										String[] parts = StringUtil.split(headers.get(headerKey));
+										Map<String, Map<String, String>> parsedHeader = OSGiHeader.parseHeader(headers.get(headerKey));
 
-										for (int i = 0; i < parts.length; i++) {
+										int i = 0;
+
+										for (Map.Entry<String, Map<String, String>> entry : parsedHeader.entrySet()) {
+											String key = entry.getKey();
+											Map<String, String> value = entry.getValue();
+
 											if (i > 0) {
-												sb.append("<br/>\n");
+												sb.append("<br />\n");
 											}
 
-											sb.append(parts[i]);
+											sb.append(key);
+
+											for (Map.Entry<String, String> attributes : value.entrySet()) {
+												if (attributes.getKey().equals("version") && attributes.getValue().equals("0")) {
+													continue;
+												}
+
+												sb.append(StringPool.SEMICOLON);
+												sb.append(attributes.getKey());
+												sb.append("=\"");
+												sb.append(attributes.getValue());
+												sb.append(StringPool.QUOTE);
+											}
+
+											i++;
 										}
 									}
+
+									sb.append("</code></div>");
 									%>
 
 								</liferay-ui:search-container-column-text>
@@ -215,9 +240,9 @@ if (Validator.isNull(bundleUpdateLocation)) {
 									Object objectClass = serviceReference.getProperty(org.osgi.framework.Constants.OBJECTCLASS);
 									%>
 
-									<h4><%= StringUtil.merge((String[])objectClass, ", ") %></h4>
+									<strong><%= StringUtil.merge((String[])objectClass, "<br />") %></strong>
 
-									<br />
+									<br /><br />
 
 									<%
 									for (String key : serviceReference.getPropertyKeys()) {
@@ -227,18 +252,18 @@ if (Validator.isNull(bundleUpdateLocation)) {
 											continue;
 										}
 									%>
-										<em>
-											<u><%= key %></u>:
-										</em>
+										<em><%= key %>:</em>
 
-										<c:choose>
-											<c:when test="<%= value instanceof String[] %>">
-												<%= StringUtil.merge((String[])value, ",<br/>") %>
-											</c:when>
-											<c:otherwise>
-												<%= String.valueOf(value) %>
-											</c:otherwise>
-										</c:choose>
+										<code>
+											<c:choose>
+												<c:when test="<%= value instanceof String[] %>">
+													<%= StringUtil.merge((String[])value, ",<br/>") %>
+												</c:when>
+												<c:otherwise>
+													<%= String.valueOf(value) %>
+												</c:otherwise>
+											</c:choose>
+										</code>
 
 										</br />
 									<%
@@ -287,9 +312,9 @@ if (Validator.isNull(bundleUpdateLocation)) {
 									Object objectClass = serviceReference.getProperty(org.osgi.framework.Constants.OBJECTCLASS);
 									%>
 
-									<h4><%= StringUtil.merge((String[])objectClass, ", ") %></h4>
+									<strong><%= StringUtil.merge((String[])objectClass, "<br />") %></strong>
 
-									<br />
+									<br /><br />
 
 									<%
 									for (String key : serviceReference.getPropertyKeys()) {
@@ -299,18 +324,18 @@ if (Validator.isNull(bundleUpdateLocation)) {
 											continue;
 										}
 									%>
-										<em>
-											<u><%= key %></u>:
-										</em>
+										<em><%= key %>:</em>
 
-										<c:choose>
-											<c:when test="<%= value instanceof String[] %>">
-												<%= StringUtil.merge((String[])value, ",<br/>") %>
-											</c:when>
-											<c:otherwise>
-												<%= String.valueOf(value) %>
-											</c:otherwise>
-										</c:choose>
+										<code>
+											<c:choose>
+												<c:when test="<%= value instanceof String[] %>">
+													<%= StringUtil.merge((String[])value, ",<br/>") %>
+												</c:when>
+												<c:otherwise>
+													<%= String.valueOf(value) %>
+												</c:otherwise>
+											</c:choose>
+										</code>
 
 										</br />
 									<%
@@ -350,6 +375,8 @@ if (Validator.isNull(bundleUpdateLocation)) {
 			<liferay-util:include page="/html/portlet/osgiadmin/bundle_action.jsp" />
 		</aui:column>
 	</aui:layout>
+
+	<div class="separator"><!-- --></div>
 
 	<c:if test="<%= bundle.getBundleId() != 0 %>">
 		<aui:fieldset>

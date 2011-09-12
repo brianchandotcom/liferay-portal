@@ -372,10 +372,9 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
-
 		DLFolderPermission.check(
-			getPermissionChecker(), dlFolder, ActionKeys.UPDATE);
+			getPermissionChecker(), serviceContext.getScopeGroupId(), folderId,
+			ActionKeys.UPDATE);
 
 		boolean hasLock = lockLocalService.hasLock(
 			getUserId(), DLFolder.class.getName(), folderId);
@@ -386,7 +385,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 			// Lock
 
-			lock = lockFolder(folderId);
+			lock = doLockFolder(
+				folderId, null, false, DLFolderImpl.LOCK_EXPIRATION_TIME);
 		}
 
 		try {
@@ -399,7 +399,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 				// Unlock
 
-				unlockFolder(dlFolder.getGroupId(), folderId, lock.getUuid());
+				unlockFolder(
+					serviceContext.getScopeGroupId(), folderId, lock.getUuid());
 			}
 		}
 	}

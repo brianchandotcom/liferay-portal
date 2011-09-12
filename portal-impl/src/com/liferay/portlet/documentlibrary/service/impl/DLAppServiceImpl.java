@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -2314,7 +2315,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Repository repository = getRepository(folderId, 0, 0);
+		Repository repository = null;
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			repository = getRepository(serviceContext.getScopeGroupId());
+		}
+		else {
+			repository = getRepository(folderId, 0, 0);
+		}
 
 		return repository.updateFolder(
 			folderId, name, description, serviceContext);

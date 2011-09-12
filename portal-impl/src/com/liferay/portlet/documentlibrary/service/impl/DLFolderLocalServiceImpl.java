@@ -374,12 +374,17 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		// File entry types
 
-		DLFolder dlFolder = dlFolderLocalService.updateFolderAndFileEntryTypes(
-			folderId, parentFolderId, name, description, defaultFileEntryTypeId,
-			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
+		DLFolder dlFolder = null;
 
-		dlFileEntryTypeLocalService.cascadeFileEntryTypes(
-			serviceContext.getUserId(), dlFolder);
+		if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			dlFolder = dlFolderLocalService.updateFolderAndFileEntryTypes(
+				folderId, parentFolderId, name, description,
+				defaultFileEntryTypeId, fileEntryTypeIds,
+				overrideFileEntryTypes, serviceContext);
+
+			dlFileEntryTypeLocalService.cascadeFileEntryTypes(
+				serviceContext.getUserId(), dlFolder);
+		}
 
 		// Workflow definitions
 
@@ -406,8 +411,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
 			serviceContext.getUserId(), serviceContext.getCompanyId(),
-			dlFolder.getGroupId(), DLFolder.class.getName(), folderId,
-			workflowDefinitions);
+			serviceContext.getScopeGroupId(), DLFolder.class.getName(),
+			folderId, workflowDefinitions);
 
 		return dlFolder;
 	}

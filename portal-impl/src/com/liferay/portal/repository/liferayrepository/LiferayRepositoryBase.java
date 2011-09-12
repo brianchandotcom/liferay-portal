@@ -264,10 +264,10 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 	protected boolean isDefaultRepository() {
 		if (_groupId == _repositoryId) {
-			return false;
+			return true;
 		}
 		else {
-			return true;
+			return false;
 		}
 	}
 

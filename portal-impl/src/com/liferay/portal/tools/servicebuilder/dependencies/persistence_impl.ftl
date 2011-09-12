@@ -253,6 +253,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public void clearCache(${entity.name} ${entity.varName}) {
 		EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
 
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, new Object[] {});
+
 		<#list entity.getUniqueFinderList() as finder>
 			<#assign finderColsList = finder.getColumns()>
 
@@ -416,6 +418,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, new Object[] {});
 
 		<#assign uniqueFinderList = entity.getUniqueFinderList()>
 
@@ -585,6 +589,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						</#list>
 					)
 			) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, new Object[] {});
+
 				FinderCacheUtil.removeResult(
 					FINDER_PATH_FETCH_BY_${finder.name?upper_case},
 					new Object[] {

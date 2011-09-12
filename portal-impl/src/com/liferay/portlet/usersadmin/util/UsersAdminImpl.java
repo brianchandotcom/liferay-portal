@@ -603,11 +603,12 @@ public class UsersAdminImpl implements UsersAdmin {
 
 				long companyId = GetterUtil.getLong(
 					document.get(Field.COMPANY_ID));
+				String uid = document.getUID();
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					Organization.class);
 
-				indexer.delete(companyId, String.valueOf(organizationId));
+				indexer.delete(companyId, uid);
 			}
 		}
 
@@ -873,10 +874,11 @@ public class UsersAdminImpl implements UsersAdmin {
 
 				long companyId = GetterUtil.getLong(
 					document.get(Field.COMPANY_ID));
+				String uid = document.getUID();
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-				indexer.delete(companyId, String.valueOf(userId));
+				indexer.delete(companyId, uid);
 			}
 		}
 

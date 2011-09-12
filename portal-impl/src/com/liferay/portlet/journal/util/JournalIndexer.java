@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -144,11 +145,13 @@ public class JournalIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		JournalArticle article = (JournalArticle)obj;
 
-		String classPK =
-			String.valueOf(article.getGroupId()) + _UID_FIELD +
-			article.getArticleId();
+		Document document = new DocumentImpl();
 
-		doDelete(article.getCompanyId(), classPK);
+		document.addUID(
+			PORTLET_ID, article.getGroupId(), article.getArticleId());
+
+		SearchEngineUtil.deleteDocument(
+			article.getCompanyId(), document.get(Field.UID));
 	}
 
 	@Override

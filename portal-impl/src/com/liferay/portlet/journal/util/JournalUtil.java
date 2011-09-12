@@ -357,14 +357,12 @@ public class JournalUtil {
 
 				long companyId = GetterUtil.getLong(
 					document.get(Field.COMPANY_ID));
-
-				String classPK =
-					String.valueOf(groupId) + _UID_FIELD + articleId;
+				String uid = document.getUID();
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					JournalArticle.class);
 
-				indexer.delete(companyId, classPK);
+				indexer.delete(companyId, uid);
 			}
 		}
 

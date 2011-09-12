@@ -29,7 +29,7 @@ public interface Indexer {
 
 	public static final int DEFAULT_INTERVAL = 1000;
 
-	public void delete(long companyId, String classPK) throws SearchException;
+	public void delete(long companyId, String uid) throws SearchException;
 
 	public void delete(Object obj) throws SearchException;
 

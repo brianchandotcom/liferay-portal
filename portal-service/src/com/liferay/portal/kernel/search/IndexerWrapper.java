@@ -29,8 +29,8 @@ public class IndexerWrapper implements Indexer {
 		_indexer = indexer;
 	}
 
-	public void delete(long companyId, String classPK) throws SearchException {
-		_indexer.delete(companyId, classPK);
+	public void delete(long companyId, String uid) throws SearchException {
+		_indexer.delete(companyId, uid);
 	}
 
 	public void delete(Object obj) throws SearchException {

@@ -530,8 +530,6 @@ public class JournalIndexer extends BaseIndexer {
 
 	private static final String _FIELD_NAMESPACE = "web_content";
 
-	private static final String _UID_FIELD = "_FIELD_";
-
 	private static Log _log = LogFactoryUtil.getLog(JournalIndexer.class);
 
 }

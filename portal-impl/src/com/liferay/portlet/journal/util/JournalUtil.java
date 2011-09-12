@@ -1472,8 +1472,6 @@ public class JournalUtil {
 		path.pop();
 	}
 
-	private static final String _UID_FIELD = "_FIELD_";
-
 	private static final char[] _URL_TITLE_REPLACE_CHARS = new char[] {
 		'.', '/'
 	};

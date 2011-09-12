@@ -12,15 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentlibrary;
+package com.liferay.portalweb.portlet.documentlibrary.image.searchdlfolderimage;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portlet.documentlibrary.comment.CommentTests;
-import com.liferay.portalweb.portlet.documentlibrary.document.DocumentTests;
-import com.liferay.portalweb.portlet.documentlibrary.folder.FolderTests;
-import com.liferay.portalweb.portlet.documentlibrary.image.ImageTests;
-import com.liferay.portalweb.portlet.documentlibrary.lar.LARTests;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.PortletTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,17 +22,19 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DocumentLibraryTests extends BaseTests {
+public class SearchDLFolderImageTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(CommentTests.suite());
-		testSuite.addTest(DocumentTests.suite());
-		testSuite.addTest(FolderTests.suite());
-		testSuite.addTest(ImageTests.suite());
-		testSuite.addTest(LARTests.suite());
-		testSuite.addTest(PortletTests.suite());
+		testSuite.addTestSuite(AddPageDLTest.class);
+		testSuite.addTestSuite(AddPortletDLTest.class);
+		testSuite.addTestSuite(AddDLFolderTest.class);
+		testSuite.addTestSuite(AddDLFolderImageTest.class);
+		testSuite.addTestSuite(SearchDLFolderImageTest.class);
+		testSuite.addTestSuite(SearchDLFolderImageQuotesTest.class);
+		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

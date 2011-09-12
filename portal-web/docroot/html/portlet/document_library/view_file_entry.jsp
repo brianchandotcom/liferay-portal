@@ -621,6 +621,14 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 							SearchContainer searchContainer = new SearchContainer();
 
+							PortletURL viewFileEntryHistoryURL = renderResponse.createRenderURL();
+
+							viewFileEntryHistoryURL.setParameter("struts_action", "/document_library/view_file_entry");
+							viewFileEntryHistoryURL.setParameter("redirect", currentURL);
+							viewFileEntryHistoryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+							
+							searchContainer.setIteratorURL(viewFileEntryHistoryURL);
+							
 							List<String> headerNames = new ArrayList<String>();
 
 							headerNames.add("version");

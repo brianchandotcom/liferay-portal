@@ -78,7 +78,7 @@ if (!fileEntries.isEmpty()) {
 else if (!folders.isEmpty()) {
 	Folder folder = folders.get(0);
 
-	folderId = folder.getFolderId();
+	folderId = folder.getParentFolderId();
 }
 %>
 

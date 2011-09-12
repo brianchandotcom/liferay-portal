@@ -62,6 +62,10 @@ public class WikiIndexer extends BaseIndexer {
 		return CLASS_NAMES;
 	}
 
+	public String getPortletId() {
+		return PORTLET_ID;
+	}
+
 	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)

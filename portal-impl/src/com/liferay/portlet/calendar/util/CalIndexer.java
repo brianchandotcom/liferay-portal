@@ -16,7 +16,6 @@ package com.liferay.portlet.calendar.util;
 
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -50,16 +49,15 @@ public class CalIndexer extends BaseIndexer {
 		return CLASS_NAMES;
 	}
 
+	public String getPortletId() {
+		return PORTLET_ID;
+	}
+
 	@Override
 	protected void doDelete(Object obj) throws Exception {
 		CalEvent event = (CalEvent)obj;
 
-		Document document = new DocumentImpl();
-
-		document.addUID(PORTLET_ID, event.getEventId());
-
-		SearchEngineUtil.deleteDocument(
-			event.getCompanyId(), document.get(Field.UID));
+		doDelete(event.getCompanyId(), String.valueOf(event.getEventId()));
 	}
 
 	@Override

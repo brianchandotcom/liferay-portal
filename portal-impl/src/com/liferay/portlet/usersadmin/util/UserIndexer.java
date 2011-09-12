@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -62,6 +61,10 @@ public class UserIndexer extends BaseIndexer {
 
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	public String getPortletId() {
+		return PORTLET_ID;
 	}
 
 	@Override
@@ -166,12 +169,7 @@ public class UserIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		User user = (User)obj;
 
-		Document document = new DocumentImpl();
-
-		document.addUID(PORTLET_ID, user.getUserId());
-
-		SearchEngineUtil.deleteDocument(
-			user.getCompanyId(), document.get(Field.UID));
+		doDelete(user.getCompanyId(), String.valueOf(user.getUserId()));
 	}
 
 	@Override

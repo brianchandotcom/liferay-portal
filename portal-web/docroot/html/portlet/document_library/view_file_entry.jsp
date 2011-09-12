@@ -619,14 +619,15 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								showNonApprovedDocuments = true;
 							}
 
-							PortletURL viewFileEntryHistory = renderResponse.createRenderURL();
-							viewFileEntryHistory.setParameter("struts_action", "/document_library/view_file_entry");
-							viewFileEntryHistory.setParameter("redirect", currentURL);
-							viewFileEntryHistory.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-							
 							SearchContainer searchContainer = new SearchContainer();
+
+							PortletURL viewFileEntryHistoryURL = renderResponse.createRenderURL();
+
+							viewFileEntryHistoryURL.setParameter("struts_action", "/document_library/view_file_entry");
+							viewFileEntryHistoryURL.setParameter("redirect", currentURL);
+							viewFileEntryHistoryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 							
-							searchContainer.setIteratorURL(viewFileEntryHistory);
+							searchContainer.setIteratorURL(viewFileEntryHistoryURL);
 							
 							List<String> headerNames = new ArrayList<String>();
 

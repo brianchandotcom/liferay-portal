@@ -23,7 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase {
 	public void testPublishToLiveCommunityStagingCommunityWCD()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open(
+			"/web/community-staging-community-web-content-display-staging/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +32,8 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible(
+							"link=Page Staging Community Web Content Display")) {
 					break;
 				}
 			}
@@ -42,31 +44,37 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
-			RuntimeVariables.replace(
-				"Community Staging Community Web Content Display"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Staging"),
-			selenium.getText("//td[1]/a[2]"));
-		selenium.clickAt("//td[1]/a[2]", RuntimeVariables.replace("Staging"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Staging Community Web Content Display",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace(
+				"Page Staging Community Web Content Display"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Publish to Live Now",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//strong/a",
+			RuntimeVariables.replace("Staging Dropdown"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Publish to Live Now"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+			RuntimeVariables.replace("Publish to Live Now"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -87,7 +95,7 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));

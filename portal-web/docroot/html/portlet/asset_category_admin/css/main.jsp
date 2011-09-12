@@ -18,8 +18,7 @@
 
 .portlet-asset-category-admin {
 	.categories-admin-actions {
-		clear: none;
-		float: left;
+		display: inline-block;
 		margin: 0;
 
 		.permissions-button {
@@ -32,11 +31,20 @@
 			margin-left: 0.3em;
 			margin-right: 0;
 		}
+
+		span {
+			display: block;
+			float: left;
+		}
 	}
 
 	.categories-admin-container {
 		.categories-actions-toolbar {
 			margin-left: 1em;
+
+			.aui-button {
+				float: left;
+			}
 		}
 
 		.results-header {

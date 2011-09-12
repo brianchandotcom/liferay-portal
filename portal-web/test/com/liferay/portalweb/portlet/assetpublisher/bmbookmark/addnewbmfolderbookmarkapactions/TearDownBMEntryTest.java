@@ -93,8 +93,6 @@ public class TearDownBMEntryTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 2:
-
 				boolean bookmarksEntry2Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
 
@@ -136,8 +134,6 @@ public class TearDownBMEntryTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
-
-			case 3:
 
 				boolean bookmarksEntry3Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
@@ -181,8 +177,6 @@ public class TearDownBMEntryTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 4:
-
 				boolean bookmarksEntry4Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
 
@@ -224,8 +218,6 @@ public class TearDownBMEntryTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
-
-			case 5:
 
 				boolean bookmarksEntry5Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
@@ -269,6 +261,10 @@ public class TearDownBMEntryTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
 			case 100:
 				label = -1;

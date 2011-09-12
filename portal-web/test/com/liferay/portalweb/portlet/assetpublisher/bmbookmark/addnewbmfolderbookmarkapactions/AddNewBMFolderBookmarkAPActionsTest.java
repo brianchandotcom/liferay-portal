@@ -76,9 +76,25 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+					RuntimeVariables.replace("Bookmarks Entry"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//input[@value='Select']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));
@@ -166,6 +182,24 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//h3[@class='asset-title']/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
 					selenium.getText("//h3[@class='asset-title']/a"));

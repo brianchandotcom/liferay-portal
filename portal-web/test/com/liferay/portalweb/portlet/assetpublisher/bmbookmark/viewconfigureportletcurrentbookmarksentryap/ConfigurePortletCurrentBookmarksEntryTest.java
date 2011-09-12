@@ -91,7 +91,7 @@ public class ConfigurePortletCurrentBookmarksEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_anyAssetType']",
-			RuntimeVariables.replace("label=Filter..."));
+			RuntimeVariables.replace("label=Select More Than One..."));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

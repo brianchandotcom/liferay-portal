@@ -48,12 +48,12 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Document Library Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
 				boolean dlFolder1Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//div/a/span[1]/img");
 
 				if (!dlFolder1Present) {
 					label = 2;
@@ -61,7 +61,17 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+				assertFalse(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
+					RuntimeVariables.replace("Document Checkbox"));
+				assertTrue(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[2]/ul/li/strong/a/span"));
+				selenium.clickAt("//span[2]/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -71,7 +81,7 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 							break;
 						}
 					}
@@ -84,18 +94,18 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
 			case 2:
 
 				boolean dlFolder2Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//div/a/span[1]/img");
 
 				if (!dlFolder2Present) {
 					label = 3;
@@ -103,7 +113,17 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+				assertFalse(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
+					RuntimeVariables.replace("Document Checkbox"));
+				assertTrue(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[2]/ul/li/strong/a/span"));
+				selenium.clickAt("//span[2]/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -113,7 +133,7 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 							break;
 						}
 					}
@@ -126,18 +146,18 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
 			case 3:
 
 				boolean dlFolder3Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//div/a/span[1]/img");
 
 				if (!dlFolder3Present) {
 					label = 4;
@@ -145,7 +165,17 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+				assertFalse(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
+					RuntimeVariables.replace("Document Checkbox"));
+				assertTrue(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[2]/ul/li/strong/a/span"));
+				selenium.clickAt("//span[2]/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -155,7 +185,7 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 							break;
 						}
 					}
@@ -168,18 +198,18 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
 			case 4:
 
 				boolean dlFolder4Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//div/a/span[1]/img");
 
 				if (!dlFolder4Present) {
 					label = 5;
@@ -187,7 +217,17 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+				assertFalse(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
+					RuntimeVariables.replace("Document Checkbox"));
+				assertTrue(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[2]/ul/li/strong/a/span"));
+				selenium.clickAt("//span[2]/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -197,7 +237,7 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 							break;
 						}
 					}
@@ -210,18 +250,18 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
 			case 5:
 
 				boolean dlFolder5Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//div/a/span[1]/img");
 
 				if (!dlFolder5Present) {
 					label = 6;
@@ -229,7 +269,17 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+				assertFalse(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
+					RuntimeVariables.replace("Document Checkbox"));
+				assertTrue(selenium.isChecked(
+						"//form/div[1]/div/span[1]/span/span/input[2]"));
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[2]/ul/li/strong/a/span"));
+				selenium.clickAt("//span[2]/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -239,7 +289,7 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 							break;
 						}
 					}
@@ -252,12 +302,12 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
 			case 6:

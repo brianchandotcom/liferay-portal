@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Document Library Display Test Page</td>
-	<td></td>
+	<td>Document Library Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Document Library Display Test Page</td>
-	<td></td>
+	<td>Document Library Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -45,23 +50,48 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_showFoldersSearchCheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_86_showFoldersSearchCheckbox'))</td>
+	<td>showSearchChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${showSearchChecked}</td>
+	<td>ShowSearchChecked</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>_86_showFoldersSearchCheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_86_showFoldersSearchCheckbox</td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ShowSearchChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -70,8 +100,8 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>_86_showFoldersSearchCheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
 </tr>
 
 </tbody></table>

@@ -14,39 +14,54 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>Document Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>Document Library Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right null']/ul/li[2]/a</td>
-	<td>Add Folder</td>
+	<td>//span[3]/span/ul/li/strong/a</td>
+	<td>Add</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right null']/ul/li[2]/a</td>
-	<td>Add Folder</td>
+	<td>clickAt</td>
+	<td>//span[3]/span/ul/li/strong/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Folder</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Folder</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_name</td>
-	<td>Test1 Folder1</td>
+	<td>//input[@id='_20_name']</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_description</td>
-	<td>This is test1 folder1.</td>
+	<td>//textarea[@id='_20_description']</td>
+	<td>DL Folder Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,8 +70,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a[2]</td>
-	<td>Test1 Folder1<br />This is test1 folder1.</td>
+	<td>//span[@class='document-title']</td>
+	<td>DL Folder Name</td>
 </tr>
 
 </tbody></table>

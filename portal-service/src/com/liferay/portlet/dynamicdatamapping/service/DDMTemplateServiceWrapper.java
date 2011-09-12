@@ -47,6 +47,13 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService {
 		_ddmTemplateService.deleteTemplate(templateId);
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
+		long templateId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateService.getTemplate(templateId);
+	}
+
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
 		long structureId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {

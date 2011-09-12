@@ -2157,7 +2157,7 @@ AUI().add(
 					);
 				};
 
-				_attachButtonInputSelector('documentlibrary', 'DocumentLibrary', 'selectDocumentLibrary');
+				_attachButtonInputSelector('documentlibrary', 'Documents and Media Library', 'selectDocumentLibrary');
 
 				container.delegate(
 					'mouseover',

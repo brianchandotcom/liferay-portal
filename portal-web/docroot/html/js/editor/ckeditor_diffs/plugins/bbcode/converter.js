@@ -62,7 +62,7 @@
 
 	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,512}$/i;
 
-	var REGEX_LASTCHAR_NEWLINE = /(\r?\n)$/;
+	var REGEX_LASTCHAR_NEWLINE = /\r?\n$/;
 
 	var REGEX_NEW_LINE = /\r?\n/g;
 
@@ -314,7 +314,7 @@
 						(nextToken.type == TOKEN_TAG_END) &&
 						(nextToken.value == STR_TAG_LIST_ITEM_SHORT)) {
 
-						value = value.replace(REGEX_LASTCHAR_NEWLINE, STR_BLANK);
+						value = value.substring(0, value.length - 1);
 					}
 				}
 

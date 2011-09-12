@@ -32,6 +32,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.launch.Framework;
+import org.osgi.framework.startlevel.BundleStartLevel;
 
 /**
  * The implementation of the o s gi remote service.
@@ -134,6 +135,24 @@ public class OSGiServiceImpl extends OSGiServiceBaseImpl {
 		}
 
 		return state;
+	}
+
+	public void setBundleStartLevel(long bundleId, int startLevel)
+		throws PortalException, SystemException {
+
+		if (!getPermissionChecker().isOmniadmin()) {
+			throw new PrincipalException();
+		}
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new OSGiException("no such bundle " + bundleId);
+		}
+
+		BundleStartLevel bundleStartLevel = (BundleStartLevel)bundle;
+
+		bundleStartLevel.setStartLevel(startLevel);
 	}
 
 	public void startBundle(long bundleId)

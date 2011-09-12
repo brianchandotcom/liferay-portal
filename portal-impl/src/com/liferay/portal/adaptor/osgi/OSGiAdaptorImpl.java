@@ -104,6 +104,9 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
 		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
 		properties.put(
+			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
+			String.valueOf(PropsValues.OSGI_FRAMEWORK_BEGINNING_STARTLEVEL));
+		properties.put(
 			Constants.FRAMEWORK_BUNDLE_PARENT,
 			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
 		properties.put(

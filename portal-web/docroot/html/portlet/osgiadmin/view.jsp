@@ -94,6 +94,8 @@ portletURL.setParameter("tabs1", tabs1);
 
 				<%
 				Dictionary<String,String> headers = bundle.getHeaders(themeDisplay.getLanguageId());
+
+				BundleStartLevel bundleStartLevel = (BundleStartLevel)bundle;
 				%>
 
 				<liferay-portlet:renderURL varImpl="rowURL">
@@ -165,9 +167,44 @@ portletURL.setParameter("tabs1", tabs1);
 					property="version"
 				/>
 				<liferay-ui:search-container-column-text
+					name="start-level"
+				>
+
+					<c:choose>
+						<c:when test="<%= bundle.getBundleId() == 0 %>">
+							<liferay-ui:message key="system" />
+						</c:when>
+						<c:otherwise>
+							<aui:select label="" name="startLevel" onChange='<%= "Liferay.OSGiAdmin.Util.setStartLevel({bundleId:" + bundle.getBundleId() + ", message: \'" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-change-the-start-level-of-this-bundle") + "\', namespace: \'" + renderResponse.getNamespace() + "\', startLevel: AUI().one(this).val()})" %>'>
+
+								<%
+								for (int i = 1; i < 100; i++) {
+									String label = String.valueOf(i);
+
+									if (i == PropsValues.OSGI_FRAMEWORK_BEGINNING_STARTLEVEL) {
+										label = LanguageUtil.get(pageContext, "framework");
+									}
+									else if (i == 1) {
+										label = LanguageUtil.get(pageContext, "default");
+									}
+
+								%>
+
+									<aui:option label="<%= label %>" selected="<%= (bundleStartLevel.getStartLevel() == i) %>" value="<%= i %>" />
+
+								<%
+								}
+								%>
+
+							</aui:select>
+						</c:otherwise>
+					</c:choose>
+
+				</liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-column-text
+					buffer="sb"
 					href="<%= rowURL %>"
 					name="state"
-					buffer="sb"
 				>
 
 					<%

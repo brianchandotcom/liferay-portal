@@ -16,6 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
+<%@ page import="com.liferay.portal.util.PropsValues" %>
 <%@ page import="com.liferay.portlet.osgiadmin.OSGiException" %>
 <%@ page import="com.liferay.portlet.osgiadmin.service.OSGiServiceUtil" %>
 
@@ -24,6 +25,7 @@
 <%@ page import="org.osgi.framework.BundleException" %>
 <%@ page import="org.osgi.framework.ServiceReference" %>
 <%@ page import="org.osgi.framework.launch.Framework" %>
+<%@ page import="org.osgi.framework.startlevel.BundleStartLevel" %>
 
 <%@ page import="java.net.MalformedURLException" %>
 <%@ page import="java.net.URL" %>

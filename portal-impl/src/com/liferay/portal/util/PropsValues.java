@@ -999,6 +999,8 @@ public class PropsValues {
 
 	public static final boolean ORGANIZATIONS_USER_GROUP_MEMBERSHIP_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_USER_GROUP_MEMBERSHIP_ENABLED));
 
+	public static final int OSGI_FRAMEWORK_BEGINNING_STARTLEVEL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.OSGI_FRAMEWORK_BEGINNING_STARTLEVEL));
+
 	public static final String OSGI_FRAMEWORK_STORAGE = PropsUtil.get(PropsKeys.OSGI_FRAMEWORK_STORAGE);
 
 	public static final String[] OSGI_SYSTEM_BUNDLE_EXPORT_PACKAGES = PropsUtil.getArray(PropsKeys.OSGI_SYSTEM_BUNDLE_EXPORT_PACKAGES);

@@ -11,6 +11,16 @@ AUI().use(
 			STOPPING: 		'STOPPING',
 			UNINSTALLED: 	'UNINSTALLED',
 
+			setStartLevel: function(options) {
+				var instance = this;
+
+				if (!confirm(Liferay.Language.get(options.message))) {
+					return;
+				}
+
+				Liferay.Service.OA.OSGi.setBundleStartLevel({bundleId: options.bundleId, startLevel: options.startLevel}, function() {});
+			},
+
 			start: function(options) {
 				var instance = this;
 

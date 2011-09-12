@@ -980,10 +980,21 @@ release was successful.</echo>
 			value=""
 		/>
 
+		<replace
+			file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/jonas.properties"
+			token="web,ear,depmonitor"
+			value="web,ear,validation,depmonitor"
+		/>
+
 		<replace file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/tomcat6-server.xml">
 			<replacefilter token="9000" value="8080" />
 			<replacefilter token="9009" value="8009" />
 			<replacefilter token="9043" value="8443" />
+		</replace>
+
+		<replace file="${app.server.parent.dir}/jonas-${app.server.jonas.version}/conf/osgi/defaults.properties">
+			<replacetoken><![CDATA[javase-packages ${javase-${javase.version}}]]></replacetoken>
+			<replacevalue><![CDATA[javase-packages ${javase-${javase.version}}, com.sun.jmx.mbeanserver, com.sun.crypto.provider, org.apache.felix.framework]]></replacevalue>
 		</replace>
 	</target>
 

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE jonas-web-app PUBLIC "-//ObjectWeb//DTD JOnAS Web App 2.6//EN" "http://www.objectweb.org/jonas/dtds/jonas-web-app_2_6.dtd">
-
-<jonas-web-app>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jonas-web-app xmlns="http://www.objectweb.org/jonas/ns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.objectweb.org/jonas/ns http://jonas.ow2.org/ns/jonas-web-app_4_0.xsd">
 	<context-root>/</context-root>
+	<java2-delegation-model>false</java2-delegation-model>
 </jonas-web-app>

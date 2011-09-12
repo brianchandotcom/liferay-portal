@@ -467,6 +467,21 @@ $(jetty.home)/lib/liferay/*</echo>
 		<if>
 			<equals arg1="${app.server.type}" arg2="jonas" />
 			<then>
+
+				<delete failonerror="false">
+					<fileset
+						dir="${app.server.lib.global.dir}"
+						includes="hsql.jar"
+					/>
+				</delete>
+
+				<delete failonerror="false">
+					<fileset
+						dir="${app.server.lib.portal.dir}"
+						includes="osgi.core.jar,xalan.jar,xercesImpl.jar,xml-apis.jar"
+					/>
+				</delete>
+
 				<loadfile property="setenv.content" srcfile="${app.server.bin.dir}/setenv" />
 
 				<antelope:stringutil string="${setenv.content}" property="setenv.content.index">
@@ -536,20 +551,20 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 					<then>
 						<unjar src="${app.server.dir}/lib/bootstrap/felix-launcher.jar" dest="${app.server.dir}/conf">
 							<patternset>
-								<include name="**/default-config.properties" />
+								<include name="**/default.properties" />
 							</patternset>
 							<chainedmapper>
 								<flattenmapper />
 								<globmapper
-									from="default-config.properties"
+									from="default.properties"
 									to="felix-config.properties"
 								/>
 							</chainedmapper>
 						</unjar>
 
 						<replace file="${app.server.dir}/conf/felix-config.properties">
-							<replacetoken>org.osgi.framework.system.packages org.osgi.framework;</replacetoken>
-							<replacevalue>org.osgi.framework.system.packages com.sun.crypto.provider; com.sun.image.codec.jpeg; com.sun.jmx.interceptor; com.sun.jmx.mbeanserver; org.apache.xerces.parsers; org.apache.xerces.util; org.apache.xerces.xni; org.apache.xerces.xni.parser; org.osgi.framework;</replacevalue>
+							<replacetoken>org.osgi.framework.system.packages=org.osgi.framework;</replacetoken>
+							<replacevalue>org.osgi.framework.system.packages=com.sun.crypto.provider; com.sun.image.codec.jpeg; com.sun.jmx.interceptor; com.sun.jmx.mbeanserver; org.apache.xerces.parsers; org.apache.xerces.util; org.apache.xerces.xni; org.apache.xerces.xni.parser; org.osgi.framework;</replacevalue>
 						</replace>
 					</then>
 				</if>

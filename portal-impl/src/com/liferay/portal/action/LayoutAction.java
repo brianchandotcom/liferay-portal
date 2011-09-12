@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -908,6 +909,15 @@ public class LayoutAction extends Action {
 			portletDisplay.setPortletName(portletConfig.getPortletName());
 			portletDisplay.setNamespace(
 				PortalUtil.getPortletNamespace(portletId));
+
+			WebDAVStorage webDAVStorage = portlet.getWebDAVStorageInstance();
+
+			if (webDAVStorage != null) {
+				portletDisplay.setWebDAVEnabled(true);
+			}
+			else {
+				portletDisplay.setWebDAVEnabled(false);
+			}
 
 			ResourceRequestImpl resourceRequestImpl =
 				ResourceRequestFactory.create(

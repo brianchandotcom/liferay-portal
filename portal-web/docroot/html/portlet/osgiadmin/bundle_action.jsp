@@ -39,6 +39,7 @@ if (row == null) {
 Dictionary<String,String> headers = bundle.getHeaders(themeDisplay.getLanguageId());
 
 String bundleUpdateLocation = headers.get(org.osgi.framework.Constants.BUNDLE_UPDATELOCATION);
+String fragmentHost = headers.get(org.osgi.framework.Constants.FRAGMENT_HOST);
 
 if (Validator.isNull(bundleUpdateLocation)) {
 	bundleUpdateLocation = bundle.getLocation();
@@ -68,19 +69,21 @@ if (Validator.isNull(bundleUpdateLocation)) {
 		</c:if>
 
 		<c:if test="<%= bundle.getBundleId() != 0 %>">
-			<liferay-ui:icon
-				cssClass='<%= (bundle.getState() != Bundle.ACTIVE ? "" : "aui-helper-hidden ") + renderResponse.getNamespace() + "start_" + bundle.getBundleId() %>'
-				message="start"
-				src='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
-				url='<%= "javascript:Liferay.OSGiAdmin.Util.start({bundleId:" + bundle.getBundleId() + ", message: \'" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-start-this-bundle") + "\', namespace: \'" + renderResponse.getNamespace() + "\'})" %>'
-			/>
+			<c:if test="<%= (fragmentHost == null) %>">
+				<liferay-ui:icon
+					cssClass='<%= (bundle.getState() != Bundle.ACTIVE ? "" : "aui-helper-hidden ") + renderResponse.getNamespace() + "start_" + bundle.getBundleId() %>'
+					message="start"
+					src='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
+					url='<%= "javascript:Liferay.OSGiAdmin.Util.start({bundleId:" + bundle.getBundleId() + ", message: \'" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-start-this-bundle") + "\', namespace: \'" + renderResponse.getNamespace() + "\'})" %>'
+				/>
 
-			<liferay-ui:icon
-				cssClass='<%= (bundle.getState() == Bundle.ACTIVE ? "" : "aui-helper-hidden ") + renderResponse.getNamespace() + "stop_" + bundle.getBundleId() %>'
-				message="stop"
-				src='<%= themeDisplay.getPathThemeImages() + "/application/close.png" %>'
-				url='<%= "javascript:Liferay.OSGiAdmin.Util.stop({bundleId:" + bundle.getBundleId() + ", message: \'" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-stop-this-bundle") + "\', namespace: \'" + renderResponse.getNamespace() + "\'})" %>'
-			/>
+				<liferay-ui:icon
+					cssClass='<%= (bundle.getState() == Bundle.ACTIVE ? "" : "aui-helper-hidden ") + renderResponse.getNamespace() + "stop_" + bundle.getBundleId() %>'
+					message="stop"
+					src='<%= themeDisplay.getPathThemeImages() + "/application/close.png" %>'
+					url='<%= "javascript:Liferay.OSGiAdmin.Util.stop({bundleId:" + bundle.getBundleId() + ", message: \'" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-stop-this-bundle") + "\', namespace: \'" + renderResponse.getNamespace() + "\'})" %>'
+				/>
+			</c:if>
 
 			<liferay-ui:icon
 				message="uninstall"

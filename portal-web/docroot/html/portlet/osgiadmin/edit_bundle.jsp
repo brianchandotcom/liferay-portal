@@ -29,9 +29,14 @@ Dictionary<String,String> headers = bundle.getHeaders(themeDisplay.getLanguageId
 
 String bundleName = headers.get(org.osgi.framework.Constants.BUNDLE_NAME);
 String bundleDescription = headers.get(org.osgi.framework.Constants.BUNDLE_DESCRIPTION);
+String fragmentHost = headers.get(org.osgi.framework.Constants.FRAGMENT_HOST);
 
 if (Validator.isNull(bundleName)) {
 	bundleName = bundle.getSymbolicName();
+}
+
+if (Validator.isNotNull(fragmentHost)) {
+	bundleName = bundleName + " (" + LanguageUtil.get(pageContext, "fragment") + ")";
 }
 
 String bundleUpdateLocation = headers.get(org.osgi.framework.Constants.BUNDLE_UPDATELOCATION);
@@ -65,6 +70,12 @@ if (Validator.isNull(bundleUpdateLocation)) {
 				<aui:field-wrapper label="bundle-id">
 					<%= bundleId %>
 				</aui:field-wrapper>
+
+				<clif test="<%= Validator.isNotNull(fragmentHost) %>">
+					<aui:field-wrapper label="host">
+						<%= fragmentHost %>
+					</aui:field-wrapper>
+				</clif>
 
 				<c:if test="<%= Validator.isNotNull(bundleDescription) %>">
 					<aui:field-wrapper label="description">

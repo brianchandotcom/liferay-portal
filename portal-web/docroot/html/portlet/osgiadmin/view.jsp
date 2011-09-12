@@ -95,6 +95,8 @@ portletURL.setParameter("tabs1", tabs1);
 				<%
 				Dictionary<String,String> headers = bundle.getHeaders(themeDisplay.getLanguageId());
 
+				String fragmentHost = headers.get(org.osgi.framework.Constants.FRAGMENT_HOST);
+
 				BundleStartLevel bundleStartLevel = (BundleStartLevel)bundle;
 				%>
 
@@ -171,6 +173,9 @@ portletURL.setParameter("tabs1", tabs1);
 				>
 
 					<c:choose>
+						<c:when test="<%= (fragmentHost != null) %>">
+							<liferay-ui:message key="fragement" />
+						</c:when>
 						<c:when test="<%= bundle.getBundleId() == 0 %>">
 							<liferay-ui:message key="system" />
 						</c:when>

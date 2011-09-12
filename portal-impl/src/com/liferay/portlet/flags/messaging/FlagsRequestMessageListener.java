@@ -236,11 +236,11 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			"[$REPORTED_USER_URL$]", reportedUserURL,
 			"[$REPORTER_USER_ADDRESS$]", reporterEmailAddress,
 			"[$REPORTER_USER_NAME$]", reporterUserName);
+		subscriptionSender.setContextUserPrefix("FLAG");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("flagsrequest", contentId);
 		subscriptionSender.setPortletId(PortletKeys.FLAGS);
-		subscriptionSender.setContextUserPrefix("FLAG");
 		subscriptionSender.setScopeGroupId(serviceContext.getScopeGroupId());
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(serviceContext.getUserId());

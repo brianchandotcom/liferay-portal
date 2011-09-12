@@ -1983,12 +1983,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setCompanyId(message.getCompanyId());
 		subscriptionSenderPrototype.setContextAttributes(
 			"[$CATEGORY_NAME$]", categoryName,
-			"[$MAILING_LIST_ADDRESS$]",	mailingListAddress,
 			"[$MESSAGE_BODY$]", message.getBody(),
 			"[$MESSAGE_ID$]", message.getMessageId(),
+			"[$MAILING_LIST_ADDRESS$]", mailingListAddress,
 			"[$MESSAGE_SUBJECT$]", message.getSubject(),
 			"[$MESSAGE_URL$]", messageURL,
-			"[$MESSAGE_USER_ADDRESS$]",	emailAddress,
+			"[$MESSAGE_USER_ADDRESS$]", emailAddress,
 			"[$MESSAGE_USER_NAME$]", fullName);
 		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
 		subscriptionSenderPrototype.setHtmlFormat(

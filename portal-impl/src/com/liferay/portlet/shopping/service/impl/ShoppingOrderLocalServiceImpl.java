@@ -644,8 +644,8 @@ public class ShoppingOrderLocalServiceImpl
 			"[$ORDER_NUMBER$]", order.getNumber(),
 			"[$ORDER_SHIPPING_ADDRESS$]", shippingAddress,
 			"[$ORDER_TOTAL$]", String.valueOf(total));
-		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setContextUserPrefix("ORDER");
+		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("order",order.getOrderId());
 		subscriptionSender.setPortletId(PortletKeys.SHOPPING);

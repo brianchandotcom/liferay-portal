@@ -343,12 +343,12 @@ public class MembershipRequestLocalServiceImpl
 			"[$REPLY_COMMENTS$]", membershipRequest.getReplyComments());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setMailId("membership_request",
-			membershipRequest.getMembershipRequestId());
+		subscriptionSender.setMailId(
+			"membership_request", membershipRequest.getMembershipRequestId());
+		subscriptionSender.setPortletId(PortletKeys.PORTAL);
 		subscriptionSender.setScopeGroupId(group.getGroupId());
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(userId);
-		subscriptionSender.setPortletId(PortletKeys.PORTAL);
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 

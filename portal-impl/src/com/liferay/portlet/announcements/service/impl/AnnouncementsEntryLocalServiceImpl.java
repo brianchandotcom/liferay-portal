@@ -420,7 +420,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
-		boolean isAnnouncementsNeedToBeSent = false;
+		boolean sendAnnouncements = false;
 
 		for (User user : users) {
 			AnnouncementsDelivery announcementsDelivery =
@@ -431,9 +431,7 @@ public class AnnouncementsEntryLocalServiceImpl
 				subscriptionSender.addRuntimeSubscribers(
 					user.getEmailAddress(), user.getFullName());
 
-				if (!isAnnouncementsNeedToBeSent) {
-					isAnnouncementsNeedToBeSent = true;
-				}
+				sendAnnouncements = true;
 			}
 
 			if (announcementsDelivery.isSms()) {
@@ -442,13 +440,11 @@ public class AnnouncementsEntryLocalServiceImpl
 				subscriptionSender.addRuntimeSubscribers(
 					smsSn, user.getFullName());
 
-				if (!isAnnouncementsNeedToBeSent) {
-					isAnnouncementsNeedToBeSent = true;
-				}
+				sendAnnouncements = true;
 			}
 		}
 
-		if (!isAnnouncementsNeedToBeSent) {
+		if (!sendAnnouncements) {
 			return;
 		}
 
@@ -462,17 +458,17 @@ public class AnnouncementsEntryLocalServiceImpl
 			"[$ENTRY_CONTENT$]", entry.getContent(),
 			"[$ENTRY_ID$]", String.valueOf(entry.getEntryId()),
 			"[$ENTRY_TITLE$]", entry.getTitle(),
-			"[$ENTRY_TYPE$]", LanguageUtil.get(company.getLocale(),
-				entry.getType()),
+			"[$ENTRY_TYPE$]", LanguageUtil.get(
+				company.getLocale(), entry.getType()),
 			"[$ENTRY_URL$]", entry.getUrl(),
 			"[$PORTLET_NAME$]", LanguageUtil.get(
 				company.getLocale(),
 				(entry.isAlert() ? "alert" : "announcement")));
+		subscriptionSender.setContextUserPrefix("ANNOUNCEMENT");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("announcement_entry", entry.getEntryId());
 		subscriptionSender.setPortletId(PortletKeys.ANNOUNCEMENTS);
-		subscriptionSender.setContextUserPrefix("ANNOUNCEMENT");
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(entry.getUserId());

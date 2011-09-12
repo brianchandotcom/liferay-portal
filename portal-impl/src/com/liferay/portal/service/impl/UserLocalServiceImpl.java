@@ -3277,16 +3277,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			"[$EMAIL_VERIFICATION_URL$]", verifyEmailAddressURL,
 			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr(),
 			"[$REMOTE_HOST$]", serviceContext.getRemoteHost(),
-			"[$USER_AGENT$]", 	serviceContext.getUserAgent(),
+			"[$USER_AGENT$]", serviceContext.getUserAgent(),
 			"[$USER_ID$]", String.valueOf(user.getUserId()),
 			"[$USER_SCREENNAME$]", user.getScreenName());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("email_verification", user.getUserId());
+		subscriptionSender.setPortletId(PortletKeys.PORTAL);
 		subscriptionSender.setScopeGroupId(serviceContext.getScopeGroupId());
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(user.getUserId());
-		subscriptionSender.setPortletId(PortletKeys.PORTAL);
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
@@ -5012,13 +5012,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(companyId);
 		subscriptionSender.setContextAttributes(
-				"[$PASSWORD_RESET_URL$]", passwordResetURL,
-				"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr(),
-				"[$REMOTE_HOST$]",	serviceContext.getRemoteHost(),
-				"[$USER_AGENT$]", serviceContext.getUserAgent(),
-				"[$USER_ID$]", String.valueOf(user.getUserId()),
-				"[$USER_PASSWORD$]", newPassword,
-				"[$USER_SCREENNAME$]", user.getScreenName());
+			"[$PASSWORD_RESET_URL$]", passwordResetURL,
+			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr(),
+			"[$REMOTE_HOST$]", serviceContext.getRemoteHost(),
+			"[$USER_AGENT$]", serviceContext.getUserAgent(),
+			"[$USER_ID$]", String.valueOf(user.getUserId()),
+			"[$USER_PASSWORD$]", newPassword,
+			"[$USER_SCREENNAME$]", user.getScreenName());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("send_pwd", user.getUserId());

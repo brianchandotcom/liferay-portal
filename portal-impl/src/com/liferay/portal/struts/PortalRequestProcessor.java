@@ -754,7 +754,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			// Authenticated users must have an email address
 
 			if ((user != null) &&
-				Validator.isNull(user.getDisplayEmailAddress())) {
+				(Validator.isNull(user.getEmailAddress()) ||
+				 (Validator.isNull(user.getDisplayEmailAddress()) &&
+				  PropsValues.USERS_EMAIL_ADDRESS_REQUIRED))) {
 
 				return _PATH_PORTAL_UPDATE_EMAIL_ADDRESS;
 			}

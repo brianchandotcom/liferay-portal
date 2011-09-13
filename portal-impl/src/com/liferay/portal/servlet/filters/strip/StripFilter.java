@@ -310,7 +310,9 @@ public class StripFilter extends BasePortalFilter {
 
 		response.setContentType(contentType);
 
-		if (contentType.startsWith(ContentTypes.TEXT_HTML)) {
+		if (contentType.startsWith(ContentTypes.TEXT_HTML) &&
+			(stringResponse.getStatus() == HttpServletResponse.SC_OK)) {
+
 			CharBuffer oldCharBuffer = CharBuffer.wrap(
 				stringResponse.getString());
 

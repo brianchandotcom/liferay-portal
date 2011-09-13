@@ -34,7 +34,7 @@ while (true) {
 		hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
 	}
 
-	tuple = UsersAdminUtil.getUsers(hits);
+	Tuple tuple = UsersAdminUtil.getUsers(hits);
 
 	boolean corruptIndex = (Boolean)tuple.getObject(1);
 

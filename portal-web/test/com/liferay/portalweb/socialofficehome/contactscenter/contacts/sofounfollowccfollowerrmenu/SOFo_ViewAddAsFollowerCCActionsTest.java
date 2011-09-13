@@ -30,7 +30,7 @@ public class SOFo_ViewAddAsFollowerCCActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -41,31 +41,13 @@ public class SOFo_ViewAddAsFollowerCCActionsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[2]/div/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/div/ul/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/a/img"));
 		assertEquals(RuntimeVariables.replace(
-				"View 1 people you are following."),
+				"Manage 1 people you are following."),
 			selenium.getText("//div[1]/div/div/div/div[2]/a"));
 		selenium.mouseOver("//div[1]/a/img");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),

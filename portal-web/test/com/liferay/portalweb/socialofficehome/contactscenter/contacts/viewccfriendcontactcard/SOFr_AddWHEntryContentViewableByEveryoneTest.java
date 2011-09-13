@@ -42,25 +42,7 @@ public class SOFr_AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[1]/div/div[2]/div[1]/ul/li[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[1]/div/div[2]/div[1]/ul/li[1]/a",
+		selenium.clickAt("//nav/ul/li[1]/a/span",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -121,7 +103,7 @@ public class SOFr_AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
 		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com"),
+				"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)"),
 			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Whats Happening Content"),
 			selenium.getText("//div[@class='content']"));

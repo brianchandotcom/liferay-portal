@@ -272,9 +272,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 	}
 
 	protected long toFolderId(long folderId) {
-		if ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			isDefaultRepository()) {
-
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return _dlFolderId;
 		}
 		else {

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.wiki.PageContentException;
@@ -104,17 +105,36 @@ public class WikiUtil {
 		return _instance._getEditPage(format);
 	}
 
-	public static String getEmailFromAddress(PortletPreferences preferences) {
+	public static String getEmailFromAddress(
+		PortletPreferences preferences, long companyId) throws SystemException {
+
 		String emailFromAddress = PropsUtil.get(
 			PropsKeys.WIKI_EMAIL_FROM_ADDRESS);
 
-		return preferences.getValue("emailFromAddress", emailFromAddress);
+		emailFromAddress = preferences.getValue(
+			"emailFromAddress", emailFromAddress);
+
+		if (Validator.isNull(emailFromAddress)) {
+			emailFromAddress = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
+
+		return emailFromAddress;
 	}
 
-	public static String getEmailFromName(PortletPreferences preferences) {
+	public static String getEmailFromName(
+		PortletPreferences preferences, long companyId) throws SystemException {
+
 		String emailFromName = PropsUtil.get(PropsKeys.WIKI_EMAIL_FROM_NAME);
 
-		return preferences.getValue("emailFromName", emailFromName);
+		emailFromName = preferences.getValue("emailFromName", emailFromName);
+
+		if (Validator.isNull(emailFromName)) {
+			emailFromName = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
+
+		return emailFromName;
 	}
 
 	public static String getEmailPageAddedBody(PortletPreferences preferences) {

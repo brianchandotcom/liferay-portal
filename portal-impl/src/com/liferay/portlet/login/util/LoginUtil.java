@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
@@ -42,6 +43,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CookieKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
@@ -205,14 +207,32 @@ public class LoginUtil {
 		return StringPool.BLANK;
 	}
 
-	public static String getEmailFromAddress(PortletPreferences preferences) {
-		return preferences.getValue(
+	public static String getEmailFromAddress(
+		PortletPreferences preferences, long companyId) throws SystemException {
+
+		String emailFromAddress = preferences.getValue(
 			"emailFromAddress", PropsValues.LOGIN_EMAIL_FROM_ADDRESS);
+
+		if (Validator.isNull(emailFromAddress)) {
+			emailFromAddress = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
+
+		return emailFromAddress;
 	}
 
-	public static String getEmailFromName(PortletPreferences preferences) {
-		return preferences.getValue(
+	public static String getEmailFromName(
+		PortletPreferences preferences, long companyId) throws SystemException {
+
+		String emailFromName = preferences.getValue(
 			"emailFromName", PropsValues.LOGIN_EMAIL_FROM_NAME);
+
+		if (Validator.isNull(emailFromName)) {
+			emailFromName = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
+
+		return emailFromName;
 	}
 
 	public static String getLogin(

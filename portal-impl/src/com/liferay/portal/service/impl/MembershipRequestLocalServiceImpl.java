@@ -280,9 +280,21 @@ public class MembershipRequestLocalServiceImpl
 			membershipRequest.getCompanyId(),
 			PropsKeys.SITES_EMAIL_FROM_NAME);
 
+		if (Validator.isNull(fromName)) {
+			fromName = PrefsPropsUtil.getString(
+				membershipRequest.getCompanyId(),
+				PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
+
 		String fromAddress = PrefsPropsUtil.getString(
 			membershipRequest.getCompanyId(),
 			PropsKeys.SITES_EMAIL_FROM_ADDRESS);
+
+		if (Validator.isNull(fromAddress)) {
+			fromAddress = PrefsPropsUtil.getString(
+				membershipRequest.getCompanyId(),
+				PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
 
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();

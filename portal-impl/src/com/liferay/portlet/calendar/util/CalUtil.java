@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.calendar.util;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.util.ContentUtil;
@@ -38,18 +40,37 @@ import javax.portlet.PortletPreferences;
  */
 public class CalUtil {
 
-	public static String getEmailFromAddress(PortletPreferences preferences) {
+	public static String getEmailFromAddress(PortletPreferences preferences,
+		long companyId) throws SystemException {
+
 		String emailFromAddress = PropsUtil.get(
 			PropsKeys.CALENDAR_EMAIL_FROM_ADDRESS);
 
-		return preferences.getValue("emailFromAddress", emailFromAddress);
+		emailFromAddress = preferences.getValue(
+			"emailFromAddress", emailFromAddress);
+
+		if (Validator.isNull(emailFromAddress)) {
+			emailFromAddress = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
+
+		return emailFromAddress;
 	}
 
-	public static String getEmailFromName(PortletPreferences preferences) {
+	public static String getEmailFromName(PortletPreferences preferences,
+		long companyId) throws SystemException {
+
 		String emailFromName = PropsUtil.get(
 			PropsKeys.CALENDAR_EMAIL_FROM_NAME);
 
-		return preferences.getValue("emailFromName", emailFromName);
+		emailFromName = preferences.getValue("emailFromName", emailFromName);
+
+		if (Validator.isNull(emailFromName)) {
+			emailFromName = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
+
+		return emailFromName;
 	}
 
 	public static boolean getEmailEventReminderEnabled(

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.util;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -40,6 +42,7 @@ import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.model.MBBan;
@@ -258,16 +261,36 @@ public class MBUtil {
 		return categoryId;
 	}
 
-	public static String getEmailFromAddress(PortletPreferences preferences) {
+	public static String getEmailFromAddress(
+		PortletPreferences preferences, long companyId) throws SystemException {
+
 		String emailFromAddress = PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS;
 
-		return preferences.getValue("emailFromAddress", emailFromAddress);
+		emailFromAddress = preferences.getValue(
+			"emailFromAddress", emailFromAddress);
+
+		if (Validator.isNull(emailFromAddress)) {
+			emailFromAddress = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
+
+		return emailFromAddress;
 	}
 
-	public static String getEmailFromName(PortletPreferences preferences) {
+	public static String getEmailFromName(
+		PortletPreferences preferences, long companyId) throws SystemException {
+
 		String emailFromName = PropsValues.MESSAGE_BOARDS_EMAIL_FROM_NAME;
 
-		return preferences.getValue("emailFromName", emailFromName);
+		emailFromName = preferences.getValue(
+			"emailFromName", emailFromName);
+
+		if (Validator.isNull(emailFromName)) {
+			emailFromName = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
+
+		return emailFromName;
 	}
 
 	public static boolean getEmailHtmlFormat(PortletPreferences preferences) {

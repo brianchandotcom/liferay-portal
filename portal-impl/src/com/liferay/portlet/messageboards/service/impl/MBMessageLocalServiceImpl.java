@@ -1936,8 +1936,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR +
 				"message_boards/view_message/" + message.getMessageId();
 
-		String fromName = MBUtil.getEmailFromName(preferences);
-		String fromAddress = MBUtil.getEmailFromAddress(preferences);
+		String fromName = MBUtil.getEmailFromName(
+			preferences, message.getCompanyId());
+		String fromAddress = MBUtil.getEmailFromAddress(
+			preferences, message.getCompanyId());
 
 		String mailingListAddress = StringPool.BLANK;
 

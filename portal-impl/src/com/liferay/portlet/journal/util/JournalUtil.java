@@ -51,6 +51,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.FriendlyURLNormalizer;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -638,18 +639,37 @@ public class JournalUtil {
 		}
 	}
 
-	public static String getEmailFromAddress(PortletPreferences preferences) {
+	public static String getEmailFromAddress(
+		PortletPreferences preferences, long companyId) throws SystemException {
+
 		String emailFromAddress = PropsUtil.get(
 			PropsKeys.JOURNAL_EMAIL_FROM_ADDRESS);
 
-		return preferences.getValue("emailFromAddress", emailFromAddress);
+		emailFromAddress = preferences.getValue(
+			"emailFromAddress", emailFromAddress);
+
+		if (Validator.isNull(emailFromAddress)) {
+			emailFromAddress = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
+
+		return emailFromAddress;
 	}
 
-	public static String getEmailFromName(PortletPreferences preferences) {
+	public static String getEmailFromName(
+		PortletPreferences preferences, long companyId) throws SystemException {
+
 		String emailFromName = PropsUtil.get(
 			PropsKeys.JOURNAL_EMAIL_FROM_NAME);
 
-		return preferences.getValue("emailFromName", emailFromName);
+		emailFromName = preferences.getValue("emailFromName", emailFromName);
+
+		if (Validator.isNull(emailFromName)) {
+			emailFromName = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
+
+		return emailFromName;
 	}
 
 	public static Stack<JournalArticle> getRecentArticles(

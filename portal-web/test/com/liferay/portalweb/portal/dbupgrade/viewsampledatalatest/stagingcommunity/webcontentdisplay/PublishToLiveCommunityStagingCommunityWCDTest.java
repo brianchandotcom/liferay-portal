@@ -23,82 +23,133 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase {
 	public void testPublishToLiveCommunityStagingCommunityWCD()
 		throws Exception {
-		selenium.open(
-			"/web/community-staging-community-web-content-display-staging/");
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open(
+					"/web/community-staging-community-web-content-display-staging/");
 
-			try {
-				if (selenium.isVisible(
-							"link=Page Staging Community Web Content Display")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"link=Page Staging Community Web Content Display")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("link=Page Staging Community Web Content Display",
+					RuntimeVariables.replace(
+						"Page Staging Community Web Content Display"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Page Staging Community Web Content Display",
-			RuntimeVariables.replace(
-				"Page Staging Community Web Content Display"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//strong/a",
-			RuntimeVariables.replace("Staging Dropdown"));
+				boolean markAsReadyPresent = selenium.isElementPresent(
+						"//button[3]");
 
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
+				if (!markAsReadyPresent) {
+					label = 2;
 
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
-					break;
+					continue;
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				assertEquals(RuntimeVariables.replace(
+						"Mark as Ready for Publication"),
+					selenium.getText("//button[3]"));
+				selenium.clickAt("//button[3]",
+					RuntimeVariables.replace("Mark as Ready for Publication"));
 
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Publish to Live Now"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
-			RuntimeVariables.replace("Publish to Live Now"));
-		Thread.sleep(5000);
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
+					try {
+						if (RuntimeVariables.replace(
+									"Status: Ready for Publication")
+												.equals(selenium.getText(
+										"//span[@class='workflow-status']"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isVisible("//input[@value='Publish']")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace(
+						"Status: Ready for Publication"),
+					selenium.getText("//span[@class='workflow-status']"));
+
+			case 2:
+				selenium.clickAt("//strong/a",
+					RuntimeVariables.replace("Staging Dropdown"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Publish to Live Now"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+					RuntimeVariables.replace("Publish to Live Now"));
+				Thread.sleep(5000);
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//input[@value='Publish']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//input[@value='Publish']",
+					RuntimeVariables.replace("Publish"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace("Publish"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 	}
 }

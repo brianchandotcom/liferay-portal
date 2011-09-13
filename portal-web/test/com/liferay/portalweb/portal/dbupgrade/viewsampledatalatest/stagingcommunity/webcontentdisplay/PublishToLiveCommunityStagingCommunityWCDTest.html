@@ -24,6 +24,41 @@
 	<td>Page Staging Community Web Content Display</td>
 </tr>
 <tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//button[3]'))</td>
+	<td>markAsReadyPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${markAsReadyPresent}</td>
+	<td>MarkAsReadyNotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Mark as Ready for Publication</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[3]</td>
+	<td>Mark as Ready for Publication</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='workflow-status']</td>
+	<td>Status: Ready for Publication</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='workflow-status']</td>
+	<td>Status: Ready for Publication</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>MarkAsReadyNotPresent</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//strong/a</td>
 	<td>Staging Dropdown</td>

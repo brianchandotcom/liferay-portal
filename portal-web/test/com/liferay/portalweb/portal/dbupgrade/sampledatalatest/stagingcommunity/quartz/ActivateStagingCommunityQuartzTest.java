@@ -50,8 +50,7 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Communities",
-					RuntimeVariables.replace("Communities"));
+				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_134_name']",
@@ -62,11 +61,12 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isPartialText("//tr[3]/td[1]",
-						"Community Staging Community Quartz"));
+				assertEquals(RuntimeVariables.replace(
+						"Community Staging Community Quartz"),
+					selenium.getText("//tr[3]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//strong/a"));
-				selenium.clickAt("//strong/a",
+					selenium.getText("//td[7]/span/ul/li/strong/a"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -76,7 +76,7 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 							break;
 						}
 					}
@@ -87,29 +87,57 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Manage Pages"),
+				assertEquals(RuntimeVariables.replace("Edit Settings"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Settings"),
-					selenium.getText(
-						"//li[@id='_134_tabs1settingsTabsId']/span/span/a"));
-				selenium.clickAt("//li[@id='_134_tabs1settingsTabsId']/span/span/a",
-					RuntimeVariables.replace("Settings"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Staging",
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_165_stagingLink']", "Staging"));
+				selenium.clickAt("//a[@id='_165_stagingLink']",
 					RuntimeVariables.replace("Staging"));
-				selenium.waitForPageToLoad("30000");
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//select[@name='_165_stagingType']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.saveScreenShotAndSource();
-				selenium.select("//select[@name='_134_stagingType']",
+				selenium.select("//select[@name='_165_stagingType']",
 					RuntimeVariables.replace("label=Local Live"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_165_branchingPublicCheckbox']"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//input[@id='_165_branchingPublicCheckbox']",
+					RuntimeVariables.replace("Enabled On Public Pages"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_165_branchingPublicCheckbox']"));
+				selenium.saveScreenShotAndSource();
+				assertFalse(selenium.isChecked(
+						"//input[@id='_165_branchingPrivateCheckbox']"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//input[@id='_165_branchingPrivateCheckbox']",
+					RuntimeVariables.replace("Enabled On Private Pages"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_165_branchingPrivateCheckbox']"));
+				selenium.saveScreenShotAndSource();
 
 				boolean blogsChecked = selenium.isChecked(
-						"_134_staged-portlet_33Checkbox");
+						"_165_staged-portlet_161Checkbox");
 
 				if (blogsChecked) {
 					label = 2;
@@ -117,13 +145,13 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_33Checkbox']",
+				selenium.clickAt("//input[@id='_165_staged-portlet_161Checkbox']",
 					RuntimeVariables.replace("Blogs"));
 
 			case 2:
 
 				boolean bookmarksChecked = selenium.isChecked(
-						"_134_staged-portlet_28Checkbox");
+						"_165_staged-portlet_28Checkbox");
 
 				if (bookmarksChecked) {
 					label = 3;
@@ -131,13 +159,13 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_28Checkbox']",
+				selenium.clickAt("//input[@id='_165_staged-portlet_28Checkbox']",
 					RuntimeVariables.replace("Bookmarks"));
 
 			case 3:
 
 				boolean calendarChecked = selenium.isChecked(
-						"_134_staged-portlet_8Checkbox");
+						"_165_staged-portlet_8Checkbox");
 
 				if (calendarChecked) {
 					label = 4;
@@ -145,13 +173,13 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_8Checkbox']",
+				selenium.clickAt("//input[@id='_165_staged-portlet_8Checkbox']",
 					RuntimeVariables.replace("Calendar"));
 
 			case 4:
 
 				boolean documentLibraryDisplayChecked = selenium.isChecked(
-						"_134_staged-portlet_110Checkbox");
+						"_165_staged-portlet_110Checkbox");
 
 				if (documentLibraryDisplayChecked) {
 					label = 5;
@@ -159,108 +187,150 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_110Checkbox']",
+				selenium.clickAt("//input[@id='_165_staged-portlet_110Checkbox']",
 					RuntimeVariables.replace("DocumentLibraryDisplay"));
 
 			case 5:
 
-				boolean messageBoardsChecked = selenium.isChecked(
-						"_134_staged-portlet_19Checkbox");
+				boolean dynamicDataMappingChecked = selenium.isChecked(
+						"_165_staged-portlet_166Checkbox");
 
-				if (messageBoardsChecked) {
+				if (dynamicDataMappingChecked) {
 					label = 6;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_19Checkbox']",
-					RuntimeVariables.replace("Message Boards"));
+				selenium.clickAt("//input[@id='_165_staged-portlet_166Checkbox']",
+					RuntimeVariables.replace("Dynamic Data Mapping"));
 
 			case 6:
 
-				boolean pageCommentsChecked = selenium.isChecked(
-						"_134_staged-portlet_107Checkbox");
+				boolean messageBoardsChecked = selenium.isChecked(
+						"_165_staged-portlet_162Checkbox");
 
-				if (pageCommentsChecked) {
+				if (messageBoardsChecked) {
 					label = 7;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_107Checkbox']",
-					RuntimeVariables.replace("Page Comments"));
+				selenium.clickAt("//input[@id='_165_staged-portlet_162Checkbox']",
+					RuntimeVariables.replace("Message Boards"));
 
 			case 7:
 
-				boolean pageRatingsChecked = selenium.isChecked(
-						"_134_staged-portlet_108Checkbox");
+				boolean pageCommentsChecked = selenium.isChecked(
+						"_165_staged-portlet_107Checkbox");
 
-				if (pageRatingsChecked) {
+				if (pageCommentsChecked) {
 					label = 8;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_108Checkbox']",
-					RuntimeVariables.replace("Page Ratings"));
+				selenium.clickAt("//input[@id='_165_staged-portlet_107Checkbox']",
+					RuntimeVariables.replace("Page Comments"));
 
 			case 8:
 
-				boolean pollsDisplayChecked = selenium.isChecked(
-						"_134_staged-portlet_59Checkbox");
+				boolean pageRatingsChecked = selenium.isChecked(
+						"_165_staged-portlet_108Checkbox");
 
-				if (pollsDisplayChecked) {
+				if (pageRatingsChecked) {
 					label = 9;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_59Checkbox']",
-					RuntimeVariables.replace("Polls Display"));
+				selenium.clickAt("//input[@id='_165_staged-portlet_108Checkbox']",
+					RuntimeVariables.replace("Page Ratings"));
 
 			case 9:
 
-				boolean webContentDisplayChecked = selenium.isChecked(
-						"_134_staged-portlet_56Checkbox");
+				boolean pollsChecked = selenium.isChecked(
+						"_165_staged-portlet_25Checkbox");
 
-				if (webContentDisplayChecked) {
+				if (pollsChecked) {
 					label = 10;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_56Checkbox']",
-					RuntimeVariables.replace("Web Content Display"));
+				selenium.clickAt("//input[@id='_165_staged-portlet_25Checkbox']",
+					RuntimeVariables.replace("Polls"));
 
 			case 10:
 
-				boolean wikiChecked = selenium.isChecked(
-						"_134_staged-portlet_36Checkbox");
+				boolean pollsDisplayChecked = selenium.isChecked(
+						"_165_staged-portlet_59Checkbox");
 
-				if (wikiChecked) {
+				if (pollsDisplayChecked) {
 					label = 11;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_36Checkbox']",
-					RuntimeVariables.replace("Wiki"));
+				selenium.clickAt("//input[@id='_165_staged-portlet_59Checkbox']",
+					RuntimeVariables.replace("Polls Display"));
 
 			case 11:
 
-				boolean wikiDisplayChecked = selenium.isChecked(
-						"_134_staged-portlet_54Checkbox");
+				boolean webContentChecked = selenium.isChecked(
+						"_165_staged-portlet_15Checkbox");
 
-				if (wikiDisplayChecked) {
+				if (webContentChecked) {
 					label = 12;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_134_staged-portlet_54Checkbox']",
-					RuntimeVariables.replace("Wiki Display Checked"));
+				selenium.clickAt("//input[@id='_165_staged-portlet_15Checkbox']",
+					RuntimeVariables.replace("Web Content"));
 
 			case 12:
+
+				boolean webContentDisplayChecked = selenium.isChecked(
+						"_165_staged-portlet_56Checkbox");
+
+				if (webContentDisplayChecked) {
+					label = 13;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_165_staged-portlet_56Checkbox']",
+					RuntimeVariables.replace("Web Content Display"));
+
+			case 13:
+
+				boolean wikiChecked = selenium.isChecked(
+						"_165_staged-portlet_36Checkbox");
+
+				if (wikiChecked) {
+					label = 14;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_165_staged-portlet_36Checkbox']",
+					RuntimeVariables.replace("Wiki"));
+
+			case 14:
+
+				boolean wikiDisplayChecked = selenium.isChecked(
+						"_165_staged-portlet_54Checkbox");
+
+				if (wikiDisplayChecked) {
+					label = 15;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_165_staged-portlet_54Checkbox']",
+					RuntimeVariables.replace("Wiki Display Checked"));
+
+			case 15:
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Save']"));
 				selenium.waitForPageToLoad("30000");
@@ -268,7 +338,7 @@ public class ActivateStagingCommunityQuartzTest extends BaseTestCase {
 								   .matches("^Are you sure you want to activate local staging for Community Staging Community Quartz[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
-						"Your request processed successfully."),
+						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace(
 						"Community Staging Community Quartz (Staging)"),

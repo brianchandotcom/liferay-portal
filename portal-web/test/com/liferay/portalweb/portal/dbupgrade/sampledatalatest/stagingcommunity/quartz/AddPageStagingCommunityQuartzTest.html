@@ -25,8 +25,8 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td>Communities</td>
+	<td>link=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -45,12 +45,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//td[7]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -69,8 +69,23 @@
 	<td>Manage Pages</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[2]/span/button</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[2]/span/button</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_156_name_en_US']</td>
+	<td>Name (Required)</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//input[@name='_134_name_en_US']</td>
+	<td>//input[@id='_156_name_en_US']</td>
 	<td>Page Staging Community Quartz</td>
 </tr>
 <tr>
@@ -81,9 +96,8 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request processed successfully.</td>
+	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

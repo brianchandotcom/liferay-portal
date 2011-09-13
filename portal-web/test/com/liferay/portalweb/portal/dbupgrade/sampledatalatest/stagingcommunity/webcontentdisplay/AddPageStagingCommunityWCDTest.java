@@ -41,21 +41,28 @@ public class AddPageStagingCommunityWCDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace(
 				"Community Staging Community Web Content Display"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+		assertEquals(RuntimeVariables.replace(
+				"Community Staging Community Web Content Display"),
+			selenium.getText("//tr[3]/td[1]"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[7]/span/ul/li/strong/a"));
+		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -82,16 +89,37 @@ public class AddPageStagingCommunityWCDTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name_en_US",
+		assertEquals(RuntimeVariables.replace("Add Page"),
+			selenium.getText("//div[2]/span/button"));
+		selenium.click("//div[2]/span/button");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_156_name_en_US']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_156_name_en_US']",
 			RuntimeVariables.replace(
 				"Page Staging Community Web Content Display"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Page']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

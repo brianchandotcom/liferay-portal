@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 	public void testAddSchedulerEventStagingCommunityQuartz()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/community-staging-community-quartz-staging/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,7 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Page Staging Community Quartz")) {
 					break;
 				}
 			}
@@ -42,26 +42,12 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
+		selenium.clickAt("link=Page Staging Community Quartz",
+			RuntimeVariables.replace("Page Staging Community Quartz"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("Community Staging Community Quartz"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//tr[3]/td[1]",
-				"Community Staging Community Quartz"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+		selenium.clickAt("//strong/a",
+			RuntimeVariables.replace("Staging Drop Down"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -81,15 +67,10 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Manage Pages"),
+		assertEquals(RuntimeVariables.replace("Schedule Publication to Live"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Schedule Publication to Live']",
-			RuntimeVariables.replace("Schedule Publication to Live"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -97,7 +78,7 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@name='_134_description']")) {
+				if (selenium.isVisible("//input[@name='_88_description']")) {
 					break;
 				}
 			}
@@ -108,14 +89,14 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@name='_134_description']",
+		selenium.type("//input[@name='_88_description']",
 			RuntimeVariables.replace("Quartz Scheduler Event"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("//select[@id='_134_schedulerStartDateMonth']",
+		selenium.select("//select[@id='_88_schedulerStartDateMonth']",
 			RuntimeVariables.replace("December"));
-		selenium.select("//select[@id='_134_schedulerStartDateDay']",
+		selenium.select("//select[@id='_88_schedulerStartDateDay']",
 			RuntimeVariables.replace("31"));
-		selenium.select("//select[@id='_134_schedulerStartDateYear']",
+		selenium.select("//select[@id='_88_schedulerStartDateYear']",
 			RuntimeVariables.replace("2016"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Add Event']",
@@ -132,7 +113,7 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("Quartz Scheduler Event")
 										.equals(selenium.getText(
-								"//tr[3]/td[1]"))) {
+								"//div[@id='_88_scheduledPublishEventsDiv']/div/div/table/tbody/tr[3]/td"))) {
 					break;
 				}
 			}
@@ -144,6 +125,7 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Quartz Scheduler Event"),
-			selenium.getText("//tr[3]/td[1]"));
+			selenium.getText(
+				"//div[@id='_88_scheduledPublishEventsDiv']/div/div/table/tbody/tr[3]/td"));
 	}
 }

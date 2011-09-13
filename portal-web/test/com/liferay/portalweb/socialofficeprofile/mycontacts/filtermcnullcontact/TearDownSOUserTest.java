@@ -27,7 +27,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/web/guest/home/");
+				selenium.open("/user/joebloggs/home/");
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -54,31 +54,10 @@ public class TearDownSOUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				assertEquals(RuntimeVariables.replace("View All Users"),
+					selenium.getText("//div[2]/div[1]/div/span/span/a"));
+				selenium.clickAt("//div[2]/div[1]/div/span/span/a",
+					RuntimeVariables.replace("View All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -95,7 +74,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 
 			case 2:
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("socialofficecoworker"));
+					RuntimeVariables.replace("socialoffice"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
@@ -112,7 +91,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -121,13 +100,6 @@ public class TearDownSOUserTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 3:
-				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("socialofficefollower"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean user2Deactivated = selenium.isElementPresent(
 						"_125_rowIds");
@@ -139,7 +111,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -159,7 +131,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -168,13 +140,6 @@ public class TearDownSOUserTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 5:
-				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("socialofficefriend"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean user4Deactivated = selenium.isElementPresent(
 						"_125_rowIds");
@@ -186,7 +151,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -206,7 +171,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Checkbox"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));
 				selenium.waitForPageToLoad("30000");
@@ -215,31 +180,14 @@ public class TearDownSOUserTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 7:
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
+				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				assertEquals(RuntimeVariables.replace("View All Users"),
+					selenium.getText("//span/a/span"));
+				selenium.clickAt("//span/a/span",
+					RuntimeVariables.replace("View All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Advanced \u00bb",
@@ -268,6 +216,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				boolean user1Deleted = selenium.isElementPresent(
 						"xPath=(//input[@name='_125_rowIds'])[1]");
@@ -350,7 +299,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 			case 11:
 
 				boolean user5Deleted = selenium.isElementPresent(
-						"xPath=(//input[@name='_125_rowIds'])[1]");
+						"xPath=(//input[@name='_125_rowIds'])[2]");
 
 				if (!user5Deleted) {
 					label = 12;
@@ -358,7 +307,7 @@ public class TearDownSOUserTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("xPath=(//input[@name='_125_rowIds'])[1]",
+				selenium.clickAt("xPath=(//input[@name='_125_rowIds'])[2]",
 					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"xPath=(//input[@value='Delete'])[1]"));
@@ -368,31 +317,14 @@ public class TearDownSOUserTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 12:
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
+				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				assertEquals(RuntimeVariables.replace("View All Users"),
+					selenium.getText("//span/a/span"));
+				selenium.clickAt("//span/a/span",
+					RuntimeVariables.replace("View All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 

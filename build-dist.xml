@@ -926,6 +926,7 @@ release was successful.</echo>
 
 		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/bin" />
 		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/contexts" />
+		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/temp" />
 		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/webapps" />
 	</target>
 

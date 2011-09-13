@@ -43,8 +43,11 @@ public class CalUtil {
 	public static String getEmailFromAddress(PortletPreferences preferences,
 		long companyId) throws SystemException {
 
-		String emailFromAddress = PrefsPropsUtil.getString(
-			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_ADDRESS);
+		String emailFromAddress = PropsUtil.get(
+			PropsKeys.CALENDAR_EMAIL_FROM_ADDRESS);
+
+		emailFromAddress = preferences.getValue(
+			"emailFromAddress", emailFromAddress);
 
 		if (Validator.isNull(emailFromAddress)) {
 			emailFromAddress = PrefsPropsUtil.getString(
@@ -56,8 +59,11 @@ public class CalUtil {
 
 	public static String getEmailFromName(PortletPreferences preferences,
 		long companyId) throws SystemException {
-		String emailFromName = PrefsPropsUtil.getString(
-			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_NAME);
+
+		String emailFromName = PropsUtil.get(
+			PropsKeys.CALENDAR_EMAIL_FROM_NAME);
+
+		emailFromName = preferences.getValue("emailFromName", emailFromName);
 
 		if (Validator.isNull(emailFromName)) {
 			emailFromName = PrefsPropsUtil.getString(

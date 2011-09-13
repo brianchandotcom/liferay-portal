@@ -3,6 +3,6 @@
 
 <Configure class="org.eclipse.jetty.webapp.WebAppContext">
 	<Set name="contextPath">/</Set>
-	<Set name="extraClasspath"><SystemProperty name="jetty.extras" /></Set>
+	<Set name="extraClasspath"><SystemProperty name="jetty.home" />/lib/jetty-server-<SystemProperty name="jetty.version" />.v<SystemProperty name="jetty.version.date" />.jar,<SystemProperty name="jetty.home" />/lib/jetty-util-<SystemProperty name="jetty.version" />.v<SystemProperty name="jetty.version.date" />.jar,<SystemProperty name="jetty.home" />/lib/jetty-webapp-<SystemProperty name="jetty.version" />.v<SystemProperty name="jetty.version.date" />.jar</Set>
 	<Set name="resourceBase"><SystemProperty name="jetty.home" />/webapps/root</Set>
 </Configure>

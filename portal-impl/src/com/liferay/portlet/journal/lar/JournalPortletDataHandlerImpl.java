@@ -740,7 +740,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		portletDataContext.importClassedModel(
 			article, importedArticle, _NAMESPACE);
 
-		articleIds.put(article.getArticleId(), importedArticle.getArticleId());
+		if (Validator.isNull(newArticleId)) {
+			articleIds.put(
+				article.getArticleId(), importedArticle.getArticleId());
+		}
 
 		articleElement.addAttribute(
 			"imported-article-group-id",

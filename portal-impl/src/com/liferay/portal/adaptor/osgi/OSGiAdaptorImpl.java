@@ -146,6 +146,9 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 
 		BundleContext bundleContext = _framework.getBundleContext();
 
+		bundleContext.addFrameworkListener(
+			new FrameworkListener(bundleContext));
+
 		bundleContext.addBundleListener(new BundleListener(bundleContext));
 
 		bundleContext.addServiceListener(

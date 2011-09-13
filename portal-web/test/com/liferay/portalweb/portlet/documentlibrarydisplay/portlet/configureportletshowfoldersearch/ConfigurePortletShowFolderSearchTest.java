@@ -123,26 +123,6 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_86_showFoldersSearchCheckbox']"));
 				selenium.saveScreenShotAndSource();
-
-				boolean showNavigationLinksChecked = selenium.isChecked(
-						"_86_showTabsCheckbox");
-
-				if (showNavigationLinksChecked) {
-					label = 3;
-
-					continue;
-				}
-
-				assertFalse(selenium.isChecked(
-						"//input[@id='_86_showTabsCheckbox']"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@id='_86_showTabsCheckbox']",
-					RuntimeVariables.replace("Show Navigation Links"));
-				assertTrue(selenium.isChecked(
-						"//input[@id='_86_showTabsCheckbox']"));
-				selenium.saveScreenShotAndSource();
-
-			case 3:
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -152,9 +132,6 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_86_showFoldersSearchCheckbox']"));
-				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isChecked(
-						"//input[@id='_86_showTabsCheckbox']"));
 				selenium.saveScreenShotAndSource();
 
 			case 100:

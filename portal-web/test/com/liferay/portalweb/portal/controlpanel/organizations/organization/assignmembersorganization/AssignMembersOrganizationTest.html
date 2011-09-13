@@ -59,6 +59,31 @@
 	<td>Assign Users</td>
 </tr>
 <tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>basicPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${basicPresent}</td>
+	<td>BasicNotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=« Basic</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BasicNotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Available</td>
+	<td>Available</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Available</td>
 	<td>Available</td>

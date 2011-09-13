@@ -257,7 +257,7 @@ public class TearDownTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Selenium"));
 				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
@@ -358,7 +358,7 @@ public class TearDownTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Selenium"));
 				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));

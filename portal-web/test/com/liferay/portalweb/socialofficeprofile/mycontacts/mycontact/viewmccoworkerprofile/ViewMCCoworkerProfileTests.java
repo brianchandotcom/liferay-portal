@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficeprofile.mycontacts;
+package com.liferay.portalweb.socialofficeprofile.mycontacts.mycontact.viewmccoworkerprofile;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.socialofficeprofile.mycontacts.mycontact.MyContactTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,12 +22,22 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MyContactsTests extends BaseTests {
+public class ViewMCCoworkerProfileTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(MyContactTests.suite());
+		testSuite.addTestSuite(AddUserSOCoworkerTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOCo_NewPasswordTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOCo_SignInTest.class);
+		testSuite.addTestSuite(SOCo_AddAsCoworkerCCActionsTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SOSignInTest.class);
+		testSuite.addTestSuite(ConfirmCCCoworkerRequestTest.class);
+		testSuite.addTestSuite(ViewMCCoworkerProfileTest.class);
+		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;
 	}

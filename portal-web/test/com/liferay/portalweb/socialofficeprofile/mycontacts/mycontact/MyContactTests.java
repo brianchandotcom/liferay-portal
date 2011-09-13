@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficeprofile.mycontacts;
+package com.liferay.portalweb.socialofficeprofile.mycontacts.mycontact;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.socialofficeprofile.mycontacts.mycontact.MyContactTests;
+import com.liferay.portalweb.socialofficeprofile.mycontacts.mycontact.filtermcallcontacts.FilterMCAllContactsTests;
+import com.liferay.portalweb.socialofficeprofile.mycontacts.mycontact.filtermccoworker.FilterMCCoworkerTests;
+import com.liferay.portalweb.socialofficeprofile.mycontacts.mycontact.filtermcnullcontact.FilterMCNullContactTests;
+import com.liferay.portalweb.socialofficeprofile.mycontacts.mycontact.viewmccoworkerprofile.ViewMCCoworkerProfileTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,12 +26,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MyContactsTests extends BaseTests {
+public class MyContactTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(MyContactTests.suite());
+		testSuite.addTest(FilterMCAllContactsTests.suite());
+		testSuite.addTest(FilterMCCoworkerTests.suite());
+		testSuite.addTest(FilterMCNullContactTests.suite());
+		testSuite.addTest(ViewMCCoworkerProfileTests.suite());
 
 		return testSuite;
 	}

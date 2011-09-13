@@ -38,9 +38,6 @@
 	<bean id="destination.document_library_audio_processor" class="com.liferay.portal.kernel.messaging.SerialDestination">
 		<property name="name" value="liferay/document_library_audio_processor" />
 	</bean>
-	<bean id="destination.document_library_folder_last_post_date" class="com.liferay.portal.kernel.messaging.SerialDestination">
-		<property name="name" value="liferay/document_library_folder_last_post_date" />
-	</bean>
 	<bean id="destination.document_library_image_processor" class="com.liferay.portal.kernel.messaging.SerialDestination">
 		<property name="name" value="liferay/document_library_image_processor" />
 	</bean>
@@ -81,7 +78,6 @@
 	<bean id="messageListener.buffered_increment" class="com.liferay.portal.increment.BufferedIncrementMessageListener" />
 	<bean id="messageListener.convert_process" class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" />
 	<bean id="messageListener.document_library_audio_processor" class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" />
-	<bean id="messageListener.document_library_folder_last_post_date" class="com.liferay.portlet.documentlibrary.messaging.FolderLastPostDateMessageListener" />
 	<bean id="messageListener.document_library_image_processor" class="com.liferay.portlet.documentlibrary.messaging.ImageProcessorMessageListener" />
 	<bean id="messageListener.document_library_pdf_processor" class="com.liferay.portlet.documentlibrary.messaging.PDFProcessorMessageListener" />
 	<bean id="messageListener.document_library_raw_metadata_processor" class="com.liferay.portlet.documentlibrary.messaging.RawMetadataProcessorMessageListener" />
@@ -130,7 +126,6 @@
 				<ref bean="destination.buffered_increment_serial" />
 				<ref bean="destination.convert_process" />
 				<ref bean="destination.document_library_audio_processor" />
-				<ref bean="destination.document_library_folder_last_post_date" />
 				<ref bean="destination.document_library_image_processor" />
 				<ref bean="destination.document_library_pdf_processor" />
 				<ref bean="destination.document_library_raw_metadata_processor" />
@@ -172,11 +167,6 @@
 				<entry key="liferay/document_library_audio_processor">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.document_library_audio_processor" />
-					</list>
-				</entry>
-				<entry key="liferay/document_library_folder_last_post_date">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.document_library_folder_last_post_date" />
 					</list>
 				</entry>
 				<entry key="liferay/document_library_image_processor">

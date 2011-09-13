@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -86,7 +87,7 @@ public class OSGiAutoDeployListener implements AutoDeployListener {
 				Constants.BUNDLE_SYMBOLICNAME);
 
 			if (Validator.isNotNull(bundleSymoblicName)) {
-				installBundle(osgiAdaptor, file);
+				installBundle(osgiAdaptor, file, manifest);
 			}
 		}
 		catch (Exception e) {
@@ -114,22 +115,29 @@ public class OSGiAutoDeployListener implements AutoDeployListener {
 		}
 	}
 
-	protected void installBundle(OSGiAdaptor osgiAdaptor, File file)
+	protected void installBundle(
+			OSGiAdaptor osgiAdaptor, File file, Manifest manifest)
 		throws Exception {
 
 		Framework framework = osgiAdaptor.getFramework();
 
 		BundleContext bundleContext = framework.getBundleContext();
 
-		try {
-			Bundle bundle = bundleContext.installBundle(file.toURI().toString());
+		String location = file.toURI().toString();
 
-			if (bundle.getState() == Bundle.INSTALLED) {
-				bundle.start();
+		try {
+			Bundle bundle = bundleContext.getBundle(location);
+
+			if (bundle != null) {
+				bundle.update(new FileInputStream(file));
+			}
+			else {
+				bundle = bundleContext.installBundle(
+					location, new FileInputStream(file));
 			}
 		}
 		catch (BundleException be) {
-			_log.warn(be.getMessage());
+			_log.error(be, be);
 		}
 	}
 

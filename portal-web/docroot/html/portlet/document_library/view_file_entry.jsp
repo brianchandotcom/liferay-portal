@@ -116,9 +116,13 @@ boolean hasVideo = VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion());
 
 User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
 
-AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(DLFileEntryConstants.getClassName(), assetClassPK);
+try {
+	AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 
-request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+}
+catch (Exception e) {
+}
 
 request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 %>

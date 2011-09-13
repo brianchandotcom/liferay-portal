@@ -48,7 +48,7 @@ public class SOFr_AddAsFriendCCActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/div/ul/li[2]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -59,7 +59,7 @@ public class SOFr_AddAsFriendCCActionsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/div/ul/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -69,10 +69,10 @@ public class SOFr_AddAsFriendCCActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Find People"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//div[1]/span[1]/span/span/input",
+		selenium.type("//form/span/span[1]/span/span/input",
 			RuntimeVariables.replace("test@liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("xPath=(//input[@value='Search'])[3]",
+		selenium.clickAt("//span[2]/span/input",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

@@ -28,6 +28,7 @@ public class SOFr_ViewMicroblogsEntryActivityFriendsTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTestSuite(AddUserSOFriendTest.class);
+		testSuite.addTestSuite(AddMicroblogsContentViewableByFriendsTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFr_NewPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

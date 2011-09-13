@@ -137,6 +137,7 @@ portletURL.setParameter("tabs1", tabs1);
 					sb.append(bundle.getSymbolicName());
 					sb.append("</em>");
 
+					/*
 					String description = headers.get(org.osgi.framework.Constants.BUNDLE_DESCRIPTION);
 
 					if (Validator.isNotNull(description)) {
@@ -144,6 +145,7 @@ portletURL.setParameter("tabs1", tabs1);
 						sb.append(description);
 						sb.append("</span>");
 					}
+					*/
 					%>
 
 				</liferay-ui:search-container-column-text>
@@ -174,7 +176,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 					<c:choose>
 						<c:when test="<%= (fragmentHost != null) %>">
-							<liferay-ui:message key="fragement" />
+							<liferay-ui:message key="fragment" />
 						</c:when>
 						<c:when test="<%= bundle.getBundleId() == 0 %>">
 							<liferay-ui:message key="system" />

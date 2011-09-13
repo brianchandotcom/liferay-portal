@@ -63,6 +63,8 @@ else {
 	}
 }
 
+boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null);
+
 int status = WorkflowConstants.STATUS_APPROVED;
 
 if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
@@ -222,7 +224,7 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 				</c:if>
 			</c:when>
 			<c:otherwise>
-				<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>">
+				<c:if test="<%= showActions && workflowEnabled && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>">
 					<portlet:renderURL var="editURL">
 						<portlet:param name="struts_action" value="/document_library/edit_folder" />
 						<portlet:param name="redirect" value="<%= redirect %>" />

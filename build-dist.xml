@@ -915,11 +915,11 @@ release was successful.</echo>
 			src="${app.server.parent.dir}/${app.server.jetty.zip.name}"
 		>
 			<patternset
-				excludes="jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/bin/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts-available/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contrib/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/overlays/**,jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/webapps/**"
+				excludes="jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/bin/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts-available/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/javadoc/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/overlays/**,jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/webapps/**"
 			/>
 			<mapper
 				type="glob"
-				from="jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/*"
+				from="jetty-hightide-${app.server.jetty.version}.v${app.server.jetty.version.date}/*"
 				to="jetty-${app.server.jetty.version}/*"
 			/>
 		</unzip>

@@ -31,7 +31,7 @@ public class SOFo_ViewMicroblogsEntryActivityFollowingTest extends BaseTestCase 
 			}
 
 			try {
-				if (selenium.isVisible("//div/div[1]/div/div/div/ul[1]/li[1]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -42,15 +42,15 @@ public class SOFo_ViewMicroblogsEntryActivityFollowingTest extends BaseTestCase 
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Activities"),
-			selenium.getText("//div[2]/section/header/h1/span"));
+			selenium.getText("//div[2]/div/section/header/h1/span"));
 		assertEquals(RuntimeVariables.replace("Following"),
-			selenium.getText("//div/div/div/ul/li[3]/span/span/a"));
-		selenium.clickAt("//div/div/div/ul/li[3]/span/span/a",
+			selenium.getText("//div/ul/li[3]/span/a"));
+		selenium.clickAt("//div/ul/li[3]/span/a",
 			RuntimeVariables.replace("Following"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

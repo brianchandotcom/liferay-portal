@@ -53,6 +53,9 @@ public class FilterMCNullContactTest extends BaseTestCase {
 		Thread.sleep(5000);
 		assertFalse(selenium.isVisible("//div/a/img"));
 		assertFalse(selenium.isVisible("//li[2]/div/a/img"));
+		selenium.type("//span/input", RuntimeVariables.replace("Coworker"));
+		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		selenium.clickAt("//div/a/img",
 			RuntimeVariables.replace("Social Office Coworker"));
 		selenium.waitForPageToLoad("30000");
@@ -60,9 +63,7 @@ public class FilterMCNullContactTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"socialofficecoworkerfn socialofficecoworkermn socialofficecoworkerln"),
 			selenium.getText("//div/h1/span"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficecoworkerea@liferay.com"),
-			selenium.getText("//div[2]/div/div/div/div/div/a"));
+		assertTrue(selenium.isTextPresent("socialofficecoworkerea@liferay.com"));
 		assertEquals(RuntimeVariables.replace("Coworker"),
 			selenium.getText("//div[2]/div/div/div/div[2]/div"));
 		assertTrue(selenium.isVisible("//span/input"));

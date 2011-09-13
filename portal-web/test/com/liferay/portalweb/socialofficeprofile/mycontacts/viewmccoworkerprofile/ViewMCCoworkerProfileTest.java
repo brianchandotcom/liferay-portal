@@ -70,9 +70,7 @@ public class ViewMCCoworkerProfileTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"socialofficecoworkerfn socialofficecoworkermn socialofficecoworkerln"),
 			selenium.getText("//div/h1/span"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficecoworkerea@liferay.com"),
-			selenium.getText("//div[2]/div/div/div/div/div/a"));
+		assertTrue(selenium.isTextPresent("socialofficecoworkerea@liferay.com"));
 		assertEquals(RuntimeVariables.replace("Coworker"),
 			selenium.getText("//div[2]/div/div/div/div[2]/div"));
 		assertTrue(selenium.isVisible("//div/img"));

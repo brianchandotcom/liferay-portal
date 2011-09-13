@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewMicroblogsEntryActivityMeTest extends BaseTestCase {
 	public void testViewMicroblogsEntryActivityMe() throws Exception {
-		selenium.open("/user/socialofficefriendsn/home");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewMicroblogsEntryActivityMeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div[1]/div/div/div/ul[1]/li[1]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -41,15 +41,16 @@ public class ViewMicroblogsEntryActivityMeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Activities"),
-			selenium.getText("//div[2]/section/header/h1/span"));
+			selenium.getText("//div[2]/div/section/header/h1/span"));
 		assertEquals(RuntimeVariables.replace("Me"),
-			selenium.getText("//li[5]/span/span/a"));
-		selenium.clickAt("//li[5]/span/span/a", RuntimeVariables.replace("Me"));
+			selenium.getText("//section/div/div/div/ul/li[5]/span/a"));
+		selenium.clickAt("//section/div/div/div/ul/li[5]/span/a",
+			RuntimeVariables.replace("Me"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/span[1]/img"));

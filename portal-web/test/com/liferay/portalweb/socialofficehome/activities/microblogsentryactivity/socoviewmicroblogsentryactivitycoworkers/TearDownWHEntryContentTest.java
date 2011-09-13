@@ -35,7 +35,8 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//ul[2]/li[2]/a")) {
+						if (selenium.isVisible(
+									"//div/div/div/div[1]/ul/li[3]/a")) {
 							break;
 						}
 					}
@@ -46,12 +47,13 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//ul[2]/li[2]/a",
+				selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Microblogs"),
-					selenium.getText("//div[2]/div/div/section/header/h1"));
+					selenium.getText(
+						"//div[2]/div/div/div/section/header/h1/span[2]"));
 				assertTrue(selenium.isPartialText("//div[2]/h1/span",
 						"What's happening?"));
 

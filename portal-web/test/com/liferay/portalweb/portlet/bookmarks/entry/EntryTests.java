@@ -23,6 +23,7 @@ import com.liferay.portalweb.portlet.bookmarks.entry.addfolderentryurlnull.AddFo
 import com.liferay.portalweb.portlet.bookmarks.entry.addsubfolderentry.AddSubfolderEntryTests;
 import com.liferay.portalweb.portlet.bookmarks.entry.deletefolderentry.DeleteFolderEntryTests;
 import com.liferay.portalweb.portlet.bookmarks.entry.editfolderentry.EditFolderEntryTests;
+import com.liferay.portalweb.portlet.bookmarks.entry.guestviewpermissionsbookmarksentryguestviewoff.Guest_ViewPermissionsBookmarksEntryGuestViewOffTests;
 import com.liferay.portalweb.portlet.bookmarks.entry.movefolderentrytofolder.MoveFolderEntryToFolderTests;
 import com.liferay.portalweb.portlet.bookmarks.entry.movefolderentrytosubfolder.MoveFolderEntryToSubfolderTests;
 import com.liferay.portalweb.portlet.bookmarks.entry.movesubfolderentrytofolder.MoveSubfolderEntryToFolderTests;
@@ -50,6 +51,8 @@ public class EntryTests extends BaseTests {
 		testSuite.addTest(AddSubfolderEntryTests.suite());
 		testSuite.addTest(DeleteFolderEntryTests.suite());
 		testSuite.addTest(EditFolderEntryTests.suite());
+		testSuite.addTest(
+			Guest_ViewPermissionsBookmarksEntryGuestViewOffTests.suite());
 		testSuite.addTest(MoveFolderEntryToFolderTests.suite());
 		testSuite.addTest(MoveFolderEntryToSubfolderTests.suite());
 		testSuite.addTest(MoveSubfolderEntryToFolderTests.suite());

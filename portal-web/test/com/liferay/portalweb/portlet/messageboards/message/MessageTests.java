@@ -35,6 +35,7 @@ import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagebo
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagesubject.EditCategoryMessageSubjectTests;
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagesubjectnull.EditCategoryMessageSubjectNullTests;
 import com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail.Gmail_ViewMBThreadMessageGmailTests;
+import com.liferay.portalweb.portlet.messageboards.message.guestviewpermissionsmbthreadmessageguestviewoff.Guest_ViewPermissionsMBThreadMessageGuestViewOffTests;
 import com.liferay.portalweb.portlet.messageboards.message.markasanswercategorymessagequestionreply.MarkAsAnswerCategoryMessageQuestionReplyTests;
 import com.liferay.portalweb.portlet.messageboards.message.movecategorymessagetocategory.MoveCategoryMessageToCategoryTests;
 import com.liferay.portalweb.portlet.messageboards.message.movecategorymessagetocategoryexplanation.MoveCategoryMessageToCategoryExplanationTests;
@@ -85,6 +86,8 @@ public class MessageTests extends BaseTests {
 		testSuite.addTest(EditCategoryMessageSubjectNullTests.suite());
 		testSuite.addTest(Gmail_ViewMBThreadMessageGmailTests.suite());
 		testSuite.addTest(
+			Guest_ViewPermissionsMBThreadMessageGuestViewOffTests.suite());
+		testSuite.addTest(
 			MarkAsAnswerCategoryMessageQuestionReplyTests.suite());
 		testSuite.addTest(MoveCategoryMessageToCategoryTests.suite());
 		testSuite.addTest(
@@ -99,7 +102,8 @@ public class MessageTests extends BaseTests {
 			SplitThreadCategoryMessageReplyBackButtonTests.suite());
 		testSuite.addTest(
 			SplitThreadCategoryMessageReplyExplanationTests.suite());
-		testSuite.addTest(SplitThreadCategoryMessageReplyMultipleTests.suite());
+		testSuite.addTest(
+			SplitThreadCategoryMessageReplyMultipleTests.suite());
 		testSuite.addTest(UnmarkCategoryMessageQuestionReplyTests.suite());
 		testSuite.addTest(ViewCategoryMessageMyPostsTests.suite());
 		testSuite.addTest(ViewCategoryMessagePostCountTests.suite());

@@ -509,14 +509,16 @@ public class AssetEntryFinderImpl
 	}
 
 	protected String getDates(Date publishDate, Date expirationDate) {
-		StringBundler sb = new StringBundler(2);
+		StringBundler sb = new StringBundler(4);
 
 		if (publishDate != null) {
-			sb.append(" AND (publishDate IS NULL OR publishDate < ?)");
+			sb.append(" AND (AssetEntry.publishDate IS NULL OR ");
+			sb.append("AssetEntry.publishDate < ?)");
 		}
 
 		if (expirationDate != null) {
-			sb.append(" AND (expirationDate IS NULL OR expirationDate > ?)");
+			sb.append(" AND (AssetEntry.expirationDate IS NULL OR ");
+			sb.append("AssetEntry.expirationDate > ?)");
 		}
 
 		return sb.toString();

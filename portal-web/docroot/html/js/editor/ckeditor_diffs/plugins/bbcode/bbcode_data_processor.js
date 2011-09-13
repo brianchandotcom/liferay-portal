@@ -61,6 +61,8 @@
 
 	var REGEX_PX = /px$/i;
 
+	var STR_MAILTO = 'mailto:';
+
 	var TAG_BLOCKQUOTE = 'blockquote';
 
 	var TAG_BR = 'br';
@@ -72,6 +74,8 @@
 	var TAG_DIV = 'div';
 
 	var TAG_LI = 'li';
+
+	var TAG_LINK = 'a';
 
 	var TAG_PARAGRAPH = 'p';
 
@@ -171,6 +175,18 @@
 			}
 
 			return allowNewLine;
+		},
+
+		_checkParentElement: function(element, tagName) {
+			var result = false;
+
+			var parentNode = element.parentNode;
+
+			if (parentNode && parentNode.tagName && (parentNode.tagName.toLowerCase() == tagName)) {
+				result = true;
+			}
+
+			return result;
 		},
 
 		_convert: function(data) {
@@ -423,6 +439,13 @@
 				if (!instance._allowNewLine(element)) {
 					data = data.replace(REGEX_NEWLINE, '');
 				}
+				else if (instance._checkParentElement(element, TAG_LINK)) {
+					var mailtoPrefixIndex = data.indexOf(STR_MAILTO);
+
+					if (mailtoPrefixIndex == 0) {
+						data = data.substring(STR_MAILTO.length);
+					}
+				}
 
 				instance._endResult.push(data);
 			}
@@ -523,9 +546,18 @@
 				hrefAttribute = decodedLink;
 			}
 
-			listTagsIn.push('[url=', hrefAttribute, ']');
+			var startTag = '[url=';
+			var endTag = '[/url]';
 
-			listTagsOut.push('[/url]');
+			if (hrefAttribute.indexOf(STR_MAILTO) == 0) {
+				startTag = '[email=';
+
+				endTag = '[/email]';
+			}
+
+			listTagsIn.push(startTag, hrefAttribute, ']');
+
+			listTagsOut.push(endTag);
 		},
 
 		_handleListItem: function(element, listTagsIn, listTagsOut) {
@@ -729,7 +761,7 @@
 
 			var tagName = element.tagName;
 
-			if ((!tagName || tagName.toLowerCase() != 'a') && element.style) {
+			if ((!tagName || tagName.toLowerCase() != TAG_LINK) && element.style) {
 				instance._handleStyleAlignCenter(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleAlignJustify(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleAlignLeft(element, stylesTagsIn, stylesTagsOut);
@@ -754,9 +786,7 @@
 		_handleTableCaption: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			var parentNode = element.parentNode;
-
-			if (parentNode && parentNode.tagName && (parentNode.tagName.toLowerCase() == TAG_TABLE)) {
+			if (instance._checkParentElement(element, TAG_TABLE)) {
 				listTagsIn.push('[tr]', NEW_LINE, '[th]');
 
 				listTagsOut.push('[/th]', NEW_LINE, '[/tr]', NEW_LINE);

@@ -17,6 +17,7 @@
 	var MAP_HANDLERS = {
 		b: '_handleStrong',
 		code: '_handleCode',
+		email: '_handleEmail',
 		font: '_handleFont',
 		i: '_handleEm',
 		img: '_handleImage',
@@ -70,7 +71,7 @@
 
 	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
 
-	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
+	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
 	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,512}$/i;
 
@@ -78,7 +79,11 @@
 
 	var STR_CODE = 'code';
 
+	var STR_EMAIL = 'email';
+
 	var STR_IMG = 'img';
+
+	var STR_MAILTO = 'mailto:';
 
 	var STR_NEW_LINE = '\n';
 
@@ -238,6 +243,26 @@
 			var instance = this;
 
 			instance._handleSimpleTag('em');
+		},
+
+		_handleEmail: function(token) {
+			var instance = this;
+
+			var href = STR_BLANK;
+
+			var hrefInput = token.attribute || instance._extractData(STR_EMAIL, false);
+
+			if (REGEX_URI.test(hrefInput)) {
+				if (hrefInput.indexOf(STR_MAILTO) != 0) {
+					hrefInput = STR_MAILTO + hrefInput;
+				}
+
+				href = CKEDITOR.tools.htmlEncodeAttr(hrefInput);
+			}
+
+			instance._result.push(STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE);
+
+			instance._stack.push(STR_TAG_A_CLOSE);
 		},
 
 		_handleFont: function(token) {

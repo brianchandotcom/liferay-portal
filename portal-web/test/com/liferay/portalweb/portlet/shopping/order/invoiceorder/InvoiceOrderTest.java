@@ -58,7 +58,8 @@ public class InvoiceOrderTest extends BaseTestCase {
 		assertTrue(selenium.isTextPresent("Shopping Category Item Comments"));
 		selenium.clickAt("//input[@value='Invoice']",
 			RuntimeVariables.replace("Invoice"));
-		selenium.selectWindow("Shopping");
+		selenium.waitForPopUp("", RuntimeVariables.replace("30000"));
+		selenium.selectWindow("name=undefined");
 		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {

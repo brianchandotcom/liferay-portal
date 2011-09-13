@@ -388,6 +388,11 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 							file="tools/servers/jetty/bin/run.bat"
 							tofile="${app.server.bin.dir}/run.bat"
 						/>
+
+						<replace file="${app.server.jetty.bin.dir}/run.bat">
+							<replacetoken>set "JAVA_OPTS=</replacetoken>
+							<replacevalue expandProperties="true">set "JAVA_OPTS=-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} </replacevalue>
+						</replace>
 					</then>
 				</if>
 
@@ -400,6 +405,11 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 							file="tools/servers/jetty/bin/run.sh"
 							tofile="${app.server.bin.dir}/run.sh"
 						/>
+
+						<replace file="${app.server.jetty.bin.dir}/run.sh">
+							<replacetoken>export JAVA_OPTS="</replacetoken>
+							<replacevalue expandProperties="true">export JAVA_OPTS="-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} </replacevalue>
+						</replace>
 					</then>
 				</if>
 
@@ -412,11 +422,6 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 							file="tools/servers/jetty/bin/start.ini"
 							tofile="${app.server.bin.dir}/start.ini"
 						/>
-
-						<replace file="${app.server.jetty.bin.dir}/start.ini">
-							<replacetoken>JETTY_EXTRA_CLASSPATH</replacetoken>
-							<replacevalue expandProperties="true">../lib/jetty-server-${app.server.jetty.version}.v${app.server.jetty.version.date}.jar,../lib/jetty-util.${app.server.jetty.version}-v${app.server.jetty.version.date}.jar,../lib/jetty-webapp-${app.server.jetty.version}.v${app.server.jetty.version.date}.jar</replacevalue>
-						</replace>
 					</then>
 				</if>
 

@@ -30,7 +30,7 @@ public class ConfigurePortletDisplayGuestTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Web Content List Test Page")) {
+				if (selenium.isVisible("link=Web Content List Test Page")) {
 					break;
 				}
 			}
@@ -42,11 +42,13 @@ public class ConfigurePortletDisplayGuestTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content List Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content List Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Please configure this portlet to make it visible to all users."));
+		assertEquals(RuntimeVariables.replace(
+				"Please configure this portlet to make it visible to all users."),
+			selenium.getText(
+				"//div[@class='portlet-configuration portlet-msg-info']/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -78,7 +80,7 @@ public class ConfigurePortletDisplayGuestTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_86_groupId")) {
+				if (selenium.isVisible("//select[@id='_86_groupId']")) {
 					break;
 				}
 			}
@@ -89,16 +91,20 @@ public class ConfigurePortletDisplayGuestTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_86_groupId", RuntimeVariables.replace("label=Liferay"));
-		selenium.select("_86_type",
-			RuntimeVariables.replace("label=Announcements"));
-		selenium.select("_86_pageURL", RuntimeVariables.replace("label=Normal"));
-		selenium.select("_86_pageDelta", RuntimeVariables.replace("label=10"));
-		selenium.select("_86_orderByCol",
-			RuntimeVariables.replace("label=Display Date"));
-		selenium.select("_86_orderByType",
-			RuntimeVariables.replace("label=Ascending"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_86_groupId']",
+			RuntimeVariables.replace("Liferay"));
+		selenium.select("//select[@id='_86_type']",
+			RuntimeVariables.replace("Announcements"));
+		selenium.select("//select[@id='_86_pageUrl']",
+			RuntimeVariables.replace("Normal"));
+		selenium.select("//select[@id='_86_pageDelta']",
+			RuntimeVariables.replace("10"));
+		selenium.select("//select[@id='_86_orderByCol']",
+			RuntimeVariables.replace("Display Date"));
+		selenium.select("//select[@id='_86_orderByType']",
+			RuntimeVariables.replace("Ascending"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -112,7 +118,7 @@ public class ConfigurePortletDisplayGuestTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Web Content List Test Page")) {
+				if (selenium.isVisible("link=Web Content List Test Page")) {
 					break;
 				}
 			}
@@ -124,9 +130,10 @@ public class ConfigurePortletDisplayGuestTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content List Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content List Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Web Content Test"));
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
+			selenium.getText("//td[1]/a"));
 	}
 }

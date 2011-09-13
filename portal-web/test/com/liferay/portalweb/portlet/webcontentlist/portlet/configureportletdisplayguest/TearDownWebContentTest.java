@@ -47,12 +47,10 @@ public class TearDownWebContentTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-				selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
@@ -66,7 +64,8 @@ public class TearDownWebContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_15_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace("Select All"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
@@ -75,29 +74,8 @@ public class TearDownWebContentTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 2:
-				selenium.clickAt("link=Templates", RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
-				boolean templatePresent = selenium.isElementPresent(
-						"_15_rowIds");
-
-				if (!templatePresent) {
-					label = 3;
-
-					continue;
-				}
-
-				selenium.clickAt("_15_allRowIds", RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
-
-			case 3:
-				selenium.clickAt("link=Structures", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Structures",
+					RuntimeVariables.replace("Structures"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -105,17 +83,42 @@ public class TearDownWebContentTest extends BaseTestCase {
 						"_15_rowIds");
 
 				if (!structurePresent) {
-					label = 4;
+					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("_15_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace("Select All"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+
+			case 3:
+				selenium.clickAt("link=Templates",
+					RuntimeVariables.replace("Templates"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+
+				boolean templatePresent = selenium.isElementPresent(
+						"_15_rowIds");
+
+				if (!templatePresent) {
+					label = 4;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace("Select All"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
 			case 4:

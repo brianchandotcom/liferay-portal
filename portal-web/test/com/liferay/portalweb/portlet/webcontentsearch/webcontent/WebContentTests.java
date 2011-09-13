@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portlet.webcontentsearch.webcontent;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portlet.webcontentsearch.webcontent.searchwcdwebcontent.SearchWCDWebContentTests;
-import com.liferay.portalweb.portlet.webcontentsearch.webcontent.searchwcwebcontent.SearchWCWebContentTests;
+import com.liferay.portalweb.portlet.webcontentsearch.webcontent.searchwcwebcontentwcdwcs.SearchWCWebContentWCDWCSTests;
+import com.liferay.portalweb.portlet.webcontentsearch.webcontent.searchwcwebcontentwcs.SearchWCWebContentWCSTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,8 +29,8 @@ public class WebContentTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(SearchWCDWebContentTests.suite());
-		testSuite.addTest(SearchWCWebContentTests.suite());
+		testSuite.addTest(SearchWCWebContentWCDWCSTests.suite());
+		testSuite.addTest(SearchWCWebContentWCSTests.suite());
 
 		return testSuite;
 	}

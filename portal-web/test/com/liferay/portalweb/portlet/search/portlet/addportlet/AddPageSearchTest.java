@@ -66,7 +66,8 @@ public class AddPageSearchTest extends BaseTestCase {
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Search Test Page"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -85,7 +86,8 @@ public class AddPageSearchTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Search Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Search Test Page",
+			RuntimeVariables.replace("Search Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

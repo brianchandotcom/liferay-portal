@@ -30,7 +30,7 @@ public class SearchUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Search Test Page")) {
+				if (selenium.isVisible("link=Search Test Page")) {
 					break;
 				}
 			}
@@ -41,7 +41,8 @@ public class SearchUserTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Search Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Search Test Page",
+			RuntimeVariables.replace("Search Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -51,7 +52,7 @@ public class SearchUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_3_keywords")) {
+				if (selenium.isVisible("//input[@name='_3_keywords']")) {
 					break;
 				}
 			}
@@ -62,9 +63,11 @@ public class SearchUserTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_3_keywords", RuntimeVariables.replace("selenium"));
+		selenium.type("//input[@name='_3_keywords']",
+			RuntimeVariables.replace("selenium"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@type='image']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@type='image']",
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),

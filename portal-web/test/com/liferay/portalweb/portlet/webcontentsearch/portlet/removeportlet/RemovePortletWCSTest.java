@@ -30,8 +30,7 @@ public class RemovePortletWCSTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"link=Web Content Search Test Page")) {
+				if (selenium.isVisible("link=Web Content Search Test Page")) {
 					break;
 				}
 			}
@@ -43,7 +42,7 @@ public class RemovePortletWCSTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Search Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

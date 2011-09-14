@@ -118,6 +118,15 @@ public class DLUtil {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
+		addPortletBreadcrumbEntries(
+			folder, request, liferayPortletResponse, true);
+    }
+
+	public static void addPortletBreadcrumbEntries(
+			Folder folder, HttpServletRequest request,
+			LiferayPortletResponse liferayPortletResponse, boolean showGlobally)
+		throws Exception {
+
 		ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -147,12 +156,20 @@ public class DLUtil {
 				portletURL.toString(), data);
 		}
 
-		addPortletBreadcrumbEntries(folder, request, portletURL);
+		addPortletBreadcrumbEntries(folder, request, portletURL, showGlobally);
 	}
 
 	public static void addPortletBreadcrumbEntries(
 			Folder folder, HttpServletRequest request,
 			PortletURL portletURL)
+		throws Exception {
+
+            addPortletBreadcrumbEntries(folder, request, portletURL, true);
+        }
+
+	public static void addPortletBreadcrumbEntries(
+			Folder folder, HttpServletRequest request,
+			PortletURL portletURL, boolean showGlobally)
 		throws Exception {
 
 		long defaultFolderId = _getDefaultFolderId(request);
@@ -187,6 +204,7 @@ public class DLUtil {
 
 			data.put("folder-id", ancestorFolder.getFolderId());
 			data.put("refresh-folders", Boolean.TRUE.toString());
+            data.put("show-globally", Boolean.valueOf(showGlobally).toString());
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, ancestorFolder.getName(), portletURL.toString(), data);
@@ -207,6 +225,7 @@ public class DLUtil {
 
 			data.put("folder-id", folderId);
 			data.put("refresh-folders", Boolean.TRUE.toString());
+            data.put("show-globally", Boolean.valueOf(showGlobally).toString());
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, folder.getName(), portletURL.toString(), data);

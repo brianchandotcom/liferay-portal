@@ -268,6 +268,10 @@
 		margin-left: 5px;
 	}
 
+	.entry-links h2 {
+		border-width: 0;
+	}
+
 	.page-info {
 		width: 100%;
 	}

@@ -46,7 +46,7 @@ public class SearchImageGalleryTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("i"));
+			RuntimeVariables.replace("m"));
 		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
@@ -55,7 +55,7 @@ public class SearchImageGalleryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='Image Gallery']")) {
+				if (selenium.isVisible("//div[@title='Media Gallery']")) {
 					break;
 				}
 			}
@@ -66,6 +66,6 @@ public class SearchImageGalleryTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//div[@title='Image Gallery']"));
+		assertTrue(selenium.isVisible("//div[@title='Media Gallery']"));
 	}
 }

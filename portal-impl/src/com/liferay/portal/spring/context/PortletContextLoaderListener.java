@@ -84,13 +84,20 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		MethodCache.reset();
 
+		ServletContext servletContext =
+			servletContextEvent.getServletContext();
+
+		Object previousApplicationContext =
+			servletContext.getAttribute(
+				WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+
+		servletContext.removeAttribute(
+			WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+
 		try {
 			super.contextInitialized(servletContextEvent);
 		}
 		finally {
-			ServletContext servletContext =
-				servletContextEvent.getServletContext();
-
 			String lockKey = getLockKey(servletContext);
 
 			LockRegistry.freeLock(lockKey, lockKey, true);
@@ -99,8 +106,6 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		PortletBeanFactoryCleaner.readBeans();
 
 		ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
-
-		ServletContext servletContext = servletContextEvent.getServletContext();
 
 		ApplicationContext applicationContext =
 			WebApplicationContextUtils.getWebApplicationContext(servletContext);
@@ -126,8 +131,15 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 			_log.error(e, e);
 		}
 
-		servletContext.removeAttribute(
-			WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+		if (previousApplicationContext == null) {
+			servletContext.removeAttribute(
+				WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+		}
+		else {
+			servletContext.setAttribute(
+				WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,
+				previousApplicationContext);
+		}
 	}
 
 	@Override

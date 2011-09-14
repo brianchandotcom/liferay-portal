@@ -45,6 +45,11 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 public class PortletApplicationContext extends XmlWebApplicationContext {
 
 	@Override
+	protected String[] getDefaultConfigLocations() {
+		return new String[0];
+	}
+
+	@Override
 	protected void initBeanDefinitionReader(XmlBeanDefinitionReader reader) {
 		ClassLoader beanClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(

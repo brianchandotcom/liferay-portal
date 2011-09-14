@@ -27,9 +27,8 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -573,7 +572,7 @@ public class SchedulerEngineUtil {
 				(MessageListener)classLoader.loadClass(
 					schedulerEntry.getEventListenerClass()).newInstance();
 
-			return (MessageListener)Proxy.newProxyInstance(
+			return (MessageListener)ProxyUtil.newProxyInstance(
 				classLoader, new Class[] {MessageListener.class},
 				new ClassLoaderBeanHandler(
 					schedulerEventListener, classLoader));

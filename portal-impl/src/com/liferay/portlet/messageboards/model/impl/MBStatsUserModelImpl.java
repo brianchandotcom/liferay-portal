@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
@@ -29,8 +30,6 @@ import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.MBStatsUserModel;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -191,7 +190,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (MBStatsUser)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (MBStatsUser)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

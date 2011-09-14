@@ -15,10 +15,10 @@
 package com.liferay.portal.adaptor.osgi;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
@@ -31,7 +31,7 @@ public class ServiceWrapperUtil {
 	public static AdvisedSupport getAdvisedSupport(Object serviceProxy)
 		throws Exception {
 
-		InvocationHandler invocationHandler = Proxy.getInvocationHandler(
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			serviceProxy);
 
 		Class<?> invocationHandlerClass = invocationHandler.getClass();
@@ -51,11 +51,11 @@ public class ServiceWrapperUtil {
 
 		Object previousService = targetSource.getTarget();
 
-		if (!Proxy.isProxyClass(previousService.getClass())) {
+		if (!ProxyUtil.isProxyClass(previousService.getClass())) {
 			return previousService;
 		}
 
-		InvocationHandler invocationHandler = Proxy.getInvocationHandler(
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			previousService);
 
 		if (invocationHandler instanceof ClassLoaderBeanHandler) {

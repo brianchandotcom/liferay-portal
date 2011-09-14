@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
@@ -27,8 +28,6 @@ import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshotModel;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -209,7 +208,7 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (SCProductScreenshot)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (SCProductScreenshot)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

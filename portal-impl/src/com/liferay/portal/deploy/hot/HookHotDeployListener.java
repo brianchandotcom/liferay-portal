@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -137,7 +138,6 @@ import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 
 import java.net.URL;
 
@@ -746,7 +746,7 @@ public class HookHotDeployListener
 
 			Object serviceProxy = PortalBeanLocatorUtil.locate(serviceType);
 
-			if (Proxy.isProxyClass(serviceProxy.getClass())) {
+			if (ProxyUtil.isProxyClass(serviceProxy.getClass())) {
 				initServices(
 					servletContextName, portletClassLoader, serviceType,
 					serviceTypeClass, serviceImplConstructor, serviceProxy);
@@ -1066,7 +1066,7 @@ public class HookHotDeployListener
 	protected AdvisedSupport getAdvisedSupport(Object serviceProxy)
 		throws Exception {
 
-		InvocationHandler invocationHandler = Proxy.getInvocationHandler(
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			serviceProxy);
 
 		Class<?> invocationHandlerClass = invocationHandler.getClass();
@@ -1766,9 +1766,9 @@ public class HookHotDeployListener
 
 		Object previousService = targetSource.getTarget();
 
-		if (Proxy.isProxyClass(previousService.getClass())) {
+		if (ProxyUtil.isProxyClass(previousService.getClass())) {
 			InvocationHandler invocationHandler =
-				Proxy.getInvocationHandler(previousService);
+				ProxyUtil.getInvocationHandler(previousService);
 
 			if (invocationHandler instanceof ClassLoaderBeanHandler) {
 				ClassLoaderBeanHandler classLoaderBeanHandler =
@@ -1781,7 +1781,7 @@ public class HookHotDeployListener
 		Object nextService = serviceImplConstructor.newInstance(
 			previousService);
 
-		Object nextTarget = Proxy.newProxyInstance(
+		Object nextTarget = ProxyUtil.newProxyInstance(
 			portletClassLoader, new Class<?>[] {serviceTypeClass},
 			new ClassLoaderBeanHandler(nextService, portletClassLoader));
 
@@ -1828,7 +1828,7 @@ public class HookHotDeployListener
 			interfaces.add(Filter.class);
 		}
 
-		filter = (Filter)Proxy.newProxyInstance(
+		filter = (Filter)ProxyUtil.newProxyInstance(
 			portletClassLoader, interfaces.toArray(new Class[0]),
 			new ClassLoaderBeanHandler(filter, portletClassLoader));
 
@@ -1844,12 +1844,12 @@ public class HookHotDeployListener
 			portletClassLoader, strutsActionClassName);
 
 		if (strutsAction instanceof StrutsAction) {
-			return Proxy.newProxyInstance(
+			return ProxyUtil.newProxyInstance(
 				portletClassLoader, new Class[] {StrutsAction.class},
 				new ClassLoaderBeanHandler(strutsAction, portletClassLoader));
 		}
 		else {
-			return Proxy.newProxyInstance(
+			return ProxyUtil.newProxyInstance(
 				portletClassLoader, new Class[] {StrutsPortletAction.class},
 				new ClassLoaderBeanHandler(strutsAction, portletClassLoader));
 		}
@@ -2767,7 +2767,7 @@ public class HookHotDeployListener
 				customService = serviceImplConstructor.newInstance(
 					customService);
 
-				customService = Proxy.newProxyInstance(
+				customService = ProxyUtil.newProxyInstance(
 					portletClassLoader, new Class<?>[] {serviceTypeClass},
 					new ClassLoaderBeanHandler(
 						customService, portletClassLoader));

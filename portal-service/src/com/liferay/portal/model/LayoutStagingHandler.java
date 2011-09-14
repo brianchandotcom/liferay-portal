@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import java.util.HashSet;
 import java.util.List;
@@ -127,7 +127,7 @@ public class LayoutStagingHandler implements InvocationHandler {
 	}
 
 	private Object _clone() {
-		return Proxy.newProxyInstance(
+		return ProxyUtil.newProxyInstance(
 			PortalClassLoaderUtil.getClassLoader(), new Class[] {Layout.class},
 			new LayoutStagingHandler(_layout, _layoutRevision));
 	}
@@ -254,14 +254,14 @@ public class LayoutStagingHandler implements InvocationHandler {
 
 	private LayoutType _getLayoutType() {
 		return LayoutTypePortletFactoryUtil.create(
-			(Layout)Proxy.newProxyInstance(
+			(Layout)ProxyUtil.newProxyInstance(
 				PortalClassLoaderUtil.getClassLoader(),
 				new Class[] {Layout.class},
 				new LayoutStagingHandler(_layout, _layoutRevision)));
 	}
 
 	private Object _toEscapedModel() {
-		return Proxy.newProxyInstance(
+		return ProxyUtil.newProxyInstance(
 			PortalClassLoaderUtil.getClassLoader(),
 			new Class[] {Layout.class},
 			new LayoutStagingHandler(

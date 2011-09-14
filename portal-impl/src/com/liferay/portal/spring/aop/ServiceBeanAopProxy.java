@@ -17,13 +17,13 @@ package com.liferay.portal.spring.aop;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -167,7 +167,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 		Class<?>[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(
 			_advisedSupport);
 
-		return Proxy.newProxyInstance(classLoader, proxiedInterfaces, this);
+		return ProxyUtil.newProxyInstance(classLoader, proxiedInterfaces, this);
 	}
 
 	public Object invoke(Object proxy, Method method, Object[] arguments)

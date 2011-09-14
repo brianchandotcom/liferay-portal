@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
@@ -24,8 +25,6 @@ import com.liferay.portlet.expando.model.ExpandoRow;
 import com.liferay.portlet.expando.model.ExpandoRowModel;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -157,7 +156,7 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (ExpandoRow)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (ExpandoRow)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

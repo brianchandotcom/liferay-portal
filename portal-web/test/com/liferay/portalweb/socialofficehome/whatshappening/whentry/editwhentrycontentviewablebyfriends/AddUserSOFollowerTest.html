@@ -10,7 +10,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/joebloggs/home/</td>
+	<td>/user/joebloggs/home/</td>
 	<td></td>
 </tr>
 <tr>
@@ -25,13 +25,28 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td>Users</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
 	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/h1/span</td>
+	<td>New User</td>
 </tr>
 <tr>
 	<td>type</td>

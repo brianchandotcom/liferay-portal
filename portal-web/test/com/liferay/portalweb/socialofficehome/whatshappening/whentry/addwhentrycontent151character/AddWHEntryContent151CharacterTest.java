@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWHEntryContent151CharacterTest extends BaseTestCase {
 	public void testAddWHEntryContent151Character() throws Exception {
-		selenium.open("/web/joebloggs/home/");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class AddWHEntryContent151CharacterTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -41,16 +41,10 @@ public class AddWHEntryContent151CharacterTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//li[@class='selected']/a/span"));
-		assertNotEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//li[@class='selected']/a/span"));
 		assertEquals(RuntimeVariables.replace("What's happening?"),
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
@@ -89,5 +83,33 @@ public class AddWHEntryContent151CharacterTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[@class='my-entry-bubble ']"));
 		assertFalse(selenium.isElementPresent("//div[@class='content']"));
+		selenium.open("/user/joebloggs/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
+			RuntimeVariables.replace("Home"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("What's happening?"),
+			selenium.getText("//div[1]/h1/span"));
+		assertTrue(selenium.isElementPresent("//textarea"));
+		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 	}
 }

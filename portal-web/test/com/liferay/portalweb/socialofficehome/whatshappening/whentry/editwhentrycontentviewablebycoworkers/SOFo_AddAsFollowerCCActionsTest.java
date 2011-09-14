@@ -20,9 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOCo_AddAsCoworkerCCTest extends BaseTestCase {
-	public void testSOCo_AddAsCoworkerCC() throws Exception {
-		selenium.open("/web/socialofficecoworkersn/home/");
+public class SOFo_AddAsFollowerCCActionsTest extends BaseTestCase {
+	public void testSOFo_AddAsFollowerCCActions() throws Exception {
+		selenium.open("/user/socialofficefollowersn/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class SOCo_AddAsCoworkerCCTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -41,25 +41,7 @@ public class SOCo_AddAsCoworkerCCTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div/div/div/ul[2]/li[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/div/div/ul[2]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -69,10 +51,10 @@ public class SOCo_AddAsCoworkerCCTest extends BaseTestCase {
 			RuntimeVariables.replace("Find People"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//div[1]/span[1]/span/span/input",
+		selenium.type("//input[@id='_1_WAR_contactsportlet_keywords1']",
 			RuntimeVariables.replace("test@liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("xPath=(//input[@value='Search'])[3]",
+		selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -80,7 +62,7 @@ public class SOCo_AddAsCoworkerCCTest extends BaseTestCase {
 			selenium.getText("//div[2]/div[1]/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText("//div[3]/span"));
-		selenium.clickAt("//span/ul", RuntimeVariables.replace("Actions"));
+		selenium.clickAt("//strong/a/img", RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -88,7 +70,7 @@ public class SOCo_AddAsCoworkerCCTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//li[3]/a")) {
+				if (selenium.isVisible("//li[4]/a")) {
 					break;
 				}
 			}
@@ -99,9 +81,9 @@ public class SOCo_AddAsCoworkerCCTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Add as Coworker"),
-			selenium.getText("//li[3]/a"));
-		selenium.click(RuntimeVariables.replace("//li[3]/a"));
+		assertEquals(RuntimeVariables.replace("Follow"),
+			selenium.getText("//li[4]/a"));
+		selenium.click(RuntimeVariables.replace("//li[4]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div/div[1]/div/div/div/ul[1]/li[1]/a</td>
+	<td>//div/div/div/div[1]/ul/li[1]/a</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/div[1]/div/div/div/ul[1]/li[1]/a</td>
+	<td>//div/div/div/div[1]/ul/li[1]/a</td>
 	<td>Home</td>
 </tr>
 <tr>
@@ -35,17 +35,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
 	<td>You have no microblogs entry.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//ul[2]/li[2]/a</td>
+	<td>//div/div/div/div[1]/ul/li[3]/a</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/div/section/header/h1</td>
+	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div/div[2]/div/div/div[1]</td>
-	<td>Joe Bloggs test@liferay.com</td>
+	<td>//div[@class='user-name']</td>
+	<td>Joe Bloggs (joebloggs)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/span</td>
+	<td>//div[@class='content']</td>
 	<td>Whats Happening Content</td>
 </tr>
 <tr>

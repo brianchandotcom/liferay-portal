@@ -31,7 +31,7 @@ public class SOFr_ViewFriendWHContentViewableByFriendsTest extends BaseTestCase 
 			}
 
 			try {
-				if (selenium.isVisible("//div/div[1]/div/div/div/ul[1]/li[1]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -42,7 +42,7 @@ public class SOFr_ViewFriendWHContentViewableByFriendsTest extends BaseTestCase 
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -50,19 +50,19 @@ public class SOFr_ViewFriendWHContentViewableByFriendsTest extends BaseTestCase 
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
-		selenium.clickAt("//ul[2]/li[2]/a",
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
+		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/section/header/h1"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertTrue(selenium.isVisible("//div[@class='entry-bubble ']"));
 		assertTrue(selenium.isVisible("//div[1]/div/div/div[2]/div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
-			selenium.getText("//div/div/div/div[2]/div/div/div[1]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
+			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Whats Happening Content"),
-			selenium.getText("//div[2]/span"));
+			selenium.getText("//div[@class='content']"));
 		assertFalse(selenium.isTextPresent("Reply"));
 	}
 }

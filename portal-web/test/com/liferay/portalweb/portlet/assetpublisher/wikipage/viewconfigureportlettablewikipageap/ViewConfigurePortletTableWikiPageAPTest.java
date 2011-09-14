@@ -56,16 +56,16 @@ public class ViewConfigurePortletTableWikiPageAPTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertTrue(selenium.isPartialText("//div[@class='asset-content']",
-				"Wiki Front Page Body"));
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Body"),
+			selenium.getText("//div[@class='asset-content']/p"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//h1[@class='header-title']/span",
-				"FrontPage"));
+		assertEquals(RuntimeVariables.replace("FrontPage"),
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Body"),
 			selenium.getText("//div[@class='wiki-body']"));
 	}

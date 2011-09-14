@@ -84,8 +84,8 @@ public class AddWikiPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isPartialText("//h1[@class='header-title']/span",
-				"FrontPage"));
+		assertEquals(RuntimeVariables.replace("FrontPage"),
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Body"),
 			selenium.getText("//div[@class='wiki-body']"));
 	}

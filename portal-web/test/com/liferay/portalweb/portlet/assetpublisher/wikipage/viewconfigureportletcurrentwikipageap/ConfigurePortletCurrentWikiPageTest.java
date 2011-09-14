@@ -70,7 +70,8 @@ public class ConfigurePortletCurrentWikiPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -90,7 +91,9 @@ public class ConfigurePortletCurrentWikiPageTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_anyAssetType']",
-			RuntimeVariables.replace("label=Filter..."));
+			RuntimeVariables.replace("Select More Than One..."));
+		assertEquals("Select More Than One...",
+			selenium.getSelectedLabel("//select[@id='_86_anyAssetType']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -111,7 +114,7 @@ public class ConfigurePortletCurrentWikiPageTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.addSelection("//select[@id='_86_availableClassNameIds']",
-			RuntimeVariables.replace("label=Wiki Page"));
+			RuntimeVariables.replace("Wiki Page"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -120,7 +123,7 @@ public class ConfigurePortletCurrentWikiPageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//fieldset[2]/div/div/div/div/div/div/div[2]/div/span/span/button[2]")) {
+							"xPath=(//button[@title='Move selected items from Available to Selected.'])[2]")) {
 					break;
 				}
 			}
@@ -131,7 +134,7 @@ public class ConfigurePortletCurrentWikiPageTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//fieldset[2]/div/div/div/div/div/div/div[2]/div/span/span/button[2]",
+		selenium.clickAt("xPath=(//button[@title='Move selected items from Available to Selected.'])[2]",
 			RuntimeVariables.replace("Left Arrow"));
 
 		for (int second = 0;; second++) {

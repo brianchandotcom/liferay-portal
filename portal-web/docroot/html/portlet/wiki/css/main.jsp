@@ -77,14 +77,14 @@
 		border-bottom: 1px solid #999;
 		font-size: 1.5em;
 		font-weight: normal;
-		margin-bottom: 0.5em 0;
+		margin-bottom: 0.5em;
 	}
 
 	.portlet-body h3 {
 		color: #222;
 		font-weight: bold;
 		font-size: 1.4em;
-		margin-bottom: 1em 0;
+		margin-bottom: 1em;
 	}
 
 	.portlet-body h4 {

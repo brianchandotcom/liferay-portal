@@ -131,15 +131,15 @@ portletURL.setParameter("tabs1", tabs1);
 				%>
 
 				<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_STRUCTURE %>">
-					<liferay-ui:message key="they-are-are-referenced-by-other-structures" />
+					<liferay-ui:message key="they-are-referenced-by-other-structures" />
 				</c:if>
 
 				<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_TEMPLATE %>">
-					<liferay-ui:message key="they-are-are-referenced-by-templates" />
+					<liferay-ui:message key="they-are-referenced-by-templates" />
 				</c:if>
 
 				<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_WEB_CONTENT %>">
-					<liferay-ui:message key="they-are-are-referenced-by-web-contents" />
+					<liferay-ui:message key="they-are-referenced-by-web-contents" />
 				</c:if>
 			</liferay-ui:error>
 

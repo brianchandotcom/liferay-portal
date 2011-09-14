@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
@@ -36,7 +37,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -383,7 +383,7 @@ public class LayoutLocalServiceStagingAdvice
 			return layout;
 		}
 
-		return (Layout)Proxy.newProxyInstance(
+		return (Layout)ProxyUtil.newProxyInstance(
 			PortalClassLoaderUtil.getClassLoader(), new Class[] {Layout.class},
 			new LayoutStagingHandler(layout));
 	}

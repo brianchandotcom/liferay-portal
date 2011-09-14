@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 
-import java.lang.reflect.Proxy;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -40,7 +38,7 @@ public class ProxyFactory {
 		Object instance = InstanceFactory.newInstance(
 			classLoader, implClassName);
 
-		return Proxy.newProxyInstance(
+		return ProxyUtil.newProxyInstance(
 			classLoader, interfaceClasses,
 			new ClassLoaderBeanHandler(instance, classLoader));
 	}

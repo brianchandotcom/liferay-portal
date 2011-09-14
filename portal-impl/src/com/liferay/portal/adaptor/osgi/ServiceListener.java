@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -118,7 +118,7 @@ public class ServiceListener implements org.osgi.framework.ServiceListener {
 				"Service must be an instance of Advised");
 		}
 
-		if (!Proxy.isProxyClass(serviceProxy.getClass())) {
+		if (!ProxyUtil.isProxyClass(serviceProxy.getClass())) {
 			return;
 		}
 
@@ -131,7 +131,7 @@ public class ServiceListener implements org.osgi.framework.ServiceListener {
 
 		ClassLoader classLoader = serviceTypeClass.getClassLoader();
 
-		Object nextTarget = Proxy.newProxyInstance(
+		Object nextTarget = ProxyUtil.newProxyInstance(
 			classLoader, new Class<?>[] {serviceTypeClass},
 			new ClassLoaderBeanHandler(nextService, classLoader));
 

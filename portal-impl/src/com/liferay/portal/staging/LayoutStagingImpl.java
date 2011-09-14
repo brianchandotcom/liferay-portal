@@ -16,6 +16,7 @@ package com.liferay.portal.staging;
 
 import com.liferay.portal.kernel.staging.LayoutStaging;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -23,7 +24,6 @@ import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutStagingHandler;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 
 /**
  * @author Raymond Augé
@@ -42,11 +42,11 @@ public class LayoutStagingImpl implements LayoutStaging {
 	}
 
 	public LayoutStagingHandler getLayoutStagingHandler(Layout layout) {
-		if (!Proxy.isProxyClass(layout.getClass())) {
+		if (!ProxyUtil.isProxyClass(layout.getClass())) {
 			return null;
 		}
 
-		InvocationHandler invocationHandler = Proxy.getInvocationHandler(
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			layout);
 
 		if (!(invocationHandler instanceof LayoutStagingHandler)) {

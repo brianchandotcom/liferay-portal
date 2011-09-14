@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -42,8 +43,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-
-import java.lang.reflect.Proxy;
 
 import java.util.Date;
 import java.util.List;
@@ -416,7 +415,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				(BaseRepositoryProxyBean) baseRepository;
 
 			ClassLoaderBeanHandler classLoaderBeanHandler =
-				(ClassLoaderBeanHandler)Proxy.getInvocationHandler(
+				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
 					baseRepositoryProxyBean.getProxyBean());
 
 			Object bean = classLoaderBeanHandler.getBean();

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -34,8 +35,6 @@ import com.liferay.portlet.messageboards.model.MBThreadModel;
 import com.liferay.portlet.messageboards.model.MBThreadSoap;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -412,7 +411,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (MBThread)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (MBThread)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,8 +38,6 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupModel;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -460,7 +459,7 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (MDRRuleGroup)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (MDRRuleGroup)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

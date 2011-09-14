@@ -17,19 +17,6 @@
 	margin: auto;
 }
 
-.aui-fieldset-content {
-	-webkit-border-bottom-right-radius: 10px;
-	-webkit-border-bottom-left-radius: 10px;
-	-moz-border-radius-bottomright: 10px;
-	-moz-border-radius-bottomleft: 10px;
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
-	border: 1px solid #363636;
-	width: 100%;
-	padding: 9px;
-	margin-top: -10px;
-}
-
 .bigger {
 	font-weight: bold;
 }
@@ -49,6 +36,19 @@
 .fieldset-header {
 	padding: 10px 0;
 	border: none;
+}
+
+.fieldset-header .aui-fieldset-content {
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border: 1px solid #363636;
+	width: 100%;
+	padding: 9px;
+	margin-top: -10px;
 }
 
 .fieldset-header legend {

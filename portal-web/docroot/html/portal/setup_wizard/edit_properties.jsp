@@ -17,70 +17,68 @@
 
 <%@ page import="com.liferay.taglib.aui.ScriptTag" %>
 
-<div>
-	<aui:form action="/c/portal/setup_wizard" name="fm" method="post">
-		<aui:input type="hidden" name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
+<aui:form action="/c/portal/setup_wizard" name="fm" method="post">
+	<aui:input type="hidden" name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 
-		<aui:fieldset cssClass="fieldset-header" label="portal">
-			<aui:input label="portal-name" name='<%= "properties--" + PropsKeys.COMPANY_DEFAULT_WEB_ID + "--" %>' value="<%= PropsValues.COMPANY_DEFAULT_WEB_ID %>" />
+	<aui:fieldset cssClass="fieldset-header" label="portal">
+		<aui:input label="portal-name" name='<%= "properties--" + PropsKeys.COMPANY_DEFAULT_WEB_ID + "--" %>' value="<%= PropsValues.COMPANY_DEFAULT_WEB_ID %>" />
 
+		<%
+		String domain = " liferay.com";
+		%>
+		<span class="tooltip"><liferay-ui:message key="for-example-x" arguments="<%= domain %>" /></span>
+	</aui:fieldset>
+
+	<aui:fieldset cssClass="fieldset-header" label="administrator-user">
+		<aui:input label="first-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_FIRST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
+
+		<aui:input label="last-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_LAST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
+
+		<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsUtil.get(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS) %>" />
+	</aui:fieldset>
+
+	<aui:fieldset cssClass="fieldset-header" label="database">
+
+		<%
+		String[] drivers = PropsUtil.getArray(PropsKeys.SETUP_DATABASE_DRIVERS_LIST);
+
+		String jdbcDefaultUrl = PropsUtil.get(PropsKeys.JDBC_DEFAULT_URL);
+		%>
+
+		<aui:input name="defaultDatabase" type="hidden" value='<%= jdbcDefaultUrl.indexOf("hsqldb") != -1 %>' />
+		<div id="defaultDatabaseOptions">
+			<strong><liferay-ui:message key="default-database-hypersonic" /></strong>. <liferay-ui:message key="this-database-is-useful-for-development" />
+
+			<a href="javascript;" id="changeDataBaseLink">(<liferay-ui:message key="change" />)</a>
+		  </div>
+
+		<div class="aui-helper-hidden" id="customDatabaseOptions">
+			<a href="javascript;" id="defaultDatabaseOptionsLink">&laquo; <liferay-ui:message key="use-default-database" /></a>
+
+			<aui:select name="databaseType">
 			<%
-			String domain = " liferay.com";
+			for (String driver : drivers) {
 			%>
-			<span class="tooltip"><liferay-ui:message key="for-example-x" arguments="<%= domain %>" /></span>
-		</aui:fieldset>
-
-		<aui:fieldset cssClass="fieldset-header" label="administrator-user">
-			<aui:input label="first-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_FIRST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
-
-			<aui:input label="last-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_LAST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
-
-			<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsUtil.get(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS) %>" />
-		</aui:fieldset>
-
-		<aui:fieldset cssClass="fieldset-header" label="database">
-
+				<aui:option selected="<%= jdbcDefaultUrl.indexOf(driver) != -1 %>" label="<%= driver %>" />
 			<%
-			String[] drivers = PropsUtil.getArray(PropsKeys.SETUP_DATABASE_DRIVERS_LIST);
-
-			String jdbcDefaultUrl = PropsUtil.get(PropsKeys.JDBC_DEFAULT_URL);
+			}
 			%>
+			</aui:select>
 
-			<aui:input name="defaultDatabase" type="hidden" value='<%= jdbcDefaultUrl.indexOf("hsqldb") != -1 %>' />
-			<div id="defaultDatabaseOptions">
-				<strong><liferay-ui:message key="default-database-hypersonic" /></strong>. <liferay-ui:message key="this-database-is-useful-for-development" />
+			<span id="tooltip" class="aui-helper-hidden tooltip"><liferay-ui:message key="in-order-to-use-this-database" /></span>
 
-				<a href="javascript;" id="changeDataBaseLink">(<liferay-ui:message key="change" />)</a>
-              </div>
+			<aui:input name="databaseName" value="lportal" />
 
-			<div class="aui-helper-hidden" id="customDatabaseOptions">
-				<a href="javascript;" id="defaultDatabaseOptionsLink">&laquo; <liferay-ui:message key="use-default-database" /></a>
+			<aui:input label="user-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_USERNAME + "--" %>' value="<%= PropsUtil.get(PropsKeys.JDBC_DEFAULT_USERNAME) %>" />
 
-				<aui:select name="databaseType">
-				<%
-				for (String driver : drivers) {
-				%>
-					<aui:option selected="<%= jdbcDefaultUrl.indexOf(driver) != -1 %>" label="<%= driver %>" />
-				<%
-				}
-				%>
-				</aui:select>
+			<aui:input label="password" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_PASSWORD + "--" %>' value="<%= PropsUtil.get(PropsKeys.JDBC_DEFAULT_PASSWORD) %>" />
+		</div>
+	</aui:fieldset>
 
-				<span id="tooltip" class="aui-helper-hidden tooltip"><liferay-ui:message key="in-order-to-use-this-database" /></span>
-
-				<aui:input name="databaseName" value="lportal" />
-
-				<aui:input label="user-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_USERNAME + "--" %>' value="<%= PropsUtil.get(PropsKeys.JDBC_DEFAULT_USERNAME) %>" />
-
-				<aui:input label="password" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_PASSWORD + "--" %>' value="<%= PropsUtil.get(PropsKeys.JDBC_DEFAULT_PASSWORD) %>" />
-           	</div>
-		</aui:fieldset>
-
-		<aui:button-row>
-			<aui:button type="submit" value="finish-configuration" />
-		</aui:button-row>
-	</aui:form>
-</div>
+	<aui:button-row>
+		<aui:button type="submit" value="finish-configuration" />
+	</aui:button-row>
+</aui:form>
 
 <aui:script use="aui-base">
 	var databaseSelector = A.one('#databaseType');
@@ -140,5 +138,5 @@
 </aui:script>
 
 <%
-	ScriptTag.flushScriptData(pageContext);
+ScriptTag.flushScriptData(pageContext);
 %>

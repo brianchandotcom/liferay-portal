@@ -363,17 +363,6 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize Setup Wizard");
-		}
-
-		try {
-			initSetupWizard();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, true);
 	}
 
@@ -845,15 +834,6 @@ public class MainServlet extends ActionServlet {
 		PortalLifecycleUtil.flushInits();
 	}
 
-	protected void initSetupWizard() throws Exception {
-		ServletContext servletContext = getServletContext();
-
-		boolean setupWizardEnabled = PropsValues.SETUP_WIZARD_ENABLED;
-
-		servletContext.setAttribute(
-			PropsKeys.SETUP_WIZARD_ENABLED, setupWizardEnabled);
-	}
-
 	protected void initPortletApp(
 			Portlet portlet, ServletContext servletContext)
 		throws PortletException {
@@ -1289,8 +1269,7 @@ public class MainServlet extends ActionServlet {
 		boolean startupFinished = (Boolean)servletContext.getAttribute(
 			WebKeys.STARTUP_FINISHED);
 
-		boolean setupWizardEnabled = (Boolean)servletContext.getAttribute(
-			PropsKeys.SETUP_WIZARD_ENABLED);
+		boolean setupWizardEnabled = PropsValues.SETUP_WIZARD_ENABLED;
 
 		if (!startupFinished || !setupWizardEnabled) {
 			return false;

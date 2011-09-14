@@ -52,9 +52,9 @@ public class RateWikiPageCommentAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[@class='aui-rating-label-element']",
-							"0 Votes")) {
+				if (RuntimeVariables.replace("0 (0 Votes)")
+										.equals(selenium.getText(
+								"//div[@class='aui-rating-label-element']"))) {
 					break;
 				}
 			}
@@ -65,12 +65,13 @@ public class RateWikiPageCommentAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-rating-label-element']", "0 Votes"));
+		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertEquals(RuntimeVariables.replace("Rate this as good."),
-			selenium.getText("//div[3]/div/div[1]/div/div/div/div/a[1]"));
-		selenium.clickAt("//div[3]/div/div[1]/div/div/div/div/a[1]",
-			RuntimeVariables.replace("Rate this as good."));
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -93,10 +94,38 @@ public class RateWikiPageCommentAPTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
+		assertEquals(RuntimeVariables.replace("Rate this as good."),
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("0 (0 Votes)")
+										.equals(selenium.getText(
+								"//div[@class='aui-rating-label-element']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText("//div[3]/div/div[1]/div/div/div/div/a[2]"));
-		selenium.clickAt("//div[3]/div/div[1]/div/div/div/div/a[2]",
-			RuntimeVariables.replace("Rate this as bad."));
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -120,12 +149,201 @@ public class RateWikiPageCommentAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertEquals(RuntimeVariables.replace("Rate this as bad."),
-			selenium.getText("//div[3]/div/div[1]/div/div/div/div/a[2]"));
-		selenium.clickAt("//div[3]/div/div[1]/div/div/div/div/a[2]",
-			RuntimeVariables.replace("Rate this as bad."));
-		assertTrue(selenium.isElementPresent(
-				"//div[3]/div/div[1]/div/div/div/div/a[1]"));
-		assertTrue(selenium.isElementPresent(
-				"//div[3]/div/div[1]/div/div/div/div/a[2]"));
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("0 (0 Votes)")
+										.equals(selenium.getText(
+								"//div[@class='aui-rating-label-element']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+			selenium.getText("//div[@class='aui-rating-label-element']"));
+		assertEquals(RuntimeVariables.replace("Rate this as good."),
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("+1 (1 Vote)")
+										.equals(selenium.getText(
+								"//div[@class='aui-rating-label-element']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
+			selenium.getText("//div[@class='aui-rating-label-element']"));
+		assertEquals(RuntimeVariables.replace("Rate this as bad."),
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("-1 (1 Vote)")
+										.equals(selenium.getText(
+								"//div[@class='aui-rating-label-element']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
+			selenium.getText("//div[@class='aui-rating-label-element']"));
+		assertEquals(RuntimeVariables.replace("Rate this as bad."),
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("0 (0 Votes)")
+										.equals(selenium.getText(
+								"//div[@class='aui-rating-label-element']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+			selenium.getText("//div[@class='aui-rating-label-element']"));
+		assertEquals(RuntimeVariables.replace("Rate this as bad."),
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("-1 (1 Vote)")
+										.equals(selenium.getText(
+								"//div[@class='aui-rating-label-element']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
+			selenium.getText("//div[@class='aui-rating-label-element']"));
+		assertEquals(RuntimeVariables.replace("Rate this as good."),
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("+1 (1 Vote)")
+										.equals(selenium.getText(
+								"//div[@class='aui-rating-label-element']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
+			selenium.getText("//div[@class='aui-rating-label-element']"));
+		assertEquals(RuntimeVariables.replace("Rate this as good."),
+			selenium.getText(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+		selenium.click(
+			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("0 (0 Votes)")
+										.equals(selenium.getText(
+								"//div[@class='aui-rating-label-element']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+			selenium.getText("//div[@class='aui-rating-label-element']"));
+		assertTrue(selenium.isVisible(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+		assertTrue(selenium.isVisible(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+		assertFalse(selenium.isElementPresent(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+		assertFalse(selenium.isElementPresent(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 	}
 }

@@ -22,88 +22,115 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConfigurePortletEnableCommentsTest extends BaseTestCase {
 	public void testConfigurePortletEnableComments() throws Exception {
-		selenium.open("/web/guest/home/");
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/web/guest/home/");
 
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Asset Publisher Test Page")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("link=Asset Publisher Test Page",
+					RuntimeVariables.replace("Asset Publisher Test Page"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//strong/a"));
+				selenium.clickAt("//strong/a",
+					RuntimeVariables.replace("Options"));
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Asset Publisher Test Page",
-			RuntimeVariables.replace("Asset Publisher Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+					RuntimeVariables.replace("Configuration"));
 
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible(
+									"//input[@id='_86_enableCommentsCheckbox']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_86_enableCommentsCheckbox']")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				selenium.saveScreenShotAndSource();
+
+				boolean enableCommentsUnchecked = selenium.isChecked(
+						"_86_enableCommentsCheckbox");
+
+				if (enableCommentsUnchecked) {
+					label = 2;
+
+					continue;
+				}
+
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_enableCommentsCheckbox']"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//input[@id='_86_enableCommentsCheckbox']",
+					RuntimeVariables.replace("Enable Comments"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableCommentsCheckbox']"));
+				selenium.saveScreenShotAndSource();
+
+			case 2:
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace(
+						"You have successfully updated the setup."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableCommentsCheckbox']"));
+				selenium.saveScreenShotAndSource();
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isChecked(
-				"//input[@id='_86_enableCommentsCheckbox']"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@id='_86_enableCommentsCheckbox']",
-			RuntimeVariables.replace("Enable Comments"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_86_enableCommentsCheckbox']"));
-		selenium.saveScreenShotAndSource();
 	}
 }

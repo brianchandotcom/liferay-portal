@@ -75,6 +75,9 @@
 	float: right;
 }
 
+.taglib-page-iterator .search-pages .page-links {
+}
+
 .taglib-page-iterator .search-pages .page-links a, .taglib-page-iterator .search-pages .page-links span {
 	background: url() no-repeat 0 0;
 	border-left: 1px solid #ccc;

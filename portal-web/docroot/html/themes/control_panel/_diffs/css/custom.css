@@ -83,6 +83,10 @@ body.portal-popup:after, body.portal-popup:before {
 	padding-left: 3px;
 }
 
+#breadcrumbs .last {
+	margin-top: 0;
+}
+
 #breadcrumbs .breadcrumbs {
 	margin-bottom: 0;
 }

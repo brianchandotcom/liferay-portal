@@ -246,6 +246,7 @@ public class HookHotDeployListener
 		"theme.portlet.sharing.default",
 		"theme.shortcut.icon",
 		"upgrade.processes",
+		"user.notification.event.confirmation.enabled",
 		"users.email.address.generator",
 		"users.email.address.required",
 		"users.form.add.identification",
@@ -2154,6 +2155,7 @@ public class HookHotDeployListener
 		"theme.loader.new.theme.id.on.import",
 		"theme.portlet.decorate.default",
 		"theme.portlet.sharing.default",
+		"user.notification.event.confirmation.enabled",
 		"users.email.address.required",
 		"users.screen.name.always.autogenerate"
 	};

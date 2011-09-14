@@ -46,7 +46,7 @@ public class ViewConfigurePortletAvailableWebContentAPTest extends BaseTestCase 
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("WC Web Content Name"));
+		assertFalse(selenium.isTextPresent("WC Web Content Title"));
 		assertFalse(selenium.isTextPresent("WC Web Content Content"));
 	}
 }

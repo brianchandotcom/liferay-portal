@@ -64,10 +64,9 @@ public class RateWCWebContentAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-
-		String voteCount = selenium.getFirstNumberIncrement(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]");
-		RuntimeVariables.setValue("voteCount", voteCount);
+		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
+			selenium.getText(
+				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		selenium.clickAt("//a[5]", RuntimeVariables.replace("5 Stars"));
 
 		for (int second = 0;; second++) {
@@ -76,9 +75,9 @@ public class RateWCWebContentAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"xPath=(//div[@class='aui-rating-label-element'])[2]",
-							RuntimeVariables.getValue("voteCount"))) {
+				if (RuntimeVariables.replace("Average (1 Vote)")
+										.equals(selenium.getText(
+								"xPath=(//div[@class='aui-rating-label-element'])[2]"))) {
 					break;
 				}
 			}
@@ -89,8 +88,8 @@ public class RateWCWebContentAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]",
-				RuntimeVariables.getValue("voteCount")));
+		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
+			selenium.getText(
+				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 	}
 }

@@ -44,7 +44,7 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
@@ -56,25 +56,25 @@
 <tr>
 	<td>addSelection</td>
 	<td>//select[@id='_86_availableMetadataFields']</td>
-	<td>label=View Count</td>
+	<td>View Count</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//fieldset[2]/div/div/div/div/div/div[2]/div/span/span/button[2]</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
 	<td>Left Arrow</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//fieldset[2]/div/div/div/div/div/div[2]/div/span/span/button[2]</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
 	<td>Left Arrow</td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
+	<td>waitForText</td>
 	<td>//select[@id='_86_currentMetadataFields']</td>
 	<td>View Count</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>assertText</td>
 	<td>//select[@id='_86_currentMetadataFields']</td>
 	<td>View Count</td>
 </tr>
@@ -89,7 +89,7 @@
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>assertText</td>
 	<td>//select[@id='_86_currentMetadataFields']</td>
 	<td>View Count</td>
 </tr>

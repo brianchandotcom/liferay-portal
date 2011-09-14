@@ -71,7 +71,8 @@ public class ConfigurePortletAvailableBookmarksEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -91,7 +92,9 @@ public class ConfigurePortletAvailableBookmarksEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_anyAssetType']",
-			RuntimeVariables.replace("label=Filter..."));
+			RuntimeVariables.replace("Select More Than One..."));
+		assertEquals("Select More Than One...",
+			selenium.getSelectedLabel("//select[@id='_86_anyAssetType']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -112,7 +115,7 @@ public class ConfigurePortletAvailableBookmarksEntryTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.addSelection("//select[@id='_86_currentClassNameIds']",
-			RuntimeVariables.replace("label=Bookmarks Entry"));
+			RuntimeVariables.replace("Bookmarks Entry"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -121,7 +124,7 @@ public class ConfigurePortletAvailableBookmarksEntryTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//fieldset[2]/div/div/div/div/div/div/div[2]/div/span/span/button[1]")) {
+							"xPath=(//button[@title='Move selected items from Selected to Available.'])[2]")) {
 					break;
 				}
 			}
@@ -132,7 +135,7 @@ public class ConfigurePortletAvailableBookmarksEntryTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//fieldset[2]/div/div/div/div/div/div/div[2]/div/span/span/button[1]",
+		selenium.clickAt("xPath=(//button[@title='Move selected items from Selected to Available.'])[2]",
 			RuntimeVariables.replace("Right Arrow"));
 
 		for (int second = 0;; second++) {
@@ -141,9 +144,9 @@ public class ConfigurePortletAvailableBookmarksEntryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//select[@id='_86_availableClassNameIds']",
-							"Bookmarks Entry")) {
+				if (RuntimeVariables.replace("Bookmarks Entry")
+										.equals(selenium.getText(
+								"//select[@id='_86_availableClassNameIds']"))) {
 					break;
 				}
 			}
@@ -154,8 +157,8 @@ public class ConfigurePortletAvailableBookmarksEntryTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_availableClassNameIds']", "Bookmarks Entry"));
+		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
+			selenium.getText("//select[@id='_86_availableClassNameIds']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -163,7 +166,7 @@ public class ConfigurePortletAvailableBookmarksEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_availableClassNameIds']", "Bookmarks Entry"));
+		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
+			selenium.getText("//select[@id='_86_availableClassNameIds']"));
 	}
 }

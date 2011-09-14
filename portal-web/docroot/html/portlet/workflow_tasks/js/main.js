@@ -53,13 +53,13 @@ AUI().add(
 								handler: function() {
 									submitForm(form);
 								},
-								text: Liferay.Language.get('ok')
+								label: Liferay.Language.get('ok')
 							},
 							{
 								handler: function() {
 									this.close();
 								},
-								text: Liferay.Language.get('cancel')
+								label: Liferay.Language.get('cancel')
 							}
 						],
 						centered: true,

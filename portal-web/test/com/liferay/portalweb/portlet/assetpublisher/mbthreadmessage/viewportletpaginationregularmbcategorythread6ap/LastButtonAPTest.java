@@ -45,15 +45,18 @@ public class LastButtonAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Last"),
+			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//a[@class='first']"));
-		assertTrue(selenium.isElementPresent("//a[@class='previous']"));
+		assertEquals(RuntimeVariables.replace("First"),
+			selenium.getText("//a[@class='first']"));
+		assertEquals(RuntimeVariables.replace("Previous"),
+			selenium.getText("//a[@class='previous']"));
 		assertFalse(selenium.isElementPresent("//a[@class='next']"));
 		assertFalse(selenium.isElementPresent("//a[@class='last']"));
-		assertEquals("3",
-			selenium.getSelectedLabel("//div[2]/span/span/span[1]/select"));
+		assertEquals("3", selenium.getSelectedLabel("//select"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -62,7 +65,7 @@ public class LastButtonAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Asset Publisher Test Page")) {
+				if (selenium.isVisible("link=Asset Publisher Test Page")) {
 					break;
 				}
 			}
@@ -77,20 +80,21 @@ public class LastButtonAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("//div[2]/span/span/span[1]/select",
-			RuntimeVariables.replace("2"));
+		selenium.select("//select", RuntimeVariables.replace("2"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals("2",
-			selenium.getSelectedLabel("//div[2]/span/span/span[1]/select"));
+		assertEquals("2", selenium.getSelectedLabel("//select"));
+		assertEquals(RuntimeVariables.replace("Last"),
+			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//a[@class='first']"));
-		assertTrue(selenium.isElementPresent("//a[@class='previous']"));
+		assertEquals(RuntimeVariables.replace("First"),
+			selenium.getText("//a[@class='first']"));
+		assertEquals(RuntimeVariables.replace("Previous"),
+			selenium.getText("//a[@class='previous']"));
 		assertFalse(selenium.isElementPresent("//a[@class='next']"));
 		assertFalse(selenium.isElementPresent("//a[@class='last']"));
-		assertEquals("3",
-			selenium.getSelectedLabel("//div[2]/span/span/span[1]/select"));
+		assertEquals("3", selenium.getSelectedLabel("//select"));
 	}
 }

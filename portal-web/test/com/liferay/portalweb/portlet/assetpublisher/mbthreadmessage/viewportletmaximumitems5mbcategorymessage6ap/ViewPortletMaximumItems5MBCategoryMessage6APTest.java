@@ -48,41 +48,41 @@ public class ViewPortletMaximumItems5MBCategoryMessage6APTest
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread6 Message1 Subject"),
+				"MB Category Thread6 Message Subject"),
 			selenium.getText("xPath=(//h3[@class='asset-title'])[1]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread6 Message1 Body"),
+				"MB Category Thread6 Message Body"),
 			selenium.getText("xPath=(//div[@class='asset-summary'])[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread5 Message1 Subject"),
+				"MB Category Thread5 Message Subject"),
 			selenium.getText("xPath=(//h3[@class='asset-title'])[2]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread5 Message1 Body"),
+				"MB Category Thread5 Message Body"),
 			selenium.getText("xPath=(//div[@class='asset-summary'])[2]"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread4 Message1 Subject"),
+				"MB Category Thread4 Message Subject"),
 			selenium.getText("xPath=(//h3[@class='asset-title'])[3]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread4 Message1 Body"),
+				"MB Category Thread4 Message Body"),
 			selenium.getText("xPath=(//div[@class='asset-summary'])[3]"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread3 Message1 Subject"),
+				"MB Category Thread3 Message Subject"),
 			selenium.getText("xPath=(//h3[@class='asset-title'])[4]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread3 Message1 Body"),
+				"MB Category Thread3 Message Body"),
 			selenium.getText("xPath=(//div[@class='asset-summary'])[4]"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread2 Message1 Subject"),
+				"MB Category Thread2 Message Subject"),
 			selenium.getText("xPath=(//h3[@class='asset-title'])[5]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread2 Message1 Body"),
+				"MB Category Thread2 Message Body"),
 			selenium.getText("xPath=(//div[@class='asset-summary'])[5]"));
 		assertFalse(selenium.isElementPresent(
 				"xPath=(//h3[@class='asset-title'])[6]/a"));
 		assertFalse(selenium.isElementPresent(
 				"xPath=(//div[@class='asset-summary'])[6]"));
 		assertFalse(selenium.isTextPresent(
-				"MB Category Thread1 Message1 Subject"));
-		assertFalse(selenium.isTextPresent("MB Category Thread1 Message1 Body"));
+				"MB Category Thread1 Message Subject"));
+		assertFalse(selenium.isTextPresent("MB Category Thread1 Message Body"));
 	}
 }

@@ -30,7 +30,7 @@ public class NextButtonAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Asset Publisher Test Page")) {
+				if (selenium.isVisible("link=Asset Publisher Test Page")) {
 					break;
 				}
 			}
@@ -46,16 +46,20 @@ public class NextButtonAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//a[@class='previous']"));
-		assertTrue(selenium.isElementPresent("//a[@class='next']"));
+		assertEquals(RuntimeVariables.replace("Next"),
+			selenium.getText("//a[@class='next']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//a[@class='previous']"));
-		assertTrue(selenium.isElementPresent("//a[@class='next']"));
+		assertEquals(RuntimeVariables.replace("Previous"),
+			selenium.getText("//a[@class='previous']"));
+		assertEquals(RuntimeVariables.replace("Next"),
+			selenium.getText("//a[@class='next']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//a[@class='previous']"));
+		assertEquals(RuntimeVariables.replace("Previous"),
+			selenium.getText("//a[@class='previous']"));
 		assertFalse(selenium.isElementPresent("//a[@class='next']"));
 	}
 }

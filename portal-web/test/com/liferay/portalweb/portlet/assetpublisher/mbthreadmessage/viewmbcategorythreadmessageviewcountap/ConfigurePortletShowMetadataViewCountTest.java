@@ -71,7 +71,8 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -92,7 +93,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.addSelection("//select[@id='_86_availableMetadataFields']",
-			RuntimeVariables.replace("label=View Count"));
+			RuntimeVariables.replace("View Count"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -101,7 +102,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//fieldset[2]/div/div/div/div/div/div[2]/div/span/span/button[2]")) {
+							"//button[@title='Move selected items from Available to Current.']")) {
 					break;
 				}
 			}
@@ -112,7 +113,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//fieldset[2]/div/div/div/div/div/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//button[@title='Move selected items from Available to Current.']",
 			RuntimeVariables.replace("Left Arrow"));
 
 		for (int second = 0;; second++) {
@@ -121,9 +122,9 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//select[@id='_86_currentMetadataFields']",
-							"View Count")) {
+				if (RuntimeVariables.replace("View Count")
+										.equals(selenium.getText(
+								"//select[@id='_86_currentMetadataFields']"))) {
 					break;
 				}
 			}
@@ -134,8 +135,8 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_currentMetadataFields']", "View Count"));
+		assertEquals(RuntimeVariables.replace("View Count"),
+			selenium.getText("//select[@id='_86_currentMetadataFields']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -143,7 +144,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_currentMetadataFields']", "View Count"));
+		assertEquals(RuntimeVariables.replace("View Count"),
+			selenium.getText("//select[@id='_86_currentMetadataFields']"));
 	}
 }

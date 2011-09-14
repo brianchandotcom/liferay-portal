@@ -71,7 +71,8 @@ public class ConfigurePortletMaximumItemsToDisplay5Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -79,7 +80,7 @@ public class ConfigurePortletMaximumItemsToDisplay5Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span[6]/span/span/select")) {
+				if (selenium.isVisible("//select[@id='_86_delta']")) {
 					break;
 				}
 			}
@@ -90,8 +91,9 @@ public class ConfigurePortletMaximumItemsToDisplay5Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("//span[6]/span/span/select",
-			RuntimeVariables.replace("label=5"));
+		selenium.select("//select[@id='_86_delta']",
+			RuntimeVariables.replace("5"));
+		assertEquals("5", selenium.getSelectedLabel("//select[@id='_86_delta']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -99,7 +101,6 @@ public class ConfigurePortletMaximumItemsToDisplay5Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("5",
-			selenium.getSelectedLabel("//span[6]/span/span/select"));
+		assertEquals("5", selenium.getSelectedLabel("//select[@id='_86_delta']"));
 	}
 }

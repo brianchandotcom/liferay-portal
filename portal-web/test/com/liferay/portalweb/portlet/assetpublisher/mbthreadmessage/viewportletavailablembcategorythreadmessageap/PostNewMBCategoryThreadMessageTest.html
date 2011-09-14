@@ -44,9 +44,29 @@
 	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//textarea[@id='_19_editor']</td>
+	<td>//body</td>
 	<td>MB Category Thread Message Body</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -57,16 +77,6 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>MB Category Thread Message Subject</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>

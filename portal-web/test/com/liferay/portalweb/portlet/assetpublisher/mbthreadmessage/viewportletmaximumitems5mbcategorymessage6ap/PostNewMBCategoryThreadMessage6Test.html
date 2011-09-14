@@ -41,12 +41,32 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_19_subject']</td>
-	<td>MB Category Thread6 Message1 Subject</td>
+	<td>MB Category Thread6 Message Subject</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__19_editor']/iframe</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea[@id='_19_editor']</td>
-	<td>MB Category Thread6 Message1 Body</td>
+	<td>//body</td>
+	<td>MB Category Thread6 Message Body</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,53 +80,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>MB Category Thread6 Message1 Subject</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>Joe Bloggs</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>1</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
-	<td>Views</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//td[6]/a</td>
-	<td>By: Joe Bloggs</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td>MB Category Thread6 Message1 Subject</td>
-</tr>
-<tr>
-	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
-	<td>MB Category Thread6 Message1 Subject</td>
+	<td>MB Category Thread6 Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='subject']/a/strong</td>
-	<td>MB Category Thread6 Message1 Subject</td>
+	<td>MB Category Thread6 Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='thread-body']</td>
-	<td>MB Category Thread6 Message1 Body</td>
+	<td>MB Category Thread6 Message Body</td>
 </tr>
 
 </tbody></table>

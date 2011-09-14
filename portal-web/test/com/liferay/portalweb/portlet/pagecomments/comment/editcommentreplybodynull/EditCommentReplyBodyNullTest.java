@@ -74,7 +74,7 @@ public class EditCommentReplyBodyNullTest extends BaseTestCase {
 		selenium.type("//textarea[@name='_107_editReplyBody2']",
 			RuntimeVariables.replace(""));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/div[3]/div/div[3]/div/div[2]/div/span[1]/span/input[@value='Publish']",
+		selenium.clickAt("xPath=(//input[@value='Publish'])[2]",
 			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
@@ -100,8 +100,7 @@ public class EditCommentReplyBodyNullTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-error']"));
 		assertTrue(selenium.isVisible("//textarea[@name='_107_editReplyBody2']"));
-		assertTrue(selenium.isVisible(
-				"//div[2]/div[3]/div/div[3]/div/div[2]/div/span[1]/span/input[@value='Publish']"));
+		assertTrue(selenium.isVisible("xPath=(//input[@value='Publish'])[2]"));
 		assertFalse(selenium.isTextPresent(
 				"Your request processed successfully."));
 		selenium.open("/web/guest/home/");

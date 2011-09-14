@@ -74,7 +74,7 @@ public class EditCommentReplyBodyTest extends BaseTestCase {
 		selenium.type("//textarea[@name='_107_editReplyBody2']",
 			RuntimeVariables.replace("PC Comment Reply Edit"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/div[3]/div/div[3]/div/div[2]/div/span[1]/span/input[@value='Publish']",
+		selenium.clickAt("xPath=(//input[@value='Publish'])[2]",
 			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {

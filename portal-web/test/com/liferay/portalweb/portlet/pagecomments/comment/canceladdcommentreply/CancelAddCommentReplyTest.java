@@ -72,7 +72,7 @@ public class CancelAddCommentReplyTest extends BaseTestCase {
 		selenium.type("//textarea[@name='_107_postReplyBody1']",
 			RuntimeVariables.replace("PC Comment Reply"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[1]/div/span[2]/span/input[@value='Cancel']",
+		selenium.clickAt("xPath=(//input[@value='Cancel'])[2]",
 			RuntimeVariables.replace("Cancel"));
 
 		for (int second = 0;; second++) {

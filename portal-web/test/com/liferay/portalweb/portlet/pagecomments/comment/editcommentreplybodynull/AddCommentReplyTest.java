@@ -72,7 +72,7 @@ public class AddCommentReplyTest extends BaseTestCase {
 		selenium.type("//textarea[@name='_107_postReplyBody1']",
 			RuntimeVariables.replace("PC Comment Reply"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[1]/div/span[1]/span/input",
+		selenium.clickAt("xPath=(//input[@value='Reply'])[2]",
 			RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {

@@ -62,8 +62,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//li[4]/span/a/span"));
-				selenium.clickAt("//li[4]/span/a/span",
-					RuntimeVariables.replace("Delete"));
+				selenium.click("//li[4]/span/a/span");
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -82,8 +81,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//li[4]/span/a/span"));
-				selenium.clickAt("//li[4]/span/a/span",
-					RuntimeVariables.replace("Delete"));
+				selenium.click("//li[4]/span/a/span");
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -102,8 +100,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//li[4]/span/a/span"));
-				selenium.clickAt("//li[4]/span/a/span",
-					RuntimeVariables.replace("Delete"));
+				selenium.click("//li[4]/span/a/span");
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -122,8 +119,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//li[4]/span/a/span"));
-				selenium.clickAt("//li[4]/span/a/span",
-					RuntimeVariables.replace("Delete"));
+				selenium.click("//li[4]/span/a/span");
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -142,8 +138,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//li[4]/span/a/span"));
-				selenium.clickAt("//li[4]/span/a/span",
-					RuntimeVariables.replace("Delete"));
+				selenium.click("//li[4]/span/a/span");
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));

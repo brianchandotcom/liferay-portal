@@ -18,7 +18,7 @@
 <%@ page import="com.liferay.portal.model.LayoutSet" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.util.WebKeys" %>
-
+<%@ page import="com.liferay.portal.service.LayoutLocalServiceUtil" %>
 <%
 
 // According to http://www.webmasterworld.com/forum91/3087.htm a semicolon in
@@ -32,7 +32,9 @@ String redirect = null;
 LayoutSet layoutSet = (LayoutSet)request.getAttribute(WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
 if (layoutSet != null) {
-	redirect = PortalUtil.getPathMain();
+	long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+
+	redirect = LayoutLocalServiceUtil.getLayout(defaultPlid).getFriendlyURL();
 }
 else {
 	redirect = PortalUtil.getHomeURL(request);
@@ -45,6 +47,7 @@ if (!request.isRequestedSessionIdFromCookie()) {
 response.setHeader(HttpHeaders.LOCATION, redirect);
 
 response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+
 %>
 
 <html>

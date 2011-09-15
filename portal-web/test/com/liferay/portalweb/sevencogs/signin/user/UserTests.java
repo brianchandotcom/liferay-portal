@@ -12,9 +12,14 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.sevencogs.signin.user;
 
-import com.liferay.portalweb.sevencogs.signin.SignInTests;
+import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.sevencogs.signin.user.basignin.BA_SignInTests;
+import com.liferay.portalweb.sevencogs.signin.user.jrsignin.JR_SignInTests;
+import com.liferay.portalweb.sevencogs.signin.user.mesignin.ME_SignInTests;
+import com.liferay.portalweb.sevencogs.signin.user.rwsignin.RW_SignInTests;
+import com.liferay.portalweb.sevencogs.signin.user.signin.SignInTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,14 +27,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SevencogsSmokeTestSuite extends BaseTests {
+public class UserTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(BA_SignInTests.suite());
+		testSuite.addTest(JR_SignInTests.suite());
+		testSuite.addTest(ME_SignInTests.suite());
+		testSuite.addTest(RW_SignInTests.suite());
 		testSuite.addTest(SignInTests.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
 
 		return testSuite;
 	}

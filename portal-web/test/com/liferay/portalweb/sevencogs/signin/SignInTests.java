@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.sevencogs.signin;
 
-import com.liferay.portalweb.sevencogs.signin.SignInTests;
+import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.sevencogs.signin.user.UserTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,14 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SevencogsSmokeTestSuite extends BaseTests {
+public class SignInTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(SignInTests.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTest(UserTests.suite());
 
 		return testSuite;
 	}

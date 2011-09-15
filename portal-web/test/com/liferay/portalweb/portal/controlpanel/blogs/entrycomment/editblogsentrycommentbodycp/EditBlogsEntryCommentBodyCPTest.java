@@ -41,10 +41,11 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
@@ -67,7 +68,8 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_161_editReplyBody1")) {
+				if (selenium.isVisible(
+							"//textarea[@name='_161_editReplyBody1']")) {
 					break;
 				}
 			}
@@ -78,16 +80,57 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_161_editReplyBody1",
+		selenium.type("//textarea[@name='_161_editReplyBody1']",
 			RuntimeVariables.replace("Blogs Entry Comment Body Edited"));
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_161_editReplyBody1",
+		selenium.keyPress("//textarea[@name='_161_editReplyBody1']",
 			RuntimeVariables.replace("\\48"));
-		selenium.keyPress("_161_editReplyBody1", RuntimeVariables.replace("\\8"));
+		selenium.keyPress("//textarea[@name='_161_editReplyBody1']",
+			RuntimeVariables.replace("\\8"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("1 Comment")
+										.equals(selenium.getText(
+								"//span[@class='comments']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry Comment Body Edited")
+										.equals(selenium.getText(
+								"//form/div/div/div/div[3]/div/div[1]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body Edited"),
 			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
 	}

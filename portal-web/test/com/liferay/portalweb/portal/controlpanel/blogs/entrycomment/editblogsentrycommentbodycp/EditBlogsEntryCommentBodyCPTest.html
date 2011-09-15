@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs</td>
-	<td></td>
+	<td>Blogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -60,22 +60,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_161_editReplyBody1</td>
+	<td>//textarea[@name='_161_editReplyBody1']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_161_editReplyBody1</td>
+	<td>//textarea[@name='_161_editReplyBody1']</td>
 	<td>Blogs Entry Comment Body Edited</td>
 </tr>
 <tr>
 	<td>keyPress</td>
-	<td>_161_editReplyBody1</td>
+	<td>//textarea[@name='_161_editReplyBody1']</td>
 	<td>\48</td>
 </tr>
 <tr>
 	<td>keyPress</td>
-	<td>_161_editReplyBody1</td>
+	<td>//textarea[@name='_161_editReplyBody1']</td>
 	<td>\8</td>
 </tr>
 <tr>
@@ -84,9 +84,19 @@
 	<td>Publish</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//span[@class='comments']</td>
+	<td>1 Comment</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='comments']</td>
 	<td>1 Comment</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//form/div/div/div/div[3]/div/div[1]</td>
+	<td>Blogs Entry Comment Body Edited</td>
 </tr>
 <tr>
 	<td>assertText</td>

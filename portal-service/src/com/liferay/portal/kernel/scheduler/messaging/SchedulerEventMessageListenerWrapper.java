@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
+import java.util.Date;
+
 /**
  * @author Shuyang Zhou
  */
@@ -108,7 +110,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 		JobState jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
 
 		if (jobState != null) {
-			jobState.addException(exception);
+			jobState.addException(exception, new Date());
 		}
 	}
 

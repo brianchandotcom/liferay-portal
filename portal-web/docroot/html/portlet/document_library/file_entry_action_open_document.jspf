@@ -71,7 +71,7 @@
 	<c:if test="<%= officeDoc != null %>">
 		<liferay-ui:icon
 			image="../document_library/msoffice"
-			message='<%= LanguageUtil.get(pageContext, "open-in-ms-office") %>'
+			message="open-in-ms-office"
 			url='<%= "javascript:" + renderResponse.getNamespace() + "openDocument();" %>'
 		/>
 	</c:if>

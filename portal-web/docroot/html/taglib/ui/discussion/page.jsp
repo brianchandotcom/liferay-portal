@@ -140,7 +140,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									cssClass="subscribe-link"
 									image="unsubscribe"
 									label="<%= true %>"
-									message = '<%= LanguageUtil.get(pageContext, "unsubscribe-from-comments") %>'
+									message="unsubscribe-from-comments"
 									url="<%= subscriptionURL %>"
 								/>
 							</c:when>
@@ -149,7 +149,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									cssClass="subscribe-link"
 									image="subscribe"
 									label="<%= true %>"
-									message = '<%= LanguageUtil.get(pageContext, "subscribe-to-comments") %>'
+									message="subscribe-to-comments"
 									url="<%= subscriptionURL %>"
 								/>
 							</c:otherwise>

@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
@@ -576,7 +578,10 @@ public class LuceneHelperImpl implements LuceneHelper {
 	}
 
 	public void startup(long companyId) {
-		if (PropsValues.INDEX_ON_STARTUP) {
+		boolean indexOnStartup = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
+
+		if (indexOnStartup) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Indexing Lucene on startup");
 			}
@@ -584,6 +589,10 @@ public class LuceneHelperImpl implements LuceneHelper {
 			LuceneIndexer luceneIndexer = new LuceneIndexer(companyId);
 
 			if (PropsValues.INDEX_WITH_THREAD) {
+				_luceneIndexThreadPoolExecutor =
+					PortalExecutorManagerUtil.getPortalExecutor(
+						LuceneHelperImpl.class.getName());
+
 				_luceneIndexThreadPoolExecutor.execute(luceneIndexer);
 			}
 			else {
@@ -621,12 +630,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 	}
 
 	private LuceneHelperImpl() {
-		if (PropsValues.INDEX_ON_STARTUP && PropsValues.INDEX_WITH_THREAD) {
-			_luceneIndexThreadPoolExecutor =
-				PortalExecutorManagerUtil.getPortalExecutor(
-					LuceneHelperImpl.class.getName());
-		}
-
 		if (isLoadIndexFromClusterEnabled()) {
 			_loadIndexClusterEventListener =
 				new LoadIndexClusterEventListener();

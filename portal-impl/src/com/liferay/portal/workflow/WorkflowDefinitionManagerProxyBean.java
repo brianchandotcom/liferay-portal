@@ -34,8 +34,7 @@ public class WorkflowDefinitionManagerProxyBean
 	extends BaseProxyBean implements WorkflowDefinitionManager {
 
 	public WorkflowDefinition deployWorkflowDefinition(
-		long companyId, long userId, String title, InputStream inputStream,
-		long scope) {
+		long companyId, long userId, String title, InputStream inputStream) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -92,19 +91,6 @@ public class WorkflowDefinitionManagerProxyBean
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 		long companyId, String name, int start, int end,
 		OrderByComparator orderByComparator) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	public List<WorkflowDefinition> search(
-		long companyId, String name, Boolean active, Long scope,
-		int start, int end, OrderByComparator orderByComparator) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	public int searchCount(
-		long companyId, String name, Boolean active, Long scope) {
 
 		throw new UnsupportedOperationException();
 	}

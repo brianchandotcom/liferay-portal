@@ -371,26 +371,24 @@ public class StripFilter extends BasePortalFilter {
 			CharBuffer charBuffer, Writer writer, char[] openTag)
 		throws IOException {
 
-		int startPos = openTag.length;
+		StringBundler sb = new StringBundler();
 
-		StringBundler bundler = new StringBundler(openTag.length);
+		sb.append(openTag);
 
-		bundler.append(openTag);
-
-		for (int i = startPos; i < charBuffer.length(); i++) {
+		for (int i = openTag.length; i < charBuffer.length(); i++) {
 			char c = charBuffer.charAt(i);
 
-			bundler.append(c);
+			sb.append(c);
 
 			if (c == CharPool.GREATER_THAN) {
-				openTag = bundler.toString().toCharArray();
-
 				break;
 			}
 			else if (c == CharPool.LESS_THAN) {
 				return;
 			}
 		}
+
+		openTag = sb.toString().toCharArray();
 
 		outputOpenTag(charBuffer, writer, openTag);
 

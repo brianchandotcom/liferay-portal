@@ -16,11 +16,9 @@ package com.liferay.portal.kernel.scheduler;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -45,13 +43,13 @@ public class JobState implements Cloneable, Serializable {
 		_exceptionsMaxSize = exceptionsMaxSize;
 	}
 
-	public void addException(Exception exception) {
+	public void addException(Exception exception, Date date) {
 		if (_exceptions == null) {
 			_exceptions = new LinkedList<ObjectValuePair<Exception, Date>>();
 		}
 
 		_exceptions.add(
-			new ObjectValuePair<Exception, Date>(exception, new Date()));
+			new ObjectValuePair<Exception, Date>(exception, date));
 
 		while (_exceptions.size() > _exceptionsMaxSize) {
 			_exceptions.poll();
@@ -97,6 +95,10 @@ public class JobState implements Cloneable, Serializable {
 		return _exceptions.toArray(new ObjectValuePair[_exceptions.size()]);
 	}
 
+	public int getExceptionsMaxSize() {
+		return _exceptionsMaxSize;
+	}
+
 	public TriggerState getTriggerState() {
 		return _triggerState;
 	}
@@ -107,6 +109,14 @@ public class JobState implements Cloneable, Serializable {
 		}
 
 		return _triggerTimeInfomation.get(key);
+	}
+
+	public Map<String, Date> getTriggerTimeInfomations() {
+		if (_triggerTimeInfomation == null) {
+			return Collections.EMPTY_MAP;
+		}
+
+		return _triggerTimeInfomation;
 	}
 
 	public void setTriggerState(TriggerState triggerState) {
@@ -121,24 +131,7 @@ public class JobState implements Cloneable, Serializable {
 		_triggerTimeInfomation.put(key, date);
 	}
 
-	private void readObject(ObjectInputStream inputStream)
-		throws ClassNotFoundException, IOException {
-
-		_exceptions =
-			(Queue<ObjectValuePair<Exception, Date>>)inputStream.readObject();
-		_exceptionsMaxSize = inputStream.readInt();
-		_triggerState = TriggerState.values()[inputStream.readInt()];
-		_triggerTimeInfomation = (Map<String, Date>)inputStream.readObject();
-	}
-
-	private void writeObject(ObjectOutputStream outputStream)
-		throws IOException {
-
-		outputStream.writeObject(_exceptions);
-		outputStream.writeInt(_exceptionsMaxSize);
-		outputStream.writeInt(_triggerState.ordinal());
-		outputStream.writeObject(_triggerTimeInfomation);
-	}
+	public static final int VERSION = 1;
 
 	private static final int _EXCEPTIONS_MAX_SIZE = 10;
 	private static final long serialVersionUID = 5747422831990881126L;

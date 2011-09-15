@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.JobState;
+import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -44,6 +45,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.quartz.CronTrigger;
@@ -593,9 +595,9 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		Trigger trigger = scheduler.getTrigger(jobName, groupName);
 
-		JobState jobState = (JobState)jobDataMap.get(JOB_STATE);
+		JobState jobState = getJobState(jobDataMap);
 
-		message.put(JOB_STATE, jobState.clone());
+		message.put(JOB_STATE, jobState);
 
 		if (trigger == null) {
 			schedulerResponse = new SchedulerResponse();
@@ -740,9 +742,12 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 				JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
-				JobState jobState = (JobState)jobDataMap.get(JOB_STATE);
+				JobState jobState = getJobState(jobDataMap);
 
 				jobState.setTriggerState(TriggerState.COMPLETE);
+
+				jobDataMap.put(
+					JOB_STATE, JobStateSerializeUtil.serialize(jobState));
 
 				_persistedScheduler.addJob(jobDetail, true);
 			}
@@ -829,7 +834,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			JobState jobState = new JobState(
 				TriggerState.NORMAL, message.getInteger(EXCEPTIONS_MAX_SIZE));
 
-			jobDataMap.put(JOB_STATE, jobState);
+			jobDataMap.put(
+				JOB_STATE, JobStateSerializeUtil.serialize(jobState));
 
 			if (scheduler == _persistedScheduler) {
 				jobDetail.setDurability(true);
@@ -893,7 +899,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
-		JobState jobState = (JobState)jobDataMap.get(JOB_STATE);
+		JobState jobState = getJobState(jobDataMap);
 
 		Trigger trigger = scheduler.getTrigger(jobName, groupName);
 
@@ -912,7 +918,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		jobState.clearExceptions();
 
-		jobDataMap.put(JOB_STATE, jobState);
+		jobDataMap.put(JOB_STATE, JobStateSerializeUtil.serialize(jobState));
 
 		scheduler.unscheduleJob(jobName, groupName);
 
@@ -962,7 +968,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
-		JobState jobState = (JobState)jobDataMap.get(JOB_STATE);
+		JobState jobState = getJobState(jobDataMap);
 
 		if (triggerState != null) {
 			jobState.setTriggerState(triggerState);
@@ -972,9 +978,16 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			jobState.clearExceptions();
 		}
 
-		jobDataMap.put(JOB_STATE, jobState);
+		jobDataMap.put(JOB_STATE, JobStateSerializeUtil.serialize(jobState));
 
 		scheduler.addJob(jobDetail, true);
+	}
+
+	private JobState getJobState(JobDataMap jobDataMap) {
+		Map<String, Object> jobStateMap = (Map<String, Object>)jobDataMap.get(
+			JOB_STATE);
+
+		return JobStateSerializeUtil.deserialize(jobStateMap);
 	}
 
 	@BeanReference(name = "com.liferay.portal.service.QuartzLocalService")

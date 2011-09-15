@@ -16,10 +16,10 @@ package com.liferay.portal.kernel.scheduler;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Tina Tian
@@ -58,8 +58,8 @@ public class JobStateSerializeUtil {
 	}
 
 	private static JobState _doDeserialize1(Map<String, Object> jobStateMap) {
-		Map<Exception, Date> exceptionsMap =
-			(Map<Exception, Date>)jobStateMap.get(_EXCEPTIONS_FIELD);
+		ArrayList<Object[]> exceptionsList =
+			(ArrayList<Object[]>)jobStateMap.get(_EXCEPTIONS_FIELD);
 		int exceptionsMaxSize = (Integer)jobStateMap.get(
 			_EXCEPTIONS_MAX_SIZE_FIELD);
 		String triggerStateString =
@@ -72,29 +72,19 @@ public class JobStateSerializeUtil {
 		try {
 			triggerState = TriggerState.valueOf(triggerStateString);
 		}
-		catch (Exception ex) {
+		catch (IllegalArgumentException iae) {
 			throw new IllegalStateException(
 				"Unable to cast string " + triggerStateString +
-					" to TriggerState enum type", ex);
+					" to TriggerState enum type", iae);
 		}
 
-		JobState jobState = new JobState(triggerState, exceptionsMaxSize);
+		JobState jobState = new JobState(triggerState, exceptionsMaxSize,
+			triggerTimeInfomation);
 
-		if (exceptionsMap != null) {
-			Set<Map.Entry<Exception, Date>> entries = exceptionsMap.entrySet();
-
-			for (Map.Entry<Exception, Date> entry : entries) {
-				jobState.addException(entry.getKey(), entry.getValue());
-			}
-		}
-
-		if (triggerTimeInfomation != null) {
-			Set<Map.Entry<String, Date>> entries =
-				triggerTimeInfomation.entrySet();
-
-			for (Map.Entry<String, Date> entry : entries) {
-				jobState.setTriggerTimeInfomation(
-					entry.getKey(), entry.getValue());
+		if (exceptionsList != null) {
+			for (Object[] exceptions : exceptionsList) {
+				jobState.addException((Exception)exceptions[0],
+					(Date)exceptions[1]);
 			}
 		}
 
@@ -104,16 +94,19 @@ public class JobStateSerializeUtil {
 	private static Map<String, Object> _doSerialize1(JobState jobState) {
 		Map<String, Object> jobStateMap = new HashMap<String, Object>();
 
-		Map<Exception, Date> exceptionsMap = new HashMap<Exception, Date>();
+		ArrayList<Object[]> exceptionsList = new ArrayList<Object[]>();
 
 		ObjectValuePair<Exception, Date>[] exceptions =
-			(ObjectValuePair<Exception, Date>[])jobState.getExceptions();
+			jobState.getExceptions();
 
 		for (ObjectValuePair<Exception, Date> exception : exceptions) {
-			exceptionsMap.put(exception.getKey(), exception.getValue());
+			exceptionsList.add(
+				new Object[]{exception.getKey(), exception.getValue()});
 		}
 
-		jobStateMap.put(_EXCEPTIONS_FIELD, exceptionsMap);
+		exceptionsList.trimToSize();
+
+		jobStateMap.put(_EXCEPTIONS_FIELD, exceptionsList);
 		jobStateMap.put(
 			_EXCEPTIONS_MAX_SIZE_FIELD, jobState.getExceptionsMaxSize());
 		jobStateMap.put(

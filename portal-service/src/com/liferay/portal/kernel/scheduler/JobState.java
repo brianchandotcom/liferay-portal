@@ -43,6 +43,19 @@ public class JobState implements Cloneable, Serializable {
 		_exceptionsMaxSize = exceptionsMaxSize;
 	}
 
+	JobState(TriggerState triggerState, int exceptionsMaxSize,
+		Map<String, Date> triggerTimeInfomation) {
+
+		if (exceptionsMaxSize <= 0) {
+			exceptionsMaxSize = _EXCEPTIONS_MAX_SIZE;
+		}
+
+		_triggerState = triggerState;
+		_exceptionsMaxSize = exceptionsMaxSize;
+		_triggerTimeInfomation = new HashMap<String, Date>(
+			triggerTimeInfomation);
+	}
+
 	public void addException(Exception exception, Date date) {
 		if (_exceptions == null) {
 			_exceptions = new LinkedList<ObjectValuePair<Exception, Date>>();

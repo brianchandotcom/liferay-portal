@@ -98,6 +98,8 @@ public class AddOrganizationTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_125_type']",
 			RuntimeVariables.replace("label=Regular Organization"));
+		assertEquals("Regular Organization",
+			selenium.getSelectedLabel("//select[@id='_125_type']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -115,7 +117,7 @@ public class AddOrganizationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -126,11 +128,11 @@ public class AddOrganizationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("All Organizations"),
+		assertEquals(RuntimeVariables.replace("Users and Organizations"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
-			RuntimeVariables.replace("All Organizations"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+			RuntimeVariables.replace("Users and Organizations"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -158,6 +160,8 @@ public class AddOrganizationTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Test Organization"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//a[2]/strong"));
+		assertEquals(RuntimeVariables.replace("Regular Organization"),
+			selenium.getText("//td[3]/a"));
 	}
 }

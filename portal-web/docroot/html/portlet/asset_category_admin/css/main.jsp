@@ -27,6 +27,8 @@
 		}
 
 		.category-actions {
+			float: none;
+			display: inline-block;
 			margin-left: 0.3em;
 			margin-right: 0;
 		}
@@ -47,13 +49,16 @@
 
 	.categories-admin-content {
 		li.vocabulary-category {
-			padding: 1px 0;
 		}
 
 		li.vocabulary-category, li.vocabulary-item {
 			font-weight: bold;
 			list-style: none;
 		}
+	}
+
+	.categories-search-combobox {
+		background: #CCC;
 	}
 
 	.categories-admin-search, .categories-admin-select-search {
@@ -67,11 +72,10 @@
 		background-repeat: no-repeat;
 		background-position: 5px 50%;
 		padding-left: 25px;
-		width: 250px;
+		width: 210px;
 	}
 
 	.categories-treeview-container {
-		padding: 5px;
 	}
 
 	.select-vocabularies, .select-categories {
@@ -79,7 +83,7 @@
 	}
 
 	.select-categories {
-		margin-left: 12px;
+		margin-left: 8px;
 	}
 
 	.vocabulary-list-container-content, .vocabulary-categories-container-content, .vocabulary-edit-category-content {
@@ -103,7 +107,7 @@
 		margin-top: -8px;
 		padding: 0;
 		position: absolute;
-		right: 0;
+		right: 5px;
 		top: 50%;
 		width: 16px;
 	}
@@ -151,10 +155,6 @@
 			a {
 				background-color: #90EE90;
 			}
-		}
-
-		li {
-			border: 1px solid transparent;
 		}
 
 		.selected {
@@ -214,8 +214,40 @@
 			}
 		}
 
+		.aui-tree-node {
+			background: #F5F5F5;
+		}
+
+		.aui-tree-node-over {
+			background: #D3DADD;
+		}
+
+		.aui-tree-node-checked {
+			/*background: #00A2EA;*/
+		}
+
+		.aui-tree-node-content {
+			.aui-tree-hitarea {
+				height: 33px;
+			}
+
+			&.aui-tree-collapsed .aui-tree-hitarea {
+				background-position: 0 50%;
+			}
+
+			.aui-tree-node-checkbox-container, .aui-tree-label {
+				display: inline-block;
+				position: relative;
+				top: 8px;
+				vertical-align: middle;
+			}
+		}
+
+		.aui-tree-node-selected {
+			background: #6F7D83;
+		}
+
 		.aui-tree-node-selected .aui-tree-label {
-			background-color: #6F7D83;
 			color: #FFF;
 			cursor: move;
 		}

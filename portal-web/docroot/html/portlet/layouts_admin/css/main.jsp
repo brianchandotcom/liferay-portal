@@ -223,7 +223,6 @@
 	}
 
 	.manage-layout-content {
-		border-left: 1px solid #CCC;
 	}
 
 	.edit-layout-form, .edit-layoutset-form {

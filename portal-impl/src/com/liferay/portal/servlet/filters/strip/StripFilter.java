@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.KMPSearch;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
@@ -370,6 +371,27 @@ public class StripFilter extends BasePortalFilter {
 			CharBuffer charBuffer, Writer writer, char[] openTag)
 		throws IOException {
 
+		int startPos = openTag.length;
+
+		StringBundler bundler = new StringBundler(openTag.length);
+
+		bundler.append(openTag);
+
+		for (int i = startPos; i < charBuffer.length(); i++) {
+			char c = charBuffer.charAt(i);
+
+			bundler.append(c);
+
+			if (c == CharPool.GREATER_THAN) {
+				openTag = bundler.toString().toCharArray();
+
+				break;
+			}
+			else if (c == CharPool.LESS_THAN) {
+				return;
+			}
+		}
+
 		outputOpenTag(charBuffer, writer, openTag);
 
 		int length = KMPSearch.search(
@@ -538,11 +560,6 @@ public class StripFilter extends BasePortalFilter {
 
 					continue;
 				}
-				else if (hasMarker(charBuffer, _MARKER_JS_OPEN)) {
-					processJavaScript(charBuffer, writer, _MARKER_JS_OPEN);
-
-					continue;
-				}
 				else if (hasMarker(charBuffer, _MARKER_SCRIPT_OPEN)) {
 					processJavaScript(charBuffer, writer, _MARKER_SCRIPT_OPEN);
 
@@ -577,9 +594,6 @@ public class StripFilter extends BasePortalFilter {
 
 	private static final char[] _MARKER_INPUT_OPEN = "input".toCharArray();
 
-	private static final char[] _MARKER_JS_OPEN =
-		"script type=\"text/javascript\">".toCharArray();
-
 	private static final String _MARKER_PRE_CLOSE = "/pre>";
 
 	private static final int[] _MARKER_PRE_CLOSE_NEXTS =
@@ -592,7 +606,7 @@ public class StripFilter extends BasePortalFilter {
 	private static final int[] _MARKER_SCRIPT_CLOSE_NEXTS =
 		KMPSearch.generateNexts(_MARKER_SCRIPT_CLOSE);
 
-	private static final char[] _MARKER_SCRIPT_OPEN = "script>".toCharArray();
+	private static final char[] _MARKER_SCRIPT_OPEN = "script".toCharArray();
 
 	private static final String _MARKER_STYLE_CLOSE = "</style>";
 

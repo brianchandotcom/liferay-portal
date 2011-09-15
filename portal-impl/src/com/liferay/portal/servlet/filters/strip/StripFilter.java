@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.KMPSearch;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
@@ -371,16 +370,14 @@ public class StripFilter extends BasePortalFilter {
 			CharBuffer charBuffer, Writer writer, char[] openTag)
 		throws IOException {
 
-		StringBundler sb = new StringBundler();
-
-		sb.append(openTag);
+		int endPos = 0;
 
 		for (int i = openTag.length; i < charBuffer.length(); i++) {
 			char c = charBuffer.charAt(i);
 
-			sb.append(c);
-
 			if (c == CharPool.GREATER_THAN) {
+				endPos = i + 1;
+
 				break;
 			}
 			else if (c == CharPool.LESS_THAN) {
@@ -388,9 +385,13 @@ public class StripFilter extends BasePortalFilter {
 			}
 		}
 
-		openTag = sb.toString().toCharArray();
+		if (endPos <= 0) {
+			return;
+		}
 
-		outputOpenTag(charBuffer, writer, openTag);
+		writer.append(charBuffer, 0, endPos);
+
+		charBuffer.position(charBuffer.position() + endPos);
 
 		int length = KMPSearch.search(
 			charBuffer, _MARKER_SCRIPT_CLOSE, _MARKER_SCRIPT_CLOSE_NEXTS);

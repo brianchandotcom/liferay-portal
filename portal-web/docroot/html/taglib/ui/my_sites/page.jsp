@@ -40,7 +40,7 @@ List<Group> mySites = user.getMySites(max);
 		portletURL.setParameter("struts_action", "/my_sites/view");
 
 		for (Group mySite : mySites) {
-			mySite = mySite.toEscapedModel();
+			String escapedSiteName = HtmlUtil.escape(mySite.getName());
 
 			Organization organization = null;
 
@@ -201,7 +201,7 @@ List<Group> mySites = user.getMySites(max);
 											if (mySite.isUser()) {
 												siteName = LanguageUtil.get(pageContext, "my-public-pages");
 											}
-											else if (mySite.getName().equals(GroupConstants.GUEST)) {
+											else if (escapedSiteName.equals(GroupConstants.GUEST)) {
 												siteName = HtmlUtil.escape(themeDisplay.getAccount().getName());
 											}
 											else {
@@ -232,7 +232,7 @@ List<Group> mySites = user.getMySites(max);
 											if (mySite.isUser()) {
 												siteName = LanguageUtil.get(pageContext, "my-private-pages");
 											}
-											else if (mySite.getName().equals(GroupConstants.GUEST)) {
+											else if (escapedSiteName.equals(GroupConstants.GUEST)) {
 												siteName = HtmlUtil.escape(themeDisplay.getAccount().getName());
 											}
 											else {
@@ -268,7 +268,7 @@ List<Group> mySites = user.getMySites(max);
 								<c:when test="<%= mySite.isControlPanel() %>">
 									<h3>
 										<a href="<%= themeDisplay.getURLControlPanel() %>">
-											<%= mySite.getName() %>
+											<%= escapedSiteName %>
 										</a>
 									</h3>
 								</c:when>
@@ -280,7 +280,7 @@ List<Group> mySites = user.getMySites(max);
 													<liferay-ui:message key="my-site" />
 												</c:when>
 												<c:otherwise>
-													<%= mySite.getName() %>
+													<%= escapedSiteName %>
 												</c:otherwise>
 											</c:choose>
 										</a>

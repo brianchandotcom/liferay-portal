@@ -334,6 +334,10 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService {
 		return _companyLocalService.getCompanyByWebId(webId);
 	}
 
+	public long getCompanyId(long userId) throws java.lang.Exception {
+		return _companyLocalService.getCompanyId(userId);
+	}
+
 	public void removePreferences(long companyId, java.lang.String[] keys)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_companyLocalService.removePreferences(companyId, keys);

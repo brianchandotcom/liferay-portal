@@ -350,6 +350,10 @@ public class CompanyLocalServiceUtil {
 		return getService().getCompanyByWebId(webId);
 	}
 
+	public static long getCompanyId(long userId) throws java.lang.Exception {
+		return getService().getCompanyId(userId);
+	}
+
 	public static void removePreferences(long companyId, java.lang.String[] keys)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().removePreferences(companyId, keys);

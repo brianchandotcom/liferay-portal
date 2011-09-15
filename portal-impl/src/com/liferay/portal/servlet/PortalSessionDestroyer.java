@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.kernel.servlet.PortletSessionTracker;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
@@ -83,7 +81,7 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 
 			if (PropsValues.LIVE_USERS_ENABLED) {
 				long userId = userIdObj.longValue();
-				long companyId = getCompanyId(userId);
+				long companyId = CompanyLocalServiceUtil.getCompanyId(userId);
 				String sessionId = session.getId();
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -134,31 +132,6 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 		catch (ActionException ae) {
 			_log.error(ae, ae);
 		}
-	}
-
-	protected long getCompanyId(long userId) throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIds();
-
-		long companyId = 0;
-
-		if (companyIds.length == 1) {
-			companyId = companyIds[0];
-		}
-		else if (companyIds.length > 1) {
-			try {
-				User user = UserLocalServiceUtil.getUserById(userId);
-
-				companyId = user.getCompanyId();
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to set the company id for user " + userId, e);
-				}
-			}
-		}
-
-		return companyId;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

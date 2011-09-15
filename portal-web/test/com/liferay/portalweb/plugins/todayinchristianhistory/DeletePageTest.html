@@ -15,53 +15,23 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeText</td>
-	<td>//nav[@id='breadcrumbs']/ul/li/span/a</td>
-	<td>guestCommunityName</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div/div[3]/div/ul/li[1]/a</td>
-	<td>Manage Pages</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div/div[3]/div/ul/li[1]/a</td>
+	<td>//div[4]/div/ul/li[1]/a</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
+	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>//div/div[3]/a</td>
-	<td>${guestCommunityName}</td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -75,7 +45,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/ul/li/div/div[1]</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
@@ -99,19 +69,29 @@
 	<td>Page1NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAt</td>
 	<td>//li[2]/div/div[3]/a</td>
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//td[2]/ul/li[1]/span/span/a</td>
-	<td>Page</td>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -119,9 +99,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Page1NotPresent</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -134,19 +119,29 @@
 	<td>Page2NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAt</td>
 	<td>//li[2]/div/div[3]/a</td>
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//td[2]/ul/li[1]/span/span/a</td>
-	<td>Page</td>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -154,9 +149,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Page2NotPresent</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -169,19 +169,29 @@
 	<td>Page3NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAt</td>
 	<td>//li[2]/div/div[3]/a</td>
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//td[2]/ul/li[1]/span/span/a</td>
-	<td>Page</td>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -189,9 +199,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Page3NotPresent</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -204,19 +219,29 @@
 	<td>Page4NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAt</td>
 	<td>//li[2]/div/div[3]/a</td>
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//td[2]/ul/li[1]/span/span/a</td>
-	<td>Page</td>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -224,9 +249,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Page4NotPresent</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -239,23 +269,53 @@
 	<td>Page5NotPresent</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAt</td>
 	<td>//li[2]/div/div[3]/a</td>
 	<td>Page Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//td[2]/ul/li[1]/span/span/a</td>
-	<td>Page</td>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>//button[3]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete the selected page?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Page1NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Page2NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Page3NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Page4NotPresent</td>
 	<td></td>
 </tr>
 <tr>

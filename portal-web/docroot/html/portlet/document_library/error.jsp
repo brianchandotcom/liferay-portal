@@ -37,3 +37,4 @@
 <liferay-ui:error exception="<%= NoSuchRepositoryException.class %>" message="the-repository-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="the-structure-could-not-be-found" />
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+<liferay-ui:error exception="<%= DuplicateFileEntryTypeException.class %>" message="please-enter-a-unique-document-type-name" />

@@ -29,6 +29,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -86,7 +87,8 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
 			}
-			else if (e instanceof NoSuchFileEntryTypeException ||
+			else if (e instanceof DuplicateFileEntryTypeException ||
+					 e instanceof NoSuchFileEntryTypeException ||
 					 e instanceof NoSuchStructureException ||
 					 e instanceof PrincipalException) {
 

@@ -79,14 +79,15 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		long[] ddmStructureId = new long[] {ddmStructure.getStructureId()};
 
-		List<DLFileEntryType> dlFileEntryTypes =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
-				groupId, dlFileEntryTypeName, dlFileEntryTypeDescription);
-
-		if (dlFileEntryTypes.isEmpty()) {
+		try {
+			DLFileEntryType dlFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+					groupId, dlFileEntryTypeName);
+		}
+		catch (Exception e) {
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				userId, groupId, dlFileEntryTypeName,
-				dlFileEntryTypeDescription, ddmStructureId,	serviceContext);
+				dlFileEntryTypeDescription, ddmStructureId, serviceContext);
 		}
 	}
 

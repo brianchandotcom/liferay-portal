@@ -177,19 +177,17 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 	}
 
+	public DLFileEntryType getFileEntryType(long groupId, String name)
+		throws PortalException, SystemException {
+
+		return dlFileEntryTypePersistence.findByG_N(groupId, name);
+	}
+
 	public List<DLFileEntryType> getFileEntryTypes(
 			long groupId, int start, int end)
 		throws SystemException {
 
 		return dlFileEntryTypePersistence.findByGroupId(groupId, start, end);
-	}
-
-	public List<DLFileEntryType> getFileEntryTypes(
-			long groupId, String name, String description)
-		throws SystemException {
-
-		return dlFileEntryTypePersistence.findByG_N_D(
-			groupId, name, description);
 	}
 
 	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds)

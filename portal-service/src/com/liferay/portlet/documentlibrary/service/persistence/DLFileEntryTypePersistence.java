@@ -372,198 +372,43 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the document library file entry types where groupId = &#63; and name = &#63; and description = &#63;.
+	* Returns the document library file entry type where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param name the name
-	* @param description the description
-	* @return the matching document library file entry types
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByG_N_D(
-		long groupId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the document library file entry types where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param description the description
-	* @param start the lower bound of the range of document library file entry types
-	* @param end the upper bound of the range of document library file entry types (not inclusive)
-	* @return the range of matching document library file entry types
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByG_N_D(
-		long groupId, java.lang.String name, java.lang.String description,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the document library file entry types where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param description the description
-	* @param start the lower bound of the range of document library file entry types
-	* @param end the upper bound of the range of document library file entry types (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching document library file entry types
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByG_N_D(
-		long groupId, java.lang.String name, java.lang.String description,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first document library file entry type in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param description the description
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching document library file entry type
+	* @return the matching document library file entry type
 	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByG_N_D_First(
-		long groupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByG_N(
+		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
-	* Returns the last document library file entry type in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* Returns the document library file entry type where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
 	* @param name the name
-	* @param description the description
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching document library file entry type
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType findByG_N_D_Last(
-		long groupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
-
-	/**
-	* Returns the document library file entry types before and after the current document library file entry type in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param fileEntryTypeId the primary key of the current document library file entry type
-	* @param groupId the group ID
-	* @param name the name
-	* @param description the description
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next document library file entry type
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] findByG_N_D_PrevAndNext(
-		long fileEntryTypeId, long groupId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
-
-	/**
-	* Returns all the document library file entry types that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param description the description
-	* @return the matching document library file entry types that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByG_N_D(
-		long groupId, java.lang.String name, java.lang.String description)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByG_N(
+		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the document library file entry types that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* Returns the document library file entry type where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
 	* @param name the name
-	* @param description the description
-	* @param start the lower bound of the range of document library file entry types
-	* @param end the upper bound of the range of document library file entry types (not inclusive)
-	* @return the range of matching document library file entry types that the user has permission to view
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByG_N_D(
-		long groupId, java.lang.String name, java.lang.String description,
-		int start, int end)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByG_N(
+		long groupId, java.lang.String name, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the document library file entry types that the user has permissions to view where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param description the description
-	* @param start the lower bound of the range of document library file entry types
-	* @param end the upper bound of the range of document library file entry types (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching document library file entry types that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> filterFindByG_N_D(
-		long groupId, java.lang.String name, java.lang.String description,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the document library file entry types before and after the current document library file entry type in the ordered set of document library file entry types that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* @param fileEntryTypeId the primary key of the current document library file entry type
-	* @param groupId the group ID
-	* @param name the name
-	* @param description the description
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next document library file entry type
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType[] filterFindByG_N_D_PrevAndNext(
-		long fileEntryTypeId, long groupId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
 	* Returns all the document library file entry types.
@@ -618,16 +463,15 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the document library file entry types where groupId = &#63; and name = &#63; and description = &#63; from the database.
+	* Removes the document library file entry type where groupId = &#63; and name = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param name the name
-	* @param description the description
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_N_D(long groupId, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByG_N(long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 
 	/**
 	* Removes all the document library file entry types from the database.
@@ -678,29 +522,14 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of document library file entry types where groupId = &#63; and name = &#63; and description = &#63;.
+	* Returns the number of document library file entry types where groupId = &#63; and name = &#63;.
 	*
 	* @param groupId the group ID
 	* @param name the name
-	* @param description the description
 	* @return the number of matching document library file entry types
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_N_D(long groupId, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of document library file entry types that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param description the description
-	* @return the number of matching document library file entry types that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public int filterCountByG_N_D(long groupId, java.lang.String name,
-		java.lang.String description)
+	public int countByG_N(long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

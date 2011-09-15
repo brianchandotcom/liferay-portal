@@ -262,13 +262,14 @@ public interface DLFileEntryTypeLocalService extends PersistedModelLocalService 
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId, java.lang.String name, java.lang.String description)
+		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

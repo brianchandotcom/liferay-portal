@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.asset.service.impl;
 
+import com.liferay.portal.kernel.cache.Lifecycle;
+import com.liferay.portal.kernel.cache.ThreadLocalCache;
+import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -64,19 +67,37 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)
 		throws PortalException, SystemException {
 
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, _GET_ENTRIES);
+
+		// See LPS-21198
+
+		Object[] results = threadLocalCache.get(_ENTRIES);
+
+		if (results != null) {
+			threadLocalCache.remove(_ENTRIES);
+
+			return (List<AssetEntry>)results[0];
+		}
+
 		AssetEntryQuery filteredEntryQuery = setupQuery(entryQuery);
 
 		if (isRemovedFilters(entryQuery, filteredEntryQuery)) {
 			return new ArrayList<AssetEntry>();
 		}
 
-		Object[] results = filterQuery(entryQuery);
+		results = filterQuery(entryQuery);
 
 		return (List<AssetEntry>)results[0];
 	}
 
 	public int getEntriesCount(AssetEntryQuery entryQuery)
 		throws PortalException, SystemException {
+
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, _GET_ENTRIES);
 
 		AssetEntryQuery filteredEntryQuery = setupQuery(entryQuery);
 
@@ -85,6 +106,10 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		}
 
 		Object[] results = filterQuery(entryQuery);
+
+		// See LPS-21198
+
+		threadLocalCache.put(_ENTRIES, results);
 
 		return (Integer)results[1];
 	}
@@ -260,5 +285,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 		return filteredEntryQuery;
 	}
+
+	private static final String _ENTRIES = "entries";
+	private static final String _GET_ENTRIES = "GET_ENTRIES";
 
 }

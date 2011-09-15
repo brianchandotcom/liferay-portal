@@ -35,10 +35,10 @@ public class AddWHEntryContentViewableByFriendsTests extends BaseTests {
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFr_SignInTest.class);
 		testSuite.addTestSuite(SOFr_ViewWHContentViewableByFriendsTest.class);
-		testSuite.addTestSuite(SOFr_AddAsFriendCCTest.class);
+		testSuite.addTestSuite(SOFr_AddAsFriendCCActionsTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
-		testSuite.addTestSuite(ConfirmFriendRequestTest.class);
+		testSuite.addTestSuite(ConfirmCCFriendRequestTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFr_SignInTest.class);
 		testSuite.addTestSuite(

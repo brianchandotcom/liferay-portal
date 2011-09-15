@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.whatshappening.whentry.editwhentrycontentviewablebycoworkers;
+package com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebyfriends;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOFo_AddAsFollowerCCTest extends BaseTestCase {
-	public void testSOFo_AddAsFollowerCC() throws Exception {
-		selenium.open("/web/socialofficefollowersn/home/");
+public class SOFr_AddAsFriendCCActionsTest extends BaseTestCase {
+	public void testSOFr_AddAsFriendCCActions() throws Exception {
+		selenium.open("/user/socialofficefriendsn/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class SOFo_AddAsFollowerCCTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div/div/ul[2]/li[1]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -41,7 +41,7 @@ public class SOFo_AddAsFollowerCCTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/div/div/ul[2]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -51,10 +51,10 @@ public class SOFo_AddAsFollowerCCTest extends BaseTestCase {
 			RuntimeVariables.replace("Find People"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//div[1]/span[1]/span/span/input",
+		selenium.type("//input[@id='_1_WAR_contactsportlet_keywords1']",
 			RuntimeVariables.replace("test@liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("xPath=(//input[@value='Search'])[3]",
+		selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -62,7 +62,7 @@ public class SOFo_AddAsFollowerCCTest extends BaseTestCase {
 			selenium.getText("//div[2]/div[1]/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText("//div[3]/span"));
-		selenium.clickAt("//span/ul", RuntimeVariables.replace("Actions"));
+		selenium.clickAt("//strong/a/img", RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -70,7 +70,7 @@ public class SOFo_AddAsFollowerCCTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//li[4]/a")) {
+				if (selenium.isVisible("//li[2]/a")) {
 					break;
 				}
 			}
@@ -81,9 +81,9 @@ public class SOFo_AddAsFollowerCCTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Follow"),
-			selenium.getText("//li[4]/a"));
-		selenium.click(RuntimeVariables.replace("//li[4]/a"));
+		assertEquals(RuntimeVariables.replace("Add as Friend"),
+			selenium.getText("//li[2]/a"));
+		selenium.click(RuntimeVariables.replace("//li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

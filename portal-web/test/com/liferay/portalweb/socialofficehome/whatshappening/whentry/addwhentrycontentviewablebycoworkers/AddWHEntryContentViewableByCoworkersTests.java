@@ -35,10 +35,10 @@ public class AddWHEntryContentViewableByCoworkersTests extends BaseTests {
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOCo_SignInTest.class);
 		testSuite.addTestSuite(SOCo_ViewWHContentViewableByCoworkersTest.class);
-		testSuite.addTestSuite(SOCo_AddAsCoworkerCCTest.class);
+		testSuite.addTestSuite(SOCo_AddAsCoworkerCCActionsTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
-		testSuite.addTestSuite(ConfirmCoworkerRequestTest.class);
+		testSuite.addTestSuite(ConfirmCCCoworkerRequestTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOCo_SignInTest.class);
 		testSuite.addTestSuite(

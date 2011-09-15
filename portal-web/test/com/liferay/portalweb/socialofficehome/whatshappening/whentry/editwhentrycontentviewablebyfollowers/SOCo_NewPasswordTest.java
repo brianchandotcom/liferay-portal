@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOCo_NewPasswordTest extends BaseTestCase {
 	public void testSOCo_NewPassword() throws Exception {
 		selenium.setTimeout("180000");
-		selenium.open("/web/socialofficecoworkersn/home");
+		selenium.open("/user/socialofficecoworkersn/home");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -220,6 +220,6 @@ public class SOCo_NewPasswordTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.open("/web/socialofficecoworkersn/home");
+		selenium.open("/user/socialofficecoworkersn/home");
 	}
 }

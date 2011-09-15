@@ -34,15 +34,15 @@ public class EditWHEntryContentViewableByFriendsTests extends BaseTests {
 		testSuite.addTestSuite(SOFr_NewPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFr_SignInTest.class);
-		testSuite.addTestSuite(SOFr_AddAsFriendCCTest.class);
+		testSuite.addTestSuite(SOFr_AddAsFriendCCActionsTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFo_NewPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFo_SignInTest.class);
-		testSuite.addTestSuite(SOFo_AddAsFollowerCCTest.class);
+		testSuite.addTestSuite(SOFo_AddAsFollowerCCActionsTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
-		testSuite.addTestSuite(ConfirmFriendRequestTest.class);
+		testSuite.addTestSuite(ConfirmCCFriendRequestTest.class);
 		testSuite.addTestSuite(EditWHEntryContentViewableByFriendsTest.class);
 		testSuite.addTestSuite(
 			ViewEditWHEntryContentViewableByFriendsTest.class);

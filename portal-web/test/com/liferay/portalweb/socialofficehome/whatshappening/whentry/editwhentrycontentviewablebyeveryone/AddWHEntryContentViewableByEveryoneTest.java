@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 	public void testAddWHEntryContentViewableByEveryone()
 		throws Exception {
-		selenium.open("/web/joebloggs/home/");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,7 @@ public class AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -42,16 +42,10 @@ public class AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//li[@class='selected']/a/span"));
-		assertNotEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//li[@class='selected']/a/span"));
 		assertEquals(RuntimeVariables.replace("What's happening?"),
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
@@ -61,7 +55,8 @@ public class AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Whats Happening Content"));
 		assertEquals(RuntimeVariables.replace(
 				"Everyone Friends Coworkers Followers"),
-			selenium.getText("//span/select"));
+			selenium.getText(
+				"//select[@id='_2_WAR_microblogsportlet_socialRelationType']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -83,8 +78,8 @@ public class AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Whats Happening Content"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("//span/select",
-			RuntimeVariables.replace("label=Everyone"));
+		selenium.select("//select[@id='_2_WAR_microblogsportlet_socialRelationType']",
+			RuntimeVariables.replace("Everyone"));
 		assertEquals(RuntimeVariables.replace("128"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.clickAt("//input[@value='Post']",
@@ -108,7 +103,7 @@ public class AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Whats Happening Content"),
 			selenium.getText("//div[@class='content']"));

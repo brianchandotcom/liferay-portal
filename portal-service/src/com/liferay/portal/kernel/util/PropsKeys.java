@@ -759,7 +759,7 @@ public interface PropsKeys {
 
 	public static final String IMAGE_HOOK_FILE_SYSTEM_ROOT_DIR = "image.hook.file.system.root.dir";
 
-	public static final String IMAGE_HOOK_IMPL = "image.hook.impl";
+	public static final String SOURCE_IMAGE_HOOK_IMPL = "source.image.hook.impl";
 
 	public static final String IMAGEMAGICK_ENABLED = "imagemagick.enabled";
 

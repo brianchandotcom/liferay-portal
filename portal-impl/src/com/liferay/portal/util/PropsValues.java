@@ -583,7 +583,7 @@ public class PropsValues {
 
 	public static final String IMAGE_HOOK_FILE_SYSTEM_ROOT_DIR = PropsUtil.get(PropsKeys.IMAGE_HOOK_FILE_SYSTEM_ROOT_DIR);
 
-	public static String IMAGE_HOOK_IMPL = GetterUtil.getString(PropsUtil.get(PropsKeys.IMAGE_HOOK_IMPL));
+	public static String SOURCE_IMAGE_HOOK_IMPL = GetterUtil.getString(PropsUtil.get(PropsKeys.SOURCE_IMAGE_HOOK_IMPL));
 
 	public static final boolean IMAGEMAGICK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGEMAGICK_ENABLED));
 

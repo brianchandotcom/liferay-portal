@@ -100,12 +100,10 @@ public class AssertTemplateAssociatedTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_15_changeStructureButton']",
 			RuntimeVariables.replace("Change"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace(
-				"Web Content Structure Name\nWeb Content Structure Description"),
+		assertEquals(RuntimeVariables.replace("Web Content Structure Name"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace(
-				"Web Content Structure Name\nWeb Content Structure Description"));
+			RuntimeVariables.replace("Web Content Structure Name"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Selecting a new structure will change the available input fields and available templates[\\s\\S] Do you want to proceed[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();

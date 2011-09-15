@@ -66,12 +66,10 @@ public class AddTemplateAssociatedTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace(
-				"Web Content Structure Name\nWeb Content Structure Description"),
+		assertEquals(RuntimeVariables.replace("Web Content Structure Name"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace(
-				"Web Content Structure Name\nWeb Content Structure Description"));
+			RuntimeVariables.replace("Web Content Structure Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -114,6 +112,7 @@ public class AddTemplateAssociatedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		selenium.type("//textarea[@id='_15_xslContent']",
 			RuntimeVariables.replace(
 				"<h1>$title.getData()</h1>\n\n<a href=\"$ltp.getUrl()\">See Page</a>"));

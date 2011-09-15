@@ -65,12 +65,10 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace(
-				"Test Localized Structure\nThis is a test localized structure."),
+		assertEquals(RuntimeVariables.replace("Test Localized Structure"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace(
-				"Test Localized Structure\nThis is a test localized structure."));
+			RuntimeVariables.replace("Test Localized Structure"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {

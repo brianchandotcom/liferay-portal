@@ -51,6 +51,23 @@ public class ChannelHubManagerUtil {
 		return getChannelHubManager().createChannelHub(companyId);
 	}
 
+	public static void deleteUserNotificiationEvent(
+			long companyId, long userId, String notificationEventUuid)
+		throws ChannelException {
+
+		getChannelHubManager().deleteUserNotificiationEvent(
+			companyId, userId, notificationEventUuid);
+	}
+
+	public void deleteUserNotificiationEvents(
+			long companyId, long userId,
+			Collection<String> notificationEventUuids)
+		throws ChannelException {
+
+		getChannelHubManager().deleteUserNotificiationEvents(
+			companyId, userId, notificationEventUuids);
+	}
+
 	public static void destroyChannel(long companyId, long userId)
 		throws ChannelException {
 

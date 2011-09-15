@@ -368,17 +368,16 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		repository.setName(name);
 		repository.setDescription(description);
 
-		// Update Folder
-		DLFolder dlFolder = dlFolderLocalService.getDLFolder(
+		repositoryPersistence.update(repository, false);
+
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
 			repository.getDlFolderId());
 
 		dlFolder.setModifiedDate(new Date());
 		dlFolder.setName(name);
 		dlFolder.setDescription(description);
 
-		dlFolderLocalService.updateDLFolder(dlFolder);
-
-		repositoryPersistence.update(repository, false);
+		dlFolderPersistence.update(dlFolder, false);
 	}
 
 	protected BaseRepository createRepositoryImpl(long repositoryEntryId)

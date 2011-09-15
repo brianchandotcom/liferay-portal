@@ -90,6 +90,7 @@ theme.portlet.decorate.default
 theme.portlet.sharing.default
 theme.shortcut.icon
 upgrade.processes
+user.notification.event.confirmation.enabled
 users.email.address.generator
 users.email.address.required
 users.form.add.identification

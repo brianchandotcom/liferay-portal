@@ -66,7 +66,7 @@ public class ByteArrayFileInputStream extends InputStream {
 			data = null;
 			fileInputStream = null;
 
-			if (deleteOnClose) {
+			if (deleteOnClose && file != null) {
 				file.delete();
 			}
 

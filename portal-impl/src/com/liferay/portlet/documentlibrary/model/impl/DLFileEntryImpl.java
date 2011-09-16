@@ -220,10 +220,17 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return _imageType;
 	}
 
-	public DLFileVersion getLatestFileVersion()
+	public DLFileVersion getLatestFileVersion(boolean trusted)
 		throws PortalException, SystemException {
 
-		return DLFileVersionServiceUtil.getLatestFileVersion(getFileEntryId());
+		if (trusted) {
+			return DLFileVersionLocalServiceUtil.getLatestFileVersion(
+				getFileEntryId(), true);
+		}
+		else {
+			return DLFileVersionServiceUtil.getLatestFileVersion(
+				getFileEntryId());
+		}
 	}
 
 	public Lock getLock() {

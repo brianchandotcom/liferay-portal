@@ -106,15 +106,8 @@ public class AudioProcessor extends DLPreviewableProcessor {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 	}
 
-	public void trigger(FileEntry fileEntry) {
-		try {
-			FileVersion fileVersion = fileEntry.getLatestFileVersion();
-
-			_instance._queueGeneration(fileVersion);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public void trigger(FileVersion fileVersion) {
+		_instance._queueGeneration(fileVersion);
 	}
 
 	@Override

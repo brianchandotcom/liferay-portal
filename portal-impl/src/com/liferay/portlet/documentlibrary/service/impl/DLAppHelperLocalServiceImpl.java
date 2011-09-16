@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchEntryException;
@@ -184,7 +185,17 @@ public class DLAppHelperLocalServiceImpl
 	protected long getFileEntryTypeId(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
-		FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+		FileVersion latestFileVersion = null;
+
+		if (fileEntry.getModel() instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+			latestFileVersion = new LiferayFileVersion(
+				dlFileEntry.getLatestFileVersion(true));
+		}
+		else {
+			latestFileVersion = fileEntry.getLatestFileVersion();
+		}
 
 		LiferayFileEntry liferayFileEntry =
 			(LiferayFileEntry)latestFileVersion.getFileEntry();

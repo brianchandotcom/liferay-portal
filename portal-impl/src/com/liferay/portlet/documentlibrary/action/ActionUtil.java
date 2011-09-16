@@ -104,10 +104,11 @@ public class ActionUtil {
 
 			request.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
-		}
 
-		if (fileEntry != null) {
-			RawMetadataProcessor.generateMetadata(fileEntry);
+			RawMetadataProcessor.generateMetadata(fileVersion);
+		}
+		else {
+			RawMetadataProcessor.generateMetadata(fileEntry.getFileVersion());
 		}
 	}
 

@@ -125,6 +125,10 @@ public interface WebKeys {
 
 	public static final String SERVLET_PATH = "SERVLET_PATH";
 
+	public static final String SETUP_WIZARD_FINISHED = "SETUP_WIZARD_FINISHED";
+	
+	public static final String STARTUP_FINISHED = "STARTUP_FINISHED";
+
 	public static final String THEME = "THEME";
 
 	public static final String THEME_DISPLAY = "THEME_DISPLAY";

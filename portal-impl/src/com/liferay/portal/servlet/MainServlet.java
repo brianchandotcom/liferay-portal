@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.PortletSessionTracker;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -77,6 +78,7 @@ import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
+import com.liferay.portal.setup.SetupWizardUtil;
 import com.liferay.portal.struts.PortletRequestProcessor;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.util.ExtRegistry;
@@ -184,6 +186,8 @@ public class MainServlet extends ActionServlet {
 
 	@Override
 	public void init() throws ServletException {
+		ServletContext servletContext = getServletContext();
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize");
 		}
@@ -358,6 +362,8 @@ public class MainServlet extends ActionServlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, true);
 	}
 
 	@Override
@@ -481,6 +487,14 @@ public class MainServlet extends ActionServlet {
 		if (processServicePre(request, response, userId)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Processing service pre events has errors");
+			}
+
+			return;
+		}
+
+		if (processSetupWizardRequest(request, response)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Processed setup request");
 			}
 
 			return;
@@ -1244,6 +1258,37 @@ public class MainServlet extends ActionServlet {
 		}
 
 		response.sendRedirect(redirect);
+	}
+
+	protected boolean processSetupWizardRequest(
+		HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException  {
+
+		ServletContext servletContext = getServletContext();
+
+		boolean startupFinished = (Boolean)servletContext.getAttribute(
+			WebKeys.STARTUP_FINISHED);
+
+		boolean setupWizardEnabled = PropsValues.SETUP_WIZARD_ENABLED;
+
+		if (!startupFinished || !setupWizardEnabled) {
+			return false;
+		}
+
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
+		if (cmd.equals(Constants.EDIT)) {
+			SetupWizardUtil.processProperties(request);
+
+			servletContext.setAttribute(WebKeys.SETUP_WIZARD_FINISHED, true);
+		}
+
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+			"/html/portal/setup_wizard/view.jsp");
+
+		requestDispatcher.include(request, response);
+
+		return true;
 	}
 
 	protected boolean processShutdownRequest(

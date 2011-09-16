@@ -96,7 +96,7 @@ public class ResubmitWebContentVersion2ActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/button[1]")) {
+				if (selenium.isVisible("//div[3]/span/span/button")) {
 					break;
 				}
 			}
@@ -107,7 +107,10 @@ public class ResubmitWebContentVersion2ActionsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/button[1]", RuntimeVariables.replace("OK"));
+		assertEquals(RuntimeVariables.replace("OK"),
+			selenium.getText("//div[3]/span/span/button"));
+		selenium.clickAt("//div[3]/span/span/button",
+			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

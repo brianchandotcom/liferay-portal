@@ -47,6 +47,11 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties();
 
+	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> getFileEntryMetadataFields(
+		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

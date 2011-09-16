@@ -29,19 +29,27 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -112,6 +120,31 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return _extraSettingsProperties;
 	}
 
+	public Map<String, Fields> getFileEntryMetadataFields(
+		long fileEntryTypeId, long fileVersionId, long ddmStructureId)
+		throws PortalException, SystemException {
+
+		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
+		List<DDMStructure> ddmStructures = null;
+
+		if (fileEntryTypeId > 0) {
+			DLFileEntryType dlFileEntryType =
+				DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
+
+			ddmStructures = dlFileEntryType.getDDMStructures();
+
+			for (DDMStructure ddmStructure : ddmStructures) {
+				DLFileEntryMetadata dlFileEntryMetadata =
+					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+						ddmStructure.getStructureId(), fileVersionId);
+				Fields fields =
+					StorageEngineUtil.getFields(dlFileEntryMetadata.getDDMStorageId());
+				fieldsMap.put(ddmStructure.getStructureKey(), fields);
+			}
+		}
+		return fieldsMap;
+	}
+	
 	public DLFileVersion getFileVersion()
 		throws PortalException, SystemException {
 

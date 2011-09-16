@@ -699,7 +699,8 @@ public class WebServerServlet extends HttpServlet {
 			contentLength = VideoProcessor.getThumbnailFileSize(fileVersion);
 
 			converted = true;
-		}else{
+		}
+		else {
 			inputStream = fileEntry.getContentStream(version);
 
 			if (Validator.isNotNull(targetExtension)) {

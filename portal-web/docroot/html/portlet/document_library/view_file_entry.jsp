@@ -222,9 +222,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&videoThumbnail=1";
 						}
 
-						AssetEntryLocalServiceUtil.incrementViewCounter(user.getUserId(), layoutAssetEntry.getClassName(), assetClassPK, 1);
-						layoutAssetEntry.setViewCount(layoutAssetEntry.getViewCount() + 1);
+						AssetEntryServiceUtil.incrementViewCounter(user.getUserId(), layoutAssetEntry.getClassName(), assetClassPK, 1);
 
+						layoutAssetEntry.setViewCount(layoutAssetEntry.getViewCount() + 1);
 						%>
 
 						<img alt="" border="no" class="thumbnail" src="<%= thumbnailSrc %>" />

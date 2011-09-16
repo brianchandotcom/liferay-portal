@@ -57,7 +57,7 @@ public class AddWikiPage1Test extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		Thread.sleep(5000);
 		selenium.type("//input[@id='_36_title']",
-			RuntimeVariables.replace("Wiki Page Title"));
+			RuntimeVariables.replace("Wiki Page1 Title"));
 		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
@@ -79,7 +79,7 @@ public class AddWikiPage1Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Wiki Page Content"));
+		selenium.type("//body", RuntimeVariables.replace("Wiki Page1 Content"));
 		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
@@ -89,15 +89,15 @@ public class AddWikiPage1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+		assertEquals(RuntimeVariables.replace("Wiki Page1 Title"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/a",
-			RuntimeVariables.replace("Wiki Page Title"));
+			RuntimeVariables.replace("Wiki Page1 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+		assertEquals(RuntimeVariables.replace("Wiki Page1 Title"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertEquals(RuntimeVariables.replace("Wiki Page Content"),
+		assertEquals(RuntimeVariables.replace("Wiki Page1 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

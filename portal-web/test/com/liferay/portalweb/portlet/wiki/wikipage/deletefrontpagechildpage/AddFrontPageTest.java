@@ -53,9 +53,9 @@ public class AddFrontPageTest extends BaseTestCase {
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		assertTrue(selenium.isVisible(
 				"//td[@id='cke_contents__36_editor']/iframe"));
-		Thread.sleep(5000);
 		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Wiki Front Page Content"));

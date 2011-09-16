@@ -48,15 +48,15 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
+		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
 			selenium.getText("//tr[5]/td[1]/a"));
 		selenium.clickAt("//tr[5]/td[1]/a",
-			RuntimeVariables.replace("Wiki2 Page2 Title2"));
+			RuntimeVariables.replace("Wiki Page2 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
+		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Content2"),
+		assertEquals(RuntimeVariables.replace("Wiki Page2 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText("//div[3]/span[2]/a/span"));
@@ -91,7 +91,7 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_36_newParentTitle']",
-			RuntimeVariables.replace("- Wiki Page Title"));
+			RuntimeVariables.replace("- Wiki Page1 Title"));
 		selenium.clickAt("//input[@value='Change Parent']",
 			RuntimeVariables.replace("Change Parent"));
 		selenium.waitForPageToLoad("30000");
@@ -125,21 +125,21 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+		assertEquals(RuntimeVariables.replace("Wiki Page1 Title"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/a",
-			RuntimeVariables.replace("Wiki Page Title"));
+			RuntimeVariables.replace("Wiki Page1 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
-			RuntimeVariables.replace("Wiki2 Page2 Title2"));
+			RuntimeVariables.replace("Wiki Page2 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
+		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("\u00ab Back to Wiki Page Title"),
+		assertEquals(RuntimeVariables.replace("\u00ab Back to Wiki Page1 Title"),
 			selenium.getText("//span[@class='header-back-to']/a"));
-		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Content2"),
+		assertEquals(RuntimeVariables.replace("Wiki Page2 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

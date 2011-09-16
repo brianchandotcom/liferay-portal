@@ -53,8 +53,8 @@ public class AddFrontPageCreoleBoldItalicsTest extends BaseTestCase {
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//span[@id='cke_34_label']"));
 		Thread.sleep(5000);
+		assertTrue(selenium.isVisible("//span[@id='cke_34_label']"));
 		selenium.clickAt("//span[@id='cke_34_label']",
 			RuntimeVariables.replace("Source"));
 		assertTrue(selenium.isVisible(

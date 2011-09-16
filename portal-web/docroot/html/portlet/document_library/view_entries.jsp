@@ -41,12 +41,12 @@ boolean useAssetEntryQuery = (categoryId > 0) || Validator.isNotNull(tagName);
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
+	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 }
 else {
 	boolean saveDisplayStyle = ParamUtil.getBoolean(request, "saveDisplayStyle");
 
-	if (saveDisplayStyle && ArrayUtil.contains(PropsValues.DL_DISPLAY_VIEWS, displayStyle)) {
+	if (saveDisplayStyle && ArrayUtil.contains(displayViews, displayStyle)) {
 		portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", displayStyle);
 	}
 }
@@ -57,7 +57,7 @@ portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
 portletURL.setParameter("displayStyle", String.valueOf(displayStyle));
 
-SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", fileEntriesPerPage, portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", itemsPerPage, portletURL, null, null);
 
 List<String> headerNames = new ArrayList<String>();
 

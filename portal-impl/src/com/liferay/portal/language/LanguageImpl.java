@@ -330,16 +330,38 @@ public class LanguageImpl implements Language {
 	}
 
 	public String get(Locale locale, String key, String defaultValue) {
-		try {
-			return _get(null, null, locale, key, defaultValue);
+		if (PropsValues.TRANSLATIONS_DISABLED) {
+			return key;
 		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+
+		if (key == null) {
+			return null;
+		}
+
+		String value = LanguageResources.getMessage(locale, key);
+
+		while ((value == null) || value.equals(defaultValue)) {
+			if ((key.length() > 0) &&
+				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
+				int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
+
+				if (pos != -1) {
+					key = key.substring(0, pos);
+
+					value = LanguageResources.getMessage(locale, key);
+
+					continue;
+				}
 			}
 
-			return defaultValue;
+			break;
 		}
+
+		if (value == null) {
+			value = defaultValue;
+		}
+
+		return value;
 	}
 
 	public String get(PageContext pageContext, String key) {
@@ -630,7 +652,8 @@ public class LanguageImpl implements Language {
 		}
 
 		if ((value == null) || value.equals(defaultValue)) {
-			if (key.endsWith(StringPool.CLOSE_BRACKET)) {
+			if ((key.length() > 0) &&
+				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
 				int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
 
 				if (pos != -1) {

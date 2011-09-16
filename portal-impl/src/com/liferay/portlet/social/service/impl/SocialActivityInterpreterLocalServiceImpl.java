@@ -26,17 +26,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The social activity interpreter local service. Activity interpreters are
+ * classes responsible for translating activity records into human readable
+ * form. This service holds a list of interpreters and provides methods to add
+ * or remove items from this list.
+ *
+ * <p>
+ * Activity interpreters use the language files to get text fragments based on
+ * the activity's type and the type of asset the activity was done on.
+ * Interpreters are created for a specific asset type and are only capable of
+ * translating activities done on that particular asset. As an example, there
+ * is an interpreter called BlogsActivityInterpreter. This class can only
+ * translate activity records for blog entries.
+ * </p>
+ *
  * @author Brian Wing Shun Chan
  */
 public class SocialActivityInterpreterLocalServiceImpl
 	extends SocialActivityInterpreterLocalServiceBaseImpl {
 
+	/**
+	 * Adds the activity interpreter to the list of available interpreters.
+	 *
+	 * @param activityInterpreter the activity interpreter
+	 */
 	public void addActivityInterpreter(
 		SocialActivityInterpreter activityInterpreter) {
 
 		_activityInterpreters.add(activityInterpreter);
 	}
 
+	/**
+	 * Removes the interpreter from the list of available interpreters.
+	 *
+	 * @param activityInterpreter the activity interpreter
+	 */
 	public void deleteActivityInterpreter(
 		SocialActivityInterpreter activityInterpreter) {
 
@@ -45,6 +69,22 @@ public class SocialActivityInterpreterLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Creates a human readable activity feed entry for the activity using one
+	 * of the available activity interpreters.
+	 *
+	 * <p>
+	 * This method finds the appropriate interpreter for the activity by going
+	 * through the available interpreters and asking them if they can handle
+	 * the asset type of the activity.
+	 * </p>
+	 *
+	 * @param  activity the activity to be translated to human readable form
+	 * @param  themeDisplay the theme display needed by interpreters to create
+	 *         links and get localized text fragments
+	 * @return the activity feed that is a human readable form of the activity
+	 *         record
+	 */
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ThemeDisplay themeDisplay) {
 

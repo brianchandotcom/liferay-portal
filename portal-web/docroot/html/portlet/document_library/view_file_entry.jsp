@@ -520,9 +520,6 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							</aui:field-wrapper>
 						</div>
 					</c:if>
-
-
-					<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
 				</div>
 
 				<%

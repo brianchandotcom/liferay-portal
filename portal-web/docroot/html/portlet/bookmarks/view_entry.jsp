@@ -112,7 +112,7 @@ request.setAttribute("view_entry.jsp-entry", entry);
 			<liferay-ui:icon
 				cssClass="lfr-asset-avatar"
 				image="../file_system/large/bookmark"
-				message="download"
+				message="visit"
 				method="get"
 				url="<%= entry.getUrl() %>"
 			/>

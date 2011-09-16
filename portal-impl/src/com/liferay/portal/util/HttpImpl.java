@@ -1193,8 +1193,6 @@ public class HttpImpl implements Http {
 				}
 
 				bytes = FileUtil.getBytes(inputStream);
-
-				inputStream.close();
 			}
 
 			for (Header header : httpMethod.getResponseHeaders()) {

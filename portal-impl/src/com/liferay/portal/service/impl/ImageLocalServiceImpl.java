@@ -362,18 +362,6 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
-		finally {
-			if (is != null) {
-				try {
-					is.close();
-				}
-				catch (IOException ioe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(ioe);
-					}
-				}
-			}
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

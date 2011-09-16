@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -893,9 +892,6 @@ public class EditLayoutsAction extends PortletAction {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to retrieve icon", e);
 			}
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 
 		return new byte[0];

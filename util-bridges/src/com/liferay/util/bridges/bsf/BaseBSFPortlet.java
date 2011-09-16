@@ -203,14 +203,9 @@ public abstract class BaseBSFPortlet extends GenericPortlet {
 				}
 			}
 
-			try {
-				if (is != null) {
-					sb.append(new String(FileUtil.getBytes(is)));
-					sb.append(StringPool.NEW_LINE);
-				}
-			}
-			finally {
-				is.close();
+			if (is != null) {
+				sb.append(new String(FileUtil.getBytes(is)));
+				sb.append(StringPool.NEW_LINE);
 			}
 		}
 

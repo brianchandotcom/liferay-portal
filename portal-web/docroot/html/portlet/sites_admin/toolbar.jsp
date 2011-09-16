@@ -51,7 +51,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 				<liferay-ui:icon-menu align="left" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add">
 					<liferay-ui:icon
 						image="site_icon"
-						message="custom-site"
+						message="site"
 						method="get"
 						url='<%= addSiteURL.toString() %>'
 					/>

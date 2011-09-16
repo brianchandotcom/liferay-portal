@@ -60,9 +60,31 @@ public class AddAnswerThreadTest extends BaseTestCase {
 		selenium.clickAt("link=Reply", RuntimeVariables.replace("Reply"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@id='_162_editor']",
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__162_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__162_editor']/iframe");
+		selenium.type("//body",
 			RuntimeVariables.replace(
 				"I like green because it is so natural. Obviously."));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -93,6 +115,7 @@ public class AddAnswerThreadTest extends BaseTestCase {
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		assertTrue(selenium.isElementPresent("link=Resolved"));
 		assertFalse(selenium.isElementPresent("link=Waiting for an Answer"));
 	}

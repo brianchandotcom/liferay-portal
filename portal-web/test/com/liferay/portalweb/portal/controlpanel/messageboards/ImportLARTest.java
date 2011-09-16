@@ -84,11 +84,7 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\messageboards\\dependencies\\Message_Boards-Selenium.portlet.lar"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_86_importFileName",
-			RuntimeVariables.replace(
-				"G:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\messageboards\\dependencies\\Message_Boards-Selenium.portlet.lar"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\messageboards\\dependencies\\Message_Boards_Admin-Selenium.portlet.lar"));
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_DELETE_PORTLET_DATACheckbox']"));

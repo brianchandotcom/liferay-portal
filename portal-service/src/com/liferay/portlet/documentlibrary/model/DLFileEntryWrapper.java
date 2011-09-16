@@ -660,6 +660,13 @@ public class DLFileEntryWrapper implements DLFileEntry {
 		return _dlFileEntry.getExtraSettingsProperties();
 	}
 
+	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> getFileEntryMetadataFields(
+		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntry.getFileEntryMetadataFields(fileVersionId);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

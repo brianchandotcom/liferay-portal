@@ -1765,7 +1765,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>173</portlet-name>
-		<icon>/html/icons/default.png</icon>
+		<icon>/html/icons/recent_content.png</icon>
 		<parent-struts-path>asset_publisher</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>

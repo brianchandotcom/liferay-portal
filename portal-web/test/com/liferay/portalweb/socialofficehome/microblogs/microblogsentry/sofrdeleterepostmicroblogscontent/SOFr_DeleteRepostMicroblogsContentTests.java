@@ -32,10 +32,10 @@ public class SOFr_DeleteRepostMicroblogsContentTests extends BaseTests {
 		testSuite.addTestSuite(SOFr_NewPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFr_SignInTest.class);
-		testSuite.addTestSuite(SOFr_AddAsFriendCCTest.class);
+		testSuite.addTestSuite(SOFr_AddAsFriendCCActionsTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
-		testSuite.addTestSuite(ConfirmFriendRequestTest.class);
+		testSuite.addTestSuite(ConfirmCCFriendRequestTest.class);
 		testSuite.addTestSuite(
 			AddMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

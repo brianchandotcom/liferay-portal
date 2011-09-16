@@ -15,22 +15,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//nav/ul/li[1]/a/span</td>
-	<td>Home</td>
+	<td>//section/div/div/div/div[1]/ul/li[3]/a</td>
+	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[1]/ul/li[3]/a</td>
+	<td>//section/div/div/div/div[1]/ul/li[3]/a</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
+	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
@@ -39,18 +34,13 @@
 	<td>Content</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
-	<td>You have no microblogs entry.</td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//textarea</td>
 	<td>Microblogs Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span/select</td>
+	<td>//select[@id='_1_WAR_microblogsportlet_socialRelationType']</td>
 	<td>Everyone Friends Coworkers Followers</td>
 </tr>
 <tr>
@@ -65,8 +55,8 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>//span/select</td>
-	<td>label=Friends</td>
+	<td>//select[@id='_1_WAR_microblogsportlet_socialRelationType']</td>
+	<td>Friends</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -91,17 +81,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='user-name']</td>
-	<td>Joe Bloggs test@liferay.com</td>
+	<td>Joe Bloggs (joebloggs)</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='content']</td>
 	<td>Microblogs Content</td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>Reply</td>
-	<td></td>
 </tr>
 
 </tbody></table>

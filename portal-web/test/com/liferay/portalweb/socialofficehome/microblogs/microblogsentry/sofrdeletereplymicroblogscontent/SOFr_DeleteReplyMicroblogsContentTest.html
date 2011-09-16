@@ -10,52 +10,62 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/socialofficefriendsn/home</td>
+	<td>/user/socialofficefriendsn/home</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//ul[2]/li[2]/a</td>
+	<td>//div/div/div/div[1]/ul/li[3]/a</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//ul[2]/li[2]/a</td>
+	<td>//div/div/div/div[1]/ul/li[3]/a</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/div/section/header/h1</td>
+	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
 	<td>Microblogs</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='my-entry-bubble ']</td>
-	<td>Status</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div/span/a/img</td>
+	<td>//div[1]/span/a/img</td>
 	<td>Thumbnail</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='user-name']</td>
-	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com</td>
+	<td>assertVisible</td>
+	<td>//div[1]/span/a/img</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@class='my-entry-bubble ']/div[1]</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='content']</td>
-	<td>@Joe Bloggs Microblogs Content Repl</td>
+	<td>//div[@class='my-entry-bubble ']/div[1]</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[3]/a/span</td>
+	<td>//div[@class='my-entry-bubble ']/div[2]/span/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@class='my-entry-bubble ']/div[2]/span</td>
+	<td>Microblogs Content Repl</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[2]/a/span</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//span[3]/a/span</td>
+	<td>//span[2]/a/span</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -70,12 +80,12 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com</td>
+	<td>socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>@Joe Bloggs Microblogs Content Repl</td>
+	<td>Joe Bloggs Microblogs Content Repl</td>
 	<td></td>
 </tr>
 

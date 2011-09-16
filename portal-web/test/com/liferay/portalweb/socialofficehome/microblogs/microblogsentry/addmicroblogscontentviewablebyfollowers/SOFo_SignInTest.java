@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOFo_SignInTest extends BaseTestCase {
 	public void testSOFo_SignIn() throws Exception {
 		selenium.setTimeout("180000");
-		selenium.open("/web/socialofficefollowersn/home");
+		selenium.open("/user/socialofficefollowersn/home");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

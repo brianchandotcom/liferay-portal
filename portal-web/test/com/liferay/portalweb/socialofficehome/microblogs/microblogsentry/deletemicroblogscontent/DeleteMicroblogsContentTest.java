@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DeleteMicroblogsContentTest extends BaseTestCase {
 	public void testDeleteMicroblogsContent() throws Exception {
-		selenium.open("/web/joebloggs/home/");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,8 @@ public class DeleteMicroblogsContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//section/div/div/div/div[1]/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -41,17 +42,15 @@ public class DeleteMicroblogsContentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//ul[2]/li[2]/a",
+		selenium.clickAt("//section/div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertTrue(selenium.isVisible("//div[@class='my-entry-bubble ']"));
 		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("//div[@class='content']"));
@@ -66,7 +65,7 @@ public class DeleteMicroblogsContentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertFalse(selenium.isElementPresent("//div/span/a/img"));
-		assertFalse(selenium.isTextPresent("Joe Bloggs test@liferay.com"));
+		assertFalse(selenium.isTextPresent("Joe Bloggs (joebloggs)"));
 		assertFalse(selenium.isTextPresent("Microblogs Content"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

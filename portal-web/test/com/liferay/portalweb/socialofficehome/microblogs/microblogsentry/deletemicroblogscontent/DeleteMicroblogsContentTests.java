@@ -30,6 +30,7 @@ public class DeleteMicroblogsContentTests extends BaseTests {
 		testSuite.addTestSuite(
 			AddMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(DeleteMicroblogsContentTest.class);
+		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 
 		return testSuite;
 	}

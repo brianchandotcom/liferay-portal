@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewMicroblogsMentionsTest extends BaseTestCase {
 	public void testViewMicroblogsMentions() throws Exception {
-		selenium.open("/web/joebloggs/home");
+		selenium.open("/user/joebloggs/home");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewMicroblogsMentionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//ul[2]/li[2]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -41,12 +41,12 @@ public class ViewMicroblogsMentionsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//ul[2]/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/section/header/h1"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Mentions"),
 			selenium.getText("link=Mentions"));
 		selenium.clickAt("link=Mentions", RuntimeVariables.replace("Mentions"));
@@ -55,12 +55,11 @@ public class ViewMicroblogsMentionsTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//div[@class='entry-bubble ']"));
 		assertTrue(selenium.isVisible("//div/span/a/img"));
 		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com"),
-			selenium.getText("//div[@class='user-name']"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//div[2]/span/a"));
-		assertTrue(selenium.isPartialText("//div[@class='content']",
-				"Microblogs Content Repl"));
+				"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)"),
+			selenium.getText("//div[@class='entry-bubble ']/div[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"Joe Bloggs Microblogs Content Repl"),
+			selenium.getText("//div[@class='entry-bubble ']/div[2]"));
 		assertFalse(selenium.isElementPresent(
 				"//div[@class='my-entry-bubble ']"));
 		assertFalse(selenium.isTextPresent("Joe Bloggs test@liferay.com"));

@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 	public void testAddMicroblogsContentViewableByEveryone()
 		throws Exception {
-		selenium.open("/web/joebloggs/home/");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,8 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//section/div/div/div/div[1]/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -42,18 +43,12 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-		selenium.clickAt("//ul[2]/li[2]/a",
+		selenium.clickAt("//section/div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//li[@class='selected']/a/span"));
-		assertNotEquals(RuntimeVariables.replace("Profile"),
-			selenium.getText("//li[@class='selected']/a/span"));
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertTrue(selenium.isElementPresent("//textarea"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
@@ -61,7 +56,8 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Microblogs Content"));
 		assertEquals(RuntimeVariables.replace(
 				"Everyone Friends Coworkers Followers"),
-			selenium.getText("//span/select"));
+			selenium.getText(
+				"//select[@id='_1_WAR_microblogsportlet_socialRelationType']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -83,8 +79,8 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Content"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("//span/select",
-			RuntimeVariables.replace("label=Everyone"));
+		selenium.select("//select[@id='_1_WAR_microblogsportlet_socialRelationType']",
+			RuntimeVariables.replace("Everyone"));
 		assertEquals(RuntimeVariables.replace("133"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.clickAt("//input[@value='Post']",
@@ -108,9 +104,10 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("//div[@class='content']"));
+		assertTrue(selenium.isTextPresent("Reply"));
 	}
 }

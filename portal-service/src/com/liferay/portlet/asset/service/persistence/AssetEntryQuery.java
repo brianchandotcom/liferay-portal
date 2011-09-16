@@ -420,8 +420,12 @@ public class AssetEntryQuery {
 		sb.append(StringUtil.merge(_classNameIds));
 		sb.append(", classTypeIds");
 		sb.append(StringUtil.merge(_classTypeIds));
-		sb.append(", layout");
-		sb.append(_layout.getPlid());
+
+		if (_layout != null) {
+			sb.append(", layout");
+			sb.append(_layout.getPlid());
+		}
+
 		sb.append(", end");
 		sb.append(_end);
 		sb.append(", excludeZeroViewCount");

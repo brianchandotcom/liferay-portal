@@ -35,7 +35,7 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 
-				boolean SignedIn = selenium.isPartialText("//td/a", "Sign out");
+				boolean SignedIn = selenium.isElementPresent("link=Sign out");
 
 				if (!SignedIn) {
 					label = 2;
@@ -164,7 +164,7 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 
-				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
+				boolean signedIn2 = selenium.isElementPresent("link=Sign out");
 
 				if (!signedIn2) {
 					label = 5;

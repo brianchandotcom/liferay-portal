@@ -120,31 +120,38 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return _extraSettingsProperties;
 	}
 
-	public Map<String, Fields> getFileEntryMetadataFields(
-		long fileEntryTypeId, long fileVersionId, long ddmStructureId)
+	public Map<String, Fields> getFileEntryMetadataFields(long fileVersionId)
 		throws PortalException, SystemException {
 
 		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
-		List<DDMStructure> ddmStructures = null;
+
+		DLFileVersion dlFileVersion = DLFileVersionServiceUtil.getFileVersion(
+			fileVersionId);
+
+		long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
 
 		if (fileEntryTypeId > 0) {
 			DLFileEntryType dlFileEntryType =
 				DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
 
-			ddmStructures = dlFileEntryType.getDDMStructures();
+			List<DDMStructure> ddmStructures =
+				dlFileEntryType.getDDMStructures();
 
 			for (DDMStructure ddmStructure : ddmStructures) {
 				DLFileEntryMetadata dlFileEntryMetadata =
 					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
 						ddmStructure.getStructureId(), fileVersionId);
-				Fields fields =
-					StorageEngineUtil.getFields(dlFileEntryMetadata.getDDMStorageId());
+
+				Fields fields = StorageEngineUtil.getFields(
+					dlFileEntryMetadata.getDDMStorageId());
+
 				fieldsMap.put(ddmStructure.getStructureKey(), fields);
 			}
 		}
+
 		return fieldsMap;
 	}
-	
+
 	public DLFileVersion getFileVersion()
 		throws PortalException, SystemException {
 

@@ -317,8 +317,6 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MBMailingListModelImpl mbMailingListModelImpl = (MBMailingListModelImpl)mbMailingList;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -381,8 +379,6 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				(!Validator.equals(mbMailingList.getUuid(),
 					mbMailingListModelImpl.getOriginalUuid()) ||
 				(mbMailingList.getGroupId() != mbMailingListModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					mbMailingListModelImpl.getOriginalUuid(),
@@ -404,8 +400,6 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		if (!isNew &&
 				((mbMailingList.getGroupId() != mbMailingListModelImpl.getOriginalGroupId()) ||
 				(mbMailingList.getCategoryId() != mbMailingListModelImpl.getOriginalCategoryId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C,
 				new Object[] {
 					Long.valueOf(mbMailingListModelImpl.getOriginalGroupId()),

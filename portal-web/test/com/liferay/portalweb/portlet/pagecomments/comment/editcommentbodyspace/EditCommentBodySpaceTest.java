@@ -30,7 +30,7 @@ public class EditCommentBodySpaceTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Page Comments Test Page")) {
+				if (selenium.isVisible("link=Page Comments Test Page")) {
 					break;
 				}
 			}
@@ -42,12 +42,14 @@ public class EditCommentBodySpaceTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Comments Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("This is a test page comment."),
-			selenium.getText("//div/div[3]/div/div[1]"));
-		selenium.clickAt("link=Edit", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("PC Comment"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("//li[3]/span/a/span"));
+		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -55,7 +57,8 @@ public class EditCommentBodySpaceTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_107_editReplyBody1")) {
+				if (selenium.isVisible(
+							"//textarea[@name='_107_editReplyBody1']")) {
 					break;
 				}
 			}
@@ -66,17 +69,37 @@ public class EditCommentBodySpaceTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_107_editReplyBody1", RuntimeVariables.replace(" "));
+		selenium.type("//textarea[@name='_107_editReplyBody1']",
+			RuntimeVariables.replace(" "));
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_107_editReplyBody1",
-			RuntimeVariables.replace("\\48"));
-		selenium.keyPress("_107_editReplyBody1", RuntimeVariables.replace("\\8"));
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+			RuntimeVariables.replace("Publish"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Please enter a valid message.")
+										.equals(selenium.getText(
+								"//div[@class='lfr-message-response portlet-msg-error']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Please enter a valid message."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-error']"));
 		assertFalse(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isVisible("_107_editReplyBody1"));
+				"Your request processed successfully."));
+		assertTrue(selenium.isVisible("//textarea[@name='_107_editReplyBody1']"));
 		assertTrue(selenium.isVisible("//input[@value='Publish']"));
 		selenium.open("/web/guest/home/");
 
@@ -86,7 +109,7 @@ public class EditCommentBodySpaceTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Page Comments Test Page")) {
+				if (selenium.isVisible("link=Page Comments Test Page")) {
 					break;
 				}
 			}
@@ -98,10 +121,10 @@ public class EditCommentBodySpaceTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Comments Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("This is a test page comment."),
-			selenium.getText("//div/div[3]/div/div[1]"));
+		assertEquals(RuntimeVariables.replace("PC Comment"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

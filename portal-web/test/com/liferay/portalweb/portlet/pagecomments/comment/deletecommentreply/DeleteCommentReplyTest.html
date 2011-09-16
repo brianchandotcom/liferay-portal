@@ -14,29 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Page Comments Test Page</td>
-	<td></td>
+	<td>Page Comments Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Page Comments Test Page</td>
+	<td>Page Comments Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='lfr-discussion-message'])[2]</td>
+	<td>PC Comment Reply</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[3]/div/div[2]/ul/li[4]/span/a/span</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[2]/div[3]/div/div[2]/ul/li[4]/span/a/span</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//form/div/div/div[3]/div/div[3]/div/div[1]</td>
-	<td>This is a test reply comment.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[3]/div/div[3]/div/div[3]/div/div[5]/div/span/a/span</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[3]/div/div[3]/div/div[3]/div/div[5]/div/span/a/span</td>
-	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -44,13 +49,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>This is a test reply comment.</td>
+	<td>PC Comment Reply</td>
 	<td></td>
 </tr>
 

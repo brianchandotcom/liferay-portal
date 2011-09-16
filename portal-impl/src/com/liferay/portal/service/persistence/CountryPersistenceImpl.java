@@ -293,8 +293,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		CountryModelImpl countryModelImpl = (CountryModelImpl)country;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME,
@@ -345,8 +343,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		if (!isNew &&
 				(!Validator.equals(country.getName(),
 					countryModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME,
 				new Object[] { countryModelImpl.getOriginalName() });
 		}
@@ -361,8 +357,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		if (!isNew &&
 				(!Validator.equals(country.getA2(),
 					countryModelImpl.getOriginalA2()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A2,
 				new Object[] { countryModelImpl.getOriginalA2() });
 		}
@@ -377,8 +371,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		if (!isNew &&
 				(!Validator.equals(country.getA3(),
 					countryModelImpl.getOriginalA3()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A3,
 				new Object[] { countryModelImpl.getOriginalA3() });
 		}

@@ -299,8 +299,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		PollsQuestionModelImpl pollsQuestionModelImpl = (PollsQuestionModelImpl)pollsQuestion;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -357,8 +355,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 				(!Validator.equals(pollsQuestion.getUuid(),
 					pollsQuestionModelImpl.getOriginalUuid()) ||
 				(pollsQuestion.getGroupId() != pollsQuestionModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					pollsQuestionModelImpl.getOriginalUuid(),

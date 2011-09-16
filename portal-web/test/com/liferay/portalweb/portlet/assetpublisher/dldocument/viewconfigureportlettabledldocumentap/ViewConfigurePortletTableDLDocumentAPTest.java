@@ -48,15 +48,15 @@ public class ViewConfigurePortletTableDLDocumentAPTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Title"),
 			selenium.getText("//th[1]"));
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//td[1]/a"));
 		selenium.clickAt("//td[1]/a",
-			RuntimeVariables.replace("DL Folder Document Title"));
+			RuntimeVariables.replace("DM Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//div[@class='asset-resource-info']/a"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
@@ -64,9 +64,9 @@ public class ViewConfigurePortletTableDLDocumentAPTest extends BaseTestCase {
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
-			selenium.getText("//div[@class='lfr-asset-name']/a"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
+			selenium.getText("//h2[@class='document-title']"));
 	}
 }

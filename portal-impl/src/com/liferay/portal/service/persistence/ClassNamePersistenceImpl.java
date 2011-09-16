@@ -253,8 +253,6 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ClassNameModelImpl classNameModelImpl = (ClassNameModelImpl)className;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE,
@@ -299,8 +297,6 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		if (!isNew &&
 				(!Validator.equals(className.getValue(),
 					classNameModelImpl.getOriginalValue()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE,
 				new Object[] { classNameModelImpl.getOriginalValue() });
 		}

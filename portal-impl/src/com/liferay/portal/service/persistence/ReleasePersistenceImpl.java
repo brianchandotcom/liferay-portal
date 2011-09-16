@@ -252,8 +252,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ReleaseModelImpl releaseModelImpl = (ReleaseModelImpl)release;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
@@ -298,8 +296,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		if (!isNew &&
 				(!Validator.equals(release.getServletContextName(),
 					releaseModelImpl.getOriginalServletContextName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
 				new Object[] { releaseModelImpl.getOriginalServletContextName() });
 		}

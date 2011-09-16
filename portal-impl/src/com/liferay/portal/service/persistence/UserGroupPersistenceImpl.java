@@ -326,8 +326,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		UserGroupModelImpl userGroupModelImpl = (UserGroupModelImpl)userGroup;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
@@ -377,8 +375,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 				((userGroup.getCompanyId() != userGroupModelImpl.getOriginalCompanyId()) ||
 				!Validator.equals(userGroup.getName(),
 					userGroupModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
 				new Object[] {
 					Long.valueOf(userGroupModelImpl.getOriginalCompanyId()),

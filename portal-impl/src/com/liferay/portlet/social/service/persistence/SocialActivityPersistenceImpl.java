@@ -397,8 +397,6 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SocialActivityModelImpl socialActivityModelImpl = (SocialActivityModelImpl)socialActivity;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MIRRORACTIVITYID,
@@ -457,8 +455,6 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 
 		if (!isNew &&
 				(socialActivity.getMirrorActivityId() != socialActivityModelImpl.getOriginalMirrorActivityId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MIRRORACTIVITYID,
 				new Object[] {
 					Long.valueOf(
@@ -481,8 +477,6 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				(socialActivity.getClassPK() != socialActivityModelImpl.getOriginalClassPK()) ||
 				(socialActivity.getType() != socialActivityModelImpl.getOriginalType()) ||
 				(socialActivity.getReceiverUserId() != socialActivityModelImpl.getOriginalReceiverUserId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R,
 				new Object[] {
 					Long.valueOf(socialActivityModelImpl.getOriginalGroupId()),

@@ -397,8 +397,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ExpandoValueModelImpl expandoValueModelImpl = (ExpandoValueModelImpl)expandoValue;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R,
@@ -454,8 +452,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		if (!isNew &&
 				((expandoValue.getColumnId() != expandoValueModelImpl.getOriginalColumnId()) ||
 				(expandoValue.getRowId() != expandoValueModelImpl.getOriginalRowId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R,
 				new Object[] {
 					Long.valueOf(expandoValueModelImpl.getOriginalColumnId()),
@@ -477,8 +473,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 				((expandoValue.getTableId() != expandoValueModelImpl.getOriginalTableId()) ||
 				(expandoValue.getColumnId() != expandoValueModelImpl.getOriginalColumnId()) ||
 				(expandoValue.getClassPK() != expandoValueModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_C_C,
 				new Object[] {
 					Long.valueOf(expandoValueModelImpl.getOriginalTableId()),

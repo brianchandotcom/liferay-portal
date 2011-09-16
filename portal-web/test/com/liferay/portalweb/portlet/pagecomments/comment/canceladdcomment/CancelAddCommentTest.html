@@ -14,59 +14,59 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Page Comments Test Page</td>
-	<td></td>
+	<td>Page Comments Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Page Comments Test Page</td>
-	<td></td>
+	<td>Page Comments Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//fieldset/div/a</td>
+	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Be the first.</td>
-	<td></td>
+	<td>//fieldset/div/a</td>
+	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_107_postReplyBody0</td>
-	<td></td>
+	<td>//textarea[@name='_107_postReplyBody0']</td>
+	<td>Comment Text Area</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>_107_postReplyBody0</td>
-	<td></td>
+	<td>//textarea[@name='_107_postReplyBody0']</td>
+	<td>Comment Text Area</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_107_postReplyBody0</td>
-	<td>This is a test page comment.</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>_107_postReplyBody0</td>
-	<td>\48</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>_107_postReplyBody0</td>
-	<td>\8</td>
+	<td>//textarea[@name='_107_postReplyBody0']</td>
+	<td>PC Comment</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Cancel']</td>
-	<td></td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>//textarea[@name='_107_postReplyBody0']</td>
+	<td>Comment Text Area</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>This is a test page comment.</td>
+	<td>PC Comment</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertNotVisible</td>
-	<td>_107_postReplyBody0</td>
-	<td></td>
+	<td>//textarea[@name='_107_postReplyBody0']</td>
+	<td>Comment Text Area</td>
 </tr>
 
 </tbody></table>

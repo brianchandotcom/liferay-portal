@@ -288,8 +288,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		PluginSettingModelImpl pluginSettingModelImpl = (PluginSettingModelImpl)pluginSetting;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_I_T,
@@ -345,8 +343,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 					pluginSettingModelImpl.getOriginalPluginId()) ||
 				!Validator.equals(pluginSetting.getPluginType(),
 					pluginSettingModelImpl.getOriginalPluginType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_I_T,
 				new Object[] {
 					Long.valueOf(pluginSettingModelImpl.getOriginalCompanyId()),

@@ -45,8 +45,7 @@ public class AddPageStagingCommunityQuartzTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities",
-			RuntimeVariables.replace("Communities"));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_134_name']",
@@ -60,8 +59,9 @@ public class AddPageStagingCommunityQuartzTest extends BaseTestCase {
 				"Community Staging Community Quartz"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+			selenium.getText("//td[7]/span/ul/li/strong/a"));
+		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -88,7 +88,28 @@ public class AddPageStagingCommunityQuartzTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@name='_134_name_en_US']",
+		assertEquals(RuntimeVariables.replace("Add Page"),
+			selenium.getText("//div[2]/span/button"));
+		selenium.click("//div[2]/span/button");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_156_name_en_US']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_156_name_en_US']",
 			RuntimeVariables.replace("Page Staging Community Quartz"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Page']",
@@ -96,7 +117,7 @@ public class AddPageStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

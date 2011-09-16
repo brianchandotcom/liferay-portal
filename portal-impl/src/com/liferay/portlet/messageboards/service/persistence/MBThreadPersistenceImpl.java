@@ -391,8 +391,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MBThreadModelImpl mbThreadModelImpl = (MBThreadModelImpl)mbThread;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ROOTMESSAGEID,
@@ -437,8 +435,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		if (!isNew &&
 				(mbThread.getRootMessageId() != mbThreadModelImpl.getOriginalRootMessageId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ROOTMESSAGEID,
 				new Object[] {
 					Long.valueOf(mbThreadModelImpl.getOriginalRootMessageId())

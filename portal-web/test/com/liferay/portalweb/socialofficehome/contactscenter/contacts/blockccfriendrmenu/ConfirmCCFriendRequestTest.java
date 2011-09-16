@@ -30,7 +30,7 @@ public class ConfirmCCFriendRequestTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -41,32 +41,12 @@ public class ConfirmCCFriendRequestTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav/ul/li[1]/a/span"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[2]/div/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/div/ul/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Contacts Center"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -85,7 +65,7 @@ public class ConfirmCCFriendRequestTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("You have a pending reqest."),
+		assertEquals(RuntimeVariables.replace("You have a pending request."),
 			selenium.getText("//div[2]/div/div[1]/div/div[1]/div/a"));
 		selenium.clickAt("//div[2]/div/div[1]/div/div[1]/div/a",
 			RuntimeVariables.replace("You have a pending reqest."));
@@ -114,7 +94,7 @@ public class ConfirmCCFriendRequestTest extends BaseTestCase {
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
 			selenium.getText("//td/div[2]/div/a"));
 		assertTrue(selenium.isPartialText("//td/div[2]/div",
-				" wants to be your friend."));
+				"wants to be your friend."));
 		assertEquals(RuntimeVariables.replace("Confirm"),
 			selenium.getText("//div[3]/span[1]/a"));
 		selenium.clickAt("//div[3]/span[1]/a",
@@ -134,7 +114,7 @@ public class ConfirmCCFriendRequestTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/div/ul/li[2]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -145,12 +125,12 @@ public class ConfirmCCFriendRequestTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/div/ul/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/a/img"));
-		assertEquals(RuntimeVariables.replace("View 1 friends."),
+		assertEquals(RuntimeVariables.replace("Manage 1 friends."),
 			selenium.getText("//div[1]/div/div/div/div[2]/a"));
 		selenium.mouseOver("//div[1]/a/img");
 		assertEquals(RuntimeVariables.replace(

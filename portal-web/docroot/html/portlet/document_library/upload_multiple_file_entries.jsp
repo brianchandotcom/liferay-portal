@@ -99,7 +99,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		</aui:form>
 
 		<%
-		DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+		DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse, true);
 
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-multiple-file-entries"), currentURL);
 		%>

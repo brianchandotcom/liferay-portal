@@ -471,7 +471,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 			ThreadLocalCache<Integer> threadLocalCache =
 				ThreadLocalCacheManager.getThreadLocalCache(
-					Lifecycle.REQUEST, _COUNT_BY_R_U_CACHE_NAME);
+					Lifecycle.REQUEST, RoleLocalServiceImpl.class.getName());
 
 			String key = String.valueOf(role.getRoleId()).concat(
 				String.valueOf(userId));
@@ -755,8 +755,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		catch (NoSuchRoleException nsge) {
 		}
 	}
-
-	private static final String _COUNT_BY_R_U_CACHE_NAME = "COUNT_BY_R_U";
 
 	private Map<String, Role> _systemRolesMap = new HashMap<String, Role>();
 

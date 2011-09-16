@@ -84,7 +84,9 @@ public class RemoveMembersOrganizationTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Available", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Available"),
+			selenium.getText("link=Available"));
+		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_125_keywords']",

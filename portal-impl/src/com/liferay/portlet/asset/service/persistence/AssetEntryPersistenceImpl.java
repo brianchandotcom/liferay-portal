@@ -379,8 +379,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		AssetEntryModelImpl assetEntryModelImpl = (AssetEntryModelImpl)assetEntry;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_CU,
@@ -437,8 +435,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				((assetEntry.getGroupId() != assetEntryModelImpl.getOriginalGroupId()) ||
 				!Validator.equals(assetEntry.getClassUuid(),
 					assetEntryModelImpl.getOriginalClassUuid()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_CU,
 				new Object[] {
 					Long.valueOf(assetEntryModelImpl.getOriginalGroupId()),
@@ -462,8 +458,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		if (!isNew &&
 				((assetEntry.getClassNameId() != assetEntryModelImpl.getOriginalClassNameId()) ||
 				(assetEntry.getClassPK() != assetEntryModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
 				new Object[] {
 					Long.valueOf(assetEntryModelImpl.getOriginalClassNameId()),

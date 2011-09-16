@@ -18,7 +18,6 @@ import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portlet.addapplication.collaboration.CollaborationTests;
 import com.liferay.portalweb.portlet.addapplication.community.CommunityTests;
 import com.liferay.portalweb.portlet.addapplication.contentmanagement.ContentManagementTests;
-import com.liferay.portalweb.portlet.addapplication.entertainment.EntertainmentTests;
 import com.liferay.portalweb.portlet.addapplication.finance.FinanceTests;
 import com.liferay.portalweb.portlet.addapplication.news.NewsTests;
 import com.liferay.portalweb.portlet.addapplication.sample.SampleTests;
@@ -41,7 +40,6 @@ public class AddApplicationTests extends BaseTests {
 		testSuite.addTest(CollaborationTests.suite());
 		testSuite.addTest(CommunityTests.suite());
 		testSuite.addTest(ContentManagementTests.suite());
-		testSuite.addTest(EntertainmentTests.suite());
 		testSuite.addTest(FinanceTests.suite());
 		testSuite.addTest(NewsTests.suite());
 		testSuite.addTest(SampleTests.suite());

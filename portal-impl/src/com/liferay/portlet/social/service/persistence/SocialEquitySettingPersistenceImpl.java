@@ -300,8 +300,6 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SocialEquitySettingModelImpl socialEquitySettingModelImpl = (SocialEquitySettingModelImpl)socialEquitySetting;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_A_T,
@@ -357,8 +355,6 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 				!Validator.equals(socialEquitySetting.getActionId(),
 					socialEquitySettingModelImpl.getOriginalActionId()) ||
 				(socialEquitySetting.getType() != socialEquitySettingModelImpl.getOriginalType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_A_T,
 				new Object[] {
 					Long.valueOf(

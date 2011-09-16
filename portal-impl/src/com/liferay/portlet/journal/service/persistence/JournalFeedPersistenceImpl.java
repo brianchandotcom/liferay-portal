@@ -318,8 +318,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		JournalFeedModelImpl journalFeedModelImpl = (JournalFeedModelImpl)journalFeed;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -382,8 +380,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				(!Validator.equals(journalFeed.getUuid(),
 					journalFeedModelImpl.getOriginalUuid()) ||
 				(journalFeed.getGroupId() != journalFeedModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					journalFeedModelImpl.getOriginalUuid(),
@@ -406,8 +402,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				((journalFeed.getGroupId() != journalFeedModelImpl.getOriginalGroupId()) ||
 				!Validator.equals(journalFeed.getFeedId(),
 					journalFeedModelImpl.getOriginalFeedId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F,
 				new Object[] {
 					Long.valueOf(journalFeedModelImpl.getOriginalGroupId()),

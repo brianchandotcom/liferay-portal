@@ -257,8 +257,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		BrowserTrackerModelImpl browserTrackerModelImpl = (BrowserTrackerModelImpl)browserTracker;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID,
@@ -304,8 +302,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 		if (!isNew &&
 				(browserTracker.getUserId() != browserTrackerModelImpl.getOriginalUserId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID,
 				new Object[] {
 					Long.valueOf(browserTrackerModelImpl.getOriginalUserId())

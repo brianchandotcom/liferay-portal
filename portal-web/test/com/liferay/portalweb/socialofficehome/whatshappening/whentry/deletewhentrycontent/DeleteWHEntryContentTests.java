@@ -29,6 +29,7 @@ public class DeleteWHEntryContentTests extends BaseTests {
 
 		testSuite.addTestSuite(AddWHEntryContentTest.class);
 		testSuite.addTestSuite(DeleteWHEntryContentTest.class);
+		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 
 		return testSuite;
 	}

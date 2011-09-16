@@ -15,28 +15,43 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Document Library Test Page</td>
-	<td>Document Library Test Page</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Document Library Test Page</td>
-	<td>Document Library Test Page</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[2]/a</td>
-	<td>Add Folder</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[2]/a</td>
-	<td>Add Folder</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Folder</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_20_name']</td>
-	<td>DL Folder Name</td>
+	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -50,8 +65,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[2]/strong</td>
-	<td>DL Folder Name</td>
+	<td>//span[@class='document-title']</td>
+	<td>DM Folder Name</td>
 </tr>
 
 </tbody></table>

@@ -34,7 +34,6 @@ public class AddNewDLFolderDocumentAPActionsTests extends BaseTests {
 		testSuite.addTestSuite(AddDLFolderTest.class);
 		testSuite.addTestSuite(AddNewDLFolderDocumentAPActionsTest.class);
 		testSuite.addTestSuite(ViewDLFolderDocumentAPTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

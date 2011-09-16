@@ -307,8 +307,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MBStatsUserModelImpl mbStatsUserModelImpl = (MBStatsUserModelImpl)mbStatsUser;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
@@ -357,8 +355,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		if (!isNew &&
 				((mbStatsUser.getGroupId() != mbStatsUserModelImpl.getOriginalGroupId()) ||
 				(mbStatsUser.getUserId() != mbStatsUserModelImpl.getOriginalUserId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
 				new Object[] {
 					Long.valueOf(mbStatsUserModelImpl.getOriginalGroupId()),

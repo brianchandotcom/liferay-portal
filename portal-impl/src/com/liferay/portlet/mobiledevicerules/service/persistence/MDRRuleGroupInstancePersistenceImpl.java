@@ -343,8 +343,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MDRRuleGroupInstanceModelImpl mdrRuleGroupInstanceModelImpl = (MDRRuleGroupInstanceModelImpl)mdrRuleGroupInstance;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -408,8 +406,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				(!Validator.equals(mdrRuleGroupInstance.getUuid(),
 					mdrRuleGroupInstanceModelImpl.getOriginalUuid()) ||
 				(mdrRuleGroupInstance.getGroupId() != mdrRuleGroupInstanceModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					mdrRuleGroupInstanceModelImpl.getOriginalUuid(),
@@ -433,8 +429,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				((mdrRuleGroupInstance.getClassNameId() != mdrRuleGroupInstanceModelImpl.getOriginalClassNameId()) ||
 				(mdrRuleGroupInstance.getClassPK() != mdrRuleGroupInstanceModelImpl.getOriginalClassPK()) ||
 				(mdrRuleGroupInstance.getRuleGroupId() != mdrRuleGroupInstanceModelImpl.getOriginalRuleGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_R,
 				new Object[] {
 					Long.valueOf(

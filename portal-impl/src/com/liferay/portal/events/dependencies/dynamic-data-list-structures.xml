@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name><![CDATA[Contacts]]></name>
+		<description><![CDATA[Contacts List]]></description>
+		<root available-locales="en_US" default-locale="en_US">
+			<dynamic-element dataType="string" name="firstName" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[First Name]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="lastName" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Last Name]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="email" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Email]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="long" name="company" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Company]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="jobTitle" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Job Title]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="phoneOffice" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Phone (Office)]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="phoneMobile" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Phone (Mobile)]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="imService" type="select">
+				<dynamic-element name="aol" type="option" value="aol">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[AOL]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="yahoo" type="option" value="yahoo">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Yahoo]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="gtalk" type="option" value="gtalk">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[GTalk]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Instant Messenger Service]]></entry>
+					<entry name="predefinedValue"><![CDATA[gtalk]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="imUserName" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Instant Messenger]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="notes" type="textarea">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Notes]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+		</root>
+	</structure>
+	<structure>
+		<name><![CDATA[Meeting Minutes]]></name>
+		<description><![CDATA[Meeting minutes]]></description>
+		<root available-locales="en_US" default-locale="en_US">
+			<dynamic-element dataType="string" name="title" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Title]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="date" fieldNamespace="ddm" name="meetingDate" type="ddm-date">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Meeting Date]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="description" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Description]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="duration" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Meeting Duration]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="long" name="author" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Author]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="minutes" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Minutes]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+		</root>
+	</structure>
+	<structure>
+		<name><![CDATA[Issues]]></name>
+		<description><![CDATA[Issues tracking]]></description>
+		<root available-locales="en_US" default-locale="en_US">
+			<dynamic-element dataType="string" name="issueId" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Issue ID]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="title" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Title]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="assignedTo" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Assigned To]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="status" type="select">
+				<dynamic-element name="open" type="option" value="open">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Open]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="pending" type="option" value="pending">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Pending]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="completed" type="option" value="completed">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Completed]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Status]]></entry>
+					<entry name="predefinedValue"><![CDATA[open]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="severity" type="select">
+				<dynamic-element name="critical" type="option" value="critical">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Critical]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="major" type="option" value="major">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Major]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="minor" type="option" value="minor">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Minor]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="trivial" type="option" value="trivial">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Trivial]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Severity]]></entry>
+					<entry name="predefinedValue"><![CDATA[minor]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="date" fieldNamespace="ddm" name="dueDate" type="ddm-date">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Due Date]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="description" type="textarea">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Description]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="comments" type="textarea">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Comments]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+		</root>
+	</structure>
+	<structure>
+		<name><![CDATA[To Do]]></name>
+		<description><![CDATA[To do list items]]></description>
+		<root available-locales="en_US" default-locale="en_US">
+			<dynamic-element dataType="string" name="title" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Title]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="description" type="textarea">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Description]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="date" fieldNamespace="ddm" name="startDate" type="ddm-date">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Start Date]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="date" fieldNamespace="ddm" name="endDate" type="ddm-date">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[End Date]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="assignedTo" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Assigned To]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="status" type="select">
+				<dynamic-element name="open" type="option" value="open">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Open]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="pending" type="option" value="pending">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Pending]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="completed" type="option" value="completed">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Completed]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Status]]></entry>
+					<entry name="predefinedValue"><![CDATA[open]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="percentComplete" type="text">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[% Complete]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="severity" type="select">
+				<dynamic-element name="critical" type="option" value="critical">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Critical]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="major" type="option" value="major">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Major]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="minor" type="option" value="minor">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Minor]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="trivial" type="option" value="trivial">
+					<meta-data locale="en_US">
+						<entry name="label"><![CDATA[Trivial]]></entry>
+					</meta-data>
+				</dynamic-element>
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Severity]]></entry>
+					<entry name="predefinedValue"><![CDATA[minor]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" name="comments" type="textarea">
+				<meta-data locale="en_US">
+					<entry name="label"><![CDATA[Comments]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+					<entry name="showLabel"><![CDATA[true]]></entry>
+				</meta-data>
+			</dynamic-element>
+		</root>
+	</structure>
+</root>

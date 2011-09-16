@@ -302,8 +302,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DLContentModelImpl dlContentModelImpl = (DLContentModelImpl)dlContent;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P_R_P_V,
@@ -366,8 +364,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 					dlContentModelImpl.getOriginalPath()) ||
 				!Validator.equals(dlContent.getVersion(),
 					dlContentModelImpl.getOriginalVersion()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P_R_P_V,
 				new Object[] {
 					Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),

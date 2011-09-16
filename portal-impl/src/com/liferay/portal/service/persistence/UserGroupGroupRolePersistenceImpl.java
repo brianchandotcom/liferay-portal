@@ -311,8 +311,6 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
 			UserGroupGroupRoleImpl.class, userGroupGroupRole.getPrimaryKey());
 

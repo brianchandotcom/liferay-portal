@@ -46,6 +46,6 @@ public class ViewConfigurePortletAvailableDLDocumentAPTest extends BaseTestCase 
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isTextPresent("DL Folder Document Title"));
+		assertFalse(selenium.isTextPresent("DM Folder Document Title"));
 	}
 }

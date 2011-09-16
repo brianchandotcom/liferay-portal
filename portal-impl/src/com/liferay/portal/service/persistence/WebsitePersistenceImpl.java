@@ -308,8 +308,6 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteImpl.class, website.getPrimaryKey());
 

@@ -22,44 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SelectWebContentTest extends BaseTestCase {
 	public void testSelectWebContent() throws Exception {
-		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
-			RuntimeVariables.replace(
-				"Community Staging Community Web Content Display"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Staging"),
-			selenium.getText("//td[1]/a[2]"));
-		selenium.clickAt("//td[1]/a[2]", RuntimeVariables.replace("Staging"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		selenium.open("/web/community-staging-community-web-content-display/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -83,10 +46,11 @@ public class SelectWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue staging controls-visible signed-in public-page']"));
+		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//img[@alt='Select Web Content']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Select Web Content"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -108,12 +72,10 @@ public class SelectWebContentTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[3]/a"));
+		assertTrue(selenium.isElementPresent("//td[3]/a"));
 		assertTrue(selenium.isElementPresent("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[6]/a"));
+			selenium.getText("//td[5]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("WC Web Content Name"));
 
@@ -123,8 +85,10 @@ public class SelectWebContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText("//form[@id='_86_fm1']/div",
-							"Displaying Content:")) {
+				if (RuntimeVariables.replace(
+							"Displaying Content: WC Web Content Name (Modified)")
+										.equals(selenium.getText(
+								"//span[@class='displaying-article-id-holder']"))) {
 					break;
 				}
 			}
@@ -135,13 +99,37 @@ public class SelectWebContentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//form[@id='_86_fm1']/div",
-				"Displaying Content:"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Displaying Content: WC Web Content Name (Modified)"),
+			selenium.getText("//span[@class='displaying-article-id-holder']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("WC Web Content Content")
+										.equals(selenium.getText(
+								"//div[@class='journal-content-article']/p"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

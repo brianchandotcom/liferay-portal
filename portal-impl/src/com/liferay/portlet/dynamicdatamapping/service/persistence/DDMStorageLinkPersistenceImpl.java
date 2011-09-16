@@ -293,8 +293,6 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DDMStorageLinkModelImpl ddmStorageLinkModelImpl = (DDMStorageLinkModelImpl)ddmStorageLink;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK,
@@ -346,8 +344,6 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 		if (!isNew &&
 				(ddmStorageLink.getClassPK() != ddmStorageLinkModelImpl.getOriginalClassPK())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK,
 				new Object[] {
 					Long.valueOf(ddmStorageLinkModelImpl.getOriginalClassPK())

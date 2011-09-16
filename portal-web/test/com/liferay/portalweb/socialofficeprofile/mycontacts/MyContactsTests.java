@@ -15,10 +15,7 @@
 package com.liferay.portalweb.socialofficeprofile.mycontacts;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.socialofficeprofile.mycontacts.filtermcallcontacts.FilterMCAllContactsTests;
-import com.liferay.portalweb.socialofficeprofile.mycontacts.filtermccoworker.FilterMCCoworkerTests;
-import com.liferay.portalweb.socialofficeprofile.mycontacts.filtermcnullcontact.FilterMCNullContactTests;
-import com.liferay.portalweb.socialofficeprofile.mycontacts.viewmccoworkerprofile.ViewMCCoworkerProfileTests;
+import com.liferay.portalweb.socialofficeprofile.mycontacts.mycontact.MyContactTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,10 +28,7 @@ public class MyContactsTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(FilterMCAllContactsTests.suite());
-		testSuite.addTest(FilterMCCoworkerTests.suite());
-		testSuite.addTest(FilterMCNullContactTests.suite());
-		testSuite.addTest(ViewMCCoworkerProfileTests.suite());
+		testSuite.addTest(MyContactTests.suite());
 
 		return testSuite;
 	}

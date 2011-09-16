@@ -53,12 +53,12 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ThemeServiceSoap {
-	public static java.util.List<com.liferay.portal.model.Theme> getThemes(
-		long companyId) throws RemoteException {
+	public static com.liferay.portal.model.Theme[] getThemes(long companyId)
+		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portal.model.Theme> returnValue = ThemeServiceUtil.getThemes(companyId);
 
-			return returnValue;
+			return returnValue.toArray(new com.liferay.portal.model.Theme[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

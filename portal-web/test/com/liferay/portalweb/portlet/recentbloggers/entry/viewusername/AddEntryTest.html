@@ -14,29 +14,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Blogs Test Page</td>
-	<td></td>
+	<td>Blogs Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Test Page</td>
-	<td></td>
+	<td>Blogs Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Blog Entry']</td>
-	<td></td>
+	<td>Add Blog Entry</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_33_title</td>
-	<td>Title</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>//input[@id='_33_title']</td>
+	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -51,7 +46,7 @@
 <tr>
 	<td>type</td>
 	<td>//body</td>
-	<td>Content.</td>
+	<td>Blogs Entry Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -61,7 +56,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -70,13 +65,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div[1]/div[1]/a</td>
-	<td>Title</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p</td>
-	<td>Content.</td>
+	<td>//div[@class='entry-body']/p</td>
+	<td>Blogs Entry Content</td>
 </tr>
 
 </tbody></table>

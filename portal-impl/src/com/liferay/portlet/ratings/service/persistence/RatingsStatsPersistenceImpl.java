@@ -263,8 +263,6 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		RatingsStatsModelImpl ratingsStatsModelImpl = (RatingsStatsModelImpl)ratingsStats;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
@@ -313,8 +311,6 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		if (!isNew &&
 				((ratingsStats.getClassNameId() != ratingsStatsModelImpl.getOriginalClassNameId()) ||
 				(ratingsStats.getClassPK() != ratingsStatsModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
 				new Object[] {
 					Long.valueOf(ratingsStatsModelImpl.getOriginalClassNameId()),

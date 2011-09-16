@@ -116,7 +116,7 @@ public class AddOrganization2Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
 					break;
 				}
 			}
@@ -127,11 +127,11 @@ public class AddOrganization2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("All Organizations"),
+		assertEquals(RuntimeVariables.replace("Users and Organizations"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_125_keywords']",

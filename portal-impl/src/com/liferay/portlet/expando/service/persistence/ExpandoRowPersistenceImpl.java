@@ -275,8 +275,6 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ExpandoRowModelImpl expandoRowModelImpl = (ExpandoRowModelImpl)expandoRow;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_C,
@@ -325,8 +323,6 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		if (!isNew &&
 				((expandoRow.getTableId() != expandoRowModelImpl.getOriginalTableId()) ||
 				(expandoRow.getClassPK() != expandoRowModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_C,
 				new Object[] {
 					Long.valueOf(expandoRowModelImpl.getOriginalTableId()),

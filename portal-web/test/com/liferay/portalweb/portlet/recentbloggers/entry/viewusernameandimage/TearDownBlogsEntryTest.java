@@ -47,7 +47,7 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Blogs Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 

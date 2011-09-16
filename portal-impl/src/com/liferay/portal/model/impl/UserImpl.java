@@ -273,7 +273,7 @@ public class UserImpl extends UserBaseImpl {
 
 		ThreadLocalCache<List<Group>> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
-				Lifecycle.REQUEST, _GET_MY_SITES_CACHE_NAME);
+				Lifecycle.REQUEST, UserImpl.class.getName());
 
 		String key = StringUtil.toHexString(max);
 
@@ -689,8 +689,6 @@ public class UserImpl extends UserBaseImpl {
 		return WebsiteLocalServiceUtil.getWebsites(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
-
-	private static final String _GET_MY_SITES_CACHE_NAME = "GET_MY_SITES";
 
 	private Locale _locale;
 	private boolean _passwordModified;

@@ -289,8 +289,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		AnnouncementsFlagModelImpl announcementsFlagModelImpl = (AnnouncementsFlagModelImpl)announcementsFlag;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_E_V,
@@ -342,8 +340,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 				((announcementsFlag.getUserId() != announcementsFlagModelImpl.getOriginalUserId()) ||
 				(announcementsFlag.getEntryId() != announcementsFlagModelImpl.getOriginalEntryId()) ||
 				(announcementsFlag.getValue() != announcementsFlagModelImpl.getOriginalValue()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_E_V,
 				new Object[] {
 					Long.valueOf(announcementsFlagModelImpl.getOriginalUserId()),

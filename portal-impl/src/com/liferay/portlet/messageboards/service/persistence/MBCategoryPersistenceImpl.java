@@ -324,8 +324,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MBCategoryModelImpl mbCategoryModelImpl = (MBCategoryModelImpl)mbCategory;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -381,8 +379,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				(!Validator.equals(mbCategory.getUuid(),
 					mbCategoryModelImpl.getOriginalUuid()) ||
 				(mbCategory.getGroupId() != mbCategoryModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					mbCategoryModelImpl.getOriginalUuid(),

@@ -94,10 +94,10 @@ public class ${entity.name}ServiceSoap {
 					java.lang.Short[]
 				<#elseif returnTypeGenericsName == "java.util.List<java.lang.String>">
 					java.lang.String[]
-				<#elseif entity.hasColumns()>
+				<#elseif entity.hasColumns() && serviceBuilder.hasEntityByGenericsName(serviceBuilder.getListActualTypeArguments(method.getReturns()))>
 					${soapModelName}[]
 				<#else>
-					${returnTypeGenericsName}
+					${serviceBuilder.getListActualTypeArguments(method.getReturns())}[]
 				</#if>
 			<#else>
 				${returnTypeGenericsName}
@@ -205,10 +205,10 @@ public class ${entity.name}ServiceSoap {
 								return returnValue.toArray(new java.lang.Short[returnValue.size()]);
 							<#elseif returnTypeGenericsName == "java.util.List<java.lang.String>">
 								return returnValue.toArray(new java.lang.String[returnValue.size()]);
-							<#elseif entity.hasColumns()>
+							<#elseif entity.hasColumns() && serviceBuilder.hasEntityByGenericsName(serviceBuilder.getListActualTypeArguments(method.getReturns()))>
 								return ${soapModelName}.toSoapModels(returnValue);
 							<#else>
-								return returnValue;
+								return returnValue.toArray(new ${serviceBuilder.getListActualTypeArguments(method.getReturns())}[returnValue.size()]);
 							</#if>
 						<#else>
 							return returnValue;

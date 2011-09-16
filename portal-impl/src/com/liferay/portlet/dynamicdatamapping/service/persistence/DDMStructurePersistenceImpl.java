@@ -348,8 +348,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DDMStructureModelImpl ddmStructureModelImpl = (DDMStructureModelImpl)ddmStructure;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -412,8 +410,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				(!Validator.equals(ddmStructure.getUuid(),
 					ddmStructureModelImpl.getOriginalUuid()) ||
 				(ddmStructure.getGroupId() != ddmStructureModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					ddmStructureModelImpl.getOriginalUuid(),
@@ -436,8 +432,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				((ddmStructure.getGroupId() != ddmStructureModelImpl.getOriginalGroupId()) ||
 				!Validator.equals(ddmStructure.getStructureKey(),
 					ddmStructureModelImpl.getOriginalStructureKey()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_S,
 				new Object[] {
 					Long.valueOf(ddmStructureModelImpl.getOriginalGroupId()),

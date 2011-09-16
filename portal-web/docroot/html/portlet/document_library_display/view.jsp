@@ -224,7 +224,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 		<%
 		if (folder != null) {
-			DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+			DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse, true);
 
 			PortalUtil.setPageSubtitle(folder.getName(), request);
 			PortalUtil.setPageDescription(folder.getDescription(), request);

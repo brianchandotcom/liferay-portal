@@ -419,8 +419,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SocialRequestModelImpl socialRequestModelImpl = (SocialRequestModelImpl)socialRequest;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -486,8 +484,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				(!Validator.equals(socialRequest.getUuid(),
 					socialRequestModelImpl.getOriginalUuid()) ||
 				(socialRequest.getGroupId() != socialRequestModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					socialRequestModelImpl.getOriginalUuid(),
@@ -512,8 +508,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				(socialRequest.getClassPK() != socialRequestModelImpl.getOriginalClassPK()) ||
 				(socialRequest.getType() != socialRequestModelImpl.getOriginalType()) ||
 				(socialRequest.getReceiverUserId() != socialRequestModelImpl.getOriginalReceiverUserId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_C_C_T_R,
 				new Object[] {
 					Long.valueOf(socialRequestModelImpl.getOriginalUserId()),

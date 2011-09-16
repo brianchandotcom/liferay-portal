@@ -16,72 +16,72 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Polls</td>
-	<td></td>
+	<td>Polls</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Question']</td>
-	<td></td>
+	<td>Add Question</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_title_en_US</td>
-	<td>Test2 Poll2 Question2</td>
+	<td>//input[@id='_25_title_en_US']</td>
+	<td>PD Question2 Title</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_description_en_US</td>
-	<td>This is a test2 poll2 description2.</td>
+	<td>//textarea[@id='_25_description_en_US']</td>
+	<td>PD Question2 Description</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_choiceDescriptiona_en_US</td>
-	<td>Test2 Choice2 A2</td>
+	<td>//input[@id='_25_choiceDescriptiona_en_US']</td>
+	<td>PD Question2 ChoiceA</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_choiceDescriptionb_en_US</td>
-	<td>Test2 Choice2 B2</td>
+	<td>//input[@id='_25_choiceDescriptionb_en_US']</td>
+	<td>PD Question2 ChoiceB</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Choice']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>_25_choiceDescriptionc_en_US</td>
-	<td></td>
+	<td>Add Choice</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_25_choiceDescriptionc_en_US</td>
-	<td>Test2 Choice2 C2</td>
+	<td>//input[@id='_25_choiceDescriptionc_en_US']</td>
+	<td>PD Question2 ChoiceC</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Test2 Poll2 Question2</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>PD Question2 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>PD Question1 Title</td>
 </tr>
 
 </tbody></table>

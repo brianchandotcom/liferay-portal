@@ -278,8 +278,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerImpl.class, userTracker.getPrimaryKey());
 

@@ -343,8 +343,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		BookmarksEntryModelImpl bookmarksEntryModelImpl = (BookmarksEntryModelImpl)bookmarksEntry;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -401,8 +399,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 				(!Validator.equals(bookmarksEntry.getUuid(),
 					bookmarksEntryModelImpl.getOriginalUuid()) ||
 				(bookmarksEntry.getGroupId() != bookmarksEntryModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					bookmarksEntryModelImpl.getOriginalUuid(),

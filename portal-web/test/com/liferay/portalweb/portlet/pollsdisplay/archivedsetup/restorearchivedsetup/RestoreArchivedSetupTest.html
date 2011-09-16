@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -39,18 +44,23 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@class='taglib-text']</td>
+	<td>//div[@class='archived-setups']/span/a/span</td>
+	<td>Archive/Restore Setup</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='archived-setups']/span/a/span</td>
 	<td>Archive/Restore Setup</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span[@class='taglib-text']</td>
+	<td>//div[@class='archived-setups']/span/a/span</td>
 	<td>Archive/Restore Setup</td>
 </tr>
 <tr>
@@ -64,9 +74,14 @@
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//tr[3]/td[3]</td>
 	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[4]/span/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -75,23 +90,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']</td>
 	<td>Restore</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']</td>
 	<td>Restore</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[@id='_86_rjus']</td>
 	<td>Restore</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -99,49 +114,49 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//span[1]/span/span/input</td>
-	<td></td>
+	<td>//div/span[1]/span/span/input</td>
+	<td>Choice A Radio Button</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//span[2]/span/span/input</td>
-	<td></td>
+	<td>//div/span[2]/span/span/input</td>
+	<td>Choice B Radio Button</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//span[3]/span/span/input</td>
+	<td>//div/span[3]/span/span/input</td>
+	<td>Choice C Radio Button</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>PD Question ChoiceA</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test Choice A</td>
+	<td>PD Question ChoiceB</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test Choice B</td>
+	<td>PD Question ChoiceC</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Test Choice C</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-configuration portlet-msg-info']</td>
 	<td>Please configure this portlet to make it visible to all users.</td>
-	<td></td>
 </tr>
 
 </tbody></table>

@@ -61,7 +61,7 @@ public class DeleteTemporaryUserGroupTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -74,28 +74,10 @@ public class DeleteTemporaryUserGroupTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("User Groups"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_125_name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_name']",
 			RuntimeVariables.replace("Temporary"));
@@ -104,6 +86,10 @@ public class DeleteTemporaryUserGroupTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Temporary"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("This is a temporary user group."),
+			selenium.getText("//td[3]/a"));
 		selenium.clickAt("//input[@name='_125_allRowIds']",
 			RuntimeVariables.replace(""));
 		selenium.click(RuntimeVariables.replace("//input[@value='Delete']"));
@@ -114,5 +100,9 @@ public class DeleteTemporaryUserGroupTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("No user groups were found."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent("Temporary"));
+		assertFalse(selenium.isTextPresent("This is a temporary user group."));
 	}
 }

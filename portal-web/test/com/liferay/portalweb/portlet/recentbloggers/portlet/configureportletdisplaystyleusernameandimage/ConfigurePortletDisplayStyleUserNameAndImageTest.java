@@ -32,7 +32,7 @@ public class ConfigurePortletDisplayStyleUserNameAndImageTest
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Recent Bloggers Test Page")) {
+				if (selenium.isVisible("link=Recent Bloggers Test Page")) {
 					break;
 				}
 			}
@@ -44,9 +44,11 @@ public class ConfigurePortletDisplayStyleUserNameAndImageTest
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Recent Bloggers Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Recent Bloggers Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -70,7 +72,8 @@ public class ConfigurePortletDisplayStyleUserNameAndImageTest
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -78,7 +81,7 @@ public class ConfigurePortletDisplayStyleUserNameAndImageTest
 			}
 
 			try {
-				if (selenium.isVisible("_86_displayStyle")) {
+				if (selenium.isVisible("//select[@id='_86_displayStyle']")) {
 					break;
 				}
 			}
@@ -89,15 +92,16 @@ public class ConfigurePortletDisplayStyleUserNameAndImageTest
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_86_displayStyle",
-			RuntimeVariables.replace("label=User Name and Image"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_86_displayStyle']",
+			RuntimeVariables.replace("User Name and Image"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("User Name and Image",
-			selenium.getSelectedLabel("_86_displayStyle"));
+			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
 	}
 }

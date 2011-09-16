@@ -297,8 +297,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		PollsChoiceModelImpl pollsChoiceModelImpl = (PollsChoiceModelImpl)pollsChoice;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_N,
@@ -355,8 +353,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 				((pollsChoice.getQuestionId() != pollsChoiceModelImpl.getOriginalQuestionId()) ||
 				!Validator.equals(pollsChoice.getName(),
 					pollsChoiceModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_N,
 				new Object[] {
 					Long.valueOf(pollsChoiceModelImpl.getOriginalQuestionId()),

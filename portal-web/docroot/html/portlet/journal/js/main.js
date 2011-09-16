@@ -944,13 +944,13 @@ AUI().add(
 							buttons: [
 								{
 									handler: saveCallback,
-									text: Liferay.Language.get('save')
+									label: Liferay.Language.get('save')
 								},
 								{
 									handler: function() {
 										this.close();
 									},
-									text: Liferay.Language.get('cancel')
+									label: Liferay.Language.get('cancel')
 								}
 							],
 							centered: true,

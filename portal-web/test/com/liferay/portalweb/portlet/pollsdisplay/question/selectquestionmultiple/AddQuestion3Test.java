@@ -41,58 +41,48 @@ public class AddQuestion3Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Polls", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Question']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Question"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_title_en_US",
-			RuntimeVariables.replace("Test3 Poll3 Question3"));
+		selenium.type("//input[@id='_25_title_en_US']",
+			RuntimeVariables.replace("PD Question3 Title"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_description_en_US",
-			RuntimeVariables.replace("This is a test poll description."));
+		selenium.type("//textarea[@id='_25_description_en_US']",
+			RuntimeVariables.replace("PD Question3 Description"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_choiceDescriptiona_en_US",
-			RuntimeVariables.replace("Test3 Choice3 A3"));
+		selenium.type("//input[@id='_25_choiceDescriptiona_en_US']",
+			RuntimeVariables.replace("PD Question3 ChoiceA"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_choiceDescriptionb_en_US",
-			RuntimeVariables.replace("Test3 Choice3 B3"));
+		selenium.type("//input[@id='_25_choiceDescriptionb_en_US']",
+			RuntimeVariables.replace("PD Question3 ChoiceB"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Choice']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Choice"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("_25_choiceDescriptionc_en_US")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.type("//input[@id='_25_choiceDescriptionc_en_US']",
+			RuntimeVariables.replace("PD Question3 ChoiceC"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_25_choiceDescriptionc_en_US",
-			RuntimeVariables.replace("Test3 Choice3 C3"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isElementPresent("link=Test3 Poll3 Question3"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("PD Question3 Title"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("PD Question2 Title"),
+			selenium.getText("//tr[4]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("PD Question1 Title"),
+			selenium.getText("//tr[5]/td[1]/a"));
 	}
 }

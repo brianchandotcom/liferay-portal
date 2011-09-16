@@ -289,8 +289,6 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MBThreadFlagModelImpl mbThreadFlagModelImpl = (MBThreadFlagModelImpl)mbThreadFlag;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
@@ -339,8 +337,6 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		if (!isNew &&
 				((mbThreadFlag.getUserId() != mbThreadFlagModelImpl.getOriginalUserId()) ||
 				(mbThreadFlag.getThreadId() != mbThreadFlagModelImpl.getOriginalThreadId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
 				new Object[] {
 					Long.valueOf(mbThreadFlagModelImpl.getOriginalUserId()),

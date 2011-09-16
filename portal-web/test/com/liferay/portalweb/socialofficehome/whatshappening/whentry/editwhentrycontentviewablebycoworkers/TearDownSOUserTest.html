@@ -10,7 +10,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/user/joebloggs/home/</td>
 	<td></td>
 </tr>
 <tr>
@@ -25,8 +25,18 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td>Users</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>View All Users</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>View All Users</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -51,7 +61,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_125_keywords']</td>
-	<td>socialofficecoworkersn</td>
+	<td>socialoffice</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -71,7 +81,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -89,16 +99,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>socialofficefriendsn</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
-</tr>
-<tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
 	<td>user2Deactivated</td>
@@ -111,7 +111,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -127,16 +127,6 @@
 	<td>label</td>
 	<td>User2NotDeactivated</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>socialofficefollowersn</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -151,7 +141,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -169,16 +159,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>socialofficefriend2sn</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
-</tr>
-<tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
 	<td>user4Deactivated</td>
@@ -191,7 +171,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -221,12 +201,12 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value='Deactivate']</td>
-	<td></td>
+	<td>Deactivate</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -237,6 +217,21 @@
 	<td>label</td>
 	<td>User5NotDeactivated</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -251,7 +246,7 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_125_status']</td>
-	<td>label=Inactive</td>
+	<td>Inactive</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -259,8 +254,13 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td>user1Deleted</td>
 </tr>
 <tr>
@@ -270,12 +270,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -289,8 +289,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
+	<td>storeElementPresent</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td>user2Deleted</td>
 </tr>
 <tr>
@@ -300,12 +300,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -319,8 +319,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
+	<td>storeElementPresent</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td>user3Deleted</td>
 </tr>
 <tr>
@@ -330,12 +330,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -349,8 +349,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
+	<td>storeElementPresent</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td>user4Deleted</td>
 </tr>
 <tr>
@@ -360,12 +360,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -379,8 +379,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
+	<td>storeElementPresent</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
 	<td>user5Deleted</td>
 </tr>
 <tr>
@@ -390,12 +390,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
+	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>xPath=(//input[@value='Delete'])[1]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -409,9 +409,39 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>basicVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${basicVisible}</td>
+	<td>basicNotVisible</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
 	<td>« Basic</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>basicNotVisible</td>
+	<td></td>
 </tr>
 
 </tbody></table>

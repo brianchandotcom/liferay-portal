@@ -264,8 +264,6 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		PortalPreferencesModelImpl portalPreferencesModelImpl = (PortalPreferencesModelImpl)portalPreferences;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O,
@@ -315,8 +313,6 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		if (!isNew &&
 				((portalPreferences.getOwnerId() != portalPreferencesModelImpl.getOriginalOwnerId()) ||
 				(portalPreferences.getOwnerType() != portalPreferencesModelImpl.getOriginalOwnerType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O,
 				new Object[] {
 					Long.valueOf(

@@ -47,8 +47,7 @@ public class AddPageStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Organizations", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_126_keywords",
-			RuntimeVariables.replace("Web Content Display"));
+		selenium.type("_126_keywords", RuntimeVariables.replace("WCD"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));

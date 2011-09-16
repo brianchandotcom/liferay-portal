@@ -314,8 +314,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SubscriptionModelImpl subscriptionModelImpl = (SubscriptionModelImpl)subscription;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_C_C,
@@ -368,8 +366,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 				(subscription.getUserId() != subscriptionModelImpl.getOriginalUserId()) ||
 				(subscription.getClassNameId() != subscriptionModelImpl.getOriginalClassNameId()) ||
 				(subscription.getClassPK() != subscriptionModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_C_C,
 				new Object[] {
 					Long.valueOf(subscriptionModelImpl.getOriginalCompanyId()),

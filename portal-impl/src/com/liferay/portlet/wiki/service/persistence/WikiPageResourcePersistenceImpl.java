@@ -288,8 +288,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		WikiPageResourceModelImpl wikiPageResourceModelImpl = (WikiPageResourceModelImpl)wikiPageResource;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T,
@@ -347,8 +345,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				((wikiPageResource.getNodeId() != wikiPageResourceModelImpl.getOriginalNodeId()) ||
 				!Validator.equals(wikiPageResource.getTitle(),
 					wikiPageResourceModelImpl.getOriginalTitle()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T,
 				new Object[] {
 					Long.valueOf(wikiPageResourceModelImpl.getOriginalNodeId()),

@@ -305,8 +305,6 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DDMContentModelImpl ddmContentModelImpl = (DDMContentModelImpl)ddmContent;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -362,8 +360,6 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 				(!Validator.equals(ddmContent.getUuid(),
 					ddmContentModelImpl.getOriginalUuid()) ||
 				(ddmContent.getGroupId() != ddmContentModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					ddmContentModelImpl.getOriginalUuid(),

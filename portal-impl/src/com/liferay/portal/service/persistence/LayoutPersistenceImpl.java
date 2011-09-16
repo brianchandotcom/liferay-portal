@@ -454,8 +454,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		LayoutModelImpl layoutModelImpl = (LayoutModelImpl)layout;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -536,8 +534,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				(!Validator.equals(layout.getUuid(),
 					layoutModelImpl.getOriginalUuid()) ||
 				(layout.getGroupId() != layoutModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					layoutModelImpl.getOriginalUuid(),
@@ -556,8 +552,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		if (!isNew &&
 				(layout.getIconImageId() != layoutModelImpl.getOriginalIconImageId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ICONIMAGEID,
 				new Object[] {
 					Long.valueOf(layoutModelImpl.getOriginalIconImageId())
@@ -574,8 +568,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				((layout.getGroupId() != layoutModelImpl.getOriginalGroupId()) ||
 				(layout.getPrivateLayout() != layoutModelImpl.getOriginalPrivateLayout()) ||
 				(layout.getLayoutId() != layoutModelImpl.getOriginalLayoutId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_L,
 				new Object[] {
 					Long.valueOf(layoutModelImpl.getOriginalGroupId()),
@@ -601,8 +593,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				(layout.getPrivateLayout() != layoutModelImpl.getOriginalPrivateLayout()) ||
 				!Validator.equals(layout.getFriendlyURL(),
 					layoutModelImpl.getOriginalFriendlyURL()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_F,
 				new Object[] {
 					Long.valueOf(layoutModelImpl.getOriginalGroupId()),
@@ -631,8 +621,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				(layout.getPrivateLayout() != layoutModelImpl.getOriginalPrivateLayout()) ||
 				!Validator.equals(layout.getTemplateLayoutUuid(),
 					layoutModelImpl.getOriginalTemplateLayoutUuid()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_TLU,
 				new Object[] {
 					Long.valueOf(layoutModelImpl.getOriginalGroupId()),

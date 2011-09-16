@@ -260,8 +260,6 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingItemFieldImpl.class, shoppingItemField.getPrimaryKey());
 

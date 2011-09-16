@@ -516,8 +516,6 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		BlogsEntryModelImpl blogsEntryModelImpl = (BlogsEntryModelImpl)blogsEntry;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -611,8 +609,6 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				(!Validator.equals(blogsEntry.getUuid(),
 					blogsEntryModelImpl.getOriginalUuid()) ||
 				(blogsEntry.getGroupId() != blogsEntryModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					blogsEntryModelImpl.getOriginalUuid(),
@@ -634,8 +630,6 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				((blogsEntry.getGroupId() != blogsEntryModelImpl.getOriginalGroupId()) ||
 				!Validator.equals(blogsEntry.getUrlTitle(),
 					blogsEntryModelImpl.getOriginalUrlTitle()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_UT,
 				new Object[] {
 					Long.valueOf(blogsEntryModelImpl.getOriginalGroupId()),

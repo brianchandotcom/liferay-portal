@@ -65,7 +65,7 @@ public class DLUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			DLFileShortcut dlFileShortcut, HttpServletRequest request,
-			RenderResponse renderResponse)
+			RenderResponse renderResponse, boolean showGlobally)
 		throws Exception {
 
 		Folder folder = dlFileShortcut.getFolder();
@@ -73,7 +73,8 @@ public class DLUtil {
 		if (folder.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			addPortletBreadcrumbEntries(folder, request, renderResponse);
+			addPortletBreadcrumbEntries(
+				folder, request, renderResponse, showGlobally);
 		}
 
 		PortletURL portletURL = renderResponse.createRenderURL();
@@ -90,7 +91,7 @@ public class DLUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			FileEntry fileEntry, HttpServletRequest request,
-			RenderResponse renderResponse)
+			RenderResponse renderResponse, boolean showGlobally)
 		throws Exception {
 
 		Folder folder = fileEntry.getFolder();
@@ -98,7 +99,8 @@ public class DLUtil {
 		if (folder.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			addPortletBreadcrumbEntries(folder, request, renderResponse);
+			addPortletBreadcrumbEntries(
+				folder, request, renderResponse, showGlobally);
 		}
 
 		PortletURL portletURL = renderResponse.createRenderURL();
@@ -115,7 +117,7 @@ public class DLUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			Folder folder, HttpServletRequest request,
-			LiferayPortletResponse liferayPortletResponse)
+			LiferayPortletResponse liferayPortletResponse, boolean showGlobally)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
@@ -147,12 +149,12 @@ public class DLUtil {
 				portletURL.toString(), data);
 		}
 
-		addPortletBreadcrumbEntries(folder, request, portletURL);
+		addPortletBreadcrumbEntries(folder, request, portletURL, showGlobally);
 	}
 
 	public static void addPortletBreadcrumbEntries(
 			Folder folder, HttpServletRequest request,
-			PortletURL portletURL)
+			PortletURL portletURL, boolean showGlobally)
 		throws Exception {
 
 		long defaultFolderId = _getDefaultFolderId(request);
@@ -187,6 +189,7 @@ public class DLUtil {
 
 			data.put("folder-id", ancestorFolder.getFolderId());
 			data.put("refresh-folders", Boolean.TRUE.toString());
+			data.put("show-globally", String.valueOf(showGlobally));
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, ancestorFolder.getName(), portletURL.toString(), data);
@@ -207,6 +210,7 @@ public class DLUtil {
 
 			data.put("folder-id", folderId);
 			data.put("refresh-folders", Boolean.TRUE.toString());
+			data.put("show-globally", String.valueOf(showGlobally));
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, folder.getName(), portletURL.toString(), data);
@@ -215,7 +219,7 @@ public class DLUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			Folder folder, HttpServletRequest request,
-			RenderResponse renderResponse)
+			RenderResponse renderResponse, boolean showGlobally)
 		throws Exception {
 
 		String strutsAction = ParamUtil.getString(
@@ -253,12 +257,12 @@ public class DLUtil {
 			portletURL.setParameter("struts_action", "/document_library/view");
 		}
 
-		addPortletBreadcrumbEntries(folder, request, portletURL);
+		addPortletBreadcrumbEntries(folder, request, portletURL, showGlobally);
 	}
 
 	public static void addPortletBreadcrumbEntries(
 			long folderId, HttpServletRequest request,
-			RenderResponse renderResponse)
+			RenderResponse renderResponse, boolean showGlobally)
 		throws Exception {
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -267,7 +271,8 @@ public class DLUtil {
 			if (folder.getFolderId() !=
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				addPortletBreadcrumbEntries(folder, request, renderResponse);
+				addPortletBreadcrumbEntries(
+					folder, request, renderResponse, showGlobally);
 			}
 		}
 	}
@@ -396,10 +401,6 @@ public class DLUtil {
 				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)));
 	}
 
-	private Set<String> _fileIcons = new HashSet<String>();
-
-	private Map<String, String> _genericNames = new HashMap<String, String>();
-
 	private DLUtil() {
 		String[] fileIcons = null;
 
@@ -472,5 +473,8 @@ public class DLUtil {
 	private static Log _log = LogFactoryUtil.getLog(DLUtil.class);
 
 	private static DLUtil _instance = new DLUtil();
+
+	private Set<String> _fileIcons = new HashSet<String>();
+	private Map<String, String> _genericNames = new HashMap<String, String>();
 
 }

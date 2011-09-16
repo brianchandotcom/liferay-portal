@@ -37,7 +37,6 @@ public class BeTheFirstDLFolderDocumentCommentAPTests extends BaseTests {
 			ConfigurePortletDisplayStyleFullContentTest.class);
 		testSuite.addTestSuite(ConfigurePortletEnableCommentsTest.class);
 		testSuite.addTestSuite(BeTheFirstDLFolderDocumentCommentAPTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

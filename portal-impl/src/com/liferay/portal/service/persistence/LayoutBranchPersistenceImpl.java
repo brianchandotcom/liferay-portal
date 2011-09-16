@@ -294,8 +294,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		LayoutBranchModelImpl layoutBranchModelImpl = (LayoutBranchModelImpl)layoutBranch;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_M,
@@ -346,8 +344,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 				((layoutBranch.getLayoutSetBranchId() != layoutBranchModelImpl.getOriginalLayoutSetBranchId()) ||
 				(layoutBranch.getPlid() != layoutBranchModelImpl.getOriginalPlid()) ||
 				(layoutBranch.getMaster() != layoutBranchModelImpl.getOriginalMaster()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_M,
 				new Object[] {
 					Long.valueOf(

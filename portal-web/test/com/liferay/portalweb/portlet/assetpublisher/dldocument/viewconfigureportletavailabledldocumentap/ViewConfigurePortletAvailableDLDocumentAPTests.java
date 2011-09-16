@@ -36,7 +36,6 @@ public class ViewConfigurePortletAvailableDLDocumentAPTests extends BaseTests {
 		testSuite.addTestSuite(ConfigurePortletAvailableDLDocumentTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletAvailableDLDocumentAPTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

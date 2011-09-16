@@ -401,8 +401,6 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SocialEquityLogModelImpl socialEquityLogModelImpl = (SocialEquityLogModelImpl)socialEquityLog;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_AEI_AID_AD_A_T_E,
@@ -466,8 +464,6 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				(socialEquityLog.getType() != socialEquityLogModelImpl.getOriginalType()) ||
 				!Validator.equals(socialEquityLog.getExtraData(),
 					socialEquityLogModelImpl.getOriginalExtraData()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_AEI_AID_AD_A_T_E,
 				new Object[] {
 					Long.valueOf(socialEquityLogModelImpl.getOriginalUserId()),

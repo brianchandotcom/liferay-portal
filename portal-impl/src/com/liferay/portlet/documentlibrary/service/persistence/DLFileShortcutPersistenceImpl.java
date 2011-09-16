@@ -334,8 +334,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DLFileShortcutModelImpl dlFileShortcutModelImpl = (DLFileShortcutModelImpl)dlFileShortcut;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -392,8 +390,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 				(!Validator.equals(dlFileShortcut.getUuid(),
 					dlFileShortcutModelImpl.getOriginalUuid()) ||
 				(dlFileShortcut.getGroupId() != dlFileShortcutModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					dlFileShortcutModelImpl.getOriginalUuid(),

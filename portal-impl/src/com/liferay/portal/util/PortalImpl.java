@@ -1443,6 +1443,34 @@ public class PortalImpl implements Portal {
 		return userId;
 	}
 
+	public String getEmailFromAddress(
+			PortletPreferences preferences, long companyId, String key)
+		throws SystemException {
+
+		String defaultValue = PropsUtil.get(key);
+
+		if (Validator.isNull(defaultValue)) {
+			defaultValue = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
+
+		return preferences.getValue("emailFromAddress", defaultValue);
+	}
+
+	public String getEmailFromName(
+			PortletPreferences preferences, long companyId, String key)
+		throws SystemException {
+
+		String defaultValue = PropsUtil.get(key);
+
+		if (Validator.isNull(defaultValue)) {
+			defaultValue = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
+
+		return preferences.getValue("emailFromName", defaultValue);
+	}
+
 	public Map<String, Serializable> getExpandoBridgeAttributes(
 			ExpandoBridge expandoBridge, PortletRequest portletRequest)
 		throws PortalException, SystemException {

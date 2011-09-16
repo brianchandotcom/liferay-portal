@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditWHEntryContentViewableByCoworkersTest extends BaseTestCase {
 	public void testEditWHEntryContentViewableByCoworkers()
 		throws Exception {
-		selenium.open("/web/joebloggs/home/");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,7 @@ public class EditWHEntryContentViewableByCoworkersTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div[1]/div/div/div/ul[1]/li[1]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -42,7 +42,7 @@ public class EditWHEntryContentViewableByCoworkersTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -50,7 +50,7 @@ public class EditWHEntryContentViewableByCoworkersTest extends BaseTestCase {
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isVisible("//div[@class='my-entry-bubble ']"));
 		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Whats Happening Content"),
 			selenium.getText("//div[@class='content']"));
@@ -113,7 +113,7 @@ public class EditWHEntryContentViewableByCoworkersTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Joe Bloggs test@liferay.com")
+				if (RuntimeVariables.replace("Joe Bloggs (joebloggs)")
 										.equals(selenium.getText(
 								"//div[@class='user-name']"))) {
 					break;
@@ -126,7 +126,7 @@ public class EditWHEntryContentViewableByCoworkersTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 
 		for (int second = 0;; second++) {

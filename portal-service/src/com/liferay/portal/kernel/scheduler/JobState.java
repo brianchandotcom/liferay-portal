@@ -16,11 +16,9 @@ package com.liferay.portal.kernel.scheduler;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,6 +29,8 @@ import java.util.Queue;
  * @author Tina Tian
  */
 public class JobState implements Cloneable, Serializable {
+
+	public static final int VERSION = 1;
 
 	public JobState(TriggerState triggerState) {
 		this(triggerState, _EXCEPTIONS_MAX_SIZE);
@@ -45,13 +45,22 @@ public class JobState implements Cloneable, Serializable {
 		_exceptionsMaxSize = exceptionsMaxSize;
 	}
 
-	public void addException(Exception exception) {
+	public JobState(
+		TriggerState triggerState, int exceptionsMaxSize,
+		Map<String, Date> triggerDates) {
+
+		this(triggerState, exceptionsMaxSize);
+
+		_triggerDates = new HashMap<String, Date>(triggerDates);
+	}
+
+	public void addException(Exception exception, Date date) {
 		if (_exceptions == null) {
 			_exceptions = new LinkedList<ObjectValuePair<Exception, Date>>();
 		}
 
 		_exceptions.add(
-			new ObjectValuePair<Exception, Date>(exception, new Date()));
+			new ObjectValuePair<Exception, Date>(exception, date));
 
 		while (_exceptions.size() > _exceptionsMaxSize) {
 			_exceptions.poll();
@@ -77,13 +86,13 @@ public class JobState implements Cloneable, Serializable {
 			jobState._exceptions = exceptions;
 		}
 
-		if (_triggerTimeInfomation != null) {
+		if (_triggerDates != null) {
 			Map<String, Date> triggerTimeInfomation =
 				new HashMap<String, Date>();
 
-			triggerTimeInfomation.putAll(_triggerTimeInfomation);
+			triggerTimeInfomation.putAll(_triggerDates);
 
-			jobState._triggerTimeInfomation = triggerTimeInfomation;
+			jobState._triggerDates = triggerTimeInfomation;
 		}
 
 		return jobState;
@@ -97,55 +106,49 @@ public class JobState implements Cloneable, Serializable {
 		return _exceptions.toArray(new ObjectValuePair[_exceptions.size()]);
 	}
 
+	public int getExceptionsMaxSize() {
+		return _exceptionsMaxSize;
+	}
+
+	public Date getTriggerDate(String key) {
+		if (_triggerDates == null) {
+			return null;
+		}
+
+		return _triggerDates.get(key);
+	}
+
+	public Map<String, Date> getTriggerDates() {
+		if (_triggerDates == null) {
+			return Collections.EMPTY_MAP;
+		}
+
+		return _triggerDates;
+	}
+
 	public TriggerState getTriggerState() {
 		return _triggerState;
 	}
 
-	public Date getTriggerTimeInfomation(String key) {
-		if (_triggerTimeInfomation == null) {
-			return null;
+	public void setTriggerDate(String key, Date date) {
+		if (_triggerDates == null) {
+			_triggerDates = new HashMap<String, Date>();
 		}
 
-		return _triggerTimeInfomation.get(key);
+		_triggerDates.put(key, date);
 	}
 
 	public void setTriggerState(TriggerState triggerState) {
 		_triggerState = triggerState;
 	}
 
-	public void setTriggerTimeInfomation(String key, Date date) {
-		if (_triggerTimeInfomation == null) {
-			_triggerTimeInfomation = new HashMap<String, Date>();
-		}
-
-		_triggerTimeInfomation.put(key, date);
-	}
-
-	private void readObject(ObjectInputStream inputStream)
-		throws ClassNotFoundException, IOException {
-
-		_exceptions =
-			(Queue<ObjectValuePair<Exception, Date>>)inputStream.readObject();
-		_exceptionsMaxSize = inputStream.readInt();
-		_triggerState = TriggerState.values()[inputStream.readInt()];
-		_triggerTimeInfomation = (Map<String, Date>)inputStream.readObject();
-	}
-
-	private void writeObject(ObjectOutputStream outputStream)
-		throws IOException {
-
-		outputStream.writeObject(_exceptions);
-		outputStream.writeInt(_exceptionsMaxSize);
-		outputStream.writeInt(_triggerState.ordinal());
-		outputStream.writeObject(_triggerTimeInfomation);
-	}
-
 	private static final int _EXCEPTIONS_MAX_SIZE = 10;
+
 	private static final long serialVersionUID = 5747422831990881126L;
 
 	private Queue<ObjectValuePair<Exception, Date>> _exceptions;
 	private int _exceptionsMaxSize;
+	private Map<String, Date> _triggerDates;
 	private TriggerState _triggerState;
-	private Map<String, Date> _triggerTimeInfomation;
 
 }

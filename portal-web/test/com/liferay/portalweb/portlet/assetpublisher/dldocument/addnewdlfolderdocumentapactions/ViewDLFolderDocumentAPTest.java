@@ -52,7 +52,7 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DL Folder Document Title")
+				if (RuntimeVariables.replace("DM Folder Document Title")
 										.equals(selenium.getText(
 								"//h3[@class='asset-title']/a"))) {
 					break;
@@ -65,9 +65,9 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//div[@class='asset-resource-info']/span/a/span"));
 		selenium.open("/web/guest/home/");
 
@@ -77,7 +77,7 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -88,48 +88,58 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(" Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("DL Folder Name"),
-			selenium.getText("//td[1]/a/strong"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText("//td[3]/a"));
-		selenium.clickAt("//td[1]/a/strong",
-			RuntimeVariables.replace("DL Folder Name"));
+		selenium.clickAt("//button[@title='Icon View']",
+			RuntimeVariables.replace("Icon View"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DM Folder Name"));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@id='_20_folderContainer']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//div[@id='_20_folderContainer']",
+				"DM Folder Name"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
+			selenium.getText("//span[@class='document-title']"));
+		selenium.clickAt("//span[@class='document-title']",
+			RuntimeVariables.replace("DM Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
-			selenium.getText("//td[1]/a/span/span"));
-		assertEquals(RuntimeVariables.replace("0.8k"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//td[1]/a/span/span",
-			RuntimeVariables.replace("DL Folder Document Title"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
-			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Version: 1.0"),
-			selenium.getText("//span[@class='workflow-version']"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
+			selenium.getText("//h2[@class='document-title']"));
+		assertEquals(RuntimeVariables.replace("Version 1.0"),
+			selenium.getText("//h3[@class='version ']"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
-			selenium.getText("//div[@class='lfr-asset-name']/a"));
+		assertEquals(RuntimeVariables.replace("Download (0.8k)"),
+			selenium.getText("//span[1]/span/a/span"));
+		assertTrue(selenium.isPartialText(
+				"//div[2]/div[2]/div/div[2]/div[2]/div[1]", "ISO-8859-1"));
+		assertTrue(selenium.isPartialText("//div[2]/div[2]/div[2]", "text/plain"));
 		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[2]/a"));
-		assertTrue(selenium.isElementPresent("//td[3]/a"));
+			selenium.getText("//tr[3]/td[2]"));
+		assertTrue(selenium.isElementPresent("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("0.8k"),
-			selenium.getText("//td[4]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[3]/td[5]"));
-		assertEquals(RuntimeVariables.replace("TXT"),
-			selenium.getText("//td[6]/span/a/span"));
+			selenium.getText("//tr[3]/td[4]"));
 	}
 }

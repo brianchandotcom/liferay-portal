@@ -319,8 +319,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DDLRecordSetModelImpl ddlRecordSetModelImpl = (DDLRecordSetModelImpl)ddlRecordSet;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -383,8 +381,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 				(!Validator.equals(ddlRecordSet.getUuid(),
 					ddlRecordSetModelImpl.getOriginalUuid()) ||
 				(ddlRecordSet.getGroupId() != ddlRecordSetModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					ddlRecordSetModelImpl.getOriginalUuid(),
@@ -407,8 +403,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 				((ddlRecordSet.getGroupId() != ddlRecordSetModelImpl.getOriginalGroupId()) ||
 				!Validator.equals(ddlRecordSet.getRecordSetKey(),
 					ddlRecordSetModelImpl.getOriginalRecordSetKey()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_R,
 				new Object[] {
 					Long.valueOf(ddlRecordSetModelImpl.getOriginalGroupId()),

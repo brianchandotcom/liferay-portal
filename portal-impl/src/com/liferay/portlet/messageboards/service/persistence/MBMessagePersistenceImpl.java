@@ -628,8 +628,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -710,8 +708,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				(!Validator.equals(mbMessage.getUuid(),
 					mbMessageModelImpl.getOriginalUuid()) ||
 				(mbMessage.getGroupId() != mbMessageModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					mbMessageModelImpl.getOriginalUuid(),

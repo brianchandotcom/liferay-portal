@@ -56,24 +56,8 @@ public class AssertAssignMembersOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[2]/strong")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Selenium"),
+			selenium.getText("//a[2]/strong"));
 		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

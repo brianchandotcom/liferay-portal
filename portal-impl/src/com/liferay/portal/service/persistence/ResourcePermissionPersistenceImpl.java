@@ -429,8 +429,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ResourcePermissionModelImpl resourcePermissionModelImpl = (ResourcePermissionModelImpl)resourcePermission;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R_O_A,
@@ -494,8 +492,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				(resourcePermission.getRoleId() != resourcePermissionModelImpl.getOriginalRoleId()) ||
 				(resourcePermission.getOwnerId() != resourcePermissionModelImpl.getOriginalOwnerId()) ||
 				(resourcePermission.getActionIds() != resourcePermissionModelImpl.getOriginalActionIds()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R_O_A,
 				new Object[] {
 					Long.valueOf(

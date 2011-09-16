@@ -38,7 +38,6 @@ public class ViewConfigurePortletAbstractsDLDocumentAPTests
 			ConfigurePortletDisplayStyleAbstractsTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletAbstractsDLDocumentAPTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

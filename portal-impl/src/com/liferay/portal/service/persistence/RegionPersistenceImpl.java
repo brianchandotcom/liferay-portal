@@ -276,8 +276,6 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey());
 

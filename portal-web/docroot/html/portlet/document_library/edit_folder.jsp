@@ -36,7 +36,7 @@ boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHan
 List<WorkflowDefinition> workflowDefinitions = null;
 
 if (workflowEnabled) {
-	workflowDefinitions = WorkflowDefinitionManagerUtil.search(company.getCompanyId(), null, true, WorkflowConstants.SCOPE_DEFAULT, 0, 100, null);
+	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
 }
 %>
 
@@ -414,12 +414,12 @@ if (workflowEnabled) {
 
 <%
 if (folder == null) {
-	DLUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
+	DLUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse, true);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-folder"), currentURL);
 }
 else {
-	DLUtil.addPortletBreadcrumbEntries(folder.getFolderId(), request, renderResponse);
+	DLUtil.addPortletBreadcrumbEntries(folder.getFolderId(), request, renderResponse, true);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
 }

@@ -47,8 +47,9 @@ public class ConfigurePortletAvailableDLDocumentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -71,7 +72,8 @@ public class ConfigurePortletAvailableDLDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -91,7 +93,7 @@ public class ConfigurePortletAvailableDLDocumentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_anyAssetType']",
-			RuntimeVariables.replace("label=Filter..."));
+			RuntimeVariables.replace("label=Select More Than One..."));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -121,7 +123,7 @@ public class ConfigurePortletAvailableDLDocumentTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//fieldset[2]/div/div/div/div/div/div/div[2]/div/span/span/button[1]")) {
+							"xPath=(//button[@title='Move selected items from Selected to Available.'])[2]")) {
 					break;
 				}
 			}
@@ -132,7 +134,7 @@ public class ConfigurePortletAvailableDLDocumentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//fieldset[2]/div/div/div/div/div/div/div[2]/div/span/span/button[1]",
+		selenium.clickAt("xPath=(//button[@title='Move selected items from Selected to Available.'])[2]",
 			RuntimeVariables.replace("Right Arrow"));
 
 		for (int second = 0;; second++) {

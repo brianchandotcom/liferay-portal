@@ -317,8 +317,6 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsEntryImpl.class, announcementsEntry.getPrimaryKey());
 

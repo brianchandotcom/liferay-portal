@@ -386,8 +386,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		JournalContentSearchModelImpl journalContentSearchModelImpl = (JournalContentSearchModelImpl)journalContentSearch;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_L_P_A,
@@ -448,8 +446,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 					journalContentSearchModelImpl.getOriginalPortletId()) ||
 				!Validator.equals(journalContentSearch.getArticleId(),
 					journalContentSearchModelImpl.getOriginalArticleId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_L_P_A,
 				new Object[] {
 					Long.valueOf(

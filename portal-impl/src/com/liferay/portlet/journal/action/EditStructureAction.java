@@ -112,7 +112,7 @@ public class EditStructureAction extends PortletAction {
 					 e instanceof StructureNameException ||
 					 e instanceof StructureXsdException) {
 
-				SessionErrors.add(actionRequest, e.getClass().getName());
+				SessionErrors.add(actionRequest, e.getClass().getName(), e);
 
 				if (e instanceof RequiredStructureException) {
 					String redirect = PortalUtil.escapeRedirect(

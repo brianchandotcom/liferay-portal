@@ -282,8 +282,6 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = (ResourceBlockPermissionModelImpl)resourceBlockPermission;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R,
@@ -335,8 +333,6 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		if (!isNew &&
 				((resourceBlockPermission.getResourceBlockId() != resourceBlockPermissionModelImpl.getOriginalResourceBlockId()) ||
 				(resourceBlockPermission.getRoleId() != resourceBlockPermissionModelImpl.getOriginalRoleId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R,
 				new Object[] {
 					Long.valueOf(

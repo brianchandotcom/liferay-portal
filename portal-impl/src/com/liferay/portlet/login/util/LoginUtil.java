@@ -17,9 +17,12 @@ package com.liferay.portlet.login.util;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.PortalSessionContext;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -34,6 +37,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.Authenticator;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -274,14 +278,24 @@ public class LoginUtil {
 				sessionUsers.values());
 
 			for (UserTracker userTracker : userTrackers) {
-				if (userId == userTracker.getUserId()) {
-					HttpSession userTrackerSession =  PortalSessionContext.get(
-						userTracker.getSessionId());
-
-					if (userTrackerSession != null) {
-						userTrackerSession.invalidate();
-					}
+				if (userId != userTracker.getUserId()) {
+					continue;
 				}
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				jsonObject.put("command", "signOut");
+
+				long companyId = CompanyLocalServiceUtil.getCompanyIdByUserId(
+					userId);
+
+				jsonObject.put("companyId", companyId);
+
+				jsonObject.put("userId", userId);
+				jsonObject.put("sessionId", userTracker.getSessionId());
+
+				MessageBusUtil.sendMessage(
+					DestinationNames.LIVE_USERS, jsonObject.toString());
 			}
 		}
 

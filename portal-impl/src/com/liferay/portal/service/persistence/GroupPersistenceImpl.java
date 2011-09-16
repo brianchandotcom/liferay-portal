@@ -480,8 +480,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		GroupModelImpl groupModelImpl = (GroupModelImpl)group;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
@@ -563,8 +561,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 		if (!isNew &&
 				(group.getLiveGroupId() != groupModelImpl.getOriginalLiveGroupId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
 				new Object[] {
 					Long.valueOf(groupModelImpl.getOriginalLiveGroupId())
@@ -581,8 +577,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				((group.getCompanyId() != groupModelImpl.getOriginalCompanyId()) ||
 				!Validator.equals(group.getName(),
 					groupModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
 				new Object[] {
 					Long.valueOf(groupModelImpl.getOriginalCompanyId()),
@@ -604,8 +598,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				((group.getCompanyId() != groupModelImpl.getOriginalCompanyId()) ||
 				!Validator.equals(group.getFriendlyURL(),
 					groupModelImpl.getOriginalFriendlyURL()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_F,
 				new Object[] {
 					Long.valueOf(groupModelImpl.getOriginalCompanyId()),
@@ -630,8 +622,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				((group.getCompanyId() != groupModelImpl.getOriginalCompanyId()) ||
 				(group.getClassNameId() != groupModelImpl.getOriginalClassNameId()) ||
 				(group.getClassPK() != groupModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C,
 				new Object[] {
 					Long.valueOf(groupModelImpl.getOriginalCompanyId()),
@@ -657,8 +647,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				(group.getLiveGroupId() != groupModelImpl.getOriginalLiveGroupId()) ||
 				!Validator.equals(group.getName(),
 					groupModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L_N,
 				new Object[] {
 					Long.valueOf(groupModelImpl.getOriginalCompanyId()),
@@ -688,8 +676,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				(group.getLiveGroupId() != groupModelImpl.getOriginalLiveGroupId()) ||
 				!Validator.equals(group.getName(),
 					groupModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_L_N,
 				new Object[] {
 					Long.valueOf(groupModelImpl.getOriginalCompanyId()),

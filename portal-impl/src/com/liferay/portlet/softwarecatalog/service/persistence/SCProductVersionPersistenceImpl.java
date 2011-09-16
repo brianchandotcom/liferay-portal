@@ -295,8 +295,6 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SCProductVersionModelImpl scProductVersionModelImpl = (SCProductVersionModelImpl)scProductVersion;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_DIRECTDOWNLOADURL,
@@ -343,8 +341,6 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		if (!isNew &&
 				(!Validator.equals(scProductVersion.getDirectDownloadURL(),
 					scProductVersionModelImpl.getOriginalDirectDownloadURL()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_DIRECTDOWNLOADURL,
 				new Object[] {
 					scProductVersionModelImpl.getOriginalDirectDownloadURL()

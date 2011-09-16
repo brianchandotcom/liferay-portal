@@ -185,7 +185,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 <%
 if (searchFolderId > 0) {
-	DLUtil.addPortletBreadcrumbEntries(searchFolderId, request, renderResponse);
+	DLUtil.addPortletBreadcrumbEntries(searchFolderId, request, renderResponse, true);
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);

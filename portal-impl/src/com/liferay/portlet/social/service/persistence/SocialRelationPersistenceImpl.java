@@ -398,8 +398,6 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SocialRelationModelImpl socialRelationModelImpl = (SocialRelationModelImpl)socialRelation;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U1_U2_T,
@@ -457,8 +455,6 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 				((socialRelation.getUserId1() != socialRelationModelImpl.getOriginalUserId1()) ||
 				(socialRelation.getUserId2() != socialRelationModelImpl.getOriginalUserId2()) ||
 				(socialRelation.getType() != socialRelationModelImpl.getOriginalType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U1_U2_T,
 				new Object[] {
 					Long.valueOf(socialRelationModelImpl.getOriginalUserId1()),

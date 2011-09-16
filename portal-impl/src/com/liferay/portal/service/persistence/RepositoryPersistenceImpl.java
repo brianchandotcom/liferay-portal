@@ -256,8 +256,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryImpl.class, repository.getPrimaryKey());
 

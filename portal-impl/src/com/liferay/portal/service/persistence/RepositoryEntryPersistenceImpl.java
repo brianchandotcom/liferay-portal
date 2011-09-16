@@ -319,8 +319,6 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		RepositoryEntryModelImpl repositoryEntryModelImpl = (RepositoryEntryModelImpl)repositoryEntry;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -384,8 +382,6 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 				(!Validator.equals(repositoryEntry.getUuid(),
 					repositoryEntryModelImpl.getOriginalUuid()) ||
 				(repositoryEntry.getGroupId() != repositoryEntryModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					repositoryEntryModelImpl.getOriginalUuid(),
@@ -408,8 +404,6 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 				((repositoryEntry.getRepositoryId() != repositoryEntryModelImpl.getOriginalRepositoryId()) ||
 				!Validator.equals(repositoryEntry.getMappedId(),
 					repositoryEntryModelImpl.getOriginalMappedId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_M,
 				new Object[] {
 					Long.valueOf(

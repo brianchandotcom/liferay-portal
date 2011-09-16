@@ -336,8 +336,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		OrganizationModelImpl organizationModelImpl = (OrganizationModelImpl)organization;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
@@ -398,8 +396,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				((organization.getCompanyId() != organizationModelImpl.getOriginalCompanyId()) ||
 				!Validator.equals(organization.getName(),
 					organizationModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
 				new Object[] {
 					Long.valueOf(organizationModelImpl.getOriginalCompanyId()),

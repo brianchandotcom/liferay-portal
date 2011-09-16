@@ -272,8 +272,6 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DLSyncModelImpl dlSyncModelImpl = (DLSyncModelImpl)dlSync;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
@@ -318,8 +316,6 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 		if (!isNew &&
 				(dlSync.getFileId() != dlSyncModelImpl.getOriginalFileId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
 				new Object[] { Long.valueOf(dlSyncModelImpl.getOriginalFileId()) });
 		}

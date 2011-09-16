@@ -284,8 +284,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		LayoutSetModelImpl layoutSetModelImpl = (LayoutSetModelImpl)layoutSet;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P,
@@ -333,8 +331,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		if (!isNew &&
 				((layoutSet.getGroupId() != layoutSetModelImpl.getOriginalGroupId()) ||
 				(layoutSet.getPrivateLayout() != layoutSetModelImpl.getOriginalPrivateLayout()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P,
 				new Object[] {
 					Long.valueOf(layoutSetModelImpl.getOriginalGroupId()),

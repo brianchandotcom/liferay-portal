@@ -330,8 +330,6 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ShoppingItemModelImpl shoppingItemModelImpl = (ShoppingItemModelImpl)shoppingItem;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID,
@@ -390,8 +388,6 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 		if (!isNew &&
 				(shoppingItem.getSmallImageId() != shoppingItemModelImpl.getOriginalSmallImageId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID,
 				new Object[] {
 					Long.valueOf(
@@ -408,8 +404,6 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 		if (!isNew &&
 				(shoppingItem.getMediumImageId() != shoppingItemModelImpl.getOriginalMediumImageId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MEDIUMIMAGEID,
 				new Object[] {
 					Long.valueOf(
@@ -426,8 +420,6 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 		if (!isNew &&
 				(shoppingItem.getLargeImageId() != shoppingItemModelImpl.getOriginalLargeImageId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LARGEIMAGEID,
 				new Object[] {
 					Long.valueOf(
@@ -446,8 +438,6 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 				((shoppingItem.getCompanyId() != shoppingItemModelImpl.getOriginalCompanyId()) ||
 				!Validator.equals(shoppingItem.getSku(),
 					shoppingItemModelImpl.getOriginalSku()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_S,
 				new Object[] {
 					Long.valueOf(shoppingItemModelImpl.getOriginalCompanyId()),

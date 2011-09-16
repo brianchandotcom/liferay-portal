@@ -352,8 +352,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl = (DLFileEntryMetadataModelImpl)dlFileEntryMetadata;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_D_F,
@@ -415,8 +413,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		if (!isNew &&
 				((dlFileEntryMetadata.getDDMStructureId() != dlFileEntryMetadataModelImpl.getOriginalDDMStructureId()) ||
 				(dlFileEntryMetadata.getFileVersionId() != dlFileEntryMetadataModelImpl.getOriginalFileVersionId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_D_F,
 				new Object[] {
 					Long.valueOf(
@@ -439,8 +435,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		if (!isNew &&
 				((dlFileEntryMetadata.getFileEntryId() != dlFileEntryMetadataModelImpl.getOriginalFileEntryId()) ||
 				(dlFileEntryMetadata.getFileVersionId() != dlFileEntryMetadataModelImpl.getOriginalFileVersionId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V,
 				new Object[] {
 					Long.valueOf(

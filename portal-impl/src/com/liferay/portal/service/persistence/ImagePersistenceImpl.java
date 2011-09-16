@@ -251,8 +251,6 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
 			ImageImpl.class, image.getPrimaryKey());
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -36,6 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Charles May
@@ -309,22 +312,34 @@ public class LiveUsers {
 
 		UserTracker userTracker = sessionUsers.remove(sessionId);
 
-		if (userTracker != null) {
-			try {
-				UserTrackerLocalServiceUtil.addUserTracker(
-					userTracker.getCompanyId(), userTracker.getUserId(),
-					userTracker.getModifiedDate(), sessionId,
-					userTracker.getRemoteAddr(), userTracker.getRemoteHost(),
-					userTracker.getUserAgent(), userTracker.getPaths());
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
-				}
-			}
-
-			_removeUserTracker(companyId, userId, userTracker);
+		if (userTracker == null) {
+			return;
 		}
+
+		try {
+			UserTrackerLocalServiceUtil.addUserTracker(
+				userTracker.getCompanyId(), userTracker.getUserId(),
+				userTracker.getModifiedDate(), sessionId,
+				userTracker.getRemoteAddr(), userTracker.getRemoteHost(),
+				userTracker.getUserAgent(), userTracker.getPaths());
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+		}
+
+		try {
+			HttpSession session = PortalSessionContext.get(sessionId);
+
+			if (session != null) {
+				session.invalidate();
+			}
+		}
+		catch (Exception e) {
+		}
+
+		_removeUserTracker(companyId, userId, userTracker);
 	}
 
 	private Map<Long, Set<Long>> _updateGroupStatus(

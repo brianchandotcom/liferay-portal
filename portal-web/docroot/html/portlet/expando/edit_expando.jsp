@@ -222,7 +222,7 @@ portletURL.setParameter("modelResource", modelResource);
 
 			<aui:input name="PropertyName--index-type--" type="hidden" value="index-type" />
 
-			<aui:select helpMessage="custom-field-index-type-help" label="searchablility" name="Property--index-type--">
+			<aui:select helpMessage="custom-field-index-type-help" label="searchability" name="Property--index-type--">
 				<aui:option label="not-searchable" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_NONE %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_NONE %>" />
 
 				<c:if test="<%= (type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">

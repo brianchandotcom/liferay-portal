@@ -30,7 +30,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 portletURL.setParameter("groupId", String.valueOf(groupId));
 
 if (folder != null) {
-	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse, true);
 }
 %>
 

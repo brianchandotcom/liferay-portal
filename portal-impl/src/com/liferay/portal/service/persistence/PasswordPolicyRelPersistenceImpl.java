@@ -305,8 +305,6 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		PasswordPolicyRelModelImpl passwordPolicyRelModelImpl = (PasswordPolicyRelModelImpl)passwordPolicyRel;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
@@ -363,8 +361,6 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		if (!isNew &&
 				((passwordPolicyRel.getClassNameId() != passwordPolicyRelModelImpl.getOriginalClassNameId()) ||
 				(passwordPolicyRel.getClassPK() != passwordPolicyRelModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
 				new Object[] {
 					Long.valueOf(
@@ -388,8 +384,6 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 				((passwordPolicyRel.getPasswordPolicyId() != passwordPolicyRelModelImpl.getOriginalPasswordPolicyId()) ||
 				(passwordPolicyRel.getClassNameId() != passwordPolicyRelModelImpl.getOriginalClassNameId()) ||
 				(passwordPolicyRel.getClassPK() != passwordPolicyRelModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_C_C,
 				new Object[] {
 					Long.valueOf(

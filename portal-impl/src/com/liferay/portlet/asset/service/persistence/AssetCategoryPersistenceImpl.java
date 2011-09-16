@@ -428,8 +428,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		AssetCategoryModelImpl assetCategoryModelImpl = (AssetCategoryModelImpl)assetCategory;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -504,8 +502,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				(!Validator.equals(assetCategory.getUuid(),
 					assetCategoryModelImpl.getOriginalUuid()) ||
 				(assetCategory.getGroupId() != assetCategoryModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					assetCategoryModelImpl.getOriginalUuid(),
@@ -529,8 +525,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				!Validator.equals(assetCategory.getName(),
 					assetCategoryModelImpl.getOriginalName()) ||
 				(assetCategory.getVocabularyId() != assetCategoryModelImpl.getOriginalVocabularyId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_N_V,
 				new Object[] {
 					Long.valueOf(

@@ -285,8 +285,6 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl = (AnnouncementsDeliveryModelImpl)announcementsDelivery;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
@@ -339,8 +337,6 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				((announcementsDelivery.getUserId() != announcementsDeliveryModelImpl.getOriginalUserId()) ||
 				!Validator.equals(announcementsDelivery.getType(),
 					announcementsDeliveryModelImpl.getOriginalType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
 				new Object[] {
 					Long.valueOf(

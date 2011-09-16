@@ -315,5 +315,5 @@ if (Validator.isNotNull(folder.getName())) {
 </div>
 
 <%
-DLUtil.addPortletBreadcrumbEntries(fileShortcut, request, renderResponse);
+DLUtil.addPortletBreadcrumbEntries(fileShortcut, request, renderResponse, true);
 %>

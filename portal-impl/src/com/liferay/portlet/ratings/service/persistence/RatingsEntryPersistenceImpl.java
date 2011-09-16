@@ -302,8 +302,6 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		RatingsEntryModelImpl ratingsEntryModelImpl = (RatingsEntryModelImpl)ratingsEntry;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_C_C,
@@ -354,8 +352,6 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 				((ratingsEntry.getUserId() != ratingsEntryModelImpl.getOriginalUserId()) ||
 				(ratingsEntry.getClassNameId() != ratingsEntryModelImpl.getOriginalClassNameId()) ||
 				(ratingsEntry.getClassPK() != ratingsEntryModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_C_C,
 				new Object[] {
 					Long.valueOf(ratingsEntryModelImpl.getOriginalUserId()),

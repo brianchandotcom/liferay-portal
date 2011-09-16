@@ -41,10 +41,11 @@ public class DeleteBlogsEntryCommentCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),

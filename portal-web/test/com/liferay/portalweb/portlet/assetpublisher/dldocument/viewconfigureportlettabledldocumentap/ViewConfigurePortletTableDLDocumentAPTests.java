@@ -36,7 +36,6 @@ public class ViewConfigurePortletTableDLDocumentAPTests extends BaseTests {
 		testSuite.addTestSuite(
 			ConfigurePortletDisplayStyleTableTest.class);
 		testSuite.addTestSuite(ViewConfigurePortletTableDLDocumentAPTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

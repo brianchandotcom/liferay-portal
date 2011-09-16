@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Joe Bloggs</td>
-	<td></td>
+	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Joe Bloggs</td>
-	<td></td>
+	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -30,47 +30,37 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>displaySettingsLink</td>
-	<td></td>
+	<td>//a[@id='_2_displaySettingsLink']</td>
+	<td>Display Settings</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>displaySettingsLink</td>
-	<td></td>
+	<td>//a[@id='_2_displaySettingsLink']</td>
+	<td>Display Settings</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_2_timeZoneId</td>
-	<td></td>
+	<td>//select[@name='_2_timeZoneId']</td>
+	<td>Time Zone</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_2_timeZoneId</td>
-	<td>label=(UTC -08:00) Pacific Standard Time</td>
+	<td>//select[@name='_2_timeZoneId']</td>
+	<td>(UTC -08:00) Pacific Standard Time</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForSelectedLabel</td>
-	<td>_2_timeZoneId</td>
-	<td>(UTC -08:00) Pacific Standard Time</td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_timeZoneId</td>
+	<td>//select[@name='_2_timeZoneId']</td>
 	<td>(UTC -08:00) Pacific Standard Time</td>
 </tr>
 

@@ -30,7 +30,7 @@ public class DeleteCommentReplyTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Page Comments Test Page")) {
+				if (selenium.isVisible("link=Page Comments Test Page")) {
 					break;
 				}
 			}
@@ -42,23 +42,45 @@ public class DeleteCommentReplyTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Comments Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("This is a test reply comment."),
-			selenium.getText("//form/div/div/div[3]/div/div[3]/div/div[1]"));
-		assertEquals(RuntimeVariables.replace("Delete"),
+		assertEquals(RuntimeVariables.replace("PC Comment Reply"),
 			selenium.getText(
-				"//div[3]/div/div[3]/div/div[3]/div/div[5]/div/span/a/span"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[3]/div/div[3]/div/div[3]/div/div[5]/div/span/a/span"));
-		selenium.waitForPageToLoad("30000");
+				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText("//div[2]/div[3]/div/div[2]/ul/li[4]/span/a/span"));
+		selenium.clickAt("//div[2]/div[3]/div/div[2]/ul/li[4]/span/a/span",
+			RuntimeVariables.replace("Delete"));
+		Thread.sleep(5000);
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Your request processed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='lfr-message-response portlet-msg-success']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent("This is a test reply comment."));
+				"Your request processed successfully."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-success']"));
+		assertFalse(selenium.isTextPresent("PC Comment Reply"));
 	}
 }

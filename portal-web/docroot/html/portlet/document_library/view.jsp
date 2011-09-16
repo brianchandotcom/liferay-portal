@@ -121,7 +121,7 @@ int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view_entr
 int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_folders.jsp-total"));
 
 if (folder != null) {
-	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse, true);
 
 	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 		PortalUtil.setPageSubtitle(folder.getName(), request);

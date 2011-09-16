@@ -8,6 +8,12 @@ java_import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSFilter
 
 log = LogFactoryUtil.getLog(DynamicCSSFilter.java_class)
 
+if log.isDebugEnabled
+	Sass.logger.log_level = :debug
+else
+	Sass.logger.log_level = :error
+end
+
 Compass.add_project_configuration
 
 Compass.configuration.project_path ||= $cssThemePath

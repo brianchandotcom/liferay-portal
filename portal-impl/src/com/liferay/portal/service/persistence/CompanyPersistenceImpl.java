@@ -293,8 +293,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_WEBID,
@@ -345,8 +343,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		if (!isNew &&
 				(!Validator.equals(company.getWebId(),
 					companyModelImpl.getOriginalWebId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_WEBID,
 				new Object[] { companyModelImpl.getOriginalWebId() });
 		}
@@ -361,8 +357,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		if (!isNew &&
 				(!Validator.equals(company.getMx(),
 					companyModelImpl.getOriginalMx()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MX,
 				new Object[] { companyModelImpl.getOriginalMx() });
 		}
@@ -376,8 +370,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 		if (!isNew &&
 				(company.getLogoId() != companyModelImpl.getOriginalLogoId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LOGOID,
 				new Object[] { Long.valueOf(
 						companyModelImpl.getOriginalLogoId()) });

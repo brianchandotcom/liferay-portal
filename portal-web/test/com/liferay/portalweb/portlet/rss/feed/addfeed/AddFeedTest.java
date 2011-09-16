@@ -30,7 +30,7 @@ public class AddFeedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=RSS Test Page")) {
+				if (selenium.isVisible("link=RSS Test Page")) {
 					break;
 				}
 			}
@@ -41,9 +41,30 @@ public class AddFeedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=RSS Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=RSS Test Page",
+			RuntimeVariables.replace("RSS Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//strong/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -94,7 +115,7 @@ public class AddFeedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_86_url3")) {
+				if (selenium.isVisible("//input[@id='_86_url3']")) {
 					break;
 				}
 			}
@@ -105,17 +126,18 @@ public class AddFeedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_86_url3",
+		selenium.type("//input[@id='_86_url3']",
 			RuntimeVariables.replace("http://feeds.digg.com/digg/popular.rss"));
 		selenium.saveScreenShotAndSource();
-		selenium.select("_86_entriesPerFeed",
-			RuntimeVariables.replace("label=4"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_86_entriesPerFeed']",
+			RuntimeVariables.replace("4"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -124,7 +146,7 @@ public class AddFeedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=RSS Test Page")) {
+				if (selenium.isVisible("link=RSS Test Page")) {
 					break;
 				}
 			}
@@ -135,7 +157,8 @@ public class AddFeedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=RSS Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=RSS Test Page",
+			RuntimeVariables.replace("RSS Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 

@@ -46,9 +46,9 @@ public class ViewConfigurePortletCurrentDLDocumentAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//div[@class='asset-resource-info']/span/a/span"));
 	}
 }

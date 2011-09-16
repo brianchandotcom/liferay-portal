@@ -273,8 +273,6 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ResourceModelImpl resourceModelImpl = (ResourceModelImpl)resource;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
@@ -324,8 +322,6 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 				((resource.getCodeId() != resourceModelImpl.getOriginalCodeId()) ||
 				!Validator.equals(resource.getPrimKey(),
 					resourceModelImpl.getOriginalPrimKey()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
 				new Object[] {
 					Long.valueOf(resourceModelImpl.getOriginalCodeId()),

@@ -48,6 +48,8 @@ public class VerifyProcessUtil {
 			if (ranUpgradeProcess && PropsValues.INDEX_ON_UPGRADE) {
 				PropsUtil.set(
 					PropsKeys.INDEX_ON_STARTUP, Boolean.TRUE.toString());
+
+				PropsValues.INDEX_ON_STARTUP = true;
 			}
 
 			String[] verifyProcessClassNames = PropsUtil.getArray(

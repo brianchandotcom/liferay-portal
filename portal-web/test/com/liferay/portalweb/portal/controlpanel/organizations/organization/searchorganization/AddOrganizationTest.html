@@ -80,38 +80,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>All Organizations</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>All Organizations</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>All Organizations</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>BasicNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td>« Basic</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>BasicNotVisible</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -125,7 +105,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//a[2]/strong</td>
 	<td>Selenium</td>
 </tr>
 

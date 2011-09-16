@@ -274,8 +274,6 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		VirtualHostModelImpl virtualHostModelImpl = (VirtualHostModelImpl)virtualHost;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME,
@@ -327,8 +325,6 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		if (!isNew &&
 				(!Validator.equals(virtualHost.getHostname(),
 					virtualHostModelImpl.getOriginalHostname()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME,
 				new Object[] { virtualHostModelImpl.getOriginalHostname() });
 		}
@@ -343,8 +339,6 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		if (!isNew &&
 				((virtualHost.getCompanyId() != virtualHostModelImpl.getOriginalCompanyId()) ||
 				(virtualHost.getLayoutSetId() != virtualHostModelImpl.getOriginalLayoutSetId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L,
 				new Object[] {
 					Long.valueOf(virtualHostModelImpl.getOriginalCompanyId()),

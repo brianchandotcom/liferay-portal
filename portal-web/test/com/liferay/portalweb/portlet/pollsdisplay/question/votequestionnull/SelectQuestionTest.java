@@ -30,7 +30,7 @@ public class SelectQuestionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Polls Display Test Page")) {
+				if (selenium.isVisible("link=Polls Display Test Page")) {
 					break;
 				}
 			}
@@ -42,9 +42,11 @@ public class SelectQuestionTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Polls Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -68,7 +70,8 @@ public class SelectQuestionTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -76,7 +79,7 @@ public class SelectQuestionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_86_questionId")) {
+				if (selenium.isVisible("//select[@id='_86_questionId']")) {
 					break;
 				}
 			}
@@ -87,16 +90,17 @@ public class SelectQuestionTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("_86_questionId",
-			RuntimeVariables.replace("label=Test Poll Question"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_86_questionId']",
+			RuntimeVariables.replace("PD Question Title"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Test Poll Question",
-			selenium.getSelectedLabel("_86_questionId"));
+		assertEquals("PD Question Title",
+			selenium.getSelectedLabel("//select[@id='_86_questionId']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -105,7 +109,7 @@ public class SelectQuestionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Polls Display Test Page")) {
+				if (selenium.isVisible("link=Polls Display Test Page")) {
 					break;
 				}
 			}
@@ -117,17 +121,17 @@ public class SelectQuestionTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Polls Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//span[1]/span/span/input"));
-		assertTrue(selenium.isElementPresent("//span[2]/span/span/input"));
-		assertTrue(selenium.isElementPresent("//span[3]/span/span/input"));
-		assertEquals(RuntimeVariables.replace("a. Test Choice A"),
-			selenium.getText("//span[1]/span/label"));
-		assertEquals(RuntimeVariables.replace("b. Test Choice B"),
-			selenium.getText("//span[2]/span/label"));
-		assertEquals(RuntimeVariables.replace("c. Test Choice C"),
-			selenium.getText("//span[3]/span/label"));
+		assertTrue(selenium.isElementPresent("//div/span[1]/span/span/input"));
+		assertTrue(selenium.isElementPresent("//div/span[2]/span/span/input"));
+		assertTrue(selenium.isElementPresent("//div/span[3]/span/span/input"));
+		assertEquals(RuntimeVariables.replace("a. PD Question ChoiceA"),
+			selenium.getText("//div/span[1]/span/label"));
+		assertEquals(RuntimeVariables.replace("b. PD Question ChoiceB"),
+			selenium.getText("//div/span[2]/span/label"));
+		assertEquals(RuntimeVariables.replace("c. PD Question ChoiceC"),
+			selenium.getText("//div/span[3]/span/label"));
 	}
 }

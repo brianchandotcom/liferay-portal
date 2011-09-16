@@ -25,6 +25,8 @@ import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -502,6 +504,31 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return companyPersistence.findByWebId(webId);
 	}
 
+	public long getCompanyIdByUserId(long userId) throws Exception {
+		long[] companyIds = PortalInstances.getCompanyIds();
+
+		long companyId = 0;
+
+		if (companyIds.length == 1) {
+			companyId = companyIds[0];
+		}
+		else if (companyIds.length > 1) {
+			try {
+				User user = userLocalService.getUserById(userId);
+
+				companyId = user.getCompanyId();
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to get the company id for user " + userId, e);
+				}
+			}
+		}
+
+		return companyId;
+	}
+
 	public void removePreferences(long companyId, String[] keys)
 		throws SystemException {
 
@@ -763,8 +790,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			preferences.store();
 		}
-		catch (LocaleException e) {
-			throw e;
+		catch (LocaleException le) {
+			throw le;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -913,6 +940,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CompanyLocalServiceImpl.class);
 
 	private static final String _DEFAULT_VIRTUAL_HOST = "localhost";
 

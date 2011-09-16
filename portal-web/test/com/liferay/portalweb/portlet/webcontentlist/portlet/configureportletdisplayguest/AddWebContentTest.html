@@ -16,52 +16,27 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
+	<td>clickAtAndWait</td>
+	<td>link=Web Content</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div[2]/div[2]/ul/li[3]/a</td>
-	<td>Web Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div/span/ul/li/strong/a/span</td>
+	<td>//input[@value='Add']</td>
 	<td>Add</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div/span/ul/li/strong/a/span</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Basic Web Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Basic Web Content</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
-	<td>Basic Web Content</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_title</td>
-	<td>Web Content Test</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td>Web Content Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -77,11 +52,11 @@
 	<td>selectFrame</td>
 	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
 	<td>CK Editor</td>
-</tr>i
+</tr>
 <tr>
 	<td>type</td>
 	<td>//body</td>
-	<td>This is a test web content.</td>
+	<td>Web Content Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -89,29 +64,49 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>_15_type</td>
-	<td>label=Announcements</td>
+	<td>clickAt</td>
+	<td>//a[@id='_15_abstractLink']</td>
+	<td>Abstract</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//textarea[@id='_15_description_en_US']</td>
+	<td>Summary</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_description</td>
-	<td>Test Description.</td>
+	<td>//textarea[@id='_15_description_en_US']</td>
+	<td>WCD Web Content Summary</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='_15_categorizationLink']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//select[@id='_15_type']</td>
+	<td>Type</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_15_type']</td>
+	<td>Announcements</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Web Content Test</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Web Content Name</td>
 </tr>
 
 </tbody></table>

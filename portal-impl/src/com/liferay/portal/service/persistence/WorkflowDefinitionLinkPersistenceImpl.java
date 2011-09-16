@@ -312,8 +312,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)workflowDefinitionLink;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
@@ -370,8 +368,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				(workflowDefinitionLink.getClassNameId() != workflowDefinitionLinkModelImpl.getOriginalClassNameId()) ||
 				(workflowDefinitionLink.getClassPK() != workflowDefinitionLinkModelImpl.getOriginalClassPK()) ||
 				(workflowDefinitionLink.getTypePK() != workflowDefinitionLinkModelImpl.getOriginalTypePK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 				new Object[] {
 					Long.valueOf(

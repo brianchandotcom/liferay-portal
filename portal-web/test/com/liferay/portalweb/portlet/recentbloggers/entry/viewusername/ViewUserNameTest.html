@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Recent Bloggers Test Page</td>
-	<td></td>
+	<td>Recent Bloggers Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Recent Bloggers Test Page</td>
-	<td></td>
+	<td>Recent Bloggers Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -39,23 +39,33 @@
 	<td>Date</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//tr[3]/td/a</td>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[3]/td[3]/a</td>
+	<td>Date</td>
+</tr>
+<tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@class='user-profile-image']/a/img[@alt='Joe Bloggs']</td>
+	<td>//img[@class='avatar']</td>
+	<td>User Image</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Posts:</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Posts: 1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>Stars: 0</td>
+	<td>Stars:</td>
 	<td></td>
 </tr>
 <tr>

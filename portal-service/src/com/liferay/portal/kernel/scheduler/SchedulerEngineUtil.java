@@ -27,9 +27,8 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -365,7 +364,7 @@ public class SchedulerEngineUtil {
 			return (Date)message.get(SchedulerEngine.END_TIME);
 		}
 		else {
-			return jobState.getTriggerTimeInfomation(SchedulerEngine.END_TIME);
+			return jobState.getTriggerDate(SchedulerEngine.END_TIME);
 		}
 	}
 
@@ -396,8 +395,7 @@ public class SchedulerEngineUtil {
 			return (Date)message.get(SchedulerEngine.FINAL_FIRE_TIME);
 		}
 		else {
-			return jobState.getTriggerTimeInfomation(
-				SchedulerEngine.FINAL_FIRE_TIME);
+			return jobState.getTriggerDate(SchedulerEngine.FINAL_FIRE_TIME);
 		}
 	}
 
@@ -474,8 +472,7 @@ public class SchedulerEngineUtil {
 			return (Date)message.get(SchedulerEngine.NEXT_FIRE_TIME);
 		}
 		else {
-			return jobState.getTriggerTimeInfomation(
-				SchedulerEngine.NEXT_FIRE_TIME);
+			return jobState.getTriggerDate(SchedulerEngine.NEXT_FIRE_TIME);
 		}
 	}
 
@@ -506,8 +503,7 @@ public class SchedulerEngineUtil {
 			return (Date)message.get(SchedulerEngine.PREVIOUS_FIRE_TIME);
 		}
 		else {
-			return jobState.getTriggerTimeInfomation(
-				SchedulerEngine.PREVIOUS_FIRE_TIME);
+			return jobState.getTriggerDate(SchedulerEngine.PREVIOUS_FIRE_TIME);
 		}
 	}
 
@@ -573,7 +569,7 @@ public class SchedulerEngineUtil {
 				(MessageListener)classLoader.loadClass(
 					schedulerEntry.getEventListenerClass()).newInstance();
 
-			return (MessageListener)Proxy.newProxyInstance(
+			return (MessageListener)ProxyUtil.newProxyInstance(
 				classLoader, new Class[] {MessageListener.class},
 				new ClassLoaderBeanHandler(
 					schedulerEventListener, classLoader));
@@ -596,8 +592,7 @@ public class SchedulerEngineUtil {
 			return (Date)message.get(SchedulerEngine.START_TIME);
 		}
 		else {
-			return jobState.getTriggerTimeInfomation(
-				SchedulerEngine.START_TIME);
+			return jobState.getTriggerDate(SchedulerEngine.START_TIME);
 		}
 	}
 

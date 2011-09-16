@@ -373,8 +373,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		CalEventModelImpl calEventModelImpl = (CalEventModelImpl)calEvent;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -461,8 +459,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				(!Validator.equals(calEvent.getUuid(),
 					calEventModelImpl.getOriginalUuid()) ||
 				(calEvent.getGroupId() != calEventModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					calEventModelImpl.getOriginalUuid(),

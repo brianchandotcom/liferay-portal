@@ -38,7 +38,6 @@ public class ViewConfigurePortletFullContentDLDocumentAPTests
 			ConfigurePortletDisplayStyleFullContentTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletFullContentDLDocumentAPTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

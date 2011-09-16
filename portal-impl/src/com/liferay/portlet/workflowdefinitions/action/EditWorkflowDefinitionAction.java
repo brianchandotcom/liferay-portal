@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
@@ -181,8 +180,7 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 				workflowDefinition =
 					WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
 						themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-						getTitle(titleMap), inputStream,
-						WorkflowConstants.SCOPE_DEFAULT);
+						getTitle(titleMap), inputStream);
 			}
 
 			actionRequest.setAttribute(

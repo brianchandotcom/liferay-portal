@@ -340,8 +340,6 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		JournalArticleImageModelImpl journalArticleImageModelImpl = (JournalArticleImageModelImpl)journalArticleImage;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
@@ -407,8 +405,6 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 					journalArticleImageModelImpl.getOriginalElName()) ||
 				!Validator.equals(journalArticleImage.getLanguageId(),
 					journalArticleImageModelImpl.getOriginalLanguageId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
 				new Object[] {
 					Long.valueOf(

@@ -15,15 +15,11 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.metadata.TikaRawMetadataProcessor;
@@ -39,7 +35,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.util.ContentUtil;
 
 import java.io.StringReader;
 
@@ -54,7 +49,8 @@ import java.util.Map;
  * @author Sergio González
  * @author Miguel Pastor
  */
-public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
+public class AddDefaultDocumentLibraryStructuresAction
+	extends BaseDefaultDDMStructureAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -63,56 +59,6 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
-		}
-	}
-
-	protected void addDDMStructures(
-			long userId, long groupId, ServiceContext serviceContext)
-		throws DocumentException, PortalException, SystemException {
-
-		String xml = ContentUtil.get(
-			"com/liferay/portal/events/dependencies/" +
-				"document-library-structures.xml");
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> structureElements = rootElement.elements("structure");
-
-		for (Element structureElement : structureElements) {
-			String name = structureElement.elementText("name");
-
-			String description = structureElement.elementText("description");
-
-			String ddmStructureKey = name;
-
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(
-					groupId, ddmStructureKey);
-
-			if (ddmStructure != null) {
-				continue;
-			}
-
-			Element structureElementRootElement = structureElement.element(
-				"root");
-
-			String xsd = structureElementRootElement.asXML();
-
-			Map<Locale, String> nameMap = new HashMap<Locale, String>();
-
-			nameMap.put(LocaleUtil.getDefault(), name);
-
-			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-
-			descriptionMap.put(LocaleUtil.getDefault(), description);
-
-			DDMStructureLocalServiceUtil.addStructure(
-				userId, groupId,
-				PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-				ddmStructureKey, nameMap, descriptionMap, xsd, "xml",
-				serviceContext);
 		}
 	}
 
@@ -276,7 +222,9 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		serviceContext.setUserId(defaultUserId);
 
 		addDDMStructures(
-			defaultUserId, group.getGroupId(), serviceContext);
+			defaultUserId, group.getGroupId(),
+			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
+			"document-library-structures.xml", serviceContext);
 		addDLFileEntryTypes(defaultUserId, group.getGroupId(), serviceContext);
 		addDLRawMetadataStructures(
 			defaultUserId, group.getGroupId(), serviceContext);

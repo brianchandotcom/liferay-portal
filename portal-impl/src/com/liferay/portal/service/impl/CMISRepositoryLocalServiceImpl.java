@@ -22,11 +22,10 @@ import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.service.base.CMISRepositoryLocalServiceBaseImpl;
-
-import java.lang.reflect.Proxy;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 
@@ -91,7 +90,7 @@ public class CMISRepositoryLocalServiceImpl
 				(BaseRepositoryProxyBean)repositoryImpl;
 
 			ClassLoaderBeanHandler classLoaderBeanHandler =
-				(ClassLoaderBeanHandler)Proxy.getInvocationHandler(
+				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
 					baseRepositoryProxyBean.getProxyBean());
 
 			Object bean = classLoaderBeanHandler.getBean();

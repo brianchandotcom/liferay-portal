@@ -37,7 +37,6 @@ public class DeleteDLFolderDocumentAPTests extends BaseTests {
 		testSuite.addTestSuite(
 			SelectExistingDLFolderDocumentAPActionsTest.class);
 		testSuite.addTestSuite(DeleteDLFolderDocumentAPTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

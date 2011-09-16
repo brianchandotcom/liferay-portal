@@ -30,7 +30,7 @@ public class ViewUserNameTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Recent Bloggers Test Page")) {
+				if (selenium.isVisible("link=Recent Bloggers Test Page")) {
 					break;
 				}
 			}
@@ -42,7 +42,7 @@ public class ViewUserNameTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Recent Bloggers Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Recent Bloggers Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("User"),
@@ -51,11 +51,14 @@ public class ViewUserNameTest extends BaseTestCase {
 			selenium.getText("//th[2]"));
 		assertEquals(RuntimeVariables.replace("Date"),
 			selenium.getText("//th[3]"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td/a"));
-		assertFalse(selenium.isElementPresent(
-				"//div[@class='user-profile-image']/a/img[@alt='Joe Bloggs']"));
-		assertFalse(selenium.isTextPresent("Posts: 1"));
-		assertFalse(selenium.isTextPresent("Stars: 0"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//tr[3]/td[2]/a"));
+		assertTrue(selenium.isVisible("//tr[3]/td[3]/a"));
+		assertFalse(selenium.isElementPresent("//img[@class='avatar']"));
+		assertFalse(selenium.isTextPresent("Posts:"));
+		assertFalse(selenium.isTextPresent("Stars:"));
 		assertFalse(selenium.isTextPresent("Date:"));
 	}
 }

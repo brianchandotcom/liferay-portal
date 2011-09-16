@@ -333,8 +333,6 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SocialEquityUserModelImpl socialEquityUserModelImpl = (SocialEquityUserModelImpl)socialEquityUser;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
@@ -384,8 +382,6 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 		if (!isNew &&
 				((socialEquityUser.getGroupId() != socialEquityUserModelImpl.getOriginalGroupId()) ||
 				(socialEquityUser.getUserId() != socialEquityUserModelImpl.getOriginalUserId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
 				new Object[] {
 					Long.valueOf(socialEquityUserModelImpl.getOriginalGroupId()),

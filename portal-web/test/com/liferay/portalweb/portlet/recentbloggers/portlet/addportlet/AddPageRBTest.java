@@ -66,7 +66,8 @@ public class AddPageRBTest extends BaseTestCase {
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Recent Bloggers Test Page"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -86,7 +87,7 @@ public class AddPageRBTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Recent Bloggers Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Recent Bloggers Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 	}

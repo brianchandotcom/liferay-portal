@@ -14,69 +14,79 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Page Comments Test Page</td>
-	<td></td>
+	<td>Page Comments Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Page Comments Test Page</td>
-	<td></td>
+	<td>Page Comments Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/div[3]/div/div[3]/div/div[2]/div/span/a/span</td>
+	<td>//div[2]/div[3]/div/div[2]/ul/li[1]/span/a/span</td>
 	<td>Post Reply</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[3]/div/div[3]/div/div[3]/div/div[2]/div/span/a/span</td>
+	<td>//div[2]/div[3]/div/div[2]/ul/li[1]/span/a/span</td>
 	<td>Post Reply</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_107_postReplyBody2</td>
-	<td></td>
+	<td>//textarea[@name='_107_postReplyBody2']</td>
+	<td>Reply Text Area</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>_107_postReplyBody2</td>
-	<td></td>
+	<td>//textarea[@name='_107_postReplyBody2']</td>
+	<td>Reply Text Area</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_107_postReplyBody2</td>
-	<td>This is a test reply2 comment2.</td>
+	<td>//textarea[@name='_107_postReplyBody2']</td>
+	<td>PC Comment Reply2</td>
 </tr>
 <tr>
-	<td>keyPress</td>
-	<td>_107_postReplyBody2</td>
-	<td>\48</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>_107_postReplyBody2</td>
-	<td>\8</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[3]/div/div[3]/div/div[4]/div/div[1]/div/span[1]/span/input</td>
+	<td>clickAt</td>
+	<td>xPath=(//input[@value='Reply'])[3]</td>
 	<td>Reply</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>waitForText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div[3]/div/div[3]/div/div[1]</td>
-	<td>This is a test reply1 comment1.</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[5]/div/div[3]/div/div[1]</td>
-	<td>This is a test reply2 comment2.</td>
+	<td>xPath=(//div[@class='lfr-discussion-message'])[1]</td>
+	<td>PC Comment</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='lfr-discussion-message'])[2]</td>
+	<td>PC Comment Reply1</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='lfr-discussion-posted-on'])[2]</td>
+	<td>in reply to</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='lfr-discussion-message'])[3]</td>
+	<td>PC Comment Reply2</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='lfr-discussion-posted-on'])[3]</td>
+	<td>in reply to</td>
 </tr>
 
 </tbody></table>

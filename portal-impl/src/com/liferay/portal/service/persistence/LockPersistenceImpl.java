@@ -282,8 +282,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		LockModelImpl lockModelImpl = (LockModelImpl)lock;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K,
@@ -335,8 +333,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				(!Validator.equals(lock.getClassName(),
 					lockModelImpl.getOriginalClassName()) ||
 				!Validator.equals(lock.getKey(), lockModelImpl.getOriginalKey()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K,
 				new Object[] {
 					lockModelImpl.getOriginalClassName(),

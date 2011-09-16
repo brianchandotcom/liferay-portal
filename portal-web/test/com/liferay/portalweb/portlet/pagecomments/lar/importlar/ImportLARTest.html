@@ -14,54 +14,89 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Page Comments Test Page</td>
-	<td></td>
+	<td>Page Comments Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Page Comments Test Page</td>
-	<td></td>
+	<td>Page Comments Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//strong/a</td>
-	<td></td>
+	<td>Options</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Export / Import</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Export / Import</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Export / Import</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Export / Import</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/ul/li[2]/span/a</td>
+	<td>Import</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Import</td>
-	<td></td>
+	<td>//div/ul/li[2]/span/a</td>
+	<td>Import</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_importFileName</td>
+	<td>//input[@id='_86_importFileName']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\pagecomments\lar\importlar\dependencies\Page_Comments-Selenium.portlet.lar</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>_86_DELETE_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_DELETE_PORTLET_DATACheckbox']</td>
+	<td>Delete portlet data before importing.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_86_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_DELETE_PORTLET_DATACheckbox']</td>
+	<td>Delete portlet data before importing.</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_DELETE_PORTLET_DATACheckbox']</td>
+	<td>Delete portlet data before importing.</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_PORTLET_DATACheckbox']</td>
+	<td>Data</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_86_PORTLET_DATACheckbox']</td>
+	<td>Data</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_PORTLET_DATACheckbox']</td>
+	<td>Data</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Import']</td>
-	<td></td>
+	<td>Import</td>
 </tr>
 <tr>
 	<td>assertText</td>

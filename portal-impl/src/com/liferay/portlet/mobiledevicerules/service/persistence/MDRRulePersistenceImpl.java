@@ -288,8 +288,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MDRRuleModelImpl mdrRuleModelImpl = (MDRRuleModelImpl)mdrRule;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -345,8 +343,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 				(!Validator.equals(mdrRule.getUuid(),
 					mdrRuleModelImpl.getOriginalUuid()) ||
 				(mdrRule.getGroupId() != mdrRuleModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					mdrRuleModelImpl.getOriginalUuid(),

@@ -633,8 +633,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		JournalArticleModelImpl journalArticleModelImpl = (JournalArticleModelImpl)journalArticle;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -707,8 +705,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				(!Validator.equals(journalArticle.getUuid(),
 					journalArticleModelImpl.getOriginalUuid()) ||
 				(journalArticle.getGroupId() != journalArticleModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					journalArticleModelImpl.getOriginalUuid(),
@@ -732,8 +728,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				(journalArticle.getClassNameId() != journalArticleModelImpl.getOriginalClassNameId()) ||
 				!Validator.equals(journalArticle.getStructureId(),
 					journalArticleModelImpl.getOriginalStructureId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_S,
 				new Object[] {
 					Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
@@ -763,8 +757,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				!Validator.equals(journalArticle.getArticleId(),
 					journalArticleModelImpl.getOriginalArticleId()) ||
 				(journalArticle.getVersion() != journalArticleModelImpl.getOriginalVersion()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V,
 				new Object[] {
 					Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),

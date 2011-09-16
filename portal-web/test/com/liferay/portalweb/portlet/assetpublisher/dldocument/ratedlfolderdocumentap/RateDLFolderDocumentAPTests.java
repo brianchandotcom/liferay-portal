@@ -37,7 +37,6 @@ public class RateDLFolderDocumentAPTests extends BaseTests {
 			ConfigurePortletDisplayStyleFullContentTest.class);
 		testSuite.addTestSuite(ConfigurePortletEnableRatingsTest.class);
 		testSuite.addTestSuite(RateDLFolderDocumentAPTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

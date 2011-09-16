@@ -268,8 +268,6 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SocialEquityAssetEntryModelImpl socialEquityAssetEntryModelImpl = (SocialEquityAssetEntryModelImpl)socialEquityAssetEntry;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
@@ -318,8 +316,6 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 
 		if (!isNew &&
 				(socialEquityAssetEntry.getAssetEntryId() != socialEquityAssetEntryModelImpl.getOriginalAssetEntryId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
 				new Object[] {
 					Long.valueOf(

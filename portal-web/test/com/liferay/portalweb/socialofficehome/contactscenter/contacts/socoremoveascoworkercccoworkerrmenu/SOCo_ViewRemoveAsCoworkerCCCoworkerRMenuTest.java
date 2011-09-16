@@ -31,7 +31,7 @@ public class SOCo_ViewRemoveAsCoworkerCCCoworkerRMenuTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -42,25 +42,7 @@ public class SOCo_ViewRemoveAsCoworkerCCCoworkerRMenuTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[2]/div/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[2]/div/ul/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -72,10 +54,10 @@ public class SOCo_ViewRemoveAsCoworkerCCCoworkerRMenuTest extends BaseTestCase {
 			RuntimeVariables.replace("Find People"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//div[1]/span[1]/span/span/input",
+		selenium.type("//input[@id='_1_WAR_contactsportlet_keywords1']",
 			RuntimeVariables.replace("test@liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("xPath=(//input[@value='Search'])[3]",
+		selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

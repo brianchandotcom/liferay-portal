@@ -292,8 +292,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		TeamModelImpl teamModelImpl = (TeamModelImpl)team;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
@@ -343,8 +341,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 				((team.getGroupId() != teamModelImpl.getOriginalGroupId()) ||
 				!Validator.equals(team.getName(),
 					teamModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
 				new Object[] {
 					Long.valueOf(teamModelImpl.getOriginalGroupId()),

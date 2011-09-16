@@ -276,13 +276,14 @@ public class MembershipRequestLocalServiceImpl
 		User requestUser = userPersistence.findByPrimaryKey(
 			membershipRequest.getUserId());
 
-		String fromName = PrefsPropsUtil.getString(
+		String fromName = PrefsPropsUtil.getStringFromNames(
 			membershipRequest.getCompanyId(),
-			PropsKeys.SITES_EMAIL_FROM_NAME);
+			PropsKeys.SITES_EMAIL_FROM_NAME, PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
-		String fromAddress = PrefsPropsUtil.getString(
+		String fromAddress = PrefsPropsUtil.getStringFromNames(
 			membershipRequest.getCompanyId(),
-			PropsKeys.SITES_EMAIL_FROM_ADDRESS);
+			PropsKeys.SITES_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();

@@ -566,6 +566,14 @@ public interface Portal {
 	public long getDigestAuthUserId(HttpServletRequest request)
 		throws PortalException, SystemException;
 
+	public String getEmailFromAddress(
+			PortletPreferences preferences, long companyId, String key)
+		throws SystemException;
+
+	public String getEmailFromName(
+			PortletPreferences preferences, long companyId, String key)
+		throws SystemException;
+
 	public Map<String, Serializable> getExpandoBridgeAttributes(
 			ExpandoBridge expandoBridge, PortletRequest portletRequest)
 		throws PortalException, SystemException;

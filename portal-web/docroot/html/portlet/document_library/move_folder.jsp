@@ -124,7 +124,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", D
 </aui:script>
 
 <%
-DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse, true);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "move"), currentURL);
 %>

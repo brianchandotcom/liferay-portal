@@ -273,8 +273,6 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ShoppingCouponModelImpl shoppingCouponModelImpl = (ShoppingCouponModelImpl)shoppingCoupon;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE,
@@ -321,8 +319,6 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		if (!isNew &&
 				(!Validator.equals(shoppingCoupon.getCode(),
 					shoppingCouponModelImpl.getOriginalCode()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE,
 				new Object[] { shoppingCouponModelImpl.getOriginalCode() });
 		}

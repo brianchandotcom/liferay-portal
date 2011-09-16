@@ -297,8 +297,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DDLRecordVersionModelImpl ddlRecordVersionModelImpl = (DDLRecordVersionModelImpl)ddlRecordVersion;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V,
@@ -350,8 +348,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 				((ddlRecordVersion.getRecordId() != ddlRecordVersionModelImpl.getOriginalRecordId()) ||
 				!Validator.equals(ddlRecordVersion.getVersion(),
 					ddlRecordVersionModelImpl.getOriginalVersion()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V,
 				new Object[] {
 					Long.valueOf(

@@ -307,8 +307,6 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
 			PhoneImpl.class, phone.getPrimaryKey());
 

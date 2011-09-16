@@ -291,8 +291,6 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MBDiscussionModelImpl mbDiscussionModelImpl = (MBDiscussionModelImpl)mbDiscussion;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THREADID,
@@ -343,8 +341,6 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 		if (!isNew &&
 				(mbDiscussion.getThreadId() != mbDiscussionModelImpl.getOriginalThreadId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THREADID,
 				new Object[] {
 					Long.valueOf(mbDiscussionModelImpl.getOriginalThreadId())
@@ -361,8 +357,6 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		if (!isNew &&
 				((mbDiscussion.getClassNameId() != mbDiscussionModelImpl.getOriginalClassNameId()) ||
 				(mbDiscussion.getClassPK() != mbDiscussionModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
 				new Object[] {
 					Long.valueOf(mbDiscussionModelImpl.getOriginalClassNameId()),

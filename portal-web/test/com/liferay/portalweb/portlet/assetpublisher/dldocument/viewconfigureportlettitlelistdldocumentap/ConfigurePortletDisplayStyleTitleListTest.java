@@ -47,8 +47,9 @@ public class ConfigurePortletDisplayStyleTitleListTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -71,7 +72,8 @@ public class ConfigurePortletDisplayStyleTitleListTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -92,6 +94,8 @@ public class ConfigurePortletDisplayStyleTitleListTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_displayStyle']",
 			RuntimeVariables.replace("label=Title List"));
+		assertEquals("Title List",
+			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -30,7 +30,7 @@ public class AddDLFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -41,18 +41,42 @@ public class AddDLFolderTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Add Folder"),
-			selenium.getText("//div[2]/ul/li[2]/a"));
-		selenium.clickAt("//div[2]/ul/li[2]/a",
-			RuntimeVariables.replace("Add Folder"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Folder"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+			RuntimeVariables.replace("Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_name']",
-			RuntimeVariables.replace("DL Folder Name"));
+			RuntimeVariables.replace("DM Folder Name"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -61,7 +85,7 @@ public class AddDLFolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("DL Folder Name"),
-			selenium.getText("//a[2]/strong"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//span[@class='document-title']"));
 	}
 }

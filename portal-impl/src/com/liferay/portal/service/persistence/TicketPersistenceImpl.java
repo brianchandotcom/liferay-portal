@@ -252,8 +252,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		TicketModelImpl ticketModelImpl = (TicketModelImpl)ticket;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY,
@@ -298,8 +296,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		if (!isNew &&
 				(!Validator.equals(ticket.getKey(),
 					ticketModelImpl.getOriginalKey()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY,
 				new Object[] { ticketModelImpl.getOriginalKey() });
 		}

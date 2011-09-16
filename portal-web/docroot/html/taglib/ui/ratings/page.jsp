@@ -144,16 +144,16 @@ if (ratingsEntry != null) {
 	<aui:script use="liferay-ratings">
 		Liferay.Ratings.register(
 			{
+				averageScore: <%= ratingsStats.getAverageScore() %>,
 				className: '<%= className %>',
 				classPK: '<%= classPK %>',
-				yourScore: <%= yourScore %>,
 				namespace: '<%= randomNamespace %>',
+				size: <%= numberOfStars %>,
 				totalEntries: <%= ratingsStats.getTotalEntries() %>,
 				totalScore: <%= ratingsStats.getTotalScore() %>,
-				averageScore: <%= ratingsStats.getAverageScore() %>,
-				size: <%= numberOfStars %>,
+				type: '<%= type %>',
 				uri: '<%= url %>',
-				type: '<%= type %>'
+				yourScore: <%= yourScore %>
 			}
 		);
 	</aui:script>

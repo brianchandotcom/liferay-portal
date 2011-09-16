@@ -383,8 +383,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		LayoutRevisionModelImpl layoutRevisionModelImpl = (LayoutRevisionModelImpl)layoutRevision;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_H_P,
@@ -436,8 +434,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				((layoutRevision.getLayoutSetBranchId() != layoutRevisionModelImpl.getOriginalLayoutSetBranchId()) ||
 				(layoutRevision.getHead() != layoutRevisionModelImpl.getOriginalHead()) ||
 				(layoutRevision.getPlid() != layoutRevisionModelImpl.getOriginalPlid()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_H_P,
 				new Object[] {
 					Long.valueOf(

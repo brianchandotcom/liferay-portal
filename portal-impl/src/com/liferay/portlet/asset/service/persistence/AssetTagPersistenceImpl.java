@@ -273,8 +273,6 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagImpl.class, assetTag.getPrimaryKey());
 

@@ -287,8 +287,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
 			SCLicenseImpl.class, scLicense.getPrimaryKey());
 

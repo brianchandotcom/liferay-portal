@@ -313,8 +313,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SCProductScreenshotModelImpl scProductScreenshotModelImpl = (SCProductScreenshotModelImpl)scProductScreenshot;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
@@ -373,8 +371,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 		if (!isNew &&
 				(scProductScreenshot.getThumbnailId() != scProductScreenshotModelImpl.getOriginalThumbnailId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
 				new Object[] {
 					Long.valueOf(
@@ -392,8 +388,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 		if (!isNew &&
 				(scProductScreenshot.getFullImageId() != scProductScreenshotModelImpl.getOriginalFullImageId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
 				new Object[] {
 					Long.valueOf(
@@ -412,8 +406,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		if (!isNew &&
 				((scProductScreenshot.getProductEntryId() != scProductScreenshotModelImpl.getOriginalProductEntryId()) ||
 				(scProductScreenshot.getPriority() != scProductScreenshotModelImpl.getOriginalPriority()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_P,
 				new Object[] {
 					Long.valueOf(

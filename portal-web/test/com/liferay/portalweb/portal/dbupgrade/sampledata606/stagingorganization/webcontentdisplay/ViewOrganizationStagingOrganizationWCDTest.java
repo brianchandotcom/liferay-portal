@@ -67,7 +67,7 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Organization Staging Organization Web Content Display"),
+				"Organization Staging Organization WCD"),
 			selenium.getText("//nav/ul/li[2]/span"));
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
@@ -114,7 +114,7 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Organization Staging Organization Web Content Display"),
+				"Organization Staging Organization WCD"),
 			selenium.getText("//nav/ul/li[2]/span"));
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),

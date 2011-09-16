@@ -78,7 +78,8 @@ public class AssertRemoveMembersOrganizationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("link=selen01"));
-		assertEquals(RuntimeVariables.replace("No users were found."),
+		assertEquals(RuntimeVariables.replace(
+				"This organization does not have any users."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

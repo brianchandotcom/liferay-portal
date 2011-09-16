@@ -273,8 +273,6 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		PortletModelImpl portletModelImpl = (PortletModelImpl)portlet;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
@@ -324,8 +322,6 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 				((portlet.getCompanyId() != portletModelImpl.getOriginalCompanyId()) ||
 				!Validator.equals(portlet.getPortletId(),
 					portletModelImpl.getOriginalPortletId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
 				new Object[] {
 					Long.valueOf(portletModelImpl.getOriginalCompanyId()),

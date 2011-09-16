@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.JobState;
+import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -44,6 +45,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.quartz.CronTrigger;
@@ -477,6 +479,13 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return groupName.concat(StringPool.PERIOD).concat(jobName);
 	}
 
+	protected JobState getJobState(JobDataMap jobDataMap) {
+		Map<String, Object> jobStateMap = (Map<String, Object>)jobDataMap.get(
+			JOB_STATE);
+
+		return JobStateSerializeUtil.deserialize(jobStateMap);
+	}
+
 	protected Message getMessage(JobDataMap jobDataMap) {
 		String messageJSON = (String)jobDataMap.get(MESSAGE);
 
@@ -593,9 +602,9 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		Trigger trigger = scheduler.getTrigger(jobName, groupName);
 
-		JobState jobState = (JobState)jobDataMap.get(JOB_STATE);
+		JobState jobState = getJobState(jobDataMap);
 
-		message.put(JOB_STATE, jobState.clone());
+		message.put(JOB_STATE, jobState);
 
 		if (trigger == null) {
 			schedulerResponse = new SchedulerResponse();
@@ -740,9 +749,12 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 				JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
-				JobState jobState = (JobState)jobDataMap.get(JOB_STATE);
+				JobState jobState = getJobState(jobDataMap);
 
 				jobState.setTriggerState(TriggerState.COMPLETE);
+
+				jobDataMap.put(
+					JOB_STATE, JobStateSerializeUtil.serialize(jobState));
 
 				_persistedScheduler.addJob(jobDetail, true);
 			}
@@ -829,7 +841,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			JobState jobState = new JobState(
 				TriggerState.NORMAL, message.getInteger(EXCEPTIONS_MAX_SIZE));
 
-			jobDataMap.put(JOB_STATE, jobState);
+			jobDataMap.put(
+				JOB_STATE, JobStateSerializeUtil.serialize(jobState));
 
 			if (scheduler == _persistedScheduler) {
 				jobDetail.setDurability(true);
@@ -893,26 +906,22 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
-		JobState jobState = (JobState)jobDataMap.get(JOB_STATE);
+		JobState jobState = getJobState(jobDataMap);
 
 		Trigger trigger = scheduler.getTrigger(jobName, groupName);
 
-		Date previousFireTime = trigger.getPreviousFireTime();
-
-		jobState.setTriggerTimeInfomation(END_TIME, new Date());
-		jobState.setTriggerTimeInfomation(
-			FINAL_FIRE_TIME, previousFireTime);
-		jobState.setTriggerTimeInfomation(NEXT_FIRE_TIME, null);
-		jobState.setTriggerTimeInfomation(
-			PREVIOUS_FIRE_TIME, previousFireTime);
-		jobState.setTriggerTimeInfomation(
-			START_TIME, trigger.getStartTime());
+		jobState.setTriggerDate(END_TIME, new Date());
+		jobState.setTriggerDate(FINAL_FIRE_TIME, trigger.getPreviousFireTime());
+		jobState.setTriggerDate(NEXT_FIRE_TIME, null);
+		jobState.setTriggerDate(
+			PREVIOUS_FIRE_TIME, trigger.getPreviousFireTime());
+		jobState.setTriggerDate(START_TIME, trigger.getStartTime());
 
 		jobState.setTriggerState(TriggerState.UNSCHEDULED);
 
 		jobState.clearExceptions();
 
-		jobDataMap.put(JOB_STATE, jobState);
+		jobDataMap.put(JOB_STATE, JobStateSerializeUtil.serialize(jobState));
 
 		scheduler.unscheduleJob(jobName, groupName);
 
@@ -962,7 +971,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
-		JobState jobState = (JobState)jobDataMap.get(JOB_STATE);
+		JobState jobState = getJobState(jobDataMap);
 
 		if (triggerState != null) {
 			jobState.setTriggerState(triggerState);
@@ -972,7 +981,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			jobState.clearExceptions();
 		}
 
-		jobDataMap.put(JOB_STATE, jobState);
+		jobDataMap.put(JOB_STATE, JobStateSerializeUtil.serialize(jobState));
 
 		scheduler.addJob(jobDetail, true);
 	}

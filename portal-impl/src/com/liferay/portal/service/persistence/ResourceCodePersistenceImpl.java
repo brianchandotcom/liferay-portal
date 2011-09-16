@@ -294,8 +294,6 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ResourceCodeModelImpl resourceCodeModelImpl = (ResourceCodeModelImpl)resourceCode;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S,
@@ -348,8 +346,6 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 				!Validator.equals(resourceCode.getName(),
 					resourceCodeModelImpl.getOriginalName()) ||
 				(resourceCode.getScope() != resourceCodeModelImpl.getOriginalScope()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S,
 				new Object[] {
 					Long.valueOf(resourceCodeModelImpl.getOriginalCompanyId()),

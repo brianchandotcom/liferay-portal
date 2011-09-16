@@ -308,8 +308,6 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ResourceBlockModelImpl resourceBlockModelImpl = (ResourceBlockModelImpl)resourceBlock;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
@@ -367,8 +365,6 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 					resourceBlockModelImpl.getOriginalName()) ||
 				!Validator.equals(resourceBlock.getPermissionsHash(),
 					resourceBlockModelImpl.getOriginalPermissionsHash()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 				new Object[] {
 					Long.valueOf(resourceBlockModelImpl.getOriginalCompanyId()),

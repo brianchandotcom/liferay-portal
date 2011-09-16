@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Joe Bloggs</td>
-	<td></td>
+	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Joe Bloggs</td>
-	<td></td>
+	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -30,140 +30,159 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_2_birthdayMonth</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_2_birthdayMonth</td>
+	<td>//select[@id='_2_birthdayMonth']</td>
 	<td>Birthday Month</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>_2_birthdayMonth</td>
-	<td>label=March</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
-	<td>waitForSelectedLabel</td>
-	<td>_2_birthdayMonth</td>
+	<td>click</td>
+	<td>//select[@id='_2_birthdayMonth']</td>
 	<td>March</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_2_birthdayYear</td>
-	<td>label=1986</td>
+	<td>//select[@id='_2_birthdayMonth']</td>
+	<td>March</td>
 </tr>
 <tr>
 	<td>waitForSelectedLabel</td>
-	<td>_2_birthdayYear</td>
+	<td>//select[@id='_2_birthdayMonth']</td>
+	<td>March</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_2_birthdayYear']</td>
 	<td>1986</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//button</td>
-	<td></td>
+	<td>waitForSelectedLabel</td>
+	<td>//select[@id='_2_birthdayYear']</td>
+	<td>1986</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[2]/div/div[1]/div/div</td>
-	<td></td>
+	<td>//button[@id='buttonTest']</td>
+	<td>Date Picker</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//button[@id='buttonTest']</td>
+	<td>Date Picker</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-calendar-title']</td>
+	<td>Calendar Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-calendar-title']</td>
+	<td>March 1986</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=Prev</td>
-	<td></td>
+	<td>Prev</td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
+	<td>waitForText</td>
+	<td>//div[@class='aui-calendar-title']</td>
+	<td>April 1986</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@class='aui-calendar-title']</td>
 	<td>April 1986</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=Prev</td>
-	<td></td>
+	<td>Prev</td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
+	<td>waitForText</td>
+	<td>//div[@class='aui-calendar-title']</td>
+	<td>May 1986</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@class='aui-calendar-title']</td>
 	<td>May 1986</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>link=31</td>
-	<td></td>
+	<td>31</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=31</td>
-	<td></td>
+	<td>31</td>
 </tr>
 <tr>
 	<td>waitForNotVisible</td>
 	<td>//div[@class='aui-calendar-title']</td>
-	<td></td>
+	<td>Date Picker</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_birthdayMonth</td>
+	<td>//select[@id='_2_birthdayMonth']</td>
 	<td>May</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_birthdayDay</td>
+	<td>//select[@id='_2_birthdayDay']</td>
 	<td>31</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_birthdayYear</td>
+	<td>//select[@id='_2_birthdayYear']</td>
 	<td>1986</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForSelectedLabel</td>
-	<td>_2_birthdayMonth</td>
-	<td>May</td>
-</tr>
-<tr>
-	<td>waitForSelectedLabel</td>
-	<td>_2_birthdayDay</td>
-	<td>31</td>
-</tr>
-<tr>
-	<td>waitForSelectedLabel</td>
-	<td>_2_birthdayYear</td>
-	<td>1986</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_birthdayMonth</td>
+	<td>//select[@id='_2_birthdayMonth']</td>
 	<td>May</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_birthdayDay</td>
+	<td>//select[@id='_2_birthdayDay']</td>
 	<td>31</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_birthdayYear</td>
+	<td>//select[@id='_2_birthdayYear']</td>
 	<td>1986</td>
 </tr>
-
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_2_birthdayMonth']</td>
+	<td>May</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_2_birthdayDay']</td>
+	<td>31</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_2_birthdayYear']</td>
+	<td>1986</td>
+</tr>
 </tbody></table>
 </body>
 </html>

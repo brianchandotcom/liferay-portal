@@ -18,8 +18,7 @@ import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.lang.reflect.Proxy;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +100,7 @@ public class BeanLocatorImpl implements BeanLocator {
 					}
 				}
 
-				bean = Proxy.newProxyInstance(
+				bean = ProxyUtil.newProxyInstance(
 					_classLoader,
 					interfacesList.toArray(new Class<?>[interfacesList.size()]),
 					new VelocityBeanHandler(bean, _classLoader));

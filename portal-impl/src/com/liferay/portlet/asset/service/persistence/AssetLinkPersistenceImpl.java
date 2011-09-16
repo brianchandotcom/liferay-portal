@@ -335,8 +335,6 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		AssetLinkModelImpl assetLinkModelImpl = (AssetLinkModelImpl)assetLink;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_E_E_T,
@@ -387,8 +385,6 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 				((assetLink.getEntryId1() != assetLinkModelImpl.getOriginalEntryId1()) ||
 				(assetLink.getEntryId2() != assetLinkModelImpl.getOriginalEntryId2()) ||
 				(assetLink.getType() != assetLinkModelImpl.getOriginalType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_E_E_T,
 				new Object[] {
 					Long.valueOf(assetLinkModelImpl.getOriginalEntryId1()),

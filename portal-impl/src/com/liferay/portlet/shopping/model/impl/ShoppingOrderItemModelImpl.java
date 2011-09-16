@@ -16,6 +16,7 @@ package com.liferay.portlet.shopping.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -28,8 +29,6 @@ import com.liferay.portlet.shopping.model.ShoppingOrderItem;
 import com.liferay.portlet.shopping.model.ShoppingOrderItemModel;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Proxy;
 
 import java.sql.Types;
 
@@ -224,7 +223,7 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		}
 		else {
 			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (ShoppingOrderItem)Proxy.newProxyInstance(_classLoader,
+				_escapedModelProxy = (ShoppingOrderItem)ProxyUtil.newProxyInstance(_classLoader,
 						_escapedModelProxyInterfaces,
 						new AutoEscapeBeanHandler(this));
 			}

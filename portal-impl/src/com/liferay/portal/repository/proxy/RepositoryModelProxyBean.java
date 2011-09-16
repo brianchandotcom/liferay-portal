@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
-
-import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +98,7 @@ public abstract class RepositoryModelProxyBean {
 			return null;
 		}
 
-		return Proxy.newProxyInstance(
+		return ProxyUtil.newProxyInstance(
 			_classLoader, new Class[] {clazz},
 			new ClassLoaderBeanHandler(bean, _classLoader));
 	}

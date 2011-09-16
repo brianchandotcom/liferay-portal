@@ -52,7 +52,7 @@ public class SearchUserQuotesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//input[@name='_3_keywords']")) {
+				if (selenium.isVisible("//input[@name='_3_keywords']")) {
 					break;
 				}
 			}

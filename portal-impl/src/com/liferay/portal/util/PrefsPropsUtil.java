@@ -496,4 +496,18 @@ public class PrefsPropsUtil {
 		return getStringArray(preferences, 0, name, delimiter, defaultValue);
 	}
 
+	public static String getStringFromNames(long companyId, String... names)
+		throws SystemException {
+
+		for (String name : names) {
+			String value = getString(companyId, name);
+
+			if (Validator.isNotNull(value)) {
+				return value;
+			}
+		}
+
+		return null;
+	}
+
 }

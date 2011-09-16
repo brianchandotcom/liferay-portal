@@ -292,8 +292,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MDRActionModelImpl mdrActionModelImpl = (MDRActionModelImpl)mdrAction;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -349,8 +347,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				(!Validator.equals(mdrAction.getUuid(),
 					mdrActionModelImpl.getOriginalUuid()) ||
 				(mdrAction.getGroupId() != mdrActionModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					mdrActionModelImpl.getOriginalUuid(),

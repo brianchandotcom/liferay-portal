@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Polls Display Test Page</td>
-	<td></td>
+	<td>Polls Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -39,34 +44,39 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@class='taglib-text']</td>
+	<td>//div[@class='archived-setups']/span/a/span</td>
+	<td>Archive/Restore Setup</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='archived-setups']/span/a/span</td>
 	<td>Archive/Restore Setup</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span[@class='taglib-text']</td>
+	<td>//div[@class='archived-setups']/span/a/span</td>
 	<td>Archive/Restore Setup</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_name</td>
+	<td>//input[@id='_86_name']</td>
 	<td>Archived Setup</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -79,7 +89,7 @@
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//tr[3]/td[3]</td>
 	<td>Modified Date</td>
 </tr>

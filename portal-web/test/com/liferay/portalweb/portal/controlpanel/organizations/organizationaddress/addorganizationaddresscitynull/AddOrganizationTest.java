@@ -22,150 +22,126 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddOrganizationTest extends BaseTestCase {
 	public void testAddOrganization() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace("Control Panel"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Users and Organizations",
-					RuntimeVariables.replace("Users and Organizations"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Regular Organization"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@id='_125_name']",
-					RuntimeVariables.replace("Selenium"));
-				selenium.saveScreenShotAndSource();
-				selenium.select("//select[@id='_125_type']",
-					RuntimeVariables.replace("label=Regular Organization"));
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace("Save"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.clickAt("//div[2]/span[1]/ul/li/strong/a/span",
-					RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("All Organizations"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
-
-				if (!basicVisible) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace("\u00ab Basic"));
-
-			case 2:
-				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("Selenium"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Selenium"),
-					selenium.getText("//td[2]/a"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Regular Organization"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_125_name']",
+			RuntimeVariables.replace("Selenium"));
+		selenium.saveScreenShotAndSource();
+		selenium.select("//select[@id='_125_type']",
+			RuntimeVariables.replace("label=Regular Organization"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.clickAt("//div[2]/span[1]/ul/li/strong/a/span",
+			RuntimeVariables.replace("View"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Users and Organizations"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@name='_125_keywords']",
+			RuntimeVariables.replace("Selenium"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Selenium"),
+			selenium.getText("//a[2]/strong"));
 	}
 }

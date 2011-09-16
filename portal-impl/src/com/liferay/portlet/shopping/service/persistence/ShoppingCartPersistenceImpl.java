@@ -289,8 +289,6 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ShoppingCartModelImpl shoppingCartModelImpl = (ShoppingCartModelImpl)shoppingCart;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
@@ -339,8 +337,6 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		if (!isNew &&
 				((shoppingCart.getGroupId() != shoppingCartModelImpl.getOriginalGroupId()) ||
 				(shoppingCart.getUserId() != shoppingCartModelImpl.getOriginalUserId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
 				new Object[] {
 					Long.valueOf(shoppingCartModelImpl.getOriginalGroupId()),

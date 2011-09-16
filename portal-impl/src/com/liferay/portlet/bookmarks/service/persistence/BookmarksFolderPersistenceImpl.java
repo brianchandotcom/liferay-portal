@@ -343,8 +343,6 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		BookmarksFolderModelImpl bookmarksFolderModelImpl = (BookmarksFolderModelImpl)bookmarksFolder;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -401,8 +399,6 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				(!Validator.equals(bookmarksFolder.getUuid(),
 					bookmarksFolderModelImpl.getOriginalUuid()) ||
 				(bookmarksFolder.getGroupId() != bookmarksFolderModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					bookmarksFolderModelImpl.getOriginalUuid(),

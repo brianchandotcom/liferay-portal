@@ -321,8 +321,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		WikiNodeModelImpl wikiNodeModelImpl = (WikiNodeModelImpl)wikiNode;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -385,8 +383,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				(!Validator.equals(wikiNode.getUuid(),
 					wikiNodeModelImpl.getOriginalUuid()) ||
 				(wikiNode.getGroupId() != wikiNodeModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					wikiNodeModelImpl.getOriginalUuid(),
@@ -408,8 +404,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				((wikiNode.getGroupId() != wikiNodeModelImpl.getOriginalGroupId()) ||
 				!Validator.equals(wikiNode.getName(),
 					wikiNodeModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
 				new Object[] {
 					Long.valueOf(wikiNodeModelImpl.getOriginalGroupId()),

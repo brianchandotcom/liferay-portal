@@ -56,7 +56,7 @@ public class SearchDocumentLibraryDisplayTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@title='Document Library Display']")) {
+							"//div[@title='Documents and Media Display']")) {
 					break;
 				}
 			}
@@ -68,6 +68,6 @@ public class SearchDocumentLibraryDisplayTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible(
-				"//div[@title='Document Library Display']"));
+				"//div[@title='Documents and Media Display']"));
 	}
 }

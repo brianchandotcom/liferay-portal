@@ -419,8 +419,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		<#assign uniqueFinderList = entity.getUniqueFinderList()>
 
 		<#if uniqueFinderList?size != 0>
@@ -589,8 +587,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						</#list>
 					)
 			) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 				FinderCacheUtil.removeResult(
 					FINDER_PATH_FETCH_BY_${finder.name?upper_case},
 					new Object[] {

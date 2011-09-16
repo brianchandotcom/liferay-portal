@@ -368,8 +368,6 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		JournalTemplateModelImpl journalTemplateModelImpl = (JournalTemplateModelImpl)journalTemplate;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -438,8 +436,6 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 				(!Validator.equals(journalTemplate.getUuid(),
 					journalTemplateModelImpl.getOriginalUuid()) ||
 				(journalTemplate.getGroupId() != journalTemplateModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					journalTemplateModelImpl.getOriginalUuid(),
@@ -460,8 +456,6 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 
 		if (!isNew &&
 				(journalTemplate.getSmallImageId() != journalTemplateModelImpl.getOriginalSmallImageId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID,
 				new Object[] {
 					Long.valueOf(
@@ -480,8 +474,6 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 				((journalTemplate.getGroupId() != journalTemplateModelImpl.getOriginalGroupId()) ||
 				!Validator.equals(journalTemplate.getTemplateId(),
 					journalTemplateModelImpl.getOriginalTemplateId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_T,
 				new Object[] {
 					Long.valueOf(journalTemplateModelImpl.getOriginalGroupId()),

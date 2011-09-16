@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.asset.service.impl;
 
+import com.liferay.portal.kernel.cache.Lifecycle;
+import com.liferay.portal.kernel.cache.ThreadLocalCache;
+import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -173,6 +176,18 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	protected Object[] filterQuery(AssetEntryQuery entryQuery)
 		throws PortalException, SystemException {
 
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
+
+		String key = entryQuery.toString();
+
+		Object[] results = threadLocalCache.get(key);
+
+		if (results != null) {
+			return results;
+		}
+
 		int end = entryQuery.getEnd();
 		int start = entryQuery.getStart();
 
@@ -222,7 +237,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		entryQuery.setEnd(end);
 		entryQuery.setStart(start);
 
-		return new Object[] {filteredEntries, length};
+		results = new Object[] {filteredEntries, length};
+
+		threadLocalCache.put(key, results);
+
+		return results;
 	}
 
 	protected boolean isRemovedFilters (

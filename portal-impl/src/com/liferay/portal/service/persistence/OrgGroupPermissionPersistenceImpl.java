@@ -271,8 +271,6 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			OrgGroupPermissionImpl.class, orgGroupPermission.getPrimaryKey());
 

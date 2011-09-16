@@ -245,8 +245,6 @@ public class SocialEquityHistoryPersistenceImpl extends BasePersistenceImpl<Soci
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(SocialEquityHistoryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityHistoryImpl.class, socialEquityHistory.getPrimaryKey());
 

@@ -367,8 +367,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		RoleModelImpl roleModelImpl = (RoleModelImpl)role;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
@@ -425,8 +423,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				((role.getCompanyId() != roleModelImpl.getOriginalCompanyId()) ||
 				!Validator.equals(role.getName(),
 					roleModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
 				new Object[] {
 					Long.valueOf(roleModelImpl.getOriginalCompanyId()),
@@ -448,8 +444,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				((role.getCompanyId() != roleModelImpl.getOriginalCompanyId()) ||
 				(role.getClassNameId() != roleModelImpl.getOriginalClassNameId()) ||
 				(role.getClassPK() != roleModelImpl.getOriginalClassPK()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C,
 				new Object[] {
 					Long.valueOf(roleModelImpl.getOriginalCompanyId()),

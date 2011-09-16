@@ -308,8 +308,6 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ShoppingOrderModelImpl shoppingOrderModelImpl = (ShoppingOrderModelImpl)shoppingOrder;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER,
@@ -359,8 +357,6 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		if (!isNew &&
 				(!Validator.equals(shoppingOrder.getNumber(),
 					shoppingOrderModelImpl.getOriginalNumber()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER,
 				new Object[] { shoppingOrderModelImpl.getOriginalNumber() });
 		}
@@ -375,8 +371,6 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		if (!isNew &&
 				(!Validator.equals(shoppingOrder.getPpTxnId(),
 					shoppingOrderModelImpl.getOriginalPpTxnId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID,
 				new Object[] { shoppingOrderModelImpl.getOriginalPpTxnId() });
 		}

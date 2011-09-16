@@ -38,7 +38,6 @@ public class ViewConfigurePortletTitleListDLDocumentAPTests
 			ConfigurePortletDisplayStyleTitleListTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletTitleListDLDocumentAPTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

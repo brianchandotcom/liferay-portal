@@ -291,8 +291,6 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPrototypeImpl.class, layoutPrototype.getPrimaryKey());
 

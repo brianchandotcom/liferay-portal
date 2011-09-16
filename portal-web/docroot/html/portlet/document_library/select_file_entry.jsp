@@ -24,7 +24,7 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConst
 long groupId = BeanParamUtil.getLong(folder, request, "groupId");
 
 if (folder != null) {
-	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse, true);
 }
 %>
 

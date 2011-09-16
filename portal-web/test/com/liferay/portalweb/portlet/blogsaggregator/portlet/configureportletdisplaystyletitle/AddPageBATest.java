@@ -32,7 +32,7 @@ public class AddPageBATest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[@id='addPage']")) {
+				if (selenium.isElementPresent("//a[@id='addPage']")) {
 					break;
 				}
 			}

@@ -298,8 +298,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		MBBanModelImpl mbBanModelImpl = (MBBanModelImpl)mbBan;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B,
@@ -348,8 +346,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		if (!isNew &&
 				((mbBan.getGroupId() != mbBanModelImpl.getOriginalGroupId()) ||
 				(mbBan.getBanUserId() != mbBanModelImpl.getOriginalBanUserId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B,
 				new Object[] {
 					Long.valueOf(mbBanModelImpl.getOriginalGroupId()),

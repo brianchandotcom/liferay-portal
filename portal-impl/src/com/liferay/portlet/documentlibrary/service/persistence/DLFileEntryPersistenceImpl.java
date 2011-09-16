@@ -434,8 +434,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		DLFileEntryModelImpl dlFileEntryModelImpl = (DLFileEntryModelImpl)dlFileEntry;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -507,8 +505,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				(!Validator.equals(dlFileEntry.getUuid(),
 					dlFileEntryModelImpl.getOriginalUuid()) ||
 				(dlFileEntry.getGroupId() != dlFileEntryModelImpl.getOriginalGroupId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 				new Object[] {
 					dlFileEntryModelImpl.getOriginalUuid(),
@@ -532,8 +528,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				(dlFileEntry.getFolderId() != dlFileEntryModelImpl.getOriginalFolderId()) ||
 				!Validator.equals(dlFileEntry.getName(),
 					dlFileEntryModelImpl.getOriginalName()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_N,
 				new Object[] {
 					Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),
@@ -562,8 +556,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				(dlFileEntry.getFolderId() != dlFileEntryModelImpl.getOriginalFolderId()) ||
 				!Validator.equals(dlFileEntry.getTitle(),
 					dlFileEntryModelImpl.getOriginalTitle()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_T,
 				new Object[] {
 					Long.valueOf(dlFileEntryModelImpl.getOriginalGroupId()),

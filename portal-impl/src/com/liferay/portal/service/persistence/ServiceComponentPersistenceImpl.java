@@ -279,8 +279,6 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ServiceComponentModelImpl serviceComponentModelImpl = (ServiceComponentModelImpl)serviceComponent;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU,
@@ -331,8 +329,6 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				(!Validator.equals(serviceComponent.getBuildNamespace(),
 					serviceComponentModelImpl.getOriginalBuildNamespace()) ||
 				(serviceComponent.getBuildNumber() != serviceComponentModelImpl.getOriginalBuildNumber()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU,
 				new Object[] {
 					serviceComponentModelImpl.getOriginalBuildNamespace(),

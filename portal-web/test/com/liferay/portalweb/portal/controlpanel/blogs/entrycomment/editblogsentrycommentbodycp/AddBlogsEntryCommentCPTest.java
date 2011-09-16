@@ -41,10 +41,11 @@ public class AddBlogsEntryCommentCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
@@ -66,7 +67,8 @@ public class AddBlogsEntryCommentCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_161_postReplyBody0")) {
+				if (selenium.isVisible(
+							"//textarea[@name='_161_postReplyBody0']")) {
 					break;
 				}
 			}
@@ -77,13 +79,15 @@ public class AddBlogsEntryCommentCPTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_161_postReplyBody0",
+		selenium.type("//textarea[@name='_161_postReplyBody0']",
 			RuntimeVariables.replace("Blogs Entry Comment Body"));
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_161_postReplyBody0",
+		selenium.keyPress("//textarea[@name='_161_postReplyBody0']",
 			RuntimeVariables.replace("\\48"));
-		selenium.keyPress("_161_postReplyBody0", RuntimeVariables.replace("\\8"));
-		selenium.clickAt("//input[@value='Reply']", RuntimeVariables.replace(""));
+		selenium.keyPress("//textarea[@name='_161_postReplyBody0']",
+			RuntimeVariables.replace("\\8"));
+		selenium.clickAt("//input[@value='Reply']",
+			RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

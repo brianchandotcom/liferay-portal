@@ -36,7 +36,6 @@ public class SelectExistingDLFolderDocumentAPActionsTests extends BaseTests {
 		testSuite.addTestSuite(ConfigurePortletAssetSelectionManualTest.class);
 		testSuite.addTestSuite(
 			SelectExistingDLFolderDocumentAPActionsTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

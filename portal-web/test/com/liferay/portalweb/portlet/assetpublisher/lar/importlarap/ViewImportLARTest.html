@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -44,7 +44,7 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
@@ -60,22 +60,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form[@id='_86_fm']/div[1]/div[1]/div[1]/div/span</td>
+	<td>xpath=(//div[@class='lfr-panel-title'])[1]</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form[@id='_86_fm']/div[1]/div[2]/div[1]/div/span</td>
+	<td>xpath=(//div[@class='lfr-panel-title'])[2]</td>
 	<td>Filter</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form[@id='_86_fm']/div[1]/div[3]/div[1]/div/span</td>
+	<td>xpath=(//div[@class='lfr-panel-title'])[3]</td>
+	<td>Custom User Attributes</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='lfr-panel-title'])[4]</td>
 	<td>Ordering and Grouping</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form[@id='_86_fm']/div[1]/div[4]/div[1]/div/span</td>
+	<td>xpath=(//div[@class='lfr-panel-title'])[5]</td>
 	<td>Display Settings</td>
 </tr>
 

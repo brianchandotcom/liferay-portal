@@ -138,6 +138,7 @@ if (feed != null) {
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="feedId" type="hidden" value="<%= feedId %>" />
 	<aui:input name="rendererTemplateId" type="hidden" value="<%= rendererTemplateId %>" />
+	<aui:input name="contentField" type="hidden" value="<%= contentField %>" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
@@ -280,24 +281,19 @@ if (feed != null) {
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="journalPresentationSettingsPanel" persistState="<%= true %>" title="presentation-settings">
 			<aui:fieldset>
-				<aui:select label="feed-item-content" name="contentField">
+				<aui:select label="feed-item-content" name="contentFieldSelector">
+					<aui:option label="<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>" selected="<%= contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) %>" />
 
-					<%
-					String taglibSelectRendererTemplateOption = renderResponse.getNamespace() + "selectRendererTemplate('');";
-					%>
-
-					<aui:option label="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" onClick="<%= taglibSelectRendererTemplateOption %>" selected="<%= contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) %>" />
 					<optgroup label='<liferay-ui:message key="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />'>
-						<aui:option label="use-default-template" onClick="<%= taglibSelectRendererTemplateOption %>" selected="<%= contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT) %>" value="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />
+						<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label="use-default-template" selected="<%= contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT) %>" value="" />
 
 						<c:if test="<%= (structure != null) && (templates.size() > 1) %>">
 
 							<%
 							for (JournalTemplate currTemplate : templates) {
-								taglibSelectRendererTemplateOption = renderResponse.getNamespace() + "selectRendererTemplate('" + currTemplate.getTemplateId() + "');";
 							%>
 
-								<aui:option label='<%= LanguageUtil.format(pageContext, "use-template-x", currTemplate.getName(locale)) %>' onClick="<%= taglibSelectRendererTemplateOption %>" selected="<%= rendererTemplateId.equals(currTemplate.getTemplateId()) %>" value="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />
+								<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>"  label='<%= LanguageUtil.format(pageContext, "use-template-x", currTemplate.getName(locale)) %>' selected="<%= rendererTemplateId.equals(currTemplate.getTemplateId()) %>" value="<%= currTemplate.getTemplateId() %>" />
 
 							<%
 							}
@@ -323,10 +319,9 @@ if (feed != null) {
 								String elType = StringUtil.replace(el.attributeValue("type"), StringPool.UNDERLINE, StringPool.DASH);
 
 								if (!elType.equals("boolean") && !elType.equals("list") && !elType.equals("multi-list")) {
-									taglibSelectRendererTemplateOption = renderResponse.getNamespace() + "selectRendererTemplate('');";
 							%>
 
-									<aui:option label='<%= TextFormatter.format(elName, TextFormatter.J) + "(" + LanguageUtil.get(pageContext, elType) + ")" %>' onClick="<%= taglibSelectRendererTemplateOption %>" selected="<%= contentField.equals(elName) %>" value="<%= elName %>" />
+									<aui:option label='<%= TextFormatter.format(elName, TextFormatter.J) + "(" + LanguageUtil.get(pageContext, elType) + ")" %>' selected="<%= contentField.equals(elName) %>" value="<%= elName %>" />
 
 							<%
 								}
@@ -482,4 +477,26 @@ if (feed != null) {
 			</c:otherwise>
 		</c:choose>
 	</c:if>
+</aui:script>
+
+<aui:script use="aui-base">
+	var feedItemContentSelector = A.one('select#<portlet:namespace />contentFieldSelector');
+
+	var changeFeedItemContent = function() {
+		var selectedFeedItemOption = feedItemContentSelector.one(':selected');
+
+		var data = selectedFeedItemOption.attr('data-contentField');
+		var value = selectedFeedItemOption.attr('value');
+
+		if (data === '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>') {
+			document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = value;
+			document.<portlet:namespace />fm.<portlet:namespace />contentField.value = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
+		}
+		else {
+			document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = '';
+			document.<portlet:namespace />fm.<portlet:namespace />contentField.value = value;
+		}
+	}
+
+	feedItemContentSelector.on('change', changeFeedItemContent);
 </aui:script>

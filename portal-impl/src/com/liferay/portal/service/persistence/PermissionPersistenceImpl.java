@@ -310,8 +310,6 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		PermissionModelImpl permissionModelImpl = (PermissionModelImpl)permission;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_R,
@@ -361,8 +359,6 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 				(!Validator.equals(permission.getActionId(),
 					permissionModelImpl.getOriginalActionId()) ||
 				(permission.getResourceId() != permissionModelImpl.getOriginalResourceId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_R,
 				new Object[] {
 					permissionModelImpl.getOriginalActionId(),

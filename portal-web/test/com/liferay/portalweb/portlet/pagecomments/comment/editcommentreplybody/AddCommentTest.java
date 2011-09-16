@@ -30,7 +30,7 @@ public class AddCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Page Comments Test Page")) {
+				if (selenium.isVisible("link=Page Comments Test Page")) {
 					break;
 				}
 			}
@@ -42,10 +42,13 @@ public class AddCommentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Comments Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Be the first.", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Be the first."),
+			selenium.getText("//fieldset/div/a"));
+		selenium.clickAt("//fieldset/div/a",
+			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -53,7 +56,8 @@ public class AddCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_107_postReplyBody0")) {
+				if (selenium.isVisible(
+							"//textarea[@name='_107_postReplyBody0']")) {
 					break;
 				}
 			}
@@ -64,20 +68,38 @@ public class AddCommentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("_107_postReplyBody0"));
-		selenium.type("_107_postReplyBody0",
-			RuntimeVariables.replace("This is a test page comment."));
+		assertTrue(selenium.isVisible("//textarea[@name='_107_postReplyBody0']"));
+		selenium.type("//textarea[@name='_107_postReplyBody0']",
+			RuntimeVariables.replace("PC Comment"));
 		selenium.saveScreenShotAndSource();
-		selenium.keyPress("_107_postReplyBody0",
-			RuntimeVariables.replace("\\48"));
-		selenium.keyPress("_107_postReplyBody0", RuntimeVariables.replace("\\8"));
-		selenium.clickAt("//input[@value='Reply']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//input[@value='Reply']",
+			RuntimeVariables.replace("Reply"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Your request processed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='lfr-message-response portlet-msg-success']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("This is a test page comment."),
-			selenium.getText("//div/div[3]/div/div[1]"));
+				"Your request processed successfully."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("PC Comment"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

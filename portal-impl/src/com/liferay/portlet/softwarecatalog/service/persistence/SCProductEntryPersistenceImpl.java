@@ -332,8 +332,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		SCProductEntryModelImpl scProductEntryModelImpl = (SCProductEntryModelImpl)scProductEntry;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_RG_RA,
@@ -386,8 +384,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 					scProductEntryModelImpl.getOriginalRepoGroupId()) ||
 				!Validator.equals(scProductEntry.getRepoArtifactId(),
 					scProductEntryModelImpl.getOriginalRepoArtifactId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_RG_RA,
 				new Object[] {
 					scProductEntryModelImpl.getOriginalRepoGroupId(),

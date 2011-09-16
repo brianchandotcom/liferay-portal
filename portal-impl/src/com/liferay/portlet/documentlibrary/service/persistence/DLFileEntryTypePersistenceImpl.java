@@ -309,8 +309,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		EntityCacheUtil.removeResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeImpl.class, dlFileEntryType.getPrimaryKey());
 

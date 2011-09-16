@@ -40,23 +40,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>User Groups</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>User Groups</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>User Groups</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@id='_125_name']</td>
-	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -67,6 +62,16 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Temporary</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>This is a temporary user group.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -88,7 +93,21 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No user groups were found.</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Temporary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>This is a temporary user group.</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

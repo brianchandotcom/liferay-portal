@@ -182,6 +182,16 @@ private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCur
 	for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
 		Map<String, Object> data = breadcrumbEntry.getData();
 
+		boolean showGlobally = true;
+
+		if (data != null) {
+			showGlobally = GetterUtil.get((String)data.get("show-globally"), true);
+		}
+
+		if (showCurrentGroup && showCurrentPortlet && !showGlobally) {
+			continue;
+		}
+
 		String breadcrumbTitle = breadcrumbEntry.getTitle();
 		String breadcrumbURL = breadcrumbEntry.getURL();
 

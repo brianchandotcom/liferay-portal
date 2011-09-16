@@ -77,9 +77,26 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 						"Document Library Document"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+					RuntimeVariables.replace("Document Library Document"));
+				Thread.sleep(5000);
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//input[@value='Select']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));
@@ -142,7 +159,7 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("DL Folder Name")
+						if (RuntimeVariables.replace("DM Folder Name")
 												.equals(selenium.getText(
 										"//a[@id='_20_folderName']"))) {
 							break;
@@ -155,14 +172,14 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("DL Folder Name"),
+				assertEquals(RuntimeVariables.replace("DM Folder Name"),
 					selenium.getText("//a[@id='_20_folderName']"));
 				selenium.type("//input[@id='_20_file']",
 					RuntimeVariables.replace(
 						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\assetpublisher\\dependencies\\DLDocument.txt"));
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_20_title']",
-					RuntimeVariables.replace("DL Folder Document Title"));
+					RuntimeVariables.replace("DM Folder Document Title"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
@@ -175,7 +192,7 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("DL Folder Document Title")
+						if (RuntimeVariables.replace("DM Folder Document Title")
 												.equals(selenium.getText(
 										"//h3[@class='asset-title']/a"))) {
 							break;
@@ -189,10 +206,10 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
-						"DL Folder Document Title"),
+						"DM Folder Document Title"),
 					selenium.getText("//h3[@class='asset-title']/a"));
 				assertEquals(RuntimeVariables.replace(
-						"DL Folder Document Title"),
+						"DM Folder Document Title"),
 					selenium.getText(
 						"//div[@class='asset-resource-info']/span/a/span"));
 

@@ -309,8 +309,6 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		AssetTagPropertyModelImpl assetTagPropertyModelImpl = (AssetTagPropertyModelImpl)assetTagProperty;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_K,
@@ -362,8 +360,6 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 				((assetTagProperty.getTagId() != assetTagPropertyModelImpl.getOriginalTagId()) ||
 				!Validator.equals(assetTagProperty.getKey(),
 					assetTagPropertyModelImpl.getOriginalKey()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_K,
 				new Object[] {
 					Long.valueOf(assetTagPropertyModelImpl.getOriginalTagId()),

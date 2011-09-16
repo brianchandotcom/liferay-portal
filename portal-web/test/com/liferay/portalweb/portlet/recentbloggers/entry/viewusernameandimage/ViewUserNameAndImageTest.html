@@ -14,39 +14,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Recent Bloggers Test Page</td>
-	<td></td>
+	<td>Recent Bloggers Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Recent Bloggers Test Page</td>
-	<td></td>
+	<td>Recent Bloggers Test Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//div[@class='user-profile-image']/a/img[@alt='Joe Bloggs']</td>
-	<td></td>
+	<td>assertVisible</td>
+	<td>//img[@class='avatar']</td>
+	<td>User Image</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//a[@class='user-name']</td>
+	<td>assertText</td>
+	<td>//span[@class='user-name']</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Posts:</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='blogger-post-count']</td>
+	<td>Posts: 1</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Stars:</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='blogger-stars']</td>
+	<td>Stars: 0</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertPartialText</td>
+	<td>//div[@class='blogger-date']</td>
 	<td>Date:</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>

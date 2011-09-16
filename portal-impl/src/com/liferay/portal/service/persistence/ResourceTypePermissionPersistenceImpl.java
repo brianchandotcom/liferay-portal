@@ -313,8 +313,6 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl = (ResourceTypePermissionModelImpl)resourceTypePermission;
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_R,
@@ -371,8 +369,6 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				!Validator.equals(resourceTypePermission.getName(),
 					resourceTypePermissionModelImpl.getOriginalName()) ||
 				(resourceTypePermission.getRoleId() != resourceTypePermissionModelImpl.getOriginalRoleId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
-
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_R,
 				new Object[] {
 					Long.valueOf(

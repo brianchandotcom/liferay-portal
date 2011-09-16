@@ -47,8 +47,9 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -71,7 +72,8 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -96,6 +98,9 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_86_enableCommentRatingsCheckbox']",
 			RuntimeVariables.replace("Enable Comment Ratings"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_enableCommentRatingsCheckbox']"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

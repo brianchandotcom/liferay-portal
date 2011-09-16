@@ -105,7 +105,11 @@ pageContext.setAttribute("portletURL", portletURL);
 	headerNames.add("name");
 	headerNames.add("type");
 	headerNames.add("members");
-	headerNames.add("online-now");
+
+	if (PropsValues.LIVE_USERS_ENABLED) {
+		headerNames.add("online-now");
+	}
+
 	headerNames.add("active");
 	headerNames.add("pending-requests");
 
@@ -163,9 +167,11 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		// Online Now
 
-		int onlineCount = LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId());
+		if (PropsValues.LIVE_USERS_ENABLED) {
+			int onlineCount = LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId());
 
-		row.addText(String.valueOf(onlineCount));
+			row.addText(String.valueOf(onlineCount));
+		}
 
 		// Active
 

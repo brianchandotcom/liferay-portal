@@ -103,7 +103,7 @@ pageContext.setAttribute("portletURL", portletURL);
 	headerNames.add("name");
 	headerNames.add("members");
 
-	if (tabs1.equals("my-sites")) {
+	if (tabs1.equals("my-sites") && PropsValues.LIVE_USERS_ENABLED) {
 		headerNames.add("online-now");
 	}
 
@@ -180,7 +180,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		// Online Now
 
-		if (tabs1.equals("my-sites")) {
+		if (tabs1.equals("my-sites") && PropsValues.LIVE_USERS_ENABLED) {
 			int onlineCount = LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId());
 
 			row.addText(String.valueOf(onlineCount));

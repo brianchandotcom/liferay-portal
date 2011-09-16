@@ -23,12 +23,15 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.InputStream;
 
+import java.net.URL;
+
 import javax.servlet.ServletContext;
 
 import org.apache.velocity.exception.ResourceNotFoundException;
 
 /**
  * @author Alexander Chow
+ * @author Raymond Augé
  */
 public class ServletVelocityResourceListener extends VelocityResourceListener {
 
@@ -60,15 +63,28 @@ public class ServletVelocityResourceListener extends VelocityResourceListener {
 							servletContextName + " " + servletContext);
 				}
 
-				is = servletContext.getResourceAsStream(name);
+				try {
+					URL url = servletContext.getResource(name);
 
-				if ((is == null) && (name.endsWith("/init_custom.vm"))) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"The template " + name + " should be created");
+					if (url == null) {
+						if (name.endsWith("/init_custom.vm")) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"The template " + name +
+										" should be created");
+							}
+
+							is = new UnsyncByteArrayInputStream(new byte[0]);
+						}
+
+						return null;
 					}
-
-					is = new UnsyncByteArrayInputStream(new byte[0]);
+					else {
+						is = url.openStream();
+					}
+				}
+				catch (Exception e) {
+					_log.error(e, e);
 				}
 			}
 			else {

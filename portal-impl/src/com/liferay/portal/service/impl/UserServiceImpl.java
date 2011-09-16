@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Address;
@@ -540,7 +541,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 
 		checkAddUserPermission(
-			creatorUserId, companyId, emailAddress, organizationIds);
+			creatorUserId, companyId, emailAddress, organizationIds,
+			serviceContext);
 
 		return userLocalService.addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -890,7 +892,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		catch (PrincipalException pe) {
 		}
 
-		checkAddUserPermission(creatorUserId, companyId, emailAddress, null);
+		checkAddUserPermission(
+			creatorUserId, companyId, emailAddress, null, serviceContext);
 
 		return userLocalService.updateIncompleteUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -1541,12 +1544,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 	protected void checkAddUserPermission(
 			long creatorUserId, long companyId, String emailAddress,
-			long[] organizationIds)
+			long[] organizationIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if ((creatorUserId != 0) || !company.isStrangers()) {
+		boolean anonymousAccount = GetterUtil.getBoolean(
+			serviceContext.getAttribute("anonymousAccount"));
+
+		if ((creatorUserId != 0) ||
+			(!company.isStrangers() && !anonymousAccount)) {
+
 			if (!PortalPermissionUtil.contains(
 					getPermissionChecker(), ActionKeys.ADD_USER) ||
 				!OrganizationPermissionUtil.contains(

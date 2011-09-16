@@ -118,14 +118,16 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 %>
 
 <liferay-util:buffer var="linkContent">
-	<c:choose>
-		<c:when test="<%= urlIsNotNull %>">
-			<img class="<%= imgClass %>" src="<%= src %>" <%= details %> />
-		</c:when>
-		<c:otherwise>
-			<img class="<%= imgClass %>" id="<%= id %>" src="<%= src %>" <%= details %> />
-		</c:otherwise>
-	</c:choose>
+	<c:if test="<%= src != null %>">
+		<c:choose>
+			<c:when test="<%= urlIsNotNull %>">
+				<img class="<%= imgClass %>" src="<%= src %>" <%= details %> />
+			</c:when>
+			<c:otherwise>
+				<img class="<%= imgClass %>" id="<%= id %>" src="<%= src %>" <%= details %> />
+			</c:otherwise>
+		</c:choose>
+	</c:if>
 
 	<c:choose>
 		<c:when test="<%= (iconMenuIconCount != null) && ((iconMenuSingleIcon == null) || iconMenuShowWhenSingleIcon) %>">

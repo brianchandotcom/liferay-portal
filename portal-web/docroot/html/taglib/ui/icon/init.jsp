@@ -57,7 +57,7 @@ if (Validator.isNull(src)) {
 	if (auiImage) {
 		src = themeDisplay.getPathThemeImages().concat("/spacer.png");
 	}
-	else {
+	else if (Validator.isNotNull(image)) {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(themeDisplay.getPathThemeImages());

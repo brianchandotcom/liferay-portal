@@ -148,7 +148,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</c:if>
 
 			<aui:column columnWidth="<%= showFolderMenu ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
-				<liferay-ui:panel-container extended="<%= false %>" id="imageGalleryAssetInfoPanelContainer" persistState="<%= true %>">
+				<div id="imageGalleryAssetInfoContainer">
 					<c:if test="<%= folder != null %>">
 						<div class="lfr-asset-description">
 							<%= HtmlUtil.escape(folder.getDescription()) %>
@@ -178,25 +178,23 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						</liferay-ui:custom-attributes-available>
 					</c:if>
 
-					<liferay-ui:panel collapsible="<%= false %>" id="imageGalleryEntriesPanel" title="Media">
-						<%
-						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+					<%
+					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-						int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
 
-						searchContainer.setTotal(total);
+					searchContainer.setTotal(total);
 
-						List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
-						searchContainer.setResults(results);
+					searchContainer.setResults(results);
 
-						List scores = null;
-						%>
+					List scores = null;
+					%>
 
-						<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
+					<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
 
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
+				</div>
 			</aui:column>
 
 			<c:if test="<%= showFolderMenu %>">

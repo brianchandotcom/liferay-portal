@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Organization;
@@ -77,7 +76,7 @@ public class UserIndexer extends BaseIndexer {
 			searchContext.getAttribute(Field.STATUS),
 			WorkflowConstants.STATUS_APPROVED);
 
-		if(status != WorkflowConstants.STATUS_ANY) {
+		if (status != WorkflowConstants.STATUS_ANY) {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
 		}
 

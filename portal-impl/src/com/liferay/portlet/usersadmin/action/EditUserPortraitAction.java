@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.UserServiceUtil;
@@ -102,22 +101,16 @@ public class EditUserPortraitAction extends PortletAction {
 
 		User user = PortalUtil.getSelectedUser(uploadPortletRequest);
 
-		InputStream inputStream = null;
+		InputStream inputStream =
+			uploadPortletRequest.getFileAsStream("fileName");
 
-		try {
-			 inputStream = uploadPortletRequest.getFileAsStream("fileName");
-
-			if (inputStream == null) {
-				throw new UploadException();
-			}
-
-			byte[] bytes = FileUtil.getBytes(inputStream);
-
-			UserServiceUtil.updatePortrait(user.getUserId(), bytes);
+		if (inputStream == null) {
+			throw new UploadException();
 		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
+
+		byte[] bytes = FileUtil.getBytes(inputStream);
+
+		UserServiceUtil.updatePortrait(user.getUserId(), bytes);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

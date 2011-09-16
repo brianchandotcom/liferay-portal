@@ -95,8 +95,6 @@ public class LiferayStrutsRequestImpl extends HttpServletRequestWrapper {
 			InputStream is = super.getInputStream();
 
 			_bytes = FileUtil.getBytes(is);
-
-			is.close();
 		}
 
 		return new UnsyncByteArrayInputStreamWrapper(

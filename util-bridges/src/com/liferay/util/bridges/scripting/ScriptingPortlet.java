@@ -226,16 +226,11 @@ public class ScriptingPortlet extends GenericPortlet {
 				}
 			}
 
-			try {
-				if (is != null) {
-					String script = new String(FileUtil.getBytes(is));
+			if (is != null) {
+				String script = new String(FileUtil.getBytes(is));
 
-					sb.append(script);
-					sb.append(StringPool.NEW_LINE);
-				}
-			}
-			finally {
-				is.close();
+				sb.append(script);
+				sb.append(StringPool.NEW_LINE);
 			}
 		}
 

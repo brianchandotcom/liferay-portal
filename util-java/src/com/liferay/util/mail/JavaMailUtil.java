@@ -36,12 +36,7 @@ public class JavaMailUtil {
 
 		InputStream is = part.getInputStream();
 
-		try {
-			return FileUtil.getBytes(is);
-		}
-		finally {
-			is.close();
-		}
+		return FileUtil.getBytes(is);
 	}
 
 	public static String toUnicodeString(Address[] addresses) {

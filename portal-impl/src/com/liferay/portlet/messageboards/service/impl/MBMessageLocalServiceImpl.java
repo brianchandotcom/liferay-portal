@@ -1808,11 +1808,26 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getUserId(), StringPool.BLANK);
 		}
 
-		String fromName = PrefsPropsUtil.getStringFromNames(
-			message.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		PortletPreferences preferences =
+			ServiceContextUtil.getPortletPreferences(serviceContext);
 
-		String fromAddress = PrefsPropsUtil.getStringFromNames(
-			message.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		if (preferences == null) {
+			long ownerId = message.getGroupId();
+			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
+			long plid = PortletKeys.PREFS_PLID_SHARED;
+			String portletId = PortletKeys.MESSAGE_BOARDS;
+			String defaultPreferences = null;
+
+			preferences = portletPreferencesLocalService.getPreferences(
+				message.getCompanyId(), ownerId, ownerType, plid, portletId,
+				defaultPreferences);
+		}
+
+		String fromName = MBUtil.getEmailFromName(
+			preferences, message.getCompanyId());
+
+		String fromAddress = MBUtil.getEmailFromAddress(
+			preferences, message.getCompanyId());
 			
 		String subject = PrefsPropsUtil.getContent(
 			message.getCompanyId(), PropsKeys.DISCUSSION_EMAIL_SUBJECT);

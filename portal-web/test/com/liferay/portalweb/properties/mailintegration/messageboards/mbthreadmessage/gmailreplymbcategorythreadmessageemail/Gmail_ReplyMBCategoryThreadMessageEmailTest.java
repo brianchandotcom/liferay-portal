@@ -35,7 +35,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				Thread.sleep(60000);
 
-				boolean SignedIn = selenium.isPartialText("//td/a", "Sign out");
+				boolean SignedIn = selenium.isElementPresent("link=Sign out");
 
 				if (!SignedIn) {
 					label = 2;
@@ -201,7 +201,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 
-				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
+				boolean signedIn2 = selenium.isElementPresent("link=Sign out");
 
 				if (!signedIn2) {
 					label = 5;

@@ -167,7 +167,7 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.clickAt("link=Summary",
+				selenium.clickAt("link=Site Memberships",
 					RuntimeVariables.replace("Summary"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();

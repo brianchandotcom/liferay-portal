@@ -60,7 +60,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//strong/a",
+				selenium.clickAt("//span[@title='Global']/ul/li/strong/a",
 					RuntimeVariables.replace("Site Name"));
 				selenium.clickAt("link=Global",
 					RuntimeVariables.replace("Global"));

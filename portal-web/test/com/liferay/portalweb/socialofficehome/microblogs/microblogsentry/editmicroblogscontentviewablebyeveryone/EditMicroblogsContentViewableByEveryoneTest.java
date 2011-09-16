@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 	public void testEditMicroblogsContentViewableByEveryone()
 		throws Exception {
-		selenium.open("/web/joebloggs/home/");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,8 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div[1]/div/div/div/ul[1]/li[1]/a")) {
+				if (selenium.isVisible(
+							"//section/div/div/div/div[1]/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -42,17 +43,17 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
-			RuntimeVariables.replace("Home"));
+		selenium.clickAt("//section/div/div/div/div[1]/ul/li[3]/a",
+			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("What's happening?"),
-			selenium.getText("//div[1]/h1/span"));
+		assertEquals(RuntimeVariables.replace("Microblogs"),
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertTrue(selenium.isVisible("//div[@class='my-entry-bubble ']"));
 		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
-		assertEquals(RuntimeVariables.replace("Whats Happening Content"),
+		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//span[2]/a/span"));
@@ -96,12 +97,12 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Whats Happening Content"),
+		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("//textarea"));
 		selenium.typeKeys("//textarea", RuntimeVariables.replace(" Edit"));
 		selenium.saveScreenShotAndSource();
 		assertEquals("Everyone", selenium.getSelectedLabel("//span/select"));
-		assertEquals(RuntimeVariables.replace("123"),
+		assertEquals(RuntimeVariables.replace("128"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
@@ -113,7 +114,7 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Joe Bloggs test@liferay.com")
+				if (RuntimeVariables.replace("Joe Bloggs (joebloggs)")
 										.equals(selenium.getText(
 								"//div[@class='user-name']"))) {
 					break;
@@ -126,7 +127,7 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 
 		for (int second = 0;; second++) {
@@ -135,7 +136,7 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Whats Happening Content Edit")
+				if (RuntimeVariables.replace("Microblogs Content Edit")
 										.equals(selenium.getText(
 								"//div[@class='content']"))) {
 					break;
@@ -148,7 +149,8 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Whats Happening Content Edit"),
+		assertEquals(RuntimeVariables.replace("Microblogs Content Edit"),
 			selenium.getText("//div[@class='content']"));
+		assertTrue(selenium.isTextPresent("Reply"));
 	}
 }

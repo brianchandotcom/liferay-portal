@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 	public void testSOFr_ReplyMicroblogsContent() throws Exception {
-		selenium.open("/web/socialofficefriendsn/home");
+		selenium.open("/user/socialofficefriendsn/home");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//ul[2]/li[2]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -41,12 +41,12 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//ul[2]/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -66,7 +66,7 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("//div[@class='content']"));
@@ -92,7 +92,7 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("//div[@class='content']"));
@@ -117,7 +117,7 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Content Repl"));
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("128"),
+		assertEquals(RuntimeVariables.replace("117"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
@@ -128,7 +128,7 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[1]/div/div/div[2]/div/span/a/img")) {
+				if (selenium.isVisible("//div[1]/span/a/img")) {
 					break;
 				}
 			}
@@ -139,7 +139,7 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//div[1]/div/div/div[2]/div/span/a/img"));
+		assertTrue(selenium.isVisible("//div[1]/span/a/img"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -147,9 +147,10 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div/div/div/div[2]/div[1]/div/div[1]",
-							"socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com")) {
+				if (RuntimeVariables.replace(
+							"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)")
+										.equals(selenium.getText(
+								"//div[@class='my-entry-bubble ']/div[1]"))) {
 					break;
 				}
 			}
@@ -161,10 +162,12 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com"),
-			selenium.getText("//div/div/div/div[2]/div[1]/div/div[1]"));
-		assertEquals(RuntimeVariables.replace(
-				"@Joe Bloggs Microblogs Content Repl"),
-			selenium.getText("//div[1]/div/div/div[2]/div/div/div[2]/span"));
+				"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)"),
+			selenium.getText("//div[@class='my-entry-bubble ']/div[1]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//div[@class='my-entry-bubble ']/div[2]/span/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='my-entry-bubble ']/div[2]/span",
+				"Microblogs Content Repl"));
 	}
 }

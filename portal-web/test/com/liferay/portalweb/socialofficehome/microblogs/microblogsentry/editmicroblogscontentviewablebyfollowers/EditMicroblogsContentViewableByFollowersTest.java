@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 	public void testEditMicroblogsContentViewableByFollowers()
 		throws Exception {
-		selenium.open("/web/joebloggs/home/");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,8 @@ public class EditMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//ul[2]/li[2]/a")) {
+				if (selenium.isVisible(
+							"//section/div/div/div/div[1]/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -42,15 +43,15 @@ public class EditMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//ul[2]/li[2]/a",
+		selenium.clickAt("//section/div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertTrue(selenium.isVisible("//div[@class='my-entry-bubble ']"));
 		assertTrue(selenium.isVisible("//div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("//div[@class='content']"));
@@ -100,7 +101,7 @@ public class EditMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 			selenium.getText("//textarea"));
 		selenium.typeKeys("//textarea", RuntimeVariables.replace(" Edit"));
 		selenium.saveScreenShotAndSource();
-		assertEquals("Coworkers", selenium.getSelectedLabel("//span/select"));
+		assertEquals("Followers", selenium.getSelectedLabel("//span/select"));
 		assertEquals(RuntimeVariables.replace("128"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.clickAt("//input[@value='Post']",
@@ -113,7 +114,7 @@ public class EditMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Joe Bloggs test@liferay.com")
+				if (RuntimeVariables.replace("Joe Bloggs (joebloggs)")
 										.equals(selenium.getText(
 								"//div[@class='user-name']"))) {
 					break;
@@ -126,7 +127,7 @@ public class EditMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 
 		for (int second = 0;; second++) {
@@ -150,5 +151,6 @@ public class EditMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs Content Edit"),
 			selenium.getText("//div[@class='content']"));
+		assertFalse(selenium.isTextPresent("Reply"));
 	}
 }

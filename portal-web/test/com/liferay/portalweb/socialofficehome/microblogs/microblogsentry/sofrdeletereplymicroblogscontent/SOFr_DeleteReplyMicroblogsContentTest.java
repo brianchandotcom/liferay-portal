@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOFr_DeleteReplyMicroblogsContentTest extends BaseTestCase {
 	public void testSOFr_DeleteReplyMicroblogsContent()
 		throws Exception {
-		selenium.open("/web/socialofficefriendsn/home");
+		selenium.open("/user/socialofficefriendsn/home");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,7 @@ public class SOFr_DeleteReplyMicroblogsContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//ul[2]/li[2]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -42,12 +42,12 @@ public class SOFr_DeleteReplyMicroblogsContentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//ul[2]/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/section/header/h1"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -55,7 +55,7 @@ public class SOFr_DeleteReplyMicroblogsContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='my-entry-bubble ']")) {
+				if (selenium.isVisible("//div[1]/span/a/img")) {
 					break;
 				}
 			}
@@ -66,16 +66,39 @@ public class SOFr_DeleteReplyMicroblogsContentTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//div/span/a/img"));
+		assertTrue(selenium.isVisible("//div[1]/span/a/img"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)")
+										.equals(selenium.getText(
+								"//div[@class='my-entry-bubble ']/div[1]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com"),
-			selenium.getText("//div[@class='user-name']"));
-		assertEquals(RuntimeVariables.replace(
-				"@Joe Bloggs Microblogs Content Repl"),
-			selenium.getText("//div[@class='content']"));
+				"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)"),
+			selenium.getText("//div[@class='my-entry-bubble ']/div[1]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//div[@class='my-entry-bubble ']/div[2]/span/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='my-entry-bubble ']/div[2]/span",
+				"Microblogs Content Repl"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//span[3]/a/span"));
-		selenium.click(RuntimeVariables.replace("//span[3]/a/span"));
+			selenium.getText("//span[2]/a/span"));
+		selenium.click(RuntimeVariables.replace("//span[2]/a/span"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -84,8 +107,7 @@ public class SOFr_DeleteReplyMicroblogsContentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertFalse(selenium.isTextPresent(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com"));
-		assertFalse(selenium.isTextPresent(
-				"@Joe Bloggs Microblogs Content Repl"));
+				"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)"));
+		assertFalse(selenium.isTextPresent("Joe Bloggs Microblogs Content Repl"));
 	}
 }

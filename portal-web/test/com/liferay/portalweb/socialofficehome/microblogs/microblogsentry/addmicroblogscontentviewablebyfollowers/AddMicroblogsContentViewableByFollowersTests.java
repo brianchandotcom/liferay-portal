@@ -37,7 +37,7 @@ public class AddMicroblogsContentViewableByFollowersTests extends BaseTests {
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFo_SignInTest.class);
 		testSuite.addTestSuite(SOFo_ViewMicroblogsContentFollowersTest.class);
-		testSuite.addTestSuite(SOFo_AddAsFollowerCCTest.class);
+		testSuite.addTestSuite(SOFo_AddAsFollowerCCActionsTest.class);
 		testSuite.addTestSuite(
 			SOFo_ViewFollowerMicroblogsContentFollowersTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

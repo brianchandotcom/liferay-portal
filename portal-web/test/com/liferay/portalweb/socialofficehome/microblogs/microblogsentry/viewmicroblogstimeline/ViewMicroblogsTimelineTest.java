@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewMicroblogsTimelineTest extends BaseTestCase {
 	public void testViewMicroblogsTimeline() throws Exception {
-		selenium.open("/web/joebloggs/home/");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//ul[2]/li[2]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -41,12 +41,12 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//ul[2]/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/section/header/h1"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Timeline"),
 			selenium.getText("link=Timeline"));
 		selenium.clickAt("link=Timeline", RuntimeVariables.replace("Timeline"));
@@ -70,7 +70,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[1]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("xPath=(//div[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("xPath=(//div[@class='content'])[1]"));
@@ -94,7 +94,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[2]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("xPath=(//div[@class='user-name'])[2]"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("xPath=(//div[@class='content'])[2]"));
@@ -118,7 +118,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[3]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("xPath=(//div[@class='user-name'])[3]"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("xPath=(//div[@class='content'])[3]"));
@@ -142,7 +142,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[4]"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("xPath=(//div[@class='user-name'])[4]"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
 			selenium.getText("xPath=(//div[@class='content'])[4]"));

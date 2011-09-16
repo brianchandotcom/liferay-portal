@@ -35,15 +35,15 @@ public class EditMicroblogsContentViewableByCoworkersTests extends BaseTests {
 		testSuite.addTestSuite(SOCo_NewPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOCo_SignInTest.class);
-		testSuite.addTestSuite(SOCo_AddAsCoworkerCCTest.class);
+		testSuite.addTestSuite(SOCo_AddAsCoworkerCCActionsTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFo_NewPasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOFo_SignInTest.class);
-		testSuite.addTestSuite(SOFo_AddAsFollowerCCTest.class);
+		testSuite.addTestSuite(SOFo_AddAsFollowerCCActionsTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SOSignInTest.class);
-		testSuite.addTestSuite(ConfirmCoworkerRequestTest.class);
+		testSuite.addTestSuite(ConfirmCCCoworkerRequestTest.class);
 		testSuite.addTestSuite(
 			EditMicroblogsContentViewableByCoworkersTest.class);
 		testSuite.addTestSuite(

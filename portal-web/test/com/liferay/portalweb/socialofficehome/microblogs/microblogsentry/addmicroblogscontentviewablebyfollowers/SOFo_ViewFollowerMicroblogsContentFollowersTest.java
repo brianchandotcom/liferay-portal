@@ -24,7 +24,7 @@ public class SOFo_ViewFollowerMicroblogsContentFollowersTest
 	extends BaseTestCase {
 	public void testSOFo_ViewFollowerMicroblogsContentFollowers()
 		throws Exception {
-		selenium.open("/web/socialofficefollowersn/home/");
+		selenium.open("/user/socialofficefollowersn/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -32,7 +32,7 @@ public class SOFo_ViewFollowerMicroblogsContentFollowersTest
 			}
 
 			try {
-				if (selenium.isVisible("//div/div[1]/div/div/div/ul[1]/li[1]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -43,7 +43,7 @@ public class SOFo_ViewFollowerMicroblogsContentFollowersTest
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -51,19 +51,37 @@ public class SOFo_ViewFollowerMicroblogsContentFollowersTest
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
-		selenium.clickAt("//ul[2]/li[2]/a",
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
+		assertFalse(selenium.isTextPresent("Microblogs Content"));
+		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/section/header/h1"));
-		assertTrue(selenium.isVisible("//div[@class='entry-bubble ']"));
-		assertTrue(selenium.isVisible("//div[1]/div/div/div[2]/div/span/a/img"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
-			selenium.getText("//div/div/div/div[2]/div/div/div[1]"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='entry-bubble ']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isVisible("//div/span/a/img"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
+			selenium.getText("//div[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),
-			selenium.getText("//div[2]/span"));
+			selenium.getText("//div[@class='content']"));
 		assertFalse(selenium.isTextPresent("Reply"));
 	}
 }

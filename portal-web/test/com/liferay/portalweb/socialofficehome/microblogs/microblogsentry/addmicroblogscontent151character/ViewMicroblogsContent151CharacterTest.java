@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMicroblogsContent151CharacterTest extends BaseTestCase {
 	public void testViewMicroblogsContent151Character()
 		throws Exception {
-		selenium.open("/web/joebloggs/home/");
+		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,7 @@ public class ViewMicroblogsContent151CharacterTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div[1]/div/div/div/ul[1]/li[1]/a")) {
+				if (selenium.isVisible("//div/div/div/div[1]/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -42,7 +42,7 @@ public class ViewMicroblogsContent151CharacterTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -51,12 +51,12 @@ public class ViewMicroblogsContent151CharacterTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//textarea"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
-		selenium.clickAt("//ul[2]/li[2]/a",
+		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
-			selenium.getText("//div[2]/div/div/section/header/h1"));
+			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 	}

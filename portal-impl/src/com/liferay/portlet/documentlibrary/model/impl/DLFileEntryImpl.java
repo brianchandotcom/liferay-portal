@@ -36,7 +36,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
@@ -125,28 +125,29 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
 
-		DLFileVersion dlFileVersion = DLFileVersionServiceUtil.getFileVersion(
-			fileVersionId);
+		DLFileVersion dlFileVersion =
+			DLFileVersionLocalServiceUtil.getFileVersion(fileVersionId);
 
 		long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
 
-		if (fileEntryTypeId > 0) {
-			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
+		if (fileEntryTypeId <= 0) {
+			return fieldsMap;
+		}
 
-			List<DDMStructure> ddmStructures =
-				dlFileEntryType.getDDMStructures();
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
 
-			for (DDMStructure ddmStructure : ddmStructures) {
-				DLFileEntryMetadata dlFileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-						ddmStructure.getStructureId(), fileVersionId);
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
-				Fields fields = StorageEngineUtil.getFields(
-					dlFileEntryMetadata.getDDMStorageId());
+		for (DDMStructure ddmStructure : ddmStructures) {
+			DLFileEntryMetadata dlFileEntryMetadata =
+				DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+					ddmStructure.getStructureId(), fileVersionId);
 
-				fieldsMap.put(ddmStructure.getStructureKey(), fields);
-			}
+			Fields fields = StorageEngineUtil.getFields(
+				dlFileEntryMetadata.getDDMStorageId());
+
+			fieldsMap.put(ddmStructure.getStructureKey(), fields);
 		}
 
 		return fieldsMap;

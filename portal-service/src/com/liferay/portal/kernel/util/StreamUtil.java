@@ -22,7 +22,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.nio.channels.Channel;
 import java.nio.channels.FileChannel;
 
@@ -139,30 +138,26 @@ public class StreamUtil {
 			bufferSize = BUFFER_SIZE;
 		}
 
-		if (!FORCE_TIO && (inputStream instanceof FileInputStream) &&
-			(outputStream instanceof FileOutputStream)) {
+		try {
+			if (!FORCE_TIO && (inputStream instanceof FileInputStream) &&
+				(outputStream instanceof FileOutputStream)) {
 
-			FileInputStream fileInputStream = (FileInputStream)inputStream;
+				FileInputStream fileInputStream = (FileInputStream)inputStream;
 
-			FileChannel sourceChannel = fileInputStream.getChannel();
+				FileChannel sourceChannel = fileInputStream.getChannel();
 
-			FileOutputStream fileOutputStream = (FileOutputStream)outputStream;
+				FileOutputStream fileOutputStream = (FileOutputStream)outputStream;
 
-			FileChannel targetChannel = fileOutputStream.getChannel();
+				FileChannel targetChannel = fileOutputStream.getChannel();
 
-			long position = 0;
+				long position = 0;
 
-			while (position < sourceChannel.size()) {
-				position += sourceChannel.transferTo(
-					position, sourceChannel.size() - position, targetChannel);
+				while (position < sourceChannel.size()) {
+					position += sourceChannel.transferTo(
+						position, sourceChannel.size() - position, targetChannel);
+				}
 			}
-
-			if (cleanUp) {
-				cleanUp(fileInputStream, fileOutputStream);
-			}
-		}
-		else {
-			try {
+			else {
 				byte[] bytes = new byte[bufferSize];
 
 				int value = -1;
@@ -171,10 +166,10 @@ public class StreamUtil {
 					outputStream.write(bytes, 0 , value);
 				}
 			}
-			finally {
-				if (cleanUp) {
-					cleanUp(inputStream, outputStream);
-				}
+		}
+		finally {
+			if (cleanUp) {
+				cleanUp(inputStream, outputStream);
 			}
 		}
 	}

@@ -52,18 +52,6 @@ public class ThemeSandboxDeployListener
 		jars.add(portalLibDir + "/util-taglib.jar");
 	}
 
-	@Override
-	public void copyXmls(
-			File srcFile, String displayName, PluginPackage pluginPackage)
-		throws Exception {
-
-		super.copyXmls(srcFile, displayName, pluginPackage);
-
-		if (appServerType.equals(ServerDetector.TOMCAT_ID)) {
-			copyDependencyXml("context.xml", srcFile + "/META-INF");
-		}
-	}
-
 	public void deploy(File dir) throws SandboxDeployException {
 		_sandboxHandler.deploy(dir);
 	}

@@ -144,7 +144,7 @@ public class StripFilterTest extends TestCase {
 		StringWriter stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script>".toCharArray());
+			charBuffer, stringWriter, "script".toCharArray());
 
 		assertEquals("script>", stringWriter.toString());
 		assertEquals(7, charBuffer.position());
@@ -155,7 +155,7 @@ public class StripFilterTest extends TestCase {
 		stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script>".toCharArray());
+			charBuffer, stringWriter, "script".toCharArray());
 
 		assertEquals("script></script>", stringWriter.toString());
 		assertEquals(16, charBuffer.position());
@@ -166,7 +166,7 @@ public class StripFilterTest extends TestCase {
 		stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script>".toCharArray());
+			charBuffer, stringWriter, "script".toCharArray());
 
 		assertEquals("script></script>", stringWriter.toString());
 		assertEquals(20, charBuffer.position());
@@ -180,7 +180,7 @@ public class StripFilterTest extends TestCase {
 		stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script>".toCharArray());
+			charBuffer, stringWriter, "script".toCharArray());
 
 		assertEquals(
 			"script>/*<![CDATA[*/" + minifiedCode + "/*]]>*/</script>",
@@ -193,7 +193,7 @@ public class StripFilterTest extends TestCase {
 		stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script>".toCharArray());
+			charBuffer, stringWriter, "script".toCharArray());
 
 		assertEquals(
 			"script>/*<![CDATA[*/" + minifiedCode + "/*]]>*/</script> ",

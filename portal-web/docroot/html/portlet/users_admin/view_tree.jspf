@@ -14,7 +14,6 @@
  */
 --%>
 
-<%@page import="com.liferay.portal.kernel.util.StringPool"%>
 <%
 long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
@@ -49,6 +48,8 @@ if (leftAndRightOrganizationIds != null) {
 }
 
 int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), (organization != null) ? organization.getOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
+
+String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <aui:layout>
@@ -305,8 +306,6 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 					showUsers = true;
 				}
 			}
-			
-			String keywords = ParamUtil.getString(request, "keywords");
 			%>
 
 			<c:if test="<%= showOrganizations %>">
@@ -314,8 +313,8 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 
 					<%
 					String organizationsTitle = null;
-					
-					if (keywords != StringPool.BLANK){
+
+					if (Validator.isNotNull(keywords)){
 						organizationsTitle = LanguageUtil.get(pageContext,"organizations");
 					}
 					else if (organization == null) {
@@ -361,7 +360,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 					<%
 					String usersTitle = null;
 
-					if ((organization == null && organizationsCount == 0) || (keywords != StringPool.BLANK)) {
+					if ((organization == null && organizationsCount == 0) || Validator.isNotNull(keywords)) {
 						usersTitle = LanguageUtil.get(pageContext, "users");
 					}
 					else if (organization == null) {
@@ -390,7 +389,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 						<liferay-ui:icon
 							image="group"
 							label="<%= true %>"
-							message="view-all-users"
+							message="search-all-users"
 							url="<%= viewUsersURL %>"
 						/>
 					</c:when>

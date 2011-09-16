@@ -796,23 +796,27 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 	var showURLFile = A.one('.show-url-file');
 	var showWebdavFile = A.one('.show-webdav-file-url');
 
-	A.one('.show-url-file').on(
-		'click',
-		function(event) {
-			var URLFileContainer = A.one('.url-file-container');
+	if (showURLFile) {
+		showURLFile.on(
+			'click',
+			function(event) {
+				var URLFileContainer = A.one('.url-file-container');
 
-			URLFileContainer.toggleClass('aui-helper-hidden');
-		}
-	);
+				URLFileContainer.toggleClass('aui-helper-hidden');
+			}
+		);
+	}
 
-	A.one('.show-webdav-url-file').on(
-		'click',
-		function(event) {
-			var WebdavFileContainer = A.one('.webdav-url-file-container');
+	if (showWebdavFile) {
+		showWebdavFile.on(
+			'click',
+			function(event) {
+				var WebdavFileContainer = A.one('.webdav-url-file-container');
 
-			WebdavFileContainer.toggleClass('aui-helper-hidden');
-		}
-	);
+				WebdavFileContainer.toggleClass('aui-helper-hidden');
+			}
+		);
+	}
 
 	var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 

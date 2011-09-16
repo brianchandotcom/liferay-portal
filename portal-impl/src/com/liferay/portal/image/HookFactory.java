@@ -27,7 +27,7 @@ public class HookFactory {
 	public static Hook getInstance() {
 		if (_hook == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Instantiate " + PropsValues.IMAGE_HOOK_IMPL);
+				_log.debug("Instantiate " + PropsValues.SOURCE_IMAGE_HOOK_IMPL);
 			}
 
 			_hook = new DLHook();

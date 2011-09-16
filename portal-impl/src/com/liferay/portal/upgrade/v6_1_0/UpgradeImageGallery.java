@@ -280,8 +280,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 		String sourceHookClassName = FileSystemHook.class.getName();
 
-		if (Validator.isNotNull(PropsValues.IMAGE_HOOK_IMPL)) {
-			sourceHookClassName = PropsValues.IMAGE_HOOK_IMPL;
+		if (Validator.isNotNull(PropsValues.SOURCE_IMAGE_HOOK_IMPL)) {
+			sourceHookClassName = PropsValues.SOURCE_IMAGE_HOOK_IMPL;
 		}
 
 		Hook sourceHook = (Hook)classLoader.loadClass(
@@ -353,7 +353,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	protected void migrateImageFiles() throws Exception {
 		boolean migrateOnlyLargeImage = false;
 
-		if (PropsValues.IMAGE_HOOK_IMPL.equals(DLHook.class.getName())) {
+		if (PropsValues.SOURCE_IMAGE_HOOK_IMPL.equals(DLHook.class.getName())) {
 			migrateOnlyLargeImage = true;
 		}
 

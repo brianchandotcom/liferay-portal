@@ -33,7 +33,7 @@ public class DatabaseHook extends BaseHook {
 	}
 
 	public InputStream getImageAsStream(Image image) {
-		return new UnsyncByteArrayInputStream(image.getTextObj());
+		return new UnsyncByteArrayInputStream(getImageAsBytes(image));
 	}
 
 	public void updateImage(Image image, String type, byte[] bytes) {

@@ -141,7 +141,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			return;
 		}
 
-		/*if (PropsValues.IMAGE_HOOK_IMPL.equals(
+		/*if (PropsValues.SOURCE_IMAGE_HOOK_IMPL.equals(
 				DatabaseHook.class.getName()) &&
 			(imagePersistence.getListeners().length == 0)) {
 

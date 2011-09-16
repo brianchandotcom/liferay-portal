@@ -56,18 +56,6 @@ public class HookDeployer extends BaseDeployer {
 	}
 
 	@Override
-	public void copyXmls(
-			File srcFile, String displayName, PluginPackage pluginPackage)
-		throws Exception {
-
-		super.copyXmls(srcFile, displayName, pluginPackage);
-
-		if (appServerType.equals(ServerDetector.TOMCAT_ID)) {
-			copyDependencyXml("context.xml", srcFile + "/META-INF");
-		}
-	}
-
-	@Override
 	public String getExtraContent(
 			double webXmlVersion, File srcFile, String displayName)
 		throws Exception {

@@ -80,9 +80,19 @@ public class DBUpgrader {
 			_log.debug("Run upgrade process");
 		}
 
-		int buildNumber = ReleaseLocalServiceUtil.getBuildNumberOrCreate();
+		int currentBuildNumber =
+			ReleaseLocalServiceUtil.getBuildNumberOrCreate();
 
-		if (buildNumber < ReleaseInfo.RELEASE_5_0_0_BUILD_NUMBER) {
+		int newBuildNumber = ReleaseInfo.getBuildNumber();
+
+		if (newBuildNumber < currentBuildNumber ) {
+			throw new IllegalStateException(
+				"Attempting to deploy an older Liferay Portal version.  " +
+				"Current build version (" + currentBuildNumber +
+				") and attempting to deploy version (" + newBuildNumber + ")");
+		}
+
+		if (currentBuildNumber < ReleaseInfo.RELEASE_5_0_0_BUILD_NUMBER) {
 			String msg = "You must first upgrade to Liferay Portal 5.0.0";
 
 			System.out.println(msg);
@@ -93,10 +103,10 @@ public class DBUpgrader {
 		// Upgrade build
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Update build " + buildNumber);
+			_log.debug("Update build " + currentBuildNumber);
 		}
 
-		StartupHelperUtil.upgradeProcess(buildNumber);
+		StartupHelperUtil.upgradeProcess(currentBuildNumber);
 
 		// Update company key
 

@@ -36,7 +36,6 @@ if (orderByType.equals("asc")) {
 	%>
 
 	<liferay-ui:icon
-		image="folder"
 		message="title"
 		url="<%= taglibUrl %>"
 	/>
@@ -46,7 +45,6 @@ if (orderByType.equals("asc")) {
 	%>
 
 	<liferay-ui:icon
-		image="folder"
 		message="create-date"
 		url="<%= taglibUrl %>"
 	/>
@@ -56,7 +54,6 @@ if (orderByType.equals("asc")) {
 	%>
 
 	<liferay-ui:icon
-		image="folder"
 		message="modified-date"
 		url="<%= taglibUrl %>"
 	/>
@@ -66,8 +63,16 @@ if (orderByType.equals("asc")) {
 	%>
 
 	<liferay-ui:icon
-		image="folder"
 		message="downloads"
+		url="<%= taglibUrl %>"
+	/>
+
+	<%
+	taglibUrl = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'readCount','" + reverseOrderByType + "')";
+	%>
+
+	<liferay-ui:icon
+		message="read-count"
 		url="<%= taglibUrl %>"
 	/>
 
@@ -76,7 +81,6 @@ if (orderByType.equals("asc")) {
 	%>
 
 	<liferay-ui:icon
-		image="folder"
 		message="size"
 		url="<%= taglibUrl %>"
 	/>

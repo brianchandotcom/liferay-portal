@@ -70,7 +70,8 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 
 	public java.lang.String getImageType();
 
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion()
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		boolean trusted)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

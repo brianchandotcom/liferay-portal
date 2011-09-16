@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portal.service.ImageServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -91,7 +90,7 @@ public class ImageProcessor implements DLProcessor {
 		boolean hasImages = false;
 
 		try {
-			Image image = ImageServiceUtil.getImage(imageId);
+			Image image = ImageLocalServiceUtil.getImage(imageId);
 
 			if (image != null) {
 				hasImages = true;

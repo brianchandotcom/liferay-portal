@@ -697,10 +697,11 @@ public class DLFileEntryWrapper implements DLFileEntry {
 		return _dlFileEntry.getImageType();
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion()
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		boolean trusted)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntry.getLatestFileVersion();
+		return _dlFileEntry.getLatestFileVersion(trusted);
 	}
 
 	public com.liferay.portal.model.Lock getLock() {

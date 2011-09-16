@@ -628,8 +628,6 @@ public class WebServerServlet extends HttpServlet {
 		String tempFileId = DLUtil.getTempFileId(
 			fileEntry.getFileEntryId(), version);
 
-		InputStream inputStream = fileEntry.getContentStream(version);
-		long contentLength = 0;
 
 		FileVersion fileVersion = fileEntry.getFileVersion(version);
 
@@ -657,20 +655,10 @@ public class WebServerServlet extends HttpServlet {
 		boolean videoThumbnail = ParamUtil.getBoolean(
 			request, "videoThumbnail");
 
-		if (Validator.isNotNull(targetExtension)) {
-			File convertedFile = DocumentConversionUtil.convert(
-				tempFileId, inputStream, extension, targetExtension);
+		InputStream inputStream = null;
+		long contentLength = 0;
 
-			if (convertedFile != null) {
-				fileName = FileUtil.stripExtension(fileName).concat(
-					StringPool.PERIOD).concat(targetExtension);
-				inputStream = new FileInputStream(convertedFile);
-				contentLength = convertedFile.length();
-
-				converted = true;
-			}
-		}
-		else if (documentThumbnail) {
+		if (documentThumbnail) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.THUMBNAIL_TYPE);
 			inputStream = PDFProcessor.getThumbnailAsStream(fileVersion);
@@ -711,6 +699,23 @@ public class WebServerServlet extends HttpServlet {
 			contentLength = VideoProcessor.getThumbnailFileSize(fileVersion);
 
 			converted = true;
+		}
+		else {
+			inputStream = fileEntry.getContentStream(version);
+
+			if (Validator.isNotNull(targetExtension)) {
+				File convertedFile = DocumentConversionUtil.convert(
+					tempFileId, inputStream, extension, targetExtension);
+
+				if (convertedFile != null) {
+					fileName = FileUtil.stripExtension(fileName).concat(
+						StringPool.PERIOD).concat(targetExtension);
+					inputStream = new FileInputStream(convertedFile);
+					contentLength = convertedFile.length();
+
+					converted = true;
+				}
+			}
 		}
 
 		String contentType = fileEntry.getMimeType(version);

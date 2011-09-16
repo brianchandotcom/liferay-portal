@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.util.ContentUtil;
 
@@ -285,9 +286,17 @@ public class ShoppingPreferences {
 		_preferences.setValue("min-order", String.valueOf(minOrder));
 	}
 
-	public String getEmailFromAddress() {
+	public String getEmailFromAddress(long companyId) throws SystemException {
 		String emailFromAddress = PropsUtil.get(
 			PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS);
+
+		emailFromAddress = _preferences.getValue(
+			"email-from-address", emailFromAddress);
+
+		if (Validator.isNull(emailFromAddress)) {
+			emailFromAddress = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
 
 		return _preferences.getValue("email-from-address", emailFromAddress);
 	}
@@ -298,9 +307,16 @@ public class ShoppingPreferences {
 		_preferences.setValue("email-from-address", emailFromAddress);
 	}
 
-	public String getEmailFromName() {
+	public String getEmailFromName(long companyId) throws SystemException {
 		String emailFromName = PropsUtil.get(
 			PropsKeys.SHOPPING_EMAIL_FROM_NAME);
+
+		emailFromName = _preferences.getValue("email-from-name", emailFromName);
+
+		if (Validator.isNull(emailFromName)) {
+			emailFromName = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
 
 		return _preferences.getValue("email-from-name", emailFromName);
 	}

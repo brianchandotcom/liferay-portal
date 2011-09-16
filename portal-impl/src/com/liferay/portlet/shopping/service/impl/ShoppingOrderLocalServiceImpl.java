@@ -463,8 +463,9 @@ public class ShoppingOrderLocalServiceImpl
 
 		double total = ShoppingUtil.calculateTotal(order);
 
-		String fromName = shoppingPrefs.getEmailFromName();
-		String fromAddress = shoppingPrefs.getEmailFromAddress();
+		String fromName = shoppingPrefs.getEmailFromName(order.getCompanyId());
+		String fromAddress = shoppingPrefs.getEmailFromAddress(
+			order.getCompanyId());
 
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();

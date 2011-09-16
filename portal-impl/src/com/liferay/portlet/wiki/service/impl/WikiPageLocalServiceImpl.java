@@ -1664,8 +1664,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
-		String fromName = WikiUtil.getEmailFromName(preferences);
-		String fromAddress = WikiUtil.getEmailFromAddress(preferences);
+		String fromName = WikiUtil.getEmailFromName(
+			preferences, page.getCompanyId());
+		String fromAddress = WikiUtil.getEmailFromAddress(
+			preferences, page.getCompanyId());
 
 		String subjectPrefix = null;
 		String body = null;

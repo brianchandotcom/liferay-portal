@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -131,10 +132,14 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		// Email
 
-		String fromName = PrefsPropsUtil.getString(
-			companyId, PropsKeys.FLAGS_EMAIL_FROM_NAME);
-		String fromAddress = PrefsPropsUtil.getString(
-			companyId, PropsKeys.FLAGS_EMAIL_FROM_ADDRESS);
+		String fromName = PrefsPropsUtil.getStringFromNames(
+			companyId, PropsKeys.FLAGS_EMAIL_FROM_NAME, 
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		String fromAddress = PrefsPropsUtil.getStringFromNames(
+			companyId, PropsKeys.FLAGS_EMAIL_FROM_ADDRESS, 
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+			
 		String subject = PrefsPropsUtil.getContent(
 			companyId, PropsKeys.FLAGS_EMAIL_SUBJECT);
 		String body = PrefsPropsUtil.getContent(

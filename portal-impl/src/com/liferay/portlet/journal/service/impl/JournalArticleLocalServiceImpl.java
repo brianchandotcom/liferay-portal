@@ -2990,8 +2990,10 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 
-		String fromName = JournalUtil.getEmailFromName(preferences);
-		String fromAddress = JournalUtil.getEmailFromAddress(preferences);
+		String fromName = JournalUtil.getEmailFromName(
+			preferences, article.getCompanyId());
+		String fromAddress = JournalUtil.getEmailFromAddress(
+			preferences, article.getCompanyId());
 
 		String subject = null;
 		String body = null;
@@ -3079,8 +3081,10 @@ public class JournalArticleLocalServiceImpl
 			"&groupId=" + article.getGroupId() + "&articleId=" +
 				article.getArticleId() + "&version=" + article.getVersion();
 
-		String fromName = JournalUtil.getEmailFromName(preferences);
-		String fromAddress = JournalUtil.getEmailFromAddress(preferences);
+		String fromName = JournalUtil.getEmailFromName(
+			preferences, article.getCompanyId());
+		String fromAddress = JournalUtil.getEmailFromAddress(
+			preferences, article.getCompanyId());
 
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();

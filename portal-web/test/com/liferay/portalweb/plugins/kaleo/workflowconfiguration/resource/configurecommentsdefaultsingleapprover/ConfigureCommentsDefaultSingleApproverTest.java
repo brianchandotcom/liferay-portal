@@ -48,9 +48,10 @@ public class ConfigureCommentsDefaultSingleApproverTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion",
-			RuntimeVariables.replace("label=Default: Single Approver"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']",
+			RuntimeVariables.replace("Default: Single Approver"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -58,6 +59,6 @@ public class ConfigureCommentsDefaultSingleApproverTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Default: Single Approver",
 			selenium.getSelectedLabel(
-				"_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion"));
+				"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']"));
 	}
 }

@@ -31,7 +31,7 @@ public class Guest_ViewWebContentVersion2CompletedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Web Content Display Page")) {
+				if (selenium.isVisible("link=Web Content Display Test Page")) {
 					break;
 				}
 			}
@@ -42,13 +42,11 @@ public class Guest_ViewWebContentVersion2CompletedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content Display Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Web Content Display"),
-			selenium.getText("//h1/span[2]"));
-		assertEquals(RuntimeVariables.replace("Web Content Content Edited"),
-			selenium.getText("//p"));
+		assertEquals(RuntimeVariables.replace("WC Web Content Content Edit"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

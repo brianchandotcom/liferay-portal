@@ -20,12 +20,12 @@ import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.config
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurecommentsdefaultnoworkflow.ConfigureCommentsDefaultNoWorkflowTests;
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurecommentsdefaultsingleapprover.ConfigureCommentsDefaultSingleApproverTests;
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurecommentssingleapprover.ConfigureCommentsSingleApproverTests;
-import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configuredldocumentdefaultnoworkflow.ConfigureDLDocumentDefaultNoWorkflowTests;
-import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configuredldocumentdefaultsingleapprover.ConfigureDLDocumentDefaultSingleApproverTests;
-import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configuredldocumentsingleapprover.ConfigureDLDocumentSingleApproverTests;
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurembmessagedefaultnoworkflow.ConfigureMBMessageDefaultNoWorkflowTests;
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurembmessagedefaultsingleapprover.ConfigureMBMessageDefaultSingleApproverTests;
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurembmessagesingleapprover.ConfigureMBMessageSingleApproverTests;
+import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurepagerevisiondefaultnoworkflow.ConfigurePageRevisionDefaultNoWorkflowTests;
+import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurepagerevisiondefaultsingleapprover.ConfigurePageRevisionDefaultSingleApproverTests;
+import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurepagerevisionsingleapprover.ConfigurePageRevisionSingleApproverTests;
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurewebcontentdefaultnoworkflow.ConfigureWebContentDefaultNoWorkflowTests;
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurewebcontentdefaultsingleapprover.ConfigureWebContentDefaultSingleApproverTests;
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.resource.configurewebcontentsingleapprover.ConfigureWebContentSingleApproverTests;
@@ -52,13 +52,13 @@ public class ResourceTests extends BaseTests {
 		testSuite.addTest(ConfigureCommentsDefaultNoWorkflowTests.suite());
 		testSuite.addTest(ConfigureCommentsDefaultSingleApproverTests.suite());
 		testSuite.addTest(ConfigureCommentsSingleApproverTests.suite());
-		testSuite.addTest(ConfigureDLDocumentDefaultNoWorkflowTests.suite());
-		testSuite.addTest(
-			ConfigureDLDocumentDefaultSingleApproverTests.suite());
-		testSuite.addTest(ConfigureDLDocumentSingleApproverTests.suite());
 		testSuite.addTest(ConfigureMBMessageDefaultNoWorkflowTests.suite());
 		testSuite.addTest(ConfigureMBMessageDefaultSingleApproverTests.suite());
 		testSuite.addTest(ConfigureMBMessageSingleApproverTests.suite());
+		testSuite.addTest(ConfigurePageRevisionDefaultNoWorkflowTests.suite());
+		testSuite.addTest(
+			ConfigurePageRevisionDefaultSingleApproverTests.suite());
+		testSuite.addTest(ConfigurePageRevisionSingleApproverTests.suite());
 		testSuite.addTest(ConfigureWebContentDefaultNoWorkflowTests.suite());
 		testSuite.addTest(
 			ConfigureWebContentDefaultSingleApproverTests.suite());

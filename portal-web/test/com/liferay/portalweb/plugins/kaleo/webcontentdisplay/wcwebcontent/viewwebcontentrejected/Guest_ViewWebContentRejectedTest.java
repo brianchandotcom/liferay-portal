@@ -30,7 +30,7 @@ public class Guest_ViewWebContentRejectedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Web Content Display Page")) {
+				if (selenium.isVisible("link=Web Content Display Test Page")) {
 					break;
 				}
 			}
@@ -41,11 +41,12 @@ public class Guest_ViewWebContentRejectedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content Display Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//section"));
-		assertFalse(selenium.isElementPresent("//h1/span[2]"));
+		assertFalse(selenium.isElementPresent(
+				"//h1[@class='portlet-title']/span[2]"));
 	}
 }

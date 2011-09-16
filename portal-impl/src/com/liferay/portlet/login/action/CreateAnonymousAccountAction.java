@@ -201,6 +201,8 @@ public class CreateAnonymousAccountAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
+		serviceContext.setAttribute("anonymousAccount", true);
+
 		if (PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT) {
 			CaptchaUtil.check(actionRequest);
 		}

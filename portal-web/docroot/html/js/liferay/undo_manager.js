@@ -60,7 +60,7 @@ AUI().add(
 						var clearText = Liferay.Language.get('clear-history');
 						var undoText = Liferay.Language.get('undo-x');
 
-						undoText = A.substitute(undoText, [TPL_UNDO_TEXT]);
+						undoText = Lang.sub(undoText, [TPL_UNDO_TEXT]);
 
 						var contentBox = instance.get('contentBox');
 
@@ -209,6 +209,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-data-set', 'base', 'substitute']
+		requires: ['aui-data-set', 'base']
 	}
 );

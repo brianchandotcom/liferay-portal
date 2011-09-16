@@ -169,7 +169,7 @@ AUI().add(
 					_formatEntry: function(item) {
 						var instance = this;
 
-						var input = A.substitute(TPL_INPUT, item);
+						var input = Lang.sub(TPL_INPUT, item);
 
 						instance._buffer.push(input);
 					},
@@ -227,7 +227,7 @@ AUI().add(
 					_getProxyData: function(context) {
 						var instance = this;
 
-						var suggestionsURL = A.substitute(
+						var suggestionsURL = Lang.sub(
 							TPL_URL_SUGGESTIONS,
 							{
 								context: encodeURIComponent(context)
@@ -623,7 +623,7 @@ AUI().add(
 
 						var buffer = instance._buffer;
 
-						var message = A.substitute(TPL_MESSAGE, [Liferay.Language.get('no-tags-found')]);
+						var message = Lang.sub(TPL_MESSAGE, [Liferay.Language.get('no-tags-found')]);
 
 						buffer.push(message);
 						buffer.push('</fieldset>');
@@ -643,6 +643,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource', 'substitute']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource']
 	}
 );

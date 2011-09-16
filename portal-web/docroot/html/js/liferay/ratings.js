@@ -325,6 +325,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-rating', 'substitute']
+		requires: ['aui-io-request', 'aui-rating']
 	}
 );

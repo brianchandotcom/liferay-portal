@@ -411,7 +411,7 @@ AUI().add(
 				var listLength = (stats.successful_uploads + stats.upload_errors + stats.files_queued);
 				var position = (stats.successful_uploads + stats.upload_errors + 1);
 
-				var currentListText = A.substitute(instance._uploadStatusText, [position, listLength]);
+				var currentListText = Lang.sub(instance._uploadStatusText, [position, listLength]);
 				var fileId = instance._namespace(file.id);
 
 				instance._updateList(listLength, currentListText);
@@ -1070,6 +1070,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-swf', 'collection', 'substitute', 'swfupload']
+		requires: ['aui-base', 'aui-swf', 'collection', 'swfupload']
 	}
 );

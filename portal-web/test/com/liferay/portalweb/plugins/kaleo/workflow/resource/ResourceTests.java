@@ -16,8 +16,8 @@ package com.liferay.portalweb.plugins.kaleo.workflow.resource;
 
 import com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfigureblogsentrysingleapprover.DefaultConfigureBlogsEntrySingleApproverTests;
 import com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfigurecommentssingleapprover.DefaultConfigureCommentsSingleApproverTests;
-import com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfiguredldocumentsingleapprover.DefaultConfigureDLDocumentSingleApproverTests;
 import com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfigurembmessagesingleapprover.DefaultConfigureMBMessageSingleApproverTests;
+import com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfigurepagerevisionsingleapprover.DefaultConfigurePageRevisionSingleApproverTests;
 import com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfigurewebcontentsingleapprover.DefaultConfigureWebContentSingleApproverTests;
 import com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfigurewikipagesingleapprover.DefaultConfigureWikiPageSingleApproverTests;
 import com.liferay.portalweb.portal.BaseTests;
@@ -36,9 +36,9 @@ public class ResourceTests extends BaseTests {
 		testSuite.addTest(
 			DefaultConfigureBlogsEntrySingleApproverTests.suite());
 		testSuite.addTest(DefaultConfigureCommentsSingleApproverTests.suite());
-		testSuite.addTest(
-			DefaultConfigureDLDocumentSingleApproverTests.suite());
 		testSuite.addTest(DefaultConfigureMBMessageSingleApproverTests.suite());
+		testSuite.addTest(
+			DefaultConfigurePageRevisionSingleApproverTests.suite());
 		testSuite.addTest(
 			DefaultConfigureWebContentSingleApproverTests.suite());
 		testSuite.addTest(DefaultConfigureWikiPageSingleApproverTests.suite());

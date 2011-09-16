@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfigurewikipagesingleapprover;
+package com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfigurepagerevisionsingleapprover;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

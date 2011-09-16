@@ -41,47 +41,83 @@ public class AddMBMessage9Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Message Boards", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards",
+			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Post New Thread']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_subject",
-			RuntimeVariables.replace("MB9 Message9 Subject9"));
+		selenium.type("//input[@id='_162_subject']",
+			RuntimeVariables.replace("MB Category Thread9 Message Subject"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("_19_textArea",
-			RuntimeVariables.replace("MB9 Message9 Body9"));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__162_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__162_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("MB Category Thread9 Message Body"));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Submit for Publication']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=My Posts", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread9 Message Subject"),
+			selenium.getText("//div[@class='subject']/a/strong"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread9 Message Body"),
+			selenium.getText("//div[@class='thread-body']"));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("MB9 Message9 Subject9"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//td[4]/a"));
-		assertEquals(RuntimeVariables.replace("None"),
-			selenium.getText("//td[5]/a"));
-		assertEquals(RuntimeVariables.replace("Pending"),
-			selenium.getText("//td[6]/a"));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Single Approver"),
+			selenium.getText("//tr[11]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread9 Message Subject"),
+			selenium.getText("//tr[11]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Message Boards Message"),
+			selenium.getText("//tr[11]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Review"),
+			selenium.getText("//tr[11]/td[4]/a"));
+		assertTrue(selenium.isVisible("//tr[11]/td[5]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//tr[11]/td[6]/a"));
 	}
 }

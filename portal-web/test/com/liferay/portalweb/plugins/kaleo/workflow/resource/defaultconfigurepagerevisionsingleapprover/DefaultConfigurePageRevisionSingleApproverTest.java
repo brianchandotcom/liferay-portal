@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfiguredldocumentsingleapprover;
+package com.liferay.portalweb.plugins.kaleo.workflow.resource.defaultconfigurepagerevisionsingleapprover;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DefaultConfigureDLDocumentSingleApproverTest extends BaseTestCase {
-	public void testDefaultConfigureDLDocumentSingleApprover()
+public class DefaultConfigurePageRevisionSingleApproverTest extends BaseTestCase {
+	public void testDefaultConfigurePageRevisionSingleApprover()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 
@@ -45,16 +45,17 @@ public class DefaultConfigureDLDocumentSingleApproverTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Workflow", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Default Configuration",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Default Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("_151_workflowDefinitionName@com.liferay.portlet.documentlibrary.model.DLFileEntry",
-			RuntimeVariables.replace("label=Single Approver (Version 1)"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']",
+			RuntimeVariables.replace("Single Approver (Version 1)"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
@@ -62,6 +63,6 @@ public class DefaultConfigureDLDocumentSingleApproverTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Single Approver (Version 1)",
 			selenium.getSelectedLabel(
-				"_151_workflowDefinitionName@com.liferay.portlet.documentlibrary.model.DLFileEntry"));
+				"//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']"));
 	}
 }

@@ -82,24 +82,13 @@ public class ActionUtil {
 	public static void getFileEntry(HttpServletRequest request)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
-
-		long groupId = themeDisplay.getScopeGroupId();
-		long folderId = ParamUtil.getLong(request, "folderId");
-		String title = ParamUtil.getString(request, "title");
 
 		FileEntry fileEntry = null;
 
 		try {
 			if (fileEntryId > 0) {
 				fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-			}
-			else if (Validator.isNotNull(title)) {
-				fileEntry = DLAppServiceUtil.getFileEntry(
-					groupId, folderId, title);
 			}
 
 			request.setAttribute(

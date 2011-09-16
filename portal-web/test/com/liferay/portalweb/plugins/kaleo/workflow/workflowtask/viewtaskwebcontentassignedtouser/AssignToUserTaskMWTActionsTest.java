@@ -112,7 +112,28 @@ public class AssignToUserTaskMWTActionsTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_153_assigneeUserId']",
 			RuntimeVariables.replace("userfn userln"));
-		selenium.clickAt("//div/button[1]", RuntimeVariables.replace("OK"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[3]/span/span/button")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("OK"),
+			selenium.getText("//div[3]/span/span/button"));
+		selenium.clickAt("//div[3]/span/span/button",
+			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

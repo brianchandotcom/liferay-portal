@@ -35,28 +35,38 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basic1Visible</td>
+	<td>basicVisible</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${basic1Visible}</td>
-	<td>Basic1NotVisible</td>
+	<td>!${basicVisible}</td>
+	<td>basicNotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -65,7 +75,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Basic1NotVisible</td>
+	<td>basicNotVisible</td>
 	<td></td>
 </tr>
 <tr>
@@ -80,7 +90,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isPartialText('//div[5]','No users were found'))</td>
+	<td>eval(selenium.isTextPresent('No users were found'))</td>
 	<td>UsersExists</td>
 </tr>
 <tr>
@@ -90,7 +100,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_allRowIds']</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
 	<td>Check All</td>
 </tr>
 <tr>
@@ -115,18 +125,28 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -145,7 +165,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -305,40 +325,34 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basic2Visible</td>
+	<td>assertText</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
 </tr>
 <tr>
-	<td>gotoIf</td>
-	<td>!${basic2Visible}</td>
-	<td>basic2NotVisible</td>
+	<td>clickAtAndWait</td>
+	<td>//span/a/span</td>
+	<td>View All Users</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
 	<td>« Basic</td>
 </tr>
-<tr>
-	<td>label</td>
-	<td>basic2NotVisible</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

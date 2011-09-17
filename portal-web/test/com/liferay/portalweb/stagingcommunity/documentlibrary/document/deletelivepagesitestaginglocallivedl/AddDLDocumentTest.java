@@ -100,6 +100,10 @@ public class AddDLDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\stagingcommunity\\documentlibrary\\dependencies\\DLDocument.docx"));
 		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_20_file']",
+			RuntimeVariables.replace(
+				"L:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\stagingcommunity\\documentlibrary\\dependencies\\DLDocument.docx"));
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.saveScreenShotAndSource();

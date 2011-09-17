@@ -59,7 +59,7 @@ public class AddPublicPagePortletDLSiteStagingLocalLiveDLTest
 
 			try {
 				if (selenium.isElementPresent(
-							"//div[@title='Documents and Media Library']/p/a")) {
+							"//div[@title='Documents and Media']/p/a")) {
 					break;
 				}
 			}
@@ -70,7 +70,7 @@ public class AddPublicPagePortletDLSiteStagingLocalLiveDLTest
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@title='Documents and Media Library']/p/a",
+		selenium.clickAt("//div[@title='Documents and Media']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

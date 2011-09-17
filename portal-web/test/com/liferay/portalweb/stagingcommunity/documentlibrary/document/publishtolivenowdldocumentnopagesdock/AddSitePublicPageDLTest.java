@@ -35,7 +35,7 @@ public class AddSitePublicPageDLTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("link=Control Panel")) {
+						if (selenium.isElementPresent("link=Control Panel")) {
 							break;
 						}
 					}
@@ -63,8 +63,8 @@ public class AddSitePublicPageDLTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Site Name"),
 					selenium.getText("//tr[3]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong"));
-				selenium.clickAt("//td[7]/span/ul/li/strong",
+					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -73,9 +73,8 @@ public class AddSitePublicPageDLTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Manage Pages")
-												.equals(selenium.getText(
-										"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"))) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
 							break;
 						}
 					}

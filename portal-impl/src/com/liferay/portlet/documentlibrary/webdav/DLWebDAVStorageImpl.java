@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.webdav.LockException;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -651,7 +652,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			String description = StringPool.BLANK;
 			String changeLog = StringPool.BLANK;
 
-			ServiceContext serviceContext = new ServiceContext();
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				request);
 
 			serviceContext.setAddGroupPermissions(
 				isAddGroupPermissions(groupId));

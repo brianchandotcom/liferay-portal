@@ -99,16 +99,19 @@ public class ActionUtil {
 
 		String version = ParamUtil.getString(request, "version");
 
-		if ((fileEntry != null) && Validator.isNotNull(version)) {
-			FileVersion fileVersion = fileEntry.getFileVersion(version);
+		if (fileEntry != null) {
+			if (Validator.isNotNull(version)) {
+				FileVersion fileVersion = fileEntry.getFileVersion(version);
 
-			request.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+				request.setAttribute(
+					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
-			RawMetadataProcessor.generateMetadata(fileVersion);
-		}
-		else {
-			RawMetadataProcessor.generateMetadata(fileEntry.getFileVersion());
+				RawMetadataProcessor.generateMetadata(fileVersion);
+			}
+			else {
+				RawMetadataProcessor.generateMetadata(
+					fileEntry.getFileVersion());
+			}
 		}
 	}
 

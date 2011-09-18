@@ -55,10 +55,10 @@ public class ActionUtil {
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(request, "fileEntryIds"), 0L);
 
-		for (int i = 0; i < fileEntryIds.length; i++) {
+		for (long fileEntryId : fileEntryIds) {
 			try {
 				FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
-					fileEntryIds[i]);
+					fileEntryId);
 
 				fileEntries.add(fileEntry);
 			}
@@ -182,9 +182,9 @@ public class ActionUtil {
 
 		List<Folder> folders = new ArrayList<Folder>();
 
-		for (int i = 0; i < folderIds.length; i++) {
+		for (long folderId : folderIds) {
 			try {
-				Folder folder = DLAppServiceUtil.getFolder(folderIds[i]);
+				Folder folder = DLAppServiceUtil.getFolder(folderId);
 
 				folders.add(folder);
 			}

@@ -107,7 +107,7 @@ public class ActionUtil {
 
 			RawMetadataProcessor.generateMetadata(fileVersion);
 		}
-		else {
+		else if (fileEntry != null) {
 			RawMetadataProcessor.generateMetadata(fileEntry.getFileVersion());
 		}
 	}

@@ -25,13 +25,11 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 List<DLFileEntryType> fileEntryTypes = new ArrayList<DLFileEntryType>();
 
-if(portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)){
-	DLFileEntryType basicDocumentType = DLFileEntryTypeLocalServiceUtil.createDLFileEntryType(0);
+DLFileEntryType basicDocumentType = DLFileEntryTypeLocalServiceUtil.createDLFileEntryType(0);
 
-	basicDocumentType.setName(LanguageUtil.get(pageContext, "basic-document"));
+basicDocumentType.setName(LanguageUtil.get(pageContext, "basic-document"));
 
-	fileEntryTypes.add(basicDocumentType);
-}
+fileEntryTypes.add(basicDocumentType);
 
 fileEntryTypes.addAll(DLFileEntryTypeServiceUtil.getFileEntryTypes(scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 %>

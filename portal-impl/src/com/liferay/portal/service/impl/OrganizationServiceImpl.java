@@ -149,7 +149,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 				indexer.reindex(
 					new String[] {
-						String.valueOf(organization.getOrganizationId())
+						String.valueOf(organization.getCompanyId())
 					});
 			}
 

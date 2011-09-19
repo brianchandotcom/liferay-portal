@@ -46,6 +46,8 @@ public class Member_EditCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("WC Comment"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 		selenium.clickAt("link=Edit", RuntimeVariables.replace("Edit"));
 
 		for (int second = 0;; second++) {
@@ -95,6 +97,8 @@ public class Member_EditCommentTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("WC Comment Edited"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
+		assertNotEquals(RuntimeVariables.replace("WC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

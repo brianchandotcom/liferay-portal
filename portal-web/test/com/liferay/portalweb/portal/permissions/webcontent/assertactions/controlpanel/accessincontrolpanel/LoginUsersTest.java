@@ -116,23 +116,7 @@ public class LoginUsersTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='reminderQueryAnswer']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='reminderQueryAnswer']",
 			RuntimeVariables.replace("Test"));
@@ -181,5 +165,7 @@ public class LoginUsersTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 	}
 }

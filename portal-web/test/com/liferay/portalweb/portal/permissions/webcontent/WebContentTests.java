@@ -29,7 +29,7 @@ public class WebContentTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-//		testSuite.addTest(AssertActionsTests.suite());
+		testSuite.addTest(AssertActionsTests.suite());
 		testSuite.addTest(PortletTests.suite());
 
 		return testSuite;

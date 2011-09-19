@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portal.permissions.webcontent.assertactions;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.permissions.webcontent.assertactions.entry.EntryTests;
 import com.liferay.portalweb.portal.permissions.webcontent.assertactions.controlpanel.ControlPanelTests;
+import com.liferay.portalweb.portal.permissions.webcontent.assertactions.entry.EntryTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,8 +29,8 @@ public class AssertActionsTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(EntryTests.suite());
 		testSuite.addTest(ControlPanelTests.suite());
+		testSuite.addTest(EntryTests.suite());
 
 		return testSuite;
 	}

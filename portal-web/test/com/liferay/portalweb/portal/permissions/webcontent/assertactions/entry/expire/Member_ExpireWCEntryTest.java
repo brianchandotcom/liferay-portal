@@ -51,6 +51,10 @@ public class Member_ExpireWCEntryTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//tr[3]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Approved"),
+			selenium.getText("//tr[3]/td[4]/a"));
+		assertNotEquals(RuntimeVariables.replace("Expired"),
+			selenium.getText("//tr[3]/td[4]/a"));
 		selenium.clickAt("//tr[3]/td/input",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.clickAt("//input[@value='Expire']",
@@ -63,6 +67,10 @@ public class Member_ExpireWCEntryTest extends BaseTestCase {
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to expire the selected web content[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
+			selenium.getText("//tr[3]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Expired"),
+			selenium.getText("//tr[3]/td[4]/a"));
 		selenium.clickAt("//tr[3]/td[3]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");

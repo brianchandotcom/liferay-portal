@@ -84,6 +84,7 @@ public class Member_EditWCEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Content Edited"));
 		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isVisible("//input[@value='Publish']"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

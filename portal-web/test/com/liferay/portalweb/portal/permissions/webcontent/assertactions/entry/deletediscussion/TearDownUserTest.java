@@ -94,8 +94,8 @@ public class TearDownUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
-				selenium.clickAt("link=View All Users",
-					RuntimeVariables.replace("View All Users"));
+				selenium.clickAt("link=Search All Users",
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -149,6 +149,8 @@ public class TearDownUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("No users were found."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 100:
 				label = -1;

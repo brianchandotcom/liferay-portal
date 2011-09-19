@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.webcontent.assertactions.controlpanel.configuration;
+package com.liferay.portalweb.portal.permissions.webcontent.assertactions.controlpanel.permissions;
 
 import com.liferay.portalweb.portal.BaseTests;
 
@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurationTests extends BaseTests {
+public class PermissionsTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
@@ -34,14 +34,13 @@ public class ConfigurationTests extends BaseTests {
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
-		testSuite.addTestSuite(
-			Member_AssertCannotAccessConfigurationTest.class);
+		testSuite.addTestSuite(Member_AssertCannotAccessPermissionsTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
-		testSuite.addTestSuite(AddPermissionConfigurationTest.class);
+		testSuite.addTestSuite(AddPermissionPermissionsTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
-		testSuite.addTestSuite(Member_AssertAccessConfigurationTest.class);
+		testSuite.addTestSuite(Member_AssertAccessPermissionsTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(TearDownWCRolesTest.class);

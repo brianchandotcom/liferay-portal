@@ -51,6 +51,10 @@ public class Member_AssertCannotExpireEntryTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//tr[3]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Approved"),
+			selenium.getText("//tr[3]/td[4]/a"));
+		assertNotEquals(RuntimeVariables.replace("Expired"),
+			selenium.getText("//tr[3]/td[4]/a"));
 		selenium.clickAt("//tr[3]/td/input",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.clickAt("//input[@value='Expire']",
@@ -62,5 +66,38 @@ public class Member_AssertCannotExpireEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You do not have the required permissions."),
 			selenium.getText("//div[@class='portlet-msg-error']"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
+			selenium.getText("//tr[3]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Approved"),
+			selenium.getText("//tr[3]/td[4]/a"));
+		assertNotEquals(RuntimeVariables.replace("Expired"),
+			selenium.getText("//tr[3]/td[4]/a"));
 	}
 }

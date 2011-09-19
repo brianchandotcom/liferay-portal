@@ -1028,6 +1028,7 @@ release was successful.</echo>
 				<available file="${app.server.parent.dir}/${app.server.tomcat.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
 				<get
 					dest="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
 					src="${app.server.tomcat.zip.url}"

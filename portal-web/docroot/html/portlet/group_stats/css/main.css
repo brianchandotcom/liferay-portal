@@ -1,0 +1,59 @@
+.portlet-group-stats .group-stats-container {
+}
+
+.portlet-group-stats .group-stats-header {
+	background-color: #202020;
+	font-size: 1.1em;
+	font-weight: bold;
+	height: 26px;
+	position: relative;
+}
+
+.portlet-group-stats .group-stats-title {
+    color: orange;
+    float: none;
+	margin: 0;
+    min-width: 50%;
+    padding: 5px;
+}
+
+.portlet-group-stats .group-stats-body {
+    border-collapse: collapse;
+    border-spacing: 0;
+    clear: both;
+    display: table;
+    table-layout: auto;
+    width: 100%;
+}
+
+.portlet-group-stats .group-stats-chart {
+	display: table-cell;
+	vertical-align: top;
+	width: 40%;
+}
+
+.portlet-group-stats .group-stats-info {
+	padding: 10px 0 10px 10px;
+}
+
+.portlet-group-stats .group-stats-info table {
+	margin-left: 10px;
+}
+
+.portlet-group-stats .group-stats-info td {
+	padding: 0px 3px;
+}
+
+.portlet-group-stats .group-stats-activity-period {
+}
+
+.portlet-group-stats .group-stats-color-marker {
+	height: 8px;
+	margin-right: 4px;
+	width: 8px;
+}
+
+.aui-field-row .inline-text {
+	margin: 1px 3px 0px 0px;
+	padding: 1px;
+}

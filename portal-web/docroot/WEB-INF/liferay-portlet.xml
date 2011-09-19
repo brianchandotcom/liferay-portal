@@ -1852,6 +1852,19 @@
 		<header-portlet-css>/html/portlet/users_stats/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-users-stats</css-class-wrapper>
 	</portlet>
+	<portlet>
+		<portlet-name>201</portlet-name>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>true</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<header-portlet-css>/html/portlet/group_stats/css/main.css</header-portlet-css>
+		<header-portlet-javascript>/html/portlet/group_stats/js/jquery-1.6.4.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/html/portlet/group_stats/js/highcharts.js</header-portlet-javascript>
+		<header-portlet-javascript>/html/portlet/group_stats/js/main.js</header-portlet-javascript>
+		<css-class-wrapper>portlet-group-stats</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

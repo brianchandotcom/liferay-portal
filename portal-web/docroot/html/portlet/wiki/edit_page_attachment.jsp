@@ -107,16 +107,6 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 %>
 
 <aui:script use="liferay-upload">
-	var params = {
-		nodeId: <%= node.getNodeId() %>,
-		tempFolderName: 'com.liferay.portlet.wiki.action.EditPageAttachmentAction'
-	};
-
-	var service = {
-		method : Liferay.Service.Wiki.WikiPage.getTempPageAttachmentNames,
-		params : params
-	};
-
 	new Liferay.Upload(
 		{
 			allowedFileTypes: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
@@ -128,7 +118,13 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 			metadataContainer: '#<portlet:namespace />selectedFileNameMetadataContainer',
 			metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 			namespace: '<portlet:namespace />',
-			service: service,
+			tempFileURL: {
+				method: Liferay.Service.Wiki.WikiPage.getTempPageAttachmentNames,
+				params: {
+					nodeId: <%= node.getNodeId() %>,
+					tempFolderName: 'com.liferay.portlet.wiki.action.EditPageAttachmentAction'
+				}
+			},
 			uploadFile: '<liferay-portlet:actionURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/wiki/edit_page_attachment" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'
 		}
 	);

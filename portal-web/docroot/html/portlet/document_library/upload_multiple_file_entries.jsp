@@ -69,7 +69,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 					metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
 					metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 					namespace: '<portlet:namespace />',
-					service: {
+					tempFileURL: {
 						method: Liferay.Service.DL.DLApp.getTempFileEntryNames,
 						params: {
 							groupId: <%= scopeGroupId %>,

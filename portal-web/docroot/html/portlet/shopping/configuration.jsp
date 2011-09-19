@@ -22,8 +22,8 @@ String tabs3 = ParamUtil.getString(request, "tabs3", "email-from");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", shoppingPrefs.getEmailFromName(company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shoppingPrefs.getEmailFromAddress(company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "emailFromName", shoppingPrefs.getEmailFromName());
+String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shoppingPrefs.getEmailFromAddress());
 
 String emailOrderConfirmationSubject = ParamUtil.getString(request, "emailOrderConfirmationSubject", shoppingPrefs.getEmailOrderConfirmationSubject());
 String emailOrderConfirmationBody = ParamUtil.getString(request, "emailOrderConfirmationBody", shoppingPrefs.getEmailOrderConfirmationBody());

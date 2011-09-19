@@ -286,9 +286,11 @@ public class ShoppingPreferences {
 		_preferences.setValue("min-order", String.valueOf(minOrder));
 	}
 
-	public String getEmailFromAddress(long companyId) throws SystemException {
-		return PortalUtil.getEmailFromName(
-			_preferences, companyId, PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS);
+	public String getEmailFromAddress() {
+		String emailFromAddress = PropsUtil.get(
+			PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS);
+
+		return _preferences.getValue("emailFromAddress", emailFromAddress);
 	}
 
 	public void setEmailFromAddress(String emailFromAddress)
@@ -297,9 +299,11 @@ public class ShoppingPreferences {
 		_preferences.setValue("emailFromAddress", emailFromAddress);
 	}
 
-	public String getEmailFromName(long companyId) throws SystemException {
-		return PortalUtil.getEmailFromName(
-			_preferences, companyId, PropsKeys.SHOPPING_EMAIL_FROM_NAME);
+	public String getEmailFromName() {
+		String emailFromName = PropsUtil.get(
+			PropsKeys.SHOPPING_EMAIL_FROM_NAME);
+
+		return _preferences.getValue("emailFromName", emailFromName);
 	}
 
 	public void setEmailFromName(String emailFromName)

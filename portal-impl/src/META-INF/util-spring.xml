@@ -196,7 +196,12 @@
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil" class="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil">
+    <bean id="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" class="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil">
+        <property name="BBCodeTranslator">
+            <bean class="com.liferay.portal.parsers.bbcode.BBCodeToHtmlTranslator" />
+        </property>
+	</bean>
+    <bean id="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil" class="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil">
 		<property name="cometHandlerPool">
 			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />
 		</property>
@@ -611,7 +616,7 @@
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdmin" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminImpl" />
+    <bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdmin" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminImpl" />
 	<bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil">
 		<property name="passwordPoliciesAdmin" ref="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdmin" />
 	</bean>
@@ -623,4 +628,5 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
+
 </beans>

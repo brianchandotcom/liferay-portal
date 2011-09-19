@@ -439,6 +439,7 @@ AUI().add(
 						customParams[namespace + STR_ENTRY_START] = startEndParams[0];
 						customParams[namespace + STR_ENTRY_END] = startEndParams[1];
 						customParams[namespace + REFRESH_FOLDERS] = false;
+						customParams[namespace + VIEW_ADD_BUTTON] = true;
 						customParams[namespace + VIEW_ENRTIES] = true;
 
 						A.mix(requestParams, customParams, true);

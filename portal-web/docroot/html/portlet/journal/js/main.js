@@ -2137,27 +2137,21 @@ AUI().add(
 					'.journal-image-link'
 				);
 
-				var _attachButtonInputSelector = function(id, title, handlerName) {
-					var buttonId = '.journal-' + id + '-button .aui-button-input';
+				container.delegate(
+					'click',
+					function(event) {
+						var button = event.currentTarget;
+						var input = button.ancestor('.journal-article-component-container').one('.aui-field-input');
+						var selectUrl = button.attr('data-documentlibraryUrl');
 
-					container.delegate(
-						'click',
-						function(event) {
-							var button = event.currentTarget;
-							var input = button.ancestor('.journal-article-component-container').one('.aui-field-input');
-							var selectUrl = button.attr('data-' + id + 'Url');
+						window[instance.portletNamespace + 'selectDocumentLibrary'] = function(url) {
+							input.val(url);
+						};
 
-							window[instance.portletNamespace + handlerName] = function(url) {
-								input.val(url);
-							};
-
-							instance.openPopupWindow(selectUrl, title);
-						},
-						buttonId
-					);
-				};
-
-				_attachButtonInputSelector('documentlibrary', 'Documents and Media', 'selectDocumentLibrary');
+						instance.openPopupWindow(selectUrl, Liferay.Language.get('javax.portlet.title.20'));
+					},
+					'.journal-documentlibrary-button .aui-button-input'
+				);
 
 				container.delegate(
 					'mouseover',

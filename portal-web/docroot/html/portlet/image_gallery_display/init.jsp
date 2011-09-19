@@ -40,8 +40,10 @@
 <%@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %>
+<%@ page import="com.liferay.portlet.documentlibrary.util.AudioProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %>
+<%@ page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %>
 <%@ page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
 
 <%

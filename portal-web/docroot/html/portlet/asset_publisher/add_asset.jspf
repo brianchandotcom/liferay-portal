@@ -58,6 +58,12 @@ Map<String, PortletURL> addPortletURLs = getAddPortletURLs(liferayPortletRequest
 			addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
 			addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
 
+			defaultAssetPublisherPortletId = typeSettingsProperties.getProperty(LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID);			
+
+			if (defaultAssetPublisherPortletId != null) {
+				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
+			}
+
 			String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "', title: '" + ResourceActionsUtil.getModelResource(locale, className) + "', uri:'" + addPortletURLString + "'});";
 		%>
 

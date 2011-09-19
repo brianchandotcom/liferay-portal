@@ -530,7 +530,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 	</c:choose>
 </aui:script>
 
-<c:if test="<%= Validator.isNotNull(layoutUuid) %>">
+<c:if test="<%= (article != null) && Validator.isNotNull(layoutUuid) %>">
 
 	<%
 	Layout defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, scopeGroupId);

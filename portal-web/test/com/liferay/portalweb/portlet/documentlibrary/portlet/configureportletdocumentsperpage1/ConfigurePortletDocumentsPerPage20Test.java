@@ -31,8 +31,7 @@ public class ConfigurePortletDocumentsPerPage20Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=Documents and Media Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -43,8 +42,8 @@ public class ConfigurePortletDocumentsPerPage20Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Documents and Media Library Test Page",
-			RuntimeVariables.replace("Documents and Media Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
@@ -110,8 +109,7 @@ public class ConfigurePortletDocumentsPerPage20Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=Documents and Media Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -122,8 +120,8 @@ public class ConfigurePortletDocumentsPerPage20Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Documents and Media Library Test Page",
-			RuntimeVariables.replace("Documents and Media Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),

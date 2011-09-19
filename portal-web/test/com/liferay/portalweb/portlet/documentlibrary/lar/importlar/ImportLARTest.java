@@ -64,10 +64,10 @@ public class ImportLARTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Documents and Media Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//ul[@class='category-portlets']/li[3]/a"));
 		selenium.clickAt("//ul[@class='category-portlets']/li[3]/a",
-			RuntimeVariables.replace("Documents and Media Library"));
+			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
@@ -82,7 +82,8 @@ public class ImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[@id='_20_qkmb']")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -94,8 +95,9 @@ public class ImportLARTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Export / Import"),
-			selenium.getText("//a[@id='_20_qkmb']"));
-		selenium.clickAt("//a[@id='_20_qkmb']",
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

@@ -36,7 +36,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"link=Documents and Media Library Test Page")) {
+									"link=Documents and Media Test Page")) {
 							break;
 						}
 					}
@@ -47,9 +47,8 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Documents and Media Library Test Page",
-					RuntimeVariables.replace(
-						"Documents and Media Library Test Page"));
+				selenium.clickAt("link=Documents and Media Test Page",
+					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 

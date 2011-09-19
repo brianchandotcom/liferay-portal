@@ -31,8 +31,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=Documents and Media Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -43,8 +42,8 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Documents and Media Library Test Page",
-			RuntimeVariables.replace("Documents and Media Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
@@ -114,8 +113,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=Documents and Media Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -126,8 +124,8 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Documents and Media Library Test Page",
-			RuntimeVariables.replace("Documents and Media Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@title='List View']",

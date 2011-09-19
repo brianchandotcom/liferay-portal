@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.DuplicateLockException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -41,6 +42,8 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.upload.LiferayFileUploadException;
+import com.liferay.portal.upload.LiferayFileUploadUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
@@ -97,8 +100,20 @@ public class EditFileEntryAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) ||
-				cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
+			if (Validator.isNull(cmd)) {
+				LiferayFileUploadException fileUploadException =
+					LiferayFileUploadUtil.getFileUploadException(actionRequest);
+
+				if (fileUploadException != null) {
+					if (fileUploadException.isSizeLimitException()) {
+						throw new FileSizeException(
+							fileUploadException.getCause());
+					}
+					throw new PortalException(fileUploadException.getCause());
+				}
+			}
+			else if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)
+				|| cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 
 				updateFileEntry(actionRequest, actionResponse);
 			}

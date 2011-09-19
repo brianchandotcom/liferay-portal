@@ -116,6 +116,7 @@ public class UploadServletRequestImpl
 			}
 		}
 		catch (Exception e) {
+			LiferayFileUploadUtil.storeFileUploadException(request, e);
 			_log.error(e, e);
 		}
 	}

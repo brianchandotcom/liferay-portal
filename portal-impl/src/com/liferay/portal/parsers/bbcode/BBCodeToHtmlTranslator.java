@@ -14,7 +14,8 @@
 
 package com.liferay.portal.parsers.bbcode;
 
-import com.liferay.portal.kernel.parsers.bbcode.BBCodeUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * @author Iliyan Peychev
  */
-public class BBCodeToHTMLImpl implements BBCodeTranslator {
+public class BBCodeToHtmlTranslator implements BBCodeTranslator {
 
 	static final String[][] _emoticons = {
 		{"happy.gif", ":)", "happy"},
@@ -135,17 +136,42 @@ public class BBCodeToHTMLImpl implements BBCodeTranslator {
 					"<img alt=\"emoticon\" src=\"@theme_images_path@/" +
 							"emoticons/" + image + "\" >";
 		}
-
-		BBCodeUtil.EMOTICONS = _emoticons;
-		BBCodeUtil.EMOTICONS_DESCRIPTIONS = _emoticonDescriptions;
-		BBCodeUtil.EMOTICONS_FILES = _emoticonFiles;
-		BBCodeUtil.EMOTICONS_SYMBOLS = _emoticonSymbols;
 	}
 
-	public BBCodeToHTMLImpl() {
+	public BBCodeToHtmlTranslator() {
 		_bbCodeParser = new com.liferay.portal.parsers.bbcode.BBCodeParser();
 
 		_sb = new StringBundler();
+	}
+
+	public String[][] getEmoticons() {
+		return _emoticons;
+	}
+
+	public String[] getEmoticonDescriptions() {
+		return _emoticonDescriptions;
+	}
+
+	public String[] getEmoticonFiles() {
+		return _emoticonFiles;
+	}
+
+	public String[] getEmoticonSymbols() {
+		return _emoticonSymbols;
+	}
+
+	public String getHTML(String bbcode) {
+		try {
+			bbcode = parse(bbcode);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Could not parse bbcode: " + bbcode + " " + e.getMessage());
+
+			bbcode = HtmlUtil.escape(bbcode);
+		}
+
+		return bbcode;
 	}
 
 	public String parse(String text) {
@@ -689,5 +715,7 @@ public class BBCodeToHTMLImpl implements BBCodeTranslator {
 	private int _itemPointer = 0;
 	private StringBundler _sb = null;
 	private Stack<String> _stack = new Stack();
+
+	private static Log _log = LogFactoryUtil.getLog(BBCodeToHtmlTranslator.class);
 
 }

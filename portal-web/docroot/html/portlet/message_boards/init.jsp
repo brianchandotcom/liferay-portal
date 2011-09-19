@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeUtil" %>
+<%@ page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" %>
 <%@ page import="com.liferay.portal.kernel.search.Document" %>
 <%@ page import="com.liferay.portal.kernel.search.Hits" %>
 <%@ page import="com.liferay.portal.kernel.search.Indexer" %>
@@ -74,7 +74,6 @@
 <%@ page import="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" %>
 <%@ page import="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" %>
 <%@ page import="com.liferay.portlet.messageboards.service.permission.MBPermission" %>
-<%@ page import="com.liferay.portlet.messageboards.util.BBCodeTranslator" %>
 <%@ page import="com.liferay.portlet.messageboards.util.MBUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator" %>
 <%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>

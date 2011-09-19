@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.parsers.bbcode.BBCodeUtil;
+import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
@@ -72,7 +72,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		String body = null;
 
 		if (translate) {
-			body = BBCodeUtil.getHTML(this);
+			body = BBCodeTranslatorUtil.getHTML(getBody());
 		}
 		else {
 			body = getBody();

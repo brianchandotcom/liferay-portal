@@ -196,9 +196,9 @@
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />
 		</property>
 	</bean>
-    <bean id="com.liferay.portal.kernel.parsers.bbcode.BBCodeUtil" class="com.liferay.portal.kernel.parsers.bbcode.BBCodeUtil">
+    <bean id="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" class="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil">
         <property name="BBCodeTranslator">
-            <bean class="com.liferay.portal.parsers.bbcode.BBCodeToHTMLImpl" />
+            <bean class="com.liferay.portal.parsers.bbcode.BBCodeToHtmlTranslator" />
         </property>
 	</bean>
     <bean id="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil" class="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil">

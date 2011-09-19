@@ -19,5 +19,17 @@ package com.liferay.portlet.messageboards.util;
  * @author Miguel Pastor
  */
 public interface BBCodeTranslator {
+
+	public String[][] getEmoticons();
+
+	public String[] getEmoticonDescriptions();
+
+	public String[] getEmoticonFiles();
+
+	public String[] getEmoticonSymbols();
+
+	public String getHTML(String bbcode);
+
 	public String parse(String message);
+
 }

@@ -166,6 +166,7 @@
 	<import class="com.liferay.portlet.wiki.model.WikiNode" />
 	<import class="com.liferay.portlet.wiki.model.WikiPage" />
 	<import class="com.liferay.portlet.wiki.model.WikiPageResource" />
+	<import class="com.liferay.portlet.osgiadmin.model.OSGi" />
 	<class name="com.liferay.counter.model.impl.CounterImpl" table="Counter">
 		<id name="name" type="java.lang.String">
 			<generator class="assigned" />

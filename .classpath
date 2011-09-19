@@ -107,6 +107,7 @@
 	<classpathentry kind="lib" path="lib/portal/backport-concurrent.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bcmail.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bcprov.jar"/>
+	<classpathentry kind="lib" path="lib/portal/bnd.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bobo-browse.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bsh.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bsf.jar"/>
@@ -151,6 +152,7 @@
 	<classpathentry kind="lib" path="lib/portal/ecs.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ehcache-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ehcache-jgroupsreplication.jar"/>
+	<classpathentry kind="lib" path="lib/portal/equinox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fastutil.jar"/>
 	<classpathentry kind="lib" path="lib/portal/flexjson.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fontbox.jar"/>
@@ -223,7 +225,6 @@
 	<classpathentry kind="lib" path="lib/portal/odmg.jar"/>
 	<classpathentry kind="lib" path="lib/portal/openid4java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/oro.jar"/>
-	<classpathentry kind="lib" path="lib/portal/osgi.core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/pdfbox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/poi.jar"/>
 	<classpathentry kind="lib" path="lib/portal/poi-ooxml.jar"/>

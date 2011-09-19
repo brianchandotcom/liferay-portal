@@ -955,6 +955,18 @@
 		<put name="portlet_content" value="/portlet/news/view.jsp" />
 	</definition>
 
+	<!-- OSGiAdmin -->
+
+	<definition name="portlet.osgiadmin" extends="portlet" />
+
+	<definition name="portlet.osgiadmin.edit_bundle" extends="portlet.osgiadmin">
+		<put name="portlet_content" value="/portlet/osgiadmin/edit_bundle.jsp" />
+	</definition>
+
+	<definition name="portlet.osgiadmin.view" extends="portlet.osgiadmin">
+		<put name="portlet_content" value="/portlet/osgiadmin/view.jsp" />
+	</definition>
+
 	<!-- Our Activities -->
 
 	<definition name="portlet.our_activities" extends="portlet" />

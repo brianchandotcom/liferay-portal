@@ -1814,6 +1814,22 @@
 		<css-class-wrapper>portlet-asset-publisher</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
+	<portlet>
+		<portlet-name>176</portlet-name>
+		<icon>/html/icons/osgiadmin.png</icon>
+		<struts-path>osgiadmin</struts-path>
+		<control-panel-entry-category>server</control-panel-entry-category>
+		<control-panel-entry-weight>11.0</control-panel-entry-weight>
+		<control-panel-entry-class>com.liferay.portlet.admin.OmniadminControlPanelEntry</control-panel-entry-class>
+		<use-default-template>false</use-default-template>
+		<render-weight>1</render-weight>
+		<header-portlet-css>/html/portlet/osgiadmin/css/main.jsp</header-portlet-css>
+		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
+		<footer-portlet-javascript>/html/portlet/osgiadmin/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>portlet-osgi-admin</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>
+		<system>true</system>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

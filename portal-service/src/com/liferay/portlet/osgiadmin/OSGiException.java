@@ -12,17 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.adaptor;
+package com.liferay.portlet.osgiadmin;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Raymond Augé
+ * @author Brian Wing Shun Chan
  */
-public interface Adaptor {
+public class OSGiException extends PortalException {
 
-	public void init(Object applicationContext) throws AdaptorException;
+	public OSGiException() {
+		super();
+	}
 
-	public void start() throws AdaptorException;
+	public OSGiException(String msg) {
+		super(msg);
+	}
 
-	public void stop() throws AdaptorException;
+	public OSGiException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public OSGiException(Throwable cause) {
+		super(cause);
+	}
 
 }

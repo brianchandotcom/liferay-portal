@@ -1117,4 +1117,16 @@
 		<property name="service" ref="com.liferay.portlet.wiki.service.WikiPageService" />
 		<property name="serviceInterface" value="com.liferay.portlet.wiki.service.WikiPageService" />
 	</bean>
+	<bean name="/com_liferay_portlet_osgiadmin_service_spring_OSGiService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.osgiadmin.service.OSGiService" />
+		<property name="serviceInterface" value="com.liferay.portlet.osgiadmin.service.OSGiService" />
+	</bean>
+	<bean name="/com_liferay_portlet_osgiadmin_service_spring_OSGiService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.osgiadmin.service.OSGiService" />
+		<property name="serviceInterface" value="com.liferay.portlet.osgiadmin.service.OSGiService" />
+	</bean>
+	<bean name="/com_liferay_portlet_osgiadmin_service_spring_OSGiService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.osgiadmin.service.OSGiService" />
+		<property name="serviceInterface" value="com.liferay.portlet.osgiadmin.service.OSGiService" />
+	</bean>
 </beans>

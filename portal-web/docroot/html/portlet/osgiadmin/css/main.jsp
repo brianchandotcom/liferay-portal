@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.kernel.adaptor;
+<%@ include file="/html/portlet/css_init.jsp" %>
 
-/**
- * @author Raymond Augé
- */
-public interface Adaptor {
+.portlet-osgi-admin {
+	.lfr-asset-column-details .results-grid .taglib-search-iterator {
+		table-layout: fixed;
+		width: 100%;
 
-	public void init(Object applicationContext) throws AdaptorException;
+		.col-1 {
+			width: 24em;
+		}
 
-	public void start() throws AdaptorException;
+		.col-2 {
+			.container {
+				max-height: 30em;
+				overflow: auto;
 
-	public void stop() throws AdaptorException;
-
+				code {
+					word-wrap: break-word;
+				}
+			}
+		}
+	}
 }

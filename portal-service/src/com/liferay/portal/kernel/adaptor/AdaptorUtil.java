@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.util.ServiceLoader;
 
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 /**
  * @author Raymond Augé
  */
@@ -45,13 +43,11 @@ public class AdaptorUtil {
 		return _adaptor;
 	}
 
-	public static void init(ServletContext servletContext, Object beanContext)
-		throws AdaptorException {
-
+	public static void init(Object applicationContext) throws AdaptorException {
 		if (hasAdaptor()) {
 			Adaptor adaptor = getAdaptor();
 
-			adaptor.init(servletContext, beanContext);
+			adaptor.init(applicationContext);
 		}
 	}
 

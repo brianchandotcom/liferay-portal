@@ -1297,6 +1297,14 @@
 
 		<action path="/news/view" forward="portlet.news.view" />
 
+		<!-- OSGiAdmin -->
+
+		<action path="/osgiadmin/edit_bundle" type="com.liferay.portlet.osgiadmin.action.EditBundleAction">
+			<forward name="portlet.osgiadmin.edit_bundle" path="portlet.osgiadmin.edit_bundle" />
+		</action>
+
+		<action path="/osgiadmin/view" forward="portlet.osgiadmin.view" />
+
 		<!-- Our Activities -->
 
 		<action path="/our_activities/view" forward="portlet.our_activities.view" />

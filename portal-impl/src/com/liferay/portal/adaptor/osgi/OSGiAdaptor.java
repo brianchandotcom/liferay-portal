@@ -12,17 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.adaptor;
+package com.liferay.portal.adaptor.osgi;
+
+import org.osgi.framework.launch.Framework;
 
 /**
  * @author Raymond Augé
  */
-public interface Adaptor {
+public interface OSGiAdaptor {
 
-	public void init(Object applicationContext) throws AdaptorException;
-
-	public void start() throws AdaptorException;
-
-	public void stop() throws AdaptorException;
+	public Framework getFramework();
 
 }

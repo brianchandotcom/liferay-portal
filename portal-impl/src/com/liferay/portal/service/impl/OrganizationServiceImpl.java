@@ -147,10 +147,15 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					Organization.class);
 
-				indexer.reindex(
-					new String[] {
-						String.valueOf(organization.getCompanyId())
-					});
+				if (parentOrganizationId > 0) {
+					indexer.reindex(
+						new String[] {
+							String.valueOf(organization.getCompanyId())
+						});
+				}
+				else {
+					indexer.reindex(organization);
+				}
 			}
 
 			return organization;

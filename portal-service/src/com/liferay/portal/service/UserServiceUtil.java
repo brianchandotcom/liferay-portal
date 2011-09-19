@@ -508,10 +508,13 @@ public class UserServiceUtil {
 	*
 	* @param groupId the primary key of the group
 	* @return the primary keys of the users belonging to the group
+	* @throws PortalException if the current user did not have permission to
+	view group assignments
 	* @throws SystemException if a system exception occurred
 	*/
 	public static long[] getGroupUserIds(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupUserIds(groupId);
 	}
 
@@ -520,10 +523,13 @@ public class UserServiceUtil {
 	*
 	* @param organizationId the primary key of the organization
 	* @return the primary keys of the users belonging to the organization
+	* @throws PortalException if the current user did not have permission to
+	view organization assignments
 	* @throws SystemException if a system exception occurred
 	*/
 	public static long[] getOrganizationUserIds(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getOrganizationUserIds(organizationId);
 	}
 
@@ -532,10 +538,13 @@ public class UserServiceUtil {
 	*
 	* @param roleId the primary key of the role
 	* @return the primary keys of the users belonging to the role
+	* @throws PortalException if the current user did not have permission to
+	view role members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static long[] getRoleUserIds(long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRoleUserIds(roleId);
 	}
 

@@ -102,6 +102,10 @@ public class AudioProcessor extends DLPreviewableProcessor {
 		return false;
 	}
 
+	public static boolean isSupportedAudio(String mimeType) {
+		return _instance._isSupportedAudio(mimeType);
+	}
+
 	public AudioProcessor() {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 	}
@@ -266,7 +270,11 @@ public class AudioProcessor extends DLPreviewableProcessor {
 			return false;
 		}
 
-		return _audioMimeTypes.contains(fileVersion.getMimeType());
+		return _isSupportedAudio(fileVersion.getMimeType());
+	}
+
+	private boolean _isSupportedAudio(String mimeType) {
+		return _audioMimeTypes.contains(mimeType);
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {

@@ -15,6 +15,7 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.metadata.TikaRawMetadataProcessor;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -108,7 +108,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		throws Exception {
 
 		String xsd = buildDLRawMetadataXML(
-			TikaRawMetadataProcessor.getFields());
+			RawMetadataProcessorUtil.getFields());
 
 		Document document = SAXReaderUtil.read(new StringReader(xsd));
 

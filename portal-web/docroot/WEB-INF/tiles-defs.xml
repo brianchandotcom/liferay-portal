@@ -587,6 +587,10 @@
 
 	<definition name="portlet.image_gallery_display" extends="portlet" />
 
+	<definition name="portlet.image_gallery_display.embedded_player" extends="portlet.image_gallery_display">
+		<put name="portlet_content" value="/portlet/image_gallery_display/embedded_player.jsp" />
+	</definition>
+
 	<definition name="portlet.image_gallery_display.search" extends="portlet.image_gallery_display">
 		<put name="portlet_content" value="/portlet/image_gallery_display/search.jsp" />
 	</definition>

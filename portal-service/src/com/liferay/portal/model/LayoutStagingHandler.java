@@ -277,22 +277,30 @@ public class LayoutStagingHandler implements InvocationHandler {
 	private LayoutRevision _layoutRevision;
 
 	static {
+		_layoutRevisionMethodNames.add("getColorScheme");
 		_layoutRevisionMethodNames.add("getColorSchemeId");
 		_layoutRevisionMethodNames.add("getCss");
+		_layoutRevisionMethodNames.add("getCssText");
 		_layoutRevisionMethodNames.add("getDescription");
+		_layoutRevisionMethodNames.add("getHTMLTitle");
 		_layoutRevisionMethodNames.add("getIconImage");
 		_layoutRevisionMethodNames.add("getIconImageId");
 		_layoutRevisionMethodNames.add("getKeywords");
 		_layoutRevisionMethodNames.add("getName");
 		_layoutRevisionMethodNames.add("getRobots");
+		_layoutRevisionMethodNames.add("getTheme");
 		_layoutRevisionMethodNames.add("getThemeId");
 		_layoutRevisionMethodNames.add("getTitle");
 		_layoutRevisionMethodNames.add("getTypeSettings");
 		_layoutRevisionMethodNames.add("getTypeSettingsProperties");
+		_layoutRevisionMethodNames.add("getWapColorScheme");
 		_layoutRevisionMethodNames.add("getWapColorSchemeId");
+		_layoutRevisionMethodNames.add("getWapTheme");
 		_layoutRevisionMethodNames.add("getWapThemeId");
 		_layoutRevisionMethodNames.add("isEscapedModel");
 		_layoutRevisionMethodNames.add("isIconImage");
+		_layoutRevisionMethodNames.add("isInheritLookAndFeel");
+		_layoutRevisionMethodNames.add("isInheritWapLookAndFeel");
 		_layoutRevisionMethodNames.add("setColorSchemeId");
 		_layoutRevisionMethodNames.add("setCss");
 		_layoutRevisionMethodNames.add("setDescription");

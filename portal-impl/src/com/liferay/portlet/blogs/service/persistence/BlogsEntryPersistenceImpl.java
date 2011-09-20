@@ -1056,63 +1056,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -1127,13 +1071,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(uuid);
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -1550,63 +1488,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -1619,13 +1501,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(groupId);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -1833,80 +1709,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FILTER_SQL_SELECT_BLOGSENTRY_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(BlogsEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
+		_appendNextPrev2(query, orderByComparator, previous);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
@@ -1928,13 +1731,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(groupId);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -2199,63 +1996,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -2268,13 +2009,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(companyId);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -2557,63 +2292,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_C_U_USERID_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -2628,13 +2307,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(userId);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -2930,63 +2603,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FINDER_COLUMN_C_LTD_DISPLAYDATE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -3003,13 +2620,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -3292,63 +2903,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -3363,13 +2918,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -3819,63 +3368,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FINDER_COLUMN_G_LTD_DISPLAYDATE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -3892,13 +3385,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -4131,80 +3618,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FILTER_SQL_SELECT_BLOGSENTRY_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(BlogsEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
+		_appendNextPrev2(query, orderByComparator, previous);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
@@ -4230,13 +3644,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -4519,63 +3927,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_S_STATUS_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -4590,13 +3942,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -4816,80 +4162,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FILTER_SQL_SELECT_BLOGSENTRY_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(BlogsEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
+		_appendNextPrev2(query, orderByComparator, previous);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
@@ -4913,13 +4186,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -5221,63 +4488,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_C_U_S_STATUS_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -5294,13 +4505,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -5614,63 +4819,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_C_LTD_S_STATUS_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -5689,13 +4838,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -6009,63 +5152,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FINDER_COLUMN_G_U_LTD_DISPLAYDATE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -6084,13 +5171,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -6335,80 +5416,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FILTER_SQL_SELECT_BLOGSENTRY_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(BlogsEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
+		_appendNextPrev2(query, orderByComparator, previous);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
@@ -6436,13 +5444,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -6744,63 +5746,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_U_S_STATUS_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -6817,13 +5763,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -7055,80 +5995,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FILTER_SQL_SELECT_BLOGSENTRY_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(BlogsEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
+		_appendNextPrev2(query, orderByComparator, previous);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
@@ -7154,13 +6021,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -7474,63 +6335,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_LTD_S_STATUS_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -7549,13 +6354,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -7800,80 +6599,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FILTER_SQL_SELECT_BLOGSENTRY_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(BlogsEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
+		_appendNextPrev2(query, orderByComparator, previous);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
@@ -7901,13 +6627,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -8242,63 +6962,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_U_LTD_S_STATUS_2);
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-		}
+		_appendNextPrev(query, orderByComparator, previous);
 
 		String sql = query.toString();
 
@@ -8319,13 +6983,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -8583,80 +7241,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FILTER_SQL_SELECT_BLOGSENTRY_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
-		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(BlogsEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
+		_appendNextPrev2(query, orderByComparator, previous);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
@@ -8686,13 +7271,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -10578,6 +9157,118 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST);
 	}
 
+	private void _appendNextPrev(
+		StringBundler query, OrderByComparator orderByComparator,
+		boolean previous) {
+
+		query.append(WHERE_AND);
+		query.append(_ORDER_BY_ENTITY_ALIAS);
+		query.append(_COLUMN_DISPLAY_DATE);
+
+		if (previous) {
+			query.append(WHERE_LESSER_THAN);
+		}
+		else {
+			query.append(WHERE_GREATER_THAN);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+		}
+	}
+
+	private void _appendNextPrev2(
+		StringBundler query, OrderByComparator orderByComparator,
+		boolean previous) {
+
+		query.append(WHERE_AND);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_ORDER_BY_ENTITY_ALIAS);
+		}
+		else {
+			query.append(_ORDER_BY_ENTITY_TABLE);
+		}
+		query.append(_COLUMN_DISPLAY_DATE);
+
+		if (previous) {
+			query.append(WHERE_LESSER_THAN);
+		}
+		else {
+			query.append(WHERE_GREATER_THAN);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			query.append(ORDER_BY_CLAUSE);
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(BlogsEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+	}
+
 	@BeanReference(type = BlogsEntryPersistence.class)
 	protected BlogsEntryPersistence blogsEntryPersistence;
 	@BeanReference(type = BlogsStatsUserPersistence.class)
@@ -10616,6 +9307,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	protected SocialActivityPersistence socialActivityPersistence;
 	@BeanReference(type = SocialEquityLogPersistence.class)
 	protected SocialEquityLogPersistence socialEquityLogPersistence;
+	private static final String _COLUMN_DISPLAY_DATE = "displayDate";
 	private static final String _SQL_SELECT_BLOGSENTRY = "SELECT blogsEntry FROM BlogsEntry blogsEntry";
 	private static final String _SQL_SELECT_BLOGSENTRY_WHERE = "SELECT blogsEntry FROM BlogsEntry blogsEntry WHERE ";
 	private static final String _SQL_COUNT_BLOGSENTRY = "SELECT COUNT(blogsEntry) FROM BlogsEntry blogsEntry";

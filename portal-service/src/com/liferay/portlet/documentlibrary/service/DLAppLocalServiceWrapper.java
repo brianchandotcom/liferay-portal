@@ -879,6 +879,16 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppLocalService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
+			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
+	}
+
 	/**
 	* Returns the number of immediate subfolders, file entries, and file
 	* shortcuts in the parent folder.
@@ -901,6 +911,15 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	/**

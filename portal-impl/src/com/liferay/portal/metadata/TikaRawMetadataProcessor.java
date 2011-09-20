@@ -38,14 +38,10 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		Metadata metadata = super.extractMetadata(
 			extension, mimeType, file);
 
-		if (metadata != null) {
-			return metadata;
-		}
-
 		try {
 			InputStream inputStream = new FileInputStream(file);
 
-			return extractMetadata(inputStream);
+			return extractMetadata(inputStream, metadata);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -60,12 +56,8 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		Metadata metadata = super.extractMetadata(
 			extension, mimeType, inputStream);
 
-		if (metadata != null) {
-			return metadata;
-		}
-
 		try {
-			return extractMetadata(inputStream);
+			return extractMetadata(inputStream, metadata);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -76,13 +68,21 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		_tika = tika;
 	}
 
-	protected Metadata extractMetadata(InputStream inputStream)
+	protected Metadata extractMetadata(
+			InputStream inputStream, Metadata metadata)
 		throws IOException {
 
-		Metadata metadata = new Metadata();
+		if (metadata == null) {
+			metadata = new Metadata();
+		}
 
 		_tika.parse(inputStream, metadata);
 
+		// Remove potential security risks
+
+		metadata.remove(XMPDM.ABS_PEAK_AUDIO_FILE_PATH.getName());
+		metadata.remove(XMPDM.RELATIVE_PEAK_AUDIO_FILE_PATH.getName());
+		
 		return metadata;
 	}
 

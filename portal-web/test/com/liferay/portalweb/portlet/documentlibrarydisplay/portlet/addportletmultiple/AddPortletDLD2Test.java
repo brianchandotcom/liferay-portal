@@ -58,7 +58,7 @@ public class AddPortletDLD2Test extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//div[@title='Document Library Display']/p/a")) {
+							"//div[@title='Documents and Media Display']/p/a")) {
 					break;
 				}
 			}
@@ -69,7 +69,7 @@ public class AddPortletDLD2Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@title='Document Library Display']/p/a",
+		selenium.clickAt("//div[@title='Documents and Media Display']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

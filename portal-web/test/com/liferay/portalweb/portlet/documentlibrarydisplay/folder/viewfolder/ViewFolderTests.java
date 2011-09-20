@@ -33,7 +33,7 @@ public class ViewFolderTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletDLDTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(ViewFolderTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

@@ -183,6 +183,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 			TikaMetadataKeys.class.getFields());
 		_fields.put(
 			TikaMimeKeys.class.getSimpleName(), TikaMimeKeys.class.getFields());
+		_fields.put(XMPDM.class.getSimpleName(), XMPDM.class.getFields());
 	}
 
 }

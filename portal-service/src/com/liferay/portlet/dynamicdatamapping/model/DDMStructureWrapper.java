@@ -607,6 +607,14 @@ public class DDMStructureWrapper implements DDMStructure {
 		_ddmStructure.persist();
 	}
 
+	public java.util.List<java.lang.String> getAvailableLocales() {
+		return _ddmStructure.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _ddmStructure.getDefaultLocale();
+	}
+
 	public java.lang.String getFieldDataType(java.lang.String fieldName) {
 		return _ddmStructure.getFieldDataType(fieldName);
 	}
@@ -615,8 +623,9 @@ public class DDMStructureWrapper implements DDMStructure {
 		return _ddmStructure.getFieldDisplayChildLabelAsValue(fieldName);
 	}
 
-	public java.lang.String getFieldLabel(java.lang.String fieldName) {
-		return _ddmStructure.getFieldLabel(fieldName);
+	public java.lang.String getFieldLabel(java.lang.String fieldName,
+		java.lang.String locale) {
+		return _ddmStructure.getFieldLabel(fieldName, locale);
 	}
 
 	public java.util.Set<java.lang.String> getFieldNames() {
@@ -626,6 +635,11 @@ public class DDMStructureWrapper implements DDMStructure {
 	public java.lang.String getFieldProperty(java.lang.String fieldName,
 		java.lang.String property) {
 		return _ddmStructure.getFieldProperty(fieldName, property);
+	}
+
+	public java.lang.String getFieldProperty(java.lang.String fieldName,
+		java.lang.String property, java.lang.String locale) {
+		return _ddmStructure.getFieldProperty(fieldName, property, locale);
 	}
 
 	public boolean getFieldRequired(java.lang.String fieldName) {
@@ -638,8 +652,20 @@ public class DDMStructureWrapper implements DDMStructure {
 		return _ddmStructure.getFields(fieldName, attributeName, attributeValue);
 	}
 
+	public java.util.Map<java.lang.String, java.lang.String> getFields(
+		java.lang.String fieldName, java.lang.String attributeName,
+		java.lang.String attributeValue, java.lang.String locale) {
+		return _ddmStructure.getFields(fieldName, attributeName,
+			attributeValue, locale);
+	}
+
 	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getFieldsMap() {
 		return _ddmStructure.getFieldsMap();
+	}
+
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getFieldsMap(
+		java.lang.String locale) {
+		return _ddmStructure.getFieldsMap(locale);
 	}
 
 	public java.lang.String getFieldType(java.lang.String fieldName) {

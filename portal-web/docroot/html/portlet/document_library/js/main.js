@@ -36,8 +36,6 @@ AUI().add(
 
 		var STR_FOLDER_START = 'folderStart';
 
-		var STR_ICON = 'icon';
-
 		var STRUTS_ACTION = 'struts_action';
 
 		var SRC_HISTORY = 0;
@@ -156,6 +154,9 @@ AUI().add(
 						documentLibraryContainer.plug(A.LoadingMask);
 
 						instance._config = config;
+
+                        instance._displayViews = config.displayViews;
+
 						instance._entryPaginator = entryPaginator;
 						instance._folderPaginator = folderPaginator;
 
@@ -672,15 +673,17 @@ AUI().add(
 					},
 
 					_syncDisplayStyleToolbar: function(content) {
-						var instance = this;
+                        var instance = this;
 
-						var displayStyleToolbar = instance._displayStyleToolbarNode.getData(DISPLAY_STYLE_TOOLBAR);
+                        if (instance._displayViews.length > 1) {
+                            var displayStyleToolbar = instance._displayStyleToolbarNode.getData(DISPLAY_STYLE_TOOLBAR);
 
-						var displayStyle = History.get(instance._displayStyle) || STR_ICON;
+                            var displayStyle = History.get(instance._displayStyle) || config.displayStyle;
 
-						displayStyleToolbar.item(0).StateInteraction.set(STR_ACTIVE, displayStyle === STR_ICON);
-						displayStyleToolbar.item(1).StateInteraction.set(STR_ACTIVE, displayStyle === 'descriptive');
-						displayStyleToolbar.item(2).StateInteraction.set(STR_ACTIVE, displayStyle === 'list');
+                            for (var i = 0; i < instance._displayViews.length; i++) {
+                                displayStyleToolbar.item(i).StateInteraction.set(STR_ACTIVE, displayStyle === instance._displayViews[i]);
+                            }
+                        }
 					},
 
 					_updatePaginatorValues: function(event) {

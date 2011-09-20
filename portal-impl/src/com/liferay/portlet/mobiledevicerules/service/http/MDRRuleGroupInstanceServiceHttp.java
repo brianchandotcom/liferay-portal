@@ -14,6 +14,15 @@
 
 package com.liferay.portlet.mobiledevicerules.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.service.http.TunnelUtil;
+
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil;
+
 /**
  * <p>
  * This class provides a HTTP utility for the
@@ -45,4 +54,126 @@ package com.liferay.portlet.mobiledevicerules.service.http;
  * @generated
  */
 public class MDRRuleGroupInstanceServiceHttp {
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance addRuleGroupInstance(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
+		long classPK, long ruleGroupId, int priority,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class.getName(),
+					"addRuleGroupInstance", _addRuleGroupInstanceParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					className, classPK, ruleGroupId, priority, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void deleteRuleGroupInstance(HttpPrincipal httpPrincipal,
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance ruleGroupInstance)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class.getName(),
+					"deleteRuleGroupInstance",
+					_deleteRuleGroupInstanceParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					ruleGroupInstance);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance updateRuleGroupInstance(
+		HttpPrincipal httpPrincipal, long ruleGroupInstanceId, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class.getName(),
+					"updateRuleGroupInstance",
+					_updateRuleGroupInstanceParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					ruleGroupInstanceId, priority);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MDRRuleGroupInstanceServiceHttp.class);
+	private static final Class<?>[] _addRuleGroupInstanceParameterTypes0 = new Class[] {
+			long.class, java.lang.String.class, long.class, long.class,
+			int.class, com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteRuleGroupInstanceParameterTypes1 = new Class[] {
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance.class
+		};
+	private static final Class<?>[] _updateRuleGroupInstanceParameterTypes2 = new Class[] {
+			long.class, int.class
+		};
 }

@@ -103,13 +103,11 @@ public class JobStateSerializeUtil {
 	private static Map<String, Object> _serialize_1(JobState jobState) {
 		Map<String, Object> jobStateMap = new HashMap<String, Object>();
 
-		ArrayList<Object[]> exceptionsList = null;
-
 		ObjectValuePair<Exception, Date>[] exceptions =
 			jobState.getExceptions();
 
 		if (exceptions != null) {
-			exceptionsList = new ArrayList<Object[]>();
+			ArrayList<Object[]> exceptionsList = new ArrayList<Object[]>();
 
 			for (ObjectValuePair<Exception, Date> exception : exceptions) {
 				exceptionsList.add(
@@ -117,9 +115,9 @@ public class JobStateSerializeUtil {
 			}
 
 			exceptionsList.trimToSize();
-		}
 
-		jobStateMap.put(_EXCEPTIONS_FIELD, exceptionsList);
+			jobStateMap.put(_EXCEPTIONS_FIELD, exceptionsList);
+		}
 
 		jobStateMap.put(
 			_EXCEPTIONS_MAX_SIZE_FIELD, jobState.getExceptionsMaxSize());

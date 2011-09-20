@@ -27,17 +27,18 @@ import java.util.List;
 
 /**
  * The social request interpreter local service. Social request interpreters
- * are classes responsible for translating social requests into human readable
- * form as well as handling confirmations and rejections. This service holds a
- * list of interpreters and provides methods to add or remove items from this
- * list.
+ * are responsible for translating social requests into human readable form as
+ * well as handling social request confirmations and rejections. This service
+ * holds a list of interpreters and provides methods to add or remove items
+ * from this list.
  *
  * <p>
  * Social request interpreters use the language files to get text fragments
- * based on the request's type. Interpreters are created for a specific request
- * type and are only capable of handling requests of that type. As an example,
- * FriendsRequestInterpreter in the social networking portlet can only
- * translate and handle friend requests or confirmations/rejections.
+ * based on the request's type. An interpreter is created for a specific
+ * request type and is only capable of handling requests of that type. As an
+ * example, there is an interpreter FriendsRequestInterpreter in the social
+ * networking portlet can only translate and handle interpretation,
+ * confirmation, and rejection of friend requests.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -73,12 +74,12 @@ public class SocialRequestInterpreterLocalServiceImpl
 
 	/**
 	 * Creates a human readable request feed entry for the social request using
-	 * one of the available request interpreters.
+	 * an available compatible request interpreter.
 	 *
 	 * <p>
-	 * This method finds the appropriate interpreter for the activity by going
-	 * through the available interpreters and asking them if they can handle
-	 * the asset type of the request.
+	 * This method finds the appropriate interpreter for the request by going
+	 * through the available interpreters to find one that can handle the asset
+	 * type of the request.
 	 * </p>
 	 *
 	 * @param  request the social request to be translated to human readable
@@ -117,10 +118,9 @@ public class SocialRequestInterpreterLocalServiceImpl
 	 *
 	 * <p>
 	 * Confirmations are handled by finding the appropriate social request
-	 * interpreters and calling their processConfirmation() methods. To find
-	 * the appropriate interpreters this method goes through the available
-	 * interpreters and asks them if they can handle the asset type of the
-	 * request.
+	 * interpreter and calling its processConfirmation() method. To find the
+	 * appropriate interpreter this method goes through the available
+	 * interpreters to find one that can handle the asset type of the request.
 	 * </p>
 	 *
 	 * @param request the social request being confirmed

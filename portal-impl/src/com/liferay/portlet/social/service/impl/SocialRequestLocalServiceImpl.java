@@ -28,8 +28,8 @@ import com.liferay.portlet.social.service.base.SocialRequestLocalServiceBaseImpl
 import java.util.List;
 
 /**
- * The social request local service to handle social requests (e.g. friend
- * requests).
+ * The social request local service responsible for handling social requests
+ * (e.g. friend requests).
  *
  * @author Brian Wing Shun Chan
  */
@@ -39,9 +39,11 @@ public class SocialRequestLocalServiceImpl
 	/**
 	 * Adds a social request to the database.
 	 *
+	 * <p>
 	 * In order to add a social request, both the requesting user and the
 	 * receiving user must be from the same company and neither of them can be
 	 * the default user.
+	 * </p>
 	 *
 	 * @param  userId the primary key of the requesting user
 	 * @param  groupId the primary key of the group
@@ -49,11 +51,13 @@ public class SocialRequestLocalServiceImpl
 	 *         request
 	 * @param  classPK the primary key of the asset that is the subject of the
 	 *         request
-	 * @param  type the type of the request
+	 * @param  type the request's type
 	 * @param  extraData the extra data regarding the request
 	 * @param  receiverUserId the primary key of the user receiving the request
 	 * @return the social request
-	 * @throws PortalException if the user violated user restrictions
+	 * @throws PortalException if the users could not be found, if the users
+	 *         were not from the same company, or if either of the users was
+	 *         the default user
 	 * @throws SystemException if a system exception occurred
 	 */
 	public SocialRequest addRequest(
@@ -103,9 +107,9 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	/**
-	 * Removes all the social requests for the given receiver user.
+	 * Removes all the social requests for the receiving user.
 	 *
-	 * @param  receiverUserId the primary key of the receiver user
+	 * @param  receiverUserId the primary key of the receiving user
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteReceiverUserRequests(long receiverUserId)
@@ -147,7 +151,7 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	/**
-	 * Removes all the social requests for the given requesting user.
+	 * Removes all the social requests for the requesting user.
 	 *
 	 * @param  userId the primary key of the requesting user
 	 * @throws SystemException if a system exception occurred
@@ -162,8 +166,7 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the social requests for the receiver user
-	 * identified by receiverUserId.
+	 * Returns a range of all the social requests for the receiving user.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -175,10 +178,10 @@ public class SocialRequestLocalServiceImpl
 	 * full result set.
 	 * </p>
 	 *
-	 * @param  receiverUserId the primary key of the receiver user
+	 * @param  receiverUserId the primary key of the receiving user
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of social requests
+	 * @return the range of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialRequest> getReceiverUserRequests(
@@ -191,7 +194,7 @@ public class SocialRequestLocalServiceImpl
 
 	/**
 	 * Returns a range of all the social requests with the given status for the
-	 * receiver user identified by receiverUserId.
+	 * receiving user.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -203,11 +206,11 @@ public class SocialRequestLocalServiceImpl
 	 * full result set.
 	 * </p>
 	 *
-	 * @param  receiverUserId the primary key of the receiver user
-	 * @param  status the status of the social request
+	 * @param  receiverUserId the primary key of the receiving user
+	 * @param  status the social request's status
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of social requests
+	 * @return the range of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialRequest> getReceiverUserRequests(
@@ -219,11 +222,10 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of social requests for the receiver user identified
-	 * by receiverUserId.
+	 * Returns the number of social requests for the receiving user.
 	 *
-	 * @param  receiverUserId the primary key of the receiver user
-	 * @return the number of social requests
+	 * @param  receiverUserId the primary key of the receiving user
+	 * @return the number of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getReceiverUserRequestsCount(long receiverUserId)
@@ -234,11 +236,11 @@ public class SocialRequestLocalServiceImpl
 
 	/**
 	 * Returns the number of social requests with the given status for the
-	 * receiver user identified by receiverUserId.
+	 * receiving user.
 	 *
-	 * @param  receiverUserId the primary key of the receiver user
-	 * @param  status the status of the social request
-	 * @return the number of social requests
+	 * @param  receiverUserId the primary key of the receiving user
+	 * @param  status the social request's status
+	 * @return the number of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getReceiverUserRequestsCount(long receiverUserId, int status)
@@ -248,8 +250,7 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the social requests for the requesting user
-	 * identified by userId.
+	 * Returns a range of all the social requests for the requesting user.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -264,7 +265,7 @@ public class SocialRequestLocalServiceImpl
 	 * @param  userId the primary key of the requesting user
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of social requests
+	 * @return the range of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialRequest> getUserRequests(long userId, int start, int end)
@@ -275,7 +276,7 @@ public class SocialRequestLocalServiceImpl
 
 	/**
 	 * Returns a range of all the social requests with the given status for the
-	 * requesting user identified by userId.
+	 * requesting user.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -288,10 +289,10 @@ public class SocialRequestLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  userId the primary key of the requesting user
-	 * @param  status the status of the social request
+	 * @param  status the social request's status
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of social requests
+	 * @return the range of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialRequest> getUserRequests(
@@ -302,11 +303,10 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of social requests for the requesting user identified
-	 * by userId.
+	 * Returns the number of social requests for the requesting user.
 	 *
-	 * @param  userId the primary key of the requestign user
-	 * @return the number of social requests
+	 * @param  userId the primary key of the requesting user
+	 * @return the number of matching social requests
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getUserRequestsCount(long userId) throws SystemException {
@@ -315,11 +315,11 @@ public class SocialRequestLocalServiceImpl
 
 	/**
 	 * Returns the number of social requests with the given status for the
-	 * requesting user identified by userId.
+	 * requesting user.
 	 *
-	 * @param  userId the primary key of the requetsing user
-	 * @param  status the status of the social request
-	 * @return the number of social request
+	 * @param  userId the primary key of the requesting user
+	 * @param  status the social request's status
+	 * @return the number of matching social request
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getUserRequestsCount(long userId, int status)
@@ -329,16 +329,16 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	/**
-	 * Returns <code>true</code> if one or more social requests identified by
-	 * the parameters exist in the database.
+	 * Returns <code>true</code> if a matching social requests exists in the
+	 * database.
 	 *
 	 * @param  userId the primary key of the requesting user
 	 * @param  className the class name of the asset that is the subject of the
 	 *         request
 	 * @param  classPK the primary key of the asset that is the subject of the
 	 *         request
-	 * @param  type the type of the request
-	 * @param  status the status of the social request
+	 * @param  type the request's type
+	 * @param  status the social request's status
 	 * @return <code>true</code> if the request exists; <code>false</code>
 	 *         otherwise
 	 * @throws SystemException if a system exception occurred
@@ -360,17 +360,17 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	/**
-	 * Returns <code>true</code> if the social request identified by the
-	 * parameters exists in the database.
+	 * Returns <code>true</code> if a matching social request exists in the
+	 * database.
 	 *
 	 * @param  userId the primary key of the requesting user
 	 * @param  className the class name of the asset that is the subject of the
 	 *         request
 	 * @param  classPK the primary key of the asset that is the subject of the
 	 *         request
-	 * @param  type the type of the request
-	 * @param  receiverUserId the primary key of the receiver user
-	 * @param  status the status of the social request
+	 * @param  type the request's type
+	 * @param  receiverUserId the primary key of the receiving user
+	 * @param  status the social request's status
 	 * @return <code>true</code> if the social request exists;
 	 *         <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
@@ -395,12 +395,20 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	/**
-	 * Updates the status of the social request identified by its primary key.
+	 * Updates the social request replacing its status.
 	 *
-	 * If the status of the social request changes to
-	 * <code>STATUS_CONFIRM</code>, processConfirmation() is called in
-	 * SocialRequestInterpreterLocalService. If the status changes to
-	 * <code>STATUS_IGNORE</code>, processRejection() is called instead.
+	 * <p>
+	 * If the status is updated to {@link
+	 * com.liferay.portlet.social.model.SocialRequestConstants#STATUS_CONFIRM}
+	 * then {@link
+	 * com.liferay.portlet.social.service.SocialRequestInterpreterLocalService#processConfirmation(
+	 * SocialRequest, ThemeDisplay)} is called. If the status is updated to
+	 * {@link
+	 * com.liferay.portlet.social.model.SocialRequestConstants#STATUS_IGNORE}
+	 * then {@link
+	 * com.liferay.portlet.social.service.SocialRequestInterpreterLocalService#processRejection(
+	 * SocialRequest, ThemeDisplay)} is called.
+	 * </p>
 	 *
 	 * @param  requestId the primary key of the social request
 	 * @param  status the new status

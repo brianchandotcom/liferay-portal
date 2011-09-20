@@ -1071,13 +1071,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(uuid);
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -1507,13 +1501,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(groupId);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -1743,13 +1731,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(groupId);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -2027,13 +2009,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(companyId);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -2331,13 +2307,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(userId);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -2650,13 +2620,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -2954,13 +2918,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -3427,13 +3385,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -3692,13 +3644,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -3996,13 +3942,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -4246,13 +4186,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -4571,13 +4505,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -4910,13 +4838,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -5249,13 +5171,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -5528,13 +5444,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(CalendarUtil.getTimestamp(displayDate));
 		}
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -5853,13 +5763,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -6117,13 +6021,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -6456,13 +6354,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -6735,13 +6627,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -7097,13 +6983,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -7391,13 +7271,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		qPos.add(status);
 
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(blogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
+		qPos.add(blogsEntry.getDisplayDate());
 
 		List<BlogsEntry> list = q.list();
 
@@ -9287,34 +9161,19 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		StringBundler query, OrderByComparator orderByComparator,
 		boolean previous) {
 
+		query.append(WHERE_AND);
+		query.append(_ORDER_BY_ENTITY_ALIAS);
+		query.append(_COLUMN_DISPLAY_DATE);
+
+		if (previous) {
+			query.append(WHERE_LESSER_THAN);
+		}
+		else {
+			query.append(WHERE_GREATER_THAN);
+		}
+
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
 
 			query.append(ORDER_BY_CLAUSE);
 
@@ -9349,40 +9208,25 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	private void _appendNextPrev2(
 		StringBundler query, OrderByComparator orderByComparator,
 		boolean previous) {
+
+		query.append(WHERE_AND);
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_ORDER_BY_ENTITY_ALIAS);
+		}
+		else {
+			query.append(_ORDER_BY_ENTITY_TABLE);
+		}
+		query.append(_COLUMN_DISPLAY_DATE);
+
+		if (previous) {
+			query.append(WHERE_LESSER_THAN);
+		}
+		else {
+			query.append(WHERE_GREATER_THAN);
+		}
+
 		if (orderByComparator != null) {
 			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			if (orderByFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
 
 			query.append(ORDER_BY_CLAUSE);
 
@@ -9463,6 +9307,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	protected SocialActivityPersistence socialActivityPersistence;
 	@BeanReference(type = SocialEquityLogPersistence.class)
 	protected SocialEquityLogPersistence socialEquityLogPersistence;
+	private static final String _COLUMN_DISPLAY_DATE = "displayDate";
 	private static final String _SQL_SELECT_BLOGSENTRY = "SELECT blogsEntry FROM BlogsEntry blogsEntry";
 	private static final String _SQL_SELECT_BLOGSENTRY_WHERE = "SELECT blogsEntry FROM BlogsEntry blogsEntry WHERE ";
 	private static final String _SQL_COUNT_BLOGSENTRY = "SELECT COUNT(blogsEntry) FROM BlogsEntry blogsEntry";

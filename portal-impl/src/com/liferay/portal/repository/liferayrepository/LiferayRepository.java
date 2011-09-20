@@ -362,12 +362,36 @@ public class LiferayRepository
 		return toFileEntriesAndFolders(dlFoldersAndFileEntriesAndFileShortcuts);
 	}
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		List<Object> dlFoldersAndFileEntriesAndFileShortcuts =
+			dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
+				getGroupId(), toFolderId(folderId), status, mimeTypes,
+				includeMountFolders, start, end, obc);
+
+		return toFileEntriesAndFolders(dlFoldersAndFileEntriesAndFileShortcuts);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, boolean includeMountFolders)
 		throws SystemException {
 
 		return dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(
 			getGroupId(), toFolderId(folderId), status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+		throws SystemException {
+
+		return dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(
+			getGroupId(), toFolderId(folderId), status, mimeTypes,
+			includeMountFolders);
 	}
 
 	public int getFoldersCount(long parentFolderId) throws SystemException {

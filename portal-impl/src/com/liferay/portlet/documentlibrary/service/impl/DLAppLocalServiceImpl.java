@@ -1013,10 +1013,21 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
+		return getFoldersAndFileEntriesAndFileShortcuts(
+			repositoryId, folderId, status, null, includeMountFolders, start,
+			end, obc);
+	}
+
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long repositoryId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		return localRepository.getFoldersAndFileEntriesAndFileShortcuts(
-			folderId, status, includeMountFolders, start, end, obc);
+			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
 	}
 
 	/**
@@ -1039,10 +1050,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			boolean includeMountFolders)
 		throws PortalException, SystemException {
 
+		return getFoldersAndFileEntriesAndFileShortcutsCount(
+			repositoryId, folderId, status, null, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long repositoryId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		return localRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
-			folderId, status, includeMountFolders);
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	/**

@@ -56,6 +56,10 @@ public class AudioProcessor extends DLPreviewableProcessor {
 		_instance._generateAudio(fileVersion);
 	}
 
+	public static Set<String> getAudioMimeTypes() {
+		return _audioMimeTypes;
+	}
+
 	public static InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 

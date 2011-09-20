@@ -52,6 +52,10 @@ public class ImageProcessor implements DLProcessor {
 		_instance._generateImages(fileVersion);
 	}
 
+	public static Set<String> getImageMimeTypes() {
+		return _imageMimeTypes;
+	}
+
 	public static boolean hasImages(FileVersion fileVersion) {
 		if (_hasImages(fileVersion.getSmallImageId()) &&
 			_hasImages(fileVersion.getLargeImageId())) {

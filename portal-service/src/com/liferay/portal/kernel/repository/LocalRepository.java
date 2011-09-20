@@ -99,8 +99,19 @@ public interface LocalRepository {
 			int end, OrderByComparator obc)
 		throws SystemException;
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
+		throws SystemException;
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, boolean includeMountFolders)
+		throws SystemException;
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
 		throws SystemException;
 
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)

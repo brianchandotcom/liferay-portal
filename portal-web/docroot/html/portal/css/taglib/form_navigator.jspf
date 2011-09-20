@@ -20,7 +20,9 @@
 	float: right;
 	margin: 0 0 0 15px;
 	padding: 10px;
+	position: relative;
 	width: 30%;
+	z-index: 1;
 }
 
 .taglib-form-navigator .form-navigator h3 {
@@ -111,7 +113,6 @@
 }
 
 .taglib-form-navigator .form-section {
-	display: table;
 	float: left;
 	width: 63%;
 }

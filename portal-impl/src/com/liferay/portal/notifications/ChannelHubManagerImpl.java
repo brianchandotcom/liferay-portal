@@ -36,6 +36,24 @@ import java.util.concurrent.ConcurrentMap;
 public class ChannelHubManagerImpl implements ChannelHubManager {
 
 	public void confirmDelivery(
+			long companyId, long userId,
+			Collection<String> notificationEventUuids)
+		throws ChannelException {
+
+		confirmDelivery(companyId, userId, notificationEventUuids, false);
+	}
+
+	public void confirmDelivery(
+			long companyId, long userId,
+			Collection<String> notificationEventUuids, boolean archive)
+		throws ChannelException {
+
+		ChannelHub channelHub = getChannelHub(companyId);
+
+		channelHub.confirmDelivery(userId, notificationEventUuids, archive);
+	}
+
+	public void confirmDelivery(
 			long companyId, long userId, String notificationEventUuid)
 		throws ChannelException {
 

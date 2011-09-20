@@ -23,6 +23,16 @@ import java.util.List;
 public interface ChannelHubManager {
 
 	public void confirmDelivery(
+			long companyId, long userId,
+			Collection<String> notificationEventUuids)
+		throws ChannelException;
+
+	public void confirmDelivery(
+			long companyId, long userId,
+			Collection<String> notificationEventUuids, boolean archive)
+		throws ChannelException;
+
+	public void confirmDelivery(
 			long companyId, long userId, String notificationEventUuid)
 		throws ChannelException;
 

@@ -22,22 +22,70 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
 
-<aui:form action="<%= configurationURL %>" method="post" name="fm">
+<aui:form action="<%= configurationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="preferences--mimeTypes--" type="hidden" />
 	<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
 
 	<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
 
 	<liferay-ui:panel-container extended="<%= true %>" id="imageGalleryDisplaySettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGalleryDisplayDisplay" persistState="<%= true %>" title="display-settings">
-			<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= showActions %>" />
+			<aui:fieldset>
+				<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= showActions %>" />
 
-			<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= showFolderMenu %>" />
+				<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= showFolderMenu %>" />
 
-			<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= showTabs %>" />
+				<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= showTabs %>" />
 
-			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
+				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
+
+				<aui:field-wrapper label="show-media-type">
+
+					<%
+					Set availableMimeTypes = SetUtil.fromList(allMimeTypes);
+
+					// Left list
+
+					List leftList = new ArrayList();
+
+					for (int i = 0; i < mimeTypes.length; i++) {
+						String mimeType = mimeTypes[i];
+
+						leftList.add(new KeyValuePair(mimeType, LanguageUtil.get(pageContext, mimeType)));
+					}
+
+					// Right list
+
+					List rightList = new ArrayList();
+
+					Arrays.sort(mimeTypes);
+
+					Iterator itr = availableMimeTypes.iterator();
+
+					while (itr.hasNext()) {
+						String mimeType = (String)itr.next();
+
+						if (Arrays.binarySearch(mimeTypes, mimeType) < 0) {
+							rightList.add(new KeyValuePair(mimeType, LanguageUtil.get(pageContext, mimeType)));
+						}
+					}
+
+					rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+					%>
+
+					<liferay-ui:input-move-boxes
+						leftTitle="current"
+						rightTitle="available"
+						leftBoxName="currentMimeTypes"
+						rightBoxName="availableMimeTypes"
+						leftReorder="true"
+						leftList="<%= leftList %>"
+						rightList="<%= rightList %>"
+					/>
+				</aui:field-wrapper>
+			</aui:fieldset>
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGalleryDisplayFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
@@ -78,6 +126,17 @@ String redirect = ParamUtil.getString(request, "redirect");
 		nameEl.href = "";
 		nameEl.innerHTML = "";
 	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveConfiguration',
+		function() {
+			document.<portlet:namespace />fm.<portlet:namespace />mimeTypes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMimeTypes);
+
+			submitForm(document.<portlet:namespace />fm);
+		},
+		['liferay-util-list-fields']
+	);
 
 	function <%= PortalUtil.getPortletNamespace(portletResource) %>selectFolder(rootFolderId, rootFolderName) {
 		document.<portlet:namespace />fm.<portlet:namespace />rootFolderId.value = rootFolderId;

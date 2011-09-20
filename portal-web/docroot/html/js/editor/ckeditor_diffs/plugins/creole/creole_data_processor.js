@@ -13,6 +13,8 @@
 
 	var STR_BLANK = '';
 
+	var STR_LIST_ITEM_ESCAPE_CHARACTERS = '\\\\';
+
 	var STR_EQUALS = '=';
 
 	var STR_PIPE = '|';
@@ -116,7 +118,7 @@
 					if (parentTagName) {
 						parentTagName = parentTagName.toLowerCase();
 
-						allowNewLine = (parentTagName == TAG_PARAGRAPH);
+						allowNewLine = (parentTagName == TAG_PARAGRAPH) || (parentTagName == TAG_LIST_ITEM);
 					}
 				}
 			}
@@ -190,9 +192,7 @@
 				listTagsIn.push(NEW_LINE);
 			}
 			else {
-				if (instance._allowNewLine(element)) {
-					listTagsIn.push(NEW_LINE);
-				}
+				instance._handleNewLine(element, listTagsIn, listTagsOut);
 			}
 		},
 
@@ -382,6 +382,19 @@
 			}
 
 			listTagsIn.push(instance._listsStack.join(STR_BLANK));
+		},
+
+		_handleNewLine: function(element, listTagsIn, listTagsOut) {
+			var instance = this;
+
+			if (instance._allowNewLine(element)) {
+				if (instance._isParentNode(element, TAG_LIST_ITEM) && element.nextSibling) {
+					listTagsIn.push(STR_LIST_ITEM_ESCAPE_CHARACTERS);
+				}
+				else {
+					listTagsIn.push(NEW_LINE);
+				}
+			}
 		},
 
 		_handleOrderedList: function(element, listTagsIn, listTagsOut) {

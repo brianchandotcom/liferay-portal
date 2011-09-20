@@ -61,8 +61,16 @@ public class ModelHintsUtil {
 		return getModelHints().getValidators(model, field);
 	}
 
+	public static boolean isCustomValidator(String validatorName) {
+		return getModelHints().isCustomValidator(validatorName);
+	}
+
 	public static boolean isLocalized(String model, String field) {
 		return getModelHints().isLocalized(model, field);
+	}
+
+	public static String processCustomValidatorName(String validatorName) {
+		return getModelHints().processCustomValidatorName(validatorName);
 	}
 
 	public static void read(ClassLoader classLoader, String source)

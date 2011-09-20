@@ -16,7 +16,9 @@ details.
 
 <html>
 	<body>
-		<h2>The Liferay Public API Documentation.</h2>
+		<p>The Liferay public API documentation describes the packages and classes used by portlet and plugin developers and provides a general overview of the API, best practices for using the API, and information about Liferay's ongoing Javadoc initiative; select the <strong>Description</strong> link below to continue reading this overview.</p>
+
+		<h2>The Liferay Public API Documentation</h2>
 
 		<p>This documentation includes only those classes that should be used by portlet and plugin developers. These include:</p>
 
@@ -26,13 +28,54 @@ details.
 			<li>The portal kernel and utilities</li>
 		</ul>
 
-		<link href="com/liferay/portal/service/package.html">
+		<p>Let's condsider each of these and look at examples of each.</p>
 
-		<h2>Best Practices</h2>
+		<h3>Portal Models and Services</h3>
+
+		<p>The portal models (e.g. User, UserGroup, Role, ResourcePermission, ... etc.) are used throughout Liferay portal and are leveraged by portlets and plugins via services.</p>
+
+		<p>Example - Get a user model object from the local service:</p>
+
+		<pre><code>import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.model.User;
+...
+User test_user = UserLocalServiceUtil.getUserByEmailAddress(&quot;test@liferay.com&quot;);</code></pre>
+
+		<h3>Built-in Portlet Models and Services</h3>
+
+		<p>A host of powerful portlets are provided with Liferay. They consume portal services and have their own models and services.</p>
+
+		<p>Example - Subscribe to a Wiki page:</p>
+
+		<pre><code>import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
+...
+long nodeId = ParamUtil.getLong(actionRequest, &quot;nodeId&quot;);
+String title = ParamUtil.getString(actionRequest, &quot;title&quot;);
+WikiPageServiceUtil.subscribePage(nodeId, title);</code></pre>
+
+		<h3>The Portal Kernel and Utilities</h3>
+
+		<p>The portal kernel acts as a bridge connecting the models and services of the portal and portlets with the application server. The kernel leverages services supporting EJB, dependency injection (Spring), a persistence framework (Hibernate), and business logic and workflow (JBPM). It provides adapters to popular languages such as PHP, Python, and Ruby. Lastly, the Liferay comes with utilities used by Liferay portal, portlets, and plugins.</p>
+
+		<p>Example - Retrieve the list of available locales from a localizations XML fragment:</p>
+
+		<pre><code>import com.liferay.portal.kernel.util.LocalizationUtil;
+...
+String xml;
+String[] locales = LocalizationUtil.getAvailableLocales(xml);</code></pre>
+
+		<h3>Find out more ...</h3>
+
+		<p>Continue reading for further description of ...</p>
+
+		<ul>
+		<li><strong>Best Practices</strong> - Includes explanation of key software paradigms used in Liferay and best practices for using the API.</li>
+		<li><strong>Liferay Javadoc Initiative</strong> - Describes the Javadoc process underway at Liferay and provides links to packages containing documented classes that may be significant to your portlet and plugin development.</li>
+		</ul>
+
+		<h4>Best Practices Interfacing with the Liferay Kernel and Built-in Portlets</h4>
 
 		<p>The hot-pluggable nature of Liferay portlets and plugins imposes certain restrictions on the parts of the Liferay core they can access. These limitations allow for the least disruptive upgrades to both the core and plugins while also allowing the greatest flexibility in modifying core Liferay features without requiring a portal restart.</p>
-
-		<h3>Interfacing with the Liferay Kernel and Built-in Portlets</h3>
 
 		<p>Most classes in Liferay follow a simple, but extremely important hierarchy. The public methods are defined in an interface, such as &quot;Portal&quot;. This interface is then implemented in a class of the same name but with the suffix &quot;Impl&quot; appended (&quot;PortalImpl&quot;). A single instance of this implementation class is then stored inside a static wrapper class with the suffix &quot;Util&quot; (&quot;PortalUtil&quot;).</p>
 
@@ -44,27 +87,11 @@ details.
 
 		<p>One other reason for the separation between interface, implementation, and utility is that Liferay makes extensive use of the Spring framework to the support dynamic injection and replacement of implementation classes in utilities. This means that it is possible in Liferay to completely replace many built-in classes with your own implementations at runtime. By placing core classes within a static utility wrapper, you can dynamically modify Liferay's behavior without the portal or other plugins needing to do anything.</p>
 
-		<h4>Examples</h4>
-
-		<p>Get a user model object from the local service:</p>
-
-		<pre><code>import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.model.User;
-...
-User test_user = UserLocalServiceUtil.getUserByEmailAddress("test@liferay.com");</code></pre>
-
-		<p>Retrieve the list of available locales from a localizations XML fragment:</p>
-
-		<pre><code>import com.liferay.portal.kernel.util.LocalizationUtil;
-...
-String xml;
-String[] locales = LocalizationUtil.getAvailableLocales(xml);</code></pre>
-
-		<h2 id="liferay-javadoc-initiative">Liferay Javadoc Initiative</h2>
+		<h4>Liferay Javadoc Initiative</h4>
 
 		<p>Liferay has started the process of writing high quality Javadoc that follows the <a href="http://www.liferay.com/community/wiki/-/wiki/Main/Javadoc+Guidelines" title="Liferay Javadoc Guidelines">Liferay Javadoc Guidelines</a> to ensure that documentation is clear, comprehensive, and helpful to you.</p>
 
-		<p>Not all classes have been documented, but the number of classes is growing. Some of the classes in the following packages come complete with Javadoc:</p>
+		<p>Not all classes have been documented, but the number of classes is growing. Some of the most significant services and classes documented that you may need are the following packages:</p>
 
 		<ul>
 			<li><a href="com/liferay/portal/kernel/bean/package-summary.html" title="com.liferay.portal.kernel.bean">com.liferay.portal.kernel.bean</a></li>

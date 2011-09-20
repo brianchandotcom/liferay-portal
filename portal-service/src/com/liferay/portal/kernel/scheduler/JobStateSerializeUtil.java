@@ -77,8 +77,15 @@ public class JobStateSerializeUtil {
 		Map<String, Date> triggerDates = (Map<String, Date>)jobStateMap.get(
 			_TRIGGER_DATES_FIELD);
 
-		JobState jobState = new JobState(
-			triggerState, exceptionsMaxSize, triggerDates);
+		JobState jobState =	null;
+
+		if (triggerDates != null) {
+			jobState = new JobState(
+				triggerState, exceptionsMaxSize, triggerDates);
+		}
+		else {
+			jobState = new JobState(triggerState, exceptionsMaxSize);
+		}
 
 		ArrayList<Object[]> exceptionsList =
 			(ArrayList<Object[]>)jobStateMap.get(_EXCEPTIONS_FIELD);
@@ -96,17 +103,21 @@ public class JobStateSerializeUtil {
 	private static Map<String, Object> _serialize_1(JobState jobState) {
 		Map<String, Object> jobStateMap = new HashMap<String, Object>();
 
-		ArrayList<Object[]> exceptionsList = new ArrayList<Object[]>();
+		ArrayList<Object[]> exceptionsList = null;
 
 		ObjectValuePair<Exception, Date>[] exceptions =
 			jobState.getExceptions();
 
-		for (ObjectValuePair<Exception, Date> exception : exceptions) {
-			exceptionsList.add(
-				new Object[] {exception.getKey(), exception.getValue()});
-		}
+		if (exceptions != null) {
+			exceptionsList = new ArrayList<Object[]>();
 
-		exceptionsList.trimToSize();
+			for (ObjectValuePair<Exception, Date> exception : exceptions) {
+				exceptionsList.add(
+					new Object[] {exception.getKey(), exception.getValue()});
+			}
+
+			exceptionsList.trimToSize();
+		}
 
 		jobStateMap.put(_EXCEPTIONS_FIELD, exceptionsList);
 

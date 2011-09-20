@@ -270,26 +270,24 @@ AUI().add(
 								if (type === 'checkbox') {
 									elementName = label;
 
-									config.options = {'true': Liferay.Language.get('true')};
-
-									config.inputFormatter = function(value) {
-										if (value.length > 0) {
-											return 'true';
-										}
-										else {
-											return 'false';
-										}
+									config.options = {
+										'true': Liferay.Language.get('true')
 									};
 
-									item.formatter = function(o) {
-										var data = o.record.get('data');
+									config.inputFormatter = function(value) {
+										return String(value.length > 0);
+									};
+
+									item.formatter = function(obj) {
+										var data = obj.record.get('data');
+
 										var value = data[item.name];
 
-										if (value === STR_EMPTY) {
-											return value;
+										if (value !== STR_EMPTY) {
+											value = Liferay.Language.get(value);
 										}
 
-										return Liferay.Language.get(value);
+										return value;
 									};
 								}
 								else if (type === 'ddm-date') {
@@ -297,17 +295,18 @@ AUI().add(
 										return A.DataType.Date.parse(value).getTime();
 									};
 
-									item.formatter = function(o) {
-										var data = o.record.get('data');
+									item.formatter = function(obj) {
+										var data = obj.record.get('data');
+
 										var value = data[item.name];
 
-										if (value === STR_EMPTY) {
-											return value;
+										if (value !== STR_EMPTY) {
+											value = parseInt(value, 10);
+
+											value = A.DataType.Date.format(new Date(value));
 										}
 
-										value = parseInt(value, 10);
-
-										return A.DataType.Date.format(new Date(value));
+										return value;
 									};
 								}
 								else if ((type === 'radio') || (type === 'select')) {

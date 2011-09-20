@@ -1470,8 +1470,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		if (newGroupFriendlyURL.equals(oldGroupFriendlyURL)) {
 			feed.setTargetLayoutFriendlyUrl(
 				StringUtil.replaceFirst(
-					feed.getTargetLayoutFriendlyUrl(), StringPool.SLASH +
-						newGroupFriendlyURL + StringPool.SLASH,
+					feed.getTargetLayoutFriendlyUrl(),
+					StringPool.SLASH + newGroupFriendlyURL + StringPool.SLASH,
 					StringPool.SLASH + "@data_handler_group_friendly_url@" +
 						StringPool.SLASH));
 		}

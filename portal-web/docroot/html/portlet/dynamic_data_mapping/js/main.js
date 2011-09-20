@@ -164,9 +164,7 @@ AUI().add(
 					initializer: function() {
 						var instance = this;
 
-						var translationManager = instance.translationManager = new Liferay.TranslationManager(
-							instance.get('translationManager')	
-						);
+						var translationManager = instance.translationManager = new Liferay.TranslationManager(instance.get('translationManager'));
 
 						instance.after(
 							'render',

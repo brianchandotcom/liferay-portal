@@ -57,15 +57,20 @@
 
 					var model = DDMDateField.superclass.getPropertyModel.apply(instance, arguments);
 
-					A.Array.each(model, function(item, index, collection) {
-						if (item.attributeName === 'predefinedValue') {
-							collection[index] = {
-								attributeName: item.attributeName,
-								editor: new A.DateCellEditor(),
-								name: Liferay.Language.get('predefined-value')
-							};
+					A.Array.each(
+						model,
+						function(item, index, collection) {
+							var attributeName = item.attributeName;
+
+							if (attributeName === 'predefinedValue') {
+								collection[index] = {
+									attributeName: attributeName,
+									editor: new A.DateCellEditor(),
+									name: Liferay.Language.get('predefined-value')
+								};
+							}
 						}
-					});
+					);
 
 					return model;
 				},

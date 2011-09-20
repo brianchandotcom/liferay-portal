@@ -73,7 +73,7 @@ if (Validator.isNotNull(portletResourceNamespace)){
 	A.Array.each(
 		availableFields,
 		function(item, index, collection) {
-			availableFields[index].iconClass = Liferay.FormBuilder.DEFAULT_ICON_CLASS;
+			item.iconClass = Liferay.FormBuilder.DEFAULT_ICON_CLASS;
 		}
 	);
 

@@ -17,6 +17,7 @@ package com.liferay.taglib.aui;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.taglib.aui.base.BaseValidatorTagImpl;
 import com.liferay.util.PwdGenerator;
 
@@ -67,7 +68,13 @@ public class ValidatorTagImpl
 		InputTag inputTag = (InputTag)findAncestorWithClass(
 			this, InputTag.class);
 
-		String name = processCustom(getName());
+		String name = getName();
+
+		_custom = ModelHintsUtil.isCustomValidator(name);
+
+		if (_custom) {
+			name = ModelHintsUtil.processCustomValidatorName(name);
+		}
 
 		ValidatorTag validatorTag = new ValidatorTagImpl(
 			name, getErrorMessage(), _body, _custom);

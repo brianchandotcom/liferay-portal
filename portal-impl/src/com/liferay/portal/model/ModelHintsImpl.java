@@ -172,6 +172,14 @@ public class ModelHintsImpl implements ModelHints {
 		}
 	}
 
+	public boolean isCustomValidator(String validatorName) {
+		if (validatorName.equals("custom")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isLocalized(String model, String field) {
 		Map<String, Object> fields = (Map<String, Object>)_modelFields.get(
 			model);
@@ -190,6 +198,12 @@ public class ModelHintsImpl implements ModelHints {
 				return false;
 			}
 		}
+	}
+
+	public String processCustomValidatorName(String validatorName) {
+		return validatorName.concat(
+			StringPool.UNDERLINE).concat(
+				PwdGenerator.getPassword(PwdGenerator.KEY3, 4));
 	}
 
 	public void read(ClassLoader classLoader, String source) throws Exception {
@@ -347,10 +361,12 @@ public class ModelHintsImpl implements ModelHints {
 						validator.attributeValue("error-message"));
 					String validatorValue = GetterUtil.getString(
 						validator.getText());
-					boolean isCustomValidator = isCustom(validatorName);
+					boolean isCustomValidator = isCustomValidator(
+						validatorName);
 
 					if (isCustomValidator) {
-						validatorName = processCustomName(validatorName);
+						validatorName = processCustomValidatorName(
+							validatorName);
 					}
 
 					Tuple fieldValidator = new Tuple(
@@ -404,20 +420,6 @@ public class ModelHintsImpl implements ModelHints {
 		else {
 			return value;
 		}
-	}
-
-	protected boolean isCustom(String validatorName) {
-		if (validatorName.equals("custom")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected String processCustomName(String validatorName) {
-		return validatorName.concat(
-			StringPool.UNDERLINE).concat(
-				PwdGenerator.getPassword(PwdGenerator.KEY3, 4));
 	}
 
 	private static final String _ELEMENTS_SUFFIX = "_ELEMENTS";

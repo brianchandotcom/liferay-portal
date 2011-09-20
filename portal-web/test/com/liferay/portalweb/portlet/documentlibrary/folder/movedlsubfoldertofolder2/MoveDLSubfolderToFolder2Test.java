@@ -154,33 +154,5 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
-		selenium.clickAt("xPath=(//span[@class='document-title'])[2]",
-			RuntimeVariables.replace("DL Folder2 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DL Subfolder Name")
-										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("DL Subfolder Name"),
-			selenium.getText("//span[@class='document-title']"));
 	}
 }

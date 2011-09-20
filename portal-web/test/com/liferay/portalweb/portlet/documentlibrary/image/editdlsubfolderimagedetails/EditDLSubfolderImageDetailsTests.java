@@ -33,7 +33,7 @@ public class EditDLSubfolderImageDetailsTests extends BaseTests {
 		testSuite.addTestSuite(AddDLSubfolderTest.class);
 		testSuite.addTestSuite(AddDLSubfolderImageTest.class);
 		testSuite.addTestSuite(EditDLSubfolderImageDetailsTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

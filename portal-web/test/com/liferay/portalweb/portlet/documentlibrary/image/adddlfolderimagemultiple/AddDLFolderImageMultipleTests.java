@@ -33,7 +33,7 @@ public class AddDLFolderImageMultipleTests extends BaseTests {
 		testSuite.addTestSuite(AddDLFolderImage1Test.class);
 		testSuite.addTestSuite(AddDLFolderImage2Test.class);
 		testSuite.addTestSuite(AddDLFolderImage3Test.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

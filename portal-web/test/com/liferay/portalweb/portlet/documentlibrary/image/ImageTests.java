@@ -16,10 +16,10 @@ package com.liferay.portalweb.portlet.documentlibrary.image;
 
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portlet.documentlibrary.image.adddlfolderimage.AddDLFolderImageTests;
-import com.liferay.portalweb.portlet.documentlibrary.image.adddlfolderimageimagenull.AddDLFolderImageImageNullTests;
+import com.liferay.portalweb.portlet.documentlibrary.image.adddlfolderimagefilenull.AddDLFolderImageFileNullTests;
 import com.liferay.portalweb.portlet.documentlibrary.image.adddlfolderimagemultiple.AddDLFolderImageMultipleTests;
-import com.liferay.portalweb.portlet.documentlibrary.image.adddlfolderimagenameduplicate.AddDLFolderImageNameDuplicateTests;
-import com.liferay.portalweb.portlet.documentlibrary.image.adddlfolderimagenamenull.AddDLFolderImageNameNullTests;
+import com.liferay.portalweb.portlet.documentlibrary.image.adddlfolderimagetitleduplicate.AddDLFolderImageTitleDuplicateTests;
+import com.liferay.portalweb.portlet.documentlibrary.image.adddlfolderimagetitlenull.AddDLFolderImageTitleNullTests;
 import com.liferay.portalweb.portlet.documentlibrary.image.adddlsubfolderimage.AddDLSubfolderImageTests;
 import com.liferay.portalweb.portlet.documentlibrary.image.deletedlfolderimageactions.DeleteDLFolderImageActionsTests;
 import com.liferay.portalweb.portlet.documentlibrary.image.deletedlsubfolderimageactions.DeleteDLSubfolderImageActionsTests;
@@ -41,10 +41,10 @@ public class ImageTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddDLFolderImageTests.suite());
-		testSuite.addTest(AddDLFolderImageImageNullTests.suite());
+		testSuite.addTest(AddDLFolderImageFileNullTests.suite());
 		testSuite.addTest(AddDLFolderImageMultipleTests.suite());
-		testSuite.addTest(AddDLFolderImageNameDuplicateTests.suite());
-		testSuite.addTest(AddDLFolderImageNameNullTests.suite());
+		testSuite.addTest(AddDLFolderImageTitleDuplicateTests.suite());
+		testSuite.addTest(AddDLFolderImageTitleNullTests.suite());
 		testSuite.addTest(AddDLSubfolderImageTests.suite());
 		testSuite.addTest(DeleteDLFolderImageActionsTests.suite());
 		testSuite.addTest(DeleteDLSubfolderImageActionsTests.suite());

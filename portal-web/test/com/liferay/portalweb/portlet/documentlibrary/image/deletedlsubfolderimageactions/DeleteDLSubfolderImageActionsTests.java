@@ -33,7 +33,7 @@ public class DeleteDLSubfolderImageActionsTests extends BaseTests {
 		testSuite.addTestSuite(AddDLSubfolderTest.class);
 		testSuite.addTestSuite(AddDLSubfolderImageTest.class);
 		testSuite.addTestSuite(DeleteDLSubfolderImageActionsTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

@@ -33,7 +33,7 @@ public class SearchDLFolderImageTests extends BaseTests {
 		testSuite.addTestSuite(AddDLFolderImageTest.class);
 		testSuite.addTestSuite(SearchDLFolderImageTest.class);
 		testSuite.addTestSuite(SearchDLFolderImageQuotesTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

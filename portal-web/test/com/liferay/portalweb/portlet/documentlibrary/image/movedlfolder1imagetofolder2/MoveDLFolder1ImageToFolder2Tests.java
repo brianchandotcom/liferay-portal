@@ -33,7 +33,8 @@ public class MoveDLFolder1ImageToFolder2Tests extends BaseTests {
 		testSuite.addTestSuite(AddDLFolder1ImageTest.class);
 		testSuite.addTestSuite(AddDLFolder2Test.class);
 		testSuite.addTestSuite(MoveDLFolder1ImageToFolder2Test.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(ViewMoveDLFolder1ImageToFolder2Test.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

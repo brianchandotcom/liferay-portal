@@ -32,7 +32,7 @@ public class AddDLSubfolderImageTests extends BaseTests {
 		testSuite.addTestSuite(AddDLFolderTest.class);
 		testSuite.addTestSuite(AddDLSubfolderTest.class);
 		testSuite.addTestSuite(AddDLSubfolderImageTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

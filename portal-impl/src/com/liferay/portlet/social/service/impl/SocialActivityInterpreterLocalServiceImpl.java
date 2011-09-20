@@ -33,11 +33,11 @@ import java.util.List;
  *
  * <p>
  * Activity interpreters use the language files to get text fragments based on
- * the activity's type and the type of asset the activity was done on.
- * Interpreters are created for a specific asset type and are only capable of
- * translating activities done on that particular asset. As an example, there
- * is an interpreter called BlogsActivityInterpreter. This class can only
- * translate activity records for blog entries.
+ * the activity's type and the type of asset on which the activity was done.
+ * Interpreters are created for specific asset types and are only capable of
+ * translating activities done on assets of those types. As an example, there
+ * is an interpreter BlogsActivityInterpreter that can only translate activity
+ * records for blog entries.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -57,7 +57,8 @@ public class SocialActivityInterpreterLocalServiceImpl
 	}
 
 	/**
-	 * Removes the interpreter from the list of available interpreters.
+	 * Removes the activity interpreter from the list of available
+	 * interpreters.
 	 *
 	 * @param activityInterpreter the activity interpreter
 	 */
@@ -70,8 +71,8 @@ public class SocialActivityInterpreterLocalServiceImpl
 	}
 
 	/**
-	 * Creates a human readable activity feed entry for the activity using one
-	 * of the available activity interpreters.
+	 * Creates a human readable activity feed entry for the activity using an
+	 * available compatible activity interpreter.
 	 *
 	 * <p>
 	 * This method finds the appropriate interpreter for the activity by going
@@ -83,7 +84,8 @@ public class SocialActivityInterpreterLocalServiceImpl
 	 * @param  themeDisplay the theme display needed by interpreters to create
 	 *         links and get localized text fragments
 	 * @return the activity feed that is a human readable form of the activity
-	 *         record
+	 *         record or <code>null</code> if a compatible interpreter is not
+	 *         found
 	 */
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ThemeDisplay themeDisplay) {

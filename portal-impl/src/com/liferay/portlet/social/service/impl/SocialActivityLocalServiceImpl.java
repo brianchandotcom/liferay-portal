@@ -34,15 +34,15 @@ import java.util.List;
  * and list social activities in groups and organizations.
  *
  * <p>
- * Social activities are identified by their types and the type of asset they
- * are done on. These activities records the exact time of the action as well
- * as further information needed to provide human readable activity feeds.
+ * Social activities are identified by their type and the type of asset they
+ * are done on. Each activity records the exact time of the action as well as
+ * human readable information needed for activity feeds.
  * </p>
  *
  * <p>
- * Most of the 'get' methods in this service order activities by their
- * execution times in descending order, so the most recent activities are the
- * first ones.
+ * Most of the <i>get-</i> methods in this service order activities in
+ * descending order by their execution times, so the most recent activities are
+ * listed first.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -51,24 +51,26 @@ public class SocialActivityLocalServiceImpl
 	extends SocialActivityLocalServiceBaseImpl {
 
 	/**
-	 * Records an activity in the database.
+	 * Records an activity with the given time in the database.
 	 *
 	 * <p>
-	 * This method records a social activity done on an asset identified by its
-	 * class name and classPK in the database. Addition information such as the
-	 * original message ID for a reply to a forum post is stored in extraData
-	 * in JSON format. For activities affecting another user a mirror activity
-	 * is generated that describes the action from the ther user's point of
-	 * view. The target user's ID is stored in recieverUserId.
+	 * This method records a social activity done on an asset, identified by
+	 * its class name and class primary key, in the database. Additional
+	 * information (such as the original message ID for a reply to a forum
+	 * post) is passed in via the <code>extraData</code> in JSON format. For
+	 * activities affecting another user, a mirror activity is generated that
+	 * describes the action from the user's point of view. The target user's ID
+	 * is passed in via the <code>receiverUserId</code>.
 	 * </p>
 	 *
 	 * <p>
 	 * Example for a mirrored activity:<br> When a user replies to a message
-	 * boards post, the reply action is stored in the database with a
-	 * receiverUserId set to the author of the original message. The extraData
-	 * parameter contains the ID of the original message in JSON format. A
-	 * mirror activity is generated where the userId and the receiverUserId is
-	 * swapped. This mirror activity basically describes a "replied to" event.
+	 * boards post, the reply action is stored in the database with the
+	 * <code>receiverUserId</code> being the ID of the author of the original
+	 * message. The <code>extraData</code> contains the ID of the original
+	 * message in JSON format. A mirror activity is generated with the values
+	 * of the <code>userId</code> and the <code>receiverUserId</code> swapped.
+	 * This mirror activity basically describes a "replied to" event.
 	 * </p>
 	 *
 	 * <p>
@@ -78,13 +80,14 @@ public class SocialActivityLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the acting user
 	 * @param  groupId the primary key of the group
-	 * @param  createDate the activity date
-	 * @param  className the class name of the target asset
+	 * @param  createDate the activity's date
+	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
-	 * @param  type the type of the activity
+	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
-	 * @param  receiverUserId the primary key of the receiver user
-	 * @return the social activity being stored
+	 * @param  receiverUserId the primary key of the receiving user
+	 * @return the social activity or <code>null</code> if an import is
+	 *         processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -155,24 +158,18 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Records an activity in the database.
-	 *
-	 * This method sets the current time as the time of the activity and tries
-	 * to make it unique.
-	 *
-	 * <p>
-	 * For the main functionality see {@link #addActivity(long, long, Date,
-	 * String, long, int, String, long)}
-	 * </p>
+	 * Records an activity in the database, using a time based on the current
+	 * time in an attempt to make the activity's time unique.
 	 *
 	 * @param  userId the primary key of the acting user
 	 * @param  groupId the primary key of the group
-	 * @param  className the class name of the target asset
+	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
-	 * @param  type the type of the activity
+	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
-	 * @param  receiverUserId the primary key of the receiver user
-	 * @return the social activity being stored
+	 * @param  receiverUserId the primary key of the receiving user
+	 * @return the social activity or <code>null</code> if an import is
+	 *         processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -205,13 +202,8 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Records an activity in the database, but only if there isn't one with
-	 * the same parameters.
-	 *
-	 * <p>
-	 * This method checks if there is already an activity with the same
-	 * parameters in the database.
-	 * </p>
+	 * Records an activity in the database, but only if there isn't already an
+	 * activity with the same parameters.
 	 *
 	 * <p>
 	 * For the main functionality see {@link #addActivity(long, long, Date,
@@ -220,13 +212,15 @@ public class SocialActivityLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the acting user
 	 * @param  groupId the primary key of the group
-	 * @param  createDate the activity date
-	 * @param  className the class name of the target asset
+	 * @param  createDate the activity's date
+	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
-	 * @param  type the type of the activity
+	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
-	 * @param  receiverUserId the primary key of the receiver user
-	 * @return the social activity being stored
+	 * @param  receiverUserId the primary key of the receiving user
+	 * @return the social stored activity, or the existing activity if it
+	 *         matches the parameters, or <code>null</code> if an import is
+	 *         processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -252,13 +246,8 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Records an activity in the database, but only if there isn't one with
-	 * the same parameters.
-	 *
-	 * <p>
-	 * This method sets the activity time to the current time and checks if
-	 * there is already an activity with the same parameters in the database.
-	 * </p>
+	 * Records an activity with the current time in the database, but only if
+	 * there isn't one with the same parameters.
 	 *
 	 * <p>
 	 * For the main functionality see {@link #addActivity(long, long, Date,
@@ -267,12 +256,13 @@ public class SocialActivityLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the acting user
 	 * @param  groupId the primary key of the group
-	 * @param  className the class name of the target asset
+	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
-	 * @param  type the type of the activity
+	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
-	 * @param  receiverUserId the primary key of the receiver user
-	 * @return the social activity being stored
+	 * @param  receiverUserId the primary key of the receiving user
+	 * @return the social stored activity, or an existing activity that matches
+	 *         the parameters, or <code>null</code> if an import is processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -287,10 +277,10 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Removes stored activities for an asset identified by classNameId and
-	 * classPK.
+	 * Removes stored activities for the asset identified by the class name ID
+	 * and class primary key.
 	 *
-	 * @param  classNameId the ID of the target asset's class
+	 * @param  classNameId the target asset's class ID
 	 * @param  classPK the primary key of the target asset
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -301,10 +291,10 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Removes stored activities for the asset identified by className and
-	 * classPK.
+	 * Removes stored activities for the asset identified by the class name and
+	 * class primary key.
 	 *
-	 * @param  className the class name of the target asset
+	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -317,7 +307,7 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Removes a stored activity from the database.
+	 * Removes the stored activity from the database.
 	 *
 	 * @param  activityId the primary key of the stored activity
 	 * @throws PortalException if the activity could not be found
@@ -333,7 +323,7 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Removes a stored activity and its mirror from the database.
+	 * Removes the stored activity and its mirror activity from the database.
 	 *
 	 * @param  activity the activity to be removed
 	 * @throws SystemException if a system exception occurred
@@ -350,7 +340,7 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Removes stored activities of the user from the database.
+	 * Removes the user's stored activities from the database.
 	 *
 	 * <p>
 	 * This method removes all activities where the user is either the actor or
@@ -378,8 +368,8 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the activities done on assets identified by
-	 * classNameId.
+	 * Returns a range of all the activities done on assets identified by the
+	 * class name ID.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -391,10 +381,10 @@ public class SocialActivityLocalServiceImpl
 	 * full result set.
 	 * </p>
 	 *
-	 * @param  classNameId the ID of the target asset's class
+	 * @param  classNameId the target asset's class name ID
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities done on the asset type
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getActivities(
@@ -407,8 +397,8 @@ public class SocialActivityLocalServiceImpl
 
 	/**
 	 * Returns a range of all the activities done on the asset identified by
-	 * classNameId and classPK that are mirrors of the activity identified by
-	 * mirrorActivityId.
+	 * the class name ID and class primary key that are mirrors of the activity
+	 * identified by the mirror activity ID.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -421,11 +411,11 @@ public class SocialActivityLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  mirrorActivityId the primary key of the mirror activity
-	 * @param  classNameId the ID of the target asset's class
+	 * @param  classNameId the target asset's class name ID
 	 * @param  classPK the primary key of the target asset
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getActivities(
@@ -439,8 +429,8 @@ public class SocialActivityLocalServiceImpl
 
 	/**
 	 * Returns a range of all the activities done on the asset identified by
-	 * className and classPK that are mirrors of the activity identified by
-	 * mirrorActivityId.
+	 * the class name and the class primary key that are mirrors of the
+	 * activity identified by the mirror activity ID.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -453,11 +443,11 @@ public class SocialActivityLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  mirrorActivityId the primary key of the mirror activity
-	 * @param  className the class name of the target asset
+	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getActivities(
@@ -472,8 +462,8 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the activities done on assets identified by
-	 * className.
+	 * Returns a range of all the activities done on assets identified by the
+	 * class name.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -485,10 +475,10 @@ public class SocialActivityLocalServiceImpl
 	 * full result set.
 	 * </p>
 	 *
-	 * @param  className the class name of the target asset
+	 * @param  className the target asset's class name
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getActivities(
@@ -501,11 +491,11 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done on assets identified by
-	 * classNameId.
+	 * Returns the number of activities done on assets identified by the class
+	 * name ID.
 	 *
-	 * @param  classNameId the ID of the target asset's class
-	 * @return the number of activities
+	 * @param  classNameId the target asset's class name ID
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getActivitiesCount(long classNameId) throws SystemException {
@@ -513,14 +503,14 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done on the asset identified by
-	 * classNameId and classPK that are mirrors of the activity identified by
-	 * mirrorActivityId.
+	 * Returns the number of activities done on the asset identified by the
+	 * class name ID and class primary key that are mirrors of the activity
+	 * identified by the mirror activity ID.
 	 *
 	 * @param  mirrorActivityId the primary key of the mirror activity
-	 * @param  classNameId the ID of the target asset's class
+	 * @param  classNameId the target asset's class name ID
 	 * @param  classPK the primary key of the target asset
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getActivitiesCount(
@@ -532,14 +522,14 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done on the asset identified by
-	 * className and classPK that are mirrors of the activity identified by
-	 * mirrorActivityId.
+	 * Returns the number of activities done on the asset identified by the
+	 * class name and class primary key that are mirrors of the activity
+	 * identified by the mirror activity ID.
 	 *
 	 * @param  mirrorActivityId the primary key of the mirror activity
-	 * @param  className the class name of the target asset
+	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getActivitiesCount(
@@ -552,10 +542,11 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done on assets identified by className.
+	 * Returns the number of activities done on assets identified by class
+	 * name.
 	 *
-	 * @param  className the class name of the target asset
-	 * @return the number of activities
+	 * @param  className the target asset's class name
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getActivitiesCount(String className) throws SystemException {
@@ -579,8 +570,7 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the activities done in the group identified by
-	 * groupId.
+	 * Returns a range of all the activities done in the group.
 	 *
 	 * <p>
 	 * This method only finds activities without mirrors.
@@ -599,7 +589,7 @@ public class SocialActivityLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getGroupActivities(
@@ -610,15 +600,14 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done in the group identified by
-	 * groupId.
+	 * Returns the number of activities done in the group.
 	 *
 	 * <p>
 	 * This method only counts activities without mirrors.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
-	 * @return the number of activites
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getGroupActivitiesCount(long groupId) throws SystemException {
@@ -627,7 +616,7 @@ public class SocialActivityLocalServiceImpl
 
 	/**
 	 * Returns a range of activities done by users that are members of the
-	 * group identified by groupId.
+	 * group.
 	 *
 	 * <p>
 	 * This method only finds activities without mirrors.
@@ -646,7 +635,7 @@ public class SocialActivityLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activites
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getGroupUsersActivities(
@@ -658,14 +647,14 @@ public class SocialActivityLocalServiceImpl
 
 	/**
 	 * Returns the number of activities done by users that are members of the
-	 * group identified by groupId.
+	 * group.
 	 *
 	 * <p>
 	 * This method only counts activities without mirrors.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getGroupUsersActivitiesCount(long groupId)
@@ -675,8 +664,7 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the activity that has the mirror activity identified by
-	 * mirrorActivityId.
+	 * Returns the activity that has the mirror activity.
 	 *
 	 * @param  mirrorActivityId the primary key of the mirror activity
 	 * @return Returns the mirror activity
@@ -691,12 +679,8 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the activities done in the organization
-	 * identified by organizationId.
-	 *
-	 * <p>
-	 * This method only finds activities without mirrors.
-	 * </p>
+	 * Returns a range of all the activities done in the organization. This
+	 * method only finds activities without mirrors.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -711,7 +695,7 @@ public class SocialActivityLocalServiceImpl
 	 * @param  organizationId the primary key of the organization
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getOrganizationActivities(
@@ -723,15 +707,11 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done in the organization identified by
-	 * organizationId.
-	 *
-	 * <p>
-	 * This method only counts activities without mirrors.
-	 * </p>
+	 * Returns the number of activities done in the organization. This method
+	 * only counts activities without mirrors.
 	 *
 	 * @param  organizationId the primary key of the organization
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getOrganizationActivitiesCount(long organizationId)
@@ -741,12 +721,8 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the activities done by users of the organization
-	 * identified by organizationId.
-	 *
-	 * <p>
+	 * Returns a range of all the activities done by users of the organization.
 	 * This method only finds activities without mirrors.
-	 * </p>
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -761,7 +737,7 @@ public class SocialActivityLocalServiceImpl
 	 * @param  organizationId the primary key of the organization
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getOrganizationUsersActivities(
@@ -773,15 +749,11 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done by users of the organization
-	 * identified by organizationId.
-	 *
-	 * <p>
-	 * This method only counts activities without mirrors.
-	 * </p>
+	 * Returns the number of activities done by users of the organization. This
+	 * method only counts activities without mirrors.
 	 *
 	 * @param  organizationId the primary key of the organization
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getOrganizationUsersActivitiesCount(long organizationId)
@@ -792,12 +764,12 @@ public class SocialActivityLocalServiceImpl
 
 	/**
 	 * Returns a range of all the activities done by users in a relationship
-	 * with the user identified by userId.
+	 * with the user identified by the user ID.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * primary keys, they are indexes in the result set. Thus, <>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
 	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
@@ -807,7 +779,7 @@ public class SocialActivityLocalServiceImpl
 	 * @param  userId the primary key of the user
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getRelationActivities(
@@ -818,13 +790,9 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the activities done by users in a relationship
-	 * with the user identified by userId. The type of the relation is
-	 * identified by type.
-	 *
-	 * <p>
+	 * Returns a range of all the activities done by users in a relationship of
+	 * type <code>type</code> with the user identified by <code>userId</code>.
 	 * This method only finds activities without mirrors.
-	 * </p>
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -837,10 +805,10 @@ public class SocialActivityLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  userId the primary key of the user
-	 * @param  type the type of the relationship
+	 * @param  type the relationship type
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getRelationActivities(
@@ -856,7 +824,7 @@ public class SocialActivityLocalServiceImpl
 	 * the user identified by userId.
 	 *
 	 * @param  userId the primary key of the user
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getRelationActivitiesCount(long userId) throws SystemException {
@@ -864,17 +832,13 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done by users in a relationship with
-	 * the user identified by userId. The type of the relation is identified by
-	 * type.
-	 *
-	 * <p>
-	 * This method only counts activities without mirrors.
-	 * </p>
+	 * Returns the number of activities done by users in a relationship of type
+	 * <code>type</code> with the user identified by <code>userId</code>. This
+	 * method only counts activities without mirrors.
 	 *
 	 * @param  userId the primary key of the user
-	 * @param  type the type of the relationship
-	 * @return the number of activities
+	 * @param  type the relationship type
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getRelationActivitiesCount(long userId, int type)
@@ -884,8 +848,7 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the activities done by the user identified by
-	 * userId.
+	 * Returns a range of all the activities done by the user.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -900,7 +863,7 @@ public class SocialActivityLocalServiceImpl
 	 * @param  userId the primary key of the user
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getUserActivities(
@@ -911,10 +874,10 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done by the user identified by userId.
+	 * Returns the number of activities done by the user.
 	 *
 	 * @param  userId the primary key of the user
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getUserActivitiesCount(long userId) throws SystemException {
@@ -922,12 +885,8 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the activities done in groups the user is a
-	 * member of.
-	 *
-	 * <p>
-	 * This method only finds activities without mirrors.
-	 * </p>
+	 * Returns a range of all the activities done in the user's groups. This
+	 * method only finds activities without mirrors.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -942,7 +901,7 @@ public class SocialActivityLocalServiceImpl
 	 * @param  userId the primary key of the user
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getUserGroupsActivities(
@@ -953,14 +912,11 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done in groups the user is a member of.
-	 *
-	 * <p>
-	 * This method only counts activities without mirrors.
-	 * </p>
+	 * Returns the number of activities done in user's groups. This method only
+	 * counts activities without mirrors.
 	 *
 	 * @param  userId the primary key of the user
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getUserGroupsActivitiesCount(long userId)
@@ -970,12 +926,8 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the activities done in groups and organizations
-	 * the user is a member of.
-	 *
-	 * <p>
-	 * This method only finds activities without mirrors.
-	 * </p>
+	 * Returns a range of all the activities done in the user's groups and
+	 * organizations. This method only finds activities without mirrors.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -990,7 +942,7 @@ public class SocialActivityLocalServiceImpl
 	 * @param  userId the primary key of the user
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getUserGroupsAndOrganizationsActivities(
@@ -1002,15 +954,11 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done in groups and organizations the
-	 * user is a member of.
-	 *
-	 * <p>
-	 * This method only counts activities without mirrors.
-	 * </p>
+	 * Returns the number of activities done in user's groups and
+	 * organizations. This method only counts activities without mirrors.
 	 *
 	 * @param  userId the primary key of the user
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getUserGroupsAndOrganizationsActivitiesCount(long userId)
@@ -1020,12 +968,8 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all activities done in organizations the user is a
-	 * member of.
-	 *
-	 * <p>
-	 * This method only finds activities without mirrors.
-	 * </p>
+	 * Returns a range of all activities done in the user's organizations. This
+	 * method only finds activities without mirrors.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -1040,7 +984,7 @@ public class SocialActivityLocalServiceImpl
 	 * @param  userId the primary key of the user
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
-	 * @return the range of activities
+	 * @return the range of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<SocialActivity> getUserOrganizationsActivities(
@@ -1051,15 +995,11 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of activities done in organizations the user is a
-	 * member of.
-	 *
-	 * <p>
-	 * This method only counts activities without mirrors.
-	 * </p>
+	 * Returns the number of activities done in the user's organizations. This
+	 * method only counts activities without mirrors.
 	 *
 	 * @param  userId the primary key of the user
-	 * @return the number of activities
+	 * @return the number of matching activities
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getUserOrganizationsActivitiesCount(long userId)

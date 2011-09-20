@@ -52,7 +52,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library")
+				if (RuntimeVariables.replace("Documents and Media")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -65,7 +65,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("Document1"));
@@ -150,7 +150,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library")
+				if (RuntimeVariables.replace("Documents and Media")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -163,7 +163,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));

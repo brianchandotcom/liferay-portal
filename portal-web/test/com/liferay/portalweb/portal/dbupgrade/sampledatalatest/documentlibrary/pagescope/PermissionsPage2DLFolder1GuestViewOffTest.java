@@ -53,7 +53,7 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library")
+				if (RuntimeVariables.replace("Documents and Media")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -66,7 +66,7 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//span[@class='document-title']"));

@@ -54,7 +54,7 @@ public class ConfigurePage2PortletDLScopeLayoutCurrentPageTest
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library")
+				if (RuntimeVariables.replace("Documents and Media")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -67,7 +67,7 @@ public class ConfigurePage2PortletDLScopeLayoutCurrentPageTest
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
@@ -201,7 +201,8 @@ public class ConfigurePage2PortletDLScopeLayoutCurrentPageTest
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library (DL Page2 Name)")
+				if (RuntimeVariables.replace(
+							"Documents and Media (DL Page2 Name)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -215,7 +216,7 @@ public class ConfigurePage2PortletDLScopeLayoutCurrentPageTest
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Document Library (DL Page2 Name)"),
+				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 	}
 }

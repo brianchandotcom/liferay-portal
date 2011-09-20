@@ -52,7 +52,8 @@ public class Guest_ViewPage2Folder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library (DL Page2 Name)")
+				if (RuntimeVariables.replace(
+							"Documents and Media (DL Page2 Name)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -66,7 +67,7 @@ public class Guest_ViewPage2Folder2Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Document Library (DL Page2 Name)"),
+				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isVisible(
 				"//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png']"));
@@ -132,7 +133,8 @@ public class Guest_ViewPage2Folder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library (DL Page2 Name)")
+				if (RuntimeVariables.replace(
+							"Documents and Media (DL Page2 Name)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -146,7 +148,7 @@ public class Guest_ViewPage2Folder2Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Document Library (DL Page2 Name)"),
+				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isVisible(
 				"//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png']"));

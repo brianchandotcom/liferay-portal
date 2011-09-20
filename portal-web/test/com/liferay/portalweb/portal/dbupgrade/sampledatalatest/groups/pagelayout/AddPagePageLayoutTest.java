@@ -51,10 +51,13 @@ public class AddPagePageLayoutTest extends BaseTestCase {
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Group Page Layout Community"));
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

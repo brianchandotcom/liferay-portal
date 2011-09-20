@@ -324,6 +324,31 @@ public class WebServerServlet extends HttpServlet {
 				}
 			}
 		}
+		else {
+			String uuid = ParamUtil.getString(request, "uuid");
+			long groupId = ParamUtil.getLong(request, "groupId");
+			boolean igSmallImage = ParamUtil.getBoolean(
+				request, "igSmallImage");
+
+			try {
+				if (Validator.isNotNull(uuid) && (groupId > 0)) {
+					FileEntry fileEntry =
+						DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+							uuid, groupId);
+
+					if (igSmallImage) {
+						image = ImageLocalServiceUtil.getImage(
+							fileEntry.getSmallImageId());
+					}
+					else {
+						image = ImageLocalServiceUtil.getImage(
+							fileEntry.getLargeImageId());
+					}
+				}
+			}
+			catch (Exception e) {
+			}
+		}
 
 		if (getDefault) {
 			if (image == null) {
@@ -442,7 +467,13 @@ public class WebServerServlet extends HttpServlet {
 					return -1;
 				}
 
-				FileEntry fileEntry = getFileEntry(pathArray);
+				FileEntry fileEntry = null;
+
+				try {
+					fileEntry = getFileEntry(pathArray);
+				}
+				catch (Exception e) {
+				}
 
 				if (fileEntry == null) {
 					return -1;

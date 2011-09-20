@@ -38,7 +38,9 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 
 DDMStructure ddmStructure = recordSet.getDDMStructure(detailDDMTemplateId);
 
-Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap();
+String languageId = LanguageUtil.getLanguageId(request);
+
+Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(languageId);
 
 List<String> headerNames = new ArrayList();
 

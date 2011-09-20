@@ -17,7 +17,9 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -40,6 +42,25 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public DDMStructureImpl() {
 	}
 
+	public List<String> getAvailableLocales() {
+		Document document = _getDocument();
+
+		Element rootElement = document.getRootElement();
+
+		String availableLocales = rootElement.attributeValue(
+			"available-locales");
+
+		return ListUtil.fromArray(StringUtil.split(availableLocales));
+	}
+
+	public String getDefaultLocale() {
+		Document document = _getDocument();
+
+		Element rootElement = document.getRootElement();
+
+		return rootElement.attributeValue("default-locale");
+	}
+
 	public String getFieldDataType(String fieldName) {
 		return getFieldProperty(fieldName, "dataType");
 	}
@@ -49,19 +70,25 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			getFieldProperty(fieldName, "displayChildLabelAsValue"));
 	}
 
-	public String getFieldLabel(String fieldName) {
+	public String getFieldLabel(String fieldName, String locale) {
 		return GetterUtil.getString(
-			getFieldProperty(fieldName, "label"), fieldName);
+			getFieldProperty(fieldName, "label", locale), fieldName);
 	}
 
 	public Set<String> getFieldNames() {
-		Map<String, Map<String, String>> fieldsMap = _getFieldsMap();
+		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
 
 		return fieldsMap.keySet();
 	}
 
 	public String getFieldProperty(String fieldName, String property) {
-		Map<String, Map<String, String>> fieldsMap = _getFieldsMap();
+		return getFieldProperty(fieldName, property, getDefaultLocale());
+	}
+
+	public String getFieldProperty(
+		String fieldName, String property, String locale) {
+
+		Map<String, Map<String, String>> fieldsMap = _getFieldsMap(locale);
 
 		Map<String, String> field = fieldsMap.get(fieldName);
 
@@ -74,6 +101,14 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	public Map<String, String> getFields(
 		String fieldName, String attributeName, String attributeValue) {
+
+		return getFields(
+			fieldName, attributeName, attributeValue, getDefaultLocale());
+	}
+
+	public Map<String, String> getFields(
+		String fieldName, String attributeName, String attributeValue,
+		String locale) {
 
 		try {
 			StringBundler sb = new StringBundler(7);
@@ -91,7 +126,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			Node node = xPathSelector.selectSingleNode(_getDocument());
 
 			if (node != null) {
-				return _getField((Element)node.asXPathResult(node.getParent()));
+				return _getField(
+					(Element)node.asXPathResult(node.getParent()), locale);
 			}
 		}
 		catch (Exception e) {
@@ -102,7 +138,11 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	public Map<String, Map<String, String>> getFieldsMap() {
-		return _getFieldsMap();
+		return _getFieldsMap(getDefaultLocale());
+	}
+
+	public Map<String, Map<String, String>> getFieldsMap(String locale) {
+		return _getFieldsMap(locale);
 	}
 
 	public String getFieldType(String fieldName) {
@@ -110,7 +150,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	public boolean hasField(String fieldName) {
-		Map<String, Map<String, String>> fieldsMap = _getFieldsMap();
+		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
 
 		return fieldsMap.containsKey(fieldName);
 	}
@@ -136,10 +176,23 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return _document;
 	}
 
-	private Map<String, String> _getField(Element element) {
+	private Map<String, String> _getField(Element element, String locale) {
 		Map<String, String> field = new HashMap<String, String>();
 
-		Element metaDataElement = element.element("meta-data");
+		List<String> availableLocales = getAvailableLocales();
+
+		if ((locale != null) && !(availableLocales.contains(locale))) {
+			locale = getDefaultLocale();
+		}
+
+		String xPathExpression =
+			"//meta-data[@locale=\"".concat(locale).concat("\"]");
+
+		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
+
+		Node node = xPathSelector.selectSingleNode(_getDocument());
+
+		Element metaDataElement = (Element)node.asXPathResult(node.getParent());
 
 		if (metaDataElement != null) {
 			List<Element> childMetaDataElements = metaDataElement.elements();
@@ -159,7 +212,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return field;
 	}
 
-	private Map<String, Map<String, String>> _getFieldsMap() {
+	private Map<String, Map<String, String>> _getFieldsMap(String locale) {
 		if (_fieldsMap == null) {
 			synchronized (this) {
 				if (_fieldsMap == null) {
@@ -179,7 +232,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 						String name = element.attributeValue("name");
 
-						_fieldsMap.put(name, _getField(element));
+						_fieldsMap.put(name, _getField(element, locale));
 					}
 				}
 			}

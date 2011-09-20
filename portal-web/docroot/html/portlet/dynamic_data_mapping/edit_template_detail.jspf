@@ -15,6 +15,8 @@
 --%>
 
 <%
+String languageId = LanguageUtil.getLanguageId(request);
+
 if (Validator.isNull(script)) {
 	script = structure.getXsd();
 }
@@ -39,7 +41,7 @@ while (itr.hasNext()) {
 
 	StringBundler sb = new StringBundler(5);
 
-	sb.append(structure.getFieldLabel(fieldName));
+	sb.append(structure.getFieldLabel(fieldName, languageId));
 	sb.append(CharPool.SPACE);
 	sb.append(CharPool.OPEN_PARENTHESIS);
 	sb.append(structure.getFieldDataType(fieldName));
@@ -54,7 +56,7 @@ while (itr.hasNext()) {
 	}
 
 	fieldJSONObject.put("key", fieldName);
-	fieldJSONObject.put("label", structure.getFieldLabel(fieldName));
+	fieldJSONObject.put("label", structure.getFieldLabel(fieldName, languageId));
 	fieldJSONObject.put("name", fieldName);
 	fieldJSONObject.put("readOnlyAttributes", readOnlyAttributesJSONArray);
 	fieldJSONObject.put("type", structure.getFieldType(fieldName));

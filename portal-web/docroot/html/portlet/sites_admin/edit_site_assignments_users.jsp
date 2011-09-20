@@ -74,7 +74,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 	LinkedHashMap userParams = new LinkedHashMap();
 
-	if (tabs2.equals("current")) {
+	if (tabs1.equals("summary")) {
 		userParams.put("usersGroups", new Long(group.getGroupId()));
 	}
 	%>

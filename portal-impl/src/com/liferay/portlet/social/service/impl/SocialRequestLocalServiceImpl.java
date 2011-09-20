@@ -28,11 +28,34 @@ import com.liferay.portlet.social.service.base.SocialRequestLocalServiceBaseImpl
 import java.util.List;
 
 /**
+ * The social request local service to handle social requests (e.g. friend
+ * requests).
+ *
  * @author Brian Wing Shun Chan
  */
 public class SocialRequestLocalServiceImpl
 	extends SocialRequestLocalServiceBaseImpl {
 
+	/**
+	 * Adds a social request to the database.
+	 *
+	 * In order to add a social request, both the requesting user and the
+	 * receiving user must be from the same company and neither of them can be
+	 * the default user.
+	 *
+	 * @param  userId the primary key of the requesting user
+	 * @param  groupId the primary key of the group
+	 * @param  className the class name of the asset that is the subject of the
+	 *         request
+	 * @param  classPK the primary key of the asset that is the subject of the
+	 *         request
+	 * @param  type the type of the request
+	 * @param  extraData the extra data regarding the request
+	 * @param  receiverUserId the primary key of the user receiving the request
+	 * @return the social request
+	 * @throws PortalException if the user violated user restrictions
+	 * @throws SystemException if a system exception occurred
+	 */
 	public SocialRequest addRequest(
 			long userId, long groupId, String className, long classPK,
 			int type, String extraData, long receiverUserId)
@@ -79,6 +102,12 @@ public class SocialRequestLocalServiceImpl
 		return request;
 	}
 
+	/**
+	 * Removes all the social requests for the given receiver user.
+	 *
+	 * @param  receiverUserId the primary key of the receiver user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteReceiverUserRequests(long receiverUserId)
 		throws SystemException {
 
@@ -90,6 +119,14 @@ public class SocialRequestLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Removes the social request identified by its primary key from the
+	 * database.
+	 *
+	 * @param  requestId the primary key of the social request
+	 * @throws PortalException if the social request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteRequest(long requestId)
 		throws PortalException, SystemException {
 
@@ -99,10 +136,22 @@ public class SocialRequestLocalServiceImpl
 		deleteRequest(request);
 	}
 
+	/**
+	 * Removes the social request from the database.
+	 *
+	 * @param  request the social request to be removed
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteRequest(SocialRequest request) throws SystemException {
 		socialRequestPersistence.remove(request);
 	}
 
+	/**
+	 * Removes all the social requests for the given requesting user.
+	 *
+	 * @param  userId the primary key of the requesting user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteUserRequests(long userId) throws SystemException {
 		List<SocialRequest> requests = socialRequestPersistence.findByUserId(
 			userId);
@@ -112,6 +161,26 @@ public class SocialRequestLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns a range of all the social requests for the receiver user
+	 * identified by receiverUserId.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
+	 * full result set.
+	 * </p>
+	 *
+	 * @param  receiverUserId the primary key of the receiver user
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
+	 * @return the range of social requests
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<SocialRequest> getReceiverUserRequests(
 			long receiverUserId, int start, int end)
 		throws SystemException {
@@ -120,6 +189,27 @@ public class SocialRequestLocalServiceImpl
 			receiverUserId, start, end);
 	}
 
+	/**
+	 * Returns a range of all the social requests with the given status for the
+	 * receiver user identified by receiverUserId.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
+	 * full result set.
+	 * </p>
+	 *
+	 * @param  receiverUserId the primary key of the receiver user
+	 * @param  status the status of the social request
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
+	 * @return the range of social requests
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<SocialRequest> getReceiverUserRequests(
 			long receiverUserId, int status, int start, int end)
 		throws SystemException {
@@ -128,24 +218,82 @@ public class SocialRequestLocalServiceImpl
 			receiverUserId, status, start, end);
 	}
 
+	/**
+	 * Returns the number of social requests for the receiver user identified
+	 * by receiverUserId.
+	 *
+	 * @param  receiverUserId the primary key of the receiver user
+	 * @return the number of social requests
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getReceiverUserRequestsCount(long receiverUserId)
 		throws SystemException {
 
 		return socialRequestPersistence.countByReceiverUserId(receiverUserId);
 	}
 
+	/**
+	 * Returns the number of social requests with the given status for the
+	 * receiver user identified by receiverUserId.
+	 *
+	 * @param  receiverUserId the primary key of the receiver user
+	 * @param  status the status of the social request
+	 * @return the number of social requests
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getReceiverUserRequestsCount(long receiverUserId, int status)
 		throws SystemException {
 
 		return socialRequestPersistence.countByR_S(receiverUserId, status);
 	}
 
+	/**
+	 * Returns a range of all the social requests for the requesting user
+	 * identified by userId.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
+	 * full result set.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the requesting user
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
+	 * @return the range of social requests
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<SocialRequest> getUserRequests(long userId, int start, int end)
 		throws SystemException {
 
 		return socialRequestPersistence.findByUserId(userId, start, end);
 	}
 
+	/**
+	 * Returns a range of all the social requests with the given status for the
+	 * requesting user identified by userId.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the
+	 * full result set.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the requesting user
+	 * @param  status the status of the social request
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
+	 * @return the range of social requests
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<SocialRequest> getUserRequests(
 			long userId, int status, int start, int end)
 		throws SystemException {
@@ -153,16 +301,48 @@ public class SocialRequestLocalServiceImpl
 		return socialRequestPersistence.findByU_S(userId, status, start, end);
 	}
 
+	/**
+	 * Returns the number of social requests for the requesting user identified
+	 * by userId.
+	 *
+	 * @param  userId the primary key of the requestign user
+	 * @return the number of social requests
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getUserRequestsCount(long userId) throws SystemException {
 		return socialRequestPersistence.countByUserId(userId);
 	}
 
+	/**
+	 * Returns the number of social requests with the given status for the
+	 * requesting user identified by userId.
+	 *
+	 * @param  userId the primary key of the requetsing user
+	 * @param  status the status of the social request
+	 * @return the number of social request
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getUserRequestsCount(long userId, int status)
 		throws SystemException {
 
 		return socialRequestPersistence.countByU_S(userId, status);
 	}
 
+	/**
+	 * Returns <code>true</code> if one or more social requests identified by
+	 * the parameters exist in the database.
+	 *
+	 * @param  userId the primary key of the requesting user
+	 * @param  className the class name of the asset that is the subject of the
+	 *         request
+	 * @param  classPK the primary key of the asset that is the subject of the
+	 *         request
+	 * @param  type the type of the request
+	 * @param  status the status of the social request
+	 * @return <code>true</code> if the request exists; <code>false</code>
+	 *         otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasRequest(
 			long userId, String className, long classPK, int type, int status)
 		throws SystemException {
@@ -179,6 +359,22 @@ public class SocialRequestLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns <code>true</code> if the social request identified by the
+	 * parameters exists in the database.
+	 *
+	 * @param  userId the primary key of the requesting user
+	 * @param  className the class name of the asset that is the subject of the
+	 *         request
+	 * @param  classPK the primary key of the asset that is the subject of the
+	 *         request
+	 * @param  type the type of the request
+	 * @param  receiverUserId the primary key of the receiver user
+	 * @param  status the status of the social request
+	 * @return <code>true</code> if the social request exists;
+	 *         <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasRequest(
 			long userId, String className, long classPK, int type,
 			long receiverUserId, int status)
@@ -198,6 +394,21 @@ public class SocialRequestLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Updates the status of the social request identified by its primary key.
+	 *
+	 * If the status of the social request changes to
+	 * <code>STATUS_CONFIRM</code>, processConfirmation() is called in
+	 * SocialRequestInterpreterLocalService. If the status changes to
+	 * <code>STATUS_IGNORE</code>, processRejection() is called instead.
+	 *
+	 * @param  requestId the primary key of the social request
+	 * @param  status the new status
+	 * @param  themeDisplay the theme display
+	 * @return the updated social request
+	 * @throws PortalException if the social request could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public SocialRequest updateRequest(
 			long requestId, int status, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {

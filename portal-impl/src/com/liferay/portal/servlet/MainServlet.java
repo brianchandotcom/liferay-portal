@@ -1264,13 +1264,16 @@ public class MainServlet extends ActionServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
+		if (!PropsValues.SETUP_WIZARD_ENABLED) {
+			return false;
+		}
+
 		ServletContext servletContext = getServletContext();
 
 		Boolean startupFinished = (Boolean)servletContext.getAttribute(
 			WebKeys.STARTUP_FINISHED);
 
-		if (!PropsValues.SETUP_WIZARD_ENABLED || (startupFinished == null) ||
-			!startupFinished.booleanValue()) {
+		if ((startupFinished == null) || !startupFinished.booleanValue()) {
 
 			return false;
 		}

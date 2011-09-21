@@ -186,11 +186,11 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 
 		String xPathExpression =
-			"//meta-data[@locale=\"".concat(locale).concat("\"]");
+			"meta-data[@locale=\"".concat(locale).concat("\"]");
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
 
-		Node node = xPathSelector.selectSingleNode(_getDocument());
+		Node node = xPathSelector.selectSingleNode(element);
 
 		Element metaDataElement = (Element)node.asXPathResult(node.getParent());
 

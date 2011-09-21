@@ -184,7 +184,7 @@ AUI().add(
 						A.each(
 							data,
 							function(item, index, collection) {
-								var field = SpreadSheet.findStructureFieldByAttribute(structure, 'key', index);
+								var field = SpreadSheet.findStructureFieldByAttribute(structure, 'name', index);
 
 								if (field !== null) {
 									var type = field.type;
@@ -310,7 +310,7 @@ AUI().add(
 									};
 								}
 								else if ((type === 'radio') || (type === 'select')) {
-									var structureField = instance.findStructureFieldByAttribute(structure, 'key', item.key);
+									var structureField = instance.findStructureFieldByAttribute(structure, 'name', item.key);
 
 									config.options = instance.getCellEditorOptions(structureField.options);
 								}

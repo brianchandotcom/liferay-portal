@@ -84,7 +84,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Public Pages")
 												.equals(selenium.getText(
-										"//div/div[3]/a"))) {
+										"//a[@class='layout-tree']"))) {
 							break;
 						}
 					}
@@ -96,7 +96,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Public Pages"),
-					selenium.getText("//div/div[3]/a"));
+					selenium.getText("//a[@class='layout-tree']"));
 
 				boolean welcome1Present = selenium.isElementPresent(
 						"//li/ul/li[1]/div/div[3]/a");

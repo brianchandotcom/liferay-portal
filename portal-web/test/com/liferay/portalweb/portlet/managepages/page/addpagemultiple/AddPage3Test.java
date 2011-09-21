@@ -59,7 +59,7 @@ public class AddPage3Test extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Public Pages")
 												.equals(selenium.getText(
-										"//div/div[3]/a"))) {
+										"//a[@class='layout-tree']"))) {
 							break;
 						}
 					}
@@ -71,7 +71,7 @@ public class AddPage3Test extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Public Pages"),
-					selenium.getText("//div/div[3]/a"));
+					selenium.getText("//a[@class='layout-tree']"));
 
 				boolean welcomePresent = selenium.isElementPresent(
 						"//li/ul/li[1]/div/div[3]/a");
@@ -108,7 +108,7 @@ public class AddPage3Test extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Welcome"),
 					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
-				selenium.clickAt("//div/div[3]/a",
+				selenium.clickAt("//a[@class='layout-tree']",
 					RuntimeVariables.replace("Public Pages"));
 
 				for (int second = 0;; second++) {

@@ -91,7 +91,7 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Public Pages")
 												.equals(selenium.getText(
-										"//div/div[3]/a"))) {
+										"//a[@class='layout-tree']"))) {
 							break;
 						}
 					}
@@ -103,7 +103,7 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Public Pages"),
-					selenium.getText("//div/div[3]/a"));
+					selenium.getText("//a[@class='layout-tree']"));
 
 				boolean welcomePresent = selenium.isElementPresent(
 						"//li/ul/li[1]/div/div[3]/a");

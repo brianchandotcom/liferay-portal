@@ -118,6 +118,12 @@ public class SearchContainerColumnTextTag<R>
 			_orderableProperty = name;
 		}
 
+		if (Validator.isNull(_property) && Validator.isNull(_buffer) && 
+				Validator.isNull(_value)) {
+
+			_property = name;
+		}
+
 		SearchContainerRowTag<R> searchContainerRowTag =
 			(SearchContainerRowTag<R>)findAncestorWithClass(
 				this, SearchContainerRowTag.class);

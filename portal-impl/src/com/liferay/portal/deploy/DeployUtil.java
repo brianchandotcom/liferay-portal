@@ -34,7 +34,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -138,8 +137,10 @@ public class DeployUtil {
 			return;
 		}
 
+		// App servers supported for undeploy
 		if (!appServerType.startsWith(ServerDetector.JBOSS_ID) &&
-			!appServerType.equals(ServerDetector.TOMCAT_ID)) {
+			!appServerType.equals(ServerDetector.TOMCAT_ID) &&
+			!appServerType.equals(ServerDetector.JETTY_ID)) {
 
 			return;
 		}
@@ -158,7 +159,7 @@ public class DeployUtil {
 
 		DeleteTask.deleteDirectory(deployDir);
 
-		if (ServerDetector.isJetty()) {
+		if (appServerType.startsWith(ServerDetector.JETTY_ID)) {
 			FileUtil.delete(
 				System.getProperty("jetty.home") + "/contexts/" +
 					deployDir.getName() + ".xml");

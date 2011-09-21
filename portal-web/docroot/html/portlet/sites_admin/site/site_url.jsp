@@ -95,7 +95,15 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 
 	<aui:input label="public-pages" name="publicVirtualHost" type="text" value="<%= publicVirtualHost %>" />
 
-	<aui:input label="private-pages" name="privateVirtualHost" type="text" value="<%= privateVirtualHost %>" />
+	<aui:input label="private-pages" name="privateVirtualHost" type="text" value="<%= privateVirtualHost %>" >
+		<aui:validator name="custom" errorMessage="please-enter-a-unique-virtual-host">
+			function(val, fieldNode, ruleValue) {
+				var public = A.one("#<portlet:namespace />publicVirtualHost");
+
+				return (val != public.val());
+			}
+		</aui:validator>
+	</aui:input>
 </aui:fieldset>
 
 <c:if test="<%= liveGroup.hasStagingGroup() %>">
@@ -120,6 +128,14 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 		String stagingPrivateVirtualHost = ParamUtil.getString(request, "stagingPrivateVirtualHost", stagingPrivateLayoutSet.getVirtualHostname());
 		%>
 
-		<aui:input label="private-pages" name="stagingPrivateVirtualHost" type="text" value="<%= stagingPrivateVirtualHost %>" />
+		<aui:input label="private-pages" name="stagingPrivateVirtualHost" type="text" value="<%= stagingPrivateVirtualHost %>" >
+			<aui:validator name="custom" errorMessage="please-enter-a-unique-virtual-host">
+				function(val, fieldNode, ruleValue) {
+					var publicStaging = A.one("#<portlet:namespace />stagingPublicVirtualHost");
+
+					return (val != publicStaging.val());
+				}
+			</aui:validator>
+		</aui:input>
 	</aui:fieldset>
 </c:if>

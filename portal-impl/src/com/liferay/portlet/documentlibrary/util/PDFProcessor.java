@@ -322,6 +322,8 @@ public class PDFProcessor extends DLPreviewableProcessor {
 
 		IMOperation imOperation = new IMOperation();
 
+		imOperation.background("White");
+		imOperation.flatten();
 		imOperation.density(dpi, dpi);
 
 		if (height != 0) {

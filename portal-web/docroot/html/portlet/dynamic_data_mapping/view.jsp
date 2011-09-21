@@ -65,7 +65,7 @@ portletURL.setParameter("tabs1", tabs1);
 			sb.append("('");
 			sb.append(structure.getStructureId());
 			sb.append("', '");
-			sb.append(HtmlUtil.escapeJS(structure.getName(locale)));
+			sb.append(HtmlUtil.escape(structure.getName(locale)));
 			sb.append("', Liferay.Util.getWindow());");
 
 			rowHREF = sb.toString();
@@ -81,7 +81,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-ui:search-container-column-text
 			href="<%= rowHREF %>"
 			name="name"
-			value="<%= structure.getName(locale) %>"
+			property="name"
 		/>
 
 		<c:if test="<%= Validator.isNull(storageTypeValue) %>">

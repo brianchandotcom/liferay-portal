@@ -24,8 +24,8 @@
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="name"
+	property="name"
 	orderable="<%= false %>"
-	value="<%= recordSet.getName(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
@@ -36,7 +36,9 @@
 >
 
 	<%
-	buffer.append(StringUtil.shorten(recordSet.getDescription(locale), 100));
+	String description = HtmlUtil.escape(recordSet.getDescription(locale));
+
+	buffer.append(StringUtil.shorten(description, 100));
 	%>
 
 </liferay-ui:search-container-column-text>

@@ -28,6 +28,8 @@ public interface BBCodeTranslator {
 
 	public String[] getEmoticonSymbols();
 
+	public String getHTML(String bbcode);
+
 	public String parse(String message);
 
 }

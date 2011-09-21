@@ -14,6 +14,8 @@
 
 package com.liferay.portal.parsers.bbcode;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -156,6 +158,20 @@ public class BBCodeToHtmlTranslator implements BBCodeTranslator {
 
 	public String[] getEmoticonSymbols() {
 		return _emoticonSymbols;
+	}
+
+	public String getHTML(String bbcode) {
+		try {
+			bbcode = parse(bbcode);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Could not parse bbcode: " + bbcode + " " + e.getMessage());
+
+			bbcode = HtmlUtil.escape(bbcode);
+		}
+
+		return bbcode;
 	}
 
 	public String parse(String text) {
@@ -699,5 +715,7 @@ public class BBCodeToHtmlTranslator implements BBCodeTranslator {
 	private int _itemPointer = 0;
 	private StringBundler _sb = null;
 	private Stack<String> _stack = new Stack();
+
+	private static Log _log = LogFactoryUtil.getLog(BBCodeToHtmlTranslator.class);
 
 }

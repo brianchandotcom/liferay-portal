@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.util;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -313,7 +314,7 @@ public class MBIndexer extends BaseIndexer {
 		String content = message.getBody();
 
 		try {
-			content = BBCodeUtil.getHTML(content);
+			content = BBCodeTranslatorUtil.getHTML(content);
 		}
 		catch (Exception e) {
 			_log.error(

@@ -36,9 +36,9 @@ public class BBCodeLexer {
 
 		if (tokenFound) {
 			token = new BBCodeToken(
-					_matcherBBCode.group(1), _matcherBBCode.group(2),
-					_matcherBBCode.group(3), _matcherBBCode.start(),
-					_matcherBBCode.end());
+				_matcherBBCode.group(1), _matcherBBCode.group(2),
+				_matcherBBCode.group(3), _matcherBBCode.start(),
+				_matcherBBCode.end());
 		}
 
 		return token;

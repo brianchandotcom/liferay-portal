@@ -311,7 +311,7 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 				String message = "multiple-documents";
 
 				if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
-					message = "multiple-images";
+					message = "multiple-media";
 				}
 
 				String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + LanguageUtil.get(pageContext, "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
@@ -340,12 +340,14 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 
 				<%
 				String message = "add-document";
+				String title = "select-document-type";
 
 				if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
-					message = "add-image";
+					message = "add-media";
+					title = "select-media-type";
 				}
 
-				String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + LanguageUtil.get(pageContext, "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
+				String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + LanguageUtil.get(pageContext, title) + "', uri:'" + editFileEntryURL.toString() + "'});";
 				%>
 
 				<liferay-ui:icon

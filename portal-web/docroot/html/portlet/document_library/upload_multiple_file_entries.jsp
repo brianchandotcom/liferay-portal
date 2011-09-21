@@ -41,7 +41,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title="add-multiple-documents"
+	title='<%= portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) ? "add-multiple-media" : "add-multiple-documents" %>'
 />
 
 <aui:layout>

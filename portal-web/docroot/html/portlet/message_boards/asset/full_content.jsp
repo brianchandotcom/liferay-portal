@@ -22,7 +22,7 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSA
 String body = StringPool.BLANK;
 
 if (message.isFormatBBCode()) {
-	body = BBCodeUtil.getHTML(message);
+	body = BBCodeTranslatorUtil.getHTML(message.getBody());
 	body = StringUtil.replace(body, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
 }
 else{

@@ -44,6 +44,10 @@ public class BBCodeTranslatorUtil {
 		return getBBCodeTranslator().getEmoticonSymbols();
 	}
 
+	public static String getHTML(String bbcode) {
+		return getBBCodeTranslator().getHTML(bbcode);
+	}
+
 	public static String parse(String message) {
 		return getBBCodeTranslator().parse(message);
 	}

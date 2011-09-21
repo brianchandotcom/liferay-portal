@@ -48,10 +48,8 @@ public class AssertLDAPUsersPresentTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("View All Users"),
-			selenium.getText("link=View All Users"));
-		selenium.clickAt("link=View All Users",
-			RuntimeVariables.replace("View All Users"));
+		selenium.clickAt("link=Search All Users",
+			RuntimeVariables.replace("Search All Users"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_125_keywords']",

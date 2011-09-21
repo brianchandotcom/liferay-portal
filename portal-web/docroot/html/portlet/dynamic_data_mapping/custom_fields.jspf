@@ -144,7 +144,7 @@
 				},
 				showLabel: {
 					readOnly: true,
-					value: false
+					value: true
 				},
 				style: {
 					value: ''

@@ -59,7 +59,7 @@ public class DeletePageTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Public Pages")
 												.equals(selenium.getText(
-										"//div/div[3]/a"))) {
+										"//a[@class='layout-tree']"))) {
 							break;
 						}
 					}
@@ -215,6 +215,7 @@ public class DeletePageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -294,6 +295,7 @@ public class DeletePageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -373,6 +375,7 @@ public class DeletePageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -452,6 +455,7 @@ public class DeletePageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

@@ -30,7 +30,7 @@ if (quote && Validator.isNull(body) && (curParentMessage != null)) {
 	body = sb.toString();
 }
 else if (splitThread && Validator.isNull(body)) {
-	body = LanguageUtil.format(pageContext, "the-new-thread-can-be-found-at-x", "[url=" + BBCodeUtil.NEW_THREAD_URL + "]" + BBCodeUtil.NEW_THREAD_URL + "[/url]", false);
+	body = LanguageUtil.format(pageContext, "the-new-thread-can-be-found-at-x", "[url=" + BBCodeTranslatorUtil.NEW_THREAD_URL + "]" + BBCodeTranslatorUtil.NEW_THREAD_URL + "[/url]", false);
 }
 %>
 

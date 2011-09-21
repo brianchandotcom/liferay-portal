@@ -16,6 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBCategory" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBDiscussion" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBMessage" %>
@@ -25,7 +26,6 @@
 <%@ page import="com.liferay.portlet.messageboards.model.MBTreeWalker" %>
 <%@ page import="com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" %>
-<%@ page import="com.liferay.portlet.messageboards.util.BBCodeUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator" %>
 <%@ page import="com.liferay.portlet.ratings.model.RatingsEntry" %>
 <%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>
@@ -318,7 +318,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								<div class="lfr-discussion-message">
 
 									<%
-									String msgBody = BBCodeUtil.getHTML(message);
+									String msgBody = BBCodeTranslatorUtil.getHTML(message.getBody());
 
 									msgBody = StringUtil.replace(msgBody, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
 									msgBody = HtmlUtil.wordBreak(msgBody, 80);

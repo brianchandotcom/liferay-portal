@@ -605,6 +605,17 @@ function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )]]></repl
 					<replacevalue><![CDATA[<body bottommargin="0" topmargin="0">]]></replacevalue>
 				</replace>
 
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
+					<replacetoken><![CDATA[var sLink = '<a href="#" onclick="OpenFolder(\'' + folderPath + '\');return false;">' ;]]></replacetoken>
+					<replacevalue><![CDATA[var sLink = '<a href="#" onclick="OpenFolder(\'' + folderPath.replace( /&#039;/g, '\\\'') + '\');return false;">' ;]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[path = path.replace( /'/g, '\\\'') ;]]></replacetoken>
+					<replacevalue><![CDATA[path = path.replace( /'/g, '\\\'') ;
+	path = path.replace( /&#039;/g, '\\\'') ;]]></replacevalue>
+				</replace>
+
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html"
 					match="(\t*)// Get the optional [^;]*?;\r?(\n).*?sFileSize \) \) ;"
 					replace="\1var sFileDesc = oNode.attributes.getNamedItem('desc').value ;\2\1var sFileUrl = oNode.attributes.getNamedItem('url').value ;\2\2\1oHtml.Append( oListManager.GetFileRowHtml( sFileDesc, sFileUrl, sFileSize ) ) ;"

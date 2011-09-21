@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portlet.messageboards.util.BBCodeTranslator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.regex.Pattern;
 /**
  * @author Iliyan Peychev
  */
-public class BBCodeToHtmlTranslator {
+public class BBCodeToHtmlTranslator implements BBCodeTranslator {
 
 	static final String[][] _emoticons = {
 		{"happy.gif", ":)", "happy"},
@@ -139,6 +140,22 @@ public class BBCodeToHtmlTranslator {
 		_bbCodeParser = new com.liferay.portal.parsers.bbcode.BBCodeParser();
 
 		_sb = new StringBundler();
+	}
+
+	public String[][] getEmoticons() {
+		return _emoticons;
+	}
+
+	public String[] getEmoticonDescriptions() {
+		return _emoticonDescriptions;
+	}
+
+	public String[] getEmoticonFiles() {
+		return _emoticonFiles;
+	}
+
+	public String[] getEmoticonSymbols() {
+		return _emoticonSymbols;
 	}
 
 	public String parse(String text) {

@@ -67,6 +67,31 @@ import javax.servlet.ServletContext;
  */
 public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
+	public ColorScheme fetchColorScheme(
+			long companyId, String themeId, String colorSchemeId)
+		throws SystemException {
+
+		colorSchemeId = GetterUtil.getString(colorSchemeId);
+
+		Theme theme = fetchTheme(companyId, themeId);
+
+		if (theme == null) {
+			return null;
+		}
+
+		Map<String, ColorScheme> colorSchemesMap = theme.getColorSchemesMap();
+
+		return colorSchemesMap.get(colorSchemeId);
+	}
+
+	public Theme fetchTheme(long companyId, String themeId)
+		throws SystemException {
+
+		themeId = GetterUtil.getString(themeId);
+
+		return _getThemes(companyId).get(themeId);
+	}
+
 	public ColorScheme getColorScheme(
 			long companyId, String themeId, String colorSchemeId,
 			boolean wapTheme)

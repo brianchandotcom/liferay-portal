@@ -37,6 +37,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 
 import java.io.Serializable;
 
@@ -318,6 +319,10 @@ public class ThemeDisplay implements Serializable {
 
 	public long getRefererPlid() {
 		return _refererPlid;
+	}
+
+	public MDRRuleGroupInstance getRuleGroupInstance() {
+		return _ruleGroupInstance;
 	}
 
 	public Group getScopeGroup() {
@@ -996,6 +1001,10 @@ public class ThemeDisplay implements Serializable {
 		_refererPlid = refererPlid;
 	}
 
+	public void setRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance) {
+		_ruleGroupInstance = ruleGroupInstance;
+	}
+
 	public void setScopeGroupId(long scopeGroupId) {
 		_scopeGroupId = scopeGroupId;
 
@@ -1301,6 +1310,7 @@ public class ThemeDisplay implements Serializable {
 	private int _realCompanyLogoWidth;
 	private User _realUser;
 	private long _refererPlid;
+	private MDRRuleGroupInstance _ruleGroupInstance;
 	private Group _scopeGroup;
 	private long _scopeGroupId;
 	private boolean _secure;

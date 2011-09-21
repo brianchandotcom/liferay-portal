@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.mobiledevicerules.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,47 @@ package com.liferay.portlet.mobiledevicerules.service.http;
  * @generated
  */
 public class MDRRuleServiceSoap {
+	public static void deleteRule(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap rule)
+		throws RemoteException {
+		try {
+			MDRRuleServiceUtil.deleteRule(com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleModelImpl.toModel(
+					rule));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap fetchRule(
+		long ruleId) throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRRule returnValue = MDRRuleServiceUtil.fetchRule(ruleId);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap getRule(
+		long ruleId) throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRRule returnValue = MDRRuleServiceUtil.getRule(ruleId);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MDRRuleServiceSoap.class);
 }

@@ -364,6 +364,21 @@
 	<bean id="com.liferay.portal.language.LanguageResources" class="com.liferay.portal.language.LanguageResources">
 		<property name="config" value="content.Language,content.Language-ext" />
 	</bean>
+	<bean id="com.liferay.portlet.mobiledevicerules.permission.MDRRuleGroupPermissionUtil" class="com.liferay.portlet.mobiledevicerules.permission.MDRRuleGroupPermissionUtil">
+		<property name="MDRRuleGroupPermission">
+			<bean class="com.liferay.portlet.mobiledevicerules.permission.MDRRuleGroupPermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.mobiledevicerules.permission.MDRRuleGroupInstancePermissionUtil" class="com.liferay.portlet.mobiledevicerules.permission.MDRRuleGroupInstancePermissionUtil">
+		<property name="MDRRuleGroupInstancePermission">
+			<bean class="com.liferay.portlet.mobiledevicerules.permission.MDRRuleGroupInstancePermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.mobiledevicerules.permission.MobileDeviceRulesPermissionUtil" class="com.liferay.portlet.mobiledevicerules.permission.MobileDeviceRulesPermissionUtil">
+		<property name="mobileDeviceRulesPermission">
+			<bean class="com.liferay.portlet.mobiledevicerules.permission.MobileDeviceRulesPermissionImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
 		<property name="modelHints">
 			<bean class="com.liferay.portal.model.ModelHintsImpl">

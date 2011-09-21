@@ -28,12 +28,49 @@
 		</property>
 	</bean>
 
-	<!-- Util -->
+	<!-- Device Detection -->
 
 	<bean id="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil" class="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil">
 		<property name="deviceRecognitionProvider" ref="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" />
 	</bean>
 	<bean id="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" class="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" />
+
+	<!-- Device Profile-->
+
+	<bean id="com.liferay.portal.mobile.device.rulegroup.DefaultDeviceRuleGroupProcessorImpl" class="com.liferay.portal.mobile.device.rulegroup.DefaultRuleGroupProcessorImpl">
+		<property name="mdrRuleGroupLocalService" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalService"/>
+		<property name="mdrRuleGroupInstanceLocalService" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalService"/>
+		<property name="ruleHandlers">
+			<list value-type="com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler">
+				<bean class="com.liferay.portal.mobile.device.rulegroup.rule.impl.SimpleRuleHandler" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="com.liferay.portal.mobile.device.rulegroup.DefaultActionHandlerManagerImpl" class="com.liferay.portal.mobile.device.rulegroup.DefaultActionHandlerManagerImpl">
+		<property name="actionHandlers">
+			<list value-type="com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler">
+				<bean class="com.liferay.portal.mobile.device.rulegroup.action.impl.SiteRedirectActionHandler">
+					<property name="groupLocalService" ref="com.liferay.portal.service.GroupLocalService" />
+					<property name="layoutLocalService" ref="com.liferay.portal.service.LayoutLocalService" />
+				</bean>
+				<bean class="com.liferay.portal.mobile.device.rulegroup.action.impl.SimpleRedirectActionHandler" />
+				<bean class="com.liferay.portal.mobile.device.rulegroup.action.impl.ThemeModificationActionHandler">
+					<property name="themeLocalService" ref="com.liferay.portal.service.ThemeLocalService" />
+				</bean>
+				<bean class="com.liferay.portal.mobile.device.rulegroup.action.impl.LayoutTemplateModificationActionHandler" />
+			</list>
+		</property>
+
+	</bean>
+
+	<bean id="com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil" class="com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil">
+		<property name="ruleGroupProcessor" ref="com.liferay.portal.mobile.device.rulegroup.DefaultDeviceRuleGroupProcessorImpl"/>
+	</bean>
+
+	<bean id="com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil" class="com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil">
+		<property name="actionHandlerManager" ref="com.liferay.portal.mobile.device.rulegroup.DefaultActionHandlerManagerImpl"/>
+	</bean>
 
 	<!-- Messaging -->
 

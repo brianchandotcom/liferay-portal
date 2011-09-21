@@ -18,11 +18,11 @@ import com.liferay.portal.events.GlobalStartupAction;
 import com.liferay.portal.kernel.deploy.DeployManager;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.io.File;
-
 import java.util.List;
 
 /**
@@ -72,6 +72,21 @@ public class DeployManagerImpl implements DeployManager {
 
 	public void undeploy(String context) throws Exception {
 		File deployDir = new File(getDeployDir(), context);
+
+		if (!deployDir.exists()) {
+			deployDir = new File(getDeployDir(), context + ".war");
+		}
+
+		if (!deployDir.exists()) {
+			return;
+		}
+
+		if (ServerDetector.isJBoss()) {
+			File deployedFlag =
+				new File(getDeployDir(), deployDir.getName() + ".deployed");
+
+			FileUtil.delete(deployedFlag);
+		}
 
 		DeployUtil.undeploy(ServerDetector.getServerId(), deployDir);
 	}

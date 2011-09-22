@@ -38,7 +38,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTy
 		<liferay-ui:icon image="folder" message='<%= (folder != null) ? "subfolder" : "folder" %>' url="<%= addFolderURL %>" />
 	</c:if>
 
-	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
+	<c:if test="<%= ((folder == null) || (folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
 		<portlet:renderURL var="editFileShortcutURL">
 			<portlet:param name="struts_action" value="/document_library/edit_file_shortcut" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

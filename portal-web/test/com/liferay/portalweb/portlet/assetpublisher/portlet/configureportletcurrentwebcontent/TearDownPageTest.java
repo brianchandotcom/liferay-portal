@@ -59,7 +59,7 @@ public class TearDownPageTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Public Pages")
 												.equals(selenium.getText(
-										"//a[@class='layout-tree']"))) {
+										"//div/div[3]/a"))) {
 							break;
 						}
 					}

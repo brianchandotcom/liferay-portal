@@ -322,9 +322,9 @@ public class PortletPermissionImpl implements PortletPermission {
 		throws PortalException, SystemException {
 
 		for (Portlet portlet : portlets) {
-			if (contains(
-					permissionChecker, groupId, 0, portlet.getPortletId(),
-					ActionKeys.ACCESS_IN_CONTROL_PANEL, true)) {
+			if (permissionChecker.hasPermission(
+				groupId, portlet.getPortletId(), portlet.getPortletId(),
+				ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 
 				return true;
 			}

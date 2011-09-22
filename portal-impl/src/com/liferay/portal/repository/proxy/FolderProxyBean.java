@@ -180,6 +180,10 @@ public class FolderProxyBean
 		return _folder.isSupportsMetadata();
 	}
 
+	public boolean isSupportsMultipleUpload() {
+		return _folder.isSupportsMultipleUpload();
+	}
+
 	public boolean isSupportsShortcuts() {
 		return _folder.isSupportsShortcuts();
 	}

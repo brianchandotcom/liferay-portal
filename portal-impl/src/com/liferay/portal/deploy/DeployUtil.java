@@ -138,7 +138,7 @@ public class DeployUtil {
 		}
 
 		// App servers supported for undeploy
-		if (!appServerType.startsWith(ServerDetector.JBOSS_ID) &&
+		if (!appServerType.equals(ServerDetector.JBOSS_ID) &&
 			!appServerType.equals(ServerDetector.TOMCAT_ID) &&
 			!appServerType.equals(ServerDetector.JETTY_ID)) {
 
@@ -163,13 +163,13 @@ public class DeployUtil {
 
 		DeleteTask.deleteDirectory(deployDir);
 
-		if (appServerType.startsWith(ServerDetector.JETTY_ID)) {
+		if (appServerType.equals(ServerDetector.JETTY_ID)) {
 			FileUtil.delete(
 				System.getProperty("jetty.home") + "/contexts/" +
 					deployDir.getName() + ".xml");
 		}
 
-		if (ServerDetector.isJBoss()) {
+		if (appServerType.equals(ServerDetector.JBOSS_ID)) {
 			File deployedFile = new File(
 				deployDir.getParent(), deployDir.getName() + ".deployed");
 

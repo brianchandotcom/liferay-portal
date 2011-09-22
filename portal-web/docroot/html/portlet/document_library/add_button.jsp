@@ -58,7 +58,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTy
 		<liferay-ui:icon image="add_drive" message="repository" url="<%= addRepositoryURL %>" />
 	</c:if>
 
-	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
+	<c:if test="<%= ((folder == null) || (folder.isSupportsMultipleUpload())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 		<portlet:renderURL var="editFileEntryURL">
 			<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

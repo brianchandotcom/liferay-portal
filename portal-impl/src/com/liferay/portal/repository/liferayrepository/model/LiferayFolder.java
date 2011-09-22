@@ -198,6 +198,15 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		}
 	}
 
+	public boolean isSupportsMultipleUpload() {
+		if (isMountPoint()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 	public boolean isMountPoint() {
 		return _dlFolder.isMountPoint();
 	}

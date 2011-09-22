@@ -86,6 +86,8 @@ public interface Folder extends RepositoryModel<Folder> {
 
 	public boolean isSupportsMetadata();
 
+	public boolean isSupportsMultipleUpload();
+
 	public boolean isMountPoint();
 
 	public boolean isRoot();

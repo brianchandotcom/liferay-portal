@@ -177,6 +177,8 @@ AUI().add(
 
 						dataContainer.hide();
 						dataContainer.empty();
+
+						instance.fire('transitionCompleted');
 					},
 
 					_setData: function(value) {

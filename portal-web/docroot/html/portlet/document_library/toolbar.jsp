@@ -144,23 +144,3 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 		);
 	}
 </aui:script>
-
-<aui:script use="aui-base">
-	var allRowIds = A.one('#<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox');
-
-	allRowIds.on(
-		'click',
-		function(event) {
-			var documentContainer = A.one('.document-container');
-			var documentDisplayStyle = A.all('.document-display-style.selectable')
-
-			Liferay.Util.checkAll(documentContainer, '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + Folder.class.getName() %>Checkbox', event.currentTarget);
-			Liferay.Util.checkAll(documentContainer, '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + FileEntry.class.getName() %>Checkbox', event.currentTarget);
-			Liferay.Util.checkAll(documentContainer, '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + DLFileShortcut.class.getName() %>Checkbox', event.currentTarget);
-
-			<portlet:namespace />toggleActionsButton();
-
-			documentDisplayStyle.toggleClass('selected', allRowIds.attr('checked'));
-		}
-	);
-</aui:script>

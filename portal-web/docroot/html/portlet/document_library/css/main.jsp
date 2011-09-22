@@ -139,10 +139,15 @@
 	}
 
 	.folder {
+		margin-top: 2px;
 		position: relative;
 
 		&:hover {
 			background-color: #D3E8F1;
+		}
+
+		.active-area, .active-area.hover {
+			background-color: #00D68E;
 		}
 	}
 
@@ -211,7 +216,7 @@
 			position: relative;
 			text-align: left;
 
-			.document-title {
+			.entry-title {
 				display: block;
 				font-size: 1.15em;
 				font-weight: bold;
@@ -298,7 +303,7 @@
 				right: 0;
 			}
 
-			.document-title {
+			.entry-title {
 				clear: both;
 				display: block;
 				padding: 0 10px;
@@ -320,6 +325,10 @@
 
 		&.selected a {
 			color: #FFF;
+		}
+
+		&.active-area, &.active-area.hover {
+			background-color: #00D68E;			
 		}
 
 		.overlay.document-action a {
@@ -778,4 +787,16 @@
 			}
 		}
 	}
+}
+
+.active-area-proxy {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background-color: #FFFFE0;
+	background-image: url(<%= themeImagesPath %>/portlet/pop_up.png);
+	background-position: 10px 50%;
+	background-repeat: no-repeat;
+	border-radius: 4px;
+	font-size: 1.2em;
+	padding: 0.3em 0.3em 0.3em 2em;
 }

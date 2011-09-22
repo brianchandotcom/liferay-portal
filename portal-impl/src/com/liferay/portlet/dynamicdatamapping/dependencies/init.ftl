@@ -1,13 +1,13 @@
-<!-- Tag libraries -->
+<#-- Tag libraries -->
 
 <#assign aui = PortalJspTagLibs["/WEB-INF/tld/liferay-aui.tld"] />
 <#assign liferay_ui = PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"] />
 
-<!-- CSS class -->
+<#-- CSS class -->
 
 <#assign cssClass = field.fieldCssClass!"">
 
-<!-- Field name -->
+<#-- Field name -->
 
 <#assign fieldName = field.name>
 
@@ -22,7 +22,7 @@
 
 <#assign namespacedFieldName = "${namespace}${fieldName}">
 
-<!-- Predefined value -->
+<#-- Predefined value -->
 
 <#assign predefinedValue = field.predefinedValue!"">
 
@@ -30,7 +30,7 @@
 	<#assign predefinedValue = parentField.predefinedValue!"">
 </#if>
 
-<!-- Field value -->
+<#-- Field value -->
 
 <#assign fieldValue = predefinedValue>
 
@@ -44,7 +44,7 @@
 	</#if>
 </#if>
 
-<!-- Label -->
+<#-- Label -->
 
 <#assign label = field.label!"">
 
@@ -52,7 +52,7 @@
 	<#assign label = "">
 </#if>
 
-<!-- Required -->
+<#-- Required -->
 
 <#assign required = false>
 

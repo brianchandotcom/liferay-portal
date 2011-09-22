@@ -373,6 +373,14 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 						includes="eclipselink.jar"
 					/>
 				</delete>
+
+				<replace file="${app.server.jboss.instance.config.dir}/standalone.xml">
+					<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.0" default-virtual-server="default-host">]]></replacetoken>
+					<replacevalue><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.0" default-virtual-server="default-host">
+            <configuration>
+                <jsp-configuration development="true"/>
+            </configuration>]]></replacevalue>
+				</replace>
 			</then>
 		</if>
 

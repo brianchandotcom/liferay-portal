@@ -608,10 +608,10 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 												<%
 												for (AssetVocabulary assetVocabulary : assetVocabularies) {
-													assetVocabulary = assetVocabulary.toEscapedModel();
+													assetVocabulary.setEscapedModel(true);
 												%>
 
-													<aui:option label="<%= assetVocabulary.getName() %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
+													<aui:option label="<%= assetVocabulary.getTitle(locale) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
 
 												<%
 												}
@@ -634,10 +634,10 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 											<%
 											for (AssetVocabulary assetVocabulary : assetVocabularies) {
-												assetVocabulary = assetVocabulary.toEscapedModel();
+												assetVocabulary.setEscapedModel(true);
 											%>
 
-												<aui:option label="<%= assetVocabulary.getName() %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
+												<aui:option label="<%= assetVocabulary.getTitle(locale) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
 
 											<%
 											}

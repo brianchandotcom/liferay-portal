@@ -178,7 +178,7 @@ AUI().add(
 									},
 									checked: checked,
 									id: treeId,
-									label: Liferay.Util.escapeHTML(item.name),
+									label: Liferay.Util.escapeHTML(item.title),
 									leaf: !item.hasChildren,
 									type: type
 								};
@@ -217,11 +217,24 @@ AUI().add(
 						var groupIds = [];
 
 						var vocabularyIds = instance.get('vocabularyIds');
+						
+						var svcParamTypesGetVocabularies = [
+ 						 	'[J',
+ 						 	'java.lang.String'
+ 						];
+
+						var svcParamTypesGetGroupsVocabularies = [
+ 						 	'[J',
+ 						 	'java.lang.String',
+ 						 	'java.lang.String',
+ 						];
 
 						if (vocabularyIds.length > 0) {
 							Liferay.Service.Asset.AssetVocabulary.getVocabularies(
 								{
-									vocabularyIds: vocabularyIds
+									vocabularyIds: vocabularyIds,
+									languageId: themeDisplay.getLanguageId(),
+									serviceParameterTypes: A.JSON.stringify(svcParamTypesGetVocabularies)
 								},
 								callback
 							);
@@ -236,7 +249,9 @@ AUI().add(
 							Liferay.Service.Asset.AssetVocabulary.getGroupsVocabularies(
 								{
 									groupIds: groupIds,
-									className: className
+									className: className,
+									languageId: themeDisplay.getLanguageId(),
+									serviceParameterTypes: A.JSON.stringify(svcParamTypesGetGroupsVocabularies)
 								},
 								callback
 							);
@@ -415,11 +430,11 @@ AUI().add(
 						var instance = this;
 
 						var popup = instance._popup;
-						var vocabularyName = item.name;
+						var vocabularyTitle = Liferay.Util.escapeHTML(item.title);
 						var vocabularyId = item.vocabularyId;
 
 						if (item.groupId == themeDisplay.getCompanyGroupId()) {
-							vocabularyName += ' (' + Liferay.Language.get('global') + ')';
+							vocabularyTitle += ' (' + Liferay.Language.get('global') + ')';
 						}
 
 						var treeId = 'vocabulary' + vocabularyId;
@@ -427,7 +442,7 @@ AUI().add(
 						var vocabularyRootNode = {
 							alwaysShowHitArea: true,
 							id: treeId,
-							label: Liferay.Util.escapeHTML(vocabularyName),
+							label: vocabularyTitle,
 							leaf: false,
 							type: 'io'
 						};

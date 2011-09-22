@@ -30,23 +30,23 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupsVocabul
 List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(className, classPK);
 
 for (AssetVocabulary vocabulary : vocabularies) {
-	vocabulary = vocabulary.toEscapedModel();
+	vocabulary.setEscapedModel(true);
 
-	String vocabularyName = vocabulary.getTitle(themeDisplay.getLocale());
+	String vocabularyTitle = vocabulary.getTitle(themeDisplay.getLocale());
 
 	List<AssetCategory> curCategories = _filterCategories(categories, vocabulary);
 %>
 
 	<c:if test="<%= !curCategories.isEmpty() %>">
 		<span class="taglib-asset-categories-summary">
-			<%= vocabularyName %>:
+			<%= vocabularyTitle %>:
 
 			<c:choose>
 				<c:when test="<%= portletURL != null %>">
 
 					<%
 					for (AssetCategory category : curCategories) {
-						category = category.toEscapedModel();
+						category.setEscapedModel(true);
 
 						portletURL.setParameter("categoryId", String.valueOf(category.getCategoryId()));
 					%>
@@ -62,7 +62,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 
 					<%
 					for (AssetCategory category : curCategories) {
-						category = category.toEscapedModel();
+						category.setEscapedModel(true);
 					%>
 
 						<span class="asset-category">
@@ -94,7 +94,7 @@ private String _buildCategoryPath(AssetCategory category, ThemeDisplay themeDisp
 	StringBundler sb = new StringBundler(ancestorCategories.size() * 2 + 1);
 
 	for (AssetCategory ancestorCategory : ancestorCategories) {
-		ancestorCategory = ancestorCategory.toEscapedModel();
+		category.setEscapedModel(true);
 
 		sb.append(ancestorCategory.getTitle(themeDisplay.getLocale()));
 		sb.append(" &raquo; ");

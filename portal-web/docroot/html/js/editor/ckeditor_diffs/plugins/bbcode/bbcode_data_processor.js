@@ -39,6 +39,10 @@
 		strong: '_handleStrong'
 	};
 
+	var MAP_LINK_HANDLERS = {
+		0: 'email'
+	};
+
 	var NEW_LINE = '\n';
 
 	var REGEX_COLOR_RGB = /^rgb\s*\(\s*([01]?\d\d?|2[0-4]\d|25[0-5])\,\s*([01]?\d\d?|2[0-4]\d|25[0-5])\,\s*([01]?\d\d?|2[0-4]\d|25[0-5])\s*\)$/;
@@ -178,15 +182,11 @@
 		},
 
 		_checkParentElement: function(element, tagName) {
-			var result = false;
+			var instance = this;
 
 			var parentNode = element.parentNode;
 
-			if (parentNode && parentNode.tagName && (parentNode.tagName.toLowerCase() == tagName)) {
-				result = true;
-			}
-
-			return result;
+			return (parentNode && parentNode.tagName && (parentNode.tagName.toLowerCase() == tagName));
 		},
 
 		_convert: function(data) {
@@ -439,12 +439,10 @@
 				if (!instance._allowNewLine(element)) {
 					data = data.replace(REGEX_NEWLINE, '');
 				}
-				else if (instance._checkParentElement(element, TAG_LINK)) {
-					var mailtoPrefixIndex = data.indexOf(STR_MAILTO);
+				else if (instance._checkParentElement(element, TAG_LINK) &&
+					data.indexOf(STR_MAILTO) == 0) {
 
-					if (mailtoPrefixIndex == 0) {
-						data = data.substring(STR_MAILTO.length);
-					}
+					data = data.substring(STR_MAILTO.length);
 				}
 
 				instance._endResult.push(data);
@@ -546,18 +544,11 @@
 				hrefAttribute = decodedLink;
 			}
 
-			var startTag = '[url=';
-			var endTag = '[/url]';
+			var linkHandler = MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] || 'url';
 
-			if (hrefAttribute.indexOf(STR_MAILTO) == 0) {
-				startTag = '[email=';
+			listTagsIn.push('[' + linkHandler + '=', hrefAttribute, ']');
 
-				endTag = '[/email]';
-			}
-
-			listTagsIn.push(startTag, hrefAttribute, ']');
-
-			listTagsOut.push(endTag);
+			listTagsOut.push('[/' + linkHandler + ']');
 		},
 
 		_handleListItem: function(element, listTagsIn, listTagsOut) {

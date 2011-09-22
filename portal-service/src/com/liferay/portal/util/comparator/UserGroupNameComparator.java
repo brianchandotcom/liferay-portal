@@ -22,11 +22,11 @@ import com.liferay.portal.model.UserGroup;
  */
 public class UserGroupNameComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "UserGroup.name ASC";
+	public static final String ORDER_BY_ASC = "UserGroup.name ASC";
 
-	public static String ORDER_BY_DESC = "UserGroup.name DESC";
+	public static final String ORDER_BY_DESC = "UserGroup.name DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
 	public UserGroupNameComparator() {
 		this(false);

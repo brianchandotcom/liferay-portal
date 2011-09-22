@@ -69,7 +69,7 @@ public interface DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -117,7 +117,7 @@ public interface DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -167,7 +167,7 @@ public interface DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1612,7 +1612,7 @@ public interface DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1663,7 +1663,7 @@ public interface DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1715,7 +1715,7 @@ public interface DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-
+	
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1785,7 +1785,7 @@ public interface DLAppService {
 	* @param description the folder's new description
 	* @param serviceContext the service context to be applied. In a Liferay
 	repository, it may include:
-
+	
 	<ul>
 	<li>
 	defaultFileEntryTypeId - the file entry type to default all

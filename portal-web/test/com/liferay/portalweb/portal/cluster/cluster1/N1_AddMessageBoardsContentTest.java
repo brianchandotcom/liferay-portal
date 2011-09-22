@@ -97,6 +97,24 @@ public class N1_AddMessageBoardsContentTest extends BaseTestCase {
 				"//input[@value='Add Category']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_19_name']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_19_name']",
 			RuntimeVariables.replace("Test Category 1"));
 		selenium.saveScreenShotAndSource();

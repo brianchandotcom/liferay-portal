@@ -24,11 +24,13 @@ import java.util.Date;
  */
 public class BaseWorkflowTaskDueDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "dueDate ASC, workflowTaskId ASC";
+	public static final String ORDER_BY_ASC = "dueDate ASC, workflowTaskId ASC";
 
-	public static String ORDER_BY_DESC = "dueDate DESC, workflowTaskId DESC";
+	public static final String ORDER_BY_DESC =
+		"dueDate DESC, workflowTaskId DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"dueDate", "workflowTaskId"};
+	public static final String[] ORDER_BY_FIELDS =
+		{"dueDate", "workflowTaskId"};
 
 	public BaseWorkflowTaskDueDateComparator() {
 		this(false);

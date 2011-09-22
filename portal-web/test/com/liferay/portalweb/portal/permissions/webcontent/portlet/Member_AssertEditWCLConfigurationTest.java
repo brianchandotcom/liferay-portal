@@ -31,7 +31,8 @@ public class Member_AssertEditWCLConfigurationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Web Content List Test Page")) {
+				if (selenium.isElementPresent(
+							"link=Web Content List Permissions Page")) {
 					break;
 				}
 			}
@@ -42,8 +43,8 @@ public class Member_AssertEditWCLConfigurationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content List Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Web Content List Permissions Page",
+			RuntimeVariables.replace("Web Content List Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -66,7 +67,8 @@ public class Member_AssertEditWCLConfigurationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -85,8 +87,7 @@ public class Member_AssertEditWCLConfigurationTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Setup"));
-		assertTrue(selenium.isElementPresent("link=Permissions"));
-		assertTrue(selenium.isElementPresent("link=Sharing"));
+		assertTrue(selenium.isVisible("link=Setup"));
+		assertTrue(selenium.isVisible("link=Sharing"));
 	}
 }

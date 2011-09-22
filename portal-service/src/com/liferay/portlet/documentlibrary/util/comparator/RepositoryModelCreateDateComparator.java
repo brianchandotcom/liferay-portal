@@ -29,11 +29,11 @@ import java.util.Date;
  */
 public class RepositoryModelCreateDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "createDate ASC";
+	public static final String ORDER_BY_ASC = "createDate ASC";
 
-	public static String ORDER_BY_DESC = "createDate DESC";
+	public static final String ORDER_BY_DESC = "createDate DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
 	public RepositoryModelCreateDateComparator() {
 		this(false);

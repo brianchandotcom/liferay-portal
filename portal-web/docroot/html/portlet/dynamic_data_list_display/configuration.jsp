@@ -34,12 +34,12 @@ catch (NoSuchRecordSetException nsrse) {
 request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
-<liferay-portlet:renderURL portletConfiguration="true" varImpl="portletURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
 
-<aui:form action="<%= configurationURL %>" method="post" name="fm1">
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value='<%= portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur %>' />
+	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur %>' />
 
 	<liferay-ui:error exception="<%= NoSuchRecordSetException.class %>" message="the-list-could-not-be-found" />
 
@@ -114,7 +114,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 		<br />
 
 		<liferay-ui:search-container
-			searchContainer="<%= new RecordSetSearch(renderRequest, portletURL) %>"
+			searchContainer="<%= new RecordSetSearch(renderRequest, configurationRenderURL) %>"
 		>
 
 			<%
@@ -168,9 +168,9 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 
 <br />
 
-<aui:form action="<%= configurationURL %>" method="post" name="fm">
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value='<%= portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
+	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
 	<aui:input name="preferences--recordSetId--" type="hidden" value="<%= recordSetId %>" />
 	<aui:input name="preferences--detailDDMTemplateId--" type="hidden" value="<%= detailDDMTemplateId %>" />
 	<aui:input name="preferences--listDDMTemplateId--" type="hidden" value="<%= listDDMTemplateId %>" />

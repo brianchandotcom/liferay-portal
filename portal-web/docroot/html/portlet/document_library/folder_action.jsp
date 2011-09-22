@@ -308,19 +308,13 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 				</portlet:renderURL>
 
 				<%
-				String message = "multiple-documents";
-
-				if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
-					message = "multiple-images";
-				}
-
 				String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + LanguageUtil.get(pageContext, "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
 				%>
 
 				<liferay-ui:icon
 					cssClass="aui-helper-hidden upload-multiple-documents"
 					image="../document_library/add_multiple_documents"
-					message="<%= message %>"
+					message='<%= portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
 					url="<%= editFileEntryURL %>"
 				/>
 			</c:if>
@@ -339,18 +333,12 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 				</liferay-portlet:renderURL>
 
 				<%
-				String message = "add-document";
-
-				if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
-					message = "add-image";
-				}
-
-				String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + LanguageUtil.get(pageContext, "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
+				String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + LanguageUtil.get(pageContext, portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
 				%>
 
 				<liferay-ui:icon
 					image="../document_library/add_document"
-					message="<%= message %>"
+					message='<%= portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
 					url="<%= fileEntryTypesCount > 0 ? taglibEditURL : editFileEntryURL %>"
 				/>
 			</c:if>

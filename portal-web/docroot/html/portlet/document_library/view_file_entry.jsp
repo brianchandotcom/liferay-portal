@@ -282,12 +282,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<div>
 
 						<%
+						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry, fileVersion.getVersion());
+						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry, fileVersion.getVersion());
+
 						int previewFileCount = 0;
 						String previewFileURL = null;
 						String videoThumbnailURL = null;
-
-						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry, fileVersion.getVersion());
-						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry, fileVersion.getVersion());
 
 						if (hasImages) {
 							previewFileURL = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
@@ -313,6 +313,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							previewFileCount = PDFProcessor.getPreviewFileCount(fileEntry, fileVersion.getVersion());
 							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&previewFileIndex=";
 						}
+
+						request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(supportedAudio));
+						request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(supportedVideo));
+
+						request.setAttribute("view_file_entry.jsp-previewFileURL", previewFileURL);
+						request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
 						%>
 
 						<c:choose>
@@ -373,32 +379,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 											<div class="lfr-preview-file-content lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
 										</div>
 
-										<script src="<%= themeDisplay.getPathJavaScript() %>/misc/swfobject.js" type="text/javascript"></script>
-
-										<aui:script use="aui-base">
-											var previewDivObject = A.one('#<portlet:namespace />previewFileContent');
-
-											var so = new SWFObject(
-												'<%= themeDisplay.getPathJavaScript() %>/misc/video_player/mpw_player.swf',
-												'<portlet:namespace />previewFileContent',
-												previewDivObject.getStyle('width'),
-												previewDivObject.getStyle('height'),
-												'9',
-												'#000000'
-											);
-
-											so.addParam('allowFullScreen', 'true');
-
-											if (<%= supportedAudio %>) {
-												so.addVariable('<%= AudioProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
-											}
-											else if (<%= supportedVideo %>) {
-												so.addVariable('<%= VideoProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
-												so.addVariable('<%= VideoProcessor.THUMBNAIL_TYPE %>', '<%= videoThumbnailURL %>');
-											}
-
-											so.write('<portlet:namespace />previewFileContent');
-										</aui:script>
+										<liferay-util:include page="/html/portlet/document_library/player.jsp" />
 									</c:when>
 								</c:choose>
 							</c:otherwise>
@@ -797,7 +778,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 <aui:script use="aui-base">
 	var showURLFile = A.one('.show-url-file');
-	var showWebdavFile = A.one('.show-webdav-file-url');
+	var showWebDavFile = A.one('.show-webdav-url-file');
 
 	if (showURLFile) {
 		showURLFile.on(
@@ -810,13 +791,13 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		);
 	}
 
-	if (showWebdavFile) {
-		showWebdavFile.on(
+	if (showWebDavFile) {
+		showWebDavFile.on(
 			'click',
 			function(event) {
-				var WebdavFileContainer = A.one('.webdav-url-file-container');
+				var WebDavFileContainer = A.one('.webdav-url-file-container');
 
-				WebdavFileContainer.toggleClass('aui-helper-hidden');
+				WebDavFileContainer.toggleClass('aui-helper-hidden');
 			}
 		);
 	}

@@ -17,6 +17,7 @@ package com.liferay.portlet.usersadmin.action;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.servlet.UploadException;
 
 import java.io.InputStream;
 

@@ -593,9 +593,11 @@ AUI().add(
 						if (fileEntrySearch) {
 							var fileEntrySearchContainer = A.one('#' + namespace + 'fileEntrySearchContainer');
 
-							fileEntrySearchContainer.plug(A.Plugin.ParseContent);
+							if (fileEntrySearchContainer) {
+								fileEntrySearchContainer.plug(A.Plugin.ParseContent);
 
-							fileEntrySearchContainer.setContent(fileEntrySearch);
+								fileEntrySearchContainer.setContent(fileEntrySearch);
+							}
 						}
 					},
 

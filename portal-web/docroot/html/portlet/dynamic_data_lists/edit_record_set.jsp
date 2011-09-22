@@ -40,7 +40,7 @@ if (Validator.isNotNull(ddmStructureId)) {
 	try {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmStructureId);
 
-		ddmStructureName = ddmStructure.getName(locale);
+		ddmStructureName = HtmlUtil.escape(ddmStructure.getName(locale));
 	}
 	catch (NoSuchStructureException nsse) {
 	}

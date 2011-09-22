@@ -28,11 +28,11 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
  */
 public class RepositoryModelReadCountComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "readCount ASC";
+	public static final String ORDER_BY_ASC = "readCount ASC";
 
-	public static String ORDER_BY_DESC = "readCount DESC";
+	public static final String ORDER_BY_DESC = "readCount DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"readCount"};
+	public static final String[] ORDER_BY_FIELDS = {"readCount"};
 
 	public RepositoryModelReadCountComparator() {
 		this(false);

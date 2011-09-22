@@ -41,7 +41,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title="add-multiple-documents"
+	title='<%= portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) ? "add-multiple-media" : "add-multiple-documents" %>'
 />
 
 <aui:layout>
@@ -69,7 +69,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 					metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
 					metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 					namespace: '<portlet:namespace />',
-					service: {
+					tempFileURL: {
 						method: Liferay.Service.DL.DLApp.getTempFileEntryNames,
 						params: {
 							groupId: <%= scopeGroupId %>,

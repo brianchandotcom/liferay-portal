@@ -25,8 +25,8 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", JournalUtil.getEmailFromName(portletSetup));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", JournalUtil.getEmailFromAddress(portletSetup));
+String emailFromName = ParamUtil.getString(request, "emailFromName", JournalUtil.getEmailFromName(portletSetup, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", JournalUtil.getEmailFromAddress(portletSetup, company.getCompanyId()));
 
 String emailArticleAddedSubject = ParamUtil.getString(request, "emailArticleAddedSubject", JournalUtil.getEmailArticleAddedSubject(portletSetup));
 String emailArticleAddedBody = ParamUtil.getString(request, "emailArticleAddedBody", JournalUtil.getEmailArticleAddedBody(portletSetup));

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -33,6 +34,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.announcements.EntryContentException;
@@ -343,8 +345,12 @@ public class AnnouncementsEntryLocalServiceImpl
 		String className = entry.getClassName();
 		long classPK = entry.getClassPK();
 
-		String fromName = PropsValues.ANNOUNCEMENTS_EMAIL_FROM_NAME;
-		String fromAddress = PropsValues.ANNOUNCEMENTS_EMAIL_FROM_ADDRESS;
+		String fromName = PrefsPropsUtil.getStringFromNames(
+			entry.getCompanyId(), PropsValues.ANNOUNCEMENTS_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		String fromAddress = PrefsPropsUtil.getStringFromNames(
+			entry.getCompanyId(), PropsValues.ANNOUNCEMENTS_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
 		String toName = PropsValues.ANNOUNCEMENTS_EMAIL_TO_NAME;
 		String toAddress = PropsValues.ANNOUNCEMENTS_EMAIL_TO_ADDRESS;

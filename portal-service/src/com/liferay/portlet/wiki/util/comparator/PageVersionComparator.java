@@ -22,11 +22,11 @@ import com.liferay.portlet.wiki.model.WikiPage;
  */
 public class PageVersionComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "WikiPage.version ASC";
+	public static final String ORDER_BY_ASC = "WikiPage.version ASC";
 
-	public static String ORDER_BY_DESC = "WikiPage.version DESC";
+	public static final String ORDER_BY_DESC = "WikiPage.version DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"version"};
+	public static final String[] ORDER_BY_FIELDS = {"version"};
 
 	public PageVersionComparator() {
 		this(false);

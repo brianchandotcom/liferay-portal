@@ -650,9 +650,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the primary keys of the users belonging to the group
+	 * @throws PortalException if the current user did not have permission to
+	 *         view group assignments
 	 * @throws SystemException if a system exception occurred
 	 */
-	public long[] getGroupUserIds(long groupId) throws SystemException {
+	public long[] getGroupUserIds(long groupId)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW_MEMBERS);
+
 		return userLocalService.getGroupUserIds(groupId);
 	}
 
@@ -661,10 +668,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *
 	 * @param  organizationId the primary key of the organization
 	 * @return the primary keys of the users belonging to the organization
+	 * @throws PortalException if the current user did not have permission to
+	 *         view organization assignments
 	 * @throws SystemException if a system exception occurred
 	 */
 	public long[] getOrganizationUserIds(long organizationId)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		OrganizationPermissionUtil.check(
+			getPermissionChecker(), organizationId, ActionKeys.VIEW_MEMBERS);
 
 		return userLocalService.getOrganizationUserIds(organizationId);
 	}
@@ -674,9 +686,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *
 	 * @param  roleId the primary key of the role
 	 * @return the primary keys of the users belonging to the role
+	 * @throws PortalException if the current user did not have permission to
+	 *         view role members
 	 * @throws SystemException if a system exception occurred
 	 */
-	public long[] getRoleUserIds(long roleId) throws SystemException {
+	public long[] getRoleUserIds(long roleId) throws
+		PortalException, SystemException {
+
+		RolePermissionUtil.check(
+			getPermissionChecker(), roleId, ActionKeys.VIEW);
+
 		return userLocalService.getRoleUserIds(roleId);
 	}
 

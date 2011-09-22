@@ -22,11 +22,11 @@ import com.liferay.portal.model.Subscription;
  */
 public class SubscriptionClassNameIdComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "Subscription.classNameId ASC";
+	public static final String ORDER_BY_ASC = "Subscription.classNameId ASC";
 
-	public static String ORDER_BY_DESC = "Subscription.classNameId DESC";
+	public static final String ORDER_BY_DESC = "Subscription.classNameId DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"classNameId"};
+	public static final String[] ORDER_BY_FIELDS = {"classNameId"};
 
 	public SubscriptionClassNameIdComparator() {
 		this(false);

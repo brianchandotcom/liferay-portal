@@ -22,13 +22,13 @@ import com.liferay.portlet.shopping.model.ShoppingItem;
  */
 public class ItemNameComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC =
+	public static final String ORDER_BY_ASC =
 		"ShoppingItem.categoryId ASC, ShoppingItem.name ASC";
 
-	public static String ORDER_BY_DESC =
+	public static final String ORDER_BY_DESC =
 		"ShoppingItem.categoryId DESC, ShoppingItem.name DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"categoryId", "name"};
+	public static final String[] ORDER_BY_FIELDS = {"categoryId", "name"};
 
 	public ItemNameComparator() {
 		this(false);

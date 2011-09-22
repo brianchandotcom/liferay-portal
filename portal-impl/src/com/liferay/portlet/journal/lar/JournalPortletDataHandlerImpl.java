@@ -55,6 +55,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.NoSuchTemplateException;
@@ -842,13 +843,39 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		JournalFeed importedFeed = null;
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			JournalFeed existingFeed = JournalFeedUtil.fetchByUUID_G(
-				feed.getUuid(), portletDataContext.getScopeGroupId());
+		try {
+			if (portletDataContext.isDataStrategyMirror()) {
+				JournalFeed existingFeed = JournalFeedUtil.fetchByUUID_G(
+					feed.getUuid(), portletDataContext.getScopeGroupId());
 
-			if (existingFeed == null) {
-				serviceContext.setUuid(feed.getUuid());
+				if (existingFeed == null) {
+					serviceContext.setUuid(feed.getUuid());
 
+					importedFeed = JournalFeedLocalServiceUtil.addFeed(
+						userId, portletDataContext.getScopeGroupId(), feedId,
+						autoFeedId, feed.getName(), feed.getDescription(),
+						feed.getType(), parentStructureId, parentTemplateId,
+						parentRenderTemplateId, feed.getDelta(),
+						feed.getOrderByCol(), feed.getOrderByType(),
+						feed.getTargetLayoutFriendlyUrl(),
+						feed.getTargetPortletId(), feed.getContentField(),
+						feed.getFeedType(), feed.getFeedVersion(),
+						serviceContext);
+				}
+				else {
+					importedFeed = JournalFeedLocalServiceUtil.updateFeed(
+						existingFeed.getGroupId(), existingFeed.getFeedId(),
+						feed.getName(), feed.getDescription(), feed.getType(),
+						parentStructureId, parentTemplateId,
+						parentRenderTemplateId, feed.getDelta(),
+						feed.getOrderByCol(), feed.getOrderByType(),
+						feed.getTargetLayoutFriendlyUrl(),
+						feed.getTargetPortletId(), feed.getContentField(),
+						feed.getFeedType(), feed.getFeedVersion(),
+						serviceContext);
+				}
+			}
+			else {
 				importedFeed = JournalFeedLocalServiceUtil.addFeed(
 					userId, portletDataContext.getScopeGroupId(), feedId,
 					autoFeedId, feed.getName(), feed.getDescription(),
@@ -857,39 +884,38 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 					feed.getOrderByCol(), feed.getOrderByType(),
 					feed.getTargetLayoutFriendlyUrl(),
 					feed.getTargetPortletId(), feed.getContentField(),
-					feed.getFeedType(), feed.getFeedVersion(),
-					serviceContext);
-			}
-			else {
-				importedFeed = JournalFeedLocalServiceUtil.updateFeed(
-					existingFeed.getGroupId(), existingFeed.getFeedId(),
-					feed.getName(), feed.getDescription(), feed.getType(),
-					parentStructureId, parentTemplateId, parentRenderTemplateId,
-					feed.getDelta(), feed.getOrderByCol(),
-					feed.getOrderByType(), feed.getTargetLayoutFriendlyUrl(),
-					feed.getTargetPortletId(), feed.getContentField(),
 					feed.getFeedType(), feed.getFeedVersion(), serviceContext);
 			}
-		}
-		else {
-			importedFeed = JournalFeedLocalServiceUtil.addFeed(
-				userId, portletDataContext.getScopeGroupId(), feedId,
-				autoFeedId, feed.getName(), feed.getDescription(),
-				feed.getType(), parentStructureId, parentTemplateId,
-				parentRenderTemplateId, feed.getDelta(), feed.getOrderByCol(),
-				feed.getOrderByType(), feed.getTargetLayoutFriendlyUrl(),
-				feed.getTargetPortletId(), feed.getContentField(),
-				feed.getFeedType(), feed.getFeedVersion(), serviceContext);
-		}
 
-		portletDataContext.importClassedModel(feed, importedFeed, _NAMESPACE);
+			portletDataContext.importClassedModel(
+				feed, importedFeed, _NAMESPACE);
 
-		if (!feedId.equals(importedFeed.getFeedId())) {
+			if (!feedId.equals(importedFeed.getFeedId())) {
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(5);
+
+					sb.append("A feed with the ID ");
+					sb.append(feedId);
+					sb.append(" already exists. The new generated ID is ");
+					sb.append(importedFeed.getFeedId());
+					sb.append(".");
+
+					_log.warn(sb.toString());
+				}
+			}
+		}
+		catch (FeedTargetLayoutFriendlyUrlException ftlfurle) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"A feed with the ID " + feedId + " already " +
-						"exists. The new generated ID is " +
-							importedFeed.getFeedId());
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("A feed with the ID ");
+				sb.append(feedId);
+				sb.append(" cannot be imported because layout with friendly ");
+				sb.append("URL ");
+				sb.append(feed.getTargetLayoutFriendlyUrl());
+				sb.append(" does not exist");
+
+				_log.warn(sb.toString());
 			}
 		}
 	}
@@ -1468,10 +1494,12 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String oldGroupFriendlyURL = friendlyUrlParts[2];
 
 		if (newGroupFriendlyURL.equals(oldGroupFriendlyURL)) {
-			feed.setTargetLayoutFriendlyUrl(
-				StringUtil.replace(
-					feed.getTargetLayoutFriendlyUrl(), newGroupFriendlyURL,
-					"@data_handler_group_friendly_url@"));
+			String targetLayoutFriendlyUrl = StringUtil.replaceFirst(
+				feed.getTargetLayoutFriendlyUrl(),
+				StringPool.SLASH + newGroupFriendlyURL + StringPool.SLASH,
+				"/@data_handler_group_friendly_url@/");
+
+			feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 		}
 
 		portletDataContext.addClassedModel(feedElement, path, feed, _NAMESPACE);

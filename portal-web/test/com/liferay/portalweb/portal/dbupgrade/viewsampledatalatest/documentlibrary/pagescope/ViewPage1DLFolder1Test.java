@@ -52,7 +52,7 @@ public class ViewPage1DLFolder1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library")
+				if (RuntimeVariables.replace("Documents and Media")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -65,7 +65,7 @@ public class ViewPage1DLFolder1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isVisible(
 				"//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png']"));
@@ -131,7 +131,8 @@ public class ViewPage1DLFolder1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library (DL Page2 Name)")
+				if (RuntimeVariables.replace(
+							"Documents and Media (DL Page2 Name)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -145,7 +146,7 @@ public class ViewPage1DLFolder1Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Document Library (DL Page2 Name)"),
+				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertFalse(selenium.isTextPresent("DL Folder1 Name"));
 		selenium.open("/web/document-library-page-scope-community/");
@@ -178,7 +179,8 @@ public class ViewPage1DLFolder1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library (DL Page2 Name)")
+				if (RuntimeVariables.replace(
+							"Documents and Media (DL Page2 Name)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -192,7 +194,7 @@ public class ViewPage1DLFolder1Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Document Library (DL Page2 Name)"),
+				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertFalse(selenium.isTextPresent("DL Folder1 Name"));
 	}

@@ -742,17 +742,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -771,6 +771,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -811,7 +813,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(address);
+			Object[] values = orderByComparator.getOrderByConditionValues(address);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1073,17 +1075,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1102,6 +1104,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1142,7 +1146,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(address);
+			Object[] values = orderByComparator.getOrderByConditionValues(address);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1430,17 +1434,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1459,6 +1463,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1501,7 +1507,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		qPos.add(classNameId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(address);
+			Object[] values = orderByComparator.getOrderByConditionValues(address);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1808,17 +1814,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		query.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1837,6 +1843,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1881,7 +1889,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(address);
+			Object[] values = orderByComparator.getOrderByConditionValues(address);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -2209,17 +2217,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		query.append(_FINDER_COLUMN_C_C_C_M_MAILING_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -2238,6 +2246,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -2284,7 +2294,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		qPos.add(mailing);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(address);
+			Object[] values = orderByComparator.getOrderByConditionValues(address);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -2612,17 +2622,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -2641,6 +2651,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -2687,7 +2699,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		qPos.add(primary);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(address);
+			Object[] values = orderByComparator.getOrderByConditionValues(address);
 
 			for (Object value : values) {
 				qPos.add(value);

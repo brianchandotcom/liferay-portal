@@ -495,10 +495,13 @@ public class UserServiceWrapper implements UserService {
 	*
 	* @param groupId the primary key of the group
 	* @return the primary keys of the users belonging to the group
+	* @throws PortalException if the current user did not have permission to
+	view group assignments
 	* @throws SystemException if a system exception occurred
 	*/
 	public long[] getGroupUserIds(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.getGroupUserIds(groupId);
 	}
 
@@ -507,10 +510,13 @@ public class UserServiceWrapper implements UserService {
 	*
 	* @param organizationId the primary key of the organization
 	* @return the primary keys of the users belonging to the organization
+	* @throws PortalException if the current user did not have permission to
+	view organization assignments
 	* @throws SystemException if a system exception occurred
 	*/
 	public long[] getOrganizationUserIds(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.getOrganizationUserIds(organizationId);
 	}
 
@@ -519,10 +525,13 @@ public class UserServiceWrapper implements UserService {
 	*
 	* @param roleId the primary key of the role
 	* @return the primary keys of the users belonging to the role
+	* @throws PortalException if the current user did not have permission to
+	view role members
 	* @throws SystemException if a system exception occurred
 	*/
 	public long[] getRoleUserIds(long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.getRoleUserIds(roleId);
 	}
 

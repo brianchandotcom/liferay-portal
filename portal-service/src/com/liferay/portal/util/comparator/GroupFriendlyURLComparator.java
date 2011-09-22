@@ -22,11 +22,11 @@ import com.liferay.portal.model.Group;
  */
 public class GroupFriendlyURLComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "groupFriendlyURL ASC";
+	public static final String ORDER_BY_ASC = "groupFriendlyURL ASC";
 
-	public static String ORDER_BY_DESC = "groupFriendlyURL DESC";
+	public static final String ORDER_BY_DESC = "groupFriendlyURL DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"groupFriendlyURL"};
+	public static final String[] ORDER_BY_FIELDS = {"groupFriendlyURL"};
 
 	public GroupFriendlyURLComparator() {
 		this(false);

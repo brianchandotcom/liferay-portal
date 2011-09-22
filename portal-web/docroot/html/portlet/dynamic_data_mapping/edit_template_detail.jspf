@@ -15,6 +15,8 @@
 --%>
 
 <%
+String languageId = LanguageUtil.getLanguageId(request);
+
 if (Validator.isNull(script)) {
 	script = structure.getXsd();
 }
@@ -39,7 +41,7 @@ while (itr.hasNext()) {
 
 	StringBundler sb = new StringBundler(5);
 
-	sb.append(structure.getFieldLabel(fieldName));
+	sb.append(structure.getFieldLabel(fieldName, languageId));
 	sb.append(CharPool.SPACE);
 	sb.append(CharPool.OPEN_PARENTHESIS);
 	sb.append(structure.getFieldDataType(fieldName));
@@ -47,14 +49,8 @@ while (itr.hasNext()) {
 
 	JSONObject fieldJSONObject = JSONFactoryUtil.createJSONObject();
 
-	fieldJSONObject.put("entryLabel", sb.toString());
-
-	if (structure.getFieldRequired(fieldName)) {
-		fieldJSONObject.put("fixed", true);
-	}
-
-	fieldJSONObject.put("key", fieldName);
-	fieldJSONObject.put("label", structure.getFieldLabel(fieldName));
+	fieldJSONObject.put("id", fieldName);
+	fieldJSONObject.put("label", structure.getFieldLabel(fieldName, languageId));
 	fieldJSONObject.put("name", fieldName);
 	fieldJSONObject.put("readOnlyAttributes", readOnlyAttributesJSONArray);
 	fieldJSONObject.put("type", structure.getFieldType(fieldName));
@@ -74,7 +70,16 @@ if (Validator.isNotNull(portletResourceNamespace)){
 <aui:input name="script" type="hidden" />
 
 <aui:script use="liferay-portlet-dynamic-data-mapping">
-	window.<%= namespace %>structureAvailableFields = A.Array(<%= structureAvailableFieldsJSONArray.toString() %>).concat(Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
+	var availableFields = A.Array(<%= structureAvailableFieldsJSONArray.toString() %>);
+
+	A.Array.each(
+		availableFields,
+		function(item, index, collection) {
+			item.iconClass = Liferay.FormBuilder.DEFAULT_ICON_CLASS;
+		}
+	);
+
+	window.<%= namespace %>structureAvailableFields = availableFields.concat(Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
 
 	Liferay.provide(
 		window,

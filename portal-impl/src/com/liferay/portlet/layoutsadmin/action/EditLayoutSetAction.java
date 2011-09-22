@@ -17,6 +17,7 @@ package com.liferay.portlet.layoutsadmin.action;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.util.servlet.UploadException;
 
 import java.io.InputStream;
 

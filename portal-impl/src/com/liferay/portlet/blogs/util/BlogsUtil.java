@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.util;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.FriendlyURLNormalizer;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.util.ContentUtil;
 
@@ -153,17 +155,20 @@ public class BlogsUtil {
 		return map;
 	}
 
-	public static String getEmailFromAddress(PortletPreferences preferences) {
-		String emailFromAddress = PropsUtil.get(
-			PropsKeys.BLOGS_EMAIL_FROM_ADDRESS);
+	public static String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
 
-		return preferences.getValue("emailFromAddress", emailFromAddress);
+		return PortalUtil.getEmailFromAddress(
+			preferences, companyId, PropsKeys.BLOGS_EMAIL_FROM_ADDRESS);
 	}
 
-	public static String getEmailFromName(PortletPreferences preferences) {
-		String emailFromName = PropsUtil.get(PropsKeys.BLOGS_EMAIL_FROM_NAME);
+	public static String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
 
-		return preferences.getValue("emailFromName", emailFromName);
+		return PortalUtil.getEmailFromName(
+			preferences, companyId, PropsKeys.BLOGS_EMAIL_FROM_NAME);
 	}
 
 	public static String getUrlTitle(long entryId, String title) {

@@ -51,6 +51,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.FriendlyURLNormalizer;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -638,18 +639,20 @@ public class JournalUtil {
 		}
 	}
 
-	public static String getEmailFromAddress(PortletPreferences preferences) {
-		String emailFromAddress = PropsUtil.get(
-			PropsKeys.JOURNAL_EMAIL_FROM_ADDRESS);
+	public static String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
 
-		return preferences.getValue("emailFromAddress", emailFromAddress);
+		return PortalUtil.getEmailFromAddress(
+			preferences, companyId, PropsKeys.JOURNAL_EMAIL_FROM_ADDRESS);
 	}
 
-	public static String getEmailFromName(PortletPreferences preferences) {
-		String emailFromName = PropsUtil.get(
-			PropsKeys.JOURNAL_EMAIL_FROM_NAME);
+	public static String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
 
-		return preferences.getValue("emailFromName", emailFromName);
+		return PortalUtil.getEmailFromName(
+			preferences, companyId, PropsKeys.JOURNAL_EMAIL_FROM_NAME);
 	}
 
 	public static Stack<JournalArticle> getRecentArticles(

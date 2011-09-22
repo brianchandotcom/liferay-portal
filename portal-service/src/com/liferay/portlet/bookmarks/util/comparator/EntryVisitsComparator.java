@@ -22,11 +22,11 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
  */
 public class EntryVisitsComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "BookmarksEntry.visits ASC";
+	public static final String ORDER_BY_ASC = "BookmarksEntry.visits ASC";
 
-	public static String ORDER_BY_DESC = "BookmarksEntry.visits DESC";
+	public static final String ORDER_BY_DESC = "BookmarksEntry.visits DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"visits"};
+	public static final String[] ORDER_BY_FIELDS = {"visits"};
 
 	public EntryVisitsComparator() {
 		this(false);

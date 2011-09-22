@@ -22,13 +22,13 @@ import com.liferay.portal.model.UserGroup;
  */
 public class UserGroupDescriptionComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC =
+	public static final String ORDER_BY_ASC =
 		"UserGroup.description ASC, UserGroup.name ASC";
 
-	public static String ORDER_BY_DESC =
+	public static final String ORDER_BY_DESC =
 		"UserGroup.description DESC, UserGroup.name DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"description", "name"};
+	public static final String[] ORDER_BY_FIELDS = {"description", "name"};
 
 	public UserGroupDescriptionComparator() {
 		this(false);

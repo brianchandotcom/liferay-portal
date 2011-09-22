@@ -52,7 +52,7 @@ public class Guest_ViewPage1Folder1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library")
+				if (RuntimeVariables.replace("Documents and Media")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -65,7 +65,7 @@ public class Guest_ViewPage1Folder1Test extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents in this folder."),

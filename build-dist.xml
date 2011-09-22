@@ -211,6 +211,8 @@
 				<available file="${app.server.parent.dir}/${tcat.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
 				<get
 					dest="${app.server.parent.dir}/${tcat.zip.name}"
 					src="${tcat.zip.url}"
@@ -794,6 +796,8 @@ release was successful.</echo>
 				<available file="${app.server.parent.dir}/${app.server.geronimo.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
 				<get
 					dest="${app.server.parent.dir}/${app.server.geronimo.zip.name}"
 					src="${app.server.geronimo.zip.url}"
@@ -812,6 +816,12 @@ release was successful.</echo>
 				to="geronimo-${app.server.geronimo.version}/*"
 			/>
 		</unzip>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.geronimo.bin.dir}">
+				<include name="*.sh"/>
+			</fileset>
+		</chmod>
 	</target>
 
 	<target name="unzip-glassfish">
@@ -822,6 +832,8 @@ release was successful.</echo>
 				<available file="${app.server.parent.dir}/${app.server.glassfish.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
 				<get
 					dest="${app.server.parent.dir}/${app.server.glassfish.zip.name}"
 					src="${app.server.glassfish.zip.url}"
@@ -843,6 +855,12 @@ release was successful.</echo>
 				to="${app.server.glassfish.dir}/*"
 			/>
 		</unzip>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.glassfish.bin.dir}">
+				<exclude name="*.bat"/>
+			</fileset>
+		</chmod>
 	</target>
 
 	<target name="unzip-jboss">
@@ -853,6 +871,8 @@ release was successful.</echo>
 				<available file="${app.server.parent.dir}/${app.server.jboss.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
 				<get
 					dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
 					src="${app.server.jboss.zip.url}"
@@ -871,6 +891,12 @@ release was successful.</echo>
 				to="jboss-${app.server.jboss.version}/*"
 			/>
 		</unzip>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.jboss.bin.dir}">
+				<include name="*.sh"/>
+			</fileset>
+		</chmod>
 
 		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
@@ -902,6 +928,8 @@ release was successful.</echo>
 				<available file="${app.server.parent.dir}/${app.server.jetty.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
 				<get
 					dest="${app.server.parent.dir}/${app.server.jetty.zip.name}"
 					src="${app.server.jetty.zip.url}"
@@ -938,6 +966,8 @@ release was successful.</echo>
 				<available file="${app.server.parent.dir}/${app.server.jonas.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
 				<get
 					dest="${app.server.parent.dir}/${app.server.jonas.zip.name}"
 					src="${app.server.jonas.zip.url}"
@@ -959,6 +989,12 @@ release was successful.</echo>
 				to="jonas-${app.server.jonas.version}/*"
 			/>
 		</unzip>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.jonas.bin.dir}">
+				<exclude name="*.bat"/>
+			</fileset>
+		</chmod>
 
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset
@@ -1000,6 +1036,8 @@ release was successful.</echo>
 				<available file="${app.server.parent.dir}/${app.server.resin.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
 				<get
 					dest="${app.server.parent.dir}/${app.server.resin.zip.name}"
 					src="${app.server.resin.zip.url}"
@@ -1028,6 +1066,8 @@ release was successful.</echo>
 				<available file="${app.server.parent.dir}/${app.server.tomcat.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
 				<get
 					dest="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
 					src="${app.server.tomcat.zip.url}"
@@ -1067,6 +1107,12 @@ release was successful.</echo>
 			/>
 		</unzip>
 
+		<chmod perm="a+x">
+			<fileset dir="${app.server.tomcat.bin.dir}">
+				<include name="*.sh"/>
+			</fileset>
+		</chmod>
+
 		<mkdir dir="${app.server.tomcat.dir}/webapps" />
 	</target>
 
@@ -1080,6 +1126,8 @@ release was successful.</echo>
 				<available file="${app.server.parent.dir}/${app.server.weblogic.zip.name}" />
 			</not>
 			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
 				<get
 					dest="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
 					src="${app.server.weblogic.zip.url}"

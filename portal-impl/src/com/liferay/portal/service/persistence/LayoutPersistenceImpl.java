@@ -1054,17 +1054,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1083,6 +1083,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1125,7 +1127,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1545,17 +1547,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1574,6 +1576,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1614,7 +1618,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1828,13 +1832,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
 					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
@@ -1842,9 +1846,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
 
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1863,6 +1867,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
@@ -1923,7 +1929,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -2191,17 +2197,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -2220,6 +2226,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -2260,7 +2268,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -2679,17 +2687,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -2708,6 +2716,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -2750,7 +2760,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		qPos.add(privateLayout);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -2977,13 +2987,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
 					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
@@ -2991,9 +3001,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
 
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -3012,6 +3022,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
@@ -3074,7 +3086,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		qPos.add(privateLayout);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -3535,17 +3547,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -3564,6 +3576,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -3608,7 +3622,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		qPos.add(parentLayoutId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -3848,13 +3862,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
 					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
@@ -3862,9 +3876,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
 
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -3883,6 +3897,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
@@ -3947,7 +3963,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		qPos.add(parentLayoutId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -4442,17 +4458,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -4471,6 +4487,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -4517,7 +4535,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -4776,13 +4794,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
 					query.append(_ORDER_BY_ENTITY_ALIAS);
 				}
@@ -4790,9 +4808,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 					query.append(_ORDER_BY_ENTITY_TABLE);
 				}
 
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -4811,6 +4829,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
@@ -4877,7 +4897,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(layout);
+			Object[] values = orderByComparator.getOrderByConditionValues(layout);
 
 			for (Object value : values) {
 				qPos.add(value);

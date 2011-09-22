@@ -23,11 +23,12 @@ import com.liferay.portlet.blogs.model.BlogsStatsUser;
  */
 public class StatsUserLastPostDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "BlogsStatsUser.lastPostDate ASC";
+	public static final String ORDER_BY_ASC = "BlogsStatsUser.lastPostDate ASC";
 
-	public static String ORDER_BY_DESC = "BlogsStatsUser.lastPostDate DESC";
+	public static final String ORDER_BY_DESC =
+		"BlogsStatsUser.lastPostDate DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"lastPostDate"};
+	public static final String[] ORDER_BY_FIELDS = {"lastPostDate"};
 
 	public StatsUserLastPostDateComparator() {
 		this(false);

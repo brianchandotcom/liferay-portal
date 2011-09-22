@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.calendar.util;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.util.ContentUtil;
@@ -38,18 +40,20 @@ import javax.portlet.PortletPreferences;
  */
 public class CalUtil {
 
-	public static String getEmailFromAddress(PortletPreferences preferences) {
-		String emailFromAddress = PropsUtil.get(
-			PropsKeys.CALENDAR_EMAIL_FROM_ADDRESS);
+	public static String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
 
-		return preferences.getValue("emailFromAddress", emailFromAddress);
+		return PortalUtil.getEmailFromAddress(
+			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_ADDRESS);
 	}
 
-	public static String getEmailFromName(PortletPreferences preferences) {
-		String emailFromName = PropsUtil.get(
-			PropsKeys.CALENDAR_EMAIL_FROM_NAME);
+	public static String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
 
-		return preferences.getValue("emailFromName", emailFromName);
+		return PortalUtil.getEmailFromName(
+			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_NAME);
 	}
 
 	public static boolean getEmailEventReminderEnabled(

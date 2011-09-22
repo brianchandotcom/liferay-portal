@@ -865,17 +865,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -894,6 +894,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -932,7 +934,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(socialRelation);
+			Object[] values = orderByComparator.getOrderByConditionValues(socialRelation);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1199,17 +1201,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1228,6 +1230,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1264,7 +1268,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(socialRelation);
+			Object[] values = orderByComparator.getOrderByConditionValues(socialRelation);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1530,17 +1534,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		query.append(_FINDER_COLUMN_USERID1_USERID1_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1559,6 +1563,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1595,7 +1601,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		qPos.add(userId1);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(socialRelation);
+			Object[] values = orderByComparator.getOrderByConditionValues(socialRelation);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1861,17 +1867,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		query.append(_FINDER_COLUMN_USERID2_USERID2_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1890,6 +1896,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1926,7 +1934,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		qPos.add(userId2);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(socialRelation);
+			Object[] values = orderByComparator.getOrderByConditionValues(socialRelation);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -2186,17 +2194,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		query.append(_FINDER_COLUMN_TYPE_TYPE_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -2215,6 +2223,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -2251,7 +2261,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(socialRelation);
+			Object[] values = orderByComparator.getOrderByConditionValues(socialRelation);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -2536,17 +2546,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		query.append(_FINDER_COLUMN_C_T_TYPE_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -2565,6 +2575,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -2603,7 +2615,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(socialRelation);
+			Object[] values = orderByComparator.getOrderByConditionValues(socialRelation);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -2889,17 +2901,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		query.append(_FINDER_COLUMN_U1_U2_USERID2_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -2918,6 +2930,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -2956,7 +2970,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		qPos.add(userId2);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(socialRelation);
+			Object[] values = orderByComparator.getOrderByConditionValues(socialRelation);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -3241,17 +3255,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		query.append(_FINDER_COLUMN_U1_T_TYPE_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -3270,6 +3284,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -3308,7 +3324,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(socialRelation);
+			Object[] values = orderByComparator.getOrderByConditionValues(socialRelation);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -3593,17 +3609,17 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		query.append(_FINDER_COLUMN_U2_T_TYPE_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -3622,6 +3638,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -3660,7 +3678,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(socialRelation);
+			Object[] values = orderByComparator.getOrderByConditionValues(socialRelation);
 
 			for (Object value : values) {
 				qPos.add(value);

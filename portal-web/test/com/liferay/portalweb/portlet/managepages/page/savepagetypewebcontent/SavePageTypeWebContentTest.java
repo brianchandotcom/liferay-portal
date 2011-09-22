@@ -50,9 +50,7 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//div[2]/div[2]/div[2]/ul/li[3]/a"));
-				selenium.clickAt("//div[2]/div[2]/div[2]/ul/li[3]/a",
+				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
@@ -91,7 +89,7 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Public Pages")
 												.equals(selenium.getText(
-										"//div/div[3]/a"))) {
+										"//a[@class='layout-tree']"))) {
 							break;
 						}
 					}
@@ -103,7 +101,7 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Public Pages"),
-					selenium.getText("//div/div[3]/a"));
+					selenium.getText("//a[@class='layout-tree']"));
 
 				boolean welcomePresent = selenium.isElementPresent(
 						"//li/ul/li[1]/div/div[3]/a");

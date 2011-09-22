@@ -22,13 +22,13 @@ import com.liferay.portal.model.Role;
  */
 public class RoleDescriptionComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC =
+	public static final String ORDER_BY_ASC =
 		"Role_.description ASC, Role_.name ASC";
 
-	public static String ORDER_BY_DESC =
+	public static final String ORDER_BY_DESC =
 		"Role_.description DESC, Role_.name DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"description", "name"};
+	public static final String[] ORDER_BY_FIELDS = {"description", "name"};
 
 	public RoleDescriptionComparator() {
 		this(false);

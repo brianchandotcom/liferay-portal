@@ -58,7 +58,7 @@ public class AddCommunityMBCategoryThreadSubscriptionTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -69,11 +69,11 @@ public class AddCommunityMBCategoryThreadSubscriptionTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Custom Site"),
+		assertEquals(RuntimeVariables.replace("Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_134_name']",

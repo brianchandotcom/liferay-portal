@@ -120,6 +120,10 @@ public class VideoProcessor extends DLPreviewableProcessor {
 		return false;
 	}
 
+	public static boolean isSupportedVideo(String mimeType) {
+		return _instance._isSupportedVideo(mimeType);
+	}
+
 	public VideoProcessor() {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
@@ -399,7 +403,11 @@ public class VideoProcessor extends DLPreviewableProcessor {
 			return false;
 		}
 
-		return _videoMimeTypes.contains(fileVersion.getMimeType());
+		return _isSupportedVideo(fileVersion.getMimeType());
+	}
+
+	public boolean _isSupportedVideo(String mimeType) {
+		return _videoMimeTypes.contains(mimeType);
 	}
 
 	private void _queueGeneration(FileVersion fileVersion) {

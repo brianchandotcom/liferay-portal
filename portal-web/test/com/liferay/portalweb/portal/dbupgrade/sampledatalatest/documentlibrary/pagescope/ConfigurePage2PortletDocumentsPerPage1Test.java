@@ -53,7 +53,8 @@ public class ConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library (DL Page2 Name)")
+				if (RuntimeVariables.replace(
+							"Documents and Media (DL Page2 Name)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -67,7 +68,7 @@ public class ConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Document Library (DL Page2 Name)"),
+				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
@@ -162,7 +163,8 @@ public class ConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library (DL Page2 Name)")
+				if (RuntimeVariables.replace(
+							"Documents and Media (DL Page2 Name)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -176,7 +178,7 @@ public class ConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Document Library (DL Page2 Name)"),
+				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("xPath=(//span[@class='document-title'])[1]"));

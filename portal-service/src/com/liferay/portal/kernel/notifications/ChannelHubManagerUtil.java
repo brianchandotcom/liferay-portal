@@ -23,6 +23,24 @@ import java.util.List;
 public class ChannelHubManagerUtil {
 
 	public static void confirmDelivery(
+			long companyId, long userId,
+			Collection<String> notificationEventUuids)
+		throws ChannelException {
+
+		getChannelHubManager().confirmDelivery(
+			companyId, userId, notificationEventUuids);
+	}
+
+	public static void confirmDelivery(
+			long companyId, long userId,
+			Collection<String> notificationEventUuids, boolean archived)
+		throws ChannelException {
+
+		getChannelHubManager().confirmDelivery(
+			companyId, userId, notificationEventUuids, archived);
+	}
+
+	public static void confirmDelivery(
 			long companyId, long userId, String notificationEventUuid)
 		throws ChannelException {
 
@@ -59,7 +77,7 @@ public class ChannelHubManagerUtil {
 			companyId, userId, notificationEventUuid);
 	}
 
-	public void deleteUserNotificiationEvents(
+	public static void deleteUserNotificiationEvents(
 			long companyId, long userId,
 			Collection<String> notificationEventUuids)
 		throws ChannelException {

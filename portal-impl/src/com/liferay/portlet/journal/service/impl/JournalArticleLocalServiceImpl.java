@@ -2990,8 +2990,10 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 
-		String fromName = JournalUtil.getEmailFromName(preferences);
-		String fromAddress = JournalUtil.getEmailFromAddress(preferences);
+		String fromName = JournalUtil.getEmailFromName(
+			preferences, article.getCompanyId());
+		String fromAddress = JournalUtil.getEmailFromAddress(
+			preferences, article.getCompanyId());
 
 		String subject = null;
 		String body = null;
@@ -3079,8 +3081,10 @@ public class JournalArticleLocalServiceImpl
 			"&groupId=" + article.getGroupId() + "&articleId=" +
 				article.getArticleId() + "&version=" + article.getVersion();
 
-		String fromName = JournalUtil.getEmailFromName(preferences);
-		String fromAddress = JournalUtil.getEmailFromAddress(preferences);
+		String fromName = JournalUtil.getEmailFromName(
+			preferences, article.getCompanyId());
+		String fromAddress = JournalUtil.getEmailFromAddress(
+			preferences, article.getCompanyId());
 
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();
@@ -3154,17 +3158,10 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), article.getArticleId(),
 				WorkflowConstants.STATUS_APPROVED, 0, 2);
 
-		if (approvedArticles.size() > 1) {
-			JournalArticle previousApprovedArticle = approvedArticles.get(1);
+		if (approvedArticles.isEmpty() ||
+			((approvedArticles.size() == 1) &&
+			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
 
-			if (article.isIndexable()) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					JournalArticle.class);
-
-				indexer.reindex(previousApprovedArticle);
-			}
-		}
-		else {
 			if (article.isIndexable()) {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					JournalArticle.class);
@@ -3175,6 +3172,20 @@ public class JournalArticleLocalServiceImpl
 			assetEntryLocalService.updateVisible(
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
 				false);
+		}
+		else {
+			JournalArticle previousApprovedArticle = approvedArticles.get(0);
+
+			if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				previousApprovedArticle = approvedArticles.get(1);
+			}
+
+			if (article.isIndexable()) {
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					JournalArticle.class);
+
+				indexer.reindex(previousApprovedArticle);
+			}
 		}
 	}
 

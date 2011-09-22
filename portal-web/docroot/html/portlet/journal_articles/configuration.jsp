@@ -44,13 +44,12 @@ if (Validator.isNotNull(structureId)) {
 }
 %>
 
-<liferay-portlet:renderURL portletConfiguration="true" varImpl="portletURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
-
-<aui:form action="<%= configurationURL %>" method="post" name="fm1">
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value='<%= portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur %>' />
+	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur %>' />
 	<aui:input name="preferences--structureId--" type="hidden" value="<%= structureId %>" />
 
 	<liferay-ui:panel-container extended="<%= true %>" id="journalArticlesSettingsPanelContainer" persistState="<%= true %>">

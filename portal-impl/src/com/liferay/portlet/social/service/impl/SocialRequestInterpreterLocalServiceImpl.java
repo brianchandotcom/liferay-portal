@@ -26,17 +26,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The social request interpreter local service. Social request interpreters
+ * are responsible for translating social requests into human readable form as
+ * well as handling social request confirmations and rejections. This service
+ * holds a list of interpreters and provides methods to add or remove items
+ * from this list.
+ *
+ * <p>
+ * Social request interpreters use the language files to get text fragments
+ * based on the request's type. An interpreter is created for a specific
+ * request type and is only capable of handling requests of that type. As an
+ * example, there is an interpreter FriendsRequestInterpreter in the social
+ * networking portlet can only translate and handle interpretation,
+ * confirmation, and rejection of friend requests.
+ * </p>
+ *
  * @author Brian Wing Shun Chan
  */
 public class SocialRequestInterpreterLocalServiceImpl
 	extends SocialRequestInterpreterLocalServiceBaseImpl {
 
+	/**
+	 * Adds the social request interpreter to the list of available
+	 * interpreters.
+	 *
+	 * @param requestInterpreter the social request interpreter
+	 */
 	public void addRequestInterpreter(
 		SocialRequestInterpreter requestInterpreter) {
 
 		_requestInterpreters.add(requestInterpreter);
 	}
 
+	/**
+	 * Removes the social request interpreter from the list of available
+	 * interpreters.
+	 *
+	 * @param requestInterpreter the social request interpreter
+	 */
 	public void deleteRequestInterpreter(
 		SocialRequestInterpreter requestInterpreter) {
 
@@ -45,6 +72,22 @@ public class SocialRequestInterpreterLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Creates a human readable request feed entry for the social request using
+	 * an available compatible request interpreter.
+	 *
+	 * <p>
+	 * This method finds the appropriate interpreter for the request by going
+	 * through the available interpreters to find one that can handle the asset
+	 * type of the request.
+	 * </p>
+	 *
+	 * @param  request the social request to be translated to human readable
+	 *         form
+	 * @param  themeDisplay the theme display needed by interpreters to create
+	 *         links and get localized text fragments
+	 * @return the social request feed entry
+	 */
 	public SocialRequestFeedEntry interpret(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
@@ -70,6 +113,20 @@ public class SocialRequestInterpreterLocalServiceImpl
 		return null;
 	}
 
+	/**
+	 * Processes the confirmation of the social request.
+	 *
+	 * <p>
+	 * Confirmations are handled by finding the appropriate social request
+	 * interpreter and calling its processConfirmation() method. To find the
+	 * appropriate interpreter this method goes through the available
+	 * interpreters to find one that can handle the asset type of the request.
+	 * </p>
+	 *
+	 * @param request the social request being confirmed
+	 * @param themeDisplay the theme display needed by interpreters to create
+	 *        links and get localized text fragments
+	 */
 	public void processConfirmation(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
@@ -90,6 +147,21 @@ public class SocialRequestInterpreterLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Processes the rejection of the social request.
+	 *
+	 * <p>
+	 * Rejections are handled by finding the appropriate social request
+	 * interpreters and calling their processRejection() methods. To find the
+	 * appropriate interpreters this method goes through the available
+	 * interpreters and asks them if they can handle the asset type of the
+	 * request.
+	 * </p>
+	 *
+	 * @param request the social request being rejected
+	 * @param themeDisplay the theme display needed by interpreters to create
+	 *        links and get localized text fragments
+	 */
 	public void processRejection(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 

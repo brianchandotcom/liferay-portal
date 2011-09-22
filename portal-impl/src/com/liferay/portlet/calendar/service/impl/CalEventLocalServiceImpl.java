@@ -1208,8 +1208,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			String portletName = PortalUtil.getPortletTitle(
 				PortletKeys.CALENDAR, user);
 
-			String fromName = CalUtil.getEmailFromName(preferences);
-			String fromAddress = CalUtil.getEmailFromAddress(preferences);
+			String fromName = CalUtil.getEmailFromName(
+				preferences, event.getCompanyId());
+			String fromAddress = CalUtil.getEmailFromAddress(
+				preferences, event.getCompanyId());
 
 			String toName = user.getFullName();
 			String toAddress = user.getEmailAddress();

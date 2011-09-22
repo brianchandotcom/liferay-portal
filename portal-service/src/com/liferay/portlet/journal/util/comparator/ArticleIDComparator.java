@@ -22,13 +22,13 @@ import com.liferay.portlet.journal.model.JournalArticle;
  */
 public class ArticleIDComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC =
+	public static final String ORDER_BY_ASC =
 		"JournalArticle.articleId ASC, JournalArticle.version ASC";
 
-	public static String ORDER_BY_DESC =
+	public static final String ORDER_BY_DESC =
 		"JournalArticle.articleId DESC, JournalArticle.version DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"articleId", "version"};
+	public static final String[] ORDER_BY_FIELDS = {"articleId", "version"};
 
 	public ArticleIDComparator() {
 		this(false);

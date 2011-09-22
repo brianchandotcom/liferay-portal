@@ -79,6 +79,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return LayoutFriendlyURLException.TOO_SHORT;
 		}
 
+		if (friendlyURL.length() > LayoutConstants.FRIENDLY_URL_MAX_LENGTH) {
+			return LayoutFriendlyURLException.TOO_LONG;
+		}
+
 		if (!friendlyURL.startsWith(StringPool.SLASH)) {
 			return LayoutFriendlyURLException.DOES_NOT_START_WITH_SLASH;
 		}

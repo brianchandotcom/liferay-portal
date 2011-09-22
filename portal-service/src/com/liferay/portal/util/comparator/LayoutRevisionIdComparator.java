@@ -22,11 +22,13 @@ import com.liferay.portal.model.LayoutRevision;
  */
 public class LayoutRevisionIdComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "LayoutRevision.layoutRevisionId ASC";
+	public static final String ORDER_BY_ASC =
+		"LayoutRevision.layoutRevisionId ASC";
 
-	public static String ORDER_BY_DESC = "LayoutRevision.layoutRevisionId DESC";
+	public static final String ORDER_BY_DESC =
+		"LayoutRevision.layoutRevisionId DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"layoutRevisionId"};
+	public static final String[] ORDER_BY_FIELDS = {"layoutRevisionId"};
 
 	public LayoutRevisionIdComparator() {
 		this(false);

@@ -25,6 +25,8 @@ import java.util.Map;
  */
 public interface ModelHints {
 
+	public String buildCustomValidatorName(String validatorName);
+
 	public Map<String, String> getDefaultHints(String model);
 
 	public Element getFieldsEl(String model, String field);
@@ -40,6 +42,8 @@ public interface ModelHints {
 	public String getType(String model, String field);
 
 	public List<Tuple> getValidators(String model, String field);
+
+	public boolean isCustomValidator(String validatorName);
 
 	public boolean isLocalized(String model, String field);
 

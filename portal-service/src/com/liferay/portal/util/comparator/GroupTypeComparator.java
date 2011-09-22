@@ -22,11 +22,11 @@ import com.liferay.portal.model.Group;
  */
 public class GroupTypeComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "groupType ASC, groupName ASC";
+	public static final String ORDER_BY_ASC = "groupType ASC, groupName ASC";
 
-	public static String ORDER_BY_DESC = "groupType DESC, groupName DESC";
+	public static final String ORDER_BY_DESC = "groupType DESC, groupName DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"groupType", "groupName"};
+	public static final String[] ORDER_BY_FIELDS = {"groupType", "groupName"};
 
 	public GroupTypeComparator() {
 		this(false);

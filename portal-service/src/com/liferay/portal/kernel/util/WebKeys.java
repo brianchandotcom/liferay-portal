@@ -129,6 +129,8 @@ public interface WebKeys {
 
 	public static final String THEME_DISPLAY = "THEME_DISPLAY";
 
+	public static final String UPLOAD_EXCEPTION = "UPLOAD_EXCEPTION";
+
 	public static final String USER = "USER";
 
 	public static final String USER_ID = "USER_ID";

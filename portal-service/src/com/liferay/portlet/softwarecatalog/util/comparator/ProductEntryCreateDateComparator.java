@@ -23,11 +23,11 @@ import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
  */
 public class ProductEntryCreateDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "SCProductEntry.createDate ASC";
+	public static final String ORDER_BY_ASC = "SCProductEntry.createDate ASC";
 
-	public static String ORDER_BY_DESC = "SCProductEntry.createDate DESC";
+	public static final String ORDER_BY_DESC = "SCProductEntry.createDate DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
 	public ProductEntryCreateDateComparator() {
 		this(false);

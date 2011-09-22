@@ -23,11 +23,11 @@ import com.liferay.portlet.journal.model.JournalStructure;
  */
 public class StructurePKComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "JournalStructure.id ASC";
+	public static final String ORDER_BY_ASC = "JournalStructure.id ASC";
 
-	public static String ORDER_BY_DESC = "JournalStructure.id DESC";
+	public static final String ORDER_BY_DESC = "JournalStructure.id DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"id"};
+	public static final String[] ORDER_BY_FIELDS = {"id"};
 
 	public StructurePKComparator() {
 		this(false);

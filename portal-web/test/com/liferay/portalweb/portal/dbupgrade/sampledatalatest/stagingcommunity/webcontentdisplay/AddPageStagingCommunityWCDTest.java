@@ -60,8 +60,8 @@ public class AddPageStagingCommunityWCDTest extends BaseTestCase {
 				"Community Staging Community Web Content Display"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[7]/span/ul/li/strong/a"));
-		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

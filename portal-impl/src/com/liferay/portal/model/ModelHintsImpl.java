@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.util.PwdGenerator;
 
 import java.io.InputStream;
 
@@ -65,6 +67,11 @@ public class ModelHintsImpl implements ModelHints {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	public String buildCustomValidatorName(String validatorName) {
+		return validatorName.concat(StringPool.UNDERLINE).concat(
+			PwdGenerator.getPassword(PwdGenerator.KEY3, 4));
 	}
 
 	public Map<String, String> getDefaultHints(String model) {
@@ -168,6 +175,14 @@ public class ModelHintsImpl implements ModelHints {
 		else {
 			return (List<Tuple>)fields.get(field + _VALIDATORS_SUFFIX);
 		}
+	}
+
+	public boolean isCustomValidator(String validatorName) {
+		if (validatorName.equals("custom")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isLocalized(String model, String field) {
@@ -345,10 +360,15 @@ public class ModelHintsImpl implements ModelHints {
 						validator.attributeValue("error-message"));
 					String validatorValue = GetterUtil.getString(
 						validator.getText());
+					boolean customValidator = isCustomValidator(validatorName);
+
+					if (customValidator) {
+						validatorName = buildCustomValidatorName(validatorName);
+					}
 
 					Tuple fieldValidator = new Tuple(
 						fieldName, validatorName, validatorErrorMessage,
-						validatorValue);
+						validatorValue, customValidator);
 
 					fieldValidators.put(validatorName, fieldValidator);
 				}

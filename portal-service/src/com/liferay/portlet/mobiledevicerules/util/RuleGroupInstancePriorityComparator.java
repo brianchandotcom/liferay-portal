@@ -22,11 +22,13 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
  */
 public class RuleGroupInstancePriorityComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "MDRRuleGroupInstance.priority ASC";
+	public static final String ORDER_BY_ASC =
+		"MDRRuleGroupInstance.priority ASC";
 
-	public static String ORDER_BY_DESC = "MDRRuleGroupInstance.priority DESC";
+	public static final String ORDER_BY_DESC =
+		"MDRRuleGroupInstance.priority DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"priority"};
+	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
 	public RuleGroupInstancePriorityComparator() {
 		this(true);

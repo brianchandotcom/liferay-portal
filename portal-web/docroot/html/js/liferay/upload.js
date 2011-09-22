@@ -11,7 +11,7 @@ AUI().add(
 		 * container {string|object}: The container where the uploader will be placed.
 		 * deleteFile {string}: The URL that will handle the deleting of the pending files.
 		 * maxFileSize {number}: The maximum file size that can be uploaded.
-		 * service {json}: configuration of the service to retrieve the pending files.
+		 * tempFileURL {string|object}: The URL or configuration of the service to retrieve the pending files.
 		 * uploadFile {string}: The URL to where the file will be uploaded.
 		 *
 		 * Optional
@@ -49,7 +49,7 @@ AUI().add(
 			instance._metadataContainer = A.one(options.metadataContainer);
 			instance._metadataExplanationContainer = A.one(options.metadataExplanationContainer);
 
-			instance._service = options.service;
+			instance._tempFileURL = options.tempFileURL;
 			instance._uploadFile = options.uploadFile;
 
 			instance._buttonUrl = options.buttonUrl || '';
@@ -443,6 +443,55 @@ AUI().add(
 				instance._updateManageUploadDisplay();
 			},
 
+			_formatTempFiles: function(fileNames) {
+				var instance = this;
+
+				var allRowIdsCheckbox = A.one('#' + instance._namespace('allRowIdsCheckbox'));
+
+				if (fileNames.length) {
+					var ul = instance.getFileListUl();
+
+					instance._pendingFileInfo.show();
+
+					allRowIdsCheckbox.show();
+
+					instance._clearUploadsButton.show();
+					instance._manageUploadTarget.show();
+
+					if (instance._metadataExplanationContainer) {
+						instance._metadataExplanationContainer.show();
+					}
+
+					var buffer = [];
+
+					var pendingFileTpl = '<li class="upload-file upload-complete pending-file selectable">' +
+						'<input class="select-file" data-fileName="{0}" name="{1}" type="checkbox" value="{0}" />' +
+						'<span class="file-title">{0}</span>' +
+						'<a class="lfr-button delete-button" href="javascript:;">{2}</a>' +
+					'</li>';
+
+					var dataBuffer = [
+						null,
+						instance._namespace('selectUploadedFileCheckbox'),
+						instance._deleteFileText
+					];
+
+					A.each(
+						fileNames,
+						function(item, index, collection) {
+							dataBuffer[0] = item;
+
+							buffer.push(Lang.sub(pendingFileTpl, dataBuffer));
+						}
+					);
+
+					ul.append(buffer.join(''));
+				}
+				else {
+					allRowIdsCheckbox.attr('checked', true);
+				}
+			},
+
 			_handleDeleteResponse: function(json, li) {
 				var instance = this;
 
@@ -647,55 +696,24 @@ AUI().add(
 						'.select-file, li .delete-button'
 					);
 
-					instance._service['method'](
-						instance._service['params'],
-						function(fileNames) {
-							var allRowIdsCheckbox = A.one('#' + instance._namespace('allRowIdsCheckbox'));
+					var tempFileURL = instance._tempFileURL;
 
-							if (fileNames.length) {
-								var ul = instance.getFileListUl();
-
-								instance._pendingFileInfo.show();
-
-								allRowIdsCheckbox.show();
-
-								instance._clearUploadsButton.show();
-								instance._manageUploadTarget.show();
-
-								if (instance._metadataExplanationContainer) {
-									instance._metadataExplanationContainer.show();
-								}
-
-								var buffer = [];
-
-								var pendingFileTpl = '<li class="upload-file upload-complete pending-file selectable">' +
-									'<input class="select-file" data-fileName="{0}" name="{1}" type="checkbox" value="{0}" />' +
-									'<span class="file-title">{0}</span>' +
-									'<a class="lfr-button delete-button" href="javascript:;">{2}</a>' +
-								'</li>';
-
-								var dataBuffer = [
-									null,
-									instance._namespace('selectUploadedFileCheckbox'),
-									instance._deleteFileText
-								];
-
-								A.each(
-									fileNames,
-									function(item, index, collection) {
-										dataBuffer[0] = item;
-
-										buffer.push(Lang.sub(pendingFileTpl, dataBuffer));
+					if (Lang.isString(tempFileURL)) {
+						A.io.request(
+							tempFileURL,
+							{
+								after: {
+									success: function(event) {
+										instance._formatTempFiles(this.get('responseData'));
 									}
-								);
-
-								ul.append(buffer.join(''));
+								},
+								dataType: 'json'
 							}
-							else {
-								allRowIdsCheckbox.attr('checked', true);
-							}
-						}
-					);
+						);
+					}
+					else {
+						tempFileURL['method'](tempFileURL['params'], A.bind('_formatTempFiles', instance));
+					}
 
 					var container = instance._container;
 					var manageUploadTarget = instance._manageUploadTarget;

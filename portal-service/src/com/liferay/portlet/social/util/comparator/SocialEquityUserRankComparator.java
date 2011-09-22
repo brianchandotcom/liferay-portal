@@ -22,11 +22,11 @@ import com.liferay.portlet.social.model.SocialEquityUser;
  */
 public class SocialEquityUserRankComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "SocialEquityUser.rank ASC";
+	public static final String ORDER_BY_ASC = "SocialEquityUser.rank ASC";
 
-	public static String ORDER_BY_DESC = "SocialEquityUser.rank DESC";
+	public static final String ORDER_BY_DESC = "SocialEquityUser.rank DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"rank"};
+	public static final String[] ORDER_BY_FIELDS = {"rank"};
 
 	public SocialEquityUserRankComparator() {
 		this(false);

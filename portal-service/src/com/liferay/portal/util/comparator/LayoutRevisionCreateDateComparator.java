@@ -23,11 +23,11 @@ import com.liferay.portal.model.LayoutRevision;
  */
 public class LayoutRevisionCreateDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "LayoutRevision.createDate ASC";
+	public static final String ORDER_BY_ASC = "LayoutRevision.createDate ASC";
 
-	public static String ORDER_BY_DESC = "LayoutRevision.createDate DESC";
+	public static final String ORDER_BY_DESC = "LayoutRevision.createDate DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
 	public LayoutRevisionCreateDateComparator() {
 		this(false);

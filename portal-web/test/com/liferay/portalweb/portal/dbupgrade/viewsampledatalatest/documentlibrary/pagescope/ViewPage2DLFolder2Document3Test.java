@@ -52,7 +52,8 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library (DL Page2 Name)")
+				if (RuntimeVariables.replace(
+							"Documents and Media (DL Page2 Name)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -66,7 +67,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Document Library (DL Page2 Name)"),
+				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//span[@class='document-title']"));
@@ -132,8 +133,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("Download (0.5k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		assertEquals(RuntimeVariables.replace(
-				"Content Type application/octet-stream"),
+		assertEquals(RuntimeVariables.replace("Content Encoding ISO-8859-1"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 		assertEquals(RuntimeVariables.replace("1.0"),
@@ -173,7 +173,8 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Document Library (DL Page2 Name)")
+				if (RuntimeVariables.replace(
+							"Documents and Media (DL Page2 Name)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -187,7 +188,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"Document Library (DL Page2 Name)"),
+				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//span[@class='document-title']"));
@@ -253,8 +254,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("Download (0.5k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		assertEquals(RuntimeVariables.replace(
-				"Content Type application/octet-stream"),
+		assertEquals(RuntimeVariables.replace("Content Encoding ISO-8859-1"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 		assertEquals(RuntimeVariables.replace("1.0"),

@@ -23,11 +23,11 @@ import com.liferay.portlet.wiki.model.WikiPage;
  */
 public class PageCreateDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "WikiPage.createDate ASC";
+	public static final String ORDER_BY_ASC = "WikiPage.createDate ASC";
 
-	public static String ORDER_BY_DESC = "WikiPage.createDate DESC";
+	public static final String ORDER_BY_DESC = "WikiPage.createDate DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
 	public PageCreateDateComparator() {
 		this(false);

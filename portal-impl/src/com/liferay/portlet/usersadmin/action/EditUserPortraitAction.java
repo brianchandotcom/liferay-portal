@@ -20,6 +20,7 @@ import com.liferay.portal.UserPortraitTypeException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.User;
@@ -28,7 +29,6 @@ import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.portlet.PortletRequestUtil;
-import com.liferay.util.servlet.UploadException;
 
 import java.io.InputStream;
 

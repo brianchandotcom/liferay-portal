@@ -34,8 +34,13 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//input[@id='_125_keywords']</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>jane</td>
 </tr>
 <tr>
@@ -45,12 +50,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>No users were found.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_keywords']</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>luke</td>
 </tr>
 <tr>
@@ -60,12 +65,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>No users were found.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_keywords']</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>martin</td>
 </tr>
 <tr>
@@ -75,10 +80,9 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>No users were found.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

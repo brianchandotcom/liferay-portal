@@ -23,11 +23,12 @@ import com.liferay.portlet.journal.model.JournalArticle;
  */
 public class ArticleModifiedDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "JournalArticle.modifiedDate ASC";
+	public static final String ORDER_BY_ASC = "JournalArticle.modifiedDate ASC";
 
-	public static String ORDER_BY_DESC = "JournalArticle.modifiedDate DESC";
+	public static final String ORDER_BY_DESC =
+		"JournalArticle.modifiedDate DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"modifiedDate"};
+	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
 	public ArticleModifiedDateComparator() {
 		this(false);

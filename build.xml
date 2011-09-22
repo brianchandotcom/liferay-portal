@@ -406,6 +406,11 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 							tofile="${app.server.bin.dir}/run.sh"
 						/>
 
+						<chmod
+							file="${app.server.bin.dir}/run.sh"
+							perm="a+x"
+						/>
+
 						<replace file="${app.server.jetty.bin.dir}/run.sh">
 							<replacetoken>export JAVA_OPTS="</replacetoken>
 							<replacevalue expandProperties="true">export JAVA_OPTS="-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date}</replacevalue>
@@ -601,6 +606,11 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 						<copy
 							file="tools/servers/resin/bin/run.sh"
 							tofile="${app.server.bin.dir}/run.sh"
+						/>
+
+						<chmod
+							file="${app.server.bin.dir}/run.sh"
+							perm="a+x"
 						/>
 					</then>
 				</if>

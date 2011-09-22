@@ -851,17 +851,17 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -880,6 +880,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -918,7 +920,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(mdrRuleGroupInstance);
+			Object[] values = orderByComparator.getOrderByConditionValues(mdrRuleGroupInstance);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1339,17 +1341,17 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		query.append(_FINDER_COLUMN_RULEGROUPID_RULEGROUPID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1368,6 +1370,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1404,7 +1408,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		qPos.add(ruleGroupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(mdrRuleGroupInstance);
+			Object[] values = orderByComparator.getOrderByConditionValues(mdrRuleGroupInstance);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1691,17 +1695,17 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
 		if (orderByComparator != null) {
-			String[] orderByFields = orderByComparator.getOrderByFields();
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
-			if (orderByFields.length > 0) {
+			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByFields.length; i++) {
+			for (int i = 0; i < orderByConditionFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				query.append(orderByConditionFields[i]);
 
-				if ((i + 1) < orderByFields.length) {
+				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
 						query.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
@@ -1720,6 +1724,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			}
 
 			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				query.append(_ORDER_BY_ENTITY_ALIAS);
@@ -1758,7 +1764,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByValues(mdrRuleGroupInstance);
+			Object[] values = orderByComparator.getOrderByConditionValues(mdrRuleGroupInstance);
 
 			for (Object value : values) {
 				qPos.add(value);

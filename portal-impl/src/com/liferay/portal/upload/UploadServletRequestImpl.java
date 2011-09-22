@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -43,6 +44,7 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
@@ -116,6 +118,16 @@ public class UploadServletRequestImpl
 			}
 		}
 		catch (Exception e) {
+			UploadException uploadException = new UploadException(e);
+
+			if (e instanceof FileUploadBase.FileSizeLimitExceededException ||
+				e instanceof FileUploadBase.SizeLimitExceededException ) {
+
+				uploadException.setExceededSizeLimit(true);
+			}
+
+			request.setAttribute(WebKeys.UPLOAD_EXCEPTION, uploadException);
+
 			_log.error(e, e);
 		}
 	}

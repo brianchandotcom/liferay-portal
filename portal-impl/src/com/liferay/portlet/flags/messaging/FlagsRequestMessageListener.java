@@ -131,10 +131,13 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		// Email
 
-		String fromName = PrefsPropsUtil.getString(
-			companyId, PropsKeys.FLAGS_EMAIL_FROM_NAME);
-		String fromAddress = PrefsPropsUtil.getString(
-			companyId, PropsKeys.FLAGS_EMAIL_FROM_ADDRESS);
+		String fromName = PrefsPropsUtil.getStringFromNames(
+			companyId, PropsKeys.FLAGS_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		String fromAddress = PrefsPropsUtil.getStringFromNames(
+			companyId, PropsKeys.FLAGS_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+
 		String subject = PrefsPropsUtil.getContent(
 			companyId, PropsKeys.FLAGS_EMAIL_SUBJECT);
 		String body = PrefsPropsUtil.getContent(

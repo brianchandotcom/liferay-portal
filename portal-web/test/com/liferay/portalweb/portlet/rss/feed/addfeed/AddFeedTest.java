@@ -168,7 +168,7 @@ public class AddFeedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent("digg.com: Stories")) {
+				if (selenium.isVisible("//a[@href='http://feeds.digg.com']")) {
 					break;
 				}
 			}
@@ -179,6 +179,7 @@ public class AddFeedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isTextPresent("digg.com: Stories"));
+		assertEquals(RuntimeVariables.replace("Stories(Opens New Window)"),
+			selenium.getText("//a[@href='http://feeds.digg.com']"));
 	}
 }

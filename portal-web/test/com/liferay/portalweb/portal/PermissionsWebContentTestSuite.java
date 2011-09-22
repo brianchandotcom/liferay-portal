@@ -15,7 +15,6 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.portal.permissions.controlpanel.ControlPanelTests;
 import com.liferay.portalweb.portal.permissions.webcontent.WebContentTests;
 
 import junit.framework.Test;
@@ -30,7 +29,6 @@ public class PermissionsWebContentTestSuite extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(ControlPanelTests.suite());
 		testSuite.addTest(WebContentTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);

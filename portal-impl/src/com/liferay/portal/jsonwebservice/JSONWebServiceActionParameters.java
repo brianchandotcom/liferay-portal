@@ -358,9 +358,7 @@ public class JSONWebServiceActionParameters {
 				return value;
 			}
 
-			if ((_serviceContext != null) && key.equals("serviceContext") &&
-				((value == null) || !value.equals(Void.TYPE))) {
-
+			if ((_serviceContext != null) && key.equals("serviceContext")) {
 				if ((value != null) &&
 					ServiceContext.class.isAssignableFrom(value.getClass())) {
 

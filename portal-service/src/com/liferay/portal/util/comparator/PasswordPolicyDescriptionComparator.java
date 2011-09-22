@@ -22,11 +22,12 @@ import com.liferay.portal.model.PasswordPolicy;
  */
 public class PasswordPolicyDescriptionComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "PasswordPolicy.description ASC";
+	public static final String ORDER_BY_ASC = "PasswordPolicy.description ASC";
 
-	public static String ORDER_BY_DESC = "PasswordPolicy.description DESC";
+	public static final String ORDER_BY_DESC =
+		"PasswordPolicy.description DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"description"};
+	public static final String[] ORDER_BY_FIELDS = {"description"};
 
 	public PasswordPolicyDescriptionComparator() {
 		this(false);

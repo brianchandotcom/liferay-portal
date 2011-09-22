@@ -22,9 +22,9 @@ import com.liferay.portal.model.Resource;
  */
 public class ResourceComparator extends OrderByComparator {
 
-	public static String ORDER_BY_DESC = "Resource_.resourceId DESC";
+	public static final String ORDER_BY_DESC = "Resource_.resourceId DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"resourceId"};
+	public static final String[] ORDER_BY_FIELDS = {"resourceId"};
 
 	@Override
 	public int compare(Object obj1, Object obj2) {

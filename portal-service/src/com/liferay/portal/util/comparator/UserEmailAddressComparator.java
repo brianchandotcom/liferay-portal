@@ -22,11 +22,11 @@ import com.liferay.portal.model.User;
  */
 public class UserEmailAddressComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "User_.emailAddress ASC";
+	public static final String ORDER_BY_ASC = "User_.emailAddress ASC";
 
-	public static String ORDER_BY_DESC = "User_.emailAddress DESC";
+	public static final String ORDER_BY_DESC = "User_.emailAddress DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"emailAddress"};
+	public static final String[] ORDER_BY_FIELDS = {"emailAddress"};
 
 	public UserEmailAddressComparator() {
 		this(false);

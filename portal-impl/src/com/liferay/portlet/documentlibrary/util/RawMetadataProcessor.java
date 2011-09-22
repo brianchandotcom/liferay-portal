@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -29,6 +30,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
@@ -88,10 +90,30 @@ public class RawMetadataProcessor implements DLProcessor {
 	public static void saveMetadata(FileVersion fileVersion)
 		throws PortalException, SystemException {
 
-		InputStream inputStream = fileVersion.getContentStream(false);
+		Map<String, Fields> rawMetadataMap = null;
 
-		Map<String, Fields> rawMetadataMap =
-			RawMetadataProcessorUtil.getRawMetadataMap(inputStream);
+		if (fileVersion instanceof LiferayFileVersion) {
+			try {
+				LiferayFileVersion liferayFileVersion =
+					(LiferayFileVersion)fileVersion;
+
+				File file = liferayFileVersion.getFile(false);
+
+				rawMetadataMap = RawMetadataProcessorUtil.getRawMetadataMap(
+					fileVersion.getExtension(), fileVersion.getMimeType(),
+					file);
+			}
+			catch (UnsupportedOperationException uoe) {
+			}
+		}
+
+		if (rawMetadataMap == null) {
+			InputStream inputStream = fileVersion.getContentStream(false);
+
+			rawMetadataMap = RawMetadataProcessorUtil.getRawMetadataMap(
+				fileVersion.getExtension(), fileVersion.getMimeType(),
+				inputStream);
+		}
 
 		List<DDMStructure> ddmStructures =
 			DDMStructureLocalServiceUtil.getClassStructures(

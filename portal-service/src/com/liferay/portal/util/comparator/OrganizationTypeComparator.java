@@ -22,11 +22,11 @@ import com.liferay.portal.model.Organization;
  */
 public class OrganizationTypeComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "orgType ASC, orgName ASC";
+	public static final String ORDER_BY_ASC = "orgType ASC, orgName ASC";
 
-	public static String ORDER_BY_DESC = "orgType DESC, orgName DESC";
+	public static final String ORDER_BY_DESC = "orgType DESC, orgName DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"type", "name"};
+	public static final String[] ORDER_BY_FIELDS = {"type", "name"};
 
 	public OrganizationTypeComparator() {
 		this(false);

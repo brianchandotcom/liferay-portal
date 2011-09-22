@@ -23,8 +23,6 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.InputStream;
 
-import java.net.URL;
-
 import javax.servlet.ServletContext;
 
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -79,23 +77,19 @@ public class ServletVelocityResourceListener extends VelocityResourceListener {
 					servletContextName + " " + servletContext);
 		}
 
-		URL url = servletContext.getResource(name);
+		InputStream inputStream = servletContext.getResourceAsStream(name);
 
-		if (url != null) {
-			return url.openStream();
-		}
-
-		if (name.endsWith("/init_custom.vm")) {
+		if ((inputStream == null) && name.endsWith("/init_custom.vm")) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"The template " + name +
-						" should be created");
+					"The template " + name + " should be created");
 			}
 
 			return new UnsyncByteArrayInputStream(new byte[0]);
 		}
-
-		return null;
+		else {
+			return inputStream;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

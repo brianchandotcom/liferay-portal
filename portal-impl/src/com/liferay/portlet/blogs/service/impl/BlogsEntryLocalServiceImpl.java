@@ -814,8 +814,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs" +
 				StringPool.SLASH + entry.getEntryId();
 
-		String fromName = BlogsUtil.getEmailFromName(preferences);
-		String fromAddress = BlogsUtil.getEmailFromAddress(preferences);
+		String fromName = BlogsUtil.getEmailFromName(
+			preferences, entry.getCompanyId());
+		String fromAddress = BlogsUtil.getEmailFromAddress(
+			preferences, entry.getCompanyId());
 
 		Map<Locale, String> localizedSubjectMap = null;
 		Map<Locale, String> localizedBodyMap = null;

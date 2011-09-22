@@ -33,6 +33,22 @@ public abstract class OrderByComparator implements Comparator, Serializable {
 		return null;
 	}
 
+	public String[] getOrderByConditionFields() {
+		return getOrderByFields();
+	}
+
+	public Object[] getOrderByConditionValues(Object obj) {
+		String[] fields = getOrderByConditionFields();
+
+		Object[] values = new Object[fields.length];
+
+		for (int i = 0; i < fields.length; i++) {
+			values[i] = BeanPropertiesUtil.getObject(obj, fields[i]);
+		}
+
+		return values;
+	}
+
 	public String[] getOrderByFields() {
 		String orderBy = getOrderBy();
 
@@ -58,18 +74,6 @@ public abstract class OrderByComparator implements Comparator, Serializable {
 		}
 
 		return fields;
-	}
-
-	public Object[] getOrderByValues(Object obj) {
-		String[] fields = getOrderByFields();
-
-		Object[] values = new Object[fields.length];
-
-		for (int i = 0; i< fields.length; i++) {
-			values[i] = BeanPropertiesUtil.getObject(obj, fields[i]);
-		}
-
-		return values;
 	}
 
 	public boolean isAscending() {

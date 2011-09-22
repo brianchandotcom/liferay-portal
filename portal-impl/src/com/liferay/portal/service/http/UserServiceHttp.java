@@ -606,7 +606,8 @@ public class UserServiceHttp {
 
 	public static long[] getGroupUserIds(HttpPrincipal httpPrincipal,
 		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
 					"getGroupUserIds", _getGroupUserIdsParameterTypes14);
@@ -619,6 +620,10 @@ public class UserServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
@@ -637,7 +642,8 @@ public class UserServiceHttp {
 
 	public static long[] getOrganizationUserIds(HttpPrincipal httpPrincipal,
 		long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
 					"getOrganizationUserIds",
@@ -652,6 +658,10 @@ public class UserServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
@@ -669,7 +679,8 @@ public class UserServiceHttp {
 	}
 
 	public static long[] getRoleUserIds(HttpPrincipal httpPrincipal, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
 					"getRoleUserIds", _getRoleUserIdsParameterTypes16);
@@ -682,6 +693,10 @@ public class UserServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}

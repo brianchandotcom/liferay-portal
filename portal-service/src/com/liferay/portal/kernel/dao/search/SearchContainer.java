@@ -349,7 +349,7 @@ public class SearchContainer<R> {
 	public void setTotal(int total) {
 		_total = total;
 
-		if (((_cur - 1) * _delta) > _total) {
+		if (((_cur - 1) * _delta) >= _total) {
 			_cur = DEFAULT_CUR;
 		}
 

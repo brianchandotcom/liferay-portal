@@ -1,0 +1,127 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+SearchContainer mainSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
+
+SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+searchContext.setAttribute("paginationType", "more");
+searchContext.setEnd(mainSearchSearchContainer.getEnd());
+searchContext.setStart(mainSearchSearchContainer.getStart());
+
+Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
+
+assetEntriesFacet.setStatic(true);
+
+searchContext.addFacet(assetEntriesFacet);
+
+Facet scopeFacet = new ScopeFacet(searchContext);
+
+scopeFacet.setStatic(true);
+
+searchContext.addFacet(scopeFacet);
+
+List<FacetConfiguration> facetConfigurations = FacetConfigurationUtil.load(searchConfiguration);
+
+for (FacetConfiguration facetConfiguration : facetConfigurations) {
+	Facet facet = FacetFactoryUtil.create(searchContext, facetConfiguration);
+
+	searchContext.addFacet(facet);
+}
+
+Indexer indexer = FacetedSearcher.getInstance();
+
+Hits hits = indexer.search(searchContext);
+
+String[] queryTerms = hits.getQueryTerms();
+
+request.setAttribute("search.jsp-queryTerms", queryTerms);
+
+boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAssetCategoriesFacet || displayModifiedRangeFacet;
+%>
+
+<aui:layout cssClass='<%= "search-layout" + (showMenu ? " menu-column" : StringPool.BLANK) %>'>
+	<c:if test="<%= showMenu %>">
+		<aui:column cssClass="menu" first="<%= true %>">
+
+			<%
+			List<Facet> facets = ListUtil.fromCollection(searchContext.getFacets().values());
+
+			facets = ListUtil.sort(facets, new PropertyComparator("facetConfiguration.weight", false, false));
+
+			for (Facet facet : facets) {
+				if (facet.isStatic()) {
+					continue;
+				}
+
+				FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+
+				request.setAttribute("search.jsp-facet", facet);
+			%>
+
+				<liferay-util:include page='<%= "/html/portlet/search/facets/" + facetConfiguration.getDisplayStyle() + ".jsp" %>' />
+
+			<%
+			}
+			%>
+
+		</aui:column>
+	</c:if>
+
+	<aui:column cssClass="result" first="<%= !showMenu %>" last="<%= showMenu %>">
+		<c:if test="<%= (hits != null) && (hits.getLength() > 0) %>">
+			<liferay-ui:search-container
+				searchContainer="<%= mainSearchSearchContainer %>"
+			>
+				<liferay-ui:search-container-results
+					results="<%= hits.toList() %>"
+					total="<%= hits.getLength() %>"
+				/>
+
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.kernel.search.Document"
+					escapedModel="<%= false %>"
+					modelVar="document"
+					keyProperty="uID"
+					stringKey="<%= true %>"
+				>
+					<liferay-ui:search-container-column-jsp path='<%= displayResultsInDocumentForm ? "/html/portlet/search/main_search_document_form.jsp" : "/html/portlet/search/main_search_result_form.jsp" %>' />
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator type="more" />
+
+				<em class="taglib-page-iterator">
+					<span class="search-results"><liferay-ui:message arguments="<%= hits.getSearchTime() %>" key="completed-in-x-seconds" /></span>
+				</em>
+
+				<c:if test="<%= displayMainQuery && (hits.getQuery() != null) %>">
+					<table class="full-query">
+						<tr>
+							<td valign="top">
+								<div class="container">
+									<code>
+										<%= HtmlUtil.escape(hits.getQuery().toString()) %>
+									</code>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</c:if>
+			</liferay-ui:search-container>
+		</c:if>
+	</aui:column>
+</aui:layout>

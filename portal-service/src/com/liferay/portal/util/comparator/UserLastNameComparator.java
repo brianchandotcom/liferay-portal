@@ -22,13 +22,13 @@ import com.liferay.portal.model.User;
  */
 public class UserLastNameComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC =
+	public static final String ORDER_BY_ASC =
 		"User_.lastName ASC, User_.firstName ASC, User_.middleName ASC";
 
-	public static String ORDER_BY_DESC =
+	public static final String ORDER_BY_DESC =
 		"User_.lastName DESC, User_.firstName DESC, User_.middleName DESC";
 
-	public static String[] ORDER_BY_FIELDS = {
+	public static final String[] ORDER_BY_FIELDS = {
 		"lastName", "firstName", "middleName"
 	};
 

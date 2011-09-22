@@ -30,11 +30,11 @@ import java.util.Date;
  */
 public class RepositoryModelModifiedDateComparator extends OrderByComparator {
 
-	public static String ORDER_BY_ASC = "modifiedDate ASC";
+	public static final String ORDER_BY_ASC = "modifiedDate ASC";
 
-	public static String ORDER_BY_DESC = "modifiedDate DESC";
+	public static final String ORDER_BY_DESC = "modifiedDate DESC";
 
-	public static String[] ORDER_BY_FIELDS = {"modifiedDate"};
+	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
 	public RepositoryModelModifiedDateComparator() {
 		this(false);

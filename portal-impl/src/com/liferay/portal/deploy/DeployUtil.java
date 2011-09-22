@@ -145,6 +145,10 @@ public class DeployUtil {
 			return;
 		}
 
+		if (!deployDir.exists()) {
+			return;
+		}
+
 		File webXml = new File(deployDir + "/WEB-INF/web.xml");
 
 		if (!webXml.exists()) {
@@ -163,6 +167,13 @@ public class DeployUtil {
 			FileUtil.delete(
 				System.getProperty("jetty.home") + "/contexts/" +
 					deployDir.getName() + ".xml");
+		}
+
+		if (ServerDetector.isJBoss()) {
+			File deployedFile = new File(
+				deployDir.getParent(), deployDir.getName() + ".deployed");
+
+			FileUtil.delete(deployedFile);
 		}
 
 		int undeployInterval = PrefsPropsUtil.getInteger(

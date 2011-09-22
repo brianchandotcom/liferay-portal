@@ -17,6 +17,7 @@ package com.liferay.taglib.aui;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.taglib.aui.base.BaseValidatorTagImpl;
 import com.liferay.util.PwdGenerator;
 
@@ -33,13 +34,14 @@ public class ValidatorTagImpl
 	public ValidatorTagImpl() {
 	}
 
-	public ValidatorTagImpl(String name, String errorMessage, String body) {
+	public ValidatorTagImpl(
+		String name, String errorMessage, String body, boolean custom) {
+
 		setName(name);
 		setErrorMessage(errorMessage);
 
 		_body = body;
-
-		processCustom();
+		_custom = custom;
 	}
 
 	@Override
@@ -68,8 +70,14 @@ public class ValidatorTagImpl
 
 		String name = getName();
 
+		_custom = ModelHintsUtil.isCustomValidator(name);
+
+		if (_custom) {
+			name = ModelHintsUtil.buildCustomValidatorName(name);
+		}
+
 		ValidatorTag validatorTag = new ValidatorTagImpl(
-			name, getErrorMessage(), _body);
+			name, getErrorMessage(), _body, _custom);
 
 		inputTag.addValidatorTag(name, validatorTag);
 
@@ -103,16 +111,16 @@ public class ValidatorTagImpl
 		_body = body;
 	}
 
-	protected void processCustom() {
-		String name = getName();
-
+	protected String processCustom(String name) {
 		if (name.equals("custom")) {
 			_custom = true;
 
-			setName(
-				name.concat(StringPool.UNDERLINE).concat(
-					PwdGenerator.getPassword(PwdGenerator.KEY3, 4)));
+			return name.concat(
+				StringPool.UNDERLINE).concat(
+					PwdGenerator.getPassword(PwdGenerator.KEY3, 4));
 		}
+
+		return name;
 	}
 
 	private String _body;

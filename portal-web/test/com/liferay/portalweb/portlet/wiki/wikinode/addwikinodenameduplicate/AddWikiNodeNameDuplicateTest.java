@@ -46,8 +46,9 @@ public class AddWikiNodeNameDuplicateTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//li[9]/a"));
-		selenium.clickAt("//li[9]/a", RuntimeVariables.replace("Wiki"));
+			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Wiki']",

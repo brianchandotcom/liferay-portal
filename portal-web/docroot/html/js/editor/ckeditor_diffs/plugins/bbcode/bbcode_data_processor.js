@@ -39,6 +39,10 @@
 		strong: '_handleStrong'
 	};
 
+	var MAP_LINK_HANDLERS = {
+		0: 'email'
+	};
+
 	var NEW_LINE = '\n';
 
 	var REGEX_COLOR_RGB = /^rgb\s*\(\s*([01]?\d\d?|2[0-4]\d|25[0-5])\,\s*([01]?\d\d?|2[0-4]\d|25[0-5])\,\s*([01]?\d\d?|2[0-4]\d|25[0-5])\s*\)$/;
@@ -61,6 +65,8 @@
 
 	var REGEX_PX = /px$/i;
 
+	var STR_MAILTO = 'mailto:';
+
 	var TAG_BLOCKQUOTE = 'blockquote';
 
 	var TAG_BR = 'br';
@@ -72,6 +78,8 @@
 	var TAG_DIV = 'div';
 
 	var TAG_LI = 'li';
+
+	var TAG_LINK = 'a';
 
 	var TAG_PARAGRAPH = 'p';
 
@@ -171,6 +179,14 @@
 			}
 
 			return allowNewLine;
+		},
+
+		_checkParentElement: function(element, tagName) {
+			var instance = this;
+
+			var parentNode = element.parentNode;
+
+			return (parentNode && parentNode.tagName && (parentNode.tagName.toLowerCase() == tagName));
 		},
 
 		_convert: function(data) {
@@ -423,6 +439,11 @@
 				if (!instance._allowNewLine(element)) {
 					data = data.replace(REGEX_NEWLINE, '');
 				}
+				else if (instance._checkParentElement(element, TAG_LINK) &&
+					data.indexOf(STR_MAILTO) == 0) {
+
+					data = data.substring(STR_MAILTO.length);
+				}
 
 				instance._endResult.push(data);
 			}
@@ -523,9 +544,11 @@
 				hrefAttribute = decodedLink;
 			}
 
-			listTagsIn.push('[url=', hrefAttribute, ']');
+			var linkHandler = MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] || 'url';
 
-			listTagsOut.push('[/url]');
+			listTagsIn.push('[' + linkHandler + '=', hrefAttribute, ']');
+
+			listTagsOut.push('[/' + linkHandler + ']');
 		},
 
 		_handleListItem: function(element, listTagsIn, listTagsOut) {
@@ -729,7 +752,7 @@
 
 			var tagName = element.tagName;
 
-			if ((!tagName || tagName.toLowerCase() != 'a') && element.style) {
+			if ((!tagName || tagName.toLowerCase() != TAG_LINK) && element.style) {
 				instance._handleStyleAlignCenter(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleAlignJustify(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleAlignLeft(element, stylesTagsIn, stylesTagsOut);
@@ -754,9 +777,7 @@
 		_handleTableCaption: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			var parentNode = element.parentNode;
-
-			if (parentNode && parentNode.tagName && (parentNode.tagName.toLowerCase() == TAG_TABLE)) {
+			if (instance._checkParentElement(element, TAG_TABLE)) {
 				listTagsIn.push('[tr]', NEW_LINE, '[th]');
 
 				listTagsOut.push('[/th]', NEW_LINE, '[/tr]', NEW_LINE);

@@ -223,7 +223,7 @@ for (int i = 0; i < results.size(); i++) {
 				<c:otherwise>
 					<liferay-util:buffer var="fileEntryTitle">
 						<liferay-ui:icon
-							image='<%= "../file_system/small/" + fileEntry.getExtension() %>'
+							image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 							label="<%= true %>"
 							message="<%= fileEntry.getTitle() %>"
 						/>

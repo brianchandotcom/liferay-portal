@@ -64,7 +64,7 @@ public class AddPageRDTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Recent Documents Test Page"));
+			RuntimeVariables.replace("Recently Downloaded Documents Test Page"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("save", RuntimeVariables.replace(""));
 
@@ -74,7 +74,8 @@ public class AddPageRDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Recent Documents Test Page")) {
+				if (selenium.isVisible(
+							"link=Recently Downloaded Documents Test Page")) {
 					break;
 				}
 			}
@@ -85,7 +86,7 @@ public class AddPageRDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Recent Documents Test Page",
+		selenium.clickAt("link=Recently Downloaded Documents Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

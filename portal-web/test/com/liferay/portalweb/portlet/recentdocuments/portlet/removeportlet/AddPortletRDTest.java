@@ -30,7 +30,8 @@ public class AddPortletRDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Recent Documents Test Page")) {
+				if (selenium.isVisible(
+							"link=Recently Downloaded Documents Test Page")) {
 					break;
 				}
 			}
@@ -41,7 +42,7 @@ public class AddPortletRDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Recent Documents Test Page",
+		selenium.clickAt("link=Recently Downloaded Documents Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -75,7 +76,8 @@ public class AddPortletRDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='Recent Documents']/p/a")) {
+				if (selenium.isVisible(
+							"//div[@title='Recently Downloaded Documents']/p/a")) {
 					break;
 				}
 			}
@@ -86,7 +88,7 @@ public class AddPortletRDTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@title='Recent Documents']/p/a",
+		selenium.clickAt("//div[@title='Recently Downloaded Documents']/p/a",
 			RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {

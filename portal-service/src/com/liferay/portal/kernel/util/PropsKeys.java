@@ -495,6 +495,8 @@ public interface PropsKeys {
 
 	public static final String DIRECT_SERVLET_CONTEXT_RELOAD = "direct.servlet.context.reload";
 
+    public static final String DISCUSSION_ALLOW_OWNERS_EDIT = "discussion.allow.owners.edit";
+
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 
 	public static final String DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED = "discussion.email.comments.added.enabled";

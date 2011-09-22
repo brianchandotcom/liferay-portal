@@ -397,6 +397,8 @@ public class PropsValues {
 
 	public static final String DISCUSSION_THREAD_VIEW = PropsUtil.get(PropsKeys.DISCUSSION_THREAD_VIEW);
 
+    public static final boolean DISCUSSION_ALLOW_OWNERS_EDIT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DISCUSSION_ALLOW_OWNERS_EDIT));
+
 	public static final String[] DL_COMPARABLE_FILE_EXTENSIONS = PropsUtil.getArray(PropsKeys.DL_COMPARABLE_FILE_EXTENSIONS);
 
 	public static final String[] DL_DISPLAY_VIEWS = PropsUtil.getArray(PropsKeys.DL_DISPLAY_VIEWS);

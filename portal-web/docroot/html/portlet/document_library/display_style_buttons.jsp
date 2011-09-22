@@ -33,6 +33,10 @@ String keywords = ParamUtil.getString(request, "keywords");
 <aui:script use="aui-dialog,aui-dialog-iframe">
 	var buttonRow = A.one('#<portlet:namespace />displayStyleToolbar');
 
+	if (buttonRow) {
+		buttonRow.empty();
+	}
+
 	function onButtonClick(displayStyle) {
 		var config = {
 			'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search" %>',

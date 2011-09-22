@@ -85,7 +85,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 
 	<liferay-ui:message arguments="<%= new Object[] {publicVirtualHost + themeDisplay.getPathFriendlyURLPublic(), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPrivateGroup()} %>" key="the-friendly-url-is-appended-to-x-for-public-pages-and-x-for-private-pages" />
 
-	<aui:input name="friendlyURL" label="" />
+	<aui:input label="" name="friendlyURL" />
 </aui:fieldset>
 
 <aui:fieldset label="virtual-hosts">
@@ -95,12 +95,12 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 
 	<aui:input label="public-pages" name="publicVirtualHost" type="text" value="<%= publicVirtualHost %>" />
 
-	<aui:input label="private-pages" name="privateVirtualHost" type="text" value="<%= privateVirtualHost %>" >
-		<aui:validator name="custom" errorMessage="please-enter-a-unique-virtual-host">
+	<aui:input label="private-pages" name="privateVirtualHost" type="text" value="<%= privateVirtualHost %>">
+		<aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom" >
 			function(val, fieldNode, ruleValue) {
-				var public = A.one("#<portlet:namespace />publicVirtualHost");
+				var publicVirtualHost = A.one("#<portlet:namespace />publicVirtualHost");
 
-				return (val != public.val());
+				return (val != publicVirtualHost.val());
 			}
 		</aui:validator>
 	</aui:input>
@@ -108,12 +108,9 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 
 <c:if test="<%= liveGroup.hasStagingGroup() %>">
 	<aui:fieldset label="staging-friendly-url">
-		<%
-		String friendlyURL = ParamUtil.getString(request, "stagingFriendlyURL", stagingGroup.getFriendlyURL());
-		%>
-
 		<aui:input bean="<%= stagingGroup %>" label="" model="<%= Group.class %>" field="friendlyURL" fieldParam="stagingFriendlyURL" name="stagingFriendlyURL" />
 	</aui:fieldset>
+
 	<aui:fieldset label="staging-virtual-hosts">
 		<%
 		LayoutSet stagingPublicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(stagingGroupId, false);
@@ -122,18 +119,19 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 		%>
 
 		<aui:input label="public-pages" name="stagingPublicVirtualHost" type="text" value="<%= stagingPublicVirtualHost %>" />
+
 		<%
 		LayoutSet stagingPrivateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(stagingGroupId, true);
 
 		String stagingPrivateVirtualHost = ParamUtil.getString(request, "stagingPrivateVirtualHost", stagingPrivateLayoutSet.getVirtualHostname());
 		%>
 
-		<aui:input label="private-pages" name="stagingPrivateVirtualHost" type="text" value="<%= stagingPrivateVirtualHost %>" >
-			<aui:validator name="custom" errorMessage="please-enter-a-unique-virtual-host">
+		<aui:input label="private-pages" name="stagingPrivateVirtualHost" type="text" value="<%= stagingPrivateVirtualHost %>">
+			<aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom" >
 				function(val, fieldNode, ruleValue) {
-					var publicStaging = A.one("#<portlet:namespace />stagingPublicVirtualHost");
+					var stagingPublicVirtualHost = A.one("#<portlet:namespace />stagingPublicVirtualHost");
 
-					return (val != publicStaging.val());
+					return (val != stagingPublicVirtualHost.val());
 				}
 			</aui:validator>
 		</aui:input>

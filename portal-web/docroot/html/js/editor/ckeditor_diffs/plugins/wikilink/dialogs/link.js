@@ -20,6 +20,9 @@ CKEDITOR.dialog.add(
 				if (CKEDITOR.config.decodeLinks) {
 					data.address = decodeURIComponent(href);
 				}
+				else {
+					data.address = href;
+				}
 			}
 			else {
 				var selection = editor.getSelection();

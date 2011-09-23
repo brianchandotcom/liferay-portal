@@ -161,7 +161,14 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 		if (classTypes != null) {
 			for (long classTypeId : classTypes.keySet()) {
 				if (ArrayUtil.contains(classTypeIds, classTypeId) || (classTypeIds.length == 0)) {
-					PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, allAssetCategoryIds, allAssetTagNames, classTypeId, StringPool.BLANK);
+
+					String structureId = StringPool.BLANK;
+					if (className.equals(journalArticleClassName.getValue())) {
+						JournalStructure structure = JournalStructureLocalServiceUtil.getJournalStructure(classTypeId);
+						structureId = structure.getStructureId();
+					}
+
+					PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, allAssetCategoryIds, allAssetTagNames, classTypeId, structureId);
 
 					if (addPortletURL != null) {
 						String mesage = className + _CLASSNAME_SEPARATOR + classTypes.get(classTypeId);

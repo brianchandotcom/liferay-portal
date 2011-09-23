@@ -234,7 +234,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 				request.setAttribute(WebKeys.LAST_PATH, lastPath);
 
-				StringBundler forwardURL = new StringBundler(6);
+				StringBundler forwardURL = new StringBundler(5);
 
 				if (i18nLanguageId != null) {
 					forwardURL.append(i18nLanguageId);
@@ -254,35 +254,34 @@ public class VirtualHostFilter extends BasePortalFilter {
 					companyId, friendlyURL);
 
 				if (plid <= 0) {
-					StringBundler prefix = new StringBundler(2);
-
 					Group group = GroupLocalServiceUtil.getGroup(
 						layoutSet.getGroupId());
 
-					if (layoutSet.isPrivateLayout()) {
-						if (group.isUser()) {
-							prefix.append(_PRIVATE_USER_SERVLET_MAPPING);
+					if (group.isGuest() &&
+						friendlyURL.equals(StringPool.SLASH)) {
+
+						String homeURL = PortalUtil.getRelativeHomeURL(request);
+
+						if (Validator.isNotNull(homeURL)) {
+							friendlyURL = homeURL;
+						}
+					}
+					else {
+						if (layoutSet.isPrivateLayout()) {
+							if (group.isUser()) {
+								forwardURL.append(
+									_PRIVATE_USER_SERVLET_MAPPING);
+							}
+							else {
+								forwardURL.append(
+									_PRIVATE_GROUP_SERVLET_MAPPING);
+							}
 						}
 						else {
-							prefix.append(_PRIVATE_GROUP_SERVLET_MAPPING);
+							forwardURL.append(_PUBLIC_GROUP_SERVLET_MAPPING);
 						}
-					}
-					else {
-						prefix.append(_PUBLIC_GROUP_SERVLET_MAPPING);
-					}
 
-					prefix.append(group.getFriendlyURL());
-
-					String homeURL = PortalUtil.getRelativeHomeURL(request);
-
-					if (group.isGuest() &&
-						friendlyURL.equals(StringPool.SLASH) &&
-						Validator.isNotNull(homeURL)) {
-
-						friendlyURL = homeURL;
-					}
-					else {
-						forwardURL.append(prefix);
+						forwardURL.append(group.getFriendlyURL());
 					}
 				}
 

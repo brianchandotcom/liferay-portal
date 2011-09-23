@@ -634,7 +634,7 @@ AUI().add(
 								onSuccess = function(event, id, obj) {
 									var data = this.get('responseData');
 
-									var tabHtml = A.substitute(
+									var tabHtml = Lang.sub(
 										TPL_TAB_LINK,
 										{
 											url: data.url,
@@ -723,6 +723,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-form-combobox', 'aui-io-request', 'dd-constrain', 'event-touch', 'json-parse', 'node-event-simulate', 'overlay', 'selector-css3', 'sortable', 'substitute']
+		requires: ['aui-form-combobox', 'aui-io-request', 'dd-constrain', 'event-touch', 'json-parse', 'node-event-simulate', 'overlay', 'selector-css3', 'sortable']
 	}
 );

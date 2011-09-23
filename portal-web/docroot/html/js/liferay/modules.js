@@ -45,7 +45,7 @@
 
 		var moduleList = {
 			'asset-categories-selector': ['aui-tree', 'liferay-asset-tags-selector'],
-			'asset-tags-selector': ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource', 'substitute'],
+			'asset-tags-selector': ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource'],
 			'auto-fields': ['aui-base', 'aui-data-set', 'aui-io-request', 'aui-parse-content', 'aui-sortable', 'base', 'liferay-undo-manager'],
 			'dockbar': ['aui-button-item', 'aui-dialog', 'aui-io-plugin', 'aui-io-request', 'aui-overlay-context', 'aui-overlay-manager', 'event-touch', 'node-focusmanager'],
 			'dynamic-select': ['aui-base'],
@@ -63,7 +63,7 @@
 			'logo-selector': ['aui-base'],
 			'look-and-feel': ['aui-color-picker', 'aui-dialog', 'aui-io-request', 'aui-tabs-base'],
 			'menu': ['aui-live-search','aui-overlay', 'node-focusmanager'],
-			'navigation': ['aui-form-combobox', 'aui-io-request', 'dd-constrain', 'event-touch', 'json-parse', 'node-event-simulate', 'overlay', 'selector-css3', 'sortable', 'substitute'],
+			'navigation': ['aui-form-combobox', 'aui-io-request', 'dd-constrain', 'event-touch', 'json-parse', 'node-event-simulate', 'overlay', 'selector-css3', 'sortable'],
 			'navigation-touch': ['liferay-navigation'],
 			'navigation-interaction': ['node-focusmanager'],
 			'notice': ['aui-base'],
@@ -71,7 +71,7 @@
 			'panel-floating': ['aui-paginator', 'liferay-panel'],
 			'poller': ['aui-base', 'io', 'json'],
 			'portlet-url': ['aui-base', 'aui-io-request', 'querystring-stringify-simple'],
-			'ratings': ['aui-io-request', 'aui-rating', 'substitute'],
+			'ratings': ['aui-io-request', 'aui-rating'],
 			'search-container': ['aui-base'],
 			'session': ['aui-io', 'aui-task-manager', 'cookie', 'liferay-notice'],
 			'service-datasource': ['aui-base', 'datasource-local'],
@@ -79,8 +79,8 @@
 			'staging-branch': ['liferay-staging'],
 			'staging-version': ['aui-button-item', 'liferay-staging'],
 			'translation-manager': ['aui-base'],
-			'undo-manager': ['aui-data-set', 'base', 'substitute'],
-			'upload': ['aui-base', 'aui-swf', 'collection', 'substitute', 'swfupload'],
+			'undo-manager': ['aui-data-set', 'base'],
+			'upload': ['aui-base', 'aui-swf', 'collection', 'swfupload'],
 			'util-list-fields': ['aui-base'],
 			'util-window': ['aui-dialog', 'aui-dialog-iframe']
 		};

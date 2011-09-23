@@ -111,11 +111,11 @@ if (folder != null) {
 		sb.append(curFolder.getFolderId());
 		sb.append("', '");
 		sb.append(UnicodeFormatter.toString(curFolder.getName()));
-		sb.append("', '");
+		sb.append("', ");
 		sb.append(curFolder.isSupportsMetadata());
-		sb.append("', '");
+		sb.append(", ");
 		sb.append(curFolder.isSupportsSocial());
-		sb.append("'); window.close();");
+		sb.append("); window.close();");
 
 		row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(pageContext, "choose"), sb.toString());
 

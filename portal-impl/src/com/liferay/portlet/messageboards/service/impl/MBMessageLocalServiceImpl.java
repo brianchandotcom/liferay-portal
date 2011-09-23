@@ -86,6 +86,7 @@ import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateCompar
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateComparator;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.social.WikiActivityKeys;
 import com.liferay.util.SerializableUtil;
@@ -1639,21 +1640,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					if (parentMessageId !=
 							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 
-						GroupedModel groupedModel = null;
-						int activityKey = 0;
+						AssetEntry assetEntry =
+							assetEntryLocalService.getEntry(className, classPK);
 
-						if (className.equals(BlogsEntry.class.getName())) {
-							groupedModel =
-								blogsEntryPersistence.findByPrimaryKey(classPK);
-							activityKey = BlogsActivityKeys.ADD_COMMENT;
-						}
-						else if (className.equals(WikiPage.class.getName())) {
-							groupedModel = wikiPageLocalService.getPage(
-								classPK);
-							activityKey = WikiActivityKeys.ADD_COMMENT;
-						}
-
-						if (groupedModel != null) {
+						if (assetEntry != null) {
 							JSONObject extraDataJSONObject =
 								JSONFactoryUtil.createJSONObject();
 
@@ -1661,10 +1651,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								"messageId", message.getMessageId());
 
 							socialActivityLocalService.addActivity(
-								userId, groupedModel.getGroupId(),
-								className, classPK,
-								activityKey, extraDataJSONObject.toString(),
-								groupedModel.getUserId());
+								userId, assetEntry.getGroupId(), className,
+								classPK, SocialActivityConstants.ADD_COMMENT,
+								extraDataJSONObject.toString(),
+								assetEntry.getUserId());
 						}
 					}
 				}

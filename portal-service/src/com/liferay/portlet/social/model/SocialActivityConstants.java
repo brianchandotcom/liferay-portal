@@ -61,4 +61,6 @@ public class SocialActivityConstants {
 
 	public static final int ADD_VOTE = 10004;
 
+	public static final int ADD_COMMENT = 10005;
+
 }

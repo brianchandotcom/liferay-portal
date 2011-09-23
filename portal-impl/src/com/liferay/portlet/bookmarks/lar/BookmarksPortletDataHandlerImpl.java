@@ -61,6 +61,11 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	@Override
+	public boolean isAlwaysExportable() {
+		return _ALWAYS_EXPORTABLE;
+	}
+
+	@Override
 	public boolean isPublishToLiveByDefault() {
 		return _PUBLISH_TO_LIVE_BY_DEFAULT;
 	}
@@ -414,6 +419,8 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 		portletDataContext.importClassedModel(
 			folder, importedFolder, _NAMESPACE);
 	}
+
+	private static final boolean _ALWAYS_EXPORTABLE = true;
 
 	private static final String _NAMESPACE = "bookmarks";
 

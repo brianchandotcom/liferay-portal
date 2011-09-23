@@ -58,6 +58,11 @@ public class CalendarPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	@Override
+	public boolean isAlwaysExportable() {
+		return _ALWAYS_EXPORTABLE;
+	}
+
+	@Override
 	public boolean isPublishToLiveByDefault() {
 		return _PUBLISH_TO_LIVE_BY_DEFAULT;
 	}
@@ -269,6 +274,8 @@ public class CalendarPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		portletDataContext.importClassedModel(event, importedEvent, _NAMESPACE);
 	}
+
+	private static final boolean _ALWAYS_EXPORTABLE = true;
 
 	private static final String _NAMESPACE = "calendar";
 

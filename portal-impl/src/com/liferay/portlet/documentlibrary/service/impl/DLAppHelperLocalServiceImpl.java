@@ -197,8 +197,14 @@ public class DLAppHelperLocalServiceImpl
 			latestFileVersion = fileEntry.getLatestFileVersion();
 		}
 
-		LiferayFileEntry liferayFileEntry =
-			(LiferayFileEntry)latestFileVersion.getFileEntry();
+
+		FileEntry latestFileEntry = latestFileVersion.getFileEntry();
+
+		LiferayFileEntry liferayFileEntry = null;
+
+		if (latestFileEntry instanceof LiferayFileEntry) {
+			liferayFileEntry = (LiferayFileEntry)latestFileEntry;
+		}
 
 		if (liferayFileEntry == null) {
 			return 0;

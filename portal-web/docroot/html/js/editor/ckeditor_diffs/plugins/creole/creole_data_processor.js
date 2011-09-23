@@ -388,12 +388,13 @@
 			var instance = this;
 
 			if (instance._allowNewLine(element)) {
+				var listCharacter = NEW_LINE;
+
 				if (instance._isParentNode(element, TAG_LIST_ITEM) && element.nextSibling) {
-					listTagsIn.push(STR_LIST_ITEM_ESCAPE_CHARACTERS);
+					listCharacter = STR_LIST_ITEM_ESCAPE_CHARACTERS;
 				}
-				else {
-					listTagsIn.push(NEW_LINE);
-				}
+
+				listTagsIn.push(listCharacter);
 			}
 		},
 

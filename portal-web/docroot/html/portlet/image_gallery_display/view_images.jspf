@@ -226,7 +226,7 @@ embeddedPlayerURL.setParameter("struts_action", "/image_gallery_display/embedded
 				</c:if>
 			},
 			delay: 5000,
-			links: '#imageGalleryAssetInfoPanelContainer .image-thumbnail',
+			links: '#<portlet:namespace />imageGalleryAssetInfo .image-thumbnail',
 			maxHeight: maxHeight,
 			maxWidth: maxWidth,
 			playingLabel: '(<liferay-ui:message key="playing" />)',

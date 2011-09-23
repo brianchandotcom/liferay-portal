@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class DLFileEntryTypeFinderUtil {
-	public static int countByKeywords(long companyId, long groupId,
+	public static int countByKeywords(long companyId, long[] groupIds,
 		java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByKeywords(companyId, groupId, keywords);
+		return getFinder().countByKeywords(companyId, groupIds, keywords);
 	}
 
 	public static int countByC_G_N_D_S(long companyId, long groupId,
@@ -35,22 +35,22 @@ public class DLFileEntryTypeFinderUtil {
 			andOperator);
 	}
 
-	public static int countByC_G_N_D_S(long companyId, long groupId,
+	public static int countByC_G_N_D_S(long companyId, long[] groupIds,
 		java.lang.String[] names, java.lang.String[] descriptions,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .countByC_G_N_D_S(companyId, groupId, names, descriptions,
+				   .countByC_G_N_D_S(companyId, groupIds, names, descriptions,
 			andOperator);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByKeywords(
-		long companyId, long groupId, java.lang.String keywords, int start,
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByKeywords(companyId, groupId, keywords, start, end,
+				   .findByKeywords(companyId, groupIds, keywords, start, end,
 			orderByComparator);
 	}
 
@@ -72,6 +72,17 @@ public class DLFileEntryTypeFinderUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByC_G_N_D_S(companyId, groupId, names, descriptions,
+			andOperator, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByC_G_N_D_S(
+		long companyId, long[] groupIds, java.lang.String[] names,
+		java.lang.String[] descriptions, boolean andOperator, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByC_G_N_D_S(companyId, groupIds, names, descriptions,
 			andOperator, start, end, orderByComparator);
 	}
 

@@ -181,6 +181,14 @@ else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+Group scopeGroup = themeDisplay.getScopeGroup();
+
+long[] groupIds = new long[] {scopeGroupId, themeDisplay.getCompanyGroupId()};
+
+if (scopeGroup.isLayout()) {
+	groupIds = new long[] {scopeGroup.getParentGroupId(), themeDisplay.getCompanyGroupId()};
+}
 %>
 
 <%!

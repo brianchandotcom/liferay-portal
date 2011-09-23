@@ -17,8 +17,8 @@
 <%
 StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSearchTerms();
 
-results = DLFileEntryTypeLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-total = DLFileEntryTypeLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, searchTerms.getKeywords());
+results = DLFileEntryTypeLocalServiceUtil.search(company.getCompanyId(), groupIds, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+total = DLFileEntryTypeLocalServiceUtil.searchCount(company.getCompanyId(), groupIds, searchTerms.getKeywords());
 
 pageContext.setAttribute("results", results);
 pageContext.setAttribute("total", total);

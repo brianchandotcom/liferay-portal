@@ -124,7 +124,7 @@
 				DLFileEntryType
 			WHERE
 				(companyId = ?) AND
-				(groupId = ?) AND
+				[$GROUPID$]
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
@@ -139,7 +139,7 @@
 				DLFileEntryType
 			WHERE
 				(companyId = ?) AND
-				(groupId = ?) AND
+				[$GROUPID$]
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])

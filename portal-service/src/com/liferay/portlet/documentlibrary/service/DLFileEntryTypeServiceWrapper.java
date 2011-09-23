@@ -53,14 +53,14 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService {
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId, int start, int end)
+		long[] groupIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryTypeService.getFileEntryTypes(groupId, start, end);
+		return _dlFileEntryTypeService.getFileEntryTypes(groupIds, start, end);
 	}
 
-	public int getFileEntryTypesCount(long groupId)
+	public int getFileEntryTypesCount(long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryTypeService.getFileEntryTypesCount(groupId);
+		return _dlFileEntryTypeService.getFileEntryTypesCount(groupIds);
 	}
 
 	public void updateFileEntryType(long fileEntryTypeId,

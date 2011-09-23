@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
@@ -205,9 +207,17 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 			// Add file entry type
 
+			long groupId = themeDisplay.getScopeGroupId();
+
+			Group scopeGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (scopeGroup.isLayout()) {
+				  groupId = scopeGroup.getParentGroupId();
+			}
+
 			DLFileEntryType fileEntryType =
 				DLFileEntryTypeServiceUtil.addFileEntryType(
-					themeDisplay.getScopeGroupId(), name, description,
+					groupId, name, description,
 					ddmStructureIds, serviceContext);
 
 			// Add dynamic data mapping structure

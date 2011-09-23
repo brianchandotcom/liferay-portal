@@ -37,12 +37,14 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -130,8 +132,22 @@ public class DLFileEntryLocalServiceImpl
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
 		String extension = getExtension(title, sourceFileName);
+
+		Group scopeGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+		Group companyGroup =
+			GroupLocalServiceUtil.getCompanyGroup(scopeGroup.getCompanyId());
+
+		long[] groupIds = new long[] {groupId, companyGroup.getGroupId()};
+
+		if (scopeGroup.isLayout()) {
+			groupIds =
+				new long[]
+					{scopeGroup.getParentGroupId(), companyGroup.getGroupId()};
+		}
+
 		fileEntryTypeId = getFileEntryTypeId(
-			groupId, folderId, fileEntryTypeId);
+			groupIds, folderId, fileEntryTypeId);
 
 		Date now = new Date();
 
@@ -939,9 +955,23 @@ public class DLFileEntryLocalServiceImpl
 
 		String extraSettings = StringPool.BLANK;
 
+		Group scopeGroup =
+			GroupLocalServiceUtil.getGroup(dlFileEntry.getGroupId());
+
+		Group companyGroup =
+			GroupLocalServiceUtil.getCompanyGroup(scopeGroup.getCompanyId());
+
+		long[] groupIds =
+			new long[] {dlFileEntry.getGroupId(), companyGroup.getGroupId()};
+
+		if (scopeGroup.isLayout()) {
+			groupIds =
+				new long[]
+					{scopeGroup.getParentGroupId(), companyGroup.getGroupId()};
+		}
+
 		fileEntryTypeId = getFileEntryTypeId(
-			dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-			fileEntryTypeId);
+			groupIds, dlFileEntry.getFolderId(), fileEntryTypeId);
 
 		return updateFileEntry(
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
@@ -1374,18 +1404,17 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected Long getFileEntryTypeId(
-			long groupId, long folderId, long fileEntryTypeId)
+			long[] groupIds, long folderId, long fileEntryTypeId)
 		throws PortalException, SystemException {
 
 		if (fileEntryTypeId == -1) {
 			fileEntryTypeId =
-				dlFileEntryTypeLocalService.getDefaultFileEntryType(
-					groupId, folderId);
+				dlFileEntryTypeLocalService.getDefaultFileEntryType(folderId);
 		}
 		else {
 			List<DLFileEntryType> dlFileEntryTypes =
 				dlFileEntryTypeLocalService.getFolderFileEntryTypes(
-					groupId, folderId, true);
+					groupIds, folderId, true);
 
 			boolean found = false;
 

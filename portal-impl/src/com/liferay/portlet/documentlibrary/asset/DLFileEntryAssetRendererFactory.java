@@ -86,16 +86,14 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	public Map<Long, String> getClassTypes(long[] groupIds) throws Exception {
 		Map<Long, String> classTypes = new HashMap<Long, String>();
 
-		for (long groupId : groupIds) {
-			List<DLFileEntryType> dlFileEntryTypes =
-				DLFileEntryTypeServiceUtil.getFileEntryTypes(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<DLFileEntryType> dlFileEntryTypes =
+			DLFileEntryTypeServiceUtil.getFileEntryTypes(
+				groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			for (DLFileEntryType dlFileEntryType: dlFileEntryTypes) {
-				classTypes.put(
-					dlFileEntryType.getFileEntryTypeId(),
-					dlFileEntryType.getName());
-			}
+		for (DLFileEntryType dlFileEntryType: dlFileEntryTypes) {
+			classTypes.put(
+				dlFileEntryType.getFileEntryTypeId(),
+				dlFileEntryType.getName());
 		}
 
 		return classTypes;

@@ -127,16 +127,18 @@
 		_appendNewLines: function(total) {
 			var instance = this;
 
-			var newLinesAtEnd = REGEX_LASTCHAR_NEWLINE.exec(instance._endResult.slice(-2).join(STR_BLANK));
-
 			var count = 0;
+
+			var endResult = instance._endResult;
+
+			var newLinesAtEnd = REGEX_LASTCHAR_NEWLINE.exec(endResult.slice(-2).join(STR_BLANK));
 
 			if (newLinesAtEnd) {
 				count = newLinesAtEnd[1].length;
 			}
 
 			while (count++ < total) {
-				instance._endResult.push(NEW_LINE);
+				endResult.push(NEW_LINE);
 			}
 		},
 

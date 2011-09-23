@@ -226,8 +226,25 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 				selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.select("//select",
-					RuntimeVariables.replace("label=2010"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isPartialText("//select", "2010")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select", RuntimeVariables.replace("2010"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -251,13 +268,47 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isElementPresent(
-						"link=Repeating Test Event"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Repeating Test Event")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertTrue(selenium.isVisible("link=Repeating Test Event"));
 				selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.select("//select",
-					RuntimeVariables.replace("label=2010"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isPartialText("//select", "2010")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select", RuntimeVariables.replace("2010"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -281,13 +332,47 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isElementPresent(
-						"link=Repeating Test Event"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Repeating Test Event")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				assertTrue(selenium.isVisible("link=Repeating Test Event"));
 				selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.select("//select",
-					RuntimeVariables.replace("label=2010"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isPartialText("//select", "2010")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+				selenium.select("//select", RuntimeVariables.replace("2010"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -310,6 +395,25 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(0, 15, 2010);')]",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (!selenium.isElementPresent(
+									"link=Repeating Test Event")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isElementPresent(
 						"link=Repeating Test Event"));

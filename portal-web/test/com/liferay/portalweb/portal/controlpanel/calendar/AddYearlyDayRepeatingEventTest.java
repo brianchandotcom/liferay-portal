@@ -148,7 +148,25 @@ public class AddYearlyDayRepeatingEventTest extends BaseTestCase {
 		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("//select", RuntimeVariables.replace("label=2011"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isPartialText("//select", "2011")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.select("//select", RuntimeVariables.replace("2011"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -190,7 +208,7 @@ public class AddYearlyDayRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Repeating Test Event"));
+		assertTrue(selenium.isVisible("link=Repeating Test Event"));
 		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -212,7 +230,7 @@ public class AddYearlyDayRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("//select", RuntimeVariables.replace("label=2012"));
+		selenium.select("//select", RuntimeVariables.replace("2012"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -254,7 +272,7 @@ public class AddYearlyDayRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("link=Repeating Test Event"));
+		assertTrue(selenium.isVisible("link=Repeating Test Event"));
 		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
@@ -276,7 +294,7 @@ public class AddYearlyDayRepeatingEventTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("//select", RuntimeVariables.replace("label=2012"));
+		selenium.select("//select", RuntimeVariables.replace("2012"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -299,6 +317,24 @@ public class AddYearlyDayRepeatingEventTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(1, 6, 2012);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (!selenium.isElementPresent("link=Repeating Test Event")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("link=Repeating Test Event"));
 	}

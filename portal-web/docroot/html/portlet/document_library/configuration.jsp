@@ -55,8 +55,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
 
-				<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= showSubfolders %>" />
-
 				<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= foldersPerPage %>" />
 
 				<aui:field-wrapper label="show-columns">

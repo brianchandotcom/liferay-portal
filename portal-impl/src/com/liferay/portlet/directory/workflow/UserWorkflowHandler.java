@@ -68,6 +68,9 @@ public class UserWorkflowHandler extends BaseWorkflowHandler {
 			(status == WorkflowConstants.STATUS_APPROVED)) {
 
 			UserLocalServiceUtil.completeUserRegistration(user, serviceContext);
+
+			serviceContext.setAttribute(
+				"passwordUnencrypted", user.getPasswordUnencrypted());
 		}
 
 		return UserLocalServiceUtil.updateStatus(userId, status);

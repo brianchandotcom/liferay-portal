@@ -795,6 +795,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			companyId, workflowUserId, User.class.getName(), userId, user,
 			serviceContext);
 
+		String passwordUnencrypted =
+			(String) serviceContext.getAttribute("passwordUnencrypted");
+
+		if (Validator.isNotNull(passwordUnencrypted)) {
+			user.setPasswordUnencrypted(passwordUnencrypted);
+		}
+
 		return user;
 	}
 

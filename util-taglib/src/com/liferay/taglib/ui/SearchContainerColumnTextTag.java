@@ -60,6 +60,12 @@ public class SearchContainerColumnTextTag<R>
 				if (bodyContent != null) {
 					_value = bodyContent.getString();
 				}
+				else {
+					Object object = BeanPropertiesUtil.getObject(
+						row.getObject(), getName());
+
+					_value = String.valueOf(object);
+				}
 			}
 
 			if (_translate) {
@@ -116,12 +122,6 @@ public class SearchContainerColumnTextTag<R>
 	public int doStartTag() throws JspException {
 		if (_orderable && Validator.isNull(_orderableProperty)) {
 			_orderableProperty = name;
-		}
-
-		if (Validator.isNull(_buffer) && Validator.isNull(_property) &&
-			Validator.isNull(_value)) {
-
-			_property = name;
 		}
 
 		SearchContainerRowTag<R> searchContainerRowTag =

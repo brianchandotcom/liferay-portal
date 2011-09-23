@@ -32,7 +32,7 @@ public class ImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//div[4]/div/ul/li[6]/a")) {
+				if (selenium.isElementPresent("//li[7]/a")) {
 					break;
 				}
 			}
@@ -43,8 +43,9 @@ public class ImportLARTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[4]/div/ul/li[6]/a",
-			RuntimeVariables.replace("Manage Content"));
+		assertEquals(RuntimeVariables.replace("Site Content"),
+			selenium.getText("//li[7]/a"));
+		selenium.clickAt("//li[7]/a", RuntimeVariables.replace("Site Content"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

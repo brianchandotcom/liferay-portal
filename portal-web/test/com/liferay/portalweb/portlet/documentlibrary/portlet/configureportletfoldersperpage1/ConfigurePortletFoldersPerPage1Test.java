@@ -93,6 +93,7 @@ public class ConfigurePortletFoldersPerPage1Test extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Configuration"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

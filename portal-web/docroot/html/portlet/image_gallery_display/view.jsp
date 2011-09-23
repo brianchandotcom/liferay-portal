@@ -148,7 +148,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</c:if>
 
 			<aui:column columnWidth="<%= showFolderMenu ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
-				<div id="imageGalleryAssetInfoContainer">
+				<div id="<portlet:namespace />imageGalleryAssetInfo">
 					<c:if test="<%= folder != null %>">
 						<div class="lfr-asset-description">
 							<%= HtmlUtil.escape(folder.getDescription()) %>

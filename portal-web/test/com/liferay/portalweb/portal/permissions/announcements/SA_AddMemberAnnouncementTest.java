@@ -63,8 +63,29 @@ public class SA_AddMemberAnnouncementTest extends BaseTestCase {
 		selenium.type("//input[@id='_84_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@id='_84_content']",
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__84_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
+		selenium.type("//body",
 			RuntimeVariables.replace("This is a test Member Announcement."));
+		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

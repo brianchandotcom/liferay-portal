@@ -29,13 +29,28 @@
 	<td>Sites</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>//input[@id='_134_name']</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//td[1]/a</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[6]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//td[6]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -148,7 +163,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

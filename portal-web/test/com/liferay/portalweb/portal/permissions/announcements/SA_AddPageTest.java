@@ -55,9 +55,11 @@ public class SA_AddPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[7]/span/ul/li/strong/a"));
-		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+			selenium.getText("//td[6]/span/ul/li/strong/a"));
+		selenium.clickAt("//td[6]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

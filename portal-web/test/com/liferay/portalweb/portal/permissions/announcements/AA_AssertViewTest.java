@@ -54,10 +54,10 @@ public class AA_AssertViewTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("xPath=(//span[@class='entry-scope'])[2]"));
 		assertTrue(selenium.isPartialText(
-				"xPath=(//p[@class=' entry-content entry-type-general'])[1]",
+				"xPath=(//div[@class=' entry-content entry-type-general'])[1]",
 				"This is a test AA Announcement."));
 		assertTrue(selenium.isPartialText(
-				"xPath=(//p[@class=' entry-content entry-type-general'])[2]",
+				"xPath=(//div[@class=' entry-content entry-type-general'])[2]",
 				"This is a test General Announcement."));
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));

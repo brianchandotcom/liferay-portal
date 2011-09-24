@@ -30,7 +30,7 @@ public class ActivatePageTemplateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -49,6 +49,7 @@ public class ActivatePageTemplateTest extends BaseTestCase {
 			RuntimeVariables.replace("Page Templates"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isVisible("link=false"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -126,7 +127,7 @@ public class ActivatePageTemplateTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("link=Yes"));
-		assertFalse(selenium.isElementPresent("link=No"));
+		assertFalse(selenium.isElementPresent("link=false"));
+		assertTrue(selenium.isVisible("link=true"));
 	}
 }

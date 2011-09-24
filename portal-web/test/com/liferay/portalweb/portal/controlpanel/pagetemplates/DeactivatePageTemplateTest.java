@@ -30,7 +30,7 @@ public class DeactivatePageTemplateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Control Panel")) {
+				if (selenium.isElementPresent("link=Control Panel")) {
 					break;
 				}
 			}
@@ -126,6 +126,6 @@ public class DeactivatePageTemplateTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("link=No"));
+		assertTrue(selenium.isVisible("link=false"));
 	}
 }

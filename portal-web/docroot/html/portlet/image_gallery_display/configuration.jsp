@@ -127,6 +127,15 @@ String redirect = ParamUtil.getString(request, "redirect");
 		nameEl.innerHTML = "";
 	}
 
+	function <%= PortalUtil.getPortletNamespace(portletResource) %>selectFolder(rootFolderId, rootFolderName) {
+		document.<portlet:namespace />fm.<portlet:namespace />rootFolderId.value = rootFolderId;
+
+		var nameEl = document.getElementById("<portlet:namespace />rootFolderName");
+
+		nameEl.href = "<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= "/image_gallery_display/view" %>' /></liferay-portlet:renderURL>&<portlet:namespace />folderId=" + rootFolderId;
+		nameEl.innerHTML = rootFolderName + "&nbsp;";
+	}
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveConfiguration',
@@ -137,13 +146,4 @@ String redirect = ParamUtil.getString(request, "redirect");
 		},
 		['liferay-util-list-fields']
 	);
-
-	function <%= PortalUtil.getPortletNamespace(portletResource) %>selectFolder(rootFolderId, rootFolderName) {
-		document.<portlet:namespace />fm.<portlet:namespace />rootFolderId.value = rootFolderId;
-
-		var nameEl = document.getElementById("<portlet:namespace />rootFolderName");
-
-		nameEl.href = "<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= "/image_gallery_display/view" %>' /></liferay-portlet:renderURL>&<portlet:namespace />folderId=" + rootFolderId;
-		nameEl.innerHTML = rootFolderName + "&nbsp;";
-	}
 </aui:script>

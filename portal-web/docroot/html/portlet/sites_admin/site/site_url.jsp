@@ -98,13 +98,42 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 	<aui:input label="private-pages" name="privateVirtualHost" type="text" value="<%= privateVirtualHost %>">
 		<aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom" >
 			function(val, fieldNode, ruleValue) {
-				var publicVirtualHost = A.one("#<portlet:namespace />publicVirtualHost");
-
-				return (val != publicVirtualHost.val());
+				return (val != A.one('#<portlet:namespace />publicVirtualHost').val());
 			}
 		</aui:validator>
 	</aui:input>
 </aui:fieldset>
+
+<aui:script use="aui-base">
+	var friendlyURL = A.one('#<portlet:namespace />friendlyURL');
+
+	friendlyURL.on(
+		['blur', 'change', 'focus'],
+		function(event) {
+			var value = A.Lang.trim(friendlyURL.val());
+
+			if (value == '/') {
+				value = '';
+			}
+			else {
+				value = value.replace(
+					/^[^\/]|\/$/g,
+					function(match, index) {
+						var str = '';
+
+						if (index == 0) {
+							str = '/' + match
+						}
+
+						return str;
+					}
+				);
+			}
+
+			friendlyURL.val(value);
+		}
+	);
+</aui:script>
 
 <c:if test="<%= liveGroup.hasStagingGroup() %>">
 	<aui:fieldset label="staging-friendly-url">
@@ -129,9 +158,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 		<aui:input label="private-pages" name="stagingPrivateVirtualHost" type="text" value="<%= stagingPrivateVirtualHost %>">
 			<aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom" >
 				function(val, fieldNode, ruleValue) {
-					var stagingPublicVirtualHost = A.one("#<portlet:namespace />stagingPublicVirtualHost");
-
-					return (val != stagingPublicVirtualHost.val());
+					return (val != A.one('#<portlet:namespace />stagingPublicVirtualHost').val());
 				}
 			</aui:validator>
 		</aui:input>

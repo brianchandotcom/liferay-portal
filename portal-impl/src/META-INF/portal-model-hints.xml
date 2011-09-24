@@ -197,21 +197,6 @@
 		</field>
 		<field name="friendlyURL" type="String">
 			<hint name="max-length">100</hint>
-			<validator name="custom" error-message="please-enter-a-friendly-url-that-begins-with-a-slash">
-			<![CDATA[
-				function(val, fieldNode, ruleValue) {
-					return (Liferay.Util.startsWith(val, '/'));
-				}
-			]]>
-			</validator>
-			<validator name="custom" error-message="please-enter-a-friendly-url-that-does-not-end-with-a-slash">
-			<![CDATA[
-				function(val, fieldNode, ruleValue) {
-					return (!Liferay.Util.endsWith(val, '/'));
-				}
-			]]>
-			</validator>
-			<validator name="minLength">2</validator>
 		</field>
 		<field name="site" type="boolean" />
 		<field name="active" type="boolean" />

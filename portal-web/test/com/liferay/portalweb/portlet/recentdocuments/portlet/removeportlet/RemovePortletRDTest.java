@@ -43,7 +43,7 @@ public class RemovePortletRDTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Recently Downloaded Documents Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Recently Downloaded Documents Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

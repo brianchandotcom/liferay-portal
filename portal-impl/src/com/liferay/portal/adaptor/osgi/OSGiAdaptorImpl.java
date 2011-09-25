@@ -52,6 +52,7 @@ import org.osgi.framework.launch.FrameworkFactory;
 
 import org.springframework.aop.SpringProxy;
 import org.springframework.aop.framework.Advised;
+import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -86,7 +87,7 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 	public void stop() throws AdaptorException {
 		try {
 			if (_framework != null) {
-				_framework.waitForStop(0);
+				_framework.stop();
 			}
 		}
 		catch (Exception e) {
@@ -243,6 +244,8 @@ public class OSGiAdaptorImpl implements Adaptor, OSGiAdaptor {
 
 			try {
 				bean = applicationContext.getBean(beanName);
+			}
+			catch (BeanIsAbstractException biae) {
 			}
 			catch (Exception e) {
 				_log.error(e, e);

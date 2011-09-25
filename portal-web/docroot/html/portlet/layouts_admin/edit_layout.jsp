@@ -160,7 +160,7 @@ String[][] categorySections = {mainSections};
 							var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
 
 							var popup = null;
-							var exportPopup;
+							var exportPopup = null;
 
 							var layoutToolbar = new A.Toolbar(
 								{

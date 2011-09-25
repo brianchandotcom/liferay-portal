@@ -20,10 +20,11 @@ import com.liferay.portal.util.PropsValues;
 
 import java.net.URL;
 
+import java.util.List;
 import java.util.Map;
 
-import net.sf.ehcache.config.CacheConfiguration.CacheEventListenerFactoryConfiguration;
 import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.config.CacheConfiguration.CacheEventListenerFactoryConfiguration;
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.config.ConfigurationFactory;
 
@@ -112,8 +113,26 @@ public class EhcacheConfigurationUtil {
 			return;
 		}
 
+		List<CacheEventListenerFactoryConfiguration> configObjects =
+					cacheConfiguration.getCacheEventListenerConfigurations();
+
+		boolean usingLiferayCacheEventListenerFactory = false;
+
+		for (CacheEventListenerFactoryConfiguration configObj : configObjects) {
+			String cacheListenerFactoryClassName =
+				configObj.getFullyQualifiedClassPath();
+
+			if (LiferayCacheEventListenerFactory.class.getName().equals(
+					cacheListenerFactoryClassName)) {
+
+				usingLiferayCacheEventListenerFactory = true;
+
+				break;
+			}
+		}
+
 		if (clearCachePeerProviderConfigurations ||
-			(!usingDefault && !cacheConfiguration.isTerracottaClustered())) {
+			(!usingDefault && usingLiferayCacheEventListenerFactory)) {
 
 			_clearCacheEventListenerConfigurations(cacheConfiguration);
 

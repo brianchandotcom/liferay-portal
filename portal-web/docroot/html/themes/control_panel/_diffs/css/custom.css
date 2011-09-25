@@ -138,6 +138,14 @@ body.portal-popup:after, body.portal-popup:before {
 	position: relative;
 }
 
+.lfr-ctrl-panel .aui-tree-node-selected {
+	background: transparent;
+}
+
+.lfr-ctrl-panel .aui-tree-node-selected a {
+	color: #333;
+}
+
 .panel-page-application .lfr-panel.lfr-extended {
 	margin-bottom: 5px;
 }
@@ -713,10 +721,6 @@ body.portal-popup:after, body.portal-popup:before {
 
 .portlet-document-library .portlet-content {
 	padding: 12px 0;
-}
-
-#main-content .aui-app-column-view {
-	
 }
 
 /*----- Extras -----*/

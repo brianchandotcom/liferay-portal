@@ -48,9 +48,6 @@
 	}
 
 	.categories-admin-content {
-		li.vocabulary-category {
-		}
-
 		li.vocabulary-category, li.vocabulary-item {
 			font-weight: bold;
 			list-style: none;
@@ -73,9 +70,6 @@
 		background-position: 5px 50%;
 		padding-left: 25px;
 		width: 210px;
-	}
-
-	.categories-treeview-container {
 	}
 
 	.select-vocabularies, .select-categories {
@@ -220,10 +214,6 @@
 
 		.aui-tree-node-over {
 			background: #D3DADD;
-		}
-
-		.aui-tree-node-checked {
-			/*background: #00A2EA;*/
 		}
 
 		.aui-tree-node-content {

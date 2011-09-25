@@ -25,6 +25,8 @@ Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
 long groupId = ParamUtil.getLong(request, "groupId");
 
+long[] layoutIds = ParamUtil.getLongValues(request, "layoutIds");
+
 Group liveGroup = group;
 
 if (group.isStagingGroup()) {
@@ -132,6 +134,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+						<portlet:param name="layoutIds" value="<%= StringUtil.merge(layoutIds) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 					</portlet:actionURL>
 

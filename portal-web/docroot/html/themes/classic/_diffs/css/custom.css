@@ -335,7 +335,7 @@ body #banner .logo a {
 .lfr-hudcrumbs {
 	position: fixed;
 	top: 0;
-	z-index: 200;
+	z-index: 440;
 }
 
 .lfr-hudcrumbs ul {

@@ -29,6 +29,19 @@
 		background: #D9D9D9 url(../images/application/subheader_bg.png) 0 0 repeat-x;
 		border: 1px solid #ccc;
 
+		&.sort-column {
+			background: #EBEBEB url(../images/application/state_active_bg.png) 0 0 repeat-x;
+			border: 1px solid #ccc;
+			color: #1F1E1E;
+
+			.result-column-name {
+				background: url(../images/arrows/05_up.png) no-repeat 100% 50%;
+				display: inline-block;
+				font-style: italic;
+				padding-right: 15px;
+			}
+		}
+
 		&.first {
 			border-left-width: 0;
 		}
@@ -41,19 +54,6 @@
 	th, td {
 		color: #7B7C7F;
 		padding: 5px 10px;
-	}
-
-	th.sort-column {
-		background: #EBEBEB url(../images/application/state_active_bg.png) 0 0 repeat-x;
-		border: 1px solid #ccc;
-		color: #1F1E1E;
-	}
-
-	.sort-column .result-column-name {
-		background: url(../images/arrows/05_up.png) no-repeat 100% 50%;
-		display: inline-block;
-		font-style: italic;
-		padding-right: 15px;
 	}
 
 	.sort-desc .result-column-name {
@@ -81,15 +81,15 @@
 		border: 1px solid;
 		border-color: #D7D7D7 #E7E7E7;
 		padding: 5px 10px;
+
+		&.sort-column {
+			background: #E6ECEF;
+		}
 	}
 
 	&.alt td {
-		background: #EEF0FF;
+		background: #F5F8FB;
 		border-width: 1px 0;
-	}
-
-	td.sort-column {
-		background: #E6ECEF;
 	}
 
 	&.hover td {
@@ -594,6 +594,37 @@
 	margin-left: 2em;
 }
 
+.taglib-page-iterator .search-pages .page-links {
+	padding: 0;
+}
+
+/* ---------- App Column View ---------- */
+
+.lfr-app-column-view {
+	border: 1px solid #C9C9C9;
+
+	.aui-layout-content {
+		position: relative;
+	}
+
+	.aui-column:before {
+		border-right: 1px solid #C9C9C9;
+		bottom: 0;
+		content: "";
+		margin-left: -1px;
+		position: absolute;
+		top: 0;
+	}
+
+	.aui-column-content {
+		border-right: 1px solid transparent;
+
+		.lfr-message-response {
+			margin: 10px;
+		}
+	}
+}
+
 /* ---------- Header row ---------- */
 
 .lfr-header-row {
@@ -601,6 +632,16 @@
 
 	.lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
 		background: url(../images/arrows/08_down.png) 100% -5px no-repeat;
+	}
+
+	.aui-toolbar {
+		.aui-toolbar-item {
+			border-right-width: 0;
+		}
+
+		.aui-toolbar-last {
+			border-right-width: 1px;
+		}
 	}
 }
 

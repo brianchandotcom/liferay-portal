@@ -138,11 +138,11 @@ body.portal-popup:after, body.portal-popup:before {
 	position: relative;
 }
 
-#main-content .aui-tree-node-selected {
+.lfr-ctrl-panel .aui-tree-node-selected {
 	background: transparent;
 }
 
-#main-content .aui-tree-node-selected a {
+.lfr-ctrl-panel .aui-tree-node-selected a {
 	color: #333;
 }
 

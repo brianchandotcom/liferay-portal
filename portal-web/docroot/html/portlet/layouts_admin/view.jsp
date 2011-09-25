@@ -84,7 +84,7 @@ if ((selLayout != null) && !group.isLayoutPrototype()) {
 }
 %>
 
-<aui:layout cssClass="manage-view">
+<aui:layout cssClass="manage-view lfr-app-column-view">
 	<c:if test="<%= !group.isLayoutPrototype() %>">
 		<aui:column columnWidth="25" cssClass="manage-sitemap">
 			<div class="lfr-header-row">

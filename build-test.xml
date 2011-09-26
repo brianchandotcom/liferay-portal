@@ -1890,6 +1890,8 @@
 				<delete file="app.server.${user.name}.properties" />
 			</then>
 		</if>
+
+		<ant dir="portal-impl" target="test-class" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db2">

@@ -49,25 +49,12 @@ public class ActivatePageTemplateTest extends BaseTestCase {
 			RuntimeVariables.replace("Page Templates"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("link=false"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[6]/td[3]/span/ul/li/strong/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Test Page Template"),
+			selenium.getText("//tr[6]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("No"),
+			selenium.getText("//tr[6]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//tr[6]/td[3]/span/ul/li/strong/a"));
 		selenium.clickAt("//tr[6]/td[3]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
@@ -127,7 +114,9 @@ public class ActivatePageTemplateTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent("link=false"));
-		assertTrue(selenium.isVisible("link=true"));
+		assertEquals(RuntimeVariables.replace("Test Page Template"),
+			selenium.getText("//tr[6]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Yes"),
+			selenium.getText("//tr[6]/td[2]/a"));
 	}
 }

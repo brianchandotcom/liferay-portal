@@ -78,17 +78,11 @@ portletURL.setParameter("topLink", topLink);
 portletURL.setParameter("folderId", String.valueOf(folderId));
 
 request.setAttribute("view.jsp-folder", folder);
-
 request.setAttribute("view.jsp-defaultFolderId", String.valueOf(defaultFolderId));
-
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
-
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
-
 request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
-
 request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
-
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
@@ -181,11 +175,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<%
 					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mimeTypes, false);
 
 					searchContainer.setTotal(total);
 
-					List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 					searchContainer.setResults(results);
 

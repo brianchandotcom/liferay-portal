@@ -108,11 +108,36 @@ public class DLFolderServiceWrapper implements DLFolderService {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(groupId,
+			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
+		long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
+			folderId, status, mimeTypes, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcuts(long groupId,
+		long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(groupId,
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)

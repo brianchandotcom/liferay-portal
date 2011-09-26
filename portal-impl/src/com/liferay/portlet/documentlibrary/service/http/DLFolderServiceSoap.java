@@ -221,6 +221,38 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders) throws RemoteException {
+		try {
+			int returnValue = DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
+					folderId, status, mimeTypes, includeMountFolders);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFoldersAndFileEntriesAndFileShortcuts(long groupId,
+		long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders) throws RemoteException {
+		try {
+			int returnValue = DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(groupId,
+					folderId, status, mimeTypes, includeMountFolders);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws RemoteException {
 		try {

@@ -97,8 +97,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 						for (int i = 1; i < displayViews.length; i++) {
 					%>
 
-							,
-							{
+							, {
 								handler: A.bind(onButtonClick, null, '<%= displayViews[i] %>'),
 								icon: 'display-<%= displayViews[i] %>',
 								title: '<%= LanguageUtil.get(pageContext, displayViews[i] + "-view") %>'

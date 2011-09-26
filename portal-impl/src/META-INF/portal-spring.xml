@@ -249,7 +249,6 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLContentLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder" class="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLFileEntryService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistenceImpl" parent="basePersistence" />

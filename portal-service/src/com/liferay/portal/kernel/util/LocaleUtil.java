@@ -119,7 +119,7 @@ public class LocaleUtil {
 				}
 			}
 
-			if (_locales.size() < 1000){
+			if (_locales.size() < _MAX_LOCALES) {
 				_locales.put(languageId, locale);
 			}
 			else {
@@ -281,6 +281,8 @@ public class LocaleUtil {
 	private static LocaleUtil _instance = new LocaleUtil();
 
 	private static Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
+
+	private static int _MAX_LOCALES = 1000;
 
 	private Locale _locale;
 	private Map<String, Locale> _locales = new HashMap<String, Locale>();

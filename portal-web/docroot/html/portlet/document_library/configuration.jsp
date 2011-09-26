@@ -32,8 +32,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
-	<aui:input name="preferences--entryColumns--" type="hidden" />
 	<aui:input name="preferences--displayViews--" type="hidden" />
+	<aui:input name="preferences--entryColumns--" type="hidden" />
 
 	<liferay-ui:error key="displayStyleViewsCannotBeEmpty" message="display-style-views-cannot-be-empty" />
 	<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
@@ -57,16 +57,18 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
 
-				<aui:select label="maximum-entries-to-display" name="preferences--itemsPerPage--">
+				<aui:select label="maximum-entries-to-display" name="preferences--entriesPerPage--">
+
 					<%
 					for (int deltaValue : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
 					%>
 
-						<aui:option label="<%= deltaValue %>" selected="<%= itemsPerPage == deltaValue %>" />
+						<aui:option label="<%= deltaValue %>" selected="<%= entriesPerPage == deltaValue %>" />
 
 					<%
 					}
 					%>
+
 				</aui:select>
 
 				<aui:field-wrapper label="display-style-views">

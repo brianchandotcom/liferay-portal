@@ -100,7 +100,7 @@ if (Validator.isNotNull(portletResource)) {
 	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 
-int itemsPerPage = PrefsParamUtil.getInteger(preferences, request, "itemsPerPage", SearchContainer.DEFAULT_DELTA);
+int entriesPerPage = PrefsParamUtil.getInteger(preferences, request, "entriesPerPage", SearchContainer.DEFAULT_DELTA);
 
 String[] displayViews = StringUtil.split(PrefsParamUtil.getString(preferences, request, "displayViews", StringUtil.merge(PropsValues.DL_DISPLAY_VIEWS)));
 

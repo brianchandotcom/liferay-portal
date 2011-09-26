@@ -47,7 +47,7 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 }
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", itemsPerPage);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
 int entryRowsPerPage = entryEnd - entryStart;
 

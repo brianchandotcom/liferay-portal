@@ -60,7 +60,7 @@ if (Validator.isNull(displayStyle)) {
 }
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", itemsPerPage);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
 int total = 0;
 %>
@@ -114,7 +114,7 @@ int total = 0;
 				headerNames.add(headerName);
 			}
 
-			SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, itemsPerPage, portletURL, headerNames, LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
+			SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, entriesPerPage, portletURL, headerNames, LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
 			Map<String, String> orderableHeaders = new HashMap<String, String>();
 

@@ -56,7 +56,7 @@ else {
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", itemsPerPage);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);

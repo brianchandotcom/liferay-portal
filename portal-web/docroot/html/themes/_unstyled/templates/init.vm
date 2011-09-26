@@ -58,6 +58,13 @@
 #set ($company_logo = $theme_display.getCompanyLogo())
 #set ($company_logo_height = $theme_display.getCompanyLogoHeight())
 #set ($company_logo_width = $theme_display.getCompanyLogoWidth())
+
+#if ($theme_display.getCompanyLogo() == $theme_display.getRealCompanyLogo())
+	#set($logo_css_class="default-logo logo")
+#else
+	#set($logo_css_class="custom-logo logo")
+#end
+
 #set ($company_url = $theme_display.getURLHome())
 
 #if (!$request.isRequestedSessionIdFromCookie())

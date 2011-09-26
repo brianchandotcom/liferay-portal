@@ -22,7 +22,7 @@
 	<header id="banner" role="banner">
 		<hgroup id="heading">
 			<h1 class="company-title">
-				<a class="logo" href="$control_panel_url" title="#language("go-to") #language("control-panel")">
+				<a class="$logo_css_class" href="$control_panel_url" title="#language("go-to") #language("control-panel")">
 					<span>#language("control-panel")</span>
 				</a>
 			</h1>

@@ -41,6 +41,6 @@ boolean showCheckBox = DLFolderPermission.contains(permissionChecker, folder, Ac
 	<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 	<c:if test="<%= showCheckBox %>">
-		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + \"Folder\" %>" type="checkbox" value="<%= folder.getFolderId() %>" />
+		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + Folder.class.getSimpleName() %>" type="checkbox" value="<%= folder.getFolderId() %>" />
 	</c:if>
 </div>

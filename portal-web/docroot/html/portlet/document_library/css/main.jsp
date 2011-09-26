@@ -328,7 +328,7 @@
 		}
 
 		&.active-area, &.active-area.hover {
-			background-color: #00D68E;			
+			background-color: #00D68E;
 		}
 
 		.overlay.document-action a {
@@ -790,13 +790,7 @@
 }
 
 .active-area-proxy {
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	background-color: #FFFFE0;
-	background-image: url(<%= themeImagesPath %>/portlet/pop_up.png);
-	background-position: 10px 50%;
-	background-repeat: no-repeat;
-	border-radius: 4px;
+	background: #FFFFE0 url(<%= themeImagesPath %>/portlet/pop_up.png) no-repeat 10px 50%;
 	font-size: 1.2em;
 	padding: 0.3em 0.3em 0.3em 2em;
 }

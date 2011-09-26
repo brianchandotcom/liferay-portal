@@ -1187,6 +1187,11 @@ public class SourceFormatter {
 				}
 			}
 
+			if (fileName.endsWith("init.jsp")) {
+				newContent = StringUtil.replace(newContent, ">\r\n<%@", "><%@");
+				newContent = StringUtil.replace(newContent, ">\n<%@", "><%@");
+			}
+
 			_checkXSS(fileName, newContent);
 
 			if ((newContent != null) && !content.equals(newContent)) {

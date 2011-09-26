@@ -1128,11 +1128,7 @@ release was successful.</echo>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
-				<get
-					dest="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
-					src="${app.server.weblogic.zip.url}"
-					verbose="true"
-				/>
+				<echo message="Please download the WebLogic zip file from ${app.server.weblogic.zip.url} and place it here: ${app.server.parent.dir}/${app.server.weblogic.zip.name}. Then re-run this task." />
 			</then>
 		</if>
 

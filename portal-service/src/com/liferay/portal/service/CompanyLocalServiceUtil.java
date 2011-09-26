@@ -262,6 +262,17 @@ public class CompanyLocalServiceUtil {
 			maxUsers, active);
 	}
 
+	public static com.liferay.portal.model.Company addCompany(
+		java.lang.String webId, java.lang.String virtualHostname,
+		java.lang.String mx, java.lang.String shardName, boolean system,
+		int maxUsers, boolean active, boolean checkCompany)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addCompany(webId, virtualHostname, mx, shardName, system,
+			maxUsers, active, checkCompany);
+	}
+
 	public static com.liferay.portal.model.Company checkCompany(
 		java.lang.String webId)
 		throws com.liferay.portal.kernel.exception.PortalException,

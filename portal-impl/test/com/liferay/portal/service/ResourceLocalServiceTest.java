@@ -19,11 +19,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portal.service.BaseServiceTestCase;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.TestPropsValues;
 
 /**
@@ -31,21 +28,32 @@ import com.liferay.portal.util.TestPropsValues;
  */
 public class ResourceLocalServiceTest extends BaseServiceTestCase {
 
+	private static int threadCount = 5;
+
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
 		Group group = GroupLocalServiceUtil.getGroup(
-			TestPropsValues.COMPANY_ID, GroupConstants.GUEST);
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
 
-		_layout = LayoutLocalServiceUtil.getLayout(TestPropsValues.LAYOUT_PLID);
+		long plid = LayoutLocalServiceUtil.getDefaultPlid(group.getGroupId());
 
-		_userIds = UserLocalServiceUtil.getGroupUserIds(group.getGroupId());
+		_layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		long[] groupIds = new long[] {group.getGroupId()};
+
+		_userIds = new long[threadCount];
+
+		for (int i = 0 ; i < threadCount; i++) {
+			User user = addUser(
+				"rlst" + (i + 1), false, groupIds);
+
+			_userIds[i] = user.getUserId();
+		}
 	}
 
 	public void testAddResourcesConcurrently() throws Exception {
-		int threadCount = 5;
-
 		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[threadCount];
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {

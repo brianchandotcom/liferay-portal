@@ -23,17 +23,17 @@ import com.liferay.portal.util.TestPropsValues;
  */
 public class BaseServiceHttpTestCase extends BaseTestCase {
 
-	protected HttpPrincipal getHttpPrincipal() {
-		return getHttpPrincipal(true);
+	protected HttpPrincipal getHttpPrincipal(long userId) {
+		return getHttpPrincipal(userId, true);
 	}
 
-	protected HttpPrincipal getHttpPrincipal(boolean authenticated) {
+	protected HttpPrincipal getHttpPrincipal(long userId, boolean authenticated) {
 		HttpPrincipal httpPrincipal = null;
 
 		if (authenticated) {
 			httpPrincipal = new HttpPrincipal(
 				TestPropsValues.PORTAL_URL,
-				String.valueOf(TestPropsValues.USER_ID),
+				String.valueOf(userId),
 				TestPropsValues.USER_PASSWORD);
 		}
 		else {

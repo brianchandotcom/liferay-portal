@@ -58,7 +58,7 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 	public void testSearch() throws Exception {
 		BookmarksEntry entry = addEntry();
 
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 
 		long companyId = entry.getCompanyId();
 		long groupId = entry.getFolder().getGroupId();

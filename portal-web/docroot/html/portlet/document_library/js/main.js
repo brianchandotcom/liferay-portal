@@ -36,6 +36,8 @@ AUI().add(
 
 		var STR_ACTIVE = 'active';
 
+		var STR_BLANK = '';
+
 		var STR_CLICK = 'click';
 
 		var STR_DATA = 'data';
@@ -92,7 +94,9 @@ AUI().add(
 
 						var namespace = config.namespace;
 
-						var documentLibraryContainer = A.one('#' + namespace + 'documentLibraryContainer');
+						var idPrefix = '#' + namespace;
+
+						var documentLibraryContainer = A.one(idPrefix + 'documentLibraryContainer');
 
 						instance._documentLibraryContainer = documentLibraryContainer;
 
@@ -101,10 +105,10 @@ AUI().add(
 						instance._eventDataRetrieveSuccess = namespace + 'dataRetrieveSuccess';
 						instance._eventPageLoaded = namespace + 'pageLoaded';
 
-						instance._displayStyleToolbarNode = A.one('#' + namespace + DISPLAY_STYLE_TOOLBAR);
-						instance._entriesContainer = A.one('#' + namespace + 'documentContainer');
+						instance._displayStyleToolbarNode = A.one(idPrefix + DISPLAY_STYLE_TOOLBAR);
+						instance._entriesContainer = A.one(idPrefix + 'documentContainer');
 
-						instance._selectAllCheckbox = A.one('#' + namespace + 'allRowIdsCheckbox');
+						instance._selectAllCheckbox = A.one(idPrefix + 'allRowIdsCheckbox');
 
 						instance._displayStyle = namespace + 'displayStyle';
 						instance._folderId = namespace + 'folderId';
@@ -162,11 +166,11 @@ AUI().add(
 
 						Liferay.after(instance._eventDataRequest, instance._afterDataRequest, instance);
 
-						var folderContainer = A.one('#' + namespace + STR_FOLDER_CONTAINER);
+						var folderContainer = A.one(idPrefix + STR_FOLDER_CONTAINER);
 
 						instance._listView = new Liferay.ListView(
 							{
-								boundingBox: '#' + namespace + 'listViewContainer',
+								boundingBox: idPrefix + 'listViewContainer',
 								cssClass: 'folder-display-style lfr-list-view-content',
 								itemSelector: '.folder a.browse-folder, .folder a.expand-folder',
 								contentBox: folderContainer,
@@ -181,7 +185,7 @@ AUI().add(
 						documentLibraryContainer.delegate(
 							STR_CLICK,
 							A.bind(instance._onDocumentLibraryContainerClick, instance),
-							'a[data-folder=true], #' + namespace + 'breadcrumbContainer a'
+							idPrefix + 'documentContainer a[data-folder=true], #' + namespace + 'breadcrumbContainer a'
 						);
 
 						History.after('stateChange', instance._afterStateChange, instance);
@@ -634,8 +638,8 @@ AUI().add(
 
 						proxyNode.setStyles(
 							{
-								'height': '',
-								'width': ''
+								'height': STR_BLANK,
+								'width': STR_BLANK
 							}
 						);
 
@@ -763,12 +767,12 @@ AUI().add(
 					_setBreadcrumb: function(content) {
 						var instance = this;
 
-						var namespace = instance._namespace;
+						var idPrefixNamespace = '#' + instance._namespace;
 
-						var breadcrumb = content.one('#' + namespace + 'breadcrumb');
+						var breadcrumb = content.one(idPrefixNamespace + 'breadcrumb');
 
 						if (breadcrumb) {
-							var breadcrumbContainer = A.one('#' + namespace + 'breadcrumbContainer');
+							var breadcrumbContainer = A.one(idPrefixNamespace + 'breadcrumbContainer');
 
 							breadcrumbContainer.setContent(breadcrumb);
 						}
@@ -777,34 +781,34 @@ AUI().add(
 					_setButtons: function(content) {
 						var instance = this;
 
-						var namespace = instance._namespace;
+						var idPrefixNamespace = '#' + instance._namespace;
 
-						var addButton = content.one('#' + namespace + 'addButton');
+						var addButton = content.one(idPrefixNamespace + 'addButton');
 
 						if (addButton) {
-							var addButtonContainer = A.one('#' + namespace + 'addButtonContainer');
+							var addButtonContainer = A.one(idPrefixNamespace + 'addButtonContainer');
 
 							addButtonContainer.plug(A.Plugin.ParseContent);
 
 							addButtonContainer.setContent(addButton);
 						}
 
-						var displayStyleButtons = content.one('#' + namespace + 'displayStyleButtons');
+						var displayStyleButtons = content.one(idPrefixNamespace + 'displayStyleButtons');
 
 						if (displayStyleButtons) {
 							instance._displayStyleToolbarNode.empty();
 
-							var displayStyleButtonsContainer = A.one('#' + namespace + 'displayStyleButtonsContainer');
+							var displayStyleButtonsContainer = A.one(idPrefixNamespace + 'displayStyleButtonsContainer');
 
 							displayStyleButtonsContainer.plug(A.Plugin.ParseContent);
 
 							displayStyleButtonsContainer.setContent(displayStyleButtons);
 						}
 
-						var sortButton = content.one('#' + namespace + 'sortButton');
+						var sortButton = content.one(idPrefixNamespace + 'sortButton');
 
 						if (sortButton) {
-							var sortButtonContainer = A.one('#' + namespace + 'sortButtonContainer');
+							var sortButtonContainer = A.one(idPrefixNamespace + 'sortButtonContainer');
 
 							sortButtonContainer.setContent(sortButton);
 						}
@@ -831,12 +835,12 @@ AUI().add(
 					_setFileEntrySearch: function(content) {
 						var instance = this;
 
-						var namespace = instance._namespace;
+						var idPrefixNamespace = '#' + instance._namespace;
 
-						var fileEntrySearch = content.one('#' + namespace + 'fileEntrySearch');
+						var fileEntrySearch = content.one(idPrefixNamespace + 'fileEntrySearch');
 
 						if (fileEntrySearch) {
-							var fileEntrySearchContainer = A.one('#' + namespace + 'fileEntrySearchContainer');
+							var fileEntrySearchContainer = A.one(idPrefixNamespace + 'fileEntrySearchContainer');
 
 							if (fileEntrySearchContainer) {
 								fileEntrySearchContainer.plug(A.Plugin.ParseContent);
@@ -867,12 +871,12 @@ AUI().add(
 					_setParentFolderTitle: function(content) {
 						var instance = this;
 
-						var namespace = instance._namespace;
+						var idPrefixNamespace = '#' + instance._namespace;
 
-						var parentFolderTitle = content.one('#' + namespace + 'parentFolderTitle');
+						var parentFolderTitle = content.one(idPrefixNamespace + 'parentFolderTitle');
 
 						if (parentFolderTitle) {
-							var parentFolderTitleContainer = A.one('#' + namespace + 'parentFolderTitleContainer');
+							var parentFolderTitleContainer = A.one(idPrefixNamespace + 'parentFolderTitleContainer');
 
 							parentFolderTitleContainer.setContent(parentFolderTitle);
 						}

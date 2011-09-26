@@ -240,30 +240,28 @@ int total = 0;
 							rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 							for (String columnName : entryColumns) {
-								if (columnName.equals("name")) {
-									row.addText(fileEntry.getTitle(), rowURL);
-								}
-
-								if (columnName.equals("size")) {
-									row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
+								if (columnName.equals("action")) {
+									row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_action.jsp");
 								}
 
 								if (columnName.equals("create-date")) {
 									row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
 								}
 
-								if (columnName.equals("modified-date")) {
-									row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
-								}
-
 								if (columnName.equals("downloads")) {
 									row.addText(String.valueOf(fileEntry.getReadCount()));
 								}
 
-								if (columnName.equals("action")) {
-									// Action
+								if (columnName.equals("modified-date")) {
+									row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
+								}
 
-									row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_action.jsp");
+								if (columnName.equals("name")) {
+									row.addText(fileEntry.getTitle(), rowURL);
+								}
+
+								if (columnName.equals("size")) {
+									row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
 								}
 							}
 

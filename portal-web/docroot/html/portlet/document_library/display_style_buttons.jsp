@@ -60,13 +60,13 @@ String keywords = ParamUtil.getString(request, "keywords");
 			var displayStyle = config['<portlet:namespace />displayStyle'];
 
 			<%
-				for (int i = 0; i < displayViews.length; i++) {
+			for (int i = 0; i < displayViews.length; i++) {
 			%>
 
-					displayStyleToolbar.item(<%= i %>).StateInteraction.set('active', (displayStyle === '<%= displayViews[i] %>'));
+				displayStyleToolbar.item(<%= i %>).StateInteraction.set('active', (displayStyle === '<%= displayViews[i] %>'));
 
 			<%
-				}
+			}
 			%>
 
 			Liferay.fire(

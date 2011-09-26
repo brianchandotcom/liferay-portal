@@ -94,7 +94,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @param  virtualHostname the company's virtual host name
 	 * @param  mx the company's mail domain
 	 * @param  shardName the company's shard
-	 * @param  system whether the company is used by WSRP
+	 * @param  system whether the company is the very first company (i.e., the
+	 *         super company)
 	 * @param  maxUsers the max number of company users (optionally
 	 *         <code>0</code>)
 	 * @param  active whether the company is active
@@ -545,7 +546,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	/**
 	 * Returns all the companies used by WSRP.
 	 *
-	 * @param  system whether the company is used by WSRP
+	 * @param  system whether the company is the very first company (i.e., the
+	 *         super company)
 	 * @return the companies used by WSRP
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -556,7 +558,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	/**
 	 * Returns the number of companies used by WSRP.
 	 *
-	 * @param  system whether the company is used by WSRP
+	 * @param  system whether the company is the very first company (i.e., the
+	 *         super company)
 	 * @return the number of companies used by WSRP
 	 * @throws SystemException if a system exception occurred
 	 */

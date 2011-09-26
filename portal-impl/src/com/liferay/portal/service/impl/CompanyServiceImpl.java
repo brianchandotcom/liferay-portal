@@ -48,7 +48,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @param  virtualHost the company's virtual host name
 	 * @param  mx the company's mail domain
 	 * @param  shardName the company's shard
-	 * @param  system whether the company is used by WSRP
+	 * @param  system whether the company is the very first company (i.e., the
+	 *         super company)
 	 * @param  maxUsers the max number of company users (optionally
 	 *         <code>0</code>)
 	 * @param  active whether the company is active

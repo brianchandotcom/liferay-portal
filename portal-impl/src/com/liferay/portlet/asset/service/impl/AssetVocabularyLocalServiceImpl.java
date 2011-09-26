@@ -223,24 +223,6 @@ public class AssetVocabularyLocalServiceImpl
 		return vocabularies;
 	}
 
-	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
-			String className, String languageId)
-		throws PortalException, SystemException {
-
-		List<AssetVocabulary> vocabularies =
-			getGroupsVocabularies(groupIds, null);
-
-		for (int pos = 0; pos < vocabularies.size(); pos++) {
-			AssetVocabulary curVocabulary = vocabularies.get(pos);
-
-			curVocabulary.setTitle(curVocabulary.getTitle(languageId));
-
-			vocabularies.set(pos, curVocabulary);
-		}
-
-		return vocabularies;
-	}
-
 	public List<AssetVocabulary> getGroupVocabularies(long groupId)
 		throws PortalException, SystemException {
 
@@ -306,23 +288,6 @@ public class AssetVocabularyLocalServiceImpl
 			AssetVocabulary vocabulary = getVocabulary(vocabularyId);
 
 			vocabularies.add(vocabulary);
-		}
-
-		return vocabularies;
-	}
-
-	public List<AssetVocabulary> getVocabularies(long[] vocabularyIds,
-			String languageId)
-		throws PortalException, SystemException {
-
-		List<AssetVocabulary> vocabularies = getVocabularies(vocabularyIds);
-
-		for (int pos = 0; pos < vocabularies.size(); pos++) {
-			AssetVocabulary curVocabulary = vocabularies.get(pos);
-
-			curVocabulary.setTitle(curVocabulary.getTitle(languageId));
-
-			vocabularies.set(pos, curVocabulary);
 		}
 
 		return vocabularies;

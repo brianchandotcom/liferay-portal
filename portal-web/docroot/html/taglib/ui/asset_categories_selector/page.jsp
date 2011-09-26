@@ -46,6 +46,8 @@ if (Validator.isNotNull(className)) {
 	}
 
 	for (AssetVocabulary vocabulary : vocabularies) {
+		vocabulary.setEscapedModel(true);
+
 		int vocabularyCategoriesCount = AssetCategoryLocalServiceUtil.getVocabularyCategoriesCount(vocabulary.getVocabularyId());
 
 		if (vocabularyCategoriesCount == 0) {
@@ -75,8 +77,6 @@ if (Validator.isNotNull(className)) {
 		}
 
 		String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId(), locale);
-
-		vocabulary.setEscapedModel(true);
 	%>
 
 		<span class="aui-field-content">

@@ -217,13 +217,13 @@ AUI().add(
 						var groupIds = [];
 
 						var vocabularyIds = instance.get('vocabularyIds');
-						
-						var svcParamTypesGetVocabularies = [
+
+						var serviceParameterTypesGetVocabularies = [
  						 	'[J',
  						 	'java.lang.String'
  						];
 
-						var svcParamTypesGetGroupsVocabularies = [
+						var serviceParameterTypesGetGroupVocabularies = [
  						 	'[J',
  						 	'java.lang.String',
  						 	'java.lang.String',
@@ -234,7 +234,7 @@ AUI().add(
 								{
 									vocabularyIds: vocabularyIds,
 									languageId: themeDisplay.getLanguageId(),
-									serviceParameterTypes: A.JSON.stringify(svcParamTypesGetVocabularies)
+									serviceParameterTypes: A.JSON.stringify(serviceParameterTypesGetVocabularies)
 								},
 								callback
 							);
@@ -251,7 +251,7 @@ AUI().add(
 									groupIds: groupIds,
 									className: className,
 									languageId: themeDisplay.getLanguageId(),
-									serviceParameterTypes: A.JSON.stringify(svcParamTypesGetGroupsVocabularies)
+									serviceParameterTypes: A.JSON.stringify(serviceParameterTypesGetGroupVocabularies)
 								},
 								callback
 							);

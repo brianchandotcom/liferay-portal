@@ -659,6 +659,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return companyPersistence.findByWebId(webId);
 	}
 
+	/**
+	 * Returns the user's company.
+	 *
+	 * @param  userId the primary key of the user
+	 * @return Returns the first company if there is only one company or the
+	 *         user's company if there are more than one company;
+	 *         <code>0</code> otherwise
+	 * @throws Exception if a user with the primary key could not be found
+	 */
 	public long getCompanyIdByUserId(long userId) throws Exception {
 		long[] companyIds = PortalInstances.getCompanyIds();
 
@@ -1027,6 +1036,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  properties the company's properties. See {@link
 	 *         com.liferay.portal.kernel.util.UnicodeProperties}
+	 * @throws PortalException if the properties contained new locales that
+	 *         were not supported
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void updatePreferences(long companyId, UnicodeProperties properties)

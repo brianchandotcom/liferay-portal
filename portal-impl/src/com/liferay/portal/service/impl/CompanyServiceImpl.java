@@ -49,7 +49,6 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @param  mx the company's mail domain
 	 * @param  shardName the company's shard
 	 * @param  system whether the company is the very first company (i.e., the
-	 *         super company)
 	 * @param  maxUsers the max number of company users (optionally
 	 *         <code>0</code>)
 	 * @param  active whether the company is active
@@ -361,7 +360,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * Updates the company's logo.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  file the file of the company's logo image
+	 * @param  inputStream the input stream of the company's logo image
 	 * @throws PortalException if the company's logo ID could not be found or
 	 *         if the logo's image was corrupted or if the user was an
 	 *         administrator

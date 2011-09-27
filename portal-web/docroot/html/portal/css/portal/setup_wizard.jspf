@@ -1,0 +1,126 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+#banner .setup-heading {
+	display: table;
+	width: 100%
+}
+
+#main-container {
+	height: 100%;
+	width: 100%;
+}
+
+#messages-wrapper {
+	display: table;
+	padding-top: 40px;
+	width: 100%;
+}
+
+
+#setup-wrapper {
+	margin: auto;
+	max-width: 800px;
+}
+
+.content-wrapper {
+	padding: 5px;
+	width: 100%;
+}
+
+.fieldset-header {
+	border: none;
+	padding: 10px 0;
+}
+
+.fieldset-header .aui-fieldset-content {
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border: 1px solid #363636;
+	margin-top: -10px;
+	padding: 9px;
+	width: 100%;
+}
+
+.fieldset-header legend {
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	background-color: #363636;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	color: #ECF1EF;
+	font-weight: bold;
+	margin: 0;
+	min-width: 500px;
+	min-height: 0.85em;
+	padding: 10px;
+	width: 100%;
+}
+
+.logo-title {
+	float: left;
+	width: 50%;
+}
+
+.properties-text {
+	min-height: 200px;
+	width: 100%;
+}
+
+#banner .setup-title {
+	float: right;
+	height: 120px;
+	width: 50%;
+}
+
+#banner .setup-title h2 {
+	position: relative;
+	text-align: right;
+	font-size: 1.8em;
+}
+
+.tooltip {
+	font-size: 0.8em;
+	font-style: italic;
+}
+
+/*  copied from classic */
+
+body {
+	background: #EEF0F2 !important;
+	color: #363636;
+	font-size: 1em;
+	margin: 0 auto;
+	padding: 0 !important;
+}
+
+#wrapper {
+	background: none;
+	margin: 0 auto;
+	max-width: 90%;
+	min-width: 960px;
+	position: relative;
+}
+
+.ie6 #wrapper {
+	width: 90%;
+}

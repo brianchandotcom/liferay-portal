@@ -132,6 +132,8 @@ public class Entity {
 			}
 
 			_finderColumnsList = new ArrayList<EntityColumn>(finderColumns);
+
+			Collections.sort(_finderColumnsList);
 		}
 		else {
 			_finderColumnsList = Collections.emptyList();

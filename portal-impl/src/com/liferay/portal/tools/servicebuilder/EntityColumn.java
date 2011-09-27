@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
  * @author Charles May
  * @author Shuyang Zhou
  */
-public class EntityColumn implements Cloneable {
+public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public EntityColumn(String name) {
 		this(
@@ -83,6 +83,10 @@ public class EntityColumn implements Cloneable {
 			isCaseSensitive(), isOrderByAscending(), getComparator(),
 			getArrayableOperator(), getIdType(), getIdParam(), isConvertNull(),
 			isLazy(), isLocalized(), isJsonEnabled());
+	}
+
+	public int compareTo(EntityColumn entityColumn) {
+		return _name.compareTo(entityColumn._name);
 	}
 
 	@Override

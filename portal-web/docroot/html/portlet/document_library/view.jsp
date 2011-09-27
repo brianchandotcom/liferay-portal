@@ -39,11 +39,15 @@ if (folder != null) {
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
+	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
+}
+
+if (!ArrayUtil.contains(displayViews, displayStyle)) {
+	displayStyle = displayViews[0];
 }
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
 int entryRowsPerPage = entryEnd - entryStart;
 
@@ -225,6 +229,7 @@ if (folder != null) {
 		{
 			defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
+			displayViews: ['<%= StringUtil.merge(displayViews, "','") %>'],
 			entriesTotal: <%= entriesTotal %>,
 			entryEnd: <%= entryEnd %>,
 			entryRowsPerPage: <%= entryRowsPerPage %>,

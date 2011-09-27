@@ -380,7 +380,7 @@ public class DLUtil {
 			orderByComparator = new RepositoryModelModifiedDateComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("readCount")) {
+		else if (orderByCol.equals("downloads")) {
 			orderByComparator = new RepositoryModelReadCountComparator(
 				orderByAsc);
 		}

@@ -36,8 +36,6 @@ AUI().add(
 
 		var STR_FOLDER_START = 'folderStart';
 
-		var STR_ICON = 'icon';
-
 		var STRUTS_ACTION = 'struts_action';
 
 		var SRC_HISTORY = 0;
@@ -52,7 +50,7 @@ AUI().add(
 
 		var VIEW_FILE_ENTRY_SEARCH = 'viewFileEntrySearch';
 
-        var VIEW_SORT_BUTTON = 'viewSortButton';
+		var VIEW_SORT_BUTTON = 'viewSortButton';
 
 		var DocumentLibrary = A.Component.create(
 			{
@@ -156,6 +154,9 @@ AUI().add(
 						documentLibraryContainer.plug(A.LoadingMask);
 
 						instance._config = config;
+
+						instance._displayViews = config.displayViews;
+
 						instance._entryPaginator = entryPaginator;
 						instance._folderPaginator = folderPaginator;
 
@@ -290,7 +291,7 @@ AUI().add(
 						requestParams[namespace + VIEW_ADD_BREADCRUMB] = true;
 						requestParams[namespace + VIEW_DISPLAY_STYLE_BUTTONS] = true;
 						requestParams[namespace + VIEW_FILE_ENTRY_SEARCH] = true;
-                        requestParams[namespace + VIEW_SORT_BUTTON] = true;
+						requestParams[namespace + VIEW_SORT_BUTTON] = true;
 
 						if (dataFolderId) {
 							requestParams[instance._folderId] = dataFolderId;
@@ -415,7 +416,7 @@ AUI().add(
 						requestParams[namespace + VIEW_DISPLAY_STYLE_BUTTONS] = true;
 						requestParams[namespace + VIEW_ENRTIES] = true;
 						requestParams[namespace + VIEW_FILE_ENTRY_SEARCH] = true;
-                        requestParams[namespace + VIEW_SORT_BUTTON] = true;
+						requestParams[namespace + VIEW_SORT_BUTTON] = true;
 
 						Liferay.fire(
 							instance._eventDataRequest,
@@ -674,13 +675,19 @@ AUI().add(
 					_syncDisplayStyleToolbar: function(content) {
 						var instance = this;
 
-						var displayStyleToolbar = instance._displayStyleToolbarNode.getData(DISPLAY_STYLE_TOOLBAR);
+						var displayViews = instance._displayViews;
 
-						var displayStyle = History.get(instance._displayStyle) || STR_ICON;
+						var length = displayViews.length;
 
-						displayStyleToolbar.item(0).StateInteraction.set(STR_ACTIVE, displayStyle === STR_ICON);
-						displayStyleToolbar.item(1).StateInteraction.set(STR_ACTIVE, displayStyle === 'descriptive');
-						displayStyleToolbar.item(2).StateInteraction.set(STR_ACTIVE, displayStyle === 'list');
+						if (length > 1) {
+							var displayStyleToolbar = instance._displayStyleToolbarNode.getData(DISPLAY_STYLE_TOOLBAR);
+
+							var displayStyle = History.get(instance._displayStyle) || config.displayStyle;
+
+							for (var i = 0; i < length; i++) {
+								displayStyleToolbar.item(i).StateInteraction.set(STR_ACTIVE, displayStyle === displayViews[i]);
+							}
+						}
 					},
 
 					_updatePaginatorValues: function(event) {

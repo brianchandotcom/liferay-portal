@@ -147,7 +147,7 @@
 		}
 
 		.active-area, .active-area.hover {
-			background-color: #00D68E;
+			background-color: #5AD300;
 		}
 	}
 
@@ -328,7 +328,7 @@
 		}
 
 		&.active-area, &.active-area.hover {
-			background-color: #00D68E;
+			background-color: #5AD300;
 		}
 
 		.overlay.document-action a {

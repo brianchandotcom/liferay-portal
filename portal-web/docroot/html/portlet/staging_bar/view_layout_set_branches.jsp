@@ -24,6 +24,11 @@ LayoutSetBranch currentLayoutSetBranch = LayoutSetBranchLocalServiceUtil.getUser
 request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", String.valueOf(currentLayoutSetBranch.getLayoutSetBranchId()));
 %>
 
+<liferay-ui:success key="sitePageVariationAdded" message="site-page-variation-was-added" />
+<liferay-ui:success key="sitePageVariationDeleted" message="site-page-variation-was-deleted" />
+<liferay-ui:success key="sitePageVariationMerged" message="site-page-variation-was-merged" />
+<liferay-ui:success key="sitePageVariationUpdated" message="site-page-variation-was-updated" />
+
 <liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.DUPLICATE %>" message="a-site-pages-variation-with-that-name-already-exists" />
 <liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.TOO_LONG %>" message='<%= LanguageUtil.format(pageContext, "please-enter-a-value-between-x-and-x-characters-long", new Object[] {4, 100}) %>' />
 <liferay-ui:error key="<%= LayoutSetBranchNameException.class.getName() + LayoutSetBranchNameException.TOO_SHORT %>" message='<%= LanguageUtil.format(pageContext, "please-enter-a-value-between-x-and-x-characters-long", new Object[] {4, 100}) %>' />

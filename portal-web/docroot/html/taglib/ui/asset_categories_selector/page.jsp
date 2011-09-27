@@ -46,6 +46,8 @@ if (Validator.isNotNull(className)) {
 	}
 
 	for (AssetVocabulary vocabulary : vocabularies) {
+		vocabulary = vocabulary.toEscapedModel();
+
 		int vocabularyCategoriesCount = AssetCategoryLocalServiceUtil.getVocabularyCategoriesCount(vocabulary.getVocabularyId());
 
 		if (vocabularyCategoriesCount == 0) {
@@ -74,7 +76,7 @@ if (Validator.isNotNull(className)) {
 			curCategoryNames = StringPool.BLANK;
 		}
 
-		String[] categoryIdsNames = _getCategoryIdsNames(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId());
+		String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId(), locale);
 	%>
 
 		<span class="aui-field-content">
@@ -100,8 +102,8 @@ if (Validator.isNotNull(className)) {
 				{
 					className: '<%= className %>',
 					contentBox: '#<%= namespace + randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>',
-					curEntries: '<%= HtmlUtil.escapeJS(categoryIdsNames[1]) %>',
-					curEntryIds: '<%= categoryIdsNames[0] %>',
+					curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitles[1]) %>',
+					curEntryIds: '<%= categoryIdsTitles[0] %>',
 					hiddenInput: '#<%= namespace + hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>',
 					instanceVar: '<%= namespace + randomNamespace %>',
 					labelNode: '#<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
@@ -122,7 +124,7 @@ else {
 		curCategoryIds = curCategoryIdsParam;
 	}
 
-	String[] categoryIdsNames = _getCategoryIdsNames(curCategoryIds, curCategoryNames, 0);
+	String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, 0, locale);
 %>
 
 	<div class="lfr-tags-selector-content" id="<%= namespace + randomNamespace %>assetCategoriesSelector">
@@ -134,8 +136,8 @@ else {
 			{
 				className: '<%= className %>',
 				contentBox: '#<%= namespace + randomNamespace %>assetCategoriesSelector',
-				curEntries: '<%= HtmlUtil.escapeJS(categoryIdsNames[1]) %>',
-				curEntryIds: '<%= categoryIdsNames[0] %>',
+				curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitles[1]) %>',
+				curEntryIds: '<%= categoryIdsTitles[0] %>',
 				hiddenInput: '#<%= namespace + hiddenInput %>',
 				instanceVar: '<%= namespace + randomNamespace %>',
 				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>
@@ -162,7 +164,7 @@ private long[] _filterCategoryIds(long vocabularyId, long[] categoryIds) throws 
 	return ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[filteredCategoryIds.size()]));
 }
 
-private String[] _getCategoryIdsNames(String categoryIds, String categoryNames, long vocabularyId) throws PortalException, SystemException {
+private String[] _getCategoryIdsTitles(String categoryIds, String categoryNames, long vocabularyId, Locale locale) throws PortalException, SystemException {
 	if (Validator.isNotNull(categoryIds)) {
 		long[] categoryIdsArray = GetterUtil.getLongValues(StringUtil.split(categoryIds));
 
@@ -182,7 +184,7 @@ private String[] _getCategoryIdsNames(String categoryIds, String categoryNames, 
 
 				category = category.toEscapedModel();
 
-				sb.append(category.getName());
+				sb.append(category.getTitle(locale));
 				sb.append(_CATEGORY_SEPARATOR);
 			}
 

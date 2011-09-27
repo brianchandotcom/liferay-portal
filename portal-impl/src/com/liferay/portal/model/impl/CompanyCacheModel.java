@@ -97,6 +97,8 @@ public class CompanyCacheModel implements CacheModel<Company> {
 
 		companyImpl.resetOriginalValues();
 
+		companyImpl.setKeyObj(_keyObj);
+
 		return companyImpl;
 	}
 
@@ -110,4 +112,5 @@ public class CompanyCacheModel implements CacheModel<Company> {
 	public boolean system;
 	public int maxUsers;
 	public boolean active;
+	public java.security.Key _keyObj;
 }

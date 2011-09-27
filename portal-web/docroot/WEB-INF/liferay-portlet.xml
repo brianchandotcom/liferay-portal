@@ -1497,7 +1497,7 @@
 		<struts-path>workflow_definition_links</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>24.0</control-panel-entry-weight>
+		<control-panel-entry-weight>25.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portal.workflow.WorkflowControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -1551,7 +1551,7 @@
 		<struts-path>social_equity_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>22.0</control-panel-entry-weight>
+		<control-panel-entry-weight>23.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.socialequityadmin.SocialEquityAdminControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -1720,7 +1720,7 @@
 		<struts-path>dynamic_data_lists</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>23.0</control-panel-entry-weight>
+		<control-panel-entry-weight>24.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.dynamicdatalists.asset.DDLRecordAssetRendererFactory</asset-renderer-factory>
 		<workflow-handler>com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler</workflow-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
@@ -1843,6 +1843,40 @@
 		<render-weight>50</render-weight>
 		<css-class-wrapper>license-manager</css-class-wrapper>
 	</portlet>
+    <portlet>
+        <portlet-name>177</portlet-name>
+        <icon>/html/icons/default.png</icon>
+        <struts-path>mobile_device_rules_admin</struts-path>
+        <parent-struts-path>mobile_device_rules_admin</parent-struts-path>
+        <portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<control-panel-entry-category>portal</control-panel-entry-category>
+		<control-panel-entry-weight>13.0</control-panel-entry-weight>
+        <preferences-owned-by-group>true</preferences-owned-by-group>
+        <use-default-template>false</use-default-template>
+        <private-request-attributes>false</private-request-attributes>
+        <private-session-attributes>false</private-session-attributes>
+        <render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/mobile_device_rules_admin/css/main.jsp</header-portlet-css>
+        <css-class-wrapper>mobile-device-rules</css-class-wrapper>
+        <add-default-resource>true</add-default-resource>
+    </portlet>
+    <portlet>
+        <portlet-name>178</portlet-name>
+        <icon>/html/icons/default.png</icon>
+        <struts-path>mobile_device_rules_admin</struts-path>
+        <parent-struts-path>mobile_device_rules_admin</parent-struts-path>
+        <portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<control-panel-entry-category>content</control-panel-entry-category>
+		<control-panel-entry-weight>22.0</control-panel-entry-weight>
+        <preferences-owned-by-group>true</preferences-owned-by-group>
+        <use-default-template>false</use-default-template>
+        <private-request-attributes>false</private-request-attributes>
+        <private-session-attributes>false</private-session-attributes>
+        <render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/mobile_device_rules_admin/css/main.jsp</header-portlet-css>
+        <css-class-wrapper>mobile-device-rules</css-class-wrapper>
+        <add-default-resource>true</add-default-resource>
+    </portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

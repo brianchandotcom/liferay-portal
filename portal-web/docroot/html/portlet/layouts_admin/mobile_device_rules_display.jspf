@@ -1,0 +1,61 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+	OrderByComparator orderByComparator = new RuleGroupInstancePriorityComparator();
+%>
+
+<liferay-ui:search-container
+	delta="<%= 2 %>"
+	deltaConfigurable="<%= false %>"
+	emptyResultsMessage="no-rule-group-instances-are-configured"
+	headerNames="name,description,priority"
+>
+
+	<liferay-ui:search-container-results
+		results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
+		total="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance"
+		escapedModel="<%= true %>"
+		keyProperty="ruleGroupInstanceId"
+		modelVar="ruleGroupInstance"
+	>
+		<%
+			MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(ruleGroupInstance.getRuleGroupId());
+		%>
+
+		<liferay-ui:search-container-column-text
+			name="name"
+			value="<%= ruleGroup.getName(locale) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="description"
+			value="<%= ruleGroup.getDescription(locale) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="priority"
+			value="<%= String.valueOf(ruleGroupInstance.getPriority()) %>"
+		/>
+
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator type="article"/>
+</liferay-ui:search-container>

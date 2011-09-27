@@ -1172,6 +1172,40 @@
 			<forward name="portlet.message_boards.view_message" path="portlet.message_boards.view_message" />
 		</action>
 
+		<!-- Mobile Device Rules Admin -->
+
+		<action path="/mobile_device_rules_admin/edit_action" type="com.liferay.portlet.mobiledevicerules.action.EditActionAction">
+			<forward name="portlet.mobile_device_rules_admin.edit_action" path="portlet.mobile_device_rules_admin.edit_action" />
+			<forward name="portlet.mobile_device_rules_admin.error" path="portlet.mobile_device_rules_admin.error" />
+		</action>
+
+		<action path="/mobile_device_rules_admin/edit_rule" type="com.liferay.portlet.mobiledevicerules.action.EditRuleAction">
+			<forward name="portlet.mobile_device_rules_admin.edit_rule" path="portlet.mobile_device_rules_admin.edit_rule" />
+			<forward name="portlet.mobile_device_rules_admin.error" path="portlet.mobile_device_rules_admin.error" />
+		</action>
+
+		<action path="/mobile_device_rules_admin/edit_rule_group" type="com.liferay.portlet.mobiledevicerules.action.EditRuleGroupAction">
+			<forward name="portlet.mobile_device_rules_admin.edit_rule_group" path="portlet.mobile_device_rules_admin.edit_rule_group" />
+			<forward name="portlet.mobile_device_rules_admin.error" path="portlet.mobile_device_rules_admin.error" />
+		</action>
+
+		<action path="/mobile_device_rules_admin/edit_rule_group_instance" type="com.liferay.portlet.mobiledevicerules.action.EditRuleGroupInstanceAction">
+			<forward name="portlet.mobile_device_rules_admin.edit_rule_group_instance" path="portlet.mobile_device_rules_admin.edit_rule_group_instance" />
+			<forward name="portlet.mobile_device_rules_admin.error" path="portlet.mobile_device_rules_admin.error" />
+		</action>
+
+        <action path="/mobile_device_rules_admin/edit_action_editor" type="com.liferay.portlet.mobiledevicerules.action.EditActionAction" />
+
+		<action path="/mobile_device_rules_admin/edit_rule_editor" type="com.liferay.portlet.mobiledevicerules.action.EditRuleAction" />
+
+		<action path="/mobile_device_rules_admin/edit_rule_group_instance_editor" type="com.liferay.portlet.mobiledevicerules.action.EditRuleGroupInstanceAction" />
+
+		<action path="/mobile_device_rules_admin/view" forward="portlet.mobile_device_rules_admin.view" />
+
+		<action path="/mobile_device_rules_admin/view_group_layouts" type="com.liferay.portlet.mobiledevicerules.action.SiteResourceAction" />
+
+		<action path="/mobile_device_rules_admin/view_rule_group_instance" forward="portlet.mobile_device_rules_admin.view_rule_group_instance" />
+
 		<!-- Monitoring -->
 
 		<action path="/monitoring/edit_session" type="com.liferay.portlet.monitoring.action.EditSessionAction">

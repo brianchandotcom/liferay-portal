@@ -14,26 +14,17 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/html/portlet/mobile_device_rules_admin/init.jsp" %>
 
 <%
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 
-LayoutTypePortlet selLayoutTypePortlet = null;
-
-Theme selTheme = null;
-
-if (selLayout != null) {
-	selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
-
-	selTheme = selLayout.getTheme();
-}
+String addURL = ParamUtil.getString(request, "addURL");
 %>
-
-<liferay-ui:error-marker key="errorSection" value="layout" />
-
-<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
-
-<h3><liferay-ui:message key="layout" /></h3>
-
-<%@ include file="/html/portlet/layouts_admin/layout_field.jspf" %>
+<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+	<div class="lfr-portlet-toolbar">
+		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
+			<a href="<%= addURL %>"><liferay-ui:message key="add"/></a>
+		</span>
+	</div>
+</c:if>

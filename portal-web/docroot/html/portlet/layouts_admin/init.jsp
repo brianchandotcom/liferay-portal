@@ -46,6 +46,10 @@ page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.util.LayoutLister" %><%@
 page import="com.liferay.portal.util.LayoutView" %><%@
 page import="com.liferay.portlet.layoutconfiguration.util.RuntimePortletUtil" %><%@
+page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" %><%@
+page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil" %><%@
+page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil" %><%@
+page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator" %><%@
 page import="com.liferay.portlet.sites.util.SitesUtil" %>
 
 <%

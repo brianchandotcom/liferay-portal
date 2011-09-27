@@ -14,26 +14,26 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<liferay-ui:search-container-column-text
+	href="<%= rowURL %>"
+	name="name"
+	value="<%= rule.getName(themeDisplay.getLocale()) %>"
+/>
 
-<%
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
+<liferay-ui:search-container-column-text
+	href="<%= rowURL %>"
+	name="description"
+	value="<%= rule.getDescription(themeDisplay.getLocale()) %>"
+/>
 
-LayoutTypePortlet selLayoutTypePortlet = null;
+<liferay-ui:search-container-column-text
+	href="<%= rowURL %>"
+	name="type"
+    translate="<%= true %>"
+	value="<%= rule.getType() %>"
+/>
 
-Theme selTheme = null;
-
-if (selLayout != null) {
-	selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
-
-	selTheme = selLayout.getTheme();
-}
-%>
-
-<liferay-ui:error-marker key="errorSection" value="layout" />
-
-<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
-
-<h3><liferay-ui:message key="layout" /></h3>
-
-<%@ include file="/html/portlet/layouts_admin/layout_field.jspf" %>
+<liferay-ui:search-container-column-jsp
+	align="right"
+	path="/html/portlet/mobile_device_rules_admin/device_rule_actions.jsp"
+/>

@@ -897,6 +897,34 @@
 		<put name="portlet_content" value="/portlet/message_boards_admin/view.jsp" />
 	</definition>
 
+	<!-- Mobile Device Rules Admin -->
+
+	<definition name="portlet.mobile_device_rules_admin" extends="portlet" />
+
+	<definition name="portlet.mobile_device_rules_admin.edit_action" extends="portlet.mobile_device_rules_admin">
+		<put name="portlet_content" value="/portlet/mobile_device_rules_admin/edit_action.jsp" />
+	</definition>
+
+	<definition name="portlet.mobile_device_rules_admin.edit_rule" extends="portlet.mobile_device_rules_admin">
+		<put name="portlet_content" value="/portlet/mobile_device_rules_admin/edit_rule.jsp" />
+	</definition>
+
+	<definition name="portlet.mobile_device_rules_admin.edit_rule_group" extends="portlet.mobile_device_rules_admin">
+		<put name="portlet_content" value="/portlet/mobile_device_rules_admin/edit_rule_group.jsp" />
+	</definition>
+
+	<definition name="portlet.mobile_device_rules_admin.edit_rule_group_instance" extends="portlet.mobile_device_rules_admin">
+		<put name="portlet_content" value="/portlet/mobile_device_rules_admin/edit_rule_group_instance.jsp" />
+	</definition>
+
+	<definition name="portlet.mobile_device_rules_admin.view" extends="portlet.mobile_device_rules_admin">
+		<put name="portlet_content" value="/portlet/mobile_device_rules_admin/view.jsp" />
+	</definition>
+
+	<definition name="portlet.mobile_device_rules_admin.view_rule_group_instance" extends="portlet.mobile_device_rules_admin">
+		<put name="portlet_content" value="/portlet/mobile_device_rules_admin/view_rule_group_instance.jsp" />
+	</definition>
+
 	<!-- Monitoring -->
 
 	<definition name="portlet.monitoring" extends="portlet" />

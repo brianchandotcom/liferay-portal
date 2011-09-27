@@ -55,6 +55,8 @@ public class AddFrontPageEmptyAttachmentTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Attachments",
 			RuntimeVariables.replace("Attachments"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

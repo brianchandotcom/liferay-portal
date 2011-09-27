@@ -368,6 +368,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String SETUP_WIZARD_FINISHED = "SETUP_WIZARD_FINISHED";
 
+	public static final String SETUP_WIZARD_PASSWORD_UPDATED = "SETUP_WIZARD_PASSWORD_UPDATED";
+
 	public static final String SETUP_WIZARD_PROPERTIES = "SETUP_WIZARD_PROPERTIES";
 
 	public static final String SETUP_WIZARD_PROPERTIES_UPDATED = "SETUP_WIZARD_PROPERTIES_UPDATED";

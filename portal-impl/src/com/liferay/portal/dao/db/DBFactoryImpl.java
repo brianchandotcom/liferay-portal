@@ -184,20 +184,18 @@ public class DBFactoryImpl implements DBFactory {
 	}
 
 	public void setDB(Object dialect) {
-		if (_db == null) {
-			_db = getDB(dialect);
+		_db = getDB(dialect);
 
-			if (_db == null) {
-				_log.error(
-					"No DB implementation exists for " +
-						dialect.getClass().getName());
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Using DB implementation " + _db.getClass().getName() +
-							" for " + dialect.getClass().getName());
-				}
+		if (_db == null) {
+			_log.error(
+				"No DB implementation exists for " +
+					dialect.getClass().getName());
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Using DB implementation " + _db.getClass().getName() +
+						" for " + dialect.getClass().getName());
 			}
 		}
 	}

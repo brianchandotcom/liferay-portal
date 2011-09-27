@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
+import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
@@ -236,10 +237,9 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	public void setKeyObj(Key keyObj) {
 		_keyObj = keyObj;
-
-		super.setKey(Base64.objectToString(keyObj));
 	}
 
+	@CacheField
 	private Key _keyObj;
 
 }

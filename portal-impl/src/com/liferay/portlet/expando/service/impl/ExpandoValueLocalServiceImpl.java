@@ -1938,7 +1938,7 @@ public class ExpandoValueLocalServiceImpl
 		else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
-				value.getBooleanArray());
+				new boolean[0]);
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
 			return expandoValueLocalService.getData(
@@ -1948,7 +1948,7 @@ public class ExpandoValueLocalServiceImpl
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
-				value.getDateArray());
+				new Date[0]);
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
 			return expandoValueLocalService.getData(
@@ -1958,7 +1958,7 @@ public class ExpandoValueLocalServiceImpl
 		else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
-				value.getDoubleArray());
+				new double[0]);
 		}
 		else if (type == ExpandoColumnConstants.FLOAT) {
 			return expandoValueLocalService.getData(
@@ -1968,7 +1968,7 @@ public class ExpandoValueLocalServiceImpl
 		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
-				value.getFloatArray());
+				new float[0]);
 		}
 		else if (type == ExpandoColumnConstants.INTEGER) {
 			return expandoValueLocalService.getData(
@@ -1978,7 +1978,7 @@ public class ExpandoValueLocalServiceImpl
 		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
-				value.getIntegerArray());
+				new int[0]);
 		}
 		else if (type == ExpandoColumnConstants.LONG) {
 			return expandoValueLocalService.getData(
@@ -1988,7 +1988,7 @@ public class ExpandoValueLocalServiceImpl
 		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
-				value.getLongArray());
+				new long[0]);
 		}
 		else if (type == ExpandoColumnConstants.SHORT) {
 			return expandoValueLocalService.getData(
@@ -1998,12 +1998,12 @@ public class ExpandoValueLocalServiceImpl
 		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
-				value.getShortArray());
+				new short[0]);
 		}
 		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
-				value.getStringArray());
+				new String[0]);
 		}
 		else {
 			return expandoValueLocalService.getData(

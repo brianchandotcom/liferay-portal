@@ -1869,6 +1869,8 @@ public class SourceFormatter {
 
 		String imports = matcher.group();
 
+		imports = StringUtil.replace(imports, "><%@", ">\n<%@");
+
 		List<String> importLines = new ArrayList<String>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(

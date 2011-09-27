@@ -1890,8 +1890,6 @@
 				<delete file="app.server.${user.name}.properties" />
 			</then>
 		</if>
-
-		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 	</target>
 
 	<target name="prepare-db2">
@@ -2796,6 +2794,8 @@ file.
 				/>
 			</else>
 		</if>
+
+		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 
 		<ant dir="portal-web" target="test-class" inheritAll="false">
 			<property name="class" value="${test.class}" />

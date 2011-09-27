@@ -393,7 +393,7 @@
 				String msgBody = StringPool.BLANK;
 
 				if (message.isFormatBBCode()) {
-					msgBody = BBCodeUtil.getHTML(message);
+					msgBody = BBCodeTranslatorUtil.getHTML(message.getBody());
 					msgBody = StringUtil.replace(msgBody, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
 				}
 				else{

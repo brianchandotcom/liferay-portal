@@ -861,6 +861,11 @@ release was successful.</echo>
 				<exclude name="*.bat"/>
 			</fileset>
 		</chmod>
+
+		<replace file="${app.server.parent.dir}/${app.server.glassfish.dir}/osgi/felix/conf/config.properties">
+			<replacetoken><![CDATA[org.xml.sax.helpers ${endorsed-standard-packages}]]></replacetoken>
+			<replacevalue><![CDATA[org.xml.sax.helpers, org.apache.felix.framework ${endorsed-standard-packages}]]></replacevalue>
+		</replace>
 	</target>
 
 	<target name="unzip-jboss">

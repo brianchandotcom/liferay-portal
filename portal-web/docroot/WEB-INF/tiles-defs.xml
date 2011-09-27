@@ -33,6 +33,11 @@
 		<put name="selectable" value="true" />
 	</definition>
 
+	<definition name="portal.license" extends="portal">
+		<put name="title" value="license" />
+		<put name="content" value="/portal/license.jsp" />
+	</definition>
+
 	<definition name="portal.login_disabled" extends="portal">
 		<put name="title" value="sign-in-disabled" />
 		<put name="content" value="/portal/login_disabled.jsp" />

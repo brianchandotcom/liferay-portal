@@ -389,7 +389,7 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>blogs</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/blogs/blogs-friendly-url-routes.xml</friendly-url-routes>
-        <portlet-data-handler-class>com.liferay.portlet.blogs.lar.BlogsPortletDataHandlerImpl</portlet-data-handler-class>
+		<portlet-data-handler-class>com.liferay.portlet.blogs.lar.BlogsPortletDataHandlerImpl</portlet-data-handler-class>
 		<social-activity-interpreter-class>com.liferay.portlet.blogs.social.BlogsActivityInterpreter</social-activity-interpreter-class>
 		<xml-rpc-method-class>com.liferay.portlet.blogs.util.PingbackMethodImpl</xml-rpc-method-class>
 		<asset-renderer-factory>com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory</asset-renderer-factory>
@@ -1499,7 +1499,7 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>my</control-panel-entry-category>
 		<control-panel-entry-weight>3.0</control-panel-entry-weight>
-        <control-panel-entry-class>com.liferay.portal.workflow.MyWorkflowTasksControlPanelEntry</control-panel-entry-class>
+		<control-panel-entry-class>com.liferay.portal.workflow.MyWorkflowTasksControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
@@ -1584,7 +1584,7 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>my</control-panel-entry-category>
 		<control-panel-entry-weight>4.0</control-panel-entry-weight>
-        <control-panel-entry-class>com.liferay.portal.workflow.MyWorkflowInstancesControlPanelEntry</control-panel-entry-class>
+		<control-panel-entry-class>com.liferay.portal.workflow.MyWorkflowInstancesControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
@@ -1780,26 +1780,26 @@
 		<css-class-wrapper>portlet-asset-publisher</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
-    <portlet>
-        <portlet-name>174</portlet-name>
-        <icon>/html/icons/site_memberships_admin.png</icon>
-        <struts-path>site_memberships_admin</struts-path>
-        <parent-struts-path>sites_admin</parent-struts-path>
+	<portlet>
+		<portlet-name>174</portlet-name>
+		<icon>/html/icons/site_memberships_admin.png</icon>
+		<struts-path>site_memberships_admin</struts-path>
+		<parent-struts-path>sites_admin</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>2.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.sitesadmin.SitesControlPanelEntry</control-panel-entry-class>
-        <preferences-owned-by-group>true</preferences-owned-by-group>
-        <use-default-template>false</use-default-template>
-        <private-request-attributes>false</private-request-attributes>
-        <private-session-attributes>false</private-session-attributes>
-        <render-weight>50</render-weight>
-        <header-portlet-css>/html/portlet/layouts_admin/css/main.jsp</header-portlet-css>
-        <css-class-wrapper>portlet-communities</css-class-wrapper>
-        <add-default-resource>true</add-default-resource>
-        <system>true</system>
-    </portlet>
-    <portlet>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>false</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/layouts_admin/css/main.jsp</header-portlet-css>
+		<css-class-wrapper>portlet-communities</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>
+		<system>true</system>
+	</portlet>
+	<portlet>
 		<portlet-name>175</portlet-name>
 		<icon>/html/icons/asset_publisher.png</icon>
 		<parent-struts-path>asset_publisher</parent-struts-path>
@@ -1807,13 +1807,26 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
-        <instanceable>true</instanceable>
+		<instanceable>true</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/html/portlet/asset_publisher/css/main.jsp</header-portlet-css>
 		<css-class-wrapper>portlet-asset-publisher</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
+	</portlet>
+	<portlet>
+		<portlet-name>176</portlet-name>
+		<icon>/html/icons/default.png</icon>
+		<struts-path>license_manager</struts-path>
+		<control-panel-entry-category>server</control-panel-entry-category>
+		<control-panel-entry-weight>4.0</control-panel-entry-weight>
+		<control-panel-entry-class>com.liferay.portlet.admin.OmniadminControlPanelEntry</control-panel-entry-class>
+		<use-default-template>false</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<render-weight>50</render-weight>
+		<css-class-wrapper>license-manager</css-class-wrapper>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

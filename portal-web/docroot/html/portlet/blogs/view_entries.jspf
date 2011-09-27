@@ -54,9 +54,9 @@ showSearch = showSearch && !results.isEmpty();
 	</div>
 </c:if>
 
-<c:if test="<%= Validator.isNotNull(categoryName) %>">
+<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
 	<h1 class="entry-title">
-		<%= LanguageUtil.format(pageContext, "entries-with-x-x", new String[] {vocabularyName, categoryName}) %>
+		<%= LanguageUtil.format(pageContext, "entries-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>
 	</h1>
 
 	<%

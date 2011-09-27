@@ -45,7 +45,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 			try {
 				AssetVocabulary vocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);
 
-				typesLeftList.add(new KeyValuePair(String.valueOf(vocabularyId), _getName(vocabulary, themeDisplay)));
+				vocabulary.setEscapedModel(true);
+
+				typesLeftList.add(new KeyValuePair(String.valueOf(vocabularyId), _getTitle(vocabulary, themeDisplay)));
 			}
 			catch (NoSuchVocabularyException nsve) {
 			}
@@ -61,9 +63,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 			if (Arrays.binarySearch(assetVocabularyIds, vocabularyId) < 0) {
 				AssetVocabulary vocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);
 
-				vocabulary = vocabulary.toEscapedModel();
+				vocabulary.setEscapedModel(true);
 
-				typesRightList.add(new KeyValuePair(String.valueOf(vocabularyId), _getName(vocabulary, themeDisplay)));
+				typesRightList.add(new KeyValuePair(String.valueOf(vocabularyId), _getTitle(vocabulary, themeDisplay)));
 			}
 		}
 
@@ -106,13 +108,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 </aui:script>
 
 <%!
-private String _getName(AssetVocabulary vocabulary, ThemeDisplay themeDisplay) {
-	String name = vocabulary.getName();
+private String _getTitle(AssetVocabulary vocabulary, ThemeDisplay themeDisplay) {
+	String title = vocabulary.getTitle(themeDisplay.getLanguageId());
 
 	if (vocabulary.getGroupId() == themeDisplay.getCompanyGroupId()) {
-		name += " (" + LanguageUtil.get(themeDisplay.getLocale(), "global") + ")";
+		title += " (" + LanguageUtil.get(themeDisplay.getLocale(), "global") + ")";
 	}
 
-	return name;
+	return title;
 }
 %>

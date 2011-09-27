@@ -118,6 +118,15 @@ public class AssetVocabularyServiceImpl
 				groupIds, className));
 	}
 
+	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
+			String className, String languageId)
+		throws PortalException, SystemException {
+
+		return flattenTitleVocabularies(
+			filterVocabularies(
+				getGroupsVocabularies(groupIds, className)), languageId);
+	}
+
 	public List<AssetVocabulary> getGroupVocabularies(long groupId)
 		throws PortalException, SystemException {
 
@@ -198,6 +207,14 @@ public class AssetVocabularyServiceImpl
 			assetVocabularyLocalService.getVocabularies(vocabularyIds));
 	}
 
+	public List<AssetVocabulary> getVocabularies(long[] vocabularyIds,
+			String languageId)
+		throws PortalException, SystemException {
+
+		return flattenTitleVocabularies(
+			filterVocabularies(getVocabularies(vocabularyIds)), languageId);
+	}
+
 	public AssetVocabulary getVocabulary(long vocabularyId)
 		throws PortalException, SystemException {
 
@@ -253,6 +270,17 @@ public class AssetVocabularyServiceImpl
 
 				itr.remove();
 			}
+		}
+
+		return vocabularies;
+	}
+
+	protected List<AssetVocabulary> flattenTitleVocabularies(
+			List<AssetVocabulary> vocabularies, String languageId)
+		throws PortalException {
+
+		for (AssetVocabulary vocabulary : vocabularies) {
+			vocabulary.setTitle(vocabulary.getTitle(languageId));
 		}
 
 		return vocabularies;

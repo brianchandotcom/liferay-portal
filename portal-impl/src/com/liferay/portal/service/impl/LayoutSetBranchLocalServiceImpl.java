@@ -300,6 +300,10 @@ public class LayoutSetBranchLocalServiceImpl
 		LayoutSetBranch layoutSetBranch =
 			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
 
+		validate(
+			layoutSetBranch.getGroupId(), layoutSetBranch.getPrivateLayout(),
+			name, layoutSetBranch.getMaster());
+
 		layoutSetBranch.setName(name);
 		layoutSetBranch.setDescription(description);
 

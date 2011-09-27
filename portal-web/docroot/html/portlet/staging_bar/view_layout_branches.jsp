@@ -39,6 +39,10 @@ else {
 request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.valueOf(currentLayoutRevision.getLayoutBranchId()));
 %>
 
+<liferay-ui:error key="<%= LayoutBranchNameException.class.getName() + LayoutBranchNameException.DUPLICATE %>" message="a-page-variation-with-that-name-already-exists" />
+<liferay-ui:error key="<%= LayoutBranchNameException.class.getName() + LayoutBranchNameException.TOO_LONG %>" message='<%= LanguageUtil.format(pageContext, "please-enter-a-value-between-x-and-x-characters-long", new Object[] {4, 100}) %>' />
+<liferay-ui:error key="<%= LayoutBranchNameException.class.getName() + LayoutBranchNameException.TOO_SHORT %>" message='<%= LanguageUtil.format(pageContext, "please-enter-a-value-between-x-and-x-characters-long", new Object[] {4, 100}) %>' />
+
 <div class="portlet-msg-info">
 	<liferay-ui:message key="page-variations-help" />
 </div>

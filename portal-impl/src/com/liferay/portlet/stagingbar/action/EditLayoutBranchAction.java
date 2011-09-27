@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.stagingbar.action;
 
+import com.liferay.portal.LayoutBranchNameException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -74,7 +75,15 @@ public class EditLayoutBranchAction extends EditLayoutsAction {
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException ||
+			if (e instanceof LayoutBranchNameException) {
+				LayoutBranchNameException lbne = (LayoutBranchNameException)e;
+
+				SessionErrors.add(
+					actionRequest, e.getClass().getName() + lbne.getType());
+
+				sendRedirect(actionRequest, actionResponse);
+			}
+			else if (e instanceof PrincipalException ||
 				e instanceof SystemException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());

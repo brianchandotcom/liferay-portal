@@ -1786,20 +1786,20 @@ AUI().add(
 						);
 					}
 
-					var dynConAttributes = null;
+					var dynamicContentAttrs = null;
 
 					if (fieldInstance.get('localized')) {
 						var localizedValue = fieldInstance.get('localizedValue');
 
 						if (localizedValue !== 'false') {
-							dynConAttributes = {
+							dynamicContentAttrs = {
 								'language-id': localizedValue
 							};
 						}
 					}
 
 					var nodeTypeContent = instance.getNodeTypeContent();
-					var typeContent = instance._createDynamicNode(nodeTypeContent, dynConAttributes);
+					var typeContent = instance._createDynamicNode(nodeTypeContent, dynamicContentAttrs);
 					var metadata = instance._createDynamicNode('meta-data');
 
 					var entryInstructions = instance._createDynamicNode(

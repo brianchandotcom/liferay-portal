@@ -74,15 +74,16 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalArticleImage"),
 			true);
-
-	public Class<?> getModelClass() {
-		return JournalArticleImage.class;
-	}
-
-	public String getModelClassName() {
-		return JournalArticleImage.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalArticleImage"),
+			true);
+	public static long ELINSTANCEID_COLUMN_BITMASK = 1L;
+	public static long ELNAME_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long ARTICLEID_COLUMN_BITMASK = 8L;
+	public static long LANGUAGEID_COLUMN_BITMASK = 16L;
+	public static long TEMPIMAGE_COLUMN_BITMASK = 32L;
+	public static long VERSION_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalArticleImage"));
 
@@ -105,6 +106,14 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return JournalArticleImage.class;
+	}
+
+	public String getModelClassName() {
+		return JournalArticleImage.class.getName();
+	}
+
 	public long getArticleImageId() {
 		return _articleImageId;
 	}
@@ -118,6 +127,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -141,6 +152,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setArticleId(String articleId) {
+		_columnBitmask |= ARTICLEID_COLUMN_BITMASK;
+
 		if (_originalArticleId == null) {
 			_originalArticleId = _articleId;
 		}
@@ -157,6 +170,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setVersion(double version) {
+		_columnBitmask |= VERSION_COLUMN_BITMASK;
+
 		if (!_setOriginalVersion) {
 			_setOriginalVersion = true;
 
@@ -180,6 +195,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setElInstanceId(String elInstanceId) {
+		_columnBitmask |= ELINSTANCEID_COLUMN_BITMASK;
+
 		if (_originalElInstanceId == null) {
 			_originalElInstanceId = _elInstanceId;
 		}
@@ -201,6 +218,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setElName(String elName) {
+		_columnBitmask |= ELNAME_COLUMN_BITMASK;
+
 		if (_originalElName == null) {
 			_originalElName = _elName;
 		}
@@ -222,6 +241,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setLanguageId(String languageId) {
+		_columnBitmask |= LANGUAGEID_COLUMN_BITMASK;
+
 		if (_originalLanguageId == null) {
 			_originalLanguageId = _languageId;
 		}
@@ -242,6 +263,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	}
 
 	public void setTempImage(boolean tempImage) {
+		_columnBitmask |= TEMPIMAGE_COLUMN_BITMASK;
+
 		if (!_setOriginalTempImage) {
 			_setOriginalTempImage = true;
 
@@ -253,6 +276,10 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 
 	public boolean getOriginalTempImage() {
 		return _originalTempImage;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -371,6 +398,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		journalArticleImageModelImpl._originalTempImage = journalArticleImageModelImpl._tempImage;
 
 		journalArticleImageModelImpl._setOriginalTempImage = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -513,5 +542,6 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	private boolean _originalTempImage;
 	private boolean _setOriginalTempImage;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private JournalArticleImage _escapedModelProxy;
 }

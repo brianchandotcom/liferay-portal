@@ -83,15 +83,16 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.WorkflowDefinitionLink"),
 			true);
-
-	public Class<?> getModelClass() {
-		return WorkflowDefinitionLink.class;
-	}
-
-	public String getModelClassName() {
-		return WorkflowDefinitionLink.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.WorkflowDefinitionLink"),
+			true);
+	public static long TYPEPK_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 8L;
+	public static long WORKFLOWDEFINITIONVERSION_COLUMN_BITMASK = 16L;
+	public static long CLASSPK_COLUMN_BITMASK = 32L;
+	public static long WORKFLOWDEFINITIONNAME_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.WorkflowDefinitionLink"));
 
@@ -114,6 +115,14 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return WorkflowDefinitionLink.class;
+	}
+
+	public String getModelClassName() {
+		return WorkflowDefinitionLink.class.getName();
+	}
+
 	public long getWorkflowDefinitionLinkId() {
 		return _workflowDefinitionLinkId;
 	}
@@ -127,6 +136,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -145,6 +156,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -216,6 +229,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -234,6 +249,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -252,6 +269,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	}
 
 	public void setTypePK(long typePK) {
+		_columnBitmask |= TYPEPK_COLUMN_BITMASK;
+
 		if (!_setOriginalTypePK) {
 			_setOriginalTypePK = true;
 
@@ -275,6 +294,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	}
 
 	public void setWorkflowDefinitionName(String workflowDefinitionName) {
+		_columnBitmask |= WORKFLOWDEFINITIONNAME_COLUMN_BITMASK;
+
 		if (_originalWorkflowDefinitionName == null) {
 			_originalWorkflowDefinitionName = _workflowDefinitionName;
 		}
@@ -291,6 +312,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	}
 
 	public void setWorkflowDefinitionVersion(int workflowDefinitionVersion) {
+		_columnBitmask |= WORKFLOWDEFINITIONVERSION_COLUMN_BITMASK;
+
 		if (!_setOriginalWorkflowDefinitionVersion) {
 			_setOriginalWorkflowDefinitionVersion = true;
 
@@ -302,6 +325,10 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	public int getOriginalWorkflowDefinitionVersion() {
 		return _originalWorkflowDefinitionVersion;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -429,6 +456,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		workflowDefinitionLinkModelImpl._originalWorkflowDefinitionVersion = workflowDefinitionLinkModelImpl._workflowDefinitionVersion;
 
 		workflowDefinitionLinkModelImpl._setOriginalWorkflowDefinitionVersion = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -614,5 +643,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	private int _originalWorkflowDefinitionVersion;
 	private boolean _setOriginalWorkflowDefinitionVersion;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private WorkflowDefinitionLink _escapedModelProxy;
 }

@@ -69,15 +69,11 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PortalPreferences"),
 			true);
-
-	public Class<?> getModelClass() {
-		return PortalPreferences.class;
-	}
-
-	public String getModelClassName() {
-		return PortalPreferences.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.PortalPreferences"),
+			true);
+	public static long OWNERTYPE_COLUMN_BITMASK = 1L;
+	public static long OWNERID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.PortalPreferences"));
 
@@ -100,6 +96,14 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return PortalPreferences.class;
+	}
+
+	public String getModelClassName() {
+		return PortalPreferences.class.getName();
+	}
+
 	public long getPortalPreferencesId() {
 		return _portalPreferencesId;
 	}
@@ -113,6 +117,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	}
 
 	public void setOwnerId(long ownerId) {
+		_columnBitmask |= OWNERID_COLUMN_BITMASK;
+
 		if (!_setOriginalOwnerId) {
 			_setOriginalOwnerId = true;
 
@@ -131,6 +137,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	}
 
 	public void setOwnerType(int ownerType) {
+		_columnBitmask |= OWNERTYPE_COLUMN_BITMASK;
+
 		if (!_setOriginalOwnerType) {
 			_setOriginalOwnerType = true;
 
@@ -155,6 +163,10 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 
 	public void setPreferences(String preferences) {
 		_preferences = preferences;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -257,6 +269,8 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 		portalPreferencesModelImpl._originalOwnerType = portalPreferencesModelImpl._ownerType;
 
 		portalPreferencesModelImpl._setOriginalOwnerType = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -339,5 +353,6 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	private boolean _setOriginalOwnerType;
 	private String _preferences;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private PortalPreferences _escapedModelProxy;
 }

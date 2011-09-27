@@ -86,6 +86,12 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.LayoutSet"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.LayoutSet"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long PRIVATELAYOUT_COLUMN_BITMASK = 2L;
+	public static long LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -131,14 +137,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return LayoutSet.class;
-	}
-
-	public String getModelClassName() {
-		return LayoutSet.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.LayoutSet"));
 
@@ -161,6 +159,14 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return LayoutSet.class;
+	}
+
+	public String getModelClassName() {
+		return LayoutSet.class.getName();
+	}
+
 	@JSON
 	public long getLayoutSetId() {
 		return _layoutSetId;
@@ -176,6 +182,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -208,6 +216,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	}
 
 	public void setPrivateLayout(boolean privateLayout) {
+		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
+
 		if (!_setOriginalPrivateLayout) {
 			_setOriginalPrivateLayout = true;
 
@@ -347,6 +357,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	}
 
 	public void setLayoutSetPrototypeUuid(String layoutSetPrototypeUuid) {
+		_columnBitmask |= LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK;
+
 		if (_originalLayoutSetPrototypeUuid == null) {
 			_originalLayoutSetPrototypeUuid = _layoutSetPrototypeUuid;
 		}
@@ -370,6 +382,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled) {
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -485,6 +501,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		layoutSetModelImpl._setOriginalPrivateLayout = false;
 
 		layoutSetModelImpl._originalLayoutSetPrototypeUuid = layoutSetModelImpl._layoutSetPrototypeUuid;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -704,5 +722,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private String _originalLayoutSetPrototypeUuid;
 	private boolean _layoutSetPrototypeLinkEnabled;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private LayoutSet _escapedModelProxy;
 }

@@ -95,6 +95,15 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Address"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Address"),
+			true);
+	public static long PRIMARY_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 4L;
+	public static long MAILING_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 16L;
+	public static long CLASSPK_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -143,14 +152,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Address.class;
-	}
-
-	public String getModelClassName() {
-		return Address.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Address"));
 
@@ -173,6 +174,14 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return Address.class;
+	}
+
+	public String getModelClassName() {
+		return Address.class.getName();
+	}
+
 	@JSON
 	public long getAddressId() {
 		return _addressId;
@@ -188,6 +197,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -207,6 +218,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -274,6 +287,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -293,6 +308,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -413,6 +430,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setMailing(boolean mailing) {
+		_columnBitmask |= MAILING_COLUMN_BITMASK;
+
 		if (!_setOriginalMailing) {
 			_setOriginalMailing = true;
 
@@ -436,6 +455,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setPrimary(boolean primary) {
+		_columnBitmask |= PRIMARY_COLUMN_BITMASK;
+
 		if (!_setOriginalPrimary) {
 			_setOriginalPrimary = true;
 
@@ -447,6 +468,10 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public boolean getOriginalPrimary() {
 		return _originalPrimary;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -577,6 +602,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		addressModelImpl._originalPrimary = addressModelImpl._primary;
 
 		addressModelImpl._setOriginalPrimary = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -838,5 +865,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Address _escapedModelProxy;
 }

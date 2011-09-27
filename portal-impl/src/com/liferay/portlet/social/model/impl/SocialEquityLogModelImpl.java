@@ -80,15 +80,16 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialEquityLog"),
 			true);
-
-	public Class<?> getModelClass() {
-		return SocialEquityLog.class;
-	}
-
-	public String getModelClassName() {
-		return SocialEquityLog.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialEquityLog"),
+			true);
+	public static long ACTIVE_COLUMN_BITMASK = 1L;
+	public static long ACTIONDATE_COLUMN_BITMASK = 2L;
+	public static long TYPE_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long EXTRADATA_COLUMN_BITMASK = 16L;
+	public static long ACTIONID_COLUMN_BITMASK = 32L;
+	public static long ASSETENTRYID_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialEquityLog"));
 
@@ -109,6 +110,14 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return SocialEquityLog.class;
+	}
+
+	public String getModelClassName() {
+		return SocialEquityLog.class.getName();
 	}
 
 	public long getEquityLogId() {
@@ -140,6 +149,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -166,6 +177,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setAssetEntryId(long assetEntryId) {
+		_columnBitmask |= ASSETENTRYID_COLUMN_BITMASK;
+
 		if (!_setOriginalAssetEntryId) {
 			_setOriginalAssetEntryId = true;
 
@@ -189,6 +202,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setActionId(String actionId) {
+		_columnBitmask |= ACTIONID_COLUMN_BITMASK;
+
 		if (_originalActionId == null) {
 			_originalActionId = _actionId;
 		}
@@ -205,6 +220,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setActionDate(int actionDate) {
+		_columnBitmask |= ACTIONDATE_COLUMN_BITMASK;
+
 		if (!_setOriginalActionDate) {
 			_setOriginalActionDate = true;
 
@@ -227,6 +244,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
 		if (!_setOriginalActive) {
 			_setOriginalActive = true;
 
@@ -253,6 +272,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -284,6 +305,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	}
 
 	public void setExtraData(String extraData) {
+		_columnBitmask |= EXTRADATA_COLUMN_BITMASK;
+
 		if (_originalExtraData == null) {
 			_originalExtraData = _extraData;
 		}
@@ -293,6 +316,10 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 
 	public String getOriginalExtraData() {
 		return GetterUtil.getString(_originalExtraData);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -419,6 +446,8 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 		socialEquityLogModelImpl._setOriginalType = false;
 
 		socialEquityLogModelImpl._originalExtraData = socialEquityLogModelImpl._extraData;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -588,5 +617,6 @@ public class SocialEquityLogModelImpl extends BaseModelImpl<SocialEquityLog>
 	private String _extraData;
 	private String _originalExtraData;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private SocialEquityLog _escapedModelProxy;
 }

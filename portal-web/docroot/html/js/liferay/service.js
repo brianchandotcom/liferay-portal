@@ -781,6 +781,7 @@ Liferay.Service.registerClass(
 		getFolder: true,
 		getFolderIds: true,
 		getFolders: true,
+		getFoldersAndFileEntriesAndFileShortcuts: true,
 		getFoldersAndFileEntriesAndFileShortcutsCount: true,
 		getFoldersCount: true,
 		getMountFolders: true,

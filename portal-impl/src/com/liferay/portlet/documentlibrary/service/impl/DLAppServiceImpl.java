@@ -1292,10 +1292,21 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
+		return getFoldersAndFileEntriesAndFileShortcuts(
+			repositoryId, folderId, status, null, includeMountFolders, start,
+			end, obc);
+	}
+
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long repositoryId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
 		Repository repository = getRepository(repositoryId);
 
 		return repository.getFoldersAndFileEntriesAndFileShortcuts(
-			folderId, status, includeMountFolders, start, end, obc);
+			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
 	}
 
 	/**
@@ -1317,10 +1328,19 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			boolean includeMountFolders)
 		throws PortalException, SystemException {
 
+		return getFoldersAndFileEntriesAndFileShortcutsCount(
+			repositoryId, folderId, status, null, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long repositoryId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+		throws PortalException, SystemException {
+
 		Repository repository = getRepository(repositoryId);
 
 		return repository.getFoldersAndFileEntriesAndFileShortcutsCount(
-			folderId, status, includeMountFolders);
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	/**
@@ -2345,6 +2365,51 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			folderId, lockUuid);
 	}
 
+	protected FileEntry copyFileEntry(
+			Repository toRepository, FileEntry fileEntry, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		List<FileVersion> fileVersions = fileEntry.getFileVersions(
+			WorkflowConstants.STATUS_ANY);
+
+		FileVersion latestFileVersion = fileVersions.get(
+			fileVersions.size() - 1);
+
+		FileEntry destinationFileEntry = toRepository.addFileEntry(
+			newFolderId, fileEntry.getNameWithExtension(),
+			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
+			latestFileVersion.getDescription(), StringPool.BLANK,
+			latestFileVersion.getContentStream(false),
+			latestFileVersion.getSize(), serviceContext);
+
+		for (int i = fileVersions.size() - 2; i >= 0 ; i--) {
+			FileVersion fileVersion = fileVersions.get(i);
+
+			FileVersion previousFileVersion = fileVersions.get(i + 1);
+
+			try {
+				destinationFileEntry = toRepository.updateFileEntry(
+					destinationFileEntry.getFileEntryId(),
+					fileEntry.getNameWithExtension(),
+					destinationFileEntry.getMimeType(),
+					destinationFileEntry.getTitle(),
+					destinationFileEntry.getDescription(), StringPool.BLANK,
+					isMajorVersion(previousFileVersion, fileVersion),
+					fileVersion.getContentStream(false), fileVersion.getSize(),
+					serviceContext);
+			}
+			catch (PortalException pe) {
+				toRepository.deleteFileEntry(
+					destinationFileEntry.getFileEntryId());
+
+				throw  pe;
+			}
+		}
+
+		return destinationFileEntry;
+	}
+
 	protected void copyFolder(
 			Repository repository, Folder srcFolder, Folder destFolder,
 			ServiceContext serviceContext)
@@ -2414,51 +2479,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			});
 	}
 
-	protected FileEntry copyFileEntry(
-			Repository toRepository, FileEntry fileEntry, long newFolderId,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		List<FileVersion> fileVersions = fileEntry.getFileVersions(
-			WorkflowConstants.STATUS_ANY);
-
-		FileVersion latestFileVersion = fileVersions.get(
-			fileVersions.size() - 1);
-
-		FileEntry destinationFileEntry = toRepository.addFileEntry(
-			newFolderId, fileEntry.getNameWithExtension(),
-			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
-			latestFileVersion.getDescription(), StringPool.BLANK,
-			latestFileVersion.getContentStream(false),
-			latestFileVersion.getSize(), serviceContext);
-
-		for (int i = fileVersions.size() - 2; i >= 0 ; i--) {
-			FileVersion fileVersion = fileVersions.get(i);
-
-			FileVersion previousFileVersion = fileVersions.get(i + 1);
-
-			try {
-				destinationFileEntry = toRepository.updateFileEntry(
-					destinationFileEntry.getFileEntryId(),
-					fileEntry.getNameWithExtension(),
-					destinationFileEntry.getMimeType(),
-					destinationFileEntry.getTitle(),
-					destinationFileEntry.getDescription(), StringPool.BLANK,
-					isMajorVersion(previousFileVersion, fileVersion),
-					fileVersion.getContentStream(false), fileVersion.getSize(),
-					serviceContext);
-			}
-			catch (PortalException pe) {
-				toRepository.deleteFileEntry(
-					destinationFileEntry.getFileEntryId());
-
-				throw  pe;
-			}
-		}
-
-		return destinationFileEntry;
-	}
-
 	protected void deleteFileEntry(
 			long oldFileEntryId, long newFileEntryId,
 			Repository fromRepository, Repository toRepository)
@@ -2481,6 +2501,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	protected Repository getRepository(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException {
+
+		return repositoryService.getRepositoryImpl(
+			folderId, fileEntryId, fileVersionId);
+	}
+
+	protected Repository getRepository(
 			long folderId, ServiceContext serviceContext)
 		throws PortalException, SystemException{
 
@@ -2494,14 +2522,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 
 		return repository;
-	}
-
-	protected Repository getRepository(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
-
-		return repositoryService.getRepositoryImpl(
-			folderId, fileEntryId, fileVersionId);
 	}
 
 	protected boolean isMajorVersion(

@@ -90,7 +90,11 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Long.class.getName()
-			});
+			},
+			WorkflowInstanceLinkModelImpl.GROUPID_COLUMN_BITMASK |
+			WorkflowInstanceLinkModelImpl.COMPANYID_COLUMN_BITMASK |
+			WorkflowInstanceLinkModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			WorkflowInstanceLinkModelImpl.CLASSPK_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_C = new FinderPath(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C",
@@ -314,25 +318,23 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !WorkflowInstanceLinkModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if ((workflowInstanceLink.getGroupId() != workflowInstanceLinkModelImpl.getOriginalGroupId()) ||
-					(workflowInstanceLink.getCompanyId() != workflowInstanceLinkModelImpl.getOriginalCompanyId()) ||
-					(workflowInstanceLink.getClassNameId() != workflowInstanceLinkModelImpl.getOriginalClassNameId()) ||
-					(workflowInstanceLink.getClassPK() != workflowInstanceLinkModelImpl.getOriginalClassPK())) {
+			if ((workflowInstanceLinkModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalGroupId()),
+						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalCompanyId()),
+						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalClassNameId()),
+						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C,
-					new Object[] {
-						Long.valueOf(
-							workflowInstanceLinkModelImpl.getOriginalGroupId()),
-						Long.valueOf(
-							workflowInstanceLinkModelImpl.getOriginalCompanyId()),
-						Long.valueOf(
-							workflowInstanceLinkModelImpl.getOriginalClassNameId()),
-						Long.valueOf(
-							workflowInstanceLinkModelImpl.getOriginalClassPK())
-					});
+					args);
 			}
 		}
 

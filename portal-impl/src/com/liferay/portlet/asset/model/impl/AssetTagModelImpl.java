@@ -86,6 +86,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetTag"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetTag"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -125,14 +129,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return AssetTag.class;
-	}
-
-	public String getModelClassName() {
-		return AssetTag.class.getName();
-	}
-
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME = "AssetEntries_AssetTags";
 	public static final Object[][] MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_COLUMNS = {
 			{ "entryId", Types.BIGINT },
@@ -164,6 +160,14 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return AssetTag.class;
+	}
+
+	public String getModelClassName() {
+		return AssetTag.class.getName();
+	}
+
 	@JSON
 	public long getTagId() {
 		return _tagId;
@@ -179,6 +183,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -271,6 +277,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	public void setAssetCount(int assetCount) {
 		_assetCount = assetCount;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -372,6 +382,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		assetTagModelImpl._originalGroupId = assetTagModelImpl._groupId;
 
 		assetTagModelImpl._setOriginalGroupId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -518,5 +530,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private String _name;
 	private int _assetCount;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private AssetTag _escapedModelProxy;
 }

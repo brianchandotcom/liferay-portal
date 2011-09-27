@@ -66,15 +66,11 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.expando.model.ExpandoRow"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ExpandoRow.class;
-	}
-
-	public String getModelClassName() {
-		return ExpandoRow.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.expando.model.ExpandoRow"),
+			true);
+	public static long TABLEID_COLUMN_BITMASK = 1L;
+	public static long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.expando.model.ExpandoRow"));
 
@@ -95,6 +91,14 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return ExpandoRow.class;
+	}
+
+	public String getModelClassName() {
+		return ExpandoRow.class.getName();
 	}
 
 	public long getRowId() {
@@ -118,6 +122,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	}
 
 	public void setTableId(long tableId) {
+		_columnBitmask |= TABLEID_COLUMN_BITMASK;
+
 		if (!_setOriginalTableId) {
 			_setOriginalTableId = true;
 
@@ -136,6 +142,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -147,6 +155,10 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	public long getOriginalClassPK() {
 		return _originalClassPK;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -234,6 +246,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		expandoRowModelImpl._originalClassPK = expandoRowModelImpl._classPK;
 
 		expandoRowModelImpl._setOriginalClassPK = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -309,5 +323,6 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
+	private long _columnBitmask;
 	private ExpandoRow _escapedModelProxy;
 }

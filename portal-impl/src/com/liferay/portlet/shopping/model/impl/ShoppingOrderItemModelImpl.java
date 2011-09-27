@@ -80,15 +80,10 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingOrderItem"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ShoppingOrderItem.class;
-	}
-
-	public String getModelClassName() {
-		return ShoppingOrderItem.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingOrderItem"),
+			true);
+	public static long ORDERID_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingOrderItem"));
 
@@ -111,6 +106,14 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ShoppingOrderItem.class;
+	}
+
+	public String getModelClassName() {
+		return ShoppingOrderItem.class.getName();
+	}
+
 	public long getOrderItemId() {
 		return _orderItemId;
 	}
@@ -124,6 +127,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	}
 
 	public void setOrderId(long orderId) {
+		_columnBitmask |= ORDERID_COLUMN_BITMASK;
+
 		if (!_setOriginalOrderId) {
 			_setOriginalOrderId = true;
 
@@ -224,6 +229,10 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	public void setShippedDate(Date shippedDate) {
 		_shippedDate = shippedDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -332,6 +341,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		shoppingOrderItemModelImpl._originalOrderId = shoppingOrderItemModelImpl._orderId;
 
 		shoppingOrderItemModelImpl._setOriginalOrderId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -497,5 +508,6 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	private int _quantity;
 	private Date _shippedDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ShoppingOrderItem _escapedModelProxy;
 }

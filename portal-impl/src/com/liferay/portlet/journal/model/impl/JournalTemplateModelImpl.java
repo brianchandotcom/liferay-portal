@@ -102,6 +102,14 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalTemplate"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalTemplate"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long UUID_COLUMN_BITMASK = 2L;
+	public static long SMALLIMAGEID_COLUMN_BITMASK = 4L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 8L;
+	public static long TEMPLATEID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -151,14 +159,6 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return JournalTemplate.class;
-	}
-
-	public String getModelClassName() {
-		return JournalTemplate.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalTemplate"));
 
@@ -179,6 +179,14 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return JournalTemplate.class;
+	}
+
+	public String getModelClassName() {
+		return JournalTemplate.class.getName();
 	}
 
 	@JSON
@@ -218,6 +226,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -300,6 +310,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setTemplateId(String templateId) {
+		_columnBitmask |= TEMPLATEID_COLUMN_BITMASK;
+
 		if (_originalTemplateId == null) {
 			_originalTemplateId = _templateId;
 		}
@@ -322,6 +334,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setStructureId(String structureId) {
+		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
+
 		if (_originalStructureId == null) {
 			_originalStructureId = _structureId;
 		}
@@ -575,6 +589,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	}
 
 	public void setSmallImageId(long smallImageId) {
+		_columnBitmask |= SMALLIMAGEID_COLUMN_BITMASK;
+
 		if (!_setOriginalSmallImageId) {
 			_setOriginalSmallImageId = true;
 
@@ -600,6 +616,10 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 
 	public void setSmallImageURL(String smallImageURL) {
 		_smallImageURL = smallImageURL;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -720,6 +740,8 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 		journalTemplateModelImpl._originalSmallImageId = journalTemplateModelImpl._smallImageId;
 
 		journalTemplateModelImpl._setOriginalSmallImageId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -994,5 +1016,6 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 	private boolean _setOriginalSmallImageId;
 	private String _smallImageURL;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private JournalTemplate _escapedModelProxy;
 }

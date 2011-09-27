@@ -69,15 +69,12 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.VirtualHost"),
 			true);
-
-	public Class<?> getModelClass() {
-		return VirtualHost.class;
-	}
-
-	public String getModelClassName() {
-		return VirtualHost.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.VirtualHost"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long LAYOUTSETID_COLUMN_BITMASK = 2L;
+	public static long HOSTNAME_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.VirtualHost"));
 
@@ -100,6 +97,14 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return VirtualHost.class;
+	}
+
+	public String getModelClassName() {
+		return VirtualHost.class.getName();
+	}
+
 	public long getVirtualHostId() {
 		return _virtualHostId;
 	}
@@ -113,6 +118,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -131,6 +138,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	}
 
 	public void setLayoutSetId(long layoutSetId) {
+		_columnBitmask |= LAYOUTSETID_COLUMN_BITMASK;
+
 		if (!_setOriginalLayoutSetId) {
 			_setOriginalLayoutSetId = true;
 
@@ -154,6 +163,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	}
 
 	public void setHostname(String hostname) {
+		_columnBitmask |= HOSTNAME_COLUMN_BITMASK;
+
 		if (_originalHostname == null) {
 			_originalHostname = _hostname;
 		}
@@ -163,6 +174,10 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 
 	public String getOriginalHostname() {
 		return GetterUtil.getString(_originalHostname);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -267,6 +282,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		virtualHostModelImpl._setOriginalLayoutSetId = false;
 
 		virtualHostModelImpl._originalHostname = virtualHostModelImpl._hostname;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -350,5 +367,6 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	private String _hostname;
 	private String _originalHostname;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private VirtualHost _escapedModelProxy;
 }

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Shard;
@@ -75,7 +74,8 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	public static final FinderPath FINDER_PATH_FETCH_BY_NAME = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, ShardImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] { String.class.getName() });
+			new String[] { String.class.getName() },
+			ShardModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
@@ -83,7 +83,9 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, ShardImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() },
+			ShardModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			ShardModelImpl.CLASSPK_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -324,6 +326,10 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
+		if (isNew || !ShardModelImpl.COLUMN_BITMASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+
 		EntityCacheUtil.putResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardImpl.class, shard.getPrimaryKey(), shard);
 
@@ -338,8 +344,8 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 				}, shard);
 		}
 		else {
-			if (!Validator.equals(shard.getName(),
-						shardModelImpl.getOriginalName())) {
+			if ((shardModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_NAME.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME,
 					new Object[] { shardModelImpl.getOriginalName() });
 
@@ -347,8 +353,8 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 					new Object[] { shard.getName() }, shard);
 			}
 
-			if ((shard.getClassNameId() != shardModelImpl.getOriginalClassNameId()) ||
-					(shard.getClassPK() != shardModelImpl.getOriginalClassPK())) {
+			if ((shardModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
 					new Object[] {
 						Long.valueOf(shardModelImpl.getOriginalClassNameId()),

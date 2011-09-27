@@ -88,6 +88,13 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.wiki.model.WikiNode"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.wiki.model.WikiNode"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long NAME_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -129,14 +136,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return WikiNode.class;
-	}
-
-	public String getModelClassName() {
-		return WikiNode.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.wiki.model.WikiNode"));
 
@@ -157,6 +156,14 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return WikiNode.class;
+	}
+
+	public String getModelClassName() {
+		return WikiNode.class.getName();
 	}
 
 	@JSON
@@ -196,6 +203,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -215,6 +224,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -288,6 +299,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -320,6 +333,10 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public void setLastPostDate(Date lastPostDate) {
 		_lastPostDate = lastPostDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -432,6 +449,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		wikiNodeModelImpl._setOriginalCompanyId = false;
 
 		wikiNodeModelImpl._originalName = wikiNodeModelImpl._name;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -619,5 +638,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	private String _description;
 	private Date _lastPostDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private WikiNode _escapedModelProxy;
 }

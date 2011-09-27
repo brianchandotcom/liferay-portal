@@ -78,15 +78,12 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.UserNotificationEvent"),
 			true);
-
-	public Class<?> getModelClass() {
-		return UserNotificationEvent.class;
-	}
-
-	public String getModelClassName() {
-		return UserNotificationEvent.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.UserNotificationEvent"),
+			true);
+	public static long USERID_COLUMN_BITMASK = 1L;
+	public static long UUID_COLUMN_BITMASK = 2L;
+	public static long ARCHIVED_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserNotificationEvent"));
 
@@ -107,6 +104,14 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return UserNotificationEvent.class;
+	}
+
+	public String getModelClassName() {
+		return UserNotificationEvent.class.getName();
 	}
 
 	public String getUuid() {
@@ -151,6 +156,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -223,6 +230,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	public void setArchived(boolean archived) {
+		_columnBitmask |= ARCHIVED_COLUMN_BITMASK;
+
 		if (!_setOriginalArchived) {
 			_setOriginalArchived = true;
 
@@ -234,6 +243,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public boolean getOriginalArchived() {
 		return _originalArchived;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -351,6 +364,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		userNotificationEventModelImpl._originalArchived = userNotificationEventModelImpl._archived;
 
 		userNotificationEventModelImpl._setOriginalArchived = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -492,5 +507,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private boolean _originalArchived;
 	private boolean _setOriginalArchived;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private UserNotificationEvent _escapedModelProxy;
 }

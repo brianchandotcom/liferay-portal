@@ -103,6 +103,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	<#assign columnBitmaskEnabled = (entity.finderColumnsList?size &gt; 0) && (entity.finderColumnsList?size &lt; 64)>
+
 	<#list entity.getFinderList() as finder>
 		<#assign finderColsList = finder.getColumns()>
 
@@ -135,7 +137,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							,
 						</#if>
 					</#list>
-				});
+				}
+
+				<#if columnBitmaskEnabled>
+					,
+
+					<#list finderColsList as finderCol>
+						${entity.name}ModelImpl.${finderCol.name?upper_case}_COLUMN_BITMASK
+
+						<#if finderCol_has_next>
+							|
+						</#if>
+					</#list>
+				</#if>
+
+				);
 		<#else>
 			public static final FinderPath FINDER_PATH_FETCH_BY_${finder.name?upper_case} = new FinderPath(
 				${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
@@ -151,7 +167,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							,
 						</#if>
 					</#list>
-				});
+				}
+
+				<#if columnBitmaskEnabled>
+					,
+
+					<#list finderColsList as finderCol>
+						${entity.name}ModelImpl.${finderCol.name?upper_case}_COLUMN_BITMASK
+
+						<#if finderCol_has_next>
+							|
+						</#if>
+					</#list>
+				</#if>
+
+				);
 		</#if>
 
 		public static final FinderPath FINDER_PATH_COUNT_BY_${finder.name?upper_case} = new FinderPath(
@@ -591,30 +621,64 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		<#if entity.collectionFinderList?size &gt; 0>
-			if (isNew) {
+		<#assign collectionFinderList = entity.getCollectionFinderList()>
+
+		<#if columnBitmaskEnabled>
+			if (isNew || !${entity.name}ModelImpl.COLUMN_BITMASK_ENABLED) {
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 			}
-			else {
-				<#list entity.collectionFinderList as finder>
-					<#assign finderColsList = finder.getColumns()>
-					if (
-						<#list finderColsList as finderCol>
-							<#if finderCol.isPrimitiveType()>
-								${entity.varName}.get${finderCol.methodName}() != ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
-							<#else>
-								!Validator.equals(${entity.varName}.get${finderCol.methodName}(), ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}())
-							</#if>
 
-							<#if finderCol_has_next>
-								||
-							</#if>
-						</#list>
-					) {
+			<#if collectionFinderList?size != 0>
+				else {
+					<#list collectionFinderList as finder>
+						if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}.getColumnBitmask()) != 0) {
+							Object[] args = new Object[] {
+								<#list finder.getColumns() as finderCol>
+									<#if finderCol.isPrimitiveType()>
+										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+									</#if>
 
-						FinderCacheUtil.removeResult(
-							FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case},
-							new Object[] {
+									${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
+
+									<#if finderCol.isPrimitiveType()>
+										)
+									</#if>
+
+									<#if finderCol_has_next>
+										,
+									</#if>
+								</#list>
+							};
+
+							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+							FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+						}
+					</#list>
+				}
+			</#if>
+		<#else>
+			<#if entity.finderColumnsList?size != 0>
+				if (isNew) {
+					FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+				}
+				else {
+					<#list entity.collectionFinderList as finder>
+						<#assign finderColsList = finder.getColumns()>
+						if (
+							<#list finderColsList as finderCol>
+								<#if finderCol.isPrimitiveType()>
+									${entity.varName}.get${finderCol.methodName}() != ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
+								<#else>
+									!Validator.equals(${entity.varName}.get${finderCol.methodName}(), ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}())
+								</#if>
+
+								<#if finderCol_has_next>
+									||
+								</#if>
+							</#list>
+						) {
+
+							Object[] args = new Object[] {
 								<#list finderColsList as finderCol>
 									<#if finderCol.isPrimitiveType()>
 										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
@@ -631,9 +695,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 									</#if>
 								</#list>
 							});
-					}
-				</#list>
-			}
+
+							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+							FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+						}
+					</#list>
+				}
+			</#if>
 		</#if>
 
 		EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
@@ -675,19 +743,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				<#list uniqueFinderList as finder>
 					<#assign finderColsList = finder.getColumns()>
 
-					if (
-						<#list finderColsList as finderCol>
-							<#if finderCol.isPrimitiveType()>
-								${entity.varName}.get${finderCol.methodName}() != ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
-							<#else>
-								!Validator.equals(${entity.varName}.get${finderCol.methodName}(), ${entity.varName}ModelImpl.getOriginal${finderCol.methodName}())
-							</#if>
-
-							<#if finderCol_has_next>
-								||
-							</#if>
-						</#list>
-					) {
+					if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_FETCH_BY_${finder.name?upper_case}.getColumnBitmask()) != 0) {
 						FinderCacheUtil.removeResult(
 							FINDER_PATH_FETCH_BY_${finder.name?upper_case},
 							new Object[] {

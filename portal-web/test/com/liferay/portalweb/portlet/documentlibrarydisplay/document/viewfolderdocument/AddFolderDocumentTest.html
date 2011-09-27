@@ -14,74 +14,74 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Document Library Test Page</td>
-	<td></td>
+	<td>Document Library Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Document Library Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
+	<td>Document Library Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right null']/ul/li[5]/a</td>
-	<td>Add Document</td>
+	<td>//span[@class='document-title']</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right null']/ul/li[5]/a</td>
-	<td>Add Document</td>
+	<td>clickAt</td>
+	<td>//span[@class='document-title']</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no documents in this folder.</td>
 </tr>
 <tr>
-	<td>windowFocus</td>
-	<td></td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>Add</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_20_file</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Basic Document</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Basic Document</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_file</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\documentlibrarydisplay\document\viewfolderdocument\dependencies\test_document.txt</td>
+	<td>//input[@id='_20_file']</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\documentlibrarydisplay\dependencies\DLDocument.docx</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_title</td>
-	<td>Test1 Document1</td>
+	<td>//input[@id='_20_title']</td>
+	<td>DL Folder Document Title</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_20_description</td>
-	<td>This is test1 document1.</td>
+	<td>//textarea[@id='_20_description']</td>
+	<td>DL Folder Document Description</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -95,13 +95,33 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/span/span</td>
-	<td>Test1 Document1.txt</td>
+	<td>//a[@class='document-link']</td>
+	<td>DL Folder Document Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@class='document-link']</td>
+	<td>DL Folder Document Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/div</td>
-	<td>This is test1 document1.</td>
+	<td>//h2[@class='document-title']</td>
+	<td>DL Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='document-description']</td>
+	<td>DL Folder Document Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='workflow-status']</td>
+	<td>Status: Approved</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='download-document']</td>
+	<td>Download (9.6k)</td>
 </tr>
 
 </tbody></table>

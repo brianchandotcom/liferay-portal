@@ -73,15 +73,11 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBThreadFlag"),
 			true);
-
-	public Class<?> getModelClass() {
-		return MBThreadFlag.class;
-	}
-
-	public String getModelClassName() {
-		return MBThreadFlag.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBThreadFlag"),
+			true);
+	public static long THREADID_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBThreadFlag"));
 
@@ -104,6 +100,14 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return MBThreadFlag.class;
+	}
+
+	public String getModelClassName() {
+		return MBThreadFlag.class.getName();
+	}
+
 	public long getThreadFlagId() {
 		return _threadFlagId;
 	}
@@ -117,6 +121,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -151,6 +157,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	}
 
 	public void setThreadId(long threadId) {
+		_columnBitmask |= THREADID_COLUMN_BITMASK;
+
 		if (!_setOriginalThreadId) {
 			_setOriginalThreadId = true;
 
@@ -162,6 +170,10 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	public long getOriginalThreadId() {
 		return _originalThreadId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -264,6 +276,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		mbThreadFlagModelImpl._originalThreadId = mbThreadFlagModelImpl._threadId;
 
 		mbThreadFlagModelImpl._setOriginalThreadId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -348,5 +362,6 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	private long _originalThreadId;
 	private boolean _setOriginalThreadId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private MBThreadFlag _escapedModelProxy;
 }

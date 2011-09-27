@@ -71,6 +71,25 @@ public class ViewAnnouncementDeliveryTest extends BaseTestCase {
 				"Announcements"));
 		selenium.clickAt("//a[@id='_2_announcementsLink']",
 			RuntimeVariables.replace("Announcements"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//input[@id='_2_announcementsTypegeneralEmailCheckbox']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked(
 				"//input[@id='_2_announcementsTypegeneralEmailCheckbox']"));
 		selenium.saveScreenShotAndSource();

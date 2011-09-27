@@ -72,15 +72,12 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink"),
 			true);
-
-	public Class<?> getModelClass() {
-		return DDMStorageLink.class;
-	}
-
-	public String getModelClassName() {
-		return DDMStorageLink.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink"),
+			true);
+	public static long UUID_COLUMN_BITMASK = 1L;
+	public static long CLASSPK_COLUMN_BITMASK = 2L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink"));
 
@@ -101,6 +98,14 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return DDMStorageLink.class;
+	}
+
+	public String getModelClassName() {
+		return DDMStorageLink.class.getName();
 	}
 
 	public String getUuid() {
@@ -153,6 +158,8 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -171,6 +178,8 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	}
 
 	public void setStructureId(long structureId) {
+		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
+
 		if (!_setOriginalStructureId) {
 			_setOriginalStructureId = true;
 
@@ -182,6 +191,10 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	public long getOriginalStructureId() {
 		return _originalStructureId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -287,6 +300,8 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 		ddmStorageLinkModelImpl._originalStructureId = ddmStorageLinkModelImpl._structureId;
 
 		ddmStorageLinkModelImpl._setOriginalStructureId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -379,5 +394,6 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	private long _originalStructureId;
 	private boolean _setOriginalStructureId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private DDMStorageLink _escapedModelProxy;
 }

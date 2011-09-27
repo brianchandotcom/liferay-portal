@@ -78,6 +78,11 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.expando.model.ExpandoColumn"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.expando.model.ExpandoColumn"),
+			true);
+	public static long TABLEID_COLUMN_BITMASK = 1L;
+	public static long NAME_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -115,14 +120,6 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return ExpandoColumn.class;
-	}
-
-	public String getModelClassName() {
-		return ExpandoColumn.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.expando.model.ExpandoColumn"));
 
@@ -143,6 +140,14 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return ExpandoColumn.class;
+	}
+
+	public String getModelClassName() {
+		return ExpandoColumn.class.getName();
 	}
 
 	@JSON
@@ -169,6 +174,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	}
 
 	public void setTableId(long tableId) {
+		_columnBitmask |= TABLEID_COLUMN_BITMASK;
+
 		if (!_setOriginalTableId) {
 			_setOriginalTableId = true;
 
@@ -193,6 +200,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -239,6 +248,10 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -325,6 +338,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		expandoColumnModelImpl._setOriginalTableId = false;
 
 		expandoColumnModelImpl._originalName = expandoColumnModelImpl._name;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -444,5 +459,6 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	private int _type;
 	private String _defaultData;
 	private String _typeSettings;
+	private long _columnBitmask;
 	private ExpandoColumn _escapedModelProxy;
 }

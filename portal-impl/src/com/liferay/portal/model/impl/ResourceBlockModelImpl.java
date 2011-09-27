@@ -77,6 +77,13 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourceBlock"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.ResourceBlock"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long PERMISSIONSHASH_COLUMN_BITMASK = 4L;
+	public static long NAME_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -113,14 +120,6 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return ResourceBlock.class;
-	}
-
-	public String getModelClassName() {
-		return ResourceBlock.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.ResourceBlock"));
 
@@ -143,6 +142,14 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ResourceBlock.class;
+	}
+
+	public String getModelClassName() {
+		return ResourceBlock.class.getName();
+	}
+
 	@JSON
 	public long getResourceBlockId() {
 		return _resourceBlockId;
@@ -158,6 +165,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -177,6 +186,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -201,6 +212,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -223,6 +236,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public void setPermissionsHash(String permissionsHash) {
+		_columnBitmask |= PERMISSIONSHASH_COLUMN_BITMASK;
+
 		if (_originalPermissionsHash == null) {
 			_originalPermissionsHash = _permissionsHash;
 		}
@@ -241,6 +256,10 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	public void setReferenceCount(long referenceCount) {
 		_referenceCount = referenceCount;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -349,6 +368,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		resourceBlockModelImpl._originalName = resourceBlockModelImpl._name;
 
 		resourceBlockModelImpl._originalPermissionsHash = resourceBlockModelImpl._permissionsHash;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -457,5 +478,6 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	private String _originalPermissionsHash;
 	private long _referenceCount;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ResourceBlock _escapedModelProxy;
 }

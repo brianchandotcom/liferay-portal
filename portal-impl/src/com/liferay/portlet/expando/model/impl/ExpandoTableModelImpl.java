@@ -68,15 +68,12 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.expando.model.ExpandoTable"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ExpandoTable.class;
-	}
-
-	public String getModelClassName() {
-		return ExpandoTable.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.expando.model.ExpandoTable"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static long NAME_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.expando.model.ExpandoTable"));
 
@@ -99,6 +96,14 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ExpandoTable.class;
+	}
+
+	public String getModelClassName() {
+		return ExpandoTable.class.getName();
+	}
+
 	public long getTableId() {
 		return _tableId;
 	}
@@ -112,6 +117,8 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -138,6 +145,8 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -161,6 +170,8 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -170,6 +181,10 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 
 	public String getOriginalName() {
 		return GetterUtil.getString(_originalName);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -259,6 +274,8 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		expandoTableModelImpl._setOriginalClassNameId = false;
 
 		expandoTableModelImpl._originalName = expandoTableModelImpl._name;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -341,5 +358,6 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	private boolean _setOriginalClassNameId;
 	private String _name;
 	private String _originalName;
+	private long _columnBitmask;
 	private ExpandoTable _escapedModelProxy;
 }

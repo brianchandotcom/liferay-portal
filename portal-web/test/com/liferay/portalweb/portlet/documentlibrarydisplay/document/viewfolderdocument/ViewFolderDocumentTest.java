@@ -30,7 +30,7 @@ public class ViewFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
 							"link=Document Library Display Test Page")) {
 					break;
 				}
@@ -43,25 +43,25 @@ public class ViewFolderDocumentTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Document Library Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Document Library Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test1 Folder1"));
+		assertEquals(RuntimeVariables.replace(
+				"DL Folder Name\nDL Folder Description"),
+			selenium.getText("//td[1]/a[2]"));
+		selenium.clickAt("//td[1]/a[2]",
+			RuntimeVariables.replace("DL Folder Name\nDL Folder Description"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
-			selenium.getText("//a/span/span"));
-		assertEquals(RuntimeVariables.replace("This is test1 document1."),
-			selenium.getText("//div[@class='file-entry-list-description']"));
-		selenium.clickAt("//a/span/span",
-			RuntimeVariables.replace("Test1 Document1.txt"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Version: 1.0"),
-			selenium.getText("//span[@class='workflow-version']"));
-		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("This is test1 document1."),
+		assertEquals(RuntimeVariables.replace("DL Folder Description"),
 			selenium.getText("//div[@class='lfr-asset-description']"));
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+			selenium.getText("//a/div[1]"));
+		assertEquals(RuntimeVariables.replace("DL Folder Document Description"),
+			selenium.getText("//div[@class='file-entry-list-description']"));
+		assertEquals(RuntimeVariables.replace("9.6k"),
+			selenium.getText("//td[2]/a"));
 	}
 }

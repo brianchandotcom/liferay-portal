@@ -81,6 +81,13 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Country"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Country"),
+			true);
+	public static long ACTIVE_COLUMN_BITMASK = 1L;
+	public static long A2_COLUMN_BITMASK = 2L;
+	public static long A3_COLUMN_BITMASK = 4L;
+	public static long NAME_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -119,14 +126,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Country.class;
-	}
-
-	public String getModelClassName() {
-		return Country.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Country"));
 
@@ -149,6 +148,14 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return Country.class;
+	}
+
+	public String getModelClassName() {
+		return Country.class.getName();
+	}
+
 	@JSON
 	public long getCountryId() {
 		return _countryId;
@@ -169,6 +176,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -191,6 +200,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public void setA2(String a2) {
+		_columnBitmask |= A2_COLUMN_BITMASK;
+
 		if (_originalA2 == null) {
 			_originalA2 = _a2;
 		}
@@ -213,6 +224,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public void setA3(String a3) {
+		_columnBitmask |= A3_COLUMN_BITMASK;
+
 		if (_originalA3 == null) {
 			_originalA3 = _a3;
 		}
@@ -275,6 +288,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
 		if (!_setOriginalActive) {
 			_setOriginalActive = true;
 
@@ -286,6 +301,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	public boolean getOriginalActive() {
 		return _originalActive;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -392,6 +411,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		countryModelImpl._originalActive = countryModelImpl._active;
 
 		countryModelImpl._setOriginalActive = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -535,5 +556,6 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Country _escapedModelProxy;
 }

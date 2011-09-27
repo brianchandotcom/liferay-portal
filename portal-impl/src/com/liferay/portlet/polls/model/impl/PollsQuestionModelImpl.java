@@ -97,6 +97,11 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.polls.model.PollsQuestion"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.polls.model.PollsQuestion"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long UUID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -139,14 +144,6 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return PollsQuestion.class;
-	}
-
-	public String getModelClassName() {
-		return PollsQuestion.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.polls.model.PollsQuestion"));
 
@@ -167,6 +164,14 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return PollsQuestion.class;
+	}
+
+	public String getModelClassName() {
+		return PollsQuestion.class.getName();
 	}
 
 	@JSON
@@ -206,6 +211,8 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -477,6 +484,10 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		_lastVoteDate = lastVoteDate;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public PollsQuestion toEscapedModel() {
 		if (isEscapedModel()) {
@@ -584,6 +595,8 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		pollsQuestionModelImpl._originalGroupId = pollsQuestionModelImpl._groupId;
 
 		pollsQuestionModelImpl._setOriginalGroupId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -784,5 +797,6 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	private Date _expirationDate;
 	private Date _lastVoteDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private PollsQuestion _escapedModelProxy;
 }

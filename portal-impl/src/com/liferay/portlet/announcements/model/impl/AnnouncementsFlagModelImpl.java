@@ -82,6 +82,12 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.announcements.model.AnnouncementsFlag"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.announcements.model.AnnouncementsFlag"),
+			true);
+	public static long VALUE_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long ENTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -118,14 +124,6 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return AnnouncementsFlag.class;
-	}
-
-	public String getModelClassName() {
-		return AnnouncementsFlag.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.announcements.model.AnnouncementsFlag"));
 
@@ -148,6 +146,14 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return AnnouncementsFlag.class;
+	}
+
+	public String getModelClassName() {
+		return AnnouncementsFlag.class.getName();
+	}
+
 	@JSON
 	public long getFlagId() {
 		return _flagId;
@@ -163,6 +169,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -199,6 +207,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	public void setEntryId(long entryId) {
+		_columnBitmask |= ENTRYID_COLUMN_BITMASK;
+
 		if (!_setOriginalEntryId) {
 			_setOriginalEntryId = true;
 
@@ -218,6 +228,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	public void setValue(int value) {
+		_columnBitmask |= VALUE_COLUMN_BITMASK;
+
 		if (!_setOriginalValue) {
 			_setOriginalValue = true;
 
@@ -229,6 +241,10 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	public int getOriginalValue() {
 		return _originalValue;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -349,6 +365,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		announcementsFlagModelImpl._originalValue = announcementsFlagModelImpl._value;
 
 		announcementsFlagModelImpl._setOriginalValue = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -444,5 +462,6 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	private int _originalValue;
 	private boolean _setOriginalValue;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private AnnouncementsFlag _escapedModelProxy;
 }

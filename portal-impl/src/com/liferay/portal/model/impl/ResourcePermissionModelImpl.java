@@ -79,6 +79,16 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourcePermission"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.ResourcePermission"),
+			true);
+	public static long ACTIONIDS_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long PRIMKEY_COLUMN_BITMASK = 4L;
+	public static long SCOPE_COLUMN_BITMASK = 8L;
+	public static long OWNERID_COLUMN_BITMASK = 16L;
+	public static long ROLEID_COLUMN_BITMASK = 32L;
+	public static long NAME_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -118,14 +128,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return ResourcePermission.class;
-	}
-
-	public String getModelClassName() {
-		return ResourcePermission.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.ResourcePermission"));
 
@@ -148,6 +150,14 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ResourcePermission.class;
+	}
+
+	public String getModelClassName() {
+		return ResourcePermission.class.getName();
+	}
+
 	@JSON
 	public long getResourcePermissionId() {
 		return _resourcePermissionId;
@@ -163,6 +173,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -187,6 +199,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -204,6 +218,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setScope(int scope) {
+		_columnBitmask |= SCOPE_COLUMN_BITMASK;
+
 		if (!_setOriginalScope) {
 			_setOriginalScope = true;
 
@@ -228,6 +244,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setPrimKey(String primKey) {
+		_columnBitmask |= PRIMKEY_COLUMN_BITMASK;
+
 		if (_originalPrimKey == null) {
 			_originalPrimKey = _primKey;
 		}
@@ -245,6 +263,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setRoleId(long roleId) {
+		_columnBitmask |= ROLEID_COLUMN_BITMASK;
+
 		if (!_setOriginalRoleId) {
 			_setOriginalRoleId = true;
 
@@ -264,6 +284,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setOwnerId(long ownerId) {
+		_columnBitmask |= OWNERID_COLUMN_BITMASK;
+
 		if (!_setOriginalOwnerId) {
 			_setOriginalOwnerId = true;
 
@@ -283,6 +305,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public void setActionIds(long actionIds) {
+		_columnBitmask |= ACTIONIDS_COLUMN_BITMASK;
+
 		if (!_setOriginalActionIds) {
 			_setOriginalActionIds = true;
 
@@ -294,6 +318,10 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 	public long getOriginalActionIds() {
 		return _originalActionIds;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -416,6 +444,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		resourcePermissionModelImpl._originalActionIds = resourcePermissionModelImpl._actionIds;
 
 		resourcePermissionModelImpl._setOriginalActionIds = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -548,5 +578,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	private long _originalActionIds;
 	private boolean _setOriginalActionIds;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ResourcePermission _escapedModelProxy;
 }

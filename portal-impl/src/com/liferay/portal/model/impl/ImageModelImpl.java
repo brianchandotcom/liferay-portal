@@ -80,6 +80,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Image"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Image"),
+			true);
+	public static long SIZE_COLUMN_BITMASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -117,14 +121,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Image.class;
-	}
-
-	public String getModelClassName() {
-		return Image.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Image"));
 
@@ -145,6 +141,14 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return Image.class;
+	}
+
+	public String getModelClassName() {
+		return Image.class.getName();
 	}
 
 	@JSON
@@ -217,6 +221,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	public void setSize(int size) {
+		_columnBitmask |= SIZE_COLUMN_BITMASK;
+
 		if (!_setOriginalSize) {
 			_setOriginalSize = true;
 
@@ -228,6 +234,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public int getOriginalSize() {
 		return _originalSize;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -335,6 +345,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		imageModelImpl._originalSize = imageModelImpl._size;
 
 		imageModelImpl._setOriginalSize = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -455,5 +467,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private int _originalSize;
 	private boolean _setOriginalSize;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Image _escapedModelProxy;
 }

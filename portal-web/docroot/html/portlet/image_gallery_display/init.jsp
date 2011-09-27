@@ -42,6 +42,7 @@
 <%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.AudioProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
+<%@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %>
 <%@ page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
@@ -84,5 +85,22 @@ boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
 boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
+String[] mimeTypes = StringUtil.split(PrefsParamUtil.getString(preferences, request, "mimeTypes", _defaultMimeTypes));
+
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+%>
+
+<%!
+private static Set<String> _allMimeTypes;
+private static String _defaultMimeTypes;
+
+static {
+	_allMimeTypes = new LinkedHashSet<String>();
+
+	_allMimeTypes.addAll(VideoProcessor.getVideoMimeTypes());
+	_allMimeTypes.addAll(ImageProcessor.getImageMimeTypes());
+	_allMimeTypes.addAll(AudioProcessor.getAudioMimeTypes());
+
+	_defaultMimeTypes = StringUtil.merge(_allMimeTypes.toArray(new String[_allMimeTypes.size()]));
+}
 %>

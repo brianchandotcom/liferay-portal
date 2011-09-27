@@ -96,6 +96,13 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetVocabulary"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetVocabulary"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long NAME_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -139,14 +146,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return AssetVocabulary.class;
-	}
-
-	public String getModelClassName() {
-		return AssetVocabulary.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.asset.model.AssetVocabulary"));
 
@@ -167,6 +166,14 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return AssetVocabulary.class;
+	}
+
+	public String getModelClassName() {
+		return AssetVocabulary.class.getName();
 	}
 
 	@JSON
@@ -206,6 +213,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -225,6 +234,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -298,6 +309,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -505,6 +518,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		_settings = settings;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public AssetVocabulary toEscapedModel() {
 		if (isEscapedModel()) {
@@ -615,6 +632,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		assetVocabularyModelImpl._setOriginalCompanyId = false;
 
 		assetVocabularyModelImpl._originalName = assetVocabularyModelImpl._name;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -816,5 +835,6 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	private String _description;
 	private String _settings;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private AssetVocabulary _escapedModelProxy;
 }

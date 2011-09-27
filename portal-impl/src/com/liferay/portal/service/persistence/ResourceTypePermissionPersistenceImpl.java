@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceTypePermission;
@@ -87,7 +86,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			ResourceTypePermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceTypePermissionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName() },
+			ResourceTypePermissionModelImpl.ROLEID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_ROLEID = new FinderPath(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceTypePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
@@ -110,7 +110,10 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
-			});
+			},
+			ResourceTypePermissionModelImpl.COMPANYID_COLUMN_BITMASK |
+			ResourceTypePermissionModelImpl.NAME_COLUMN_BITMASK |
+			ResourceTypePermissionModelImpl.ROLEID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_R = new FinderPath(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceTypePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_R",
@@ -125,7 +128,11 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Long.class.getName()
-			});
+			},
+			ResourceTypePermissionModelImpl.COMPANYID_COLUMN_BITMASK |
+			ResourceTypePermissionModelImpl.GROUPID_COLUMN_BITMASK |
+			ResourceTypePermissionModelImpl.NAME_COLUMN_BITMASK |
+			ResourceTypePermissionModelImpl.ROLEID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_N_R = new FinderPath(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceTypePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_N_R",
@@ -383,31 +390,34 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !ResourceTypePermissionModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if (resourceTypePermission.getRoleId() != resourceTypePermissionModelImpl.getOriginalRoleId()) {
+			if ((resourceTypePermissionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ROLEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(resourceTypePermissionModelImpl.getOriginalRoleId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROLEID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ROLEID,
-					new Object[] {
-						Long.valueOf(
-							resourceTypePermissionModelImpl.getOriginalRoleId())
-					});
+					args);
 			}
 
-			if ((resourceTypePermission.getCompanyId() != resourceTypePermissionModelImpl.getOriginalCompanyId()) ||
-					!Validator.equals(resourceTypePermission.getName(),
-						resourceTypePermissionModelImpl.getOriginalName()) ||
-					(resourceTypePermission.getRoleId() != resourceTypePermissionModelImpl.getOriginalRoleId())) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_R,
-					new Object[] {
-						Long.valueOf(
-							resourceTypePermissionModelImpl.getOriginalCompanyId()),
+			if ((resourceTypePermissionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(resourceTypePermissionModelImpl.getOriginalCompanyId()),
 						
-					resourceTypePermissionModelImpl.getOriginalName(),
-						Long.valueOf(
-							resourceTypePermissionModelImpl.getOriginalRoleId())
-					});
+						resourceTypePermissionModelImpl.getOriginalName(),
+						Long.valueOf(resourceTypePermissionModelImpl.getOriginalRoleId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_R,
+					args);
 			}
 		}
 
@@ -426,11 +436,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				}, resourceTypePermission);
 		}
 		else {
-			if ((resourceTypePermission.getCompanyId() != resourceTypePermissionModelImpl.getOriginalCompanyId()) ||
-					(resourceTypePermission.getGroupId() != resourceTypePermissionModelImpl.getOriginalGroupId()) ||
-					!Validator.equals(resourceTypePermission.getName(),
-						resourceTypePermissionModelImpl.getOriginalName()) ||
-					(resourceTypePermission.getRoleId() != resourceTypePermissionModelImpl.getOriginalRoleId())) {
+			if ((resourceTypePermissionModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_G_N_R.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_R,
 					new Object[] {
 						Long.valueOf(

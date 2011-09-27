@@ -72,15 +72,11 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ServiceComponent"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ServiceComponent.class;
-	}
-
-	public String getModelClassName() {
-		return ServiceComponent.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.ServiceComponent"),
+			true);
+	public static long BUILDNUMBER_COLUMN_BITMASK = 1L;
+	public static long BUILDNAMESPACE_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.ServiceComponent"));
 
@@ -103,6 +99,14 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ServiceComponent.class;
+	}
+
+	public String getModelClassName() {
+		return ServiceComponent.class.getName();
+	}
+
 	public long getServiceComponentId() {
 		return _serviceComponentId;
 	}
@@ -121,6 +125,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	}
 
 	public void setBuildNamespace(String buildNamespace) {
+		_columnBitmask |= BUILDNAMESPACE_COLUMN_BITMASK;
+
 		if (_originalBuildNamespace == null) {
 			_originalBuildNamespace = _buildNamespace;
 		}
@@ -137,6 +143,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	}
 
 	public void setBuildNumber(long buildNumber) {
+		_columnBitmask |= BUILDNUMBER_COLUMN_BITMASK;
+
 		if (!_setOriginalBuildNumber) {
 			_setOriginalBuildNumber = true;
 
@@ -169,6 +177,10 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	public void setData(String data) {
 		_data = data;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -287,6 +299,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		serviceComponentModelImpl._originalBuildNumber = serviceComponentModelImpl._buildNumber;
 
 		serviceComponentModelImpl._setOriginalBuildNumber = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -383,5 +397,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	private long _buildDate;
 	private String _data;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ServiceComponent _escapedModelProxy;
 }

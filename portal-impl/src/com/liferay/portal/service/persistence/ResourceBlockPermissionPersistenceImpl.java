@@ -87,7 +87,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByResourceBlockId",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName() },
+			ResourceBlockPermissionModelImpl.RESOURCEBLOCKID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_RESOURCEBLOCKID = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -96,7 +97,9 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByR_R",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() },
+			ResourceBlockPermissionModelImpl.RESOURCEBLOCKID_COLUMN_BITMASK |
+			ResourceBlockPermissionModelImpl.ROLEID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_R_R = new FinderPath(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R",
@@ -343,16 +346,21 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !ResourceBlockPermissionModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if (resourceBlockPermission.getResourceBlockId() != resourceBlockPermissionModelImpl.getOriginalResourceBlockId()) {
+			if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(resourceBlockPermissionModelImpl.getOriginalResourceBlockId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
+					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
-					new Object[] {
-						Long.valueOf(
-							resourceBlockPermissionModelImpl.getOriginalResourceBlockId())
-					});
+					args);
 			}
 		}
 
@@ -368,8 +376,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 				}, resourceBlockPermission);
 		}
 		else {
-			if ((resourceBlockPermission.getResourceBlockId() != resourceBlockPermissionModelImpl.getOriginalResourceBlockId()) ||
-					(resourceBlockPermission.getRoleId() != resourceBlockPermissionModelImpl.getOriginalRoleId())) {
+			if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_R_R.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R,
 					new Object[] {
 						Long.valueOf(

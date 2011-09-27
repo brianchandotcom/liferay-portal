@@ -1,3 +1,5 @@
+<#setting number_format = "0">
+
 <#assign parentPKColumn = "">
 
 <#if entity.isHierarchicalTree()>
@@ -176,6 +178,32 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 
 		);
+
+		<#assign columnBitmaskEnabled = true>
+
+		<#if entity.finderColumnsList?size == 0>
+			public static final boolean COLUMN_BITMASK_ENABLED = false;
+
+			<#assign columnBitmaskEnabled = false>
+		</#if>
+
+		<#if entity.finderColumnsList?size &gt; 64>
+			public static final boolean COLUMN_BITMASK_ENABLED = false;
+
+			<#assign columnBitmaskEnabled = false >
+		</#if>
+
+		<#if columnBitmaskEnabled>
+			public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${packagePath}.model.${entity.name}"), true);
+
+			<#assign columnBitmask = 1>
+
+			<#list entity.finderColumnsList as column>
+				public static long ${column.name?upper_case}_COLUMN_BITMASK = ${columnBitmask}L;
+
+				<#assign columnBitmask = columnBitmask * 2 >
+			</#list>
+		</#if>
 	</#if>
 
 	<#if entity.hasRemoteService()>
@@ -211,14 +239,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			return models;
 		}
 	</#if>
-
-	public Class<?> getModelClass() {
-		return ${entity.name}.class;
-	}
-
-	public String getModelClassName() {
-		return ${entity.name}.class.getName();
-	}
 
 	<#list entity.columnList as column>
 		<#if column.mappingTable??>
@@ -327,6 +347,14 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		);
 	}
 
+	public Class<?> getModelClass() {
+		return ${entity.name}.class;
+	}
+
+	public String getModelClassName() {
+		return ${entity.name}.class.getName();
+	}
+
 	<#list entity.regularColList as column>
 		<#if column.name == "classNameId">
 			public String getClassName() {
@@ -432,6 +460,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				_uuid = uuid;
 			<#else>
 				<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
+					<#if columnBitmaskEnabled>
+						_columnBitmask |= ${column.name?upper_case}_COLUMN_BITMASK;
+					</#if>
+
 					<#if column.isPrimitiveType()>
 						if (!_setOriginal${column.methodName}) {
 							_setOriginal${column.methodName} = true;
@@ -561,6 +593,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			else {
 				return false;
 			}
+		}
+	</#if>
+
+	<#if columnBitmaskEnabled>
+		public long getColumnBitmask() {
+			return _columnBitmask;
 		}
 	</#if>
 
@@ -753,6 +791,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				_${column.name}BlobModel = null;
 			</#if>
 		</#list>
+
+		<#if columnBitmaskEnabled>
+			_columnBitmask = 0;
+		</#if>
 	}
 
 	@Override
@@ -852,6 +894,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#if (entity.PKClassName == "long") && !stringUtil.startsWith(entity.name, "Expando")>
 		private transient ExpandoBridge _expandoBridge;
+	</#if>
+
+	<#if columnBitmaskEnabled>
+		private long _columnBitmask;
 	</#if>
 
 	private ${entity.name} _escapedModelProxy;

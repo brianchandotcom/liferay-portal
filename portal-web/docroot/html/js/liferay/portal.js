@@ -6,6 +6,12 @@
 
 	var toCharCode = Liferay.Util.toCharCode;
 
+	var BODY_CONTENT = 'bodyContent';
+
+	var REGION = 'region';
+
+	var TRIGGER = 'trigger';
+
 	Liferay.Portal.Tabs._show = function(event) {
 		var id = event.id;
 		var names = event.names;
@@ -121,8 +127,8 @@
 				instance._cached = cached;
 			}
 
-			var trigger = cached.get('trigger');
-			var bodyContent = cached.get('bodyContent');
+			var trigger = cached.get(TRIGGER);
+			var bodyContent = cached.get(BODY_CONTENT);
 
 			var newElement = (trigger.indexOf(obj) == -1);
 
@@ -133,13 +139,24 @@
 			}
 
 			if (newElement || (bodyContent != text)) {
-				cached.set('trigger', obj);
-				cached.set('bodyContent', text);
+				cached.set(TRIGGER, obj);
+				cached.set(BODY_CONTENT, text);
+
+				trigger = obj;
 
 				cached.show();
 			}
 
-			cached.refreshAlign();
+			var tooltipHeight = cached.get('boundingBox').outerHeight(true);
+
+			var triggerTop = cached.get('currentNode').getY();
+
+			if (triggerTop - tooltipHeight < 0) {
+				cached.align(trigger, ['tl', 'bl']);
+			}
+			else {
+				cached.refreshAlign();
+			}
 		},
 		['aui-tooltip']
 	);

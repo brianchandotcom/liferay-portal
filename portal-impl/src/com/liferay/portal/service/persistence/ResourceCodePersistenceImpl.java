@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceCode;
@@ -86,7 +85,8 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 		new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, ResourceCodeImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName() },
+			ResourceCodeModelImpl.COMPANYID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
@@ -103,7 +103,8 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, ResourceCodeImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
-			new String[] { String.class.getName() });
+			new String[] { String.class.getName() },
+			ResourceCodeModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
@@ -114,7 +115,10 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
-			});
+			},
+			ResourceCodeModelImpl.COMPANYID_COLUMN_BITMASK |
+			ResourceCodeModelImpl.NAME_COLUMN_BITMASK |
+			ResourceCodeModelImpl.SCOPE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_S = new FinderPath(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceCodeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_S",
@@ -357,22 +361,32 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !ResourceCodeModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if (resourceCode.getCompanyId() != resourceCodeModelImpl.getOriginalCompanyId()) {
+			if ((resourceCodeModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(resourceCodeModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
-					new Object[] {
-						Long.valueOf(
-							resourceCodeModelImpl.getOriginalCompanyId())
-					});
+					args);
 			}
 
-			if (!Validator.equals(resourceCode.getName(),
-						resourceCodeModelImpl.getOriginalName())) {
+			if ((resourceCodeModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						resourceCodeModelImpl.getOriginalName()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
-					new Object[] { resourceCodeModelImpl.getOriginalName() });
+					args);
 			}
 		}
 
@@ -388,10 +402,8 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 				}, resourceCode);
 		}
 		else {
-			if ((resourceCode.getCompanyId() != resourceCodeModelImpl.getOriginalCompanyId()) ||
-					!Validator.equals(resourceCode.getName(),
-						resourceCodeModelImpl.getOriginalName()) ||
-					(resourceCode.getScope() != resourceCodeModelImpl.getOriginalScope())) {
+			if ((resourceCodeModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_N_S.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S,
 					new Object[] {
 						Long.valueOf(

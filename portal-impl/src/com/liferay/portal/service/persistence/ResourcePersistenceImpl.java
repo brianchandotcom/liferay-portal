@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Resource;
@@ -85,7 +84,8 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 		new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceModelImpl.FINDER_CACHE_ENABLED, ResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCodeId",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName() },
+			ResourceModelImpl.CODEID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_CODEID = new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCodeId",
@@ -93,7 +93,9 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_P = new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceModelImpl.FINDER_CACHE_ENABLED, ResourceImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
-			new String[] { Long.class.getName(), String.class.getName() });
+			new String[] { Long.class.getName(), String.class.getName() },
+			ResourceModelImpl.CODEID_COLUMN_BITMASK |
+			ResourceModelImpl.PRIMKEY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_P = new FinderPath(ResourceModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
@@ -329,15 +331,20 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !ResourceModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if (resource.getCodeId() != resourceModelImpl.getOriginalCodeId()) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CODEID,
-					new Object[] {
+			if ((resourceModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CODEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
 						Long.valueOf(resourceModelImpl.getOriginalCodeId())
-					});
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CODEID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CODEID,
+					args);
 			}
 		}
 
@@ -353,9 +360,8 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 				}, resource);
 		}
 		else {
-			if ((resource.getCodeId() != resourceModelImpl.getOriginalCodeId()) ||
-					!Validator.equals(resource.getPrimKey(),
-						resourceModelImpl.getOriginalPrimKey())) {
+			if ((resourceModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
 					new Object[] {
 						Long.valueOf(resourceModelImpl.getOriginalCodeId()),

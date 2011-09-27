@@ -69,15 +69,12 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourceCode"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ResourceCode.class;
-	}
-
-	public String getModelClassName() {
-		return ResourceCode.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.ResourceCode"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long SCOPE_COLUMN_BITMASK = 2L;
+	public static long NAME_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.ResourceCode"));
 
@@ -100,6 +97,14 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ResourceCode.class;
+	}
+
+	public String getModelClassName() {
+		return ResourceCode.class.getName();
+	}
+
 	public long getCodeId() {
 		return _codeId;
 	}
@@ -113,6 +118,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -136,6 +143,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -152,6 +161,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	}
 
 	public void setScope(int scope) {
+		_columnBitmask |= SCOPE_COLUMN_BITMASK;
+
 		if (!_setOriginalScope) {
 			_setOriginalScope = true;
 
@@ -163,6 +174,10 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 
 	public int getOriginalScope() {
 		return _originalScope;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -267,6 +282,8 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 		resourceCodeModelImpl._originalScope = resourceCodeModelImpl._scope;
 
 		resourceCodeModelImpl._setOriginalScope = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -350,5 +367,6 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 	private int _originalScope;
 	private boolean _setOriginalScope;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ResourceCode _escapedModelProxy;
 }

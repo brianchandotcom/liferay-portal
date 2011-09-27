@@ -75,6 +75,11 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Permission"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Permission"),
+			true);
+	public static long ACTIONID_COLUMN_BITMASK = 1L;
+	public static long RESOURCEID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -107,14 +112,6 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 		}
 
 		return models;
-	}
-
-	public Class<?> getModelClass() {
-		return Permission.class;
-	}
-
-	public String getModelClassName() {
-		return Permission.class.getName();
 	}
 
 	public static final String MAPPING_TABLE_GROUPS_PERMISSIONS_NAME = "Groups_Permissions";
@@ -163,6 +160,14 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return Permission.class;
+	}
+
+	public String getModelClassName() {
+		return Permission.class.getName();
+	}
+
 	@JSON
 	public long getPermissionId() {
 		return _permissionId;
@@ -192,6 +197,8 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 	}
 
 	public void setActionId(String actionId) {
+		_columnBitmask |= ACTIONID_COLUMN_BITMASK;
+
 		if (_originalActionId == null) {
 			_originalActionId = _actionId;
 		}
@@ -209,6 +216,8 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 	}
 
 	public void setResourceId(long resourceId) {
+		_columnBitmask |= RESOURCEID_COLUMN_BITMASK;
+
 		if (!_setOriginalResourceId) {
 			_setOriginalResourceId = true;
 
@@ -220,6 +229,10 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 
 	public long getOriginalResourceId() {
 		return _originalResourceId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -320,6 +333,8 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 		permissionModelImpl._originalResourceId = permissionModelImpl._resourceId;
 
 		permissionModelImpl._setOriginalResourceId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -401,5 +416,6 @@ public class PermissionModelImpl extends BaseModelImpl<Permission>
 	private long _originalResourceId;
 	private boolean _setOriginalResourceId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Permission _escapedModelProxy;
 }

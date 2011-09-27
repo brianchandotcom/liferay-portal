@@ -69,15 +69,10 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.BrowserTracker"),
 			true);
-
-	public Class<?> getModelClass() {
-		return BrowserTracker.class;
-	}
-
-	public String getModelClassName() {
-		return BrowserTracker.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.BrowserTracker"),
+			true);
+	public static long USERID_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.BrowserTracker"));
 
@@ -100,6 +95,14 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return BrowserTracker.class;
+	}
+
+	public String getModelClassName() {
+		return BrowserTracker.class.getName();
+	}
+
 	public long getBrowserTrackerId() {
 		return _browserTrackerId;
 	}
@@ -113,6 +116,8 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -140,6 +145,10 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 	public void setBrowserKey(long browserKey) {
 		_browserKey = browserKey;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -237,6 +246,8 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		browserTrackerModelImpl._originalUserId = browserTrackerModelImpl._userId;
 
 		browserTrackerModelImpl._setOriginalUserId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -303,5 +314,6 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	private boolean _setOriginalUserId;
 	private long _browserKey;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private BrowserTracker _escapedModelProxy;
 }

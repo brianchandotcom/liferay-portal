@@ -26,31 +26,56 @@
 <tr>
 	<td>type</td>
 	<td>//input[@title='Search Documents']</td>
-	<td>"Test1 Document1"</td>
+	<td>"DL Folder Document Title"</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Test1 Document1.txt</td>
-	<td>Test1 Document1.txt</td>
+	<td>waitForText</td>
+	<td>//td[2]/a</td>
+	<td>DL Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>DL Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>DL Folder Document Title</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@title='Search Documents']</td>
-	<td>"Test2 Document2"</td>
+	<td>"DL2 Folder2 Document2 Title2"</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No documents were found that matched the keywords: "DL2 Folder2 Document2 Title2".</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No documents were found that matched the keywords: "DL2 Folder2 Document2 Title2".</td>
+</tr>
+<tr>
 	<td>assertTextNotPresent</td>
-	<td>Test1 Document1</td>
+	<td>DL Folder Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>DL Folder Document Title</td>
 	<td></td>
 </tr>
 

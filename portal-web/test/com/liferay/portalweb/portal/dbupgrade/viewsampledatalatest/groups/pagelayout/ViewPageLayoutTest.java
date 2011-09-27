@@ -46,18 +46,14 @@ public class ViewPageLayoutTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first yui3-dd-drop']"));
+				"//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='column-2' and @class='aui-w50 portlet-column portlet-column-last yui3-dd-drop']"));
+				"//div[@id='column-2' and @class='aui-w50 portlet-column portlet-column-last']"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb"),
 			selenium.getText(
 				"//div[@id='layout-column_column-1' and @class='portlet-dropzone portlet-column-content portlet-column-content-first']/div[1]/div[1]/section/header/h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Navigation"),
 			selenium.getText(
 				"//div[@id='layout-column_column-2' and @class='portlet-dropzone portlet-column-content portlet-column-content-last']/div[1]/div[1]/section/header/h1/span[2]"));
-		assertFalse(selenium.isElementPresent(
-				"//div[@id='column-1' and @class='yui3-aui-w30 portlet-column portlet-column-first yui3-aui-dd-drop']"));
-		assertFalse(selenium.isElementPresent(
-				"//div[@id='column-2' and @class='yui3-aui-w70 portlet-column portlet-column-last yui3-aui-dd-drop']"));
 	}
 }

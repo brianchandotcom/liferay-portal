@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -92,7 +91,8 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED,
 			SocialEquityLogImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName() },
+			SocialEquityLogModelImpl.USERID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
@@ -116,7 +116,10 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			SocialEquityLogModelImpl.ASSETENTRYID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.TYPE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIVE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_AEI_T_A = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAEI_T_A",
@@ -144,7 +147,11 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName(), String.class.getName()
-			});
+			},
+			SocialEquityLogModelImpl.ASSETENTRYID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIONID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIVE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.EXTRADATA_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_AEI_AID_A_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAEI_AID_A_E",
@@ -174,7 +181,12 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Boolean.class.getName(),
 				String.class.getName()
-			});
+			},
+			SocialEquityLogModelImpl.USERID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ASSETENTRYID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIONID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIVE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.EXTRADATA_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_AEI_AID_A_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_AEI_AID_A_E",
@@ -205,7 +217,13 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), String.class.getName()
-			});
+			},
+			SocialEquityLogModelImpl.USERID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIONID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIONDATE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIVE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.TYPE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.EXTRADATA_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_AID_AD_A_T_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_AID_AD_A_T_E",
@@ -237,7 +255,13 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), String.class.getName()
-			});
+			},
+			SocialEquityLogModelImpl.ASSETENTRYID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIONID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIONDATE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIVE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.TYPE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.EXTRADATA_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_AEI_AID_AD_A_T_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -256,7 +280,14 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				String.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				String.class.getName()
-			});
+			},
+			SocialEquityLogModelImpl.USERID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ASSETENTRYID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIONID_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIONDATE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.ACTIVE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.TYPE_COLUMN_BITMASK |
+			SocialEquityLogModelImpl.EXTRADATA_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_U_AEI_AID_AD_A_T_E = new FinderPath(SocialEquityLogModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -523,121 +554,106 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !SocialEquityLogModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if (socialEquityLog.getUserId() != socialEquityLogModelImpl.getOriginalUserId()) {
+			if ((socialEquityLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
-					new Object[] {
-						Long.valueOf(
-							socialEquityLogModelImpl.getOriginalUserId())
-					});
+					args);
 			}
 
-			if ((socialEquityLog.getAssetEntryId() != socialEquityLogModelImpl.getOriginalAssetEntryId()) ||
-					(socialEquityLog.getType() != socialEquityLogModelImpl.getOriginalType()) ||
-					(socialEquityLog.getActive() != socialEquityLogModelImpl.getOriginalActive())) {
+			if ((socialEquityLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_T_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getOriginalAssetEntryId()),
+						Integer.valueOf(socialEquityLogModelImpl.getOriginalType()),
+						Boolean.valueOf(socialEquityLogModelImpl.getOriginalActive())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AEI_T_A, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_T_A,
-					new Object[] {
-						Long.valueOf(
-							socialEquityLogModelImpl.getOriginalAssetEntryId()),
-						Integer.valueOf(
-							socialEquityLogModelImpl.getOriginalType()),
-						Boolean.valueOf(
-							socialEquityLogModelImpl.getOriginalActive())
-					});
+					args);
 			}
 
-			if ((socialEquityLog.getAssetEntryId() != socialEquityLogModelImpl.getOriginalAssetEntryId()) ||
-					!Validator.equals(socialEquityLog.getActionId(),
-						socialEquityLogModelImpl.getOriginalActionId()) ||
-					(socialEquityLog.getActive() != socialEquityLogModelImpl.getOriginalActive()) ||
-					!Validator.equals(socialEquityLog.getExtraData(),
-						socialEquityLogModelImpl.getOriginalExtraData())) {
+			if ((socialEquityLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_AID_A_E.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getOriginalAssetEntryId()),
+						
+						socialEquityLogModelImpl.getOriginalActionId(),
+						Boolean.valueOf(socialEquityLogModelImpl.getOriginalActive()),
+						
+						socialEquityLogModelImpl.getOriginalExtraData()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AEI_AID_A_E,
+					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_AID_A_E,
-					new Object[] {
-						Long.valueOf(
-							socialEquityLogModelImpl.getOriginalAssetEntryId()),
-						
-					socialEquityLogModelImpl.getOriginalActionId(),
-						Boolean.valueOf(
-							socialEquityLogModelImpl.getOriginalActive()),
-						
-					socialEquityLogModelImpl.getOriginalExtraData()
-					});
+					args);
 			}
 
-			if ((socialEquityLog.getUserId() != socialEquityLogModelImpl.getOriginalUserId()) ||
-					(socialEquityLog.getAssetEntryId() != socialEquityLogModelImpl.getOriginalAssetEntryId()) ||
-					!Validator.equals(socialEquityLog.getActionId(),
-						socialEquityLogModelImpl.getOriginalActionId()) ||
-					(socialEquityLog.getActive() != socialEquityLogModelImpl.getOriginalActive()) ||
-					!Validator.equals(socialEquityLog.getExtraData(),
-						socialEquityLogModelImpl.getOriginalExtraData())) {
+			if ((socialEquityLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_AEI_AID_A_E.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getOriginalUserId()),
+						Long.valueOf(socialEquityLogModelImpl.getOriginalAssetEntryId()),
+						
+						socialEquityLogModelImpl.getOriginalActionId(),
+						Boolean.valueOf(socialEquityLogModelImpl.getOriginalActive()),
+						
+						socialEquityLogModelImpl.getOriginalExtraData()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_AEI_AID_A_E,
+					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_AEI_AID_A_E,
-					new Object[] {
-						Long.valueOf(
-							socialEquityLogModelImpl.getOriginalUserId()),
-						Long.valueOf(
-							socialEquityLogModelImpl.getOriginalAssetEntryId()),
-						
-					socialEquityLogModelImpl.getOriginalActionId(),
-						Boolean.valueOf(
-							socialEquityLogModelImpl.getOriginalActive()),
-						
-					socialEquityLogModelImpl.getOriginalExtraData()
-					});
+					args);
 			}
 
-			if ((socialEquityLog.getUserId() != socialEquityLogModelImpl.getOriginalUserId()) ||
-					!Validator.equals(socialEquityLog.getActionId(),
-						socialEquityLogModelImpl.getOriginalActionId()) ||
-					(socialEquityLog.getActionDate() != socialEquityLogModelImpl.getOriginalActionDate()) ||
-					(socialEquityLog.getActive() != socialEquityLogModelImpl.getOriginalActive()) ||
-					(socialEquityLog.getType() != socialEquityLogModelImpl.getOriginalType()) ||
-					!Validator.equals(socialEquityLog.getExtraData(),
-						socialEquityLogModelImpl.getOriginalExtraData())) {
+			if ((socialEquityLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_AID_AD_A_T_E.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getOriginalUserId()),
+						
+						socialEquityLogModelImpl.getOriginalActionId(),
+						Integer.valueOf(socialEquityLogModelImpl.getOriginalActionDate()),
+						Boolean.valueOf(socialEquityLogModelImpl.getOriginalActive()),
+						Integer.valueOf(socialEquityLogModelImpl.getOriginalType()),
+						
+						socialEquityLogModelImpl.getOriginalExtraData()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_AID_AD_A_T_E,
+					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_AID_AD_A_T_E,
-					new Object[] {
-						Long.valueOf(
-							socialEquityLogModelImpl.getOriginalUserId()),
-						
-					socialEquityLogModelImpl.getOriginalActionId(),
-						Integer.valueOf(
-							socialEquityLogModelImpl.getOriginalActionDate()),
-						Boolean.valueOf(
-							socialEquityLogModelImpl.getOriginalActive()),
-						Integer.valueOf(
-							socialEquityLogModelImpl.getOriginalType()),
-						
-					socialEquityLogModelImpl.getOriginalExtraData()
-					});
+					args);
 			}
 
-			if ((socialEquityLog.getAssetEntryId() != socialEquityLogModelImpl.getOriginalAssetEntryId()) ||
-					!Validator.equals(socialEquityLog.getActionId(),
-						socialEquityLogModelImpl.getOriginalActionId()) ||
-					(socialEquityLog.getActionDate() != socialEquityLogModelImpl.getOriginalActionDate()) ||
-					(socialEquityLog.getActive() != socialEquityLogModelImpl.getOriginalActive()) ||
-					(socialEquityLog.getType() != socialEquityLogModelImpl.getOriginalType()) ||
-					!Validator.equals(socialEquityLog.getExtraData(),
-						socialEquityLogModelImpl.getOriginalExtraData())) {
+			if ((socialEquityLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_AID_AD_A_T_E.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getOriginalAssetEntryId()),
+						
+						socialEquityLogModelImpl.getOriginalActionId(),
+						Integer.valueOf(socialEquityLogModelImpl.getOriginalActionDate()),
+						Boolean.valueOf(socialEquityLogModelImpl.getOriginalActive()),
+						Integer.valueOf(socialEquityLogModelImpl.getOriginalType()),
+						
+						socialEquityLogModelImpl.getOriginalExtraData()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AEI_AID_AD_A_T_E,
+					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_AID_AD_A_T_E,
-					new Object[] {
-						Long.valueOf(
-							socialEquityLogModelImpl.getOriginalAssetEntryId()),
-						
-					socialEquityLogModelImpl.getOriginalActionId(),
-						Integer.valueOf(
-							socialEquityLogModelImpl.getOriginalActionDate()),
-						Boolean.valueOf(
-							socialEquityLogModelImpl.getOriginalActive()),
-						Integer.valueOf(
-							socialEquityLogModelImpl.getOriginalType()),
-						
-					socialEquityLogModelImpl.getOriginalExtraData()
-					});
+					args);
 			}
 		}
 
@@ -660,15 +676,8 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				}, socialEquityLog);
 		}
 		else {
-			if ((socialEquityLog.getUserId() != socialEquityLogModelImpl.getOriginalUserId()) ||
-					(socialEquityLog.getAssetEntryId() != socialEquityLogModelImpl.getOriginalAssetEntryId()) ||
-					!Validator.equals(socialEquityLog.getActionId(),
-						socialEquityLogModelImpl.getOriginalActionId()) ||
-					(socialEquityLog.getActionDate() != socialEquityLogModelImpl.getOriginalActionDate()) ||
-					(socialEquityLog.getActive() != socialEquityLogModelImpl.getOriginalActive()) ||
-					(socialEquityLog.getType() != socialEquityLogModelImpl.getOriginalType()) ||
-					!Validator.equals(socialEquityLog.getExtraData(),
-						socialEquityLogModelImpl.getOriginalExtraData())) {
+			if ((socialEquityLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_U_AEI_AID_AD_A_T_E.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_AEI_AID_AD_A_T_E,
 					new Object[] {
 						Long.valueOf(

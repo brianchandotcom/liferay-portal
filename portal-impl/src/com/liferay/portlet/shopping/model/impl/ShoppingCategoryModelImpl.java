@@ -87,6 +87,11 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingCategory"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingCategory"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long PARENTCATEGORYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -128,14 +133,6 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return ShoppingCategory.class;
-	}
-
-	public String getModelClassName() {
-		return ShoppingCategory.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingCategory"));
 
@@ -158,6 +155,14 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ShoppingCategory.class;
+	}
+
+	public String getModelClassName() {
+		return ShoppingCategory.class.getName();
+	}
+
 	@JSON
 	public long getCategoryId() {
 		return _categoryId;
@@ -173,6 +178,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -250,6 +257,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	}
 
 	public void setParentCategoryId(long parentCategoryId) {
+		_columnBitmask |= PARENTCATEGORYID_COLUMN_BITMASK;
+
 		if (!_setOriginalParentCategoryId) {
 			_setOriginalParentCategoryId = true;
 
@@ -289,6 +298,10 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 	public void setDescription(String description) {
 		_description = description;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -410,6 +423,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		shoppingCategoryModelImpl._originalParentCategoryId = shoppingCategoryModelImpl._parentCategoryId;
 
 		shoppingCategoryModelImpl._setOriginalParentCategoryId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -573,5 +588,6 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	private String _name;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ShoppingCategory _escapedModelProxy;
 }

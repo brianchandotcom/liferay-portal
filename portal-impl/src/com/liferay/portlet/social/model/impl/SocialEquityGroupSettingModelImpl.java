@@ -73,15 +73,12 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialEquityGroupSetting"),
 			true);
-
-	public Class<?> getModelClass() {
-		return SocialEquityGroupSetting.class;
-	}
-
-	public String getModelClassName() {
-		return SocialEquityGroupSetting.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialEquityGroupSetting"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static long TYPE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialEquityGroupSetting"));
 
@@ -104,6 +101,14 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return SocialEquityGroupSetting.class;
+	}
+
+	public String getModelClassName() {
+		return SocialEquityGroupSetting.class.getName();
+	}
+
 	public long getEquityGroupSettingId() {
 		return _equityGroupSettingId;
 	}
@@ -117,6 +122,8 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -151,6 +158,8 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -169,6 +178,8 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	}
 
 	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -192,6 +203,10 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 
 	public void setEnabled(boolean enabled) {
 		_enabled = enabled;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -300,6 +315,8 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 		socialEquityGroupSettingModelImpl._originalType = socialEquityGroupSettingModelImpl._type;
 
 		socialEquityGroupSettingModelImpl._setOriginalType = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -396,5 +413,6 @@ public class SocialEquityGroupSettingModelImpl extends BaseModelImpl<SocialEquit
 	private boolean _setOriginalType;
 	private boolean _enabled;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private SocialEquityGroupSetting _escapedModelProxy;
 }

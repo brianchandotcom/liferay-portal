@@ -69,15 +69,12 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Shard"),
 			true);
-
-	public Class<?> getModelClass() {
-		return Shard.class;
-	}
-
-	public String getModelClassName() {
-		return Shard.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Shard"),
+			true);
+	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static long CLASSPK_COLUMN_BITMASK = 2L;
+	public static long NAME_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Shard"));
 
@@ -98,6 +95,14 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return Shard.class;
+	}
+
+	public String getModelClassName() {
+		return Shard.class.getName();
 	}
 
 	public long getShardId() {
@@ -121,6 +126,8 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -139,6 +146,8 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -162,6 +171,8 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -171,6 +182,10 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 
 	public String getOriginalName() {
 		return GetterUtil.getString(_originalName);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -275,6 +290,8 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		shardModelImpl._setOriginalClassPK = false;
 
 		shardModelImpl._originalName = shardModelImpl._name;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -358,5 +375,6 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	private String _name;
 	private String _originalName;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Shard _escapedModelProxy;
 }

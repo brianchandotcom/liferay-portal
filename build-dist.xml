@@ -1128,11 +1128,9 @@ release was successful.</echo>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
-				<get
-					dest="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
-					src="${app.server.weblogic.zip.url}"
-					verbose="true"
-				/>
+				<echo>Please download the WebLogic zip file from ${app.server.weblogic.zip.url} and
+place it here: ${app.server.parent.dir}/${app.server.weblogic.zip.name}. Then
+rerun this task.</echo>
 			</then>
 		</if>
 
@@ -1194,7 +1192,7 @@ set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
 
 				<echo file="${app.server.weblogic.instance.dir}/run.bat">@echo off
 
-set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=256m"
+set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=512m"
 
 set "MW_HOME=${app.server.weblogic.dir}"
 
@@ -1231,7 +1229,7 @@ ${env.JAVA_HOME}/bin/java weblogic.WLST create-weblogic-domain.py</echo>
 
 				<echo file="${app.server.weblogic.instance.dir}/run.sh">#!/bin/sh
 
-export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=256m"
+export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=512m"
 
 export MW_HOME="${app.server.weblogic.dir}"
 

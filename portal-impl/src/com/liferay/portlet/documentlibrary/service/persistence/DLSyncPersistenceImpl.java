@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -81,7 +80,8 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	public static final FinderPath FINDER_PATH_FETCH_BY_FILEID = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, DLSyncImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByFileId",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName() },
+			DLSyncModelImpl.FILEID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_FILEID = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileId",
@@ -100,7 +100,10 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_M_R",
 			new String[] {
 				Long.class.getName(), Date.class.getName(), Long.class.getName()
-			});
+			},
+			DLSyncModelImpl.COMPANYID_COLUMN_BITMASK |
+			DLSyncModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			DLSyncModelImpl.REPOSITORYID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_M_R = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M_R",
@@ -327,21 +330,23 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !DLSyncModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if ((dlSync.getCompanyId() != dlSyncModelImpl.getOriginalCompanyId()) ||
-					!Validator.equals(dlSync.getModifiedDate(),
-						dlSyncModelImpl.getOriginalModifiedDate()) ||
-					(dlSync.getRepositoryId() != dlSyncModelImpl.getOriginalRepositoryId())) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_M_R,
-					new Object[] {
+			if ((dlSyncModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_M_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
 						Long.valueOf(dlSyncModelImpl.getOriginalCompanyId()),
 						
-					dlSyncModelImpl.getOriginalModifiedDate(),
+						dlSyncModelImpl.getOriginalModifiedDate(),
 						Long.valueOf(dlSyncModelImpl.getOriginalRepositoryId())
-					});
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_M_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_M_R,
+					args);
 			}
 		}
 
@@ -353,7 +358,8 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 				new Object[] { Long.valueOf(dlSync.getFileId()) }, dlSync);
 		}
 		else {
-			if (dlSync.getFileId() != dlSyncModelImpl.getOriginalFileId()) {
+			if ((dlSyncModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_FILEID.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
 					new Object[] {
 						Long.valueOf(dlSyncModelImpl.getOriginalFileId())

@@ -73,15 +73,10 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingItemField"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ShoppingItemField.class;
-	}
-
-	public String getModelClassName() {
-		return ShoppingItemField.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingItemField"),
+			true);
+	public static long ITEMID_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingItemField"));
 
@@ -104,6 +99,14 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ShoppingItemField.class;
+	}
+
+	public String getModelClassName() {
+		return ShoppingItemField.class.getName();
+	}
+
 	public long getItemFieldId() {
 		return _itemFieldId;
 	}
@@ -117,6 +120,8 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	}
 
 	public void setItemId(long itemId) {
+		_columnBitmask |= ITEMID_COLUMN_BITMASK;
+
 		if (!_setOriginalItemId) {
 			_setOriginalItemId = true;
 
@@ -167,6 +172,10 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	public void setDescription(String description) {
 		_description = description;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -279,6 +288,8 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 		shoppingItemFieldModelImpl._originalItemId = shoppingItemFieldModelImpl._itemId;
 
 		shoppingItemFieldModelImpl._setOriginalItemId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -380,5 +391,6 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	private String _values;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ShoppingItemField _escapedModelProxy;
 }

@@ -112,6 +112,20 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.User"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.User"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long FACEBOOKID_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 4L;
+	public static long PORTRAITID_COLUMN_BITMASK = 8L;
+	public static long EMAILADDRESS_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
+	public static long SCREENNAME_COLUMN_BITMASK = 64L;
+	public static long CONTACTID_COLUMN_BITMASK = 128L;
+	public static long STATUS_COLUMN_BITMASK = 256L;
+	public static long DEFAULTUSER_COLUMN_BITMASK = 512L;
+	public static long OPENID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -179,14 +193,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		return models;
-	}
-
-	public Class<?> getModelClass() {
-		return User.class;
-	}
-
-	public String getModelClassName() {
-		return User.class.getName();
 	}
 
 	public static final String MAPPING_TABLE_USERS_GROUPS_NAME = "Users_Groups";
@@ -259,6 +265,14 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return User.class;
+	}
+
+	public String getModelClassName() {
+		return User.class.getName();
+	}
+
 	@JSON
 	public String getUuid() {
 		if (_uuid == null) {
@@ -287,6 +301,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -314,6 +330,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -355,6 +373,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setDefaultUser(boolean defaultUser) {
+		_columnBitmask |= DEFAULTUSER_COLUMN_BITMASK;
+
 		if (!_setOriginalDefaultUser) {
 			_setOriginalDefaultUser = true;
 
@@ -374,6 +394,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setContactId(long contactId) {
+		_columnBitmask |= CONTACTID_COLUMN_BITMASK;
+
 		if (!_setOriginalContactId) {
 			_setOriginalContactId = true;
 
@@ -498,6 +520,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setScreenName(String screenName) {
+		_columnBitmask |= SCREENNAME_COLUMN_BITMASK;
+
 		if (_originalScreenName == null) {
 			_originalScreenName = _screenName;
 		}
@@ -520,6 +544,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setEmailAddress(String emailAddress) {
+		_columnBitmask |= EMAILADDRESS_COLUMN_BITMASK;
+
 		if (_originalEmailAddress == null) {
 			_originalEmailAddress = _emailAddress;
 		}
@@ -537,6 +563,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setFacebookId(long facebookId) {
+		_columnBitmask |= FACEBOOKID_COLUMN_BITMASK;
+
 		if (!_setOriginalFacebookId) {
 			_setOriginalFacebookId = true;
 
@@ -561,6 +589,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setOpenId(String openId) {
+		_columnBitmask |= OPENID_COLUMN_BITMASK;
+
 		if (_originalOpenId == null) {
 			_originalOpenId = _openId;
 		}
@@ -578,6 +608,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setPortraitId(long portraitId) {
+		_columnBitmask |= PORTRAITID_COLUMN_BITMASK;
+
 		if (!_setOriginalPortraitId) {
 			_setOriginalPortraitId = true;
 
@@ -821,6 +853,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
 		if (!_setOriginalStatus) {
 			_setOriginalStatus = true;
 
@@ -832,6 +866,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public int getOriginalStatus() {
 		return _originalStatus;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -997,6 +1035,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userModelImpl._originalStatus = userModelImpl._status;
 
 		userModelImpl._setOriginalStatus = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1562,5 +1602,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private int _originalStatus;
 	private boolean _setOriginalStatus;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private User _escapedModelProxy;
 }

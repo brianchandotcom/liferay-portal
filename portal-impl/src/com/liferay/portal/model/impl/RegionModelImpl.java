@@ -78,6 +78,11 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Region"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Region"),
+			true);
+	public static long ACTIVE_COLUMN_BITMASK = 1L;
+	public static long COUNTRYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -113,14 +118,6 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Region.class;
-	}
-
-	public String getModelClassName() {
-		return Region.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Region"));
 
@@ -143,6 +140,14 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return Region.class;
+	}
+
+	public String getModelClassName() {
+		return Region.class.getName();
+	}
+
 	@JSON
 	public long getRegionId() {
 		return _regionId;
@@ -158,6 +163,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	}
 
 	public void setCountryId(long countryId) {
+		_columnBitmask |= COUNTRYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCountryId) {
 			_setOriginalCountryId = true;
 
@@ -209,6 +216,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	}
 
 	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
 		if (!_setOriginalActive) {
 			_setOriginalActive = true;
 
@@ -220,6 +229,10 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	public boolean getOriginalActive() {
 		return _originalActive;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -321,6 +334,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		regionModelImpl._originalActive = regionModelImpl._active;
 
 		regionModelImpl._setOriginalActive = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -418,5 +433,6 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Region _escapedModelProxy;
 }

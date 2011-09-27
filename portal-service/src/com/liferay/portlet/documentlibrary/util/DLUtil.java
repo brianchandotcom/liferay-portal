@@ -376,12 +376,12 @@ public class DLUtil {
 			orderByComparator = new RepositoryModelCreateDateComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("modifiedDate")) {
-			orderByComparator = new RepositoryModelModifiedDateComparator(
+		else if (orderByCol.equals("downloads")) {
+			orderByComparator = new RepositoryModelReadCountComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("readCount")) {
-			orderByComparator = new RepositoryModelReadCountComparator(
+		else if (orderByCol.equals("modifiedDate")) {
+			orderByComparator = new RepositoryModelModifiedDateComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("size")) {

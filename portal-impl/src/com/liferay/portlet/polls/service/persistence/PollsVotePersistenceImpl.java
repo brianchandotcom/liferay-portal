@@ -89,7 +89,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByQuestionId",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName() },
+			PollsVoteModelImpl.QUESTIONID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_QUESTIONID = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByQuestionId",
@@ -107,7 +108,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByChoiceId",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName() },
+			PollsVoteModelImpl.CHOICEID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_CHOICEID = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByChoiceId",
@@ -115,7 +117,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public static final FinderPath FINDER_PATH_FETCH_BY_Q_U = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByQ_U",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() },
+			PollsVoteModelImpl.QUESTIONID_COLUMN_BITMASK |
+			PollsVoteModelImpl.USERID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_Q_U = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByQ_U",
@@ -350,22 +354,32 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !PollsVoteModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if (pollsVote.getQuestionId() != pollsVoteModelImpl.getOriginalQuestionId()) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID,
-					new Object[] {
+			if ((pollsVoteModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
 						Long.valueOf(pollsVoteModelImpl.getOriginalQuestionId())
-					});
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_QUESTIONID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID,
+					args);
 			}
 
-			if (pollsVote.getChoiceId() != pollsVoteModelImpl.getOriginalChoiceId()) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID,
-					new Object[] {
+			if ((pollsVoteModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
 						Long.valueOf(pollsVoteModelImpl.getOriginalChoiceId())
-					});
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CHOICEID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID,
+					args);
 			}
 		}
 
@@ -380,8 +394,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				}, pollsVote);
 		}
 		else {
-			if ((pollsVote.getQuestionId() != pollsVoteModelImpl.getOriginalQuestionId()) ||
-					(pollsVote.getUserId() != pollsVoteModelImpl.getOriginalUserId())) {
+			if ((pollsVoteModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_Q_U.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U,
 					new Object[] {
 						Long.valueOf(pollsVoteModelImpl.getOriginalQuestionId()),

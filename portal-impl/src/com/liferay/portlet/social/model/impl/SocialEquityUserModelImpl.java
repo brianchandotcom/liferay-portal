@@ -76,15 +76,12 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialEquityUser"),
 			true);
-
-	public Class<?> getModelClass() {
-		return SocialEquityUser.class;
-	}
-
-	public String getModelClassName() {
-		return SocialEquityUser.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialEquityUser"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long RANK_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialEquityUser"));
 
@@ -105,6 +102,14 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return SocialEquityUser.class;
+	}
+
+	public String getModelClassName() {
+		return SocialEquityUser.class.getName();
 	}
 
 	public long getEquityUserId() {
@@ -129,6 +134,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -155,6 +162,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -213,6 +222,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	}
 
 	public void setRank(int rank) {
+		_columnBitmask |= RANK_COLUMN_BITMASK;
+
 		if (!_setOriginalRank) {
 			_setOriginalRank = true;
 
@@ -224,6 +235,10 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	public int getOriginalRank() {
 		return _originalRank;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -335,6 +350,8 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 		socialEquityUserModelImpl._originalRank = socialEquityUserModelImpl._rank;
 
 		socialEquityUserModelImpl._setOriginalRank = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -460,5 +477,6 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 	private int _originalRank;
 	private boolean _setOriginalRank;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private SocialEquityUser _escapedModelProxy;
 }

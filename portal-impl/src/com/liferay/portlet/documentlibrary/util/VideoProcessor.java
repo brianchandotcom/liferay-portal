@@ -86,6 +86,10 @@ public class VideoProcessor extends DLPreviewableProcessor {
 		return _instance.doGetThumbnailFileSize(fileVersion);
 	}
 
+	public static Set<String> getVideoMimeTypes() {
+		return _videoMimeTypes;
+	}
+
 	public static boolean hasVideo(FileEntry fileEntry, String version) {
 		boolean hasVideo = false;
 

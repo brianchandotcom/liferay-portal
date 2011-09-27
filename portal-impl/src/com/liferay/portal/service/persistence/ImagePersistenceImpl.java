@@ -86,7 +86,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		new FinderPath(ImageModelImpl.ENTITY_CACHE_ENABLED,
 			ImageModelImpl.FINDER_CACHE_ENABLED, ImageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLtSize",
-			new String[] { Integer.class.getName() });
+			new String[] { Integer.class.getName() },
+			ImageModelImpl.SIZE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_LTSIZE = new FinderPath(ImageModelImpl.ENTITY_CACHE_ENABLED,
 			ImageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLtSize",
@@ -298,15 +299,20 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !ImageModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if (image.getSize() != imageModelImpl.getOriginalSize()) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTSIZE,
-					new Object[] {
+			if ((imageModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTSIZE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
 						Integer.valueOf(imageModelImpl.getOriginalSize())
-					});
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTSIZE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTSIZE,
+					args);
 			}
 		}
 

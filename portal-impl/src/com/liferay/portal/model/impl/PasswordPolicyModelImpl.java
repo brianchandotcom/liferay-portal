@@ -106,6 +106,12 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PasswordPolicy"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.PasswordPolicy"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long NAME_COLUMN_BITMASK = 2L;
+	public static long DEFAULTPOLICY_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -168,14 +174,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return PasswordPolicy.class;
-	}
-
-	public String getModelClassName() {
-		return PasswordPolicy.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.PasswordPolicy"));
 
@@ -198,6 +196,14 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return PasswordPolicy.class;
+	}
+
+	public String getModelClassName() {
+		return PasswordPolicy.class.getName();
+	}
+
 	@JSON
 	public long getPasswordPolicyId() {
 		return _passwordPolicyId;
@@ -213,6 +219,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -285,6 +293,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	public void setDefaultPolicy(boolean defaultPolicy) {
+		_columnBitmask |= DEFAULTPOLICY_COLUMN_BITMASK;
+
 		if (!_setOriginalDefaultPolicy) {
 			_setOriginalDefaultPolicy = true;
 
@@ -309,6 +319,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -573,6 +585,10 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		_resetTicketMaxAge = resetTicketMaxAge;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public PasswordPolicy toEscapedModel() {
 		if (isEscapedModel()) {
@@ -703,6 +719,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		passwordPolicyModelImpl._setOriginalDefaultPolicy = false;
 
 		passwordPolicyModelImpl._originalName = passwordPolicyModelImpl._name;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1065,5 +1083,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	private long _resetFailureCount;
 	private long _resetTicketMaxAge;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private PasswordPolicy _escapedModelProxy;
 }

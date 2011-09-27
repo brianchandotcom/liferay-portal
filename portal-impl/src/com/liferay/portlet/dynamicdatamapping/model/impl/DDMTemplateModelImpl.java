@@ -96,6 +96,14 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long TYPE_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long LANGUAGE_COLUMN_BITMASK = 8L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -140,14 +148,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return DDMTemplate.class;
-	}
-
-	public String getModelClassName() {
-		return DDMTemplate.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"));
 
@@ -168,6 +168,14 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return DDMTemplate.class;
+	}
+
+	public String getModelClassName() {
+		return DDMTemplate.class.getName();
 	}
 
 	@JSON
@@ -207,6 +215,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -284,6 +294,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	}
 
 	public void setStructureId(long structureId) {
+		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
+
 		if (!_setOriginalStructureId) {
 			_setOriginalStructureId = true;
 
@@ -490,6 +502,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	}
 
 	public void setType(String type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
 		if (_originalType == null) {
 			_originalType = _type;
 		}
@@ -512,6 +526,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	}
 
 	public void setLanguage(String language) {
+		_columnBitmask |= LANGUAGE_COLUMN_BITMASK;
+
 		if (_originalLanguage == null) {
 			_originalLanguage = _language;
 		}
@@ -535,6 +551,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	public void setScript(String script) {
 		_script = script;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -653,6 +673,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateModelImpl._originalType = ddmTemplateModelImpl._type;
 
 		ddmTemplateModelImpl._originalLanguage = ddmTemplateModelImpl._language;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -879,5 +901,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private String _originalLanguage;
 	private String _script;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private DDMTemplate _escapedModelProxy;
 }

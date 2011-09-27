@@ -80,6 +80,15 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.expando.model.ExpandoValue"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.expando.model.ExpandoValue"),
+			true);
+	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static long COLUMNID_COLUMN_BITMASK = 2L;
+	public static long ROWID_COLUMN_BITMASK = 4L;
+	public static long DATA_COLUMN_BITMASK = 8L;
+	public static long TABLEID_COLUMN_BITMASK = 16L;
+	public static long CLASSPK_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -118,14 +127,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return ExpandoValue.class;
-	}
-
-	public String getModelClassName() {
-		return ExpandoValue.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.expando.model.ExpandoValue"));
 
@@ -146,6 +147,14 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return ExpandoValue.class;
+	}
+
+	public String getModelClassName() {
+		return ExpandoValue.class.getName();
 	}
 
 	@JSON
@@ -172,6 +181,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setTableId(long tableId) {
+		_columnBitmask |= TABLEID_COLUMN_BITMASK;
+
 		if (!_setOriginalTableId) {
 			_setOriginalTableId = true;
 
@@ -191,6 +202,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setColumnId(long columnId) {
+		_columnBitmask |= COLUMNID_COLUMN_BITMASK;
+
 		if (!_setOriginalColumnId) {
 			_setOriginalColumnId = true;
 
@@ -210,6 +223,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setRowId(long rowId) {
+		_columnBitmask |= ROWID_COLUMN_BITMASK;
+
 		if (!_setOriginalRowId) {
 			_setOriginalRowId = true;
 
@@ -237,6 +252,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -256,6 +273,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -280,6 +299,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setData(String data) {
+		_columnBitmask |= DATA_COLUMN_BITMASK;
+
 		if (_originalData == null) {
 			_originalData = _data;
 		}
@@ -289,6 +310,10 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	public String getOriginalData() {
 		return GetterUtil.getString(_originalData);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -428,6 +453,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		expandoValueModelImpl._setOriginalClassPK = false;
 
 		expandoValueModelImpl._originalData = expandoValueModelImpl._data;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -552,5 +579,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	private boolean _setOriginalClassPK;
 	private String _data;
 	private String _originalData;
+	private long _columnBitmask;
 	private ExpandoValue _escapedModelProxy;
 }

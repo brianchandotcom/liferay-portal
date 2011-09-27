@@ -122,7 +122,7 @@
 			</div>
 		</div>
 	</c:when>
-	<c:when test="<%= showTabs && showSubfolders && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
+	<c:when test="<%= showTabs && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
 		<liferay-ui:header
 			title="documents-home"
 		/>

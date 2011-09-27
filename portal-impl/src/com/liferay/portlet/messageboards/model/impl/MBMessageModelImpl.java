@@ -105,6 +105,20 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBMessage"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBMessage"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 4L;
+	public static long THREADID_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
+	public static long ANSWER_COLUMN_BITMASK = 64L;
+	public static long PARENTMESSAGEID_COLUMN_BITMASK = 128L;
+	public static long CLASSPK_COLUMN_BITMASK = 256L;
+	public static long STATUS_COLUMN_BITMASK = 512L;
+	public static long CATEGORYID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -161,14 +175,6 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return MBMessage.class;
-	}
-
-	public String getModelClassName() {
-		return MBMessage.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBMessage"));
 
@@ -189,6 +195,14 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return MBMessage.class;
+	}
+
+	public String getModelClassName() {
+		return MBMessage.class.getName();
 	}
 
 	@JSON
@@ -228,6 +242,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -247,6 +263,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -266,6 +284,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -333,6 +353,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -352,6 +374,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -371,6 +395,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setCategoryId(long categoryId) {
+		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCategoryId) {
 			_setOriginalCategoryId = true;
 
@@ -390,6 +416,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setThreadId(long threadId) {
+		_columnBitmask |= THREADID_COLUMN_BITMASK;
+
 		if (!_setOriginalThreadId) {
 			_setOriginalThreadId = true;
 
@@ -418,6 +446,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setParentMessageId(long parentMessageId) {
+		_columnBitmask |= PARENTMESSAGEID_COLUMN_BITMASK;
+
 		if (!_setOriginalParentMessageId) {
 			_setOriginalParentMessageId = true;
 
@@ -531,6 +561,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setAnswer(boolean answer) {
+		_columnBitmask |= ANSWER_COLUMN_BITMASK;
+
 		if (!_setOriginalAnswer) {
 			_setOriginalAnswer = true;
 
@@ -550,6 +582,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
 		if (!_setOriginalStatus) {
 			_setOriginalStatus = true;
 
@@ -645,6 +679,10 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		else {
 			return false;
 		}
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -815,6 +853,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		mbMessageModelImpl._originalStatus = mbMessageModelImpl._status;
 
 		mbMessageModelImpl._setOriginalStatus = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1165,5 +1205,6 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	private String _statusByUserName;
 	private Date _statusDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private MBMessage _escapedModelProxy;
 }

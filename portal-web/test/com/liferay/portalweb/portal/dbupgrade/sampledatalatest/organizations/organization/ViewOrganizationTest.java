@@ -124,49 +124,34 @@ public class ViewOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[1]/span[1]/ul/li/strong/a/span",
-			RuntimeVariables.replace("View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		assertEquals(RuntimeVariables.replace("Search All Users"),
+			selenium.getText("//a[@id='_125_allUsersLink']"));
+		selenium.clickAt("//a[@id='_125_allUsersLink']",
+			RuntimeVariables.replace("Search All Users"));
+		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("All Users"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.type("//input[@name='_125_keywords']",
+			RuntimeVariables.replace("Joe"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Joe"),
 			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[2]"));
+				"//tr[@class='portlet-section-body results-row last']/td[2]"));
 		assertEquals(RuntimeVariables.replace("Bloggs"),
 			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[3]"));
+				"//tr[@class='portlet-section-body results-row last']/td[3]"));
 		assertEquals(RuntimeVariables.replace("joebloggs"),
 			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[4]"));
+				"//tr[@class='portlet-section-body results-row last']/td[4]"));
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[5]"));
+				"//tr[@class='portlet-section-body results-row last']/td[5]"));
 		assertEquals(RuntimeVariables.replace(
 				"Liferay Los Angeles, Liferay, Inc., Organization Sample Test"),
 			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[6]"));
+				"//tr[@class='portlet-section-body results-row last']/td[6]"));
 	}
 }

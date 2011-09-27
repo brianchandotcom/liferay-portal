@@ -77,15 +77,12 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.UserTracker"),
 			true);
-
-	public Class<?> getModelClass() {
-		return UserTracker.class;
-	}
-
-	public String getModelClassName() {
-		return UserTracker.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.UserTracker"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long SESSIONID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserTracker"));
 
@@ -108,6 +105,14 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return UserTracker.class;
+	}
+
+	public String getModelClassName() {
+		return UserTracker.class.getName();
+	}
+
 	public long getUserTrackerId() {
 		return _userTrackerId;
 	}
@@ -121,6 +126,8 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -139,6 +146,8 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -178,6 +187,8 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	public void setSessionId(String sessionId) {
+		_columnBitmask |= SESSIONID_COLUMN_BITMASK;
+
 		if (_originalSessionId == null) {
 			_originalSessionId = _sessionId;
 		}
@@ -226,6 +237,10 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	public void setUserAgent(String userAgent) {
 		_userAgent = userAgent;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -334,6 +349,8 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		userTrackerModelImpl._setOriginalUserId = false;
 
 		userTrackerModelImpl._originalSessionId = userTrackerModelImpl._sessionId;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -479,5 +496,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	private String _remoteHost;
 	private String _userAgent;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private UserTracker _escapedModelProxy;
 }

@@ -96,6 +96,12 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.dynamicdatalists.model.DDLRecordSet"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.dynamicdatalists.model.DDLRecordSet"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long RECORDSETKEY_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -140,14 +146,6 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return DDLRecordSet.class;
-	}
-
-	public String getModelClassName() {
-		return DDLRecordSet.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.dynamicdatalists.model.DDLRecordSet"));
 
@@ -168,6 +166,14 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return DDLRecordSet.class;
+	}
+
+	public String getModelClassName() {
+		return DDLRecordSet.class.getName();
 	}
 
 	@JSON
@@ -207,6 +213,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -298,6 +306,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	}
 
 	public void setRecordSetKey(String recordSetKey) {
+		_columnBitmask |= RECORDSETKEY_COLUMN_BITMASK;
+
 		if (_originalRecordSetKey == null) {
 			_originalRecordSetKey = _recordSetKey;
 		}
@@ -509,6 +519,10 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		_scope = scope;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public DDLRecordSet toEscapedModel() {
 		if (isEscapedModel()) {
@@ -619,6 +633,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		ddlRecordSetModelImpl._setOriginalGroupId = false;
 
 		ddlRecordSetModelImpl._originalRecordSetKey = ddlRecordSetModelImpl._recordSetKey;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -830,5 +846,6 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	private int _minDisplayRows;
 	private int _scope;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private DDLRecordSet _escapedModelProxy;
 }

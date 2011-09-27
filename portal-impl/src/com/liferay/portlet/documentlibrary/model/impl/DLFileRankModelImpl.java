@@ -78,15 +78,13 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFileRank"),
 			true);
-
-	public Class<?> getModelClass() {
-		return DLFileRank.class;
-	}
-
-	public String getModelClassName() {
-		return DLFileRank.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFileRank"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long FILEENTRYID_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFileRank"));
 
@@ -109,6 +107,14 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return DLFileRank.class;
+	}
+
+	public String getModelClassName() {
+		return DLFileRank.class.getName();
+	}
+
 	public long getFileRankId() {
 		return _fileRankId;
 	}
@@ -122,6 +128,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -140,6 +148,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -158,6 +168,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -192,6 +204,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	public void setFileEntryId(long fileEntryId) {
+		_columnBitmask |= FILEENTRYID_COLUMN_BITMASK;
+
 		if (!_setOriginalFileEntryId) {
 			_setOriginalFileEntryId = true;
 
@@ -203,6 +217,10 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	public long getOriginalFileEntryId() {
 		return _originalFileEntryId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -315,6 +333,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		dlFileRankModelImpl._originalFileEntryId = dlFileRankModelImpl._fileEntryId;
 
 		dlFileRankModelImpl._setOriginalFileEntryId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -421,5 +441,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	private long _originalFileEntryId;
 	private boolean _setOriginalFileEntryId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private DLFileRank _escapedModelProxy;
 }

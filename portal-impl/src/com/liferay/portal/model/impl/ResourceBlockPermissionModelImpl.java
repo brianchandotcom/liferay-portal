@@ -68,15 +68,11 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ResourceBlockPermission"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ResourceBlockPermission.class;
-	}
-
-	public String getModelClassName() {
-		return ResourceBlockPermission.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.ResourceBlockPermission"),
+			true);
+	public static long ROLEID_COLUMN_BITMASK = 1L;
+	public static long RESOURCEBLOCKID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.ResourceBlockPermission"));
 
@@ -99,6 +95,14 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ResourceBlockPermission.class;
+	}
+
+	public String getModelClassName() {
+		return ResourceBlockPermission.class.getName();
+	}
+
 	public long getResourceBlockPermissionId() {
 		return _resourceBlockPermissionId;
 	}
@@ -112,6 +116,8 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public void setResourceBlockId(long resourceBlockId) {
+		_columnBitmask |= RESOURCEBLOCKID_COLUMN_BITMASK;
+
 		if (!_setOriginalResourceBlockId) {
 			_setOriginalResourceBlockId = true;
 
@@ -130,6 +136,8 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public void setRoleId(long roleId) {
+		_columnBitmask |= ROLEID_COLUMN_BITMASK;
+
 		if (!_setOriginalRoleId) {
 			_setOriginalRoleId = true;
 
@@ -149,6 +157,10 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	public void setActionIds(long actionIds) {
 		_actionIds = actionIds;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -251,6 +263,8 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		resourceBlockPermissionModelImpl._originalRoleId = resourceBlockPermissionModelImpl._roleId;
 
 		resourceBlockPermissionModelImpl._setOriginalRoleId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -327,5 +341,6 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	private boolean _setOriginalRoleId;
 	private long _actionIds;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ResourceBlockPermission _escapedModelProxy;
 }

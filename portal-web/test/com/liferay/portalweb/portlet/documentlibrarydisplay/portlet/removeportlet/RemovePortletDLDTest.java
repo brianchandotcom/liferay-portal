@@ -43,7 +43,7 @@ public class RemovePortletDLDTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Document Library Display Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Document Library Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");

@@ -584,10 +584,12 @@ public class JournalArticleLocalServiceImpl
 
 		// Asset
 
+		long[] assetCategoryIds = assetCategoryLocalService.getCategoryIds(
+			JournalArticle.class.getName(), oldArticle.getResourcePrimKey());
 		String[] assetTagNames = assetTagLocalService.getTagNames(
 			JournalArticle.class.getName(), oldArticle.getResourcePrimKey());
 
-		updateAsset(userId, newArticle, null, assetTagNames, null);
+		updateAsset(userId, newArticle, assetCategoryIds, assetTagNames, null);
 
 		return newArticle;
 	}

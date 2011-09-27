@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -95,7 +94,10 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
-			});
+			},
+			SocialEquitySettingModelImpl.GROUPID_COLUMN_BITMASK |
+			SocialEquitySettingModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			SocialEquitySettingModelImpl.ACTIONID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_A = new FinderPath(SocialEquitySettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquitySettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_A",
@@ -110,7 +112,11 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Integer.class.getName()
-			});
+			},
+			SocialEquitySettingModelImpl.GROUPID_COLUMN_BITMASK |
+			SocialEquitySettingModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			SocialEquitySettingModelImpl.ACTIONID_COLUMN_BITMASK |
+			SocialEquitySettingModelImpl.TYPE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_A_T = new FinderPath(SocialEquitySettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquitySettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_A_T",
@@ -363,23 +369,23 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !SocialEquitySettingModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if ((socialEquitySetting.getGroupId() != socialEquitySettingModelImpl.getOriginalGroupId()) ||
-					(socialEquitySetting.getClassNameId() != socialEquitySettingModelImpl.getOriginalClassNameId()) ||
-					!Validator.equals(socialEquitySetting.getActionId(),
-						socialEquitySettingModelImpl.getOriginalActionId())) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_A,
-					new Object[] {
-						Long.valueOf(
-							socialEquitySettingModelImpl.getOriginalGroupId()),
-						Long.valueOf(
-							socialEquitySettingModelImpl.getOriginalClassNameId()),
+			if ((socialEquitySettingModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialEquitySettingModelImpl.getOriginalGroupId()),
+						Long.valueOf(socialEquitySettingModelImpl.getOriginalClassNameId()),
 						
-					socialEquitySettingModelImpl.getOriginalActionId()
-					});
+						socialEquitySettingModelImpl.getOriginalActionId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_A,
+					args);
 			}
 		}
 
@@ -398,11 +404,8 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 				}, socialEquitySetting);
 		}
 		else {
-			if ((socialEquitySetting.getGroupId() != socialEquitySettingModelImpl.getOriginalGroupId()) ||
-					(socialEquitySetting.getClassNameId() != socialEquitySettingModelImpl.getOriginalClassNameId()) ||
-					!Validator.equals(socialEquitySetting.getActionId(),
-						socialEquitySettingModelImpl.getOriginalActionId()) ||
-					(socialEquitySetting.getType() != socialEquitySettingModelImpl.getOriginalType())) {
+			if ((socialEquitySettingModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_G_C_A_T.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_A_T,
 					new Object[] {
 						Long.valueOf(

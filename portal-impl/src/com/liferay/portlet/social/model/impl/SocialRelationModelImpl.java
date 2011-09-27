@@ -73,15 +73,14 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialRelation"),
 			true);
-
-	public Class<?> getModelClass() {
-		return SocialRelation.class;
-	}
-
-	public String getModelClassName() {
-		return SocialRelation.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialRelation"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long TYPE_COLUMN_BITMASK = 2L;
+	public static long USERID1_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long USERID2_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialRelation"));
 
@@ -102,6 +101,14 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return SocialRelation.class;
+	}
+
+	public String getModelClassName() {
+		return SocialRelation.class.getName();
 	}
 
 	public String getUuid() {
@@ -138,6 +145,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -164,6 +173,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public void setUserId1(long userId1) {
+		_columnBitmask |= USERID1_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId1) {
 			_setOriginalUserId1 = true;
 
@@ -182,6 +193,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public void setUserId2(long userId2) {
+		_columnBitmask |= USERID2_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId2) {
 			_setOriginalUserId2 = true;
 
@@ -200,6 +213,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -211,6 +226,10 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	public int getOriginalType() {
 		return _originalType;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -326,6 +345,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		socialRelationModelImpl._originalType = socialRelationModelImpl._type;
 
 		socialRelationModelImpl._setOriginalType = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -440,5 +461,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	private int _originalType;
 	private boolean _setOriginalType;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private SocialRelation _escapedModelProxy;
 }

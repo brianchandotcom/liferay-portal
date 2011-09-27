@@ -119,7 +119,14 @@ public class LocaleUtil {
 				}
 			}
 
-			_locales.put(languageId, locale);
+			if (_locales.size() < _MAX_LOCALES) {
+				_locales.put(languageId, locale);
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn("There are too many entries in the locales map");
+				}
+			}
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -270,6 +277,8 @@ public class LocaleUtil {
 
 		return w3cLanguageIds;
 	}
+
+	private static final int _MAX_LOCALES = 1000;
 
 	private static LocaleUtil _instance = new LocaleUtil();
 

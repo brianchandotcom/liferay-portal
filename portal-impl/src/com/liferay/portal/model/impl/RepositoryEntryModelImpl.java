@@ -70,15 +70,13 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.RepositoryEntry"),
 			true);
-
-	public Class<?> getModelClass() {
-		return RepositoryEntry.class;
-	}
-
-	public String getModelClassName() {
-		return RepositoryEntry.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.RepositoryEntry"),
+			true);
+	public static long MAPPEDID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long REPOSITORYID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.RepositoryEntry"));
 
@@ -99,6 +97,14 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return RepositoryEntry.class;
+	}
+
+	public String getModelClassName() {
+		return RepositoryEntry.class.getName();
 	}
 
 	public String getUuid() {
@@ -135,6 +141,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -153,6 +161,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	}
 
 	public void setRepositoryId(long repositoryId) {
+		_columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
+
 		if (!_setOriginalRepositoryId) {
 			_setOriginalRepositoryId = true;
 
@@ -176,6 +186,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	}
 
 	public void setMappedId(String mappedId) {
+		_columnBitmask |= MAPPEDID_COLUMN_BITMASK;
+
 		if (_originalMappedId == null) {
 			_originalMappedId = _mappedId;
 		}
@@ -185,6 +197,10 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	public String getOriginalMappedId() {
 		return GetterUtil.getString(_originalMappedId);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -292,6 +308,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		repositoryEntryModelImpl._setOriginalRepositoryId = false;
 
 		repositoryEntryModelImpl._originalMappedId = repositoryEntryModelImpl._mappedId;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -391,5 +409,6 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	private String _mappedId;
 	private String _originalMappedId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private RepositoryEntry _escapedModelProxy;
 }

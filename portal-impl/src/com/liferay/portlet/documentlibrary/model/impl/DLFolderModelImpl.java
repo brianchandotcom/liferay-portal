@@ -93,6 +93,16 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLFolder"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFolder"),
+			true);
+	public static long PARENTFOLDERID_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long REPOSITORYID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long NAME_COLUMN_BITMASK = 32L;
+	public static long MOUNTPOINT_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -139,14 +149,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return DLFolder.class;
-	}
-
-	public String getModelClassName() {
-		return DLFolder.class.getName();
-	}
-
 	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME = "DLFileEntryTypes_DLFolders";
 	public static final Object[][] MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_COLUMNS =
 		{
@@ -178,6 +180,14 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return DLFolder.class;
+	}
+
+	public String getModelClassName() {
+		return DLFolder.class.getName();
 	}
 
 	@JSON
@@ -217,6 +227,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -236,6 +248,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -304,6 +318,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setRepositoryId(long repositoryId) {
+		_columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
+
 		if (!_setOriginalRepositoryId) {
 			_setOriginalRepositoryId = true;
 
@@ -327,6 +343,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setMountPoint(boolean mountPoint) {
+		_columnBitmask |= MOUNTPOINT_COLUMN_BITMASK;
+
 		if (!_setOriginalMountPoint) {
 			_setOriginalMountPoint = true;
 
@@ -346,6 +364,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setParentFolderId(long parentFolderId) {
+		_columnBitmask |= PARENTFOLDERID_COLUMN_BITMASK;
+
 		if (!_setOriginalParentFolderId) {
 			_setOriginalParentFolderId = true;
 
@@ -370,6 +390,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -424,6 +446,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	public void setOverrideFileEntryTypes(boolean overrideFileEntryTypes) {
 		_overrideFileEntryTypes = overrideFileEntryTypes;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -567,6 +593,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderModelImpl._setOriginalParentFolderId = false;
 
 		dlFolderModelImpl._originalName = dlFolderModelImpl._name;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -805,5 +833,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private long _defaultFileEntryTypeId;
 	private boolean _overrideFileEntryTypes;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private DLFolder _escapedModelProxy;
 }

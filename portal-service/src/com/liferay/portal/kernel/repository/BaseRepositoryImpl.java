@@ -120,8 +120,25 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFoldersAndFileEntries(folderId, start, end, obc);
 	}
 
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return getFoldersAndFileEntries(folderId, start, end, obc);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, boolean includeMountFolders)
+		throws SystemException {
+
+		return getFoldersAndFileEntriesCount(folderId);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
 		throws SystemException {
 
 		return getFoldersAndFileEntriesCount(folderId);
@@ -196,19 +213,16 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 		this.companyLocalService = companyLocalService;
 	}
-
 	public void setCounterLocalService(
 		CounterLocalService counterLocalService) {
 
 		this.counterLocalService = counterLocalService;
 	}
-
 	public void setDLAppHelperLocalService(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
 	}
-
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}

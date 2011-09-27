@@ -87,7 +87,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() });
+			new String[] { String.class.getName() },
+			LockModelImpl.UUID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -106,7 +107,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLtExpirationDate", new String[] { Date.class.getName() });
+			"findByLtExpirationDate", new String[] { Date.class.getName() },
+			LockModelImpl.EXPIRATIONDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -114,7 +116,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_K = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
-			new String[] { String.class.getName(), String.class.getName() });
+			new String[] { String.class.getName(), String.class.getName() },
+			LockModelImpl.CLASSNAME_COLUMN_BITMASK |
+			LockModelImpl.KEY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_K = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
@@ -345,20 +349,30 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !LockModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if (!Validator.equals(lock.getUuid(),
-						lockModelImpl.getOriginalUuid())) {
+			if ((lockModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { lockModelImpl.getOriginalUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					new Object[] { lockModelImpl.getOriginalUuid() });
+					args);
 			}
 
-			if (!Validator.equals(lock.getExpirationDate(),
-						lockModelImpl.getOriginalExpirationDate())) {
+			if ((lockModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						lockModelImpl.getOriginalExpirationDate()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE,
+					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE,
-					new Object[] { lockModelImpl.getOriginalExpirationDate() });
+					args);
 			}
 		}
 
@@ -370,10 +384,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				new Object[] { lock.getClassName(), lock.getKey() }, lock);
 		}
 		else {
-			if (!Validator.equals(lock.getClassName(),
-						lockModelImpl.getOriginalClassName()) ||
-					!Validator.equals(lock.getKey(),
-						lockModelImpl.getOriginalKey())) {
+			if ((lockModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_K.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K,
 					new Object[] {
 						lockModelImpl.getOriginalClassName(),

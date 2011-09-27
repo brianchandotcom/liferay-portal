@@ -69,15 +69,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.ClusterGroup"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ClusterGroup.class;
-	}
-
-	public String getModelClassName() {
-		return ClusterGroup.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = false;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.ClusterGroup"));
 
@@ -98,6 +90,14 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return ClusterGroup.class;
+	}
+
+	public String getModelClassName() {
+		return ClusterGroup.class.getName();
 	}
 
 	public long getClusterGroupId() {

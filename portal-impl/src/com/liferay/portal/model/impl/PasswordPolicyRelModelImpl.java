@@ -70,15 +70,12 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PasswordPolicyRel"),
 			true);
-
-	public Class<?> getModelClass() {
-		return PasswordPolicyRel.class;
-	}
-
-	public String getModelClassName() {
-		return PasswordPolicyRel.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.PasswordPolicyRel"),
+			true);
+	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static long CLASSPK_COLUMN_BITMASK = 2L;
+	public static long PASSWORDPOLICYID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.PasswordPolicyRel"));
 
@@ -101,6 +98,14 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return PasswordPolicyRel.class;
+	}
+
+	public String getModelClassName() {
+		return PasswordPolicyRel.class.getName();
+	}
+
 	public long getPasswordPolicyRelId() {
 		return _passwordPolicyRelId;
 	}
@@ -114,6 +119,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	}
 
 	public void setPasswordPolicyId(long passwordPolicyId) {
+		_columnBitmask |= PASSWORDPOLICYID_COLUMN_BITMASK;
+
 		if (!_setOriginalPasswordPolicyId) {
 			_setOriginalPasswordPolicyId = true;
 
@@ -140,6 +147,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -158,6 +167,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -169,6 +180,10 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 	public long getOriginalClassPK() {
 		return _originalClassPK;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -275,6 +290,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		passwordPolicyRelModelImpl._originalClassPK = passwordPolicyRelModelImpl._classPK;
 
 		passwordPolicyRelModelImpl._setOriginalClassPK = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -353,5 +370,6 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private PasswordPolicyRel _escapedModelProxy;
 }

@@ -95,6 +95,15 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBThread"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBThread"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long LASTPOSTDATE_COLUMN_BITMASK = 2L;
+	public static long STATUS_COLUMN_BITMASK = 4L;
+	public static long ROOTMESSAGEID_COLUMN_BITMASK = 8L;
+	public static long CATEGORYID_COLUMN_BITMASK = 16L;
+	public static long PRIORITY_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -141,14 +150,6 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return MBThread.class;
-	}
-
-	public String getModelClassName() {
-		return MBThread.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBThread"));
 
@@ -171,6 +172,14 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return MBThread.class;
+	}
+
+	public String getModelClassName() {
+		return MBThread.class.getName();
+	}
+
 	@JSON
 	public long getThreadId() {
 		return _threadId;
@@ -186,6 +195,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -214,6 +225,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setCategoryId(long categoryId) {
+		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCategoryId) {
 			_setOriginalCategoryId = true;
 
@@ -233,6 +246,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setRootMessageId(long rootMessageId) {
+		_columnBitmask |= ROOTMESSAGEID_COLUMN_BITMASK;
+
 		if (!_setOriginalRootMessageId) {
 			_setOriginalRootMessageId = true;
 
@@ -306,6 +321,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setLastPostDate(Date lastPostDate) {
+		_columnBitmask |= LASTPOSTDATE_COLUMN_BITMASK;
+
 		if (_originalLastPostDate == null) {
 			_originalLastPostDate = _lastPostDate;
 		}
@@ -323,6 +340,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setPriority(double priority) {
+		_columnBitmask |= PRIORITY_COLUMN_BITMASK;
+
 		if (!_setOriginalPriority) {
 			_setOriginalPriority = true;
 
@@ -355,6 +374,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
 		if (!_setOriginalStatus) {
 			_setOriginalStatus = true;
 
@@ -450,6 +471,10 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		else {
 			return false;
 		}
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -594,6 +619,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		mbThreadModelImpl._originalStatus = mbThreadModelImpl._status;
 
 		mbThreadModelImpl._setOriginalStatus = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -808,5 +835,6 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	private String _statusByUserName;
 	private Date _statusDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private MBThread _escapedModelProxy;
 }

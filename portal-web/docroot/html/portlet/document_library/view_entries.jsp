@@ -41,14 +41,18 @@ boolean useAssetEntryQuery = (categoryId > 0) || Validator.isNotNull(tagName);
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
+	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 }
 else {
 	boolean saveDisplayStyle = ParamUtil.getBoolean(request, "saveDisplayStyle");
 
-	if (saveDisplayStyle && ArrayUtil.contains(PropsValues.DL_DISPLAY_VIEWS, displayStyle)) {
+	if (saveDisplayStyle && ArrayUtil.contains(displayViews, displayStyle)) {
 		portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", displayStyle);
 	}
+}
+
+if (!ArrayUtil.contains(displayViews, displayStyle)) {
+	displayStyle = displayViews[0];
 }
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
@@ -57,17 +61,20 @@ portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
 portletURL.setParameter("displayStyle", String.valueOf(displayStyle));
 
-SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", fileEntriesPerPage, portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", entriesPerPage, portletURL, null, null);
 
 List<String> headerNames = new ArrayList<String>();
 
-headerNames.add("title");
-headerNames.add("description");
-headerNames.add("size");
-headerNames.add("create-date");
-headerNames.add("modified-date");
-headerNames.add("read-count");
-headerNames.add(StringPool.BLANK);
+for (String headerName : entryColumns) {
+	if (headerName.equals("action")) {
+		headerName = StringPool.BLANK;
+	}
+	else if (headerName.equals("name")) {
+		headerName = "title";
+	}
+
+	headerNames.add(headerName);
+}
 
 searchContainer.setHeaderNames(headerNames);
 
@@ -79,7 +86,7 @@ orderableHeaders.put("title", "title");
 orderableHeaders.put("size", "size");
 orderableHeaders.put("create-date", "creationDate");
 orderableHeaders.put("modified-date", "modifiedDate");
-orderableHeaders.put("read-count", "readCount");
+orderableHeaders.put("downloads", "downloads");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -240,14 +247,31 @@ for (int i = 0; i < results.size(); i++) {
 					rowURL.setParameter("redirect", HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiblings", true));
 					rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
-					row.addText(fileEntryTitle, rowURL);
-					row.addText(fileEntry.getDescription(), rowURL);
-					row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
-					row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
-					row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
-					row.addText(String.valueOf(fileEntry.getReadCount()));
+					for (String columnName : entryColumns) {
+						if (columnName.equals("action")) {
+							row.addJSP("/html/portlet/document_library/file_entry_action.jsp");
+						}
 
-					row.addJSP("/html/portlet/document_library/file_entry_action.jsp");
+						if (columnName.equals("create-date")) {
+							row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
+						}
+
+						if (columnName.equals("downloads")) {
+							row.addText(String.valueOf(fileEntry.getReadCount()));
+						}
+
+						if (columnName.equals("modified-date")) {
+							row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
+						}
+
+						if (columnName.equals("name")) {
+							row.addText(fileEntryTitle, rowURL);
+						}
+
+						if (columnName.equals("size")) {
+							row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
+						}
+					}
 
 					resultRows.add(row);
 					%>
@@ -328,31 +352,37 @@ for (int i = 0; i < results.size(); i++) {
 					data.put("refresh-folders", true);
 					data.put("resource-url", viewEntriesURL);
 
-					TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
+					for (String columnName : entryColumns) {
+						if (columnName.equals("action")) {
+							row.addJSP("/html/portlet/document_library/folder_action.jsp");
+						}
 
-					folderTitleSearchEntry.setData(data);
-					folderTitleSearchEntry.setHref(rowURL.toString());
-					folderTitleSearchEntry.setName(folderTitle);
+						if (columnName.equals("create-date")) {
+							row.addText(dateFormatDateTime.format(curFolder.getCreateDate()));
+						}
 
-					row.addSearchEntry(folderTitleSearchEntry);
+						if (columnName.equals("downloads")) {
+							row.addText(String.valueOf(0));
+						}
 
-					TextSearchEntry folderDescriptionSearchEntry = new TextSearchEntry();
+						if (columnName.equals("modified-date")) {
+							row.addText(dateFormatDateTime.format(curFolder.getModifiedDate()));
+						}
 
-					folderDescriptionSearchEntry.setData(data);
-					folderDescriptionSearchEntry.setHref(rowURL.toString());
-					folderDescriptionSearchEntry.setName(curFolder.getDescription());
+						if (columnName.equals("name")) {
+							TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
 
-					row.addSearchEntry(folderDescriptionSearchEntry);
+							folderTitleSearchEntry.setData(data);
+							folderTitleSearchEntry.setHref(rowURL.toString());
+							folderTitleSearchEntry.setName(folderTitle);
 
-					row.addText(String.valueOf(0) + "k");
+							row.addSearchEntry(folderTitleSearchEntry);
+						}
 
-					row.addText(dateFormatDateTime.format(curFolder.getCreateDate()));
-
-					row.addText(dateFormatDateTime.format(curFolder.getModifiedDate()));
-
-					row.addText(String.valueOf(0));
-
-					row.addJSP("/html/portlet/document_library/folder_action.jsp");
+						if (columnName.equals("size")) {
+							row.addText(String.valueOf(0) + "k");
+						}
+					}
 
 					resultRows.add(row);
 					%>

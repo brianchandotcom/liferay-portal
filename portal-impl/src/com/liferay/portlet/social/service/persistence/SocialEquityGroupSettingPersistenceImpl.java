@@ -83,7 +83,10 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
-			});
+			},
+			SocialEquityGroupSettingModelImpl.GROUPID_COLUMN_BITMASK |
+			SocialEquityGroupSettingModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			SocialEquityGroupSettingModelImpl.TYPE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_T = new FinderPath(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityGroupSettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_T",
@@ -335,6 +338,10 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
+		if (isNew || !SocialEquityGroupSettingModelImpl.COLUMN_BITMASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+
 		EntityCacheUtil.putResult(SocialEquityGroupSettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityGroupSettingImpl.class,
 			socialEquityGroupSetting.getPrimaryKey(), socialEquityGroupSetting);
@@ -348,9 +355,8 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 				}, socialEquityGroupSetting);
 		}
 		else {
-			if ((socialEquityGroupSetting.getGroupId() != socialEquityGroupSettingModelImpl.getOriginalGroupId()) ||
-					(socialEquityGroupSetting.getClassNameId() != socialEquityGroupSettingModelImpl.getOriginalClassNameId()) ||
-					(socialEquityGroupSetting.getType() != socialEquityGroupSettingModelImpl.getOriginalType())) {
+			if ((socialEquityGroupSettingModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_G_C_T.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_T,
 					new Object[] {
 						Long.valueOf(

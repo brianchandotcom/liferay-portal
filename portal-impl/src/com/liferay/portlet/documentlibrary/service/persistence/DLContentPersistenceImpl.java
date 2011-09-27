@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -88,7 +87,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() },
+			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
+			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_R = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
@@ -109,7 +110,10 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
-			});
+			},
+			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
+			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
+			DLContentModelImpl.PATH_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_R_P = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P",
@@ -135,7 +139,10 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
-			});
+			},
+			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
+			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
+			DLContentModelImpl.PATH_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_R_LIKEP = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_LikeP",
@@ -149,7 +156,11 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
-			});
+			},
+			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
+			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
+			DLContentModelImpl.PATH_COLUMN_BITMASK |
+			DLContentModelImpl.VERSION_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_R_P_V = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_V",
@@ -174,7 +185,11 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName(), String.class.getName()
-			});
+			},
+			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
+			DLContentModelImpl.PORTLETID_COLUMN_BITMASK |
+			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
+			DLContentModelImpl.PATH_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_P_R_P = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_R_P",
@@ -200,7 +215,11 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName(), String.class.getName()
-			});
+			},
+			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
+			DLContentModelImpl.PORTLETID_COLUMN_BITMASK |
+			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
+			DLContentModelImpl.PATH_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_P_R_LIKEP = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_R_LikeP",
@@ -215,7 +234,12 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
-			});
+			},
+			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
+			DLContentModelImpl.PORTLETID_COLUMN_BITMASK |
+			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
+			DLContentModelImpl.PATH_COLUMN_BITMASK |
+			DLContentModelImpl.VERSION_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_P_R_P_V = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_R_P_V",
@@ -504,82 +528,83 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !DLContentModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if ((dlContent.getCompanyId() != dlContentModelImpl.getOriginalCompanyId()) ||
-					(dlContent.getRepositoryId() != dlContentModelImpl.getOriginalRepositoryId())) {
+			if ((dlContentModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
+						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R,
-					new Object[] {
-						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
-						Long.valueOf(
-							dlContentModelImpl.getOriginalRepositoryId())
-					});
+					args);
 			}
 
-			if ((dlContent.getCompanyId() != dlContentModelImpl.getOriginalCompanyId()) ||
-					(dlContent.getRepositoryId() != dlContentModelImpl.getOriginalRepositoryId()) ||
-					!Validator.equals(dlContent.getPath(),
-						dlContentModelImpl.getOriginalPath())) {
+			if ((dlContentModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
+						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId()),
+						
+						dlContentModelImpl.getOriginalPath()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_P,
-					new Object[] {
-						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
-						Long.valueOf(
-							dlContentModelImpl.getOriginalRepositoryId()),
-						
-					dlContentModelImpl.getOriginalPath()
-					});
+					args);
 			}
 
-			if ((dlContent.getCompanyId() != dlContentModelImpl.getOriginalCompanyId()) ||
-					(dlContent.getRepositoryId() != dlContentModelImpl.getOriginalRepositoryId()) ||
-					!Validator.equals(dlContent.getPath(),
-						dlContentModelImpl.getOriginalPath())) {
+			if ((dlContentModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_LIKEP.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
+						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId()),
+						
+						dlContentModelImpl.getOriginalPath()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_LIKEP,
+					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_LIKEP,
-					new Object[] {
-						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
-						Long.valueOf(
-							dlContentModelImpl.getOriginalRepositoryId()),
-						
-					dlContentModelImpl.getOriginalPath()
-					});
+					args);
 			}
 
-			if ((dlContent.getCompanyId() != dlContentModelImpl.getOriginalCompanyId()) ||
-					!Validator.equals(dlContent.getPortletId(),
-						dlContentModelImpl.getOriginalPortletId()) ||
-					(dlContent.getRepositoryId() != dlContentModelImpl.getOriginalRepositoryId()) ||
-					!Validator.equals(dlContent.getPath(),
-						dlContentModelImpl.getOriginalPath())) {
+			if ((dlContentModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P_R_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
+						
+						dlContentModelImpl.getOriginalPortletId(),
+						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId()),
+						
+						dlContentModelImpl.getOriginalPath()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P_R_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P_R_P,
-					new Object[] {
-						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
-						
-					dlContentModelImpl.getOriginalPortletId(),
-						Long.valueOf(
-							dlContentModelImpl.getOriginalRepositoryId()),
-						
-					dlContentModelImpl.getOriginalPath()
-					});
+					args);
 			}
 
-			if ((dlContent.getCompanyId() != dlContentModelImpl.getOriginalCompanyId()) ||
-					!Validator.equals(dlContent.getPortletId(),
-						dlContentModelImpl.getOriginalPortletId()) ||
-					(dlContent.getRepositoryId() != dlContentModelImpl.getOriginalRepositoryId()) ||
-					!Validator.equals(dlContent.getPath(),
-						dlContentModelImpl.getOriginalPath())) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P_R_LIKEP,
-					new Object[] {
+			if ((dlContentModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P_R_LIKEP.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
 						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
 						
-					dlContentModelImpl.getOriginalPortletId(),
-						Long.valueOf(
-							dlContentModelImpl.getOriginalRepositoryId()),
+						dlContentModelImpl.getOriginalPortletId(),
+						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId()),
 						
-					dlContentModelImpl.getOriginalPath()
-					});
+						dlContentModelImpl.getOriginalPath()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P_R_LIKEP,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P_R_LIKEP,
+					args);
 			}
 		}
 
@@ -612,12 +637,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				}, dlContent);
 		}
 		else {
-			if ((dlContent.getCompanyId() != dlContentModelImpl.getOriginalCompanyId()) ||
-					(dlContent.getRepositoryId() != dlContentModelImpl.getOriginalRepositoryId()) ||
-					!Validator.equals(dlContent.getPath(),
-						dlContentModelImpl.getOriginalPath()) ||
-					!Validator.equals(dlContent.getVersion(),
-						dlContentModelImpl.getOriginalVersion())) {
+			if ((dlContentModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_R_P_V.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R_P_V,
 					new Object[] {
 						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
@@ -640,14 +661,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 					}, dlContent);
 			}
 
-			if ((dlContent.getCompanyId() != dlContentModelImpl.getOriginalCompanyId()) ||
-					!Validator.equals(dlContent.getPortletId(),
-						dlContentModelImpl.getOriginalPortletId()) ||
-					(dlContent.getRepositoryId() != dlContentModelImpl.getOriginalRepositoryId()) ||
-					!Validator.equals(dlContent.getPath(),
-						dlContentModelImpl.getOriginalPath()) ||
-					!Validator.equals(dlContent.getVersion(),
-						dlContentModelImpl.getOriginalVersion())) {
+			if ((dlContentModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_P_R_P_V.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P_R_P_V,
 					new Object[] {
 						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),

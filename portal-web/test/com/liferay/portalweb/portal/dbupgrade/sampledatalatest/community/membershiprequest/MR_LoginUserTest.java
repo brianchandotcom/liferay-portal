@@ -67,7 +67,7 @@ public class MR_LoginUserTest extends BaseTestCase {
 			RuntimeVariables.replace("requestmemberea@liferay.com"));
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_58_password']",
-			RuntimeVariables.replace("test"));
+			RuntimeVariables.replace("password"));
 		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {

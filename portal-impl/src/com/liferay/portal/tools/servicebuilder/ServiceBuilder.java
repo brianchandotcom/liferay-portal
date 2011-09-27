@@ -1395,12 +1395,10 @@ public class ServiceBuilder {
 
 		String key = sb.toString();
 
-		if (tempMap.containsKey(key)) {
+		if (tempMap.put(key, key) != null) {
 			return true;
 		}
 		else {
-			tempMap.put(key, key);
-
 			return false;
 		}
 	}

@@ -115,6 +115,15 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.LayoutRevision"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.LayoutRevision"),
+			true);
+	public static long PARENTLAYOUTREVISIONID_COLUMN_BITMASK = 1L;
+	public static long PLID_COLUMN_BITMASK = 2L;
+	public static long LAYOUTSETBRANCHID_COLUMN_BITMASK = 4L;
+	public static long HEAD_COLUMN_BITMASK = 8L;
+	public static long LAYOUTBRANCHID_COLUMN_BITMASK = 16L;
+	public static long STATUS_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -176,14 +185,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return LayoutRevision.class;
-	}
-
-	public String getModelClassName() {
-		return LayoutRevision.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.LayoutRevision"));
 
@@ -204,6 +205,14 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return LayoutRevision.class;
+	}
+
+	public String getModelClassName() {
+		return LayoutRevision.class.getName();
 	}
 
 	@JSON
@@ -288,6 +297,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
+		_columnBitmask |= LAYOUTSETBRANCHID_COLUMN_BITMASK;
+
 		if (!_setOriginalLayoutSetBranchId) {
 			_setOriginalLayoutSetBranchId = true;
 
@@ -307,6 +318,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setLayoutBranchId(long layoutBranchId) {
+		_columnBitmask |= LAYOUTBRANCHID_COLUMN_BITMASK;
+
 		if (!_setOriginalLayoutBranchId) {
 			_setOriginalLayoutBranchId = true;
 
@@ -326,6 +339,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setParentLayoutRevisionId(long parentLayoutRevisionId) {
+		_columnBitmask |= PARENTLAYOUTREVISIONID_COLUMN_BITMASK;
+
 		if (!_setOriginalParentLayoutRevisionId) {
 			_setOriginalParentLayoutRevisionId = true;
 
@@ -349,6 +364,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setHead(boolean head) {
+		_columnBitmask |= HEAD_COLUMN_BITMASK;
+
 		if (!_setOriginalHead) {
 			_setOriginalHead = true;
 
@@ -381,6 +398,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setPlid(long plid) {
+		_columnBitmask |= PLID_COLUMN_BITMASK;
+
 		if (!_setOriginalPlid) {
 			_setOriginalPlid = true;
 
@@ -970,6 +989,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
 		if (!_setOriginalStatus) {
 			_setOriginalStatus = true;
 
@@ -1065,6 +1086,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		else {
 			return false;
 		}
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -1218,6 +1243,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		layoutRevisionModelImpl._originalStatus = layoutRevisionModelImpl._status;
 
 		layoutRevisionModelImpl._setOriginalStatus = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1646,5 +1673,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	private String _statusByUserName;
 	private Date _statusDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private LayoutRevision _escapedModelProxy;
 }

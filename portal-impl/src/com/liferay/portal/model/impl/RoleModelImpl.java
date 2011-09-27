@@ -89,6 +89,15 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Role"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Role"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static long TYPE_COLUMN_BITMASK = 4L;
+	public static long CLASSPK_COLUMN_BITMASK = 8L;
+	public static long SUBTYPE_COLUMN_BITMASK = 16L;
+	public static long NAME_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -126,14 +135,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 
 		return models;
-	}
-
-	public Class<?> getModelClass() {
-		return Role.class;
-	}
-
-	public String getModelClassName() {
-		return Role.class.getName();
 	}
 
 	public static final String MAPPING_TABLE_GROUPS_ROLES_NAME = "Groups_Roles";
@@ -182,6 +183,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return Role.class;
+	}
+
+	public String getModelClassName() {
+		return Role.class.getName();
+	}
+
 	@JSON
 	public long getRoleId() {
 		return _roleId;
@@ -197,6 +206,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -224,6 +235,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -243,6 +256,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -267,6 +282,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -466,6 +483,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -490,6 +509,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public void setSubtype(String subtype) {
+		_columnBitmask |= SUBTYPE_COLUMN_BITMASK;
+
 		if (_originalSubtype == null) {
 			_originalSubtype = _subtype;
 		}
@@ -499,6 +520,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	public String getOriginalSubtype() {
 		return GetterUtil.getString(_originalSubtype);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -616,6 +641,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		roleModelImpl._setOriginalType = false;
 
 		roleModelImpl._originalSubtype = roleModelImpl._subtype;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -767,5 +794,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private String _subtype;
 	private String _originalSubtype;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Role _escapedModelProxy;
 }

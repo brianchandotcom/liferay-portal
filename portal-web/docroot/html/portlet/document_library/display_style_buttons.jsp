@@ -24,93 +24,111 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
+	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 }
 
 String keywords = ParamUtil.getString(request, "keywords");
 %>
 
-<aui:script use="aui-dialog,aui-dialog-iframe">
-	var buttonRow = A.one('#<portlet:namespace />displayStyleToolbar');
+<c:if test="<%= displayViews.length > 1 %>">
+	<aui:script use="aui-dialog,aui-dialog-iframe">
+		var buttonRow = A.one('#<portlet:namespace />displayStyleToolbar');
 
-	if (buttonRow) {
-		buttonRow.empty();
-	}
+		function onButtonClick(displayStyle) {
+			var config = {
+				'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search" %>',
+				'<portlet:namespace />displayStyle': displayStyle,
+				'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
+				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
+			};
 
-	function onButtonClick(displayStyle) {
-		var config = {
-			'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search" %>',
-			'<portlet:namespace />displayStyle': displayStyle,
-			'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
-			'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
-		};
-
-		if (<%= Validator.isNull(keywords) %>) {
-			config['<portlet:namespace />viewEntries'] = <%= Boolean.TRUE.toString() %>;
-		}
-		else {
-			config['<portlet:namespace />keywords'] = '<%= HtmlUtil.escapeJS(keywords) %>';
-		}
-
-		if (<%= fileEntryTypeId != -1 %>) {
-			config['<portlet:namespace />fileEntryTypeId'] = '<%= String.valueOf(fileEntryTypeId) %>';
-		}
-
-		updateDisplayStyle(config);
-	}
-
-	function updateDisplayStyle(config) {
-		var displayStyle = config['<portlet:namespace />displayStyle'];
-
-		displayStyleToolbar.item(0).StateInteraction.set('active', (displayStyle === 'icon'));
-		displayStyleToolbar.item(1).StateInteraction.set('active', (displayStyle === 'descriptive'));
-		displayStyleToolbar.item(2).StateInteraction.set('active', (displayStyle === 'list'));
-
-		Liferay.fire(
-			'<portlet:namespace />dataRequest',
-			{
-				requestParams: config
+			if (<%= Validator.isNull(keywords) %>) {
+				config['<portlet:namespace />viewEntries'] = <%= Boolean.TRUE.toString() %>;
 			}
-		);
-	}
+			else {
+				config['<portlet:namespace />keywords'] = '<%= HtmlUtil.escapeJS(keywords) %>';
+			}
 
-	var displayStyleToolbar = new A.Toolbar(
-		{
-			activeState: true,
-			boundingBox: buttonRow,
-			children: [
-				{
-					handler: A.bind(onButtonClick, null, 'icon'),
-					icon: 'display-icon',
-					title: '<liferay-ui:message key="icon-view" />'
-				},
-				{
-					handler: A.bind(onButtonClick, null, 'descriptive'),
-					icon: 'display-descriptive',
-					title: '<liferay-ui:message key="descriptive-view" />'
-				},
-				{
-					handler: A.bind(onButtonClick, null, 'list'),
-					icon: 'display-list',
-					title: '<liferay-ui:message key="list-view" />'
-				}
-			]
+			if (<%= fileEntryTypeId != -1 %>) {
+				config['<portlet:namespace />fileEntryTypeId'] = '<%= String.valueOf(fileEntryTypeId) %>';
+			}
+
+			updateDisplayStyle(config);
 		}
-	).render();
 
-	<c:choose>
-		<c:when test='<%= displayStyle.equals("icon") %>'>
-			var index = 0;
-		</c:when>
-		<c:when test='<%= displayStyle.equals("descriptive") %>'>
-			var index = 1;
-		</c:when>
-		<c:when test='<%= displayStyle.equals("list") %>'>
-			var index = 2;
-		</c:when>
-	</c:choose>
+		function updateDisplayStyle(config) {
+			var displayStyle = config['<portlet:namespace />displayStyle'];
 
-	displayStyleToolbar.item(index).StateInteraction.set('active', true);
+			<%
+			for (int i = 0; i < displayViews.length; i++) {
+			%>
 
-	buttonRow.setData('displayStyleToolbar', displayStyleToolbar);
-</aui:script>
+				displayStyleToolbar.item(<%= i %>).StateInteraction.set('active', (displayStyle === '<%= displayViews[i] %>'));
+
+			<%
+			}
+			%>
+
+			Liferay.fire(
+				'<portlet:namespace />dataRequest',
+				{
+					requestParams: config
+				}
+			);
+		}
+
+		var displayStyleToolbar = new A.Toolbar(
+			{
+				activeState: true,
+				boundingBox: buttonRow,
+				children: [
+
+					<%
+					if (displayViews.length > 0) {
+					%>
+
+						{
+							handler: A.bind(onButtonClick, null, '<%= displayViews[0] %>'),
+							icon: 'display-<%= displayViews[0] %>',
+							title: '<%= LanguageUtil.get(pageContext, displayViews[0] + "-view") %>'
+						}
+
+					<%
+						for (int i = 1; i < displayViews.length; i++) {
+					%>
+
+							, {
+								handler: A.bind(onButtonClick, null, '<%= displayViews[i] %>'),
+								icon: 'display-<%= displayViews[i] %>',
+								title: '<%= LanguageUtil.get(pageContext, displayViews[i] + "-view") %>'
+							}
+
+					<%
+						}
+					}
+					%>
+
+				]
+			}
+		).render();
+
+		var index = 0;
+
+		<%
+		for (int i = 0; i < displayViews.length; i++) {
+			if (displayStyle.equals(displayViews[i])) {
+		%>
+
+				index = <%= i %>;
+
+		<%
+				break;
+			}
+		}
+		%>
+
+		displayStyleToolbar.item(index).StateInteraction.set('active', true);
+
+		buttonRow.setData('displayStyleToolbar', displayStyleToolbar);
+	</aui:script>
+</c:if>

@@ -99,6 +99,14 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetCategory"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetCategory"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long VOCABULARYID_COLUMN_BITMASK = 2L;
+	public static long PARENTCATEGORYID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -144,14 +152,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return AssetCategory.class;
-	}
-
-	public String getModelClassName() {
-		return AssetCategory.class.getName();
-	}
-
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_NAME = "AssetEntries_AssetCategories";
 	public static final Object[][] MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_COLUMNS =
 		{
@@ -184,6 +184,14 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return AssetCategory.class;
+	}
+
+	public String getModelClassName() {
+		return AssetCategory.class.getName();
 	}
 
 	@JSON
@@ -223,6 +231,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -300,6 +310,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	public void setParentCategoryId(long parentCategoryId) {
+		_columnBitmask |= PARENTCATEGORYID_COLUMN_BITMASK;
+
 		if (!_setOriginalParentCategoryId) {
 			_setOriginalParentCategoryId = true;
 
@@ -342,6 +354,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
 		if (_originalName == null) {
 			_originalName = _name;
 		}
@@ -541,6 +555,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	public void setVocabularyId(long vocabularyId) {
+		_columnBitmask |= VOCABULARYID_COLUMN_BITMASK;
+
 		if (!_setOriginalVocabularyId) {
 			_setOriginalVocabularyId = true;
 
@@ -552,6 +568,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	public long getOriginalVocabularyId() {
 		return _originalVocabularyId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -671,6 +691,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		assetCategoryModelImpl._originalVocabularyId = assetCategoryModelImpl._vocabularyId;
 
 		assetCategoryModelImpl._setOriginalVocabularyId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -895,5 +917,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	private long _originalVocabularyId;
 	private boolean _setOriginalVocabularyId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private AssetCategory _escapedModelProxy;
 }

@@ -77,6 +77,12 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PluginSetting"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.PluginSetting"),
+			true);
+	public static long PLUGINTYPE_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long PLUGINID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -113,14 +119,6 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return PluginSetting.class;
-	}
-
-	public String getModelClassName() {
-		return PluginSetting.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.PluginSetting"));
 
@@ -143,6 +141,14 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return PluginSetting.class;
+	}
+
+	public String getModelClassName() {
+		return PluginSetting.class.getName();
+	}
+
 	@JSON
 	public long getPluginSettingId() {
 		return _pluginSettingId;
@@ -158,6 +164,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -182,6 +190,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	}
 
 	public void setPluginId(String pluginId) {
+		_columnBitmask |= PLUGINID_COLUMN_BITMASK;
+
 		if (_originalPluginId == null) {
 			_originalPluginId = _pluginId;
 		}
@@ -204,6 +214,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	}
 
 	public void setPluginType(String pluginType) {
+		_columnBitmask |= PLUGINTYPE_COLUMN_BITMASK;
+
 		if (_originalPluginType == null) {
 			_originalPluginType = _pluginType;
 		}
@@ -240,6 +252,10 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	public void setActive(boolean active) {
 		_active = active;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -344,6 +360,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		pluginSettingModelImpl._originalPluginId = pluginSettingModelImpl._pluginId;
 
 		pluginSettingModelImpl._originalPluginType = pluginSettingModelImpl._pluginType;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -456,5 +474,6 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	private String _roles;
 	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private PluginSetting _escapedModelProxy;
 }

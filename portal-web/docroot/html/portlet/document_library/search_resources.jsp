@@ -56,11 +56,11 @@ String keywords = ParamUtil.getString(request, "keywords");
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
+	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 }
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
 int total = 0;
 %>
@@ -104,23 +104,26 @@ int total = 0;
 
 			List<String> headerNames = new ArrayList<String>();
 
-			headerNames.add("name");
-			headerNames.add("description");
-			headerNames.add("size");
-			headerNames.add("create-date");
-			headerNames.add("modified-date");
-			headerNames.add("read-count");
-			headerNames.add(StringPool.BLANK);
+			for (String headerName : entryColumns) {
+				if (headerName.equals("action")) {
+					headerName = StringPool.BLANK;
+				}
+				else if (headerName.equals("name")) {
+					headerName = "title";
+				}
 
-			SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
+				headerNames.add(headerName);
+			}
+
+			SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, entriesPerPage, portletURL, headerNames, LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
 			Map<String, String> orderableHeaders = new HashMap<String, String>();
 
-			orderableHeaders.put("name", "name");
+			orderableHeaders.put("title", "title");
 			orderableHeaders.put("size", "size");
 			orderableHeaders.put("create-date", "creationDate");
 			orderableHeaders.put("modified-date", "modifiedDate");
-			orderableHeaders.put("read-count", "readCount");
+			orderableHeaders.put("downloads", "downloads");
 
 			searchContainer.setOrderableHeaders(orderableHeaders);
 
@@ -237,16 +240,31 @@ int total = 0;
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
-							row.addText(fileEntry.getTitle(), rowURL);
-							row.addText(fileEntry.getDescription(), rowURL);
-							row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
-							row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
-							row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
-							row.addText(String.valueOf(fileEntry.getReadCount()));
+							for (String columnName : entryColumns) {
+								if (columnName.equals("action")) {
+									row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_action.jsp");
+								}
 
-							// Action
+								if (columnName.equals("create-date")) {
+									row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
+								}
 
-							row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_action.jsp");
+								if (columnName.equals("downloads")) {
+									row.addText(String.valueOf(fileEntry.getReadCount()));
+								}
+
+								if (columnName.equals("modified-date")) {
+									row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
+								}
+
+								if (columnName.equals("name")) {
+									row.addText(fileEntry.getTitle(), rowURL);
+								}
+
+								if (columnName.equals("size")) {
+									row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
+								}
+							}
 
 							// Add result row
 

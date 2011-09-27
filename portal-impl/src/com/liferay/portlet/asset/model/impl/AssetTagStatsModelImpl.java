@@ -73,15 +73,11 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetTagStats"),
 			true);
-
-	public Class<?> getModelClass() {
-		return AssetTagStats.class;
-	}
-
-	public String getModelClassName() {
-		return AssetTagStats.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetTagStats"),
+			true);
+	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static long TAGID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.asset.model.AssetTagStats"));
 
@@ -104,6 +100,14 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return AssetTagStats.class;
+	}
+
+	public String getModelClassName() {
+		return AssetTagStats.class.getName();
+	}
+
 	public long getTagStatsId() {
 		return _tagStatsId;
 	}
@@ -117,6 +121,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	}
 
 	public void setTagId(long tagId) {
+		_columnBitmask |= TAGID_COLUMN_BITMASK;
+
 		if (!_setOriginalTagId) {
 			_setOriginalTagId = true;
 
@@ -143,6 +149,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -162,6 +170,10 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 	public void setAssetCount(int assetCount) {
 		_assetCount = assetCount;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -272,6 +284,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		assetTagStatsModelImpl._originalClassNameId = assetTagStatsModelImpl._classNameId;
 
 		assetTagStatsModelImpl._setOriginalClassNameId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -348,5 +362,6 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	private boolean _setOriginalClassNameId;
 	private int _assetCount;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private AssetTagStats _escapedModelProxy;
 }

@@ -77,15 +77,10 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingItemPrice"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ShoppingItemPrice.class;
-	}
-
-	public String getModelClassName() {
-		return ShoppingItemPrice.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingItemPrice"),
+			true);
+	public static long ITEMID_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingItemPrice"));
 
@@ -108,6 +103,14 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ShoppingItemPrice.class;
+	}
+
+	public String getModelClassName() {
+		return ShoppingItemPrice.class.getName();
+	}
+
 	public long getItemPriceId() {
 		return _itemPriceId;
 	}
@@ -121,6 +124,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	}
 
 	public void setItemId(long itemId) {
+		_columnBitmask |= ITEMID_COLUMN_BITMASK;
+
 		if (!_setOriginalItemId) {
 			_setOriginalItemId = true;
 
@@ -204,6 +209,10 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 
 	public void setStatus(int status) {
 		_status = status;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -328,6 +337,8 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 		shoppingItemPriceModelImpl._originalItemId = shoppingItemPriceModelImpl._itemId;
 
 		shoppingItemPriceModelImpl._setOriginalItemId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -456,5 +467,6 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 	private boolean _useShippingFormula;
 	private int _status;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ShoppingItemPrice _escapedModelProxy;
 }

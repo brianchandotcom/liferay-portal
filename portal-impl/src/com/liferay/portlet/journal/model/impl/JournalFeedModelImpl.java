@@ -100,6 +100,12 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalFeed"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalFeed"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long UUID_COLUMN_BITMASK = 2L;
+	public static long FEEDID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -153,14 +159,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return JournalFeed.class;
-	}
-
-	public String getModelClassName() {
-		return JournalFeed.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalFeed"));
 
@@ -181,6 +179,14 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return JournalFeed.class;
+	}
+
+	public String getModelClassName() {
+		return JournalFeed.class.getName();
 	}
 
 	@JSON
@@ -220,6 +226,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -302,6 +310,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	}
 
 	public void setFeedId(String feedId) {
+		_columnBitmask |= FEEDID_COLUMN_BITMASK;
+
 		if (_originalFeedId == null) {
 			_originalFeedId = _feedId;
 		}
@@ -499,6 +509,10 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		_feedVersion = feedVersion;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public JournalFeed toEscapedModel() {
 		if (isEscapedModel()) {
@@ -616,6 +630,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		journalFeedModelImpl._setOriginalGroupId = false;
 
 		journalFeedModelImpl._originalFeedId = journalFeedModelImpl._feedId;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -969,5 +985,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private String _feedType;
 	private double _feedVersion;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private JournalFeed _escapedModelProxy;
 }

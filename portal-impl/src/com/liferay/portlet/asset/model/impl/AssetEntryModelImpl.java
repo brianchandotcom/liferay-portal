@@ -108,6 +108,17 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetEntry"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetEntry"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 4L;
+	public static long PUBLISHDATE_COLUMN_BITMASK = 8L;
+	public static long VISIBLE_COLUMN_BITMASK = 16L;
+	public static long CLASSPK_COLUMN_BITMASK = 32L;
+	public static long CLASSUUID_COLUMN_BITMASK = 64L;
+	public static long EXPIRATIONDATE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -164,14 +175,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return AssetEntry.class;
-	}
-
-	public String getModelClassName() {
-		return AssetEntry.class.getName();
-	}
-
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_NAME = "AssetEntries_AssetCategories";
 	public static final Object[][] MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_COLUMNS =
 		{
@@ -215,6 +218,14 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return AssetEntry.class;
+	}
+
+	public String getModelClassName() {
+		return AssetEntry.class.getName();
+	}
+
 	@JSON
 	public long getEntryId() {
 		return _entryId;
@@ -230,6 +241,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -249,6 +262,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -325,6 +340,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -344,6 +361,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -368,6 +387,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setClassUuid(String classUuid) {
+		_columnBitmask |= CLASSUUID_COLUMN_BITMASK;
+
 		if (_originalClassUuid == null) {
 			_originalClassUuid = _classUuid;
 		}
@@ -398,6 +419,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setVisible(boolean visible) {
+		_columnBitmask |= VISIBLE_COLUMN_BITMASK;
+
 		if (!_setOriginalVisible) {
 			_setOriginalVisible = true;
 
@@ -435,6 +458,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setPublishDate(Date publishDate) {
+		_columnBitmask |= PUBLISHDATE_COLUMN_BITMASK;
+
 		if (_originalPublishDate == null) {
 			_originalPublishDate = _publishDate;
 		}
@@ -452,6 +477,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setExpirationDate(Date expirationDate) {
+		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
+
 		if (_originalExpirationDate == null) {
 			_originalExpirationDate = _expirationDate;
 		}
@@ -658,6 +685,10 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_viewCount = viewCount;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public AssetEntry toEscapedModel() {
 		if (isEscapedModel()) {
@@ -798,6 +829,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		assetEntryModelImpl._originalPublishDate = assetEntryModelImpl._publishDate;
 
 		assetEntryModelImpl._originalExpirationDate = assetEntryModelImpl._expirationDate;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1172,5 +1205,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private double _priority;
 	private int _viewCount;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private AssetEntry _escapedModelProxy;
 }

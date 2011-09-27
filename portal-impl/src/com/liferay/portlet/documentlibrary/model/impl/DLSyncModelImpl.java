@@ -85,6 +85,13 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLSync"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLSync"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long MODIFIEDDATE_COLUMN_BITMASK = 2L;
+	public static long REPOSITORYID_COLUMN_BITMASK = 4L;
+	public static long FILEID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -124,14 +131,6 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return DLSync.class;
-	}
-
-	public String getModelClassName() {
-		return DLSync.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLSync"));
 
@@ -154,6 +153,14 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return DLSync.class;
+	}
+
+	public String getModelClassName() {
+		return DLSync.class.getName();
+	}
+
 	@JSON
 	public long getSyncId() {
 		return _syncId;
@@ -169,6 +176,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -197,6 +206,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setModifiedDate(Date modifiedDate) {
+		_columnBitmask |= MODIFIEDDATE_COLUMN_BITMASK;
+
 		if (_originalModifiedDate == null) {
 			_originalModifiedDate = _modifiedDate;
 		}
@@ -214,6 +225,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setFileId(long fileId) {
+		_columnBitmask |= FILEID_COLUMN_BITMASK;
+
 		if (!_setOriginalFileId) {
 			_setOriginalFileId = true;
 
@@ -233,6 +246,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setRepositoryId(long repositoryId) {
+		_columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
+
 		if (!_setOriginalRepositoryId) {
 			_setOriginalRepositoryId = true;
 
@@ -281,6 +296,10 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 
 	public void setType(String type) {
 		_type = type;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -420,6 +439,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		dlSyncModelImpl._originalRepositoryId = dlSyncModelImpl._repositoryId;
 
 		dlSyncModelImpl._setOriginalRepositoryId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -570,5 +591,6 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	private String _event;
 	private String _type;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private DLSync _escapedModelProxy;
 }

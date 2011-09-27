@@ -84,6 +84,13 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.ratings.model.RatingsEntry"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.ratings.model.RatingsEntry"),
+			true);
+	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long SCORE_COLUMN_BITMASK = 4L;
+	public static long CLASSPK_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -123,14 +130,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return RatingsEntry.class;
-	}
-
-	public String getModelClassName() {
-		return RatingsEntry.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.ratings.model.RatingsEntry"));
 
@@ -151,6 +150,14 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return RatingsEntry.class;
+	}
+
+	public String getModelClassName() {
+		return RatingsEntry.class.getName();
 	}
 
 	@JSON
@@ -177,6 +184,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -244,6 +253,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -263,6 +274,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -282,6 +295,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	public void setScore(double score) {
+		_columnBitmask |= SCORE_COLUMN_BITMASK;
+
 		if (!_setOriginalScore) {
 			_setOriginalScore = true;
 
@@ -293,6 +308,10 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 	public double getOriginalScore() {
 		return _originalScore;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -408,6 +427,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		ratingsEntryModelImpl._originalScore = ratingsEntryModelImpl._score;
 
 		ratingsEntryModelImpl._setOriginalScore = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -554,5 +575,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	private double _originalScore;
 	private boolean _setOriginalScore;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private RatingsEntry _escapedModelProxy;
 }

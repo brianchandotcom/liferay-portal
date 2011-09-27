@@ -97,6 +97,13 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalStructure"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalStructure"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long PARENTSTRUCTUREID_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -141,14 +148,6 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return JournalStructure.class;
-	}
-
-	public String getModelClassName() {
-		return JournalStructure.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalStructure"));
 
@@ -169,6 +168,14 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return JournalStructure.class;
+	}
+
+	public String getModelClassName() {
+		return JournalStructure.class.getName();
 	}
 
 	@JSON
@@ -208,6 +215,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -290,6 +299,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public void setStructureId(String structureId) {
+		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
+
 		if (_originalStructureId == null) {
 			_originalStructureId = _structureId;
 		}
@@ -312,6 +323,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public void setParentStructureId(String parentStructureId) {
+		_columnBitmask |= PARENTSTRUCTUREID_COLUMN_BITMASK;
+
 		if (_originalParentStructureId == null) {
 			_originalParentStructureId = _parentStructureId;
 		}
@@ -519,6 +532,10 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		_xsd = xsd;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public JournalStructure toEscapedModel() {
 		if (isEscapedModel()) {
@@ -628,6 +645,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		journalStructureModelImpl._originalStructureId = journalStructureModelImpl._structureId;
 
 		journalStructureModelImpl._originalParentStructureId = journalStructureModelImpl._parentStructureId;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -843,5 +862,6 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	private String _description;
 	private String _xsd;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private JournalStructure _escapedModelProxy;
 }

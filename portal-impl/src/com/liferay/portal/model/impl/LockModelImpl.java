@@ -79,15 +79,13 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Lock"),
 			true);
-
-	public Class<?> getModelClass() {
-		return Lock.class;
-	}
-
-	public String getModelClassName() {
-		return Lock.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Lock"),
+			true);
+	public static long KEY_COLUMN_BITMASK = 1L;
+	public static long UUID_COLUMN_BITMASK = 2L;
+	public static long CLASSNAME_COLUMN_BITMASK = 4L;
+	public static long EXPIRATIONDATE_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Lock"));
 
@@ -108,6 +106,14 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return Lock.class;
+	}
+
+	public String getModelClassName() {
+		return Lock.class.getName();
 	}
 
 	public String getUuid() {
@@ -194,6 +200,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public void setClassName(String className) {
+		_columnBitmask |= CLASSNAME_COLUMN_BITMASK;
+
 		if (_originalClassName == null) {
 			_originalClassName = _className;
 		}
@@ -215,6 +223,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public void setKey(String key) {
+		_columnBitmask |= KEY_COLUMN_BITMASK;
+
 		if (_originalKey == null) {
 			_originalKey = _key;
 		}
@@ -256,6 +266,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public void setExpirationDate(Date expirationDate) {
+		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
+
 		if (_originalExpirationDate == null) {
 			_originalExpirationDate = _expirationDate;
 		}
@@ -265,6 +277,10 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public Date getOriginalExpirationDate() {
 		return _originalExpirationDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -374,6 +390,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		lockModelImpl._originalKey = lockModelImpl._key;
 
 		lockModelImpl._originalExpirationDate = lockModelImpl._expirationDate;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -558,5 +576,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private Date _expirationDate;
 	private Date _originalExpirationDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Lock _escapedModelProxy;
 }

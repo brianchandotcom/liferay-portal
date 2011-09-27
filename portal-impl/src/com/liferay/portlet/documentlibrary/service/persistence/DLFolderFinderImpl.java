@@ -61,12 +61,12 @@ public class DLFolderFinderImpl
 		DLFolderFinder.class.getName() + ".findFS_ByG_F_S";
 
 	public int countF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status,
+			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
 		throws SystemException {
 
 		return doCountF_FE_FS_ByG_F_S(
-			groupId, folderId, status, includeMountFolders, false);
+			groupId, folderId, status, mimeTypes, includeMountFolders, false);
 	}
 
 	public int countFE_FS_ByG_F_S(long groupId, long folderId, int status)
@@ -76,12 +76,12 @@ public class DLFolderFinderImpl
 	}
 
 	public int filterCountF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status,
+			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
 		throws SystemException {
 
 		return doCountF_FE_FS_ByG_F_S(
-			groupId, folderId, status, includeMountFolders, true);
+			groupId, folderId, status, mimeTypes, includeMountFolders, true);
 	}
 
 	public int filterCountFE_FS_ByG_F_S(
@@ -92,14 +92,14 @@ public class DLFolderFinderImpl
 	}
 
 	public List<Object> filterFindF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status,
+			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 
 		return doFindF_FE_FS_ByG_F_S(
-			groupId, folderId, status, includeMountFolders, start, end, obc,
-			true);
+			groupId, folderId, status, mimeTypes, includeMountFolders, start,
+			end, obc, true);
 	}
 
 	public List<Object> filterFindFE_FS_ByG_F_S(
@@ -111,14 +111,14 @@ public class DLFolderFinderImpl
 	}
 
 	public List<Object> findF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status,
+			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 
 		return doFindF_FE_FS_ByG_F_S(
-			groupId, folderId, status, includeMountFolders, start, end, obc,
-			false);
+			groupId, folderId, status, mimeTypes, includeMountFolders, start,
+			end, obc, false);
 	}
 
 	public List<Object> findFE_FS_ByG_F_S(
@@ -130,7 +130,7 @@ public class DLFolderFinderImpl
 	}
 
 	protected int doCountF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status,
+			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, boolean inlineSQLHelper)
 		throws SystemException {
 
@@ -163,6 +163,24 @@ public class DLFolderFinderImpl
 			}
 
 			sb.append(sql);
+
+			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+				for (int i = 0; i < mimeTypes.length; i++) {
+					if (i == 0) {
+						sb.append(" AND (");
+					}
+					else {
+						sb.append(" OR");
+					}
+
+					sb.append(" DLFileEntry.mimeType = '");
+					sb.append(mimeTypes[i]);
+					sb.append("'");
+				}
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
 			sb.append(") UNION ALL (");
 
 			sql = CustomSQLUtil.get(COUNT_FS_BY_G_F_S);
@@ -174,6 +192,24 @@ public class DLFolderFinderImpl
 			}
 
 			sb.append(sql);
+
+			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+				for (int i = 0; i < mimeTypes.length; i++) {
+					if (i == 0) {
+						sb.append(" AND (");
+					}
+					else {
+						sb.append(" OR");
+					}
+
+					sb.append(" DLFileEntry.mimeType = '");
+					sb.append(mimeTypes[i]);
+					sb.append("'");
+				}
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			sql = sb.toString();
@@ -331,7 +367,7 @@ public class DLFolderFinderImpl
 	}
 
 	protected List<Object> doFindF_FE_FS_ByG_F_S(
-			long groupId, long folderId, int status,
+			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc, boolean inlineSQLHelper)
 		throws SystemException {
@@ -365,6 +401,24 @@ public class DLFolderFinderImpl
 			}
 
 			sb.append(sql);
+
+			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+				for (int i = 0; i < mimeTypes.length; i++) {
+					if (i == 0) {
+						sb.append(" AND (");
+					}
+					else {
+						sb.append(" OR");
+					}
+
+					sb.append(" DLFileEntry.mimeType = '");
+					sb.append(mimeTypes[i]);
+					sb.append("'");
+				}
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
 			sb.append(") UNION ALL (");
 
 			sql = CustomSQLUtil.get(FIND_FS_BY_G_F_S);
@@ -376,6 +430,24 @@ public class DLFolderFinderImpl
 			}
 
 			sb.append(sql);
+
+			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+				for (int i = 0; i < mimeTypes.length; i++) {
+					if (i == 0) {
+						sb.append(" AND (");
+					}
+					else {
+						sb.append(" OR");
+					}
+
+					sb.append(" mimeType = '");
+					sb.append(mimeTypes[i]);
+					sb.append("'");
+				}
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
 			sb.append(")) TEMP_TABLE ORDER BY modelFolder DESC, title ASC");
 
 			sql = sb.toString();

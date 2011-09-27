@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortletPreferences;
@@ -86,7 +85,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName() },
+			PortletPreferencesModelImpl.PLID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_PLID = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
@@ -105,7 +105,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_P",
-			new String[] { Long.class.getName(), String.class.getName() });
+			new String[] { Long.class.getName(), String.class.getName() },
+			PortletPreferencesModelImpl.PLID_COLUMN_BITMASK |
+			PortletPreferencesModelImpl.PORTLETID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_P",
@@ -128,7 +130,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Long.class.getName()
-			});
+			},
+			PortletPreferencesModelImpl.OWNERID_COLUMN_BITMASK |
+			PortletPreferencesModelImpl.OWNERTYPE_COLUMN_BITMASK |
+			PortletPreferencesModelImpl.PLID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_O_O_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O_P",
@@ -143,7 +148,11 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Long.class.getName(), String.class.getName()
-			});
+			},
+			PortletPreferencesModelImpl.OWNERID_COLUMN_BITMASK |
+			PortletPreferencesModelImpl.OWNERTYPE_COLUMN_BITMASK |
+			PortletPreferencesModelImpl.PLID_COLUMN_BITMASK |
+			PortletPreferencesModelImpl.PORTLETID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_O_O_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O_P_P",
@@ -396,42 +405,46 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !PortletPreferencesModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
-			if (portletPreferences.getPlid() != portletPreferencesModelImpl.getOriginalPlid()) {
+			if ((portletPreferencesModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(portletPreferencesModelImpl.getOriginalPlid())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PLID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID,
-					new Object[] {
-						Long.valueOf(
-							portletPreferencesModelImpl.getOriginalPlid())
-					});
+					args);
 			}
 
-			if ((portletPreferences.getPlid() != portletPreferencesModelImpl.getOriginalPlid()) ||
-					!Validator.equals(portletPreferences.getPortletId(),
-						portletPreferencesModelImpl.getOriginalPortletId())) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_P,
-					new Object[] {
-						Long.valueOf(
-							portletPreferencesModelImpl.getOriginalPlid()),
+			if ((portletPreferencesModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(portletPreferencesModelImpl.getOriginalPlid()),
 						
-					portletPreferencesModelImpl.getOriginalPortletId()
-					});
+						portletPreferencesModelImpl.getOriginalPortletId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_P,
+					args);
 			}
 
-			if ((portletPreferences.getOwnerId() != portletPreferencesModelImpl.getOriginalOwnerId()) ||
-					(portletPreferences.getOwnerType() != portletPreferencesModelImpl.getOriginalOwnerType()) ||
-					(portletPreferences.getPlid() != portletPreferencesModelImpl.getOriginalPlid())) {
+			if ((portletPreferencesModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_O_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(portletPreferencesModelImpl.getOriginalOwnerId()),
+						Integer.valueOf(portletPreferencesModelImpl.getOriginalOwnerType()),
+						Long.valueOf(portletPreferencesModelImpl.getOriginalPlid())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_O_P,
-					new Object[] {
-						Long.valueOf(
-							portletPreferencesModelImpl.getOriginalOwnerId()),
-						Integer.valueOf(
-							portletPreferencesModelImpl.getOriginalOwnerType()),
-						Long.valueOf(
-							portletPreferencesModelImpl.getOriginalPlid())
-					});
+					args);
 			}
 		}
 
@@ -450,11 +463,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				}, portletPreferences);
 		}
 		else {
-			if ((portletPreferences.getOwnerId() != portletPreferencesModelImpl.getOriginalOwnerId()) ||
-					(portletPreferences.getOwnerType() != portletPreferencesModelImpl.getOriginalOwnerType()) ||
-					(portletPreferences.getPlid() != portletPreferencesModelImpl.getOriginalPlid()) ||
-					!Validator.equals(portletPreferences.getPortletId(),
-						portletPreferencesModelImpl.getOriginalPortletId())) {
+			if ((portletPreferencesModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_O_O_P_P.getColumnBitmask()) != 0) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O_P_P,
 					new Object[] {
 						Long.valueOf(

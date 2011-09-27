@@ -97,6 +97,12 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.mobiledevicerules.model.MDRAction"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.mobiledevicerules.model.MDRAction"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long UUID_COLUMN_BITMASK = 2L;
+	public static long RULEGROUPINSTANCEID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -142,14 +148,6 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return MDRAction.class;
-	}
-
-	public String getModelClassName() {
-		return MDRAction.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.mobiledevicerules.model.MDRAction"));
 
@@ -170,6 +168,14 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return MDRAction.class;
+	}
+
+	public String getModelClassName() {
+		return MDRAction.class.getName();
 	}
 
 	@JSON
@@ -209,6 +215,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -312,6 +320,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	public void setRuleGroupInstanceId(long ruleGroupInstanceId) {
+		_columnBitmask |= RULEGROUPINSTANCEID_COLUMN_BITMASK;
+
 		if (!_setOriginalRuleGroupInstanceId) {
 			_setOriginalRuleGroupInstanceId = true;
 
@@ -535,6 +545,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_typeSettings = typeSettings;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public MDRAction toEscapedModel() {
 		if (isEscapedModel()) {
@@ -648,6 +662,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		mdrActionModelImpl._originalRuleGroupInstanceId = mdrActionModelImpl._ruleGroupInstanceId;
 
 		mdrActionModelImpl._setOriginalRuleGroupInstanceId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -875,5 +891,6 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	private String _type;
 	private String _typeSettings;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private MDRAction _escapedModelProxy;
 }

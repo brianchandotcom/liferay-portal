@@ -56,6 +56,8 @@ public class LiferayDefaultSelenium
 
 			Runtime runtime = Runtime.getRuntime();
 
+			Thread.sleep(1000);
+
 			runtime.exec(commands);
 
 			Thread.sleep(10000);

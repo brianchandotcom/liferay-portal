@@ -74,15 +74,10 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialEquityAssetEntry"),
 			true);
-
-	public Class<?> getModelClass() {
-		return SocialEquityAssetEntry.class;
-	}
-
-	public String getModelClassName() {
-		return SocialEquityAssetEntry.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialEquityAssetEntry"),
+			true);
+	public static long ASSETENTRYID_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialEquityAssetEntry"));
 
@@ -103,6 +98,14 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return SocialEquityAssetEntry.class;
+	}
+
+	public String getModelClassName() {
+		return SocialEquityAssetEntry.class.getName();
 	}
 
 	public long getEquityAssetEntryId() {
@@ -150,6 +153,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 	}
 
 	public void setAssetEntryId(long assetEntryId) {
+		_columnBitmask |= ASSETENTRYID_COLUMN_BITMASK;
+
 		if (!_setOriginalAssetEntryId) {
 			_setOriginalAssetEntryId = true;
 
@@ -177,6 +182,10 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 
 	public void setInformationB(double informationB) {
 		_informationB = informationB;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -278,6 +287,8 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 		socialEquityAssetEntryModelImpl._originalAssetEntryId = socialEquityAssetEntryModelImpl._assetEntryId;
 
 		socialEquityAssetEntryModelImpl._setOriginalAssetEntryId = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -380,5 +391,6 @@ public class SocialEquityAssetEntryModelImpl extends BaseModelImpl<SocialEquityA
 	private double _informationK;
 	private double _informationB;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private SocialEquityAssetEntry _escapedModelProxy;
 }

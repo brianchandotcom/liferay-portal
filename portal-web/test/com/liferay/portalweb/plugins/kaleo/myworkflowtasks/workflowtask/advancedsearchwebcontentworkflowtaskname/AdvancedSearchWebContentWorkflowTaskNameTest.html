@@ -16,22 +16,22 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -46,7 +46,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
-	<td></td>
+	<td>Advanced »</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -55,27 +55,27 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_153_andOperator</td>
+	<td>//select[@id='_153_andOperator']</td>
 	<td>Match</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_153_andOperator</td>
+	<td>//select[@id='_153_andOperator']</td>
 	<td>label=Any</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_153_name</td>
+	<td>//input[@id='_153_name']</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_153_type</td>
+	<td>//select[@id='_153_type']</td>
 	<td>label=Blogs Entry</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -110,12 +110,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_153_name</td>
+	<td>//input[@id='_153_name']</td>
 	<td>Review1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
 	<td>There are no pending tasks assigned to you with the specified search criteria.</td>
 </tr>
 <tr>
@@ -136,8 +136,9 @@
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
-	<td></td>
+	<td>« Basic</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

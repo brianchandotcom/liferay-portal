@@ -16,56 +16,56 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[1]/div/span/a</td>
+	<td>//strong/a/span</td>
 	<td>Scope Selector</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[3]/div[2]/ul/li[1]/a</td>
-	<td>Global</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[3]/div[2]/ul/li[1]/a</td>
-	<td>Global</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[1]/div/span/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
 	<td>Global</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/div/span/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Global</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>Global</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//strong/a/span</td>
+	<td>Global</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a/span</td>
 	<td>Global</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
 	<td>There are no pending tasks assigned to you.</td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Completed</td>
-	<td></td>
+	<td>Completed</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -106,12 +106,12 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=My Submissions</td>
-	<td></td>
+	<td>My Submissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -121,7 +121,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Completed</td>
-	<td></td>
+	<td>Completed</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -156,11 +156,11 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content</td>
-	<td></td>
+	<td>Web Content</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//li[1]/span/span/a</td>
+	<td>//form/ul/li[1]/span/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
@@ -196,17 +196,17 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Workflow</td>
-	<td></td>
+	<td>Workflow</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Submissions</td>
-	<td></td>
+	<td>Submissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -216,7 +216,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Completed</td>
-	<td></td>
+	<td>Completed</td>
 </tr>
 <tr>
 	<td>assertText</td>

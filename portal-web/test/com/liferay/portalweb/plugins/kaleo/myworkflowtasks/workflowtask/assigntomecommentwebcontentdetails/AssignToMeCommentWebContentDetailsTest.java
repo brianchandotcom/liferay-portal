@@ -42,7 +42,8 @@ public class AssignToMeCommentWebContentDetailsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
@@ -64,7 +65,7 @@ public class AssignToMeCommentWebContentDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[1]/div/div[1]/div/div/span/a",
+		selenium.clickAt("//a[@id='_153_taskAssignToMeLink']",
 			RuntimeVariables.replace("Assign to Me"));
 
 		for (int second = 0;; second++) {
@@ -73,7 +74,7 @@ public class AssignToMeCommentWebContentDetailsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_153_comment")) {
+				if (selenium.isVisible("//textarea[@name='_153_comment']")) {
 					break;
 				}
 			}
@@ -84,10 +85,13 @@ public class AssignToMeCommentWebContentDetailsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.type("_153_comment",
+		selenium.type("//textarea[@name='_153_comment']",
 			RuntimeVariables.replace("Web Content Comment Assign To Me"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div/button[1]", RuntimeVariables.replace("OK"));
+		assertEquals(RuntimeVariables.replace("OK"),
+			selenium.getText("//div[3]/span/span/button"));
+		selenium.clickAt("//div[3]/span/span/button",
+			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -133,7 +137,8 @@ public class AssignToMeCommentWebContentDetailsTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));

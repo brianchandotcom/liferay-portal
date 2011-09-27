@@ -10,80 +10,94 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=My Account</td>
-	<td></td>
+	<td>My Account</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_2_addressesLink']</td>
+	<td>Addresses</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_2_addressesLink']</td>
+	<td>Addresses</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>addressesLink</td>
+	<td>//a[@id='_2_addressesLink']</td>
+	<td>Addresses</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_2_addressStreet1_0']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForSelectedLabel</td>
-	<td>_2_addressCountryId2</td>
+	<td>//select[@id='_2_addressCountryId2']</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>waitForSelectedLabel</td>
-	<td>_2_addressRegionId2</td>
+	<td>//select[@id='_2_addressRegionId2']</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_2_addressStreet1_2</td>
+	<td>//input[@id='_2_addressStreet1_2']</td>
 	<td>1220 Brea Canyon Rd</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_addressTypeId2</td>
+	<td>//select[@id='_2_addressTypeId2']</td>
 	<td>Business</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_2_addressStreet2_2</td>
+	<td>//input[@id='_2_addressStreet2_2']</td>
 	<td>Ste 12</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_2_addressZip2</td>
+	<td>//input[@id='_2_addressZip2']</td>
 	<td>91789</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_2_addressStreet3_2</td>
+	<td>//input[@id='_2_addressStreet3_2']</td>
 	<td>Walnut</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_2_addressCity2</td>
+	<td>//input[@id='_2_addressCity2']</td>
 	<td>Los Angeles</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_addressCountryId2</td>
+	<td>//select[@id='_2_addressCountryId2']</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_2_addressRegionId2</td>
+	<td>//select[@id='_2_addressRegionId2']</td>
 	<td>California</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

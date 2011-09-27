@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewWebContentExpandoTest extends BaseTestCase {
 	public void testViewWebContentExpando() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/expando-web-content-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewWebContentExpandoTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Web Content Display Page")) {
 					break;
 				}
 			}
@@ -41,28 +41,12 @@ public class ViewWebContentExpandoTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Expando Web Content Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("First Expando Bank"),
-			selenium.getText("//div[1]/h1"));
+			selenium.getText("//div[@class='journal-content-article']/h1"));
 		assertTrue(selenium.isElementPresent("//input[@value='Create Account']"));
 		assertEquals(RuntimeVariables.replace("Michael"),
 			selenium.getText("//td[2]"));
@@ -82,7 +66,6 @@ public class ViewWebContentExpandoTest extends BaseTestCase {
 			selenium.getText("//tr[4]/td[3]"));
 		assertEquals(RuntimeVariables.replace("$1,000,000.00"),
 			selenium.getText("//tr[4]/td[4]"));
-		assertTrue(selenium.isPartialText("//section/div/div/div/div[1]",
-				"# of Accounts: 3"));
+		assertTrue(selenium.isTextPresent("# of Accounts: 3"));
 	}
 }

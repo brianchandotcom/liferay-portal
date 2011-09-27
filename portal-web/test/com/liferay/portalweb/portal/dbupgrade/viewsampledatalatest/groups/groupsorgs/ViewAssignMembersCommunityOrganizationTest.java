@@ -58,25 +58,9 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Community Groups Orgs"),
 			selenium.getText("//tr[3]/td[1]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[7]/span/ul/li/strong/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

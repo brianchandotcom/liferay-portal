@@ -124,32 +124,10 @@ public class ViewOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[1]/span[1]/ul/li/strong/a/span",
-			RuntimeVariables.replace("View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("All Users"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		assertEquals(RuntimeVariables.replace("Search All Users"),
+			selenium.getText("//a[@id='_125_allUsersLink']"));
+		selenium.clickAt("//a[@id='_125_allUsersLink']",
+			RuntimeVariables.replace("Search All Users"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_125_keywords']",

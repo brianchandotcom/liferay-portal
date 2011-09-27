@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
@@ -46,9 +47,11 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.util.xml.XMLFormatter;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.Annotation;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.DocletTag;
 import com.thoughtworks.qdox.model.JavaClass;
+import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.Type;
@@ -1245,6 +1248,16 @@ public class ServiceBuilder {
 		return sb.toString();
 	}
 
+	public String getVariableName(JavaField field) {
+		String fieldName = field.getName();
+
+		if ((fieldName.length() > 0) && (fieldName.charAt(0) == '_')) {
+			fieldName = fieldName.substring(1);
+		}
+
+		return fieldName;
+	}
+
 	public boolean hasEntityByGenericsName(String genericsName) {
 		if (Validator.isNull(genericsName)) {
 			return false;
@@ -2070,9 +2083,13 @@ public class ServiceBuilder {
 	}
 
 	private void _createModelCache(Entity entity) throws Exception {
+		JavaClass javaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+		context.put("cacheFields", _getCacheFields(javaClass));
 
 		// Content
 
@@ -2165,9 +2182,13 @@ public class ServiceBuilder {
 	}
 
 	private void _createModelImpl(Entity entity) throws Exception {
+		JavaClass javaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+		context.put("cacheFields", _getCacheFields(javaClass));
 
 		// Content
 
@@ -3700,6 +3721,35 @@ public class ServiceBuilder {
 		}
 
 		return xml;
+	}
+
+	private JavaField[] _getCacheFields(JavaClass javaClass) {
+		JavaField[] fields = javaClass.getFields();
+
+		if (fields.length == 0) {
+			return fields;
+		}
+
+		String annotationClassName = CacheField.class.getName();
+
+		List<JavaField> fieldList = new ArrayList<JavaField>();
+
+		for (JavaField field : fields) {
+			Annotation[] annotations = field.getAnnotations();
+
+			for (Annotation annotation : annotations) {
+				String annotationTypeFQN =
+					annotation.getType().getFullyQualifiedName();
+
+				if (annotationTypeFQN.equals(annotationClassName)) {
+						fieldList.add(field);
+
+					break;
+				}
+			}
+		}
+
+		return fieldList.toArray(new JavaField[fieldList.size()]);
 	}
 
 	private String _getContent(String fileName) throws Exception {

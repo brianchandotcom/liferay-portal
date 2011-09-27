@@ -551,6 +551,27 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 	</#list>
 
+	<#list cacheFields as cacheField>
+		<#assign variableName = serviceBuilder.getVariableName(cacheField)>
+		<#assign methodName = textFormatter.format(variableName, 6)>
+		<#assign typeName = cacheField.getType().getFullyQualifiedName()>
+
+		public ${typeName} get${methodName}() {
+			<#if cacheField.getType().isPrimitive()>
+				<#if typeName == "boolean">
+					return false;
+				<#else>
+					return 0;
+				</#if>
+			<#else>
+				return null;
+			</#if>
+		}
+
+		public void set${methodName}(${typeName} ${variableName}) {
+		}
+	</#list>
+
 	<#if entity.isWorkflowEnabled()>
 		/**
 		 * @deprecated {@link #isApproved}
@@ -824,6 +845,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					</#if>
 				</#if>
 			</#if>
+		</#list>
+
+		<#list cacheFields as cacheField>
+			<#assign methodName = textFormatter.format(serviceBuilder.getVariableName(cacheField), 6)>
+
+			${entity.varName}CacheModel.${cacheField.name} = get${methodName}();
 		</#list>
 
 		return ${entity.varName}CacheModel;

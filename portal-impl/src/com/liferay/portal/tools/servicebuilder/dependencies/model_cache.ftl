@@ -69,6 +69,12 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}> {
 
 		${entity.varName}Impl.resetOriginalValues();
 
+		<#list cacheFields as cacheField>
+			<#assign methodName = textFormatter.format(serviceBuilder.getVariableName(cacheField), 6)>
+
+			${entity.varName}Impl.set${methodName}(${cacheField.name});
+		</#list>
+
 		return ${entity.varName}Impl;
 	}
 
@@ -80,6 +86,10 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}> {
 				public ${column.type} ${column.name};
 			</#if>
 		</#if>
+	</#list>
+
+	<#list cacheFields as cacheField>
+		public ${cacheField.type.fullyQualifiedName} ${cacheField.name};
 	</#list>
 
 }

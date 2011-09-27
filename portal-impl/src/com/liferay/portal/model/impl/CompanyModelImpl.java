@@ -320,6 +320,13 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		_active = active;
 	}
 
+	public java.security.Key getKeyObj() {
+		return null;
+	}
+
+	public void setKeyObj(java.security.Key keyObj) {
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -485,6 +492,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		companyCacheModel.maxUsers = getMaxUsers();
 
 		companyCacheModel.active = getActive();
+
+		companyCacheModel._keyObj = getKeyObj();
 
 		return companyCacheModel;
 	}

@@ -184,14 +184,14 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 				var height = A.Plugin.ResizeIframe.getContentHeight(iframe);
 
 				if (height == null) {
+					height = <%= heightNormal %>;
+
 					if (themeDisplay.isStateMaximized()) {
 						height = <%= heightMaximized %>;
 					}
-					else {
-						height = <%= heightNormal %>;
-					}
 
 					iframe.setStyle('height', height);
+
 					iframe.resizeiframe.set('monitorHeight', false);
 				}
 			}

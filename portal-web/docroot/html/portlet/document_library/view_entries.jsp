@@ -207,6 +207,11 @@ for (int i = 0; i < results.size(); i++) {
 							request.setAttribute("view_entries.jsp-fileEntry", fileEntry);
 
 							request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
+
+							if (fileShortcut != null) {
+								request.setAttribute("view_entries.jsp-fileShortcut", fileShortcut);
+							}
+
 							%>
 
 							<c:choose>

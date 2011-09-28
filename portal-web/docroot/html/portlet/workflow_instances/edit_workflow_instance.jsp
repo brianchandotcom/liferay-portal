@@ -302,7 +302,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 						</c:choose>
 
 						<div>
-							<%= workflowLog.getComment() %>
+							<%= HtmlUtil.escape(workflowLog.getComment()) %>
 						</div>
 					</div>
 

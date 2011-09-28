@@ -29,9 +29,14 @@
 	<td>Sites</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>assertText</td>
 	<td>//tr[3]/td[1]</td>
 	<td>Liferay</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[6]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -40,17 +45,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[8]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[8]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[8]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -60,20 +65,19 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-error']</td>
-	<td>You have entered invalid data. Please try again.</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
+	<td>Your request failed to complete.</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>The group cannot be deleted because it is a required system group.</td>
+	<td>The site cannot be deleted or deactivated because it is a required system site.</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>assertText</td>
 	<td>//tr[3]/td[1]</td>
 	<td>Liferay</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

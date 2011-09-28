@@ -72,7 +72,7 @@ public class User_JoinSitesPrivateTest extends BaseTestCase {
 		selenium.type("//input[@id='_29_name']",
 			RuntimeVariables.replace("Test Private Community"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
+		selenium.clickAt("xPath=(//input[@value='Search'])[3]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

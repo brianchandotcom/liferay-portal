@@ -48,7 +48,10 @@ public class DeleteSitesGuestTest extends BaseTestCase {
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//tr[3]/td[1]", "Liferay"));
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//tr[3]/td[1]"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
 		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
@@ -59,7 +62,7 @@ public class DeleteSitesGuestTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[8]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
 					break;
 				}
 			}
@@ -72,19 +75,20 @@ public class DeleteSitesGuestTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[8]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[8]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
-				"You have entered invalid data. Please try again."),
-			selenium.getText("//div[@class='portlet-msg-error']"));
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"The group cannot be deleted because it is a required system group."),
+				"The site cannot be deleted or deactivated because it is a required system site."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
-		assertTrue(selenium.isPartialText("//tr[3]/td[1]", "Liferay"));
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//tr[3]/td[1]"));
 	}
 }

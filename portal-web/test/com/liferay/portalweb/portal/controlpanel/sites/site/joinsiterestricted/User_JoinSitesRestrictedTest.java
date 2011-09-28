@@ -69,32 +69,15 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 			RuntimeVariables.replace("Available Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_29_name']",
-			RuntimeVariables.replace("Test Restricted Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[4]/td[3]/span/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("//tr[4]/td[3]/span/a/span"));
+		assertEquals(RuntimeVariables.replace(
+				"Test Restricted Community\nThis is an restricted test community!"),
+			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[1]"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Request Membership"),
+			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[3]/span/a/span"));
+		selenium.clickAt("//div[2]/div/table/tbody/tr[4]/td[3]/span/a/span",
+			RuntimeVariables.replace("Request Membership"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_29_comments']",
@@ -111,5 +94,12 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request was sent. You will receive a reply by email."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-success'])[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"Test Restricted Community\nThis is an restricted test community!"),
+			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[1]"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Membership Requested"),
+			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[3]/span/span"));
 	}
 }

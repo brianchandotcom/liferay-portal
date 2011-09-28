@@ -47,13 +47,18 @@ public class User_LeaveSitesTest extends BaseTestCase {
 		selenium.type("//input[@id='_29_name']",
 			RuntimeVariables.replace("Test Open Community"));
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//form/span/span[2]/span/input",
+		selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Test Open Community"),
+			selenium.getText("//div[1]/table/tbody/tr[3]/td[1]"));
+		assertEquals(RuntimeVariables.replace("2"),
+			selenium.getText("//div[1]/table/tbody/tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Leave"),
-			selenium.getText("//tr[4]/td[3]/span/a/span"));
-		selenium.click(RuntimeVariables.replace("//tr[4]/td[3]/span/a/span"));
+			selenium.getText("//div[1]/table/tbody/tr[3]/td[3]/span/a/span"));
+		selenium.clickAt("//div[1]/table/tbody/tr[3]/td[3]/span/a/span",
+			RuntimeVariables.replace("Leave"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(

@@ -53,34 +53,6 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//strong/a/span",
-					RuntimeVariables.replace("Test Restricted Community"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Global"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_134_name']",
 					RuntimeVariables.replace("Restricted"));
 				selenium.saveScreenShotAndSource();
@@ -90,7 +62,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 				boolean communityInactiveNot1Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//td[6]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot1Present) {
 					label = 2;
@@ -134,7 +106,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 			case 2:
 
 				boolean communityInactiveNot2Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//td[6]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot2Present) {
 					label = 3;
@@ -178,7 +150,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 			case 3:
 
 				boolean communityInactiveNot3Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//td[6]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot3Present) {
 					label = 4;
@@ -222,7 +194,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 			case 4:
 
 				boolean communityInactiveNot4Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//td[6]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot4Present) {
 					label = 5;
@@ -266,7 +238,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 			case 5:
 
 				boolean communityInactiveNot5Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a/span");
+						"//td[6]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot5Present) {
 					label = 6;

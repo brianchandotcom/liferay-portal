@@ -116,7 +116,7 @@ public class AddSitesInactiveTest extends BaseTestCase {
 					selenium.getText("//tr[4]/td[3]"));
 				assertEquals(RuntimeVariables.replace("No"),
 					selenium.getText("//tr[4]/td[4]"));
-				assertEquals(RuntimeVariables.replace("0"),
+				assertEquals(RuntimeVariables.replace(""),
 					selenium.getText("//tr[4]/td[5]"));
 
 			case 100:

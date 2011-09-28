@@ -440,6 +440,15 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getFileEntriesCount(groupId, folderId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFileEntriesPrevAndNext(fileEntryId, orderByComparator);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,

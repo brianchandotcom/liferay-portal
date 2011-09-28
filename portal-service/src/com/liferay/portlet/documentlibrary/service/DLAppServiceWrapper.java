@@ -770,6 +770,15 @@ public class DLAppServiceWrapper implements DLAppService {
 			fileEntryTypeId);
 	}
 
+	public com.liferay.portal.kernel.repository.model.FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getFileEntriesPrevAndNext(fileEntryId,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the file entry with the primary key.
 	*

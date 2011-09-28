@@ -93,7 +93,7 @@ public class ConfigurationImpl
 					File file = new File(fileName);
 
 					if (file.exists() && file.canWrite()) {
-						Writer writer =	new FileWriter(file, true);
+						Writer writer = new FileWriter(file, true);
 
 						StringBundler sb = new StringBundler(4);
 

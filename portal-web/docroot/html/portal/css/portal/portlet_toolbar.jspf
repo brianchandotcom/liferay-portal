@@ -85,3 +85,12 @@
 .lfr-portlet-toolbar .lfr-toolbar-button.view-templates a {
 	background-image: url(<%= themeImagesPath %>/common/view_templates.png);
 }
+
+
+.lfr-portlet-toolbar .lfr-toolbar-button.teams-button a {
+	background-image: url(<%= themeImagesPath %>/common/team_icon.png);
+}
+
+.lfr-portlet-toolbar .lfr-toolbar-button.membership-requests-button a {
+	background-image: url(<%= themeImagesPath %>/common/manage_task.png);
+}

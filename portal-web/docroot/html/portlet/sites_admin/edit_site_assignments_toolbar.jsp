@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-memberships");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-members");
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
@@ -29,50 +29,15 @@ if (group == null) {
 %>
 
 <div class="lfr-portlet-toolbar">
-	<liferay-ui:icon-menu align="left" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/view.png" %>' message="view">
-		<liferay-portlet:renderURL varImpl="assignMembersURL">
-			<liferay-portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
-			<liferay-portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-		</liferay-portlet:renderURL>
+	<liferay-portlet:renderURL varImpl="assignMembersURL">
+		<liferay-portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
+		<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+		<liferay-portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+	</liferay-portlet:renderURL>
 
-		<liferay-ui:icon
-			image="assign"
-			message="memberships"
-			method="get"
-			url="<%= assignMembersURL.toString() %>"
-		/>
-
-		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_TEAMS) %>">
-			<portlet:renderURL var="manageTeamsURL">
-				<portlet:param name="struts_action" value="/sites_admin/view_teams" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:icon
-				image="team_icon"
-				message="teams"
-				method="get"
-				url="<%= manageTeamsURL.toString() %>"
-			/>
-		</c:if>
-
-		<c:if test="<%= group.getType() == GroupConstants.TYPE_SITE_RESTRICTED %>">
-			<portlet:renderURL var="viewMembershipRequestsURL">
-				<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:icon
-				image="manage_task"
-				message="membership-requests"
-				method="get"
-				url="<%= viewMembershipRequestsURL.toString() %>"
-			/>
-		</c:if>
-	</liferay-ui:icon-menu>
+	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-members") ? "current" : StringPool.BLANK %>">
+		<a href="<%= assignMembersURL %>"><liferay-ui:message key="view-members" /></a>
+	</span>
 
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
 		<liferay-ui:icon-menu align="left" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add-members">
@@ -147,5 +112,29 @@ if (group == null) {
 				url="<%= assignUserGroupRolesURL %>"
 			/>
 		</liferay-ui:icon-menu>
+	</c:if>
+
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_TEAMS) %>">
+		<portlet:renderURL var="manageTeamsURL">
+			<portlet:param name="struts_action" value="/sites_admin/view_teams" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+		</portlet:renderURL>
+
+		<span class="lfr-toolbar-button teams-button <%= toolbarItem.equals("view-teams") ? "current" : StringPool.BLANK %>">
+			<a href="<%= manageTeamsURL %>"><liferay-ui:message key="view-teams" /></a>
+		</span>
+	</c:if>
+
+	<c:if test="<%= group.getType() == GroupConstants.TYPE_SITE_RESTRICTED %>">
+		<portlet:renderURL var="viewMembershipRequestsURL">
+			<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+		</portlet:renderURL>
+
+		<span class="lfr-toolbar-button membership-requests-button <%= toolbarItem.equals("view-membership-requests") ? "current" : StringPool.BLANK %>">
+			<a href="<%= viewMembershipRequestsURL %>"><liferay-ui:message key="view-membership-requests" /></a>
+		</span>
 	</c:if>
 </div>

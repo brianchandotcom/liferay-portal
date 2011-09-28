@@ -48,6 +48,10 @@ else {
 	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 		if (request.getAttribute("view_file_entry.jsp-fileEntry") != null) {
 			fileEntry = (FileEntry)request.getAttribute("view_file_entry.jsp-fileEntry");
+
+			if (request.getAttribute("view_file_entry.jsp-fileShortcut") != null) {
+				fileShortcut = (DLFileShortcut)request.getAttribute("view_file_entry.jsp-fileShortcut");
+			}
 		}
 		else {
 			fileShortcut = (DLFileShortcut)request.getAttribute("view_file_shortcut.jsp-fileShortcut");
@@ -55,7 +59,12 @@ else {
 	}
 	else {
 		if (request.getAttribute("view_entries.jsp-fileEntry") != null) {
-				fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
+			fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
+
+			if (request.getAttribute("view_entries.jsp-fileShortcut") != null) {
+				fileShortcut = (DLFileShortcut)request.getAttribute("view_entries.jsp-fileShortcut");
+			}
+
 		}
 		else {
 			fileShortcut = (DLFileShortcut)request.getAttribute("view_file_shortcut.jsp-fileShortcut");
@@ -85,7 +94,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 <liferay-util:buffer var="iconMenu">
 	<liferay-ui:icon-menu align='<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? "right" : "auto" %>' direction='<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? null : "down" %>' extended="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? true : false %>" icon="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? null : StringPool.BLANK %>" message='<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? "actions" : StringPool.BLANK %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
 		<c:choose>
-			<c:when test="<%= fileEntry != null %>">
+			<c:when test="<%= fileEntry != null && fileShortcut == null %>">
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 					<liferay-ui:icon
 						image="download"

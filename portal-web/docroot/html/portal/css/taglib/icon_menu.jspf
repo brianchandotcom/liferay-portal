@@ -41,7 +41,8 @@
 }
 
 .lfr-actions .lfr-trigger, .lfr-actions .lfr-trigger strong {
-	background: url(<%= themeImagesPath %>/common/button_bg.png) no-repeat;
+	background-image: url(<%= themeImagesPath %>/common/button_bg.png) ;
+	background-repeat: no-repeat;
 	font-weight: normal;
 }
 
@@ -87,7 +88,9 @@
 }
 
 .lfr-actions.show-arrow .lfr-trigger strong a {
-	background: url(<%= themeImagesPath %>/arrows/04_left.png) no-repeat 5px 50%;
+	background-image: url(<%= themeImagesPath %>/arrows/04_left.png) ;
+	background-position: 5px 50%;
+	background-repeat: no-repeat;
 }
 
 .lfr-actions.show-arrow.direction-left .lfr-trigger strong a {

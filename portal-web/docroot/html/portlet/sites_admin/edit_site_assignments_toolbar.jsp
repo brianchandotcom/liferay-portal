@@ -40,7 +40,7 @@ if (group == null) {
 	</span>
 
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
-		<liferay-ui:icon-menu align="left" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add-members">
+		<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button " + (toolbarItem.equals("add-role") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add-members">
 
 			<liferay-portlet:renderURL varImpl="assignMembersURL">
 				<liferay-portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
@@ -87,7 +87,7 @@ if (group == null) {
 	</c:if>
 
 	<c:if test="<%= permissionChecker.isGroupOwner(group.getGroupId()) || GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_USER_ROLES) %>">
-		<liferay-ui:icon-menu align="left" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/assign_user_roles.png" %>' message="add-site-roles-to">
+		<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button " + (toolbarItem.equals("assign-user-roles") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/assign_user_roles.png" %>' message="add-site-roles-to">
 			<portlet:renderURL var="assignUserRolesURL">
 				<portlet:param name="struts_action" value="/sites_admin/edit_user_roles" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />

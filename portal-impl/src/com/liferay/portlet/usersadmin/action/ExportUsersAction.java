@@ -104,7 +104,7 @@ public class ExportUsersAction extends PortletAction {
 				sb.append(CSVUtil.encode(user.getFullName()));
 			}
 			else if (field.startsWith("expando:")) {
-				String attributeName = field.substring(7);
+				String attributeName = field.substring(8);
 
 				ExpandoBridge expandoBridge = user.getExpandoBridge();
 

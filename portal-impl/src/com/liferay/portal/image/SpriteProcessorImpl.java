@@ -193,8 +193,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 				MosaicDescriptor.MOSAIC_TYPE_OVERLAY, null, null, null, null,
 				null);
 
-			File spriteFile = new File(
-				dir + StringPool.SLASH + spriteFileName);
+			File spriteFile = new File(dir + StringPool.SLASH + spriteFileName);
 
 			ImageIO.write(renderedImage, "png", spriteFile);
 

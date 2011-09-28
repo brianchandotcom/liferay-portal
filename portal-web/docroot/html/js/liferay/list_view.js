@@ -79,7 +79,7 @@ AUI().add(
 					initializer: function() {
 						var instance = this;
 
-						instance._transitionCompleteProxy = A.bind(instance._onTransitionCompleted, instance);
+						instance._transitionCompleteProxy = A.fn(instance.fire, instance, 'transitionComplete');
 					},
 
 					renderUI: function() {
@@ -105,6 +105,13 @@ AUI().add(
 						instance._itemChosenHandle = contentBox.delegate(itemChosenEvent, instance._onItemChosen, itemSelector, instance);
 
 						instance.after('dataChange', instance._afterDataChange);
+
+						instance.publish(
+							'transitionComplete',
+							{
+								defaultFn: instance._defTransitionCompletedFn
+							}
+						);
 					},
 
 					destructor: function() {
@@ -136,22 +143,15 @@ AUI().add(
 						}
 					},
 
-					_moveContainer: function() {
+					_defTransitionCompletedFn: function(event) {
 						var instance = this;
-
-						var contentBox = instance.get(CONTENT_BOX);
-
-						var targetRegion = contentBox.get(STR_REGION);
-
-						instance._setDataContainerPosition(targetRegion);
 
 						var dataContainer = instance._dataContainer;
 
-						dataContainer.show();
+						instance.get(CONTENT_BOX).html(dataContainer.html());
 
-						var transitionConfig = instance.get('transitionConfig');
-
-						dataContainer.transition(transitionConfig, instance._transitionCompleteProxy);
+						dataContainer.hide();
+						dataContainer.empty();
 					},
 
 					_onItemChosen: function(event) {
@@ -168,15 +168,22 @@ AUI().add(
 						);
 					},
 
-					_onTransitionCompleted: function() {
+					_moveContainer: function() {
 						var instance = this;
+
+						var contentBox = instance.get(CONTENT_BOX);
+
+						var targetRegion = contentBox.get(STR_REGION);
+
+						instance._setDataContainerPosition(targetRegion);
 
 						var dataContainer = instance._dataContainer;
 
-						instance.get(CONTENT_BOX).html(dataContainer.html());
+						dataContainer.show();
 
-						dataContainer.hide();
-						dataContainer.empty();
+						var transitionConfig = instance.get('transitionConfig');
+
+						dataContainer.transition(transitionConfig, instance._transitionCompleteProxy);
 					},
 
 					_setData: function(value) {

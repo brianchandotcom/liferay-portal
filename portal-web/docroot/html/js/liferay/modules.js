@@ -70,6 +70,7 @@
 			'panel': ['aui-base', 'aui-io-request'],
 			'panel-floating': ['aui-paginator', 'liferay-panel'],
 			'poller': ['aui-base', 'io', 'json'],
+			'portlet-base': ['aui-base'],
 			'portlet-url': ['aui-base', 'aui-io-request', 'querystring-stringify-simple'],
 			'ratings': ['aui-io-request', 'aui-rating'],
 			'search-container': ['aui-base'],

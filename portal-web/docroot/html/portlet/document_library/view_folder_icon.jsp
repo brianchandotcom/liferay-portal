@@ -29,7 +29,7 @@ boolean showCheckBox = DLFolderPermission.contains(permissionChecker, folder, Ac
 
 <div class="document-display-style icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>">
 	<c:if test="<%= showCheckBox %>">
-		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + StringPool.UNDERLINE + Folder.class.getName() %>" type="checkbox" value="<%= folder.getFolderId() %>" />
+		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + Folder.class.getSimpleName() %>" type="checkbox" value="<%= folder.getFolderId() %>" />
 	</c:if>
 
 	<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
@@ -39,7 +39,7 @@ boolean showCheckBox = DLFolderPermission.contains(permissionChecker, folder, Ac
 			<img alt="" border="no" src="<%= thumbnailSrc %>" style="height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT %>; width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
 		</span>
 
-		<span class="document-title">
+		<span class="entry-title">
 			<%= HtmlUtil.escape(StringUtil.shorten(folder.getName(), 60)) %>
 		</span>
 	</a>

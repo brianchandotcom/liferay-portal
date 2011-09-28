@@ -41,28 +41,15 @@ public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 		
-		if (scopeGroup.isUser() ||
-				!(GroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), 
-					scopeGroup.getGroupId(), ActionKeys.UPDATE))) {
-			
-		}
-
-		boolean visible = super.isVisible(portlet, category, themeDisplay);
-
-		if (!visible) {
-			visible = GroupPermissionUtil.contains(
+		if (scopeGroup.isUser() || scopeGroup.isCompany() ||
+			!(GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.MANAGE_LAYOUTS);
+				scopeGroup.getGroupId(), ActionKeys.UPDATE))) {
+
+			return false;
 		}
 
-		if (visible) {
-			if (scopeGroup.isCompany() ) {
-				visible = false;
-			}
-		}
-
-		return visible;
+		return super.isVisible(portlet, category, themeDisplay);
 	}
 
 	public boolean isVisible(

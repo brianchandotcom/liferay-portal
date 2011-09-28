@@ -152,10 +152,7 @@ public class SQLTransformer {
 	private String _replaceCastText(String sql) {
 		Matcher matcher = _castTextPattern.matcher(sql);
 
-		if (_vendorDB2) {
-			return matcher.replaceAll("CAST($1 AS VARCHAR(500))");
-		}
-		else if (_vendorDerby) {
+		if (_vendorDB2 || _vendorDerby) {
 			return matcher.replaceAll("CAST($1 AS CHAR(254))");
 		}
 		else if (_vendorPostgreSQL) {

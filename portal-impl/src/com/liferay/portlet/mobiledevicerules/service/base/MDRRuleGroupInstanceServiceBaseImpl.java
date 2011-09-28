@@ -21,11 +21,18 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.LayoutService;
+import com.liferay.portal.service.LayoutSetLocalService;
+import com.liferay.portal.service.LayoutSetService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.base.PrincipalBean;
+import com.liferay.portal.service.persistence.LayoutFinder;
+import com.liferay.portal.service.persistence.LayoutPersistence;
+import com.liferay.portal.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
@@ -328,6 +335,134 @@ public abstract class MDRRuleGroupInstanceServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the layout local service.
+	 *
+	 * @return the layout local service
+	 */
+	public LayoutLocalService getLayoutLocalService() {
+		return layoutLocalService;
+	}
+
+	/**
+	 * Sets the layout local service.
+	 *
+	 * @param layoutLocalService the layout local service
+	 */
+	public void setLayoutLocalService(LayoutLocalService layoutLocalService) {
+		this.layoutLocalService = layoutLocalService;
+	}
+
+	/**
+	 * Returns the layout remote service.
+	 *
+	 * @return the layout remote service
+	 */
+	public LayoutService getLayoutService() {
+		return layoutService;
+	}
+
+	/**
+	 * Sets the layout remote service.
+	 *
+	 * @param layoutService the layout remote service
+	 */
+	public void setLayoutService(LayoutService layoutService) {
+		this.layoutService = layoutService;
+	}
+
+	/**
+	 * Returns the layout persistence.
+	 *
+	 * @return the layout persistence
+	 */
+	public LayoutPersistence getLayoutPersistence() {
+		return layoutPersistence;
+	}
+
+	/**
+	 * Sets the layout persistence.
+	 *
+	 * @param layoutPersistence the layout persistence
+	 */
+	public void setLayoutPersistence(LayoutPersistence layoutPersistence) {
+		this.layoutPersistence = layoutPersistence;
+	}
+
+	/**
+	 * Returns the layout finder.
+	 *
+	 * @return the layout finder
+	 */
+	public LayoutFinder getLayoutFinder() {
+		return layoutFinder;
+	}
+
+	/**
+	 * Sets the layout finder.
+	 *
+	 * @param layoutFinder the layout finder
+	 */
+	public void setLayoutFinder(LayoutFinder layoutFinder) {
+		this.layoutFinder = layoutFinder;
+	}
+
+	/**
+	 * Returns the layout set local service.
+	 *
+	 * @return the layout set local service
+	 */
+	public LayoutSetLocalService getLayoutSetLocalService() {
+		return layoutSetLocalService;
+	}
+
+	/**
+	 * Sets the layout set local service.
+	 *
+	 * @param layoutSetLocalService the layout set local service
+	 */
+	public void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+		this.layoutSetLocalService = layoutSetLocalService;
+	}
+
+	/**
+	 * Returns the layout set remote service.
+	 *
+	 * @return the layout set remote service
+	 */
+	public LayoutSetService getLayoutSetService() {
+		return layoutSetService;
+	}
+
+	/**
+	 * Sets the layout set remote service.
+	 *
+	 * @param layoutSetService the layout set remote service
+	 */
+	public void setLayoutSetService(LayoutSetService layoutSetService) {
+		this.layoutSetService = layoutSetService;
+	}
+
+	/**
+	 * Returns the layout set persistence.
+	 *
+	 * @return the layout set persistence
+	 */
+	public LayoutSetPersistence getLayoutSetPersistence() {
+		return layoutSetPersistence;
+	}
+
+	/**
+	 * Sets the layout set persistence.
+	 *
+	 * @param layoutSetPersistence the layout set persistence
+	 */
+	public void setLayoutSetPersistence(
+		LayoutSetPersistence layoutSetPersistence) {
+		this.layoutSetPersistence = layoutSetPersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -551,6 +686,20 @@ public abstract class MDRRuleGroupInstanceServiceBaseImpl extends PrincipalBean
 	protected MDRRuleGroupInstancePersistence mdrRuleGroupInstancePersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
+	@BeanReference(type = LayoutLocalService.class)
+	protected LayoutLocalService layoutLocalService;
+	@BeanReference(type = LayoutService.class)
+	protected LayoutService layoutService;
+	@BeanReference(type = LayoutPersistence.class)
+	protected LayoutPersistence layoutPersistence;
+	@BeanReference(type = LayoutFinder.class)
+	protected LayoutFinder layoutFinder;
+	@BeanReference(type = LayoutSetLocalService.class)
+	protected LayoutSetLocalService layoutSetLocalService;
+	@BeanReference(type = LayoutSetService.class)
+	protected LayoutSetService layoutSetService;
+	@BeanReference(type = LayoutSetPersistence.class)
+	protected LayoutSetPersistence layoutSetPersistence;
 	@BeanReference(type = ResourceLocalService.class)
 	protected ResourceLocalService resourceLocalService;
 	@BeanReference(type = ResourceService.class)

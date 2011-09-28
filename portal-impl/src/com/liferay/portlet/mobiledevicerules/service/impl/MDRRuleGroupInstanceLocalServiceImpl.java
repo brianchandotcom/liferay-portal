@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
 
@@ -36,6 +38,9 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			long groupId, String className, long classPK, long ruleGroupId,
 			int priority, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		MDRRuleGroup ruleGroup = mdrRuleGroupLocalService.getMDRRuleGroup(
+			ruleGroupId);
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -94,6 +99,35 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
 			deleteRuleGroupInstance(ruleGroupInstance);
 		}
+	}
+
+	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId)
+		throws SystemException {
+
+		return mdrRuleGroupInstancePersistence.fetchByPrimaryKey(
+			ruleGroupInstanceId);
+	}
+
+	public MDRRuleGroupInstance fetchRuleGroupInstance(
+			String className, long classPK, long ruleGroupId)
+		throws SystemException {
+
+		try {
+			return getRuleGroupInstance(className, classPK, ruleGroupId);
+		}
+		catch (NoSuchRuleGroupInstanceException e) {
+			return null;
+		}
+	}
+
+	public MDRRuleGroupInstance getRuleGroupInstance(
+			String className, long classPK, long ruleGroupId)
+		throws NoSuchRuleGroupInstanceException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return mdrRuleGroupInstancePersistence.findByC_C_R(
+			classNameId, classPK, ruleGroupId);
 	}
 
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId)

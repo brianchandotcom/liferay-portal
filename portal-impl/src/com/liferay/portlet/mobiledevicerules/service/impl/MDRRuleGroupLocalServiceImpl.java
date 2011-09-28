@@ -125,13 +125,18 @@ public class MDRRuleGroupLocalServiceImpl
 
 	public void deleteRuleGroup(MDRRuleGroup ruleGroup) throws SystemException {
 
-		// Rule group
-
-		deleteMDRRuleGroup(ruleGroup);
-
 		// Rules
 
 		mdrRuleLocalService.deleteRules(ruleGroup.getRuleGroupId());
+
+		//	Rule Group Instances
+
+		mdrRuleGroupInstanceLocalService.deleteRuleGroupInstances(
+			ruleGroup.getRuleGroupId());
+
+		// Rule group
+
+		deleteMDRRuleGroup(ruleGroup);
 	}
 
 	public void deleteRuleGroups(long groupId) throws SystemException {

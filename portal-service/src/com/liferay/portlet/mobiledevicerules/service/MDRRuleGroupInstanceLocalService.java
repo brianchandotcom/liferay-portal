@@ -265,6 +265,22 @@ public interface MDRRuleGroupInstanceLocalService
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
+		long ruleGroupInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
+		java.lang.String className, long classPK, long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance getRuleGroupInstance(
+		java.lang.String className, long classPK, long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException;

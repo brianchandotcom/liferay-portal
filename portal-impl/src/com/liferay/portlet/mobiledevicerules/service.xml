@@ -137,10 +137,20 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="C_C_G" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="groupId" />
+		</finder>
 		<finder name="C_C_R" return-type="MDRRuleGroupInstance" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="ruleGroupId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Layout" />
+		<reference package-path="com.liferay.portal" entity="LayoutSet" />
 	</entity>
 </service-builder>

@@ -618,6 +618,228 @@ public class MDRRuleGroupInstanceUtil {
 	}
 
 	/**
+	* Returns all the m d r rule group instances where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @return the matching m d r rule group instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> findByC_C_G(
+		long classNameId, long classPK, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_C_G(classNameId, classPK, groupId);
+	}
+
+	/**
+	* Returns a range of all the m d r rule group instances where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @param start the lower bound of the range of m d r rule group instances
+	* @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	* @return the range of matching m d r rule group instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> findByC_C_G(
+		long classNameId, long classPK, long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_G(classNameId, classPK, groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the m d r rule group instances where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @param start the lower bound of the range of m d r rule group instances
+	* @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching m d r rule group instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> findByC_C_G(
+		long classNameId, long classPK, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_G(classNameId, classPK, groupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first m d r rule group instance in the ordered set where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching m d r rule group instance
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException if a matching m d r rule group instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance findByC_C_G_First(
+		long classNameId, long classPK, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException {
+		return getPersistence()
+				   .findByC_C_G_First(classNameId, classPK, groupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last m d r rule group instance in the ordered set where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching m d r rule group instance
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException if a matching m d r rule group instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance findByC_C_G_Last(
+		long classNameId, long classPK, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException {
+		return getPersistence()
+				   .findByC_C_G_Last(classNameId, classPK, groupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the m d r rule group instances before and after the current m d r rule group instance in the ordered set where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param ruleGroupInstanceId the primary key of the current m d r rule group instance
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next m d r rule group instance
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException if a m d r rule group instance with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance[] findByC_C_G_PrevAndNext(
+		long ruleGroupInstanceId, long classNameId, long classPK, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException {
+		return getPersistence()
+				   .findByC_C_G_PrevAndNext(ruleGroupInstanceId, classNameId,
+			classPK, groupId, orderByComparator);
+	}
+
+	/**
+	* Returns all the m d r rule group instances that the user has permission to view where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @return the matching m d r rule group instances that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> filterFindByC_C_G(
+		long classNameId, long classPK, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByC_C_G(classNameId, classPK, groupId);
+	}
+
+	/**
+	* Returns a range of all the m d r rule group instances that the user has permission to view where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @param start the lower bound of the range of m d r rule group instances
+	* @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	* @return the range of matching m d r rule group instances that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> filterFindByC_C_G(
+		long classNameId, long classPK, long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByC_C_G(classNameId, classPK, groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the m d r rule group instances that the user has permissions to view where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @param start the lower bound of the range of m d r rule group instances
+	* @param end the upper bound of the range of m d r rule group instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching m d r rule group instances that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> filterFindByC_C_G(
+		long classNameId, long classPK, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByC_C_G(classNameId, classPK, groupId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the m d r rule group instances before and after the current m d r rule group instance in the ordered set of m d r rule group instances that the user has permission to view where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* @param ruleGroupInstanceId the primary key of the current m d r rule group instance
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next m d r rule group instance
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException if a m d r rule group instance with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance[] filterFindByC_C_G_PrevAndNext(
+		long ruleGroupInstanceId, long classNameId, long classPK, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException {
+		return getPersistence()
+				   .filterFindByC_C_G_PrevAndNext(ruleGroupInstanceId,
+			classNameId, classPK, groupId, orderByComparator);
+	}
+
+	/**
 	* Returns the m d r rule group instance where classNameId = &#63; and classPK = &#63; and ruleGroupId = &#63; or throws a {@link com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException} if it could not be found.
 	*
 	* @param classNameId the class name ID
@@ -765,6 +987,20 @@ public class MDRRuleGroupInstanceUtil {
 	}
 
 	/**
+	* Removes all the m d r rule group instances where classNameId = &#63; and classPK = &#63; and groupId = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C_G(long classNameId, long classPK,
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_C_G(classNameId, classPK, groupId);
+	}
+
+	/**
 	* Removes the m d r rule group instance where classNameId = &#63; and classPK = &#63; and ruleGroupId = &#63; from the database.
 	*
 	* @param classNameId the class name ID
@@ -837,6 +1073,35 @@ public class MDRRuleGroupInstanceUtil {
 	public static int countByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByC_C(classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of m d r rule group instances where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @return the number of matching m d r rule group instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C_G(long classNameId, long classPK, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_C_G(classNameId, classPK, groupId);
+	}
+
+	/**
+	* Returns the number of m d r rule group instances that the user has permission to view where classNameId = &#63; and classPK = &#63; and groupId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param groupId the group ID
+	* @return the number of matching m d r rule group instances that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByC_C_G(long classNameId, long classPK,
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByC_C_G(classNameId, classPK, groupId);
 	}
 
 	/**

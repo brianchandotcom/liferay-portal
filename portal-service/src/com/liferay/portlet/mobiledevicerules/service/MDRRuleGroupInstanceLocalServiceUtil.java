@@ -300,6 +300,26 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 		getService().deleteRuleGroupInstances(ruleGroupId);
 	}
 
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
+		long ruleGroupInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchRuleGroupInstance(ruleGroupInstanceId);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
+		java.lang.String className, long classPK, long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchRuleGroupInstance(className, classPK, ruleGroupId);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance getRuleGroupInstance(
+		java.lang.String className, long classPK, long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException {
+		return getService().getRuleGroupInstance(className, classPK, ruleGroupId);
+	}
+
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {

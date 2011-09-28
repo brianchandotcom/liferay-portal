@@ -16,12 +16,18 @@ package com.liferay.portlet.mobiledevicerules.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceServiceBaseImpl;
 import com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil;
 import com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil;
+
+import java.util.List;
 
 /**
  * @author Edward C. Han
@@ -50,6 +56,61 @@ public class MDRRuleGroupInstanceServiceImpl
 
 		mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(
 			ruleGroupInstance);
+	}
+
+	public List<MDRRuleGroupInstance> getRuleGroupInstances(
+			String className, long classPK, int start, int end,
+			OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		long groupId = 0;
+
+		if (Layout.class.getName().equals(className)) {
+			Layout layout = layoutLocalService.getLayout(classPK);
+
+			if (layout != null) {
+				groupId = layout.getGroupId();
+			}
+		}
+		else if (LayoutSet.class.getName().equals(className)) {
+			LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(classPK);
+
+			if (layoutSet != null) {
+				groupId = layoutSet.getGroupId();
+			}
+		}
+
+		return mdrRuleGroupInstancePersistence.filterFindByC_C_G(
+			classNameId, classPK, groupId, start, end, orderByComparator);
+	}
+
+
+	public int getRuleGroupInstancesCount(String className, long classPK)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		long groupId = 0;
+
+		if (Layout.class.getName().equals(className)) {
+			Layout layout = layoutLocalService.getLayout(classPK);
+
+			if (layout != null) {
+				groupId = layout.getGroupId();
+			}
+		}
+		else if (LayoutSet.class.getName().equals(className)) {
+			LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(classPK);
+
+			if (layoutSet != null) {
+				groupId = layoutSet.getGroupId();
+			}
+		}
+
+		return mdrRuleGroupInstancePersistence.filterCountByC_C_G(
+			classNameId, classPK, groupId);
 	}
 
 	public MDRRuleGroupInstance updateRuleGroupInstance(

@@ -89,8 +89,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 			MDRActionModelImpl.FINDER_CACHE_ENABLED, MDRActionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			MDRActionModelImpl.UUID_COLUMN_BITMASK);
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 			MDRActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -98,9 +97,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 			MDRActionModelImpl.FINDER_CACHE_ENABLED, MDRActionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			MDRActionModelImpl.UUID_COLUMN_BITMASK |
-			MDRActionModelImpl.GROUPID_COLUMN_BITMASK);
+			new String[] { String.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 			MDRActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
@@ -120,8 +117,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		new FinderPath(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 			MDRActionModelImpl.FINDER_CACHE_ENABLED, MDRActionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByRuleGroupInstanceId", new String[] { Long.class.getName() },
-			MDRActionModelImpl.RULEGROUPINSTANCEID_COLUMN_BITMASK);
+			"findByRuleGroupInstanceId", new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_COUNT_BY_RULEGROUPINSTANCEID = new FinderPath(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 			MDRActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -364,32 +360,22 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew || !MDRActionModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (isNew) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-
 		else {
-			if ((mdrActionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						mdrActionModelImpl.getOriginalUuid()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+			if (!Validator.equals(mdrAction.getUuid(),
+						mdrActionModelImpl.getOriginalUuid())) {
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
+					new Object[] { mdrActionModelImpl.getOriginalUuid() });
 			}
 
-			if ((mdrActionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPINSTANCEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(mdrActionModelImpl.getOriginalRuleGroupInstanceId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPINSTANCEID,
-					args);
+			if (mdrAction.getRuleGroupInstanceId() != mdrActionModelImpl.getOriginalRuleGroupInstanceId()) {
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPINSTANCEID,
-					args);
+					new Object[] {
+						Long.valueOf(
+							mdrActionModelImpl.getOriginalRuleGroupInstanceId())
+					});
 			}
 		}
 
@@ -403,8 +389,9 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				}, mdrAction);
 		}
 		else {
-			if ((mdrActionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			if (!Validator.equals(mdrAction.getUuid(),
+						mdrActionModelImpl.getOriginalUuid()) ||
+					(mdrAction.getGroupId() != mdrActionModelImpl.getOriginalGroupId())) {
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 					new Object[] {
 						mdrActionModelImpl.getOriginalUuid(),

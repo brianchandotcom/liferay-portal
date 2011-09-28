@@ -1593,6 +1593,11 @@ public class DLFileEntryLocalServiceImpl
 		else if (!checkedOut) {
 			lockFileEntry(userId, fileEntryId);
 		}
+		else {
+			if (!hasFileEntryLock(userId, fileEntryId)) {
+				lockFileEntry(userId, fileEntryId);
+			}
+		}
 
 		if (checkedOut || autoCheckIn) {
 			dlFileVersion = dlFileVersionLocalService.getLatestFileVersion(

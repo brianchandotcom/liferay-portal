@@ -165,7 +165,7 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 	<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp">
-		<liferay-util:param name="toolbarItem" value='<%= (selUser == null) ? "add-user" : "view" %>' />
+		<liferay-util:param name="toolbarItem" value='<%= (selUser == null) ? "add" : "view" %>' />
 	</liferay-util:include>
 </c:if>
 

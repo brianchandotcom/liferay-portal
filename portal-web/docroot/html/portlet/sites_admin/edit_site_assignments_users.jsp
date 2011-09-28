@@ -38,7 +38,7 @@ viewUsersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
 UserGroupChecker userGroupChecker = null;
 
-if (!tabs1.equals("summary")) {
+if (!tabs1.equals("summary") && !tabs2.equals("current")) {
 	userGroupChecker = new UserGroupChecker(renderResponse, group);
 }
 
@@ -74,7 +74,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 	LinkedHashMap userParams = new LinkedHashMap();
 
-	if (tabs1.equals("summary")) {
+	if (tabs1.equals("summary") || tabs2.equals("current")) {
 		userParams.put("usersGroups", new Long(group.getGroupId()));
 	}
 	%>
@@ -105,7 +105,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 			property="screenName"
 		/>
 
-		<c:if test='<%= tabs2.equals("current") %>'>
+		<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
 			<liferay-ui:search-container-column-text
 				buffer="buffer"
 				name="site-roles"
@@ -136,6 +136,33 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 		</c:if>
 	</liferay-ui:search-container-row>
 
+	<liferay-util:buffer var="formButton">
+		<c:choose>
+			<c:when test='<%= tabs2.equals("current") %>'>
+
+				<%
+				viewUsersURL.setParameter("tabs2", "available");
+				%>
+
+				<aui:button-row>
+					<aui:button href="<%= viewUsersURL.toString() %>" value="assign-users" />
+				</aui:button-row>
+			</c:when>
+			<c:otherwise>
+
+				<%
+				portletURL.setParameter("tabs2", "current");
+
+				String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+				%>
+
+				<aui:button-row>
+					<aui:button onClick="<%= taglibOnClick %>" value="save" />
+				</aui:button-row>
+			</c:otherwise>
+		</c:choose>
+	</liferay-util:buffer>
+
 	<c:choose>
 		<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, (total > 1) ? "x-users" : "x-user", total) %>'>
@@ -152,21 +179,15 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 				</c:if>
 			</liferay-ui:panel>
 
-			<div class="separator"><!-- --></div>
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
-
-			<%
-			String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-			%>
-
-			<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-			<br /><br />
+			<c:if test="<%= total > userSearch.getDelta() %>">
+				<%= formButton%>
+			</c:if>
 
 			<liferay-ui:search-iterator />
 
-			<div class="separator"><!-- --></div>
+			<%= formButton%>
 		</c:when>
 	</c:choose>
 </liferay-ui:search-container>

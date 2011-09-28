@@ -38,7 +38,7 @@ viewOrganizationsURL.setParameter("groupId", String.valueOf(group.getGroupId()))
 
 OrganizationGroupChecker organizationGroupChecker = null;
 
-if (!tabs1.equals("summary")) {
+if (!tabs1.equals("summary") && !tabs2.equals("current")) {
 	organizationGroupChecker = new OrganizationGroupChecker(renderResponse, group);
 }
 
@@ -76,7 +76,7 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 	LinkedHashMap organizationParams = new LinkedHashMap();
 
-	if (tabs2.equals("current")) {
+	if (tabs1.equals("summary") || tabs2.equals("current")) {
 		organizationParams.put("organizationsGroups", new Long(group.getGroupId()));
 	}
 	%>
@@ -140,6 +140,33 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
+	<liferay-util:buffer var="formButton">
+		<c:choose>
+			<c:when test='<%= tabs2.equals("current") %>'>
+
+				<%
+				viewOrganizationsURL.setParameter("tabs2", "available");
+				%>
+
+				<aui:button-row>
+					<aui:button href="<%= viewOrganizationsURL.toString() %>" value="assign-organizations" />
+				</aui:button-row>
+			</c:when>
+			<c:otherwise>
+
+				<%
+				portletURL.setParameter("tabs2", "current");
+
+				String taglibOnClick = renderResponse.getNamespace() + "updateGroupOrganizations('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+				%>
+
+				<aui:button-row>
+					<aui:button onClick="<%= taglibOnClick %>" value="save" />
+				</aui:button-row>
+			</c:otherwise>
+		</c:choose>
+	</liferay-util:buffer>
+
 	<c:choose>
 		<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, (total > 1) ? "x-organizations" : "x-organization", total) %>'>
@@ -159,18 +186,13 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 			<div class="separator"><!-- --></div>
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
-
-			<%
-			String taglibOnClick = renderResponse.getNamespace() + "updateGroupOrganizations('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-			%>
-
-			<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-			<br /><br />
+			<c:if test="<%= total > organizationSearch.getDelta() %>">
+				<%= formButton%>
+			</c:if>
 
 			<liferay-ui:search-iterator />
 
-			<div class="separator"><!-- --></div>
+			<%= formButton%>
 		</c:when>
 	</c:choose>
 </liferay-ui:search-container>

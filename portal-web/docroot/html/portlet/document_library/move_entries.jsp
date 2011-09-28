@@ -184,7 +184,7 @@ else if (!folders.isEmpty()) {
 				%>
 
 					<li class="move-file">
-						<span class=file-title>
+						<span class="file-title" title="<%= validMoveFileEntry.getTitle() %>">
 							<%= validMoveFileEntry.getTitle() %>
 						</span>
 					</li>
@@ -211,7 +211,7 @@ else if (!folders.isEmpty()) {
 				%>
 
 					<li class="move-file move-error">
-						<span class="file-title">
+						<span class="file-title" title="<%= invalidMoveFileEntry.getTitle() %>">
 							<%= invalidMoveFileEntry.getTitle() %>
 						</span>
 

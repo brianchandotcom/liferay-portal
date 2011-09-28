@@ -707,6 +707,7 @@
 			font-size: 1.8em;
 			font-weight: bold;
 			margin-bottom: 10px;
+			overflow: hidden;
 		}
 
 		.document-type .lfr-panel-content {

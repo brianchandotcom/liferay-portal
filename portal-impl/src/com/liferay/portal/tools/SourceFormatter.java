@@ -1187,6 +1187,11 @@ public class SourceFormatter {
 				}
 			}
 
+			if (fileName.endsWith("init.jsp")) {
+				newContent = StringUtil.replace(newContent, ">\r\n<%@", "><%@");
+				newContent = StringUtil.replace(newContent, ">\n<%@", "><%@");
+			}
+
 			_checkXSS(fileName, newContent);
 
 			if ((newContent != null) && !content.equals(newContent)) {
@@ -1863,6 +1868,8 @@ public class SourceFormatter {
 		}
 
 		String imports = matcher.group();
+
+		imports = StringUtil.replace(imports, "><%@", ">\n<%@");
 
 		List<String> importLines = new ArrayList<String>();
 

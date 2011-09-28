@@ -706,10 +706,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
 
-		<#if entity.hasLazyBlobColumn()>
-			${entity.varName}.resetOriginalValues();
-		</#if>
-
 		<#assign uniqueFinderList = entity.getUniqueFinderList()>
 
 		<#if uniqueFinderList?size &gt; 0>
@@ -744,25 +740,26 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					<#assign finderColsList = finder.getColumns()>
 
 					if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_FETCH_BY_${finder.name?upper_case}.getColumnBitmask()) != 0) {
-						FinderCacheUtil.removeResult(
-							FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-							new Object[] {
-								<#list finderColsList as finderCol>
-									<#if finderCol.isPrimitiveType()>
-										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-									</#if>
+						Object[] args = new Object[] {
+							<#list finderColsList as finderCol>
+								<#if finderCol.isPrimitiveType()>
+									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+								</#if>
 
-									${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
+								${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
 
-									<#if finderCol.isPrimitiveType()>
-										)
-									</#if>
+								<#if finderCol.isPrimitiveType()>
+									)
+								</#if>
 
-									<#if finderCol_has_next>
-										,
-									</#if>
-								</#list>
-							});
+								<#if finderCol_has_next>
+									,
+								</#if>
+							</#list>
+						};
+
+						FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+						FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
 
 						FinderCacheUtil.putResult(
 							FINDER_PATH_FETCH_BY_${finder.name?upper_case},
@@ -787,6 +784,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 				</#list>
 			}
+		</#if>
+
+		<#if entity.hasLazyBlobColumn()>
+			${entity.varName}.resetOriginalValues();
 		</#if>
 
 		return ${entity.varName};

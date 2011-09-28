@@ -241,6 +241,7 @@ public abstract class BaseTemplateParser implements TemplateParser {
 			"permissionChecker", PermissionThreadLocal.getPermissionChecker());
 
 		templateContext.put("viewMode", _viewMode);
+		templateContext.put("device", _themeDisplay.getDevice());
 	}
 
 	private String _languageId;

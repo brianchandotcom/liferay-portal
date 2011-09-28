@@ -617,6 +617,16 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		return localRepository.getFileEntriesCount(folderId);
 	}
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
+
+		return localRepository.getFileEntriesPrevAndNext(
+			fileEntryId, orderByComparator);
+	}
+
 	/**
 	 * Returns the file entry with the primary key.
 	 *

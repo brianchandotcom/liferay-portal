@@ -126,6 +126,14 @@ public class LocalRepositoryProxyBean
 		return _localRepository.getFileEntriesCount(folderId);
 	}
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		return _localRepository.getFileEntriesPrevAndNext(
+			fileEntryId, orderByComparator);
+	}
+
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 

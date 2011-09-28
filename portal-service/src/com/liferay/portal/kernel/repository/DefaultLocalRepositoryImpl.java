@@ -113,6 +113,14 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		return _repository.getFileEntriesCount(folderId);
 	}
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		return _repository.getFileEntriesPrevAndNext(
+			fileEntryId, orderByComparator);
+	}
+
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 

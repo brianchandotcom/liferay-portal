@@ -83,7 +83,7 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span/a/span")) {
+				if (selenium.isVisible("//tr[4]/td[3]/span/a/span")) {
 					break;
 				}
 			}
@@ -94,7 +94,7 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.click(RuntimeVariables.replace("//span/a/span"));
+		selenium.click(RuntimeVariables.replace("//tr[4]/td[3]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_29_comments']",

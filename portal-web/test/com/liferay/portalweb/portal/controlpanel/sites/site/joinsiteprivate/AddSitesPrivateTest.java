@@ -68,7 +68,7 @@ public class AddSitesPrivateTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Custom Site"),
+		assertEquals(RuntimeVariables.replace("Site"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
@@ -91,14 +91,14 @@ public class AddSitesPrivateTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test Private Community"),
-			selenium.getText("//tr[3]/td[1]"));
+			selenium.getText("//tr[4]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Private"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[4]/td[2]"));
 		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText("//tr[4]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//tr[3]/td[5]"));
+			selenium.getText("//tr[4]/td[4]"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[4]/td[5]"));
 	}
 }

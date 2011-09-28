@@ -49,7 +49,7 @@ public class DeleteSitesGuestTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//tr[3]/td[1]", "Liferay"));
-		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

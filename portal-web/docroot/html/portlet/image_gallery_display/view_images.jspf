@@ -27,7 +27,7 @@
 	</c:otherwise>
 </c:choose>
 
-<div>
+<div id="<portlet:namespace />imageGalleryAssetInfo">
 
 	<%
 	for (int i = 0; i < results.size(); i++) {

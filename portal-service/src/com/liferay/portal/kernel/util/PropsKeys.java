@@ -749,6 +749,8 @@ public interface PropsKeys {
 
 	public static final String IG_IMAGE_THUMBNAIL_MIME_TYPES = "ig.image.thumbnail.mime.types";
 
+	public static final String IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = "ig.previous.and.next.navigation.enabled";
+
 	public static final String IG_PUBLISH_TO_LIVE_BY_DEFAULT = "ig.publish.to.live.by.default";
 
 	public static final String IMAGE_AUTO_SCALE = "image.auto.scale";

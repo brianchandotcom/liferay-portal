@@ -657,6 +657,17 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryPersistence.countByG_F(groupId, folderId);
 	}
 
+	public DLFileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry = getFileEntry(fileEntryId);
+
+		return dlFileEntryPersistence.findByG_F_PrevAndNext(
+			fileEntryId, dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+			orderByComparator);
+	}
+
 	public DLFileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 

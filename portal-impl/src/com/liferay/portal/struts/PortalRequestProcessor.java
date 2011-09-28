@@ -50,6 +50,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.persistence.UserTrackerPathUtil;
+import com.liferay.portal.setup.SetupWizardUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -665,6 +666,14 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			}
 		}
 
+		// setup wizard
+
+		if (PropsValues.SETUP_WIZARD_ENABLED && !
+			SetupWizardUtil.isSetupFinished(request)) {
+
+			return _PATH_PORTAL_SETUP_WIZARD;
+		}
+
 		// Authenticated users can always log out
 
 		if (((remoteUser != null) || (user != null)) &&
@@ -973,6 +982,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 	private static String _PATH_PORTAL_RENDER_PORTLET =
 		"/portal/render_portlet";
+
+	private static String _PATH_PORTAL_SETUP_WIZARD =
+		"/portal/setup_wizard";
 
 	private static String _PATH_PORTAL_TCK = "/portal/tck";
 

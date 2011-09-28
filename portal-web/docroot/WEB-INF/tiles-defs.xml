@@ -55,6 +55,11 @@
 		<put name="portlet_content" value="/portal/portlet_not_setup.jsp" />
 	</definition>
 
+	<definition name="portal.setup_wizard" extends="portal">
+		<put name="title" value="basic-configuration" />
+		<put name="content" value="/portal/setup_wizard.jsp" />
+	</definition>
+
 	<definition name="portal.status" extends="portal">
 		<put name="title" value="status" />
 		<put name="content" value="/portal/status.jsp" />

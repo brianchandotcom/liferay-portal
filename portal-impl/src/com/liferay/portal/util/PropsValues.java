@@ -29,6 +29,10 @@ public class PropsValues {
 
 	public static String[] ADMIN_DEFAULT_USER_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES));
 
+	public static final String ADMIN_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+
+    public static String ADMIN_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
 	public static final String[] ADMIN_MAIL_HOST_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_MAIL_HOST_NAMES));
 
 	public static final String[] ADMIN_RESERVED_EMAIL_ADDRESSES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES));
@@ -257,7 +261,7 @@ public class PropsValues {
 
 	public static final String COMPANY_DEFAULT_HOME_URL = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_HOME_URL);
 
-	public static final String COMPANY_DEFAULT_WEB_ID = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID);
+	public static String COMPANY_DEFAULT_WEB_ID = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID);
 
 	public static final boolean COMPANY_LOGIN_PREPOPULATE_DOMAIN = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_LOGIN_PREPOPULATE_DOMAIN));
 
@@ -309,19 +313,19 @@ public class PropsValues {
 
 	public static final String DATABASE_MYSQL_ENGINE = PropsUtil.get(PropsKeys.DATABASE_MYSQL_ENGINE);
 
-	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS);
+	public static String DEFAULT_ADMIN_EMAIL_ADDRESS = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS);
 
 	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX);
 
-	public static final String DEFAULT_ADMIN_FIRST_NAME = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME);
+	public static String DEFAULT_ADMIN_FIRST_NAME = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME);
 
-	public static final String DEFAULT_ADMIN_LAST_NAME = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME);
+	public static String DEFAULT_ADMIN_LAST_NAME = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME);
 
 	public static final String DEFAULT_ADMIN_MIDDLE_NAME = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_MIDDLE_NAME);
 
 	public static final String DEFAULT_ADMIN_PASSWORD = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD);
 
-	public static final String DEFAULT_ADMIN_SCREEN_NAME = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME);
+	public static String DEFAULT_ADMIN_SCREEN_NAME = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME);
 
 	public static final String DEFAULT_GUEST_PUBLIC_LAYOUT_COLUMN = PropsUtil.get(PropsKeys.DEFAULT_GUEST_PUBLIC_LAYOUT_COLUMN);
 

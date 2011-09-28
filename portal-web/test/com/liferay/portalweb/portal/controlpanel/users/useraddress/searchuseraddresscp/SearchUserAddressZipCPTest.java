@@ -58,13 +58,13 @@ public class SearchUserAddressZipCPTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("selen01"),
 			selenium.getText(
-				"//div[2]/div[2]/div[2]/div[1]/table/tbody/tr[3]/td[2]/a"));
+				"//div[@id='usersAdminUsersPanel']/div[2]/div/div[1]/table/tbody/tr[3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("nium01"),
 			selenium.getText(
-				"//div[2]/div[2]/div[2]/div[1]/table/tbody/tr[3]/td[3]/a"));
+				"//div[@id='usersAdminUsersPanel']/div[2]/div/div[1]/table/tbody/tr[3]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("selenium01"),
 			selenium.getText(
-				"//div[2]/div[2]/div[2]/div[1]/table/tbody/tr[3]/td[4]/a"));
+				"//div[@id='usersAdminUsersPanel']/div[2]/div/div[1]/table/tbody/tr[3]/td[4]/a"));
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("11112"));
 		selenium.saveScreenShotAndSource();

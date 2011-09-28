@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
@@ -85,8 +86,18 @@ public abstract class PortalClassLoaderServletContextListener
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+			ClassLoader aggregateClassLoader =
+				PortalClassLoaderUtil.getClassLoader();
+
+			if (!aggregateClassLoader.equals(contextClassLoader)) {
+				ClassLoader[] classLoaders = new ClassLoader[] {
+					contextClassLoader, aggregateClassLoader};
+
+				aggregateClassLoader =
+					AggregateClassLoader.getAggregateClassLoader(classLoaders);
+			}
+
+			currentThread.setContextClassLoader(aggregateClassLoader);
 
 			_servletContextListener = getInstance();
 

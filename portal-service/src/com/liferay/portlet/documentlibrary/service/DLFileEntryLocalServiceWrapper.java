@@ -430,12 +430,11 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		long fileEntryId, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getFileEntriesPrevAndNext(fileEntryId,
-			orderByComparator);
+			obc);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(

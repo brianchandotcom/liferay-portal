@@ -243,12 +243,11 @@ public class DLFileEntryServiceSoap {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap[] getFileEntriesPrevAndNext(
-		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		long fileEntryId, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.documentlibrary.model.DLFileEntry[] returnValue = DLFileEntryServiceUtil.getFileEntriesPrevAndNext(fileEntryId,
-					orderByComparator);
+					obc);
 
 			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModels(returnValue);
 		}

@@ -440,7 +440,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 
 		dlSyncModelImpl._setOriginalRepositoryId = false;
 
-		dlSyncModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override

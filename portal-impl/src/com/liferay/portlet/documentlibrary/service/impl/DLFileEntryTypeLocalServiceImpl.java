@@ -16,22 +16,34 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
+import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -48,9 +60,17 @@ public class DLFileEntryTypeLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
-		verify(ddmStructureIds);
-
 		long fileEntryTypeId = counterLocalService.increment();
+
+		long dynamicStructureId = updateDynamicStructure(
+			fileEntryTypeId, groupId, name, description, serviceContext);
+
+		if (dynamicStructureId > 0) {
+			ddmStructureIds = ArrayUtil.append(
+				ddmStructureIds, dynamicStructureId);
+		}
+
+		verify(ddmStructureIds);
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			fileEntryTypeId);
@@ -109,6 +129,16 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	public void deleteFileEntryType(long fileEntryTypeId)
 		throws PortalException, SystemException {
+
+		DLFileEntryType dlFileEntryType =
+			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
+
+		DDMStructure ddmStructure = ddmStructureService.fetchStructure(
+			dlFileEntryType.getGroupId(), "auto_" + fileEntryTypeId);
+
+		if (ddmStructure != null) {
+			ddmStructureService.deleteStructure(ddmStructure.getStructureId());
+		}
 
 		dlFileEntryTypePersistence.remove(fileEntryTypeId);
 	}
@@ -215,6 +245,17 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
+
+		long dynamicStructureId = updateDynamicStructure(
+			fileEntryTypeId, dlFileEntryType.getGroupId(), name, description,
+			serviceContext);
+
+		if (dynamicStructureId > 0) {
+			ddmStructureIds = ArrayUtil.append(
+				ddmStructureIds, dynamicStructureId);
+		}
+
+		verify(ddmStructureIds);
 
 		dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(null));
 		dlFileEntryType.setName(name);
@@ -353,11 +394,71 @@ public class DLFileEntryTypeLocalServiceImpl
 		return folderId;
 	}
 
+	protected long updateDynamicStructure(
+			long fileEntryTypeId, long groupId, String name, String description,
+			ServiceContext serviceContext)
+		throws SystemException, PortalException {
+
+		Locale locale = ServiceContextUtil.getLocale(serviceContext);
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(locale, name);
+		nameMap.put(defaultLocale, name);
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(locale, description);
+		descriptionMap.put(defaultLocale, description);
+
+		String xsd = ParamUtil.getString(serviceContext, "xsd");
+
+		String ddmStructureKey = "auto_" + fileEntryTypeId;
+
+		DDMStructure ddmStructure = ddmStructureService.fetchStructure(
+			groupId, ddmStructureKey);
+
+		try {
+			if (ddmStructure == null) {
+				ddmStructure = ddmStructureService.addStructure(
+					groupId,
+					PortalUtil.getClassNameId(DLFileEntryMetadata.class),
+					ddmStructureKey, nameMap, descriptionMap, xsd, "xml",
+					serviceContext);
+			}
+			else {
+				ddmStructure = ddmStructureService.updateStructure(
+					ddmStructure.getStructureId(), nameMap, descriptionMap, xsd,
+					serviceContext);
+			}
+
+			return ddmStructure.getStructureId();
+		}
+		catch (StructureXsdException sxe) {
+			if (ddmStructure != null) {
+				ddmStructureService.deleteStructure(
+					ddmStructure.getStructureId());
+			}
+		}
+
+		return 0;
+	}
+
 	protected void verify(long[] ddmStructureIds)
 		throws PortalException, SystemException {
 
+		if (ddmStructureIds.length == 0) {
+			throw new NoSuchMetadataSetException();
+		}
+
 		for (long ddmStructureId : ddmStructureIds) {
-			ddmStructurePersistence.findByPrimaryKey(ddmStructureId);
+			DDMStructure ddmStructure =
+				ddmStructurePersistence.fetchByPrimaryKey(ddmStructureId);
+
+			if (ddmStructure == null) {
+				throw new NoSuchMetadataSetException();
+			}
 		}
 	}
 

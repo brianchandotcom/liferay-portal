@@ -834,6 +834,7 @@ Liferay.Service.registerClass(
 	{
 		addStructure: true,
 		deleteStructure: true,
+		fetchStructure: true,
 		getStructure: true,
 		updateStructure: true
 	}

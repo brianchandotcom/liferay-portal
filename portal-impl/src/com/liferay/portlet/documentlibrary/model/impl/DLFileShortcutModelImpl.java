@@ -566,7 +566,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		dlFileShortcutModelImpl._setOriginalStatus = false;
 
-		dlFileShortcutModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override

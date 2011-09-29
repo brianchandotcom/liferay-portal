@@ -47,6 +47,13 @@ public class DDMStructureServiceWrapper implements DDMStructureService {
 		_ddmStructureService.deleteStructure(structureId);
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(
+		long groupId, java.lang.String structureKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureService.fetchStructure(groupId, structureKey);
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -57,6 +57,20 @@ public class DDMStructureServiceImpl
 		ddmStructureLocalService.deleteStructure(structureId);
 	}
 
+	public DDMStructure fetchStructure(long groupId, String structureKey)
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure = ddmStructurePersistence.fetchByG_S(
+			groupId, structureKey);
+
+		if (ddmStructure != null) {
+			DDMStructurePermission.check(
+				getPermissionChecker(), ddmStructure, ActionKeys.VIEW);
+		}
+
+		return ddmStructure;
+	}
+
 	public DDMStructure getStructure(long structureId)
 		throws PortalException, SystemException {
 

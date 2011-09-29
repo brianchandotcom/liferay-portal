@@ -334,7 +334,7 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 		dlFileRankModelImpl._setOriginalFileEntryId = false;
 
-		dlFileRankModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override

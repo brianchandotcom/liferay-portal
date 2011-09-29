@@ -27,7 +27,7 @@ long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryT
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
-long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "ddmStructureId");
+long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
 String script = BeanParamUtil.getString(ddmStructure, request, "xsd");
 
@@ -36,7 +36,11 @@ List<DDMStructure> ddmStructures = null;
 if (fileEntryType != null) {
 	ddmStructures = fileEntryType.getDDMStructures();
 
-	ddmStructures.remove(ddmStructure);
+	if (ddmStructure != null) {
+		ddmStructures = new ArrayList<DDMStructure>(ddmStructures);
+
+		ddmStructures.remove(ddmStructure);
+	}
 }
 
 String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields");
@@ -66,6 +70,9 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		localizeTitle="<%= (fileEntryType == null) %>"
 		title='<%= (fileEntryType == null) ? "new-document-type" : fileEntryType.getName() %>'
 	/>
+
+	<liferay-ui:error exception="<%= NoSuchMetadataSetException.class %>" message="please-enter-a-valid-metadata-set-or-enter-a-metadata-field" />
+	<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-metadata-field-names-(including-field-names-inherited-from-the-parent)" />
 
 	<aui:model-context bean="<%= fileEntryType %>" model="<%= DLFileEntryType.class %>" />
 

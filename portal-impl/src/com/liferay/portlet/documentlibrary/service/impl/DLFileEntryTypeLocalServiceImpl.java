@@ -133,11 +133,12 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
-		DDMStructure ddmStructure = ddmStructureService.fetchStructure(
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
 			dlFileEntryType.getGroupId(), "auto_" + fileEntryTypeId);
 
 		if (ddmStructure != null) {
-			ddmStructureService.deleteStructure(ddmStructure.getStructureId());
+			ddmStructureLocalService.deleteStructure(
+				ddmStructure.getStructureId());
 		}
 
 		dlFileEntryTypePersistence.remove(fileEntryTypeId);
@@ -416,19 +417,19 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		String ddmStructureKey = "auto_" + fileEntryTypeId;
 
-		DDMStructure ddmStructure = ddmStructureService.fetchStructure(
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
 			groupId, ddmStructureKey);
 
 		try {
 			if (ddmStructure == null) {
-				ddmStructure = ddmStructureService.addStructure(
-					groupId,
+				ddmStructure = ddmStructureLocalService.addStructure(
+					serviceContext.getUserId(), groupId,
 					PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 					ddmStructureKey, nameMap, descriptionMap, xsd, "xml",
 					serviceContext);
 			}
 			else {
-				ddmStructure = ddmStructureService.updateStructure(
+				ddmStructure = ddmStructureLocalService.updateStructure(
 					ddmStructure.getStructureId(), nameMap, descriptionMap, xsd,
 					serviceContext);
 			}
@@ -437,7 +438,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 		catch (StructureXsdException sxe) {
 			if (ddmStructure != null) {
-				ddmStructureService.deleteStructure(
+				ddmStructureLocalService.deleteStructure(
 					ddmStructure.getStructureId());
 			}
 		}

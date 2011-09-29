@@ -37,7 +37,7 @@ if (dataJSONObject.has("values")) {
 
 	<aui:field-wrapper cssClass="asset-entries" label="" name="<%= fieldParam %>">
 		<ul class="asset-type">
-			<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">">
+			<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
 				<a href="#" data-value=""><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/common/search.png" /><liferay-ui:message key="everything" /></a>
 			</li>
 
@@ -85,7 +85,7 @@ if (dataJSONObject.has("values")) {
 </div>
 
 <aui:script position="inline" use="aui-base">
-	var container = A.one('.portlet-search .menu .search-asset-entries .asset-entries');
+	var container = A.one('.portlet-search .menu <%= cssClassSelector %> .asset-entries');
 
 	if (container) {
 		container.delegate(
@@ -97,7 +97,7 @@ if (dataJSONObject.has("values")) {
 
 				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-				var currentTerms = A.all('.portlet-search .menu .search-asset-entries .asset-entries .facet-value.current-term a');
+				var currentTerms = A.all('.portlet-search .menu <%= cssClassSelector %> .asset-entries .facet-value.current-term a');
 
 				if (currentTerms) {
 					currentTerms.each(

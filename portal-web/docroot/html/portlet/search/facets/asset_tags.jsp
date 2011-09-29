@@ -32,7 +32,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 	<aui:field-wrapper cssClass='<%= randomNamespace + "asset-tags asset-tags" %>' label="" name="assetTags">
 		<ul class="<%= (showAssetCount && displayStyle.equals("cloud")) ? "tag-cloud" : "tag-list" %>">
-			<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">">
+			<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
 				<a href="#" data-value=""><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/common/<%= facetConfiguration.getLabel() %>.png" /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
 			</li>
 
@@ -96,7 +96,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 </div>
 
 <aui:script position="inline" use="aui-base">
-	var container = A.one('.portlet-search .menu .search-asset-tags .<%= randomNamespace %>asset-tags');
+	var container = A.one('.portlet-search .menu <%= cssClassSelector %> .<%= randomNamespace %>asset-tags');
 
 	if (container) {
 		container.delegate(
@@ -108,7 +108,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-				var currentTerms = A.all('.portlet-search .menu .search-asset-tags .<%= randomNamespace %>asset-tags .facet-value.current-term a');
+				var currentTerms = A.all('.portlet-search .menu <%= cssClassSelector %> .<%= randomNamespace %>asset-tags .facet-value.current-term a');
 
 				if (currentTerms) {
 					currentTerms.each(

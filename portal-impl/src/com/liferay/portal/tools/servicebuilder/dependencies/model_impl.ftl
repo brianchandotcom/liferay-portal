@@ -809,12 +809,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			</#if>
 
 			<#if (column.type == "Blob") && column.lazy>
-				_${column.name}BlobModel = null;
+				${entity.varName}ModelImpl._${column.name}BlobModel = null;
 			</#if>
 		</#list>
 
 		<#if columnBitmaskEnabled>
-			_columnBitmask = 0;
+			${entity.varName}ModelImpl._columnBitmask = 0;
 		</#if>
 	}
 
@@ -861,16 +861,18 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		StringBundler sb = new StringBundler(${entity.regularColList?size * 2 + 1});
 
 		<#list entity.regularColList as column>
-			<#if column_index == 0>
-				sb.append("{${column.name}=");
-				sb.append(get${column.methodName}());
-			<#elseif column_has_next>
-				sb.append(", ${column.name}=");
-				sb.append(get${column.methodName}());
-			<#else>
-				sb.append(", ${column.name}=");
-				sb.append(get${column.methodName}());
-				sb.append("}");
+			<#if (column.type != "Blob") || !column.lazy>
+				<#if column_index == 0>
+					sb.append("{${column.name}=");
+					sb.append(get${column.methodName}());
+				<#elseif column_has_next>
+					sb.append(", ${column.name}=");
+					sb.append(get${column.methodName}());
+				<#else>
+					sb.append(", ${column.name}=");
+					sb.append(get${column.methodName}());
+					sb.append("}");
+				</#if>
 			</#if>
 		</#list>
 
@@ -885,9 +887,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		sb.append("</model-name>");
 
 		<#list entity.regularColList as column>
-			sb.append("<column><column-name>${column.name}</column-name><column-value><![CDATA[");
-			sb.append(get${column.methodName}());
-			sb.append("]]></column-value></column>");
+			<#if (column.type != "Blob") || !column.lazy>
+				sb.append("<column><column-name>${column.name}</column-name><column-value><![CDATA[");
+				sb.append(get${column.methodName}());
+				sb.append("]]></column-value></column>");
+			</#if>
 		</#list>
 
 		sb.append("</model>");

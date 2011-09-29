@@ -1,0 +1,366 @@
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.documentlibrary.store;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.model.DLContent;
+import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.channels.FileChannel;
+
+import java.sql.Blob;
+import java.sql.SQLException;
+
+import java.util.List;
+
+/**
+ * @author Shuyang Zhou
+ * @author Tina Tian
+ */
+public class DBStore extends BaseStore {
+
+	@Override
+	public void addDirectory(long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+	}
+
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, byte[] bytes)
+		throws PortalException, SystemException {
+
+		updateFile(companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			bytes);
+	}
+
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, File file)
+		throws PortalException, SystemException {
+
+		updateFile(companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			file);
+	}
+
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, InputStream is)
+		throws PortalException, SystemException {
+
+		updateFile(companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+			is);
+	}
+
+	@Override
+	public void checkRoot(long companyId) throws SystemException {
+	}
+
+	@Override
+	public void deleteDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		DLContentLocalServiceUtil.deleteContentsByDirectory(companyId,
+			repositoryId, dirName);
+	}
+
+	@Override
+	public void deleteFile(long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		DLContentLocalServiceUtil.deleteContents(companyId, repositoryId,
+			fileName);
+	}
+
+	@Override
+	public void deleteFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException, SystemException {
+
+		DLContentLocalServiceUtil.deleteContent(
+			companyId, repositoryId, fileName, versionLabel);
+	}
+
+	@Override
+	public InputStream getFileAsStream(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		DLContent dlcontent = DLContentLocalServiceUtil.getContent(
+			companyId, repositoryId, fileName);
+
+		dlcontent.resetOriginalValues();
+
+		Blob blobData = dlcontent.getData();
+
+		if (blobData == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find data for file with companyId=" +
+					companyId + ", repositoryId=" + repositoryId +
+					", fileName=" + fileName);
+			}
+
+			return null;
+		}
+
+		try {
+			return blobData.getBinaryStream();
+		}
+		catch (SQLException sqle) {
+			throw new SystemException(
+				"Unable to find data for file with companyId=" +  companyId +
+					", repositoryId=" + repositoryId + ", fileName=" + fileName,
+				sqle);
+		}
+	}
+
+	@Override
+	public InputStream getFileAsStream(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException, SystemException {
+
+		DLContent dlcontent = DLContentLocalServiceUtil.getContent(
+			companyId, repositoryId, fileName, versionLabel);
+
+		Blob blobData = dlcontent.getData();
+
+		if (blobData == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find data for file with companyId=" +
+					companyId + ", repositoryId=" + repositoryId +
+					", fileName=" + fileName + ", versionLabel=" +
+					versionLabel);
+			}
+
+			return null;
+		}
+
+		try {
+			return blobData.getBinaryStream();
+		}
+		catch (SQLException sqle) {
+			throw new SystemException(
+				"Unable to find data for file with companyId=" + companyId +
+				", repositoryId=" + repositoryId + ", fileName=" + fileName +
+				", versionLabel=" + versionLabel, sqle);
+		}
+	}
+
+	public String[] getFileNames(long companyId, long repositoryId)
+		throws SystemException {
+		List<DLContent> dlContents = DLContentLocalServiceUtil.getContents(
+			companyId, repositoryId);
+
+		String[] fileNames = new String[dlContents.size()];
+
+		for (int i = 0; i < dlContents.size(); i++) {
+			DLContent dlContent = dlContents.get(i);
+
+			fileNames[i] = dlContent.getPath();
+		}
+
+		return fileNames;
+	}
+
+	public String[] getFileNames(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		List<DLContent> dlContents =
+			DLContentLocalServiceUtil.getContentsByDirectory(
+				companyId, repositoryId, dirName);
+
+		String[] fileNames = new String[dlContents.size()];
+
+		for (int i = 0; i < dlContents.size(); i++) {
+			DLContent dlContent = dlContents.get(i);
+
+			fileNames[i] = dlContent.getPath();
+		}
+
+		return fileNames;
+	}
+
+	@Override
+	public long getFileSize(long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			companyId, repositoryId, fileName);
+
+		return dlContent.getSize();
+	}
+
+	@Override
+	public boolean hasFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException, SystemException {
+
+		return DLContentLocalServiceUtil.hasContent(
+			companyId, repositoryId, fileName, versionLabel);
+	}
+
+	@Override
+	public void move(String srcDir, String destDir) throws SystemException {
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws PortalException, SystemException {
+
+		DLContentLocalServiceUtil.updateDLContent(
+			companyId, repositoryId, newRepositoryId, fileName, fileName);
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, byte[] bytes)
+		throws PortalException, SystemException {
+
+		if (DLContentLocalServiceUtil.hasContent(
+			companyId, repositoryId, fileName, versionLabel)) {
+
+			throw new DuplicateFileException(fileName);
+		}
+
+		DLContentLocalServiceUtil.addContent(companyId, repositoryId, fileName,
+			versionLabel, bytes);
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, File file)
+		throws PortalException, SystemException {
+
+		if (DLContentLocalServiceUtil.hasContent(
+			companyId, repositoryId, fileName, versionLabel)) {
+
+			throw new DuplicateFileException(fileName);
+		}
+
+		InputStream inputStream = null;
+
+		try {
+			 inputStream = new FileInputStream(file);
+		}
+		catch (FileNotFoundException fnfe) {
+			throw new SystemException(fnfe);
+		}
+
+		DLContentLocalServiceUtil.addContent(
+			companyId, repositoryId, fileName, versionLabel, inputStream,
+			file.length());
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is)
+		throws PortalException, SystemException {
+
+		if (DLContentLocalServiceUtil.hasContent(
+			companyId, repositoryId, fileName, versionLabel)) {
+
+			throw new DuplicateFileException(fileName);
+		}
+
+		long length = -1;
+
+		if (is instanceof FileInputStream) {
+			FileInputStream fileInputStream = (FileInputStream)is;
+			FileChannel fileChannel = fileInputStream.getChannel();
+
+			try {
+				length = fileChannel.size();
+			}
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Failed to detect file size from FileChannel," +
+							"fallback to memory buffer adding.", ioe);
+				}
+			}
+		}
+		else if (is instanceof UnsyncByteArrayInputStream) {
+			UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				(UnsyncByteArrayInputStream)is;
+
+			length = unsyncByteArrayInputStream.available();
+		}
+		else if (is instanceof ByteArrayInputStream) {
+			ByteArrayInputStream byteArrayInputStream =(ByteArrayInputStream)is;
+			length = byteArrayInputStream.available();
+		}
+
+		if (length >= 0) {
+			DLContentLocalServiceUtil.addContent(
+				companyId, repositoryId, fileName, versionLabel, is, length);
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to detect given InputStream's data length :" +
+						is + ", have to buffer the whole data into " +
+							"memory before flush to database, this could be " +
+								"a memory hog when the inputing file is large");
+			}
+
+			byte[] bytes = null;
+
+			try {
+				bytes = FileUtil.getBytes(is);
+			}
+			catch (IOException ioe) {
+				throw new SystemException(ioe);
+			}
+
+			DLContentLocalServiceUtil.addContent(
+				companyId, repositoryId, fileName, versionLabel, bytes);
+		}
+	}
+
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws PortalException, SystemException {
+
+		DLContentLocalServiceUtil.updateDLContent(
+			companyId, repositoryId, repositoryId, fileName, newFileName);
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(DBStore.class);
+
+}

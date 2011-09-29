@@ -27,8 +27,6 @@ public class AddPortletScopeDefaultWCWebContentWCDTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddSiteTest.class);
-		testSuite.addTestSuite(AddSitePublicPageTest.class);
 		testSuite.addTestSuite(AddPageWCD1Test.class);
 		testSuite.addTestSuite(AddPortletWCD1Test.class);
 		testSuite.addTestSuite(AddPageWCD2Test.class);
@@ -54,7 +52,6 @@ public class AddPortletScopeDefaultWCWebContentWCDTests extends BaseTests {
 		testSuite.addTestSuite(TearDownPortletScopeTest.class);
 		testSuite.addTestSuite(TearDownScopeWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
-		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

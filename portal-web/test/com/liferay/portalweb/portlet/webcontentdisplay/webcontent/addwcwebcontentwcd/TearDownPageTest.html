@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>//li[contains(@class,'manage-page')]/a</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>//li[contains(@class,'manage-page')]/a</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
@@ -74,6 +74,11 @@
 	<td>Page Name</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForNotValue</td>
 	<td>//input[@id='_88_friendlyURL']</td>
 	<td>/home</td>
@@ -107,6 +112,11 @@
 	<td>clickAt</td>
 	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -159,6 +169,11 @@
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
+</tr>
+<tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('//li[2]/div/div[3]/a'))</td>
 	<td>page3Present</td>
@@ -207,6 +222,11 @@
 	<td>clickAt</td>
 	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -259,6 +279,11 @@
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Welcome</td>
+</tr>
+<tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('//li[2]/div/div[3]/a'))</td>
 	<td>page5Present</td>
@@ -303,7 +328,6 @@
 	<td>Page5NotPresent</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

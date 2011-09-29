@@ -59,7 +59,8 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("//div[4]/div/ul/li[1]/a")) {
+						if (selenium.isElementPresent(
+									"//li[contains(@class,'manage-page')]/a")) {
 							break;
 						}
 					}
@@ -70,7 +71,7 @@ public class TearDownPageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[4]/div/ul/li[1]/a",
+				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
 
 				for (int second = 0;; second++) {
@@ -138,6 +139,7 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {

@@ -37,7 +37,8 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("//div[4]/div/ul/li[1]/a")) {
+						if (selenium.isElementPresent(
+									"//li[contains(@class,'manage-page')]/a")) {
 							break;
 						}
 					}
@@ -48,7 +49,7 @@ public class TearDownPageTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[4]/div/ul/li[1]/a",
+				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
 
 				for (int second = 0;; second++) {
@@ -116,6 +117,7 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -166,6 +168,24 @@ public class TearDownPageTest extends BaseTestCase {
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//li/ul/li[1]/div/div[3]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+
 				boolean page2Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
 
@@ -209,6 +229,24 @@ public class TearDownPageTest extends BaseTestCase {
 			case 4:
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//li/ul/li[1]/div/div[3]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
 
 				boolean page3Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -254,6 +292,24 @@ public class TearDownPageTest extends BaseTestCase {
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//li/ul/li[1]/div/div[3]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
+
 				boolean page4Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
 
@@ -297,6 +353,24 @@ public class TearDownPageTest extends BaseTestCase {
 			case 6:
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
+
+				for (int second = 0;; second++) {
+					if (second >= 60) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//li/ul/li[1]/div/div[3]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.saveScreenShotAndSource();
 
 				boolean page5Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");

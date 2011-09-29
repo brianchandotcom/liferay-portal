@@ -54,31 +54,8 @@ public class TearDownUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.clickAt("link=Search All Users",
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -121,33 +98,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 			case 3:
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Advanced \u00bb",
 					RuntimeVariables.replace("Advanced \u00bb"));
 
@@ -270,33 +220,6 @@ public class TearDownUserTest extends BaseTestCase {
 			case 6:
 			case 7:
 			case 8:
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basic2Visible = selenium.isVisible("link=\u00ab Basic");
 

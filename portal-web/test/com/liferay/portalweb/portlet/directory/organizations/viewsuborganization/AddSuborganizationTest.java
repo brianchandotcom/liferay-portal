@@ -54,31 +54,8 @@ public class AddSuborganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("All Organizations"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
-					RuntimeVariables.replace("All Organizations"));
+				selenium.clickAt("link=Search All Organizations",
+					RuntimeVariables.replace("Search All Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 

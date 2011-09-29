@@ -54,7 +54,11 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@id='_125_keywords']",
+				selenium.clickAt("link=Search All Organizations",
+					RuntimeVariables.replace("Search All Organizations"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("Test"));
 				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
@@ -63,7 +67,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 				boolean organization1Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//td[8]/span/ul/li/strong/a/span");
 
 				if (!organization1Present) {
 					label = 11;
@@ -72,8 +76,8 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText("//td[8]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -111,8 +115,8 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("\u00ab Back"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isElementPresent("//a[2]/strong"));
-				selenium.clickAt("//a[2]/strong",
+				assertTrue(selenium.isVisible("//td[2]/a"));
+				selenium.clickAt("//td[2]/a",
 					RuntimeVariables.replace("Organization Entry 1"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
@@ -155,7 +159,11 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@id='_125_keywords']",
+				selenium.clickAt("link=Search All Organizations",
+					RuntimeVariables.replace("Search All Organizations"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("Test"));
 				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
@@ -164,7 +172,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 				boolean organization2Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//td[8]/span/ul/li/strong/a/span");
 
 				if (!organization2Present) {
 					label = 10;
@@ -173,8 +181,8 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText("//td[8]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -256,7 +264,11 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@id='_125_keywords']",
+				selenium.clickAt("link=Search All Organizations",
+					RuntimeVariables.replace("Search All Organizations"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("Test"));
 				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
@@ -265,7 +277,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 				boolean organization3Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//td[8]/span/ul/li/strong/a/span");
 
 				if (!organization3Present) {
 					label = 9;
@@ -274,8 +286,8 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText("//td[8]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -357,7 +369,11 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@id='_125_keywords']",
+				selenium.clickAt("link=Search All Organizations",
+					RuntimeVariables.replace("Search All Organizations"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("Test"));
 				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
@@ -366,7 +382,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 				boolean organization4Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//td[8]/span/ul/li/strong/a/span");
 
 				if (!organization4Present) {
 					label = 8;
@@ -375,8 +391,8 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText("//td[8]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -458,7 +474,11 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@id='_125_keywords']",
+				selenium.clickAt("link=Search All Organizations",
+					RuntimeVariables.replace("Search All Organizations"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("Test"));
 				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
@@ -467,7 +487,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.saveScreenShotAndSource();
 
 				boolean organization5Present = selenium.isElementPresent(
-						"//td[4]/span/ul/li/strong/a");
+						"//td[8]/span/ul/li/strong/a/span");
 
 				if (!organization5Present) {
 					label = 7;
@@ -476,8 +496,8 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a",
+					selenium.getText("//td[8]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {

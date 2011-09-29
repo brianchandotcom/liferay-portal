@@ -178,7 +178,7 @@ AUI().add(
 							}
 						).render();
 
-						instance._listView.on('transitionComplete', instance._initDropTargets, instance);
+						instance._listView.after('transitionComplete', instance._initDropTargets, instance);
 
 						instance._listView.after('itemChange', instance._afterListViewItemChange, instance);
 

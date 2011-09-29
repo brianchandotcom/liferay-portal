@@ -1139,7 +1139,7 @@ public class DLAppServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry[] getFileEntriesPrevAndNext(
 		HttpPrincipal httpPrincipal, long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1148,7 +1148,7 @@ public class DLAppServiceHttp {
 					_getFileEntriesPrevAndNextParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, orderByComparator);
+					fileEntryId, obc);
 
 			Object returnObj = null;
 
@@ -1482,7 +1482,7 @@ public class DLAppServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
-					"getFolders", _getFoldersParameterTypes39);
+					"getFolders", _getFoldersParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					repositoryId, parentFolderId, includeMountFolders, start,
@@ -1522,7 +1522,7 @@ public class DLAppServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
-					"getFolders", _getFoldersParameterTypes38);
+					"getFolders", _getFoldersParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					repositoryId, parentFolderId, includeMountFolders, start,
@@ -1638,7 +1638,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
 					"getFoldersAndFileEntriesAndFileShortcuts",
-					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes43);
+					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					repositoryId, folderId, status, includeMountFolders, start,
@@ -1679,7 +1679,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
 					"getFoldersAndFileEntriesAndFileShortcuts",
-					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes42);
+					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes43);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					repositoryId, folderId, status, includeMountFolders, start,
@@ -2841,7 +2841,7 @@ public class DLAppServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
-					"updateFileEntry", _updateFileEntryParameterTypes76);
+					"updateFileEntry", _updateFileEntryParameterTypes74);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,
@@ -2883,7 +2883,7 @@ public class DLAppServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
-					"updateFileEntry", _updateFileEntryParameterTypes74);
+					"updateFileEntry", _updateFileEntryParameterTypes75);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,
@@ -2926,7 +2926,7 @@ public class DLAppServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
-					"updateFileEntry", _updateFileEntryParameterTypes75);
+					"updateFileEntry", _updateFileEntryParameterTypes76);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,
@@ -2969,7 +2969,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
 					"updateFileEntryAndCheckIn",
-					_updateFileEntryAndCheckInParameterTypes78);
+					_updateFileEntryAndCheckInParameterTypes77);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,
@@ -3013,7 +3013,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
 					"updateFileEntryAndCheckIn",
-					_updateFileEntryAndCheckInParameterTypes77);
+					_updateFileEntryAndCheckInParameterTypes78);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,

@@ -538,12 +538,10 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService {
 	}
 
 	public com.liferay.portal.kernel.repository.model.FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		long fileEntryId, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlAppLocalService.getFileEntriesPrevAndNext(fileEntryId,
-			orderByComparator);
+		return _dlAppLocalService.getFileEntriesPrevAndNext(fileEntryId, obc);
 	}
 
 	/**

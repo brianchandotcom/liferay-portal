@@ -588,7 +588,7 @@ public class DLFileEntryServiceHttp {
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry[] getFileEntriesPrevAndNext(
 		HttpPrincipal httpPrincipal, long fileEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -597,7 +597,7 @@ public class DLFileEntryServiceHttp {
 					_getFileEntriesPrevAndNextParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, orderByComparator);
+					fileEntryId, obc);
 
 			Object returnObj = null;
 

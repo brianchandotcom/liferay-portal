@@ -37,15 +37,26 @@ public class BaseButtonRowTag extends com.liferay.taglib.util.IncludeTag {
 		return _cssClass;
 	}
 
+	public java.lang.String getId() {
+		return _id;
+	}
+
 	public void setCssClass(java.lang.String cssClass) {
 		_cssClass = cssClass;
 
 		setScopedAttribute("cssClass", cssClass);
 	}
 
+	public void setId(java.lang.String id) {
+		_id = id;
+
+		setScopedAttribute("id", id);
+	}
+
 	@Override
 	protected void cleanUp() {
 		_cssClass = null;
+		_id = null;
 	}
 
 	@Override
@@ -61,6 +72,7 @@ public class BaseButtonRowTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "id", _id);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:button-row:";
@@ -72,5 +84,6 @@ public class BaseButtonRowTag extends com.liferay.taglib.util.IncludeTag {
 		"/html/taglib/aui/button_row/start.jsp";
 
 	private java.lang.String _cssClass = null;
+	private java.lang.String _id = null;
 
 }

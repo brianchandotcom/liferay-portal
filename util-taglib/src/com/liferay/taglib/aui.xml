@@ -150,6 +150,13 @@
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
+			<attribute>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
 		</attributes>
 	</component>
 	<component name="Column" bodyContent="true">

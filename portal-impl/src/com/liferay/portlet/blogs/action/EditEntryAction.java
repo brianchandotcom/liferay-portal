@@ -84,6 +84,8 @@ public class EditEntryAction extends PortletAction {
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		String title = ParamUtil.getString(actionRequest, "title");
+		String content = ParamUtil.getString(actionRequest, "content");
 
 		try {
 			BlogsEntry entry = null;
@@ -103,6 +105,10 @@ public class EditEntryAction extends PortletAction {
 
 				if (entryId > 0) {
 					entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+					entry.setContent(content);
+					entry.setTitle(title);
+					actionRequest.setAttribute(WebKeys.BLOGS_ENTRY, entry);
+					return;
 				}
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {

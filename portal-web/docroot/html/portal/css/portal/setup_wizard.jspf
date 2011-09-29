@@ -14,97 +14,6 @@
  */
 --%>
 
-#banner .setup-heading {
-	display: table;
-	width: 100%
-}
-
-#main-container {
-	height: 100%;
-	width: 100%;
-}
-
-#messages-wrapper {
-	display: table;
-	padding-top: 40px;
-	width: 100%;
-}
-
-
-#setup-wrapper {
-	margin: auto;
-	max-width: 800px;
-}
-
-.content-wrapper {
-	padding: 5px;
-	width: 100%;
-}
-
-.fieldset-header {
-	border: none;
-	padding: 10px 0;
-}
-
-.fieldset-header .aui-fieldset-content {
-	-webkit-border-bottom-right-radius: 10px;
-	-webkit-border-bottom-left-radius: 10px;
-	-moz-border-radius-bottomright: 10px;
-	-moz-border-radius-bottomleft: 10px;
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
-	border: 1px solid #363636;
-	margin-top: -10px;
-	padding: 9px;
-	width: 100%;
-}
-
-.fieldset-header legend {
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-top-right-radius: 10px;
-	-moz-border-radius-topleft: 10px;
-	-moz-border-radius-topright: 10px;
-	background-color: #363636;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	color: #ECF1EF;
-	font-weight: bold;
-	margin: 0;
-	min-width: 500px;
-	min-height: 0.85em;
-	padding: 10px;
-	width: 100%;
-}
-
-.logo-title {
-	float: left;
-	width: 50%;
-}
-
-.properties-text {
-	min-height: 200px;
-	width: 100%;
-}
-
-#banner .setup-title {
-	float: right;
-	height: 120px;
-	width: 50%;
-}
-
-#banner .setup-title h2 {
-	position: relative;
-	text-align: right;
-	font-size: 1.8em;
-}
-
-.tooltip {
-	font-size: 0.8em;
-	font-style: italic;
-}
-
-/*  copied from classic */
-
 body {
 	background: #EEF0F2 !important;
 	color: #363636;
@@ -114,13 +23,128 @@ body {
 }
 
 #wrapper {
-	background: none;
-	margin: 0 auto;
-	max-width: 90%;
-	min-width: 960px;
+	margin: auto;
+	max-width: 600px;
+	min-width: 0;
+}
+
+#banner {
+	min-height: 100px;
+}
+
+#banner:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+#banner .company-title {
+	float: left;
+	width: 50%;
+}
+
+#banner .site-title {
+	clip: auto;
+	float: right;
+	font-size: 1.8em;
+	margin: 0.5em 0;
 	position: relative;
+	text-align: right;
+	text-shadow: 1px 1px #FFF;
+	width: 50%;
+}
+
+.properties-text {
+	min-height: 200px;
+	width: 100%;
+}
+
+.aui-form .aui-fieldset {
+	margin-bottom: 1em;
+}
+
+.aui-fieldset .aui-field-content {
+	margin-top: 0;
+}
+
+.aui-legend {
+	background: #D4D4D4 url(<%= themeImagesPath %>/portlet/header_bg.png) repeat-x 0 0;
+	border: 1px solid;
+	border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
+	font-size: 1.1em;
+	overflow: hidden;
+	padding: 0;
+	position: static;
+	text-indent: 10px;
+	text-overflow: ellipsis;
+	text-shadow: 1px 1px #FFF;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.aui-fieldset-content {
+	padding: 1em 10px 0;
+}
+
+.aui-fieldset-legend {
+	color: #363636;
+	padding: 0;
+	position: static;
+	width: 100%;
+}
+
+.aui-field-element {
+	display: block;
+}
+
+.aui-field-input-text {
+	width: 100%;
+}
+
+.aui-field-hint {
+	float: none;
+	font-style: italic;
+}
+
+.database-options {
+	display: block;
+	margin-bottom: 1em;
+}
+
+.lfr-inline-code {
+	background: #FF9;
+	color: #555;
+	font-family: monospace;
+	font-size: 1.2em;
+	font-style: normal;
+	font-weight: bold;
+	padding: 3px;
+}
+
+.portlet-msg-alert .lfr-inline-code {
+	background-color: #EEB;
+	color: #333;
 }
 
 .ie6 #wrapper {
-	width: 90%;
+	width: 600px;
+}
+
+/* ---------- Extras ---------- */
+
+.aui-legend {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 1px 1px 0 #FFF;
+	-webkit-box-shadow: 1px 1px 0 #FFF;
+	box-shadow: 1px 1px 0 #FFF;
+}
+
+.aui-field-input-text {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }

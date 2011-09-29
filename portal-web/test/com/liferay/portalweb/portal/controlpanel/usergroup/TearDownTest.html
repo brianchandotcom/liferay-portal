@@ -29,8 +29,48 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//form/div[2]/div/div/div/div/div[2]'))</td>
+	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>basicVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${basicVisible}</td>
+	<td>BasicNotVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=« Basic</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BasicNotVisible</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>selenium</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
 	<td>usersPresent</td>
 </tr>
 <tr>
@@ -40,11 +80,11 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@id='usersAdminUsersPanel']/div[2]/div/div/table/tbody/tr/th/input</td>
-	<td>Select All</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td></td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAndWait</td>
 	<td>//input[@value='Deactivate']</td>
 	<td>Deactivate</td>
 </tr>
@@ -52,11 +92,6 @@
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to deactivate the selected users?</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -69,29 +104,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=View All Users</td>
-	<td>View All Users</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=Advanced »'))</td>
-	<td>advancedVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${advancedVisible}</td>
-	<td>AdvancedNotVisible</td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
-	<td>Advanced</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>AdvancedNotVisible</td>
-	<td></td>
+	<td>Advanced »</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -109,9 +124,19 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>users2Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${users2Present}</td>
+	<td>Users2NotPresent</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_allRowIds']</td>
-	<td>Select All</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -132,6 +157,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']</td>
 	<td>No users were found.</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Users2NotPresent</td>
+	<td></td>
 </tr>
 <tr>
 	<td>open</td>
@@ -453,7 +483,6 @@
 	<td>UserGroup1NotPresent</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

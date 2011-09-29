@@ -54,22 +54,23 @@ public class TearDownTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				selenium.clickAt("link=Search All Users",
+					RuntimeVariables.replace("Search All Users"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 
-				boolean usersPresent = selenium.isElementPresent(
-						"//form/div[2]/div/div/div/div/div[2]");
+				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
-				if (!usersPresent) {
+				if (!basicVisible) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//div[@id='usersAdminUsersPanel']/div[2]/div/div/table/tbody/tr/th/input",
-					RuntimeVariables.replace("Select All"));
-				selenium.click("//input[@value='Deactivate']");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
+
+			case 2:
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -77,8 +78,7 @@ public class TearDownTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
+						if (selenium.isVisible("//input[@name='_125_keywords']")) {
 							break;
 						}
 					}
@@ -89,29 +89,38 @@ public class TearDownTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
-			case 2:
-				selenium.clickAt("link=View All Users",
-					RuntimeVariables.replace("View All Users"));
+				selenium.type("//input[@name='_125_keywords']",
+					RuntimeVariables.replace("selenium"));
+				selenium.saveScreenShotAndSource();
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
-				boolean advancedVisible = selenium.isVisible(
-						"link=Advanced \u00bb");
+				boolean usersPresent = selenium.isElementPresent(
+						"//input[@name='_125_rowIds']");
 
-				if (!advancedVisible) {
+				if (!usersPresent) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("link=Advanced \u00bb",
-					RuntimeVariables.replace("Advanced"));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace(""));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Deactivate']"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 3:
+				selenium.clickAt("link=Advanced \u00bb",
+					RuntimeVariables.replace("Advanced \u00bb"));
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -136,8 +145,18 @@ public class TearDownTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+
+				boolean users2Present = selenium.isElementPresent(
+						"//input[@name='_125_rowIds']");
+
+				if (!users2Present) {
+					label = 4;
+
+					continue;
+				}
+
 				selenium.clickAt("//input[@name='_125_allRowIds']",
-					RuntimeVariables.replace("Select All"));
+					RuntimeVariables.replace(""));
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
@@ -149,6 +168,8 @@ public class TearDownTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("No users were found."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
+
+			case 4:
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
@@ -208,7 +229,7 @@ public class TearDownTest extends BaseTestCase {
 						"//td[2]/a");
 
 				if (!userGroup1Present) {
-					label = 8;
+					label = 9;
 
 					continue;
 				}
@@ -258,7 +279,7 @@ public class TearDownTest extends BaseTestCase {
 						"//td[2]/a");
 
 				if (!userGroup2Present) {
-					label = 7;
+					label = 8;
 
 					continue;
 				}
@@ -308,7 +329,7 @@ public class TearDownTest extends BaseTestCase {
 						"//td[2]/a");
 
 				if (!userGroup3Present) {
-					label = 6;
+					label = 7;
 
 					continue;
 				}
@@ -358,7 +379,7 @@ public class TearDownTest extends BaseTestCase {
 						"//td[2]/a");
 
 				if (!userGroup4Present) {
-					label = 5;
+					label = 6;
 
 					continue;
 				}
@@ -408,7 +429,7 @@ public class TearDownTest extends BaseTestCase {
 						"//td[2]/a");
 
 				if (!userGroup5Present) {
-					label = 4;
+					label = 5;
 
 					continue;
 				}
@@ -427,11 +448,11 @@ public class TearDownTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 
-			case 4:
 			case 5:
 			case 6:
 			case 7:
 			case 8:
+			case 9:
 			case 100:
 				label = -1;
 			}

@@ -52,8 +52,8 @@
 <%@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %>
 <%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
-<%@ page import="com.liferay.portlet.journal.model.JournalStructure"%>
-<%@ page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil"%>
+<%@ page import="com.liferay.portlet.journal.model.JournalStructure" %>
+<%@ page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil" %>
 <%@ page import="com.liferay.util.RSSUtil" %>
 <%@ page import="com.liferay.util.xml.DocUtil" %>
 

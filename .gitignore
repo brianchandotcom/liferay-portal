@@ -2,6 +2,7 @@
 *.bak
 *.iml
 *.swp
+*.ant-*
 
 /*.ipr
 /*.iws
@@ -12,6 +13,7 @@
 /.xmlcatalog
 /ActiveMQ
 /ant.install.log
+/*.ant-*
 /api
 /app.server.*.properties
 /bin

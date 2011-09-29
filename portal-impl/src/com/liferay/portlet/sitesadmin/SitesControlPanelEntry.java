@@ -43,9 +43,7 @@ public class SitesControlPanelEntry extends BaseControlPanelEntry {
 			groupParams.put(
 				"usersGroups", new Long(permissionChecker.getUserId()));
 
-            //Sites
-
-            groupParams.put("type", 1);
+            groupParams.put("site", Boolean.TRUE);
 
 			int count = GroupLocalServiceUtil.searchCount(
 				permissionChecker.getCompanyId(), null, null, groupParams);

@@ -34,7 +34,6 @@ public class DLContentSoap implements Serializable {
 		soapModel.setContentId(model.getContentId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setPortletId(model.getPortletId());
 		soapModel.setRepositoryId(model.getRepositoryId());
 		soapModel.setPath(model.getPath());
 		soapModel.setVersion(model.getVersion());
@@ -116,14 +115,6 @@ public class DLContentSoap implements Serializable {
 		_companyId = companyId;
 	}
 
-	public String getPortletId() {
-		return _portletId;
-	}
-
-	public void setPortletId(String portletId) {
-		_portletId = portletId;
-	}
-
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -167,7 +158,6 @@ public class DLContentSoap implements Serializable {
 	private long _contentId;
 	private long _groupId;
 	private long _companyId;
-	private String _portletId;
 	private long _repositoryId;
 	private String _path;
 	private String _version;

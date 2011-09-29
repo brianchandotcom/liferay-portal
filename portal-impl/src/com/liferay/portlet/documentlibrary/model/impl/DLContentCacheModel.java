@@ -30,7 +30,7 @@ import com.liferay.portlet.documentlibrary.model.DLContent;
 public class DLContentCacheModel implements CacheModel<DLContent> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{contentId=");
 		sb.append(contentId);
@@ -38,8 +38,6 @@ public class DLContentCacheModel implements CacheModel<DLContent> {
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", portletId=");
-		sb.append(portletId);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
 		sb.append(", path=");
@@ -59,14 +57,6 @@ public class DLContentCacheModel implements CacheModel<DLContent> {
 		dlContentImpl.setContentId(contentId);
 		dlContentImpl.setGroupId(groupId);
 		dlContentImpl.setCompanyId(companyId);
-
-		if (portletId == null) {
-			dlContentImpl.setPortletId(StringPool.BLANK);
-		}
-		else {
-			dlContentImpl.setPortletId(portletId);
-		}
-
 		dlContentImpl.setRepositoryId(repositoryId);
 
 		if (path == null) {
@@ -93,7 +83,6 @@ public class DLContentCacheModel implements CacheModel<DLContent> {
 	public long contentId;
 	public long groupId;
 	public long companyId;
-	public String portletId;
 	public long repositoryId;
 	public String path;
 	public String version;

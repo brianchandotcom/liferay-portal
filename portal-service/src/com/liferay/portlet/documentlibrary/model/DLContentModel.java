@@ -102,21 +102,6 @@ public interface DLContentModel extends BaseModel<DLContent> {
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the portlet ID of this document library content.
-	 *
-	 * @return the portlet ID of this document library content
-	 */
-	@AutoEscape
-	public String getPortletId();
-
-	/**
-	 * Sets the portlet ID of this document library content.
-	 *
-	 * @param portletId the portlet ID of this document library content
-	 */
-	public void setPortletId(String portletId);
-
-	/**
 	 * Returns the repository ID of this document library content.
 	 *
 	 * @return the repository ID of this document library content

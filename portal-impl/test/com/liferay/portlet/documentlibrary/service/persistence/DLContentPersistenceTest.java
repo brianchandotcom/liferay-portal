@@ -79,8 +79,6 @@ public class DLContentPersistenceTest extends BasePersistenceTestCase {
 
 		newDLContent.setCompanyId(nextLong());
 
-		newDLContent.setPortletId(randomString());
-
 		newDLContent.setRepositoryId(nextLong());
 
 		newDLContent.setPath(randomString());
@@ -105,8 +103,6 @@ public class DLContentPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingDLContent.getGroupId(), newDLContent.getGroupId());
 		assertEquals(existingDLContent.getCompanyId(),
 			newDLContent.getCompanyId());
-		assertEquals(existingDLContent.getPortletId(),
-			newDLContent.getPortletId());
 		assertEquals(existingDLContent.getRepositoryId(),
 			newDLContent.getRepositoryId());
 		assertEquals(existingDLContent.getPath(), newDLContent.getPath());
@@ -241,17 +237,6 @@ public class DLContentPersistenceTest extends BasePersistenceTestCase {
 				existingDLContentModelImpl.getOriginalPath()));
 		assertTrue(Validator.equals(existingDLContentModelImpl.getVersion(),
 				existingDLContentModelImpl.getOriginalVersion()));
-
-		assertEquals(existingDLContentModelImpl.getCompanyId(),
-			existingDLContentModelImpl.getOriginalCompanyId());
-		assertTrue(Validator.equals(existingDLContentModelImpl.getPortletId(),
-				existingDLContentModelImpl.getOriginalPortletId()));
-		assertEquals(existingDLContentModelImpl.getRepositoryId(),
-			existingDLContentModelImpl.getOriginalRepositoryId());
-		assertTrue(Validator.equals(existingDLContentModelImpl.getPath(),
-				existingDLContentModelImpl.getOriginalPath()));
-		assertTrue(Validator.equals(existingDLContentModelImpl.getVersion(),
-				existingDLContentModelImpl.getOriginalVersion()));
 	}
 
 	protected DLContent addDLContent() throws Exception {
@@ -262,8 +247,6 @@ public class DLContentPersistenceTest extends BasePersistenceTestCase {
 		dlContent.setGroupId(nextLong());
 
 		dlContent.setCompanyId(nextLong());
-
-		dlContent.setPortletId(randomString());
 
 		dlContent.setRepositoryId(nextLong());
 

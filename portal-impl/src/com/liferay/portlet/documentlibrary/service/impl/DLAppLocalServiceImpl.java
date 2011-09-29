@@ -618,13 +618,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	public FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId, OrderByComparator orderByComparator)
+			long fileEntryId, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
-		return localRepository.getFileEntriesPrevAndNext(
-			fileEntryId, orderByComparator);
+		return localRepository.getFileEntriesPrevAndNext(fileEntryId, obc);
 	}
 
 	/**

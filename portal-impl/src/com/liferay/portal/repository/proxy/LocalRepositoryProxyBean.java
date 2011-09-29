@@ -127,11 +127,10 @@ public class LocalRepositoryProxyBean
 	}
 
 	public FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId, OrderByComparator orderByComparator)
+			long fileEntryId, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		return _localRepository.getFileEntriesPrevAndNext(
-			fileEntryId, orderByComparator);
+		return _localRepository.getFileEntriesPrevAndNext(fileEntryId, obc);
 	}
 
 	public FileEntry getFileEntry(long fileEntryId)

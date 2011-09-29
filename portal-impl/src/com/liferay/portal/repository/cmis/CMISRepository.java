@@ -419,7 +419,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	public FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId, OrderByComparator obc)
+			long fileEntryId, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);

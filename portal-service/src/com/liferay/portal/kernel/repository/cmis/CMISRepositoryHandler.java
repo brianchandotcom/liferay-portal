@@ -141,11 +141,10 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	}
 
 	public FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId, OrderByComparator orderByComparator)
+			long fileEntryId, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		return _baseCmisRepository.getFileEntriesPrevAndNext(
-			fileEntryId, orderByComparator);
+		return _baseCmisRepository.getFileEntriesPrevAndNext(fileEntryId, obc);
 	}
 
 	public int getFileEntriesCount(long folderId) throws SystemException {

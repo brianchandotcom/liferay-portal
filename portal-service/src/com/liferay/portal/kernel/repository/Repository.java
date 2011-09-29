@@ -106,7 +106,7 @@ public interface Repository {
 		throws SystemException;
 
 	public FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId, OrderByComparator orderByComparator)
+			long fileEntryId, OrderByComparator obc)
 		throws PortalException, SystemException;
 
 	public int getFileEntriesCount(long folderId)

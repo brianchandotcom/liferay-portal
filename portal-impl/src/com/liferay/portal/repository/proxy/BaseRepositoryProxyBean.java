@@ -202,11 +202,10 @@ public class BaseRepositoryProxyBean
 	}
 
 	public FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId, OrderByComparator orderByComparator)
+			long fileEntryId, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		return _baseRepository.getFileEntriesPrevAndNext(
-			fileEntryId, orderByComparator);
+		return _baseRepository.getFileEntriesPrevAndNext(fileEntryId, obc);
 	}
 
 	public int getFileEntriesCount(long folderId)

@@ -129,7 +129,6 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 if (portletId.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) && showPrevAndNextNavigation) {
 	showPrevAndNextControls = true;
 }
-
 %>
 
 <portlet:actionURL var="editFileEntry">
@@ -164,74 +163,53 @@ if (portletId.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) && showPrevAndNextNaviga
 		<aui:column columnWidth="<%= 65 %>" cssClass="lfr-asset-column-details" first="<%= true %>">
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content">
-					<c:if test = '<%= showActions %>'>
+					<c:if test="<%= showActions %>">
 						<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>'/>
 					</c:if>
 
 					<c:if test="<%= showPrevAndNextControls %>">
+
 						<%
 						FileEntry[] prevAndNext = DLAppServiceUtil.getFileEntriesPrevAndNext(fileEntry.getFileEntryId(), obc);
+
 						FileEntry previousEntry = prevAndNext[0];
 						FileEntry nextEntry = prevAndNext[2];
 						%>
 
 						<div class="prev-next-navigation">
-							<%
-							if (previousEntry != null) {
-							%>
+							<c:choose>
+								<c:when test="<%= (previousEntry != null) %>">
+									<portlet:renderURL var="previousEntryURL">
+										<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="fileEntryId" value="<%= String.valueOf(previousEntry.getFileEntryId()) %>" />
+									</portlet:renderURL>
 
-								<portlet:renderURL var="previousEntryURL">
-									<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
-									<portlet:param name="redirect" value="<%= redirect %>" />
-									<portlet:param name="fileEntryId" value="<%= String.valueOf(previousEntry.getFileEntryId()) %>" />
-								</portlet:renderURL>
-								<a href="<%= previousEntryURL %>">
+									<aui:a href="<%= previousEntryURL %>">
+										<span class="left-arrow <%= previousEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<span class="left-arrow <%= previousEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+								</c:otherwise>
+							</c:choose>
 
-							<%
-							}
-							%>
+							<c:choose>
+								<c:when test="<%= (nextEntry != null) %>">
+									<portlet:renderURL var="nextEntryURL">
+										<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="fileEntryId" value="<%= String.valueOf(nextEntry.getFileEntryId()) %>" />
+									</portlet:renderURL>
 
-									<button type="button" class="aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-toolbar-first aui-toolbar-item" title="" style="padding:0px">
-										<span class="aui-buttonitem-icon aui-icon aui-icon-arrow-1-l <%= previousEntry == null ? "disabled" : "" %>"></span>
-									</button>
-
-
-							<%
-							if (previousEntry != null) {
-							%>
-
-								</a>
-
-							<%
-								}
-							%>
-
-							<%
-							if (nextEntry != null) {
-							%>
-
-								<portlet:renderURL var="nextEntryURL">
-									<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
-									<portlet:param name="redirect" value="<%= redirect %>" />
-									<portlet:param name="fileEntryId" value="<%= String.valueOf(nextEntry.getFileEntryId()) %>" />
-								</portlet:renderURL>
-								<a href="<%= nextEntryURL %>">
-
-							<%
-							}
-							%>
-									<button type="button" class="aui-buttonitem-content yui3-widget aui-component aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-last aui-toolbar-item" title="" style="padding:0px">
-										<span class="aui-buttonitem-icon aui-icon aui-icon-arrow-1-r <%= nextEntry == null ? "disabled" : "" %>"></span>
-									</button>
-							<%
-							if (nextEntry != null) {
-							%>
-
-								</a>
-
-							<%
-							}
-							%>
+									<aui:a href="<%= nextEntryURL %>">
+										<span class="right-arrow <%= nextEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<span class="right-arrow <%= nextEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</c:if>
 				</div>
@@ -881,6 +859,7 @@ if (portletId.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) && showPrevAndNextNaviga
 	}
 
 	<c:if test = '<%= showActions %>'>
+
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 
 		var fileEntryToolbar = new A.Toolbar(

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -44,6 +45,8 @@ public class GetCategoriesAction extends JSONAction {
 			HttpServletResponse response)
 		throws Exception {
 
+		String languageId = LanguageUtil.getLanguageId(request);
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<AssetCategory> categories = getCategories(request);
@@ -59,7 +62,7 @@ public class GetCategoriesAction extends JSONAction {
 			jsonObject.put("hasChildren", !childCategories.isEmpty());
 			jsonObject.put("name", category.getName());
 			jsonObject.put("parentCategoryId", category.getParentCategoryId());
-			jsonObject.put("title", category.getTitle());
+			jsonObject.put("title", category.getTitle(languageId));
 
 			jsonArray.put(jsonObject);
 		}

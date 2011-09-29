@@ -54,21 +54,21 @@ int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repo
 long categoryId = ParamUtil.getLong(request, "categoryId");
 String tagName = ParamUtil.getString(request, "tag");
 
-String categoryName = null;
-String vocabularyName = null;
+String categoryTitle = null;
+String vocabularyTitle = null;
 
 if (categoryId != 0) {
 	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
 
 	assetCategory = assetCategory.toEscapedModel();
 
-	categoryName = assetCategory.getName();
+	categoryTitle = assetCategory.getTitle(locale);
 
 	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
 
 	assetVocabulary = assetVocabulary.toEscapedModel();
 
-	vocabularyName = assetVocabulary.getName();
+	vocabularyTitle = assetVocabulary.getTitle(locale);
 }
 
 boolean useAssetEntryQuery = (categoryId > 0) || Validator.isNotNull(tagName);
@@ -96,9 +96,9 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
-		<c:if test="<%= Validator.isNotNull(categoryName) %>">
+		<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
 			<h1 class="entry-title">
-				<%= LanguageUtil.format(pageContext, "documents-with-x-x", new String[] {vocabularyName, categoryName}) %>
+				<%= LanguageUtil.format(pageContext, "documents-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>
 			</h1>
 		</c:if>
 
@@ -112,7 +112,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 		<%
 		PortalUtil.addPageKeywords(tagName, request);
-		PortalUtil.addPageKeywords(categoryName, request);
+		PortalUtil.addPageKeywords(categoryTitle, request);
 		%>
 
 	</c:when>

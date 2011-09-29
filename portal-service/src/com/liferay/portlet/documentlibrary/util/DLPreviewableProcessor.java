@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -99,6 +100,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 		catch (Exception e) {
 		}
+	}
+
+	public static void init() {
+		FileUtil.mkdirs(PREVIEW_TMP_PATH);
+		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 	}
 
 	protected void addFileToStore(

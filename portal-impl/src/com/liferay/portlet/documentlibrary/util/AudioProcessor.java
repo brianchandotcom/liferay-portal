@@ -110,10 +110,6 @@ public class AudioProcessor extends DLPreviewableProcessor {
 		return _instance._isSupportedAudio(mimeType);
 	}
 
-	public AudioProcessor() {
-		FileUtil.mkdirs(PREVIEW_TMP_PATH);
-	}
-
 	public void trigger(FileVersion fileVersion) {
 		_instance._queueGeneration(fileVersion);
 	}

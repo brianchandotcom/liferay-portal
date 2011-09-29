@@ -150,9 +150,6 @@ public class PDFProcessor extends DLPreviewableProcessor {
 	}
 
 	public PDFProcessor() {
-		FileUtil.mkdirs(PREVIEW_TMP_PATH);
-		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
-
 		if (isImageMagickEnabled() && (_convertCmd == null)) {
 			String filterName = null;
 

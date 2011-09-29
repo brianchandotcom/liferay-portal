@@ -46,6 +46,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import org.jamwiki.Environment;
 
 /**
@@ -307,6 +308,10 @@ public class GlobalStartupAction extends SimpleAction {
 
 			browserLauncherThread.start();
 		}
+
+		// Document Library
+
+		DLPreviewableProcessor.init();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(GlobalStartupAction.class);

@@ -128,11 +128,6 @@ public class VideoProcessor extends DLPreviewableProcessor {
 		return _instance._isSupportedVideo(mimeType);
 	}
 
-	public VideoProcessor() {
-		FileUtil.mkdirs(PREVIEW_TMP_PATH);
-		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
-	}
-
 	public void trigger(FileVersion fileVersion) {
 		_instance._queueGeneration(fileVersion);
 	}

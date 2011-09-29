@@ -225,6 +225,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		throws PortalException, SystemException {
 
 		if (_latestFileVersion == null) {
+			_document.refresh();
+
 			Document latestDocumentVersion = _document;
 
 			CMISRepository cmisRepository = getCmisRepository();

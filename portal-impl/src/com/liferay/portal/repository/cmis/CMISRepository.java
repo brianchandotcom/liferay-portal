@@ -68,6 +68,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeCo
 
 import java.io.InputStream;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import java.util.ArrayList;
@@ -1488,7 +1489,6 @@ public class CMISRepository extends BaseCmisRepository {
 
 	protected Hits doSearch(SearchContext searchContext, Query query)
 		throws Exception {
-
 		long startTime = System.currentTimeMillis();
 
 		Session session = getSession();
@@ -1543,8 +1543,16 @@ public class CMISRepository extends BaseCmisRepository {
 			documents[index] = document;
 
 			if (queryConfig.isScoreEnabled()) {
-				scores[index] = (Float)queryResult.getPropertyValueByQueryName(
-					"SCORE");
+				Object scoreObj = queryResult.getPropertyValueByQueryName(
+					"HITS");
+
+				if (scoreObj instanceof BigDecimal) {
+					BigDecimal bigDecimalScore = (BigDecimal)scoreObj;
+					scores[index] = bigDecimalScore.floatValue();
+				}
+				else {
+					scores[index] = (Float)scoreObj;
+				}
 			}
 			else {
 				scores[index] = 1;

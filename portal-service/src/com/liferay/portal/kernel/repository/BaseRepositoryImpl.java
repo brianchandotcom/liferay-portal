@@ -19,6 +19,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.RepositoryEntry;
@@ -26,6 +32,7 @@ import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 
 import java.io.File;
@@ -203,6 +210,17 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 	public abstract void initRepository()
 		throws PortalException, SystemException;
+
+	public Hits search(SearchContext searchContext) throws SearchException {
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			DLFileEntryConstants.getClassName());
+
+		searchContext.setSearchEngineId("GENERIC_ENGINE");
+
+		BooleanQuery fullQuery = indexer.getFullQuery(searchContext);
+
+		return search(searchContext, fullQuery);
+	}
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;

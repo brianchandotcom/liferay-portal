@@ -71,6 +71,6 @@ public class SearchUserTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
-			selenium.getText("//td/a"));
+			selenium.getText("//span[@class='asset-entry-title']/a"));
 	}
 }

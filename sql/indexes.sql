@@ -578,9 +578,9 @@ create index IX_88705859 on ResourcePermission (companyId, name, primKey, ownerI
 create index IX_C94C7708 on ResourcePermission (companyId, name, primKey, roleId, actionIds);
 create index IX_60B99860 on ResourcePermission (companyId, name, scope);
 create index IX_2200AA69 on ResourcePermission (companyId, name, scope, primKey);
-create unique index IX_8D83D0CE on ResourcePermission (companyId, name, scope, primKey, roleId);
+create index IX_8D83D0CE on ResourcePermission (companyId, name, scope, primKey, roleId);
 create index IX_D2E2B644 on ResourcePermission (companyId, name, scope, primKey, roleId, actionIds);
-create unique index IX_4A1F4402 on ResourcePermission (companyId, name, scope, primKey, roleId, ownerId, actionIds);
+create index IX_4A1F4402 on ResourcePermission (companyId, name, scope, primKey, roleId, ownerId, actionIds);
 create index IX_A37A0588 on ResourcePermission (roleId);
 create index IX_F4555981 on ResourcePermission (scope);
 

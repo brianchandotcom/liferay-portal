@@ -174,8 +174,6 @@ create index IX_C4F283C8 on DDMTemplate (type_);
 create index IX_F2A243A7 on DDMTemplate (uuid_);
 create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId);
 
-create index IX_9B3F8F9D on DLContent (companyId, portletId, repositoryId, path_);
-create unique index IX_19EC270B on DLContent (companyId, portletId, repositoryId, path_, version);
 create index IX_6A83A66A on DLContent (companyId, repositoryId);
 create index IX_EB531760 on DLContent (companyId, repositoryId, path_);
 create unique index IX_FDD1AAA8 on DLContent (companyId, repositoryId, path_, version);

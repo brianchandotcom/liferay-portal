@@ -17,7 +17,9 @@ package com.liferay.portlet.documentlibrary.action;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -37,7 +39,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateDisplayStyleViews(actionRequest);
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+			validateDisplayStyleViews(actionRequest);
+		}
 
 		validateRootFolder(actionRequest);
 

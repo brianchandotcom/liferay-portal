@@ -939,13 +939,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	public FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId, OrderByComparator orderByComparator)
+			long fileEntryId, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		Repository repository = getRepository(0, fileEntryId, 0);
 
-		return repository.getFileEntriesPrevAndNext(
-			fileEntryId, orderByComparator);
+		return repository.getFileEntriesPrevAndNext(fileEntryId, obc);
 	}
 
 	/**

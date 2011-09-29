@@ -72,7 +72,7 @@ public interface LocalRepository {
 		throws SystemException;
 
 	public FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId, OrderByComparator orderByComparator)
+			long fileEntryId, OrderByComparator orderByComparator)
 		throws PortalException, SystemException;
 
 	public FileEntry getFileEntry(long fileEntryId)

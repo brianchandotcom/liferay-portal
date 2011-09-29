@@ -277,12 +277,11 @@ public class LiferayRepository
 	}
 
 	public FileEntry[] getFileEntriesPrevAndNext(
-		long fileEntryId, OrderByComparator orderByComparator)
+		long fileEntryId, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		DLFileEntry[] dlFileEntries =
-			dlFileEntryService.getFileEntriesPrevAndNext(
-				fileEntryId, orderByComparator);
+			dlFileEntryService.getFileEntriesPrevAndNext(fileEntryId, obc);
 
 		List<FileEntry> fileEntries =
 			toFileEntries(ListUtil.fromArray(dlFileEntries));

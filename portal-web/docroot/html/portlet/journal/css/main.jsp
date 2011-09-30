@@ -241,6 +241,7 @@
 		}
 
 		.structure-field .structure-field {
+			border-bottom: 1px #CCC solid;
 			border-left: 10px solid #E0E0E0;
 			margin: 7px 0 0 5px;
 			padding: 7px 0 0 10px;

@@ -20,6 +20,8 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.service.base.ResourcePermissionServiceBaseImpl;
 
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -36,6 +38,18 @@ public class ResourcePermissionServiceImpl
 
 		resourcePermissionLocalService.addResourcePermission(
 			companyId, name, scope, primKey, roleId, actionId);
+	}
+
+	public void setIndividualResourcePermissions(
+			long groupId, long companyId, String name, String primKey,
+			Map<Long, String[]> roleIdsToActionIds)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(groupId, name, primKey);
+
+		resourcePermissionLocalService.setResourcePermissions(
+			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
+			roleIdsToActionIds);
 	}
 
 	public void setIndividualResourcePermissions(

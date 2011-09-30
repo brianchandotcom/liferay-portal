@@ -41,7 +41,9 @@ import com.liferay.portal.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -297,16 +299,22 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			WebKeys.THEME_DISPLAY);
 
 		long resourceId = ParamUtil.getLong(actionRequest, "resourceId");
+
 		long[] roleIds = StringUtil.split(
 			ParamUtil.getString(
 				actionRequest, "rolesSearchContainerPrimaryKeys"), 0L);
 
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
+
 		for (long roleId : roleIds) {
 			String[] actionIds = getActionIds(actionRequest, roleId, false);
 
-			PermissionServiceUtil.setRolePermissions(
-				roleId, themeDisplay.getScopeGroupId(), actionIds, resourceId);
+			roleIdsToActionIds.put(roleId, actionIds);
 		}
+
+		PermissionServiceUtil.setIndividualPermissions(
+			themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
+			roleIdsToActionIds, resourceId);
 	}
 
 	protected void updateRolePermissions_6(ActionRequest actionRequest)
@@ -332,25 +340,32 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		String resourcePrimKey = ParamUtil.getString(
 			actionRequest, "resourcePrimKey");
 
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
+
 		if (ResourceBlockLocalServiceUtil.isSupported(selResource)) {
 			for (long roleId : roleIds) {
-				List<String> actionIds =
-					getActionIdsList(actionRequest, roleId, true);
+				List<String> actionIds = getActionIdsList(
+					actionRequest, roleId, true);
 
-				ResourceBlockServiceUtil.setIndividualScopePermissions(
-					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-					selResource, GetterUtil.getLong(resourcePrimKey), roleId,
-					actionIds);
+				roleIdsToActionIds.put(
+					roleId, actionIds.toArray(new String[actionIds.size()]));
 			}
+
+			ResourceBlockServiceUtil.setIndividualScopePermissions(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				selResource, GetterUtil.getLong(resourcePrimKey),
+				roleIdsToActionIds);
 		}
 		else {
 			for (long roleId : roleIds) {
 				String[] actionIds = getActionIds(actionRequest, roleId, false);
 
-				ResourcePermissionServiceUtil.setIndividualResourcePermissions(
-					themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
-					selResource, resourcePrimKey, roleId, actionIds);
+				roleIdsToActionIds.put(roleId, actionIds);
 			}
+
+			ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
+				selResource, resourcePrimKey, roleIdsToActionIds);
 		}
 
 		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {

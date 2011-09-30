@@ -73,6 +73,7 @@ import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -142,6 +143,17 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 
 		permissionLocalService.setGroupPermissions(
 			className, classPK, groupId, actionIds, resourceId);
+	}
+
+	public void setIndividualPermissions(
+			long groupId, long companyId,
+			Map<Long, String[]> roleIdsToActionIds, long resourceId)
+		throws PortalException, SystemException {
+
+		checkPermission(getPermissionChecker(), groupId, resourceId);
+
+		permissionLocalService.setRolesPermissions(
+			companyId, roleIdsToActionIds, resourceId);
 	}
 
 	public void setOrgGroupPermissions(

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.lar;
 
-import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +40,6 @@ import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
-import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.Role;
@@ -52,7 +50,6 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.PermissionLocalServiceUtil;
-import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -1042,6 +1039,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
+
 		for (KeyValuePair permission : permissions) {
 			String roleName = permission.getKey();
 
@@ -1084,31 +1083,23 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			String[] actionIds = StringUtil.split(permission.getValue());
 
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-				Resource resource = null;
+			roleIdsToActionIds.put(role.getRoleId(), actionIds);
+		}
 
-				try {
-					resource = ResourceLocalServiceUtil.getResource(
-						_companyId, resourceName,
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(newResourcePK));
-				}
-				catch (NoSuchResourceException nsre) {
-					resource = ResourceLocalServiceUtil.addResource(
-						_companyId, resourceName,
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(newResourcePK));
-				}
+		if (roleIdsToActionIds.isEmpty()) {
+			return;
+		}
 
-				PermissionLocalServiceUtil.setRolePermissions(
-					role.getRoleId(), actionIds, resource.getResourceId());
-			}
-			else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(
-					_companyId, resourceName,
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(newResourcePK), role.getRoleId(), actionIds);
-			}
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
+			PermissionLocalServiceUtil.setRolesPermissions(
+				_companyId, roleIdsToActionIds, resourceName,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(newResourcePK));
+		}
+		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(newResourcePK), roleIdsToActionIds);
 		}
 	}
 

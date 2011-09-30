@@ -158,10 +158,9 @@
 			<bean class="com.liferay.portal.image.SpriteProcessorImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.json.JSONFactory" class="com.liferay.portal.json.JSONFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.json.JSONFactoryUtil" class="com.liferay.portal.kernel.json.JSONFactoryUtil">
-		<property name="JSONFactory">
-			<bean class="com.liferay.portal.json.JSONFactoryImpl" />
-		</property>
+		<property name="JSONFactory" ref="com.liferay.portal.kernel.json.JSONFactory" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" class="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil">
 		<property name="JSONWebServiceActionsManager">

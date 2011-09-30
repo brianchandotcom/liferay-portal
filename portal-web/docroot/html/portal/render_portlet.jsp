@@ -1013,6 +1013,41 @@ else {
 </c:if>
 
 <%
+PortletRequest portletRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+%>
+
+<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(portletRequest, portletConfig.getPortletName() + ".doRefresh") %>'>
+
+	<%
+	String portletResource = ParamUtil.getString(request, "portletResource");
+
+	Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
+
+	String p_p_id = (String)SessionMessages.get(portletRequest, portletConfig.getPortletName() + ".doRefresh");
+
+	if (Validator.isNull(p_p_id)) {
+		p_p_id = portletResource;
+	}
+	%>
+
+	<aui:script position="inline" use="aui-base">
+		if (window.parent) {
+			var data = null;
+
+			var curPortletBoundaryId = '#p_p_id_<%= p_p_id %>_';
+
+			<c:if test='<%= !selPortlet.isAjaxable() || SessionMessages.contains(portletRequest, portletConfig.getPortletName() + ".notAjaxable") %>'>
+				data = {
+					portletAjaxable: false
+				};
+			</c:if>
+
+			Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
+		}
+	</aui:script>
+</c:if>
+
+<%
 themeDisplay.setScopeGroupId(previousScopeGroupId);
 themeDisplay.setParentGroupId(previousParentGroupId);
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.shopping.util.ShoppingPreferences;
 
@@ -81,6 +82,10 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 			SessionMessages.add(
 				actionRequest, portletConfig.getPortletName() + ".doConfigure");
+
+			SessionMessages.add(
+				actionRequest, portletConfig.getPortletName() + ".doRefresh",
+				PortletKeys.SHOPPING);
 		}
 	}
 

@@ -748,7 +748,10 @@ public class WebServerServlet extends HttpServlet {
 		String contentType = fileEntry.getMimeType(version);
 
 		if (!converted) {
-			if (DLUtil.compareVersions(version, fileEntry.getVersion()) >= 0) {
+			if ((DLUtil.compareVersions(
+					version, fileEntry.getVersion()) >= 0) &&
+				fileVersion.isApproved()) {
+
 				contentLength = fileEntry.getSize();
 			}
 			else {

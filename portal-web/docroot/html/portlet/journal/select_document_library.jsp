@@ -208,6 +208,12 @@ if (folder != null) {
 			sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
 		}
 
+		sb.append("','");
+		sb.append(fileEntry.getUuid());
+		sb.append("','");
+		sb.append(fileEntry.getVersion());
+		sb.append("','");
+		sb.append(fileEntry.getTitle());
 		sb.append("'); Liferay.Util.getWindow().close();");
 
 		row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(pageContext, "choose"), sb.toString());

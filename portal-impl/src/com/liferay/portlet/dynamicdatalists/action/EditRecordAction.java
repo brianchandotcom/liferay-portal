@@ -14,7 +14,10 @@
 
 package com.liferay.portlet.dynamicdatalists.action;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -23,7 +26,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
@@ -31,12 +36,14 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.Set;
@@ -88,7 +95,9 @@ public class EditRecordAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.dynamic_data_lists.error");
 			}
-			else if (e instanceof StorageFieldRequiredException) {
+			else if (e instanceof FileSizeException ||
+					 e instanceof StorageFieldRequiredException) {
+
 				SessionErrors.add(actionRequest, e.getClass().getName());
 			}
 			else {
@@ -177,7 +186,26 @@ public class EditRecordAction extends PortletAction {
 
 			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 
+			field.setDataType(fieldDataType);
+
 			String fieldValue = ParamUtil.getString(actionRequest, fieldName);
+
+			if (fieldDataType.equals(FieldConstants.DOCUMENT_LIBRARY)) {
+				UploadPortletRequest uploadPortletRequest =
+					PortalUtil.getUploadPortletRequest(actionRequest);
+
+				File file = uploadPortletRequest.getFile(fieldName);
+
+				if (file != null) {
+					FileEntry fileEntry = DDLUtil.updateRecordFile(
+						actionRequest, recordId, fieldName, ddmStructure);
+
+					JSONObject recordFileEntryJSONObject =
+						DDLUtil.getRecordFileEntryJSONObject(fileEntry);
+
+					fieldValue = recordFileEntryJSONObject.toString();
+				}
+			}
 
 			Serializable fieldValueSerializable =
 				FieldConstants.getSerializable(fieldDataType, fieldValue);

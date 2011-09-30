@@ -25,12 +25,9 @@ Set<String> fieldNames = structure.getFieldNames();
 
 JSONArray readOnlyAttributesJSONArray = JSONFactoryUtil.createJSONArray();
 
-readOnlyAttributesJSONArray.put("label");
 readOnlyAttributesJSONArray.put("name");
 readOnlyAttributesJSONArray.put("options");
-readOnlyAttributesJSONArray.put("predefinedValue");
 readOnlyAttributesJSONArray.put("required");
-readOnlyAttributesJSONArray.put("showLabel");
 
 JSONArray structureAvailableFieldsJSONArray = JSONFactoryUtil.createJSONArray();
 

@@ -45,7 +45,8 @@ public class CalUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_ADDRESS);
+			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_ADDRESS,
+			null);
 	}
 
 	public static String getEmailFromName(
@@ -53,7 +54,7 @@ public class CalUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_NAME);
+			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_NAME, null);
 	}
 
 	public static boolean getEmailEventReminderEnabled(

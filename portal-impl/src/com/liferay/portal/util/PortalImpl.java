@@ -1444,28 +1444,34 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getEmailFromAddress(
-			PortletPreferences preferences, long companyId, String key)
+			PortletPreferences preferences, long companyId, String key,
+			String defaultValue)
 		throws SystemException {
 
-		String defaultValue = PropsUtil.get(key);
-
 		if (Validator.isNull(defaultValue)) {
-			defaultValue = PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+			defaultValue = PropsUtil.get(key);
+
+			if (Validator.isNull(defaultValue)) {
+				defaultValue = PrefsPropsUtil.getString(
+					companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+			}
 		}
 
 		return preferences.getValue("emailFromAddress", defaultValue);
 	}
 
 	public String getEmailFromName(
-			PortletPreferences preferences, long companyId, String key)
+			PortletPreferences preferences, long companyId, String key,
+			String defaultValue)
 		throws SystemException {
 
-		String defaultValue = PropsUtil.get(key);
-
 		if (Validator.isNull(defaultValue)) {
-			defaultValue = PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+			defaultValue = PropsUtil.get(key);
+
+			if (Validator.isNull(defaultValue)) {
+				defaultValue = PrefsPropsUtil.getString(
+					companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+			}
 		}
 
 		return preferences.getValue("emailFromName", defaultValue);

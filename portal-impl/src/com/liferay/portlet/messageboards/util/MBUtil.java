@@ -266,7 +266,7 @@ public class MBUtil {
 
 		return PortalUtil.getEmailFromAddress(
 			preferences, companyId,
-			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
+			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS, null);
 	}
 
 	public static String getEmailFromName(
@@ -274,7 +274,8 @@ public class MBUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_NAME);
+			preferences, companyId, PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_NAME,
+			null);
 	}
 
 	public static boolean getEmailHtmlFormat(PortletPreferences preferences) {

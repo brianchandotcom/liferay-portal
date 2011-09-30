@@ -36,7 +36,7 @@
 		curParam="cur2"
 		delta="<%= fileEntriesPerPage %>"
 		deltaConfigurable="<%= false %>"
-		emptyResultsMessage="there-are-no-documents-in-this-folder"
+		emptyResultsMessage="there-are-no-documents-or-media-files-in-this-folder"
 		headerNames="<%= StringUtil.merge(fileEntryColumns) %>"
 		iteratorURL="<%= portletURL %>"
 		rowChecker="<%= rowChecker %>"

@@ -140,12 +140,14 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
+			long ddmStructureId = ddmStructure.getStructureId();
+
 			DLFileEntryMetadata dlFileEntryMetadata =
 				DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-					ddmStructure.getStructureId(), fileVersionId);
+					ddmStructureId, fileVersionId);
 
 			Fields fields = StorageEngineUtil.getFields(
-				dlFileEntryMetadata.getDDMStorageId());
+				ddmStructureId, dlFileEntryMetadata.getDDMStorageId());
 
 			fieldsMap.put(ddmStructure.getStructureKey(), fields);
 		}

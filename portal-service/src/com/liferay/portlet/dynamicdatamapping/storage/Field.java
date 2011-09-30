@@ -24,9 +24,14 @@ public class Field {
 	public Field() {
 	}
 
-	public Field(String name, Serializable value) {
+	public Field(String name, Serializable value, String dataType) {
+		_dataType = dataType;
 		_name = name;
 		_value = value;
+	}
+
+	public String getDataType() {
+		return _dataType;
 	}
 
 	public String getName() {
@@ -37,6 +42,10 @@ public class Field {
 		return _value;
 	}
 
+	public void setDataType(String dataType) {
+		_dataType = dataType;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -45,6 +54,7 @@ public class Field {
 		_value = value;
 	}
 
+	private String _dataType;
 	private String _name;
 	private Serializable _value;
 

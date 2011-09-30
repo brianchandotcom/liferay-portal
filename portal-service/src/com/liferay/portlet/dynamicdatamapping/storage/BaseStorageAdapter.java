@@ -83,20 +83,19 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 		}
 	}
 
-	public Fields getFields(long classPK) throws StorageException {
-		return getFields(classPK, null);
+	public Fields getFields(long ddmStructureId, long classPK)
+		throws StorageException {
+
+		return getFields(ddmStructureId, classPK, null);
 	}
 
-	public Fields getFields(long classPK, List<String> fieldNames)
+	public Fields getFields(
+			long ddmStructureId, long classPK, List<String> fieldNames)
 		throws StorageException {
 
 		try {
-			DDMStorageLink ddmStorageLink =
-				DDMStorageLinkLocalServiceUtil.getClassStorageLink(classPK);
-
 			Map<Long, Fields> fieldsMapByClasses = getFieldsMap(
-				ddmStorageLink.getStructureId(),
-				new long[] {classPK}, fieldNames);
+				ddmStructureId, new long[] {classPK}, fieldNames);
 
 			return fieldsMapByClasses.get(classPK);
 		}

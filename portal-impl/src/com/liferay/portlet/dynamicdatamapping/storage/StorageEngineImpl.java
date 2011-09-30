@@ -59,16 +59,19 @@ public class StorageEngineImpl implements StorageEngine {
 		storageAdapter.deleteByDDMStructure(ddmStructureId);
 	}
 
-	public Fields getFields(long classPK) throws StorageException {
-		return getFields(classPK, null);
+	public Fields getFields(long ddmStructureId, long classPK)
+		throws StorageException {
+
+		return getFields(ddmStructureId, classPK, null);
 	}
 
-	public Fields getFields(long classPK, List<String> fieldNames)
+	public Fields getFields(
+			long ddmStructureId, long classPK, List<String> fieldNames)
 		throws StorageException {
 
 		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
 
-		return storageAdapter.getFields(classPK, fieldNames);
+		return storageAdapter.getFields(ddmStructureId, classPK, fieldNames);
 	}
 
 	public List<Fields> getFieldsList(

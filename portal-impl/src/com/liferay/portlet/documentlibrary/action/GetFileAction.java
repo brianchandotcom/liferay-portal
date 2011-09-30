@@ -213,7 +213,11 @@ public class GetFileAction extends PortletAction {
 			String id = DLUtil.getTempFileId(
 				fileEntry.getFileEntryId(), version);
 
-			String sourceExtension = FileUtil.getExtension(fileName);
+			String sourceExtension = fileEntry.getExtension();
+
+			if (!fileName.endsWith(StringPool.PERIOD + sourceExtension)) {
+				fileName += StringPool.PERIOD + sourceExtension;
+			}
 
 			File convertedFile = DocumentConversionUtil.convert(
 				id, is, sourceExtension, targetExtension);

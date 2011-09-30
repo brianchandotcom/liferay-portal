@@ -76,8 +76,8 @@ long assetVocabularyId = GetterUtil.getLong(preferences.getValue("assetVocabular
 
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 
-String assetCategoryName = null;
-String assetVocabularyName = null;
+String assetCategoryTitle = null;
+String assetVocabularyTitle = null;
 
 if (assetCategoryId > 0) {
 	assetEntryQuery.setAllCategoryIds(new long[] {assetCategoryId});
@@ -86,15 +86,15 @@ if (assetCategoryId > 0) {
 
 	assetCategory = assetCategory.toEscapedModel();
 
-	assetCategoryName = assetCategory.getName();
+	assetCategoryTitle = assetCategory.getTitle(locale);
 
 	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
 
 	assetVocabulary = assetVocabulary.toEscapedModel();
 
-	assetVocabularyName = assetVocabulary.getName();
+	assetVocabularyTitle = assetVocabulary.getTitle(locale);
 
-	PortalUtil.setPageKeywords(assetCategory.getName(), request);
+	PortalUtil.setPageKeywords(assetCategoryTitle, request);
 }
 
 String assetTagName = ParamUtil.getString(request, "tag");

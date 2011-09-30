@@ -32,14 +32,14 @@ List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(classNam
 for (AssetVocabulary vocabulary : vocabularies) {
 	vocabulary = vocabulary.toEscapedModel();
 
-	String vocabularyName = vocabulary.getTitle(themeDisplay.getLocale());
+	String vocabularyTitle = vocabulary.getTitle(themeDisplay.getLocale());
 
 	List<AssetCategory> curCategories = _filterCategories(categories, vocabulary);
 %>
 
 	<c:if test="<%= !curCategories.isEmpty() %>">
 		<span class="taglib-asset-categories-summary">
-			<%= vocabularyName %>:
+			<%= vocabularyTitle %>:
 
 			<c:choose>
 				<c:when test="<%= portletURL != null %>">

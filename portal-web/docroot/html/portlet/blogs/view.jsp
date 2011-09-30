@@ -19,21 +19,21 @@
 <%
 long categoryId = ParamUtil.getLong(request, "categoryId");
 
-String categoryName = null;
-String vocabularyName = null;
+String categoryTitle = null;
+String vocabularyTitle = null;
 
 if (categoryId != 0) {
 	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
 
 	assetCategory = assetCategory.toEscapedModel();
 
-	categoryName = assetCategory.getName();
+	categoryTitle = assetCategory.getTitle(locale);
 
 	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
 
 	assetVocabulary = assetVocabulary.toEscapedModel();
 
-	vocabularyName = assetVocabulary.getName();
+	vocabularyTitle = assetVocabulary.getTitle(locale);
 }
 
 String tagName = ParamUtil.getString(request, "tag");

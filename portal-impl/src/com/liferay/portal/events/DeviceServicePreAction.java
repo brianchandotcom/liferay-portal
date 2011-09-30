@@ -78,11 +78,18 @@ public class DeviceServicePreAction extends Action {
 			}
 		}
 		catch (Exception e) {
-			throw new ActionException(
-				"Unable to retrieve rule group", e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to retrieve rule group", e);
+			}
+
+			return;
 		}
 
 		themeDisplay.setMDRRuleGroupInstance(mdrRuleGroupInstance);
+
+		if (mdrRuleGroupInstance == null) {
+			return;
+		}
 
 		try {
 			List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(
@@ -92,7 +99,11 @@ public class DeviceServicePreAction extends Action {
 				mdrActions, request, response);
 		}
 		catch (Exception e) {
-			throw new ActionException("Unable to apply device profile", e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to apply device profile", e);
+			}
+
+			return;
 		}
 	}
 

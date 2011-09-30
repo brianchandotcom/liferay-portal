@@ -97,6 +97,16 @@ public class PermissionServiceUtil {
 			resourceId);
 	}
 
+	public static void setIndividualPermissions(long groupId, long companyId,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		long resourceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setIndividualPermissions(groupId, companyId, roleIdsToActionIds,
+			resourceId);
+	}
+
 	public static void setOrgGroupPermissions(long organizationId,
 		long groupId, java.lang.String[] actionIds, long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,

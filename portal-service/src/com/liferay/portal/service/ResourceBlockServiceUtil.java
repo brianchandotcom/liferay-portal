@@ -137,6 +137,16 @@ public class ResourceBlockServiceUtil {
 			roleId, actionIds);
 	}
 
+	public static void setIndividualScopePermissions(long companyId,
+		long groupId, java.lang.String name, long primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setIndividualScopePermissions(companyId, groupId, name, primKey,
+			roleIdsToActionIds);
+	}
+
 	public static ResourceBlockService getService() {
 		if (_service == null) {
 			_service = (ResourceBlockService)PortalBeanLocatorUtil.locate(ResourceBlockService.class.getName());

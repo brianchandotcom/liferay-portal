@@ -237,6 +237,7 @@ Liferay.Service.registerClass(
 		hasUserPermission: true,
 		hasUserPermissions: true,
 		setGroupPermissions: true,
+		setIndividualPermissions: true,
 		setOrgGroupPermissions: true,
 		setRolePermission: true,
 		setRolePermissions: true,

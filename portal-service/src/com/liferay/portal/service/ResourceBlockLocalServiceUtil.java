@@ -659,6 +659,16 @@ public class ResourceBlockLocalServiceUtil {
 	}
 
 	public static void setIndividualScopePermissions(long companyId,
+		long groupId, java.lang.String name, long primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setIndividualScopePermissions(companyId, groupId, name, primKey,
+			roleIdsToActionIds);
+	}
+
+	public static void setIndividualScopePermissions(long companyId,
 		long groupId, java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		long roleId, java.util.List<java.lang.String> actionIds)
@@ -704,6 +714,16 @@ public class ResourceBlockLocalServiceUtil {
 		getService()
 			.updateIndividualScopePermissions(companyId, groupId, name,
 			permissionedModel, roleId, actionIdsLong, operator);
+	}
+
+	public static void updateIndividualScopePermissions(long companyId,
+		long groupId, java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong, int operator, boolean flush)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateIndividualScopePermissions(companyId, groupId, name,
+			permissionedModel, roleId, actionIdsLong, operator, flush);
 	}
 
 	public static com.liferay.portal.model.ResourceBlock updateResourceBlockId(

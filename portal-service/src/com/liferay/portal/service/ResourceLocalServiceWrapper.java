@@ -322,6 +322,13 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService {
 		_resourceLocalService.deleteResource(companyId, name, scope, primKey);
 	}
 
+	public com.liferay.portal.model.Resource fetchResource(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceLocalService.fetchResource(companyId, name, scope,
+			primKey);
+	}
+
 	public void deleteResources(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_resourceLocalService.deleteResources(name);

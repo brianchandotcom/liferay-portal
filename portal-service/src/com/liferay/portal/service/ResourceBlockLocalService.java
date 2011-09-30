@@ -507,6 +507,12 @@ public interface ResourceBlockLocalService extends PermissionedModelLocalService
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		long roleId, java.util.List<java.lang.String> actionIds)
@@ -531,6 +537,12 @@ public interface ResourceBlockLocalService extends PermissionedModelLocalService
 		java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		long roleId, long actionIdsLong, int operator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name,
+		com.liferay.portal.model.PermissionedModel permissionedModel,
+		long roleId, long actionIdsLong, int operator, boolean flush)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.ResourceBlock updateResourceBlockId(

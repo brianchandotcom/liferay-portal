@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.theme.ThemeDisplay;
+
 import java.io.Serializable;
 
 /**
@@ -36,6 +38,13 @@ public class Field {
 
 	public String getName() {
 		return _name;
+	}
+
+	public String getRenderedValue(ThemeDisplay themeDisplay) {
+		FieldRenderer fieldrenderer = FieldRendererFactory.getFieldRenderer(
+			_dataType);
+
+		return fieldrenderer.render(themeDisplay, _value);
 	}
 
 	public Serializable getValue() {

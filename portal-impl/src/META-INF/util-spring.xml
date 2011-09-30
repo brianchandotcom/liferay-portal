@@ -553,6 +553,21 @@
 			</map>
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory" class="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory">
+		<property name="fieldRenderers">
+			<map>
+				<entry key="date">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.DateFieldRenderer" />
+				</entry>
+				<entry key="document-library">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.DocumentLibraryFieldRenderer" />
+				</entry>
+				<entry key="string">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.StringFieldRenderer" />
+				</entry>
+			</map>
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageEngine" class="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineImpl">
 		<property name="defaultStorageAdapter">
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.XMLStorageAdapter" />

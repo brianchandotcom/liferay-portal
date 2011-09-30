@@ -146,19 +146,21 @@ public class ConvertDatabase extends ConvertProcess {
 				_log.debug("Migrating database tables");
 			}
 
-			for (int i = 0; i < tableDetails.size(); i++) {
+			int i = 0;
+
+			for (Tuple tuple : tableDetails.values()) {
 				if ((i > 0) && (i % (tableDetails.size() / 4) == 0)) {
 					MaintenanceUtil.appendStatus(
 						(i * 100 / tableDetails.size()) + "%");
 				}
-
-				Tuple tuple = tableDetails.get(i);
 
 				String table = (String)tuple.getObject(0);
 				Object[][] columns = (Object[][])tuple.getObject(1);
 				String sqlCreate = (String)tuple.getObject(2);
 
 				migrateTable(db, connection, table, columns, sqlCreate);
+
+				i++;
 			}
 		}
 		finally {

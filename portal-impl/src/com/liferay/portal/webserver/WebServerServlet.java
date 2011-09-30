@@ -752,7 +752,7 @@ public class WebServerServlet extends HttpServlet {
 
 		if (!converted) {
 			if ((DLUtil.compareVersions(
-				version, fileEntry.getVersion()) >= 0) &&
+					version, fileEntry.getVersion()) >= 0) &&
 				fileVersion.isApproved()) {
 
 				contentLength = fileEntry.getSize();

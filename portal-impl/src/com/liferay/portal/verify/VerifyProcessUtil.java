@@ -45,6 +45,8 @@ public class VerifyProcessUtil {
 			((verifyFrequency == VerifyProcess.ONCE) && !verified) ||
 			(ranUpgradeProcess)) {
 
+			boolean tempIndexOnStartUp = PropsValues.INDEX_ON_STARTUP;
+
 			if (ranUpgradeProcess && PropsValues.INDEX_ON_UPGRADE) {
 				PropsUtil.set(
 					PropsKeys.INDEX_ON_STARTUP, Boolean.TRUE.toString());
@@ -79,6 +81,12 @@ public class VerifyProcessUtil {
 				WorkflowThreadLocal.setEnabled(true);
 
 				SearchEngineUtil.setIndexReadOnly(tempIndexReadOnly);
+
+				PropsUtil.set(
+					PropsKeys.INDEX_ON_STARTUP,
+					String.valueOf(tempIndexOnStartUp));
+
+				PropsValues.INDEX_ON_STARTUP = tempIndexOnStartUp;
 			}
 		}
 

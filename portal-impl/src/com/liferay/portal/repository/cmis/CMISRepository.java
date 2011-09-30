@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -50,9 +51,12 @@ import com.liferay.portal.repository.cmis.model.CMISFileVersion;
 import com.liferay.portal.repository.cmis.model.CMISFolder;
 import com.liferay.portal.repository.cmis.search.CMISQueryBuilder;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -1069,7 +1073,29 @@ public class CMISRepository extends BaseCmisRepository {
 		long fileEntryId = (Long)ids[0];
 		String uuid = (String)ids[1];
 
-		return new CMISFileEntry(this, uuid, fileEntryId, document);
+		FileEntry fileEntry = new CMISFileEntry(
+			this, uuid, fileEntryId, document);
+
+		try {
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(), fileEntryId);
+
+			if (assetEntry == null) {
+				FileVersion fileVersion = fileEntry.getFileVersion();
+
+				String name = PrincipalThreadLocal.getName();
+
+				long userId = GetterUtil.getLong(name);
+
+				dlAppHelperLocalService.addFileEntry(
+					userId, fileEntry, fileVersion, new ServiceContext());
+			}
+		}
+		catch (Exception e) {
+			_log.error("Error attempting to update asset info", e);
+		}
+
+		return fileEntry;
 	}
 
 	@Override

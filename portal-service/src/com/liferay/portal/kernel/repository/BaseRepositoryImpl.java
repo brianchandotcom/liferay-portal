@@ -26,6 +26,7 @@ import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 
 import java.io.File;
@@ -204,6 +205,12 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	public abstract void initRepository()
 		throws PortalException, SystemException;
 
+	public void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		this.assetEntryLocalService = assetEntryLocalService;
+	}
+
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
@@ -213,16 +220,19 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 		this.companyLocalService = companyLocalService;
 	}
+
 	public void setCounterLocalService(
 		CounterLocalService counterLocalService) {
 
 		this.counterLocalService = counterLocalService;
 	}
+
 	public void setDLAppHelperLocalService(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
 	}
+
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
@@ -280,6 +290,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		}
 	}
 
+	protected AssetEntryLocalService assetEntryLocalService;
 	protected CompanyLocalService companyLocalService;
 	protected CounterLocalService counterLocalService;
 	protected DLAppHelperLocalService dlAppHelperLocalService;

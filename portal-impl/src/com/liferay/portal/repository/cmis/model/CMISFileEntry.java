@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.CMISRepositoryLocalServiceUtil;
 import com.liferay.portal.service.persistence.LockUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.InputStream;
@@ -88,6 +90,18 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	public InputStream getContentStream() {
 		ContentStream contentStream = _document.getContentStream();
 
+		try {
+			String name = PrincipalThreadLocal.getName();
+
+			long userId = GetterUtil.getLong(name);
+
+			DLAppHelperLocalServiceUtil.getFileAsStream(
+				userId, this, true);
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
 		return contentStream.getStream();
 	}
 
@@ -97,6 +111,18 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		for (Document document : _document.getAllVersions()) {
 			if (version.equals(document.getVersionLabel())) {
 				ContentStream contentStream = document.getContentStream();
+
+				try {
+					String name = PrincipalThreadLocal.getName();
+
+					long userId = GetterUtil.getLong(name);
+
+					DLAppHelperLocalServiceUtil.getFileAsStream(
+						userId, this, true);
+				}
+				catch (Exception e) {
+					_log.error(e);
+				}
 
 				return contentStream.getStream();
 			}

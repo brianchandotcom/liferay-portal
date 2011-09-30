@@ -430,7 +430,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 		dlFileEntryTypeModelImpl._originalDescription = dlFileEntryTypeModelImpl._description;
 
-		_columnBitmask = 0;
+		dlFileEntryTypeModelImpl._columnBitmask = 0;
 	}
 
 	@Override

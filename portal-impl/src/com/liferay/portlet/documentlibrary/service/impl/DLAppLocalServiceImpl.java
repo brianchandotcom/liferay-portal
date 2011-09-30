@@ -30,21 +30,18 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * The document library local service. All portlets should interact with the
@@ -199,7 +196,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 
-		registerDLProcessorCallback(fileEntry);
+		dlAppHelperLocalService.addFileEntry(
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		return fileEntry;
 	}
@@ -265,7 +263,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
 
-		registerDLProcessorCallback(fileEntry);
+		dlAppHelperLocalService.addFileEntry(
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		return fileEntry;
 	}
@@ -374,7 +373,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
 		localRepository.deleteFileEntry(fileEntryId);
+
+		dlAppHelperLocalService.deleteFileEntry(fileEntry);
 	}
 
 	/**
@@ -1438,7 +1441,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
-		registerDLProcessorCallback(fileEntry);
+		dlAppHelperLocalService.updateFileEntry(
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		return fileEntry;
 	}
@@ -1502,7 +1506,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		registerDLProcessorCallback(fileEntry);
+		dlAppHelperLocalService.updateFileEntry(
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		return fileEntry;
 	}
@@ -1665,20 +1670,34 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			}
 		}
 
+		dlAppHelperLocalService.addFileEntry(
+			userId, destinationFileEntry, destinationFileEntry.getFileVersion(),
+			serviceContext);
+
 		return destinationFileEntry;
 	}
 
 	protected void deleteFileEntry(
 			long oldFileEntryId, long newFileEntryId,
-			LocalRepository sourceLocalRepository,
-			LocalRepository destinationLocalRepository)
+			LocalRepository fromLocalRepository,
+			LocalRepository toLocalRepository)
 		throws PortalException, SystemException {
 
 		try {
-			sourceLocalRepository.deleteFileEntry(oldFileEntryId);
+			FileEntry fileEntry = fromLocalRepository.getFileEntry(
+				oldFileEntryId);
+
+			fromLocalRepository.deleteFileEntry(oldFileEntryId);
+
+			dlAppHelperLocalService.deleteFileEntry(fileEntry);
 		}
 		catch (PortalException pe) {
-			destinationLocalRepository.deleteFileEntry(newFileEntryId);
+			FileEntry fileEntry = toLocalRepository.getFileEntry(
+				newFileEntryId);
+
+			toLocalRepository.deleteFileEntry(newFileEntryId);
+
+			dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
 			throw pe;
 		}
@@ -1743,22 +1762,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			fileEntryId, destinationFileEntry.getFileEntryId(),
 			fromLocalRepository, toLocalRepository);
 
-		registerDLProcessorCallback(destinationFileEntry);
-
 		return destinationFileEntry;
-	}
-
-	protected void registerDLProcessorCallback(final FileEntry fileEntry) {
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
-				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(fileEntry);
-
-					return null;
-				}
-
-			});
 	}
 
 }

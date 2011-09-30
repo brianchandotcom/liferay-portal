@@ -746,7 +746,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryModelImpl._setOriginalFileEntryTypeId = false;
 
-		_columnBitmask = 0;
+		dlFileEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override

@@ -704,7 +704,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		dlFileVersionModelImpl._setOriginalStatus = false;
 
-		_columnBitmask = 0;
+		dlFileVersionModelImpl._columnBitmask = 0;
 	}
 
 	@Override

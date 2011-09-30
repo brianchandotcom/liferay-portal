@@ -3836,6 +3836,7 @@
 		<table name="DLFileEntry" />
 		<attributes>
 			<transient name="extraSettingsProperties" />
+			<transient name="fileVersion" />
 		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl" name="DLFileEntryMetadata">

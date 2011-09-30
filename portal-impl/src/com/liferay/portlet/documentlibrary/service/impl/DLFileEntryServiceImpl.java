@@ -148,12 +148,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,
 			dlFileEntry.getSize(), serviceContext);
 
-		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
-			fileEntryId, dlFileEntry.getVersion());
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		DLFileVersion newDlFileVersion =
-			dlFileVersionLocalService.getFileVersion(
-				newDlFileEntry.getFileEntryId(), newDlFileEntry.getVersion());
+		DLFileVersion newDlFileVersion = newDlFileEntry.getFileVersion();
 
 		dlFileEntryLocalService.copyFileEntryMetadata(
 			dlFileVersion.getCompanyId(), dlFileVersion.getFileEntryTypeId(),

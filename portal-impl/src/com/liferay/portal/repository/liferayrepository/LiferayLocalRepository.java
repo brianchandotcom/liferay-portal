@@ -32,6 +32,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
@@ -54,6 +55,7 @@ public class LiferayLocalRepository
 
 	public LiferayLocalRepository(
 		RepositoryService repositoryService,
+		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
 		DLFileVersionLocalService dlFileVersionLocalService,
@@ -62,13 +64,14 @@ public class LiferayLocalRepository
 		DLFolderService dlFolderService, long repositoryId) {
 
 		super(
-			repositoryService, dlFileEntryLocalService, dlFileEntryService,
-			dlFileVersionLocalService, dlFileVersionService,
+			repositoryService, dlAppHelperLocalService, dlFileEntryLocalService,
+			dlFileEntryService, dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, repositoryId);
 	}
 
 	public LiferayLocalRepository(
 		RepositoryService repositoryService,
+		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
 		DLFileVersionLocalService dlFileVersionLocalService,
@@ -78,8 +81,8 @@ public class LiferayLocalRepository
 		long fileVersionId) {
 
 		super(
-			repositoryService, dlFileEntryLocalService, dlFileEntryService,
-			dlFileVersionLocalService, dlFileVersionService,
+			repositoryService, dlAppHelperLocalService, dlFileEntryLocalService,
+			dlFileEntryService, dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, folderId, fileEntryId,
 			fileVersionId);
 	}
@@ -362,11 +365,8 @@ public class LiferayLocalRepository
 			long[] assetLinkEntryIds)
 		throws PortalException, SystemException {
 
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
-
-		dlFileEntryLocalService.updateAsset(
-			userId, dlFileEntry, dlFileVersion, assetCategoryIds,
+		dlAppHelperLocalService.updateAsset(
+			userId, fileEntry, fileVersion, assetCategoryIds,
 			assetTagNames, assetLinkEntryIds);
 	}
 

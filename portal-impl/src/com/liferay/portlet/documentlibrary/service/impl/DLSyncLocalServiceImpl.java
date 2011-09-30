@@ -55,7 +55,18 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 	public DLSync updateSync(long fileId, long parentFolderId, String event)
 		throws PortalException, SystemException {
 
-		DLSync dlSync = dlSyncPersistence.findByFileId(fileId);
+		DLSync dlSync = null;
+
+		if (event == DLSyncConstants.EVENT_DELETE) {
+			dlSync = dlSyncPersistence.fetchByFileId(fileId);
+
+			if (dlSync == null) {
+				return dlSync;
+			}
+		}
+		else {
+			dlSync = dlSyncPersistence.findByFileId(fileId);
+		}
 
 		dlSync.setModifiedDate(new Date());
 		dlSync.setParentFolderId(parentFolderId);

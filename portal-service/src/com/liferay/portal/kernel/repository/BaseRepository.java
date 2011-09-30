@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.UserLocalService;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 
 /**
@@ -35,6 +36,9 @@ public interface BaseRepository extends Repository {
 	public String[] getSupportedConfigurations();
 
 	public String[][] getSupportedParameters();
+
+	public void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService);
 
 	public void setCompanyId(long companyId);
 

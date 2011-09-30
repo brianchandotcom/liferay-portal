@@ -594,7 +594,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderModelImpl._originalName = dlFolderModelImpl._name;
 
-		_columnBitmask = 0;
+		dlFolderModelImpl._columnBitmask = 0;
 	}
 
 	@Override

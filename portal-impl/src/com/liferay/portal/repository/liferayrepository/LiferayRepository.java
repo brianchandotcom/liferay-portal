@@ -37,6 +37,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
@@ -59,6 +60,7 @@ public class LiferayRepository
 
 	public LiferayRepository(
 		RepositoryService repositoryService,
+		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
 		DLFileVersionLocalService dlFileVersionLocalService,
@@ -67,13 +69,14 @@ public class LiferayRepository
 		DLFolderService dlFolderService, long repositoryId) {
 
 		super(
-			repositoryService, dlFileEntryLocalService, dlFileEntryService,
-			dlFileVersionLocalService, dlFileVersionService,
+			repositoryService, dlAppHelperLocalService, dlFileEntryLocalService,
+			dlFileEntryService, dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, repositoryId);
 	}
 
 	public LiferayRepository(
 		RepositoryService repositoryService,
+		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
 		DLFileVersionLocalService dlFileVersionLocalService,
@@ -83,8 +86,8 @@ public class LiferayRepository
 		long fileEntryId, long fileVersionId) {
 
 		super(
-			repositoryService, dlFileEntryLocalService, dlFileEntryService,
-			dlFileVersionLocalService, dlFileVersionService,
+			repositoryService, dlAppHelperLocalService, dlFileEntryLocalService,
+			dlFileEntryService, dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, folderId, fileEntryId,
 			fileVersionId);
 	}

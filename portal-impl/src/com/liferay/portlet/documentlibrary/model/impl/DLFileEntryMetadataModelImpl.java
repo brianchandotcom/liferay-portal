@@ -346,7 +346,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		dlFileEntryMetadataModelImpl._setOriginalFileVersionId = false;
 
-		_columnBitmask = 0;
+		dlFileEntryMetadataModelImpl._columnBitmask = 0;
 	}
 
 	@Override

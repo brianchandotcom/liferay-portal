@@ -89,7 +89,7 @@ orderableHeaders.put("modified-date", "modifiedDate");
 orderableHeaders.put("downloads", "downloads");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 OrderByComparator orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
 

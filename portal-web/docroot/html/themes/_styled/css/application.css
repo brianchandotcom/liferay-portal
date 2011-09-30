@@ -56,7 +56,7 @@
 		padding: 5px 10px;
 	}
 
-	.sort-desc .result-column-name {
+	th.sort-desc .result-column-name {
 		background-image: url(../images/arrows/05_down.png);
 	}
 

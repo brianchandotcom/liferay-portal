@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewWebContentAssignedToMyRolesUpdateDueDateTest
-	extends BaseTestCase {
-	public void testViewWebContentAssignedToMyRolesUpdateDueDate()
+public class ViewWebContentAssignedToMyRolesDueDateTest extends BaseTestCase {
+	public void testViewWebContentAssignedToMyRolesDueDate()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 

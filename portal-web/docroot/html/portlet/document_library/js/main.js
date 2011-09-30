@@ -178,7 +178,7 @@ AUI().add(
 							}
 						).render();
 
-						instance._listView.on('transitionComplete', instance._initDropTargets, instance);
+						instance._listView.after('transitionComplete', instance._initDropTargets, instance);
 
 						instance._listView.after('itemChange', instance._afterListViewItemChange, instance);
 
@@ -396,6 +396,27 @@ AUI().add(
 						return ioRequest;
 					},
 
+					_getMoveText: function(selectedItemsCount, targetAvailable) {
+						var moveText = STR_BLANK;
+
+						if (targetAvailable) {
+							moveText = Liferay.Language.get('x-item-is-ready-to-be-moved-to-x');
+
+							if (selectedItemsCount > 1) {
+								moveText = Liferay.Language.get('x-items-are-ready-to-be-moved-to-x');
+							}
+						}
+						else {
+							moveText = Liferay.Language.get('x-item-is-ready-to-be-moved');
+
+							if (selectedItemsCount > 1) {
+								moveText = Liferay.Language.get('x-items-are-ready-to-be-moved');
+							}
+						}
+
+						return moveText;
+					},
+
 					_getResultsStartEnd: function(paginator, page, rowsPerPage) {
 						var instance = this;
 
@@ -585,11 +606,13 @@ AUI().add(
 
 							var dd = instance._ddHandler.dd;
 
-							var moveText = Liferay.Language.get('x-items-are-ready-to-be-moved-to-x');
+							var selectedItemsCount = dd.get(STR_DATA).selectedItemsCount;
+
+							var moveText = instance._getMoveText(selectedItemsCount, true);
 
 							var itemTitle = Lang.trim(dropTarget.one('.entry-title').text());
 
-							proxyNode.html(Lang.sub(moveText, [dd.get(STR_DATA).selectedItemsCount, itemTitle]));
+							proxyNode.html(Lang.sub(moveText, [selectedItemsCount, itemTitle]));
 						}
 					},
 
@@ -604,9 +627,9 @@ AUI().add(
 
 						var proxyNode = event.target.get(STR_DRAG_NODE);
 
-						var moveText = Liferay.Language.get('x-items-are-ready-to-be-moved');
-
 						var selectedItemsCount = instance._ddHandler.dd.get(STR_DATA).selectedItemsCount;
+
+						var moveText = instance._getMoveText(selectedItemsCount);
 
 						proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
 					},
@@ -637,7 +660,7 @@ AUI().add(
 
 						var selectedItemsCount = selectedItems.size();
 
-						var moveText = Liferay.Language.get('x-items-are-ready-to-be-moved');
+						var moveText = instance._getMoveText(selectedItemsCount);
 
 						proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
 

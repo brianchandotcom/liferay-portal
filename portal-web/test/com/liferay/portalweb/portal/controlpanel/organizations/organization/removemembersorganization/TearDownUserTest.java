@@ -94,8 +94,8 @@ public class TearDownUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
-				selenium.clickAt("link=View All Users",
-					RuntimeVariables.replace("View All Users"));
+				selenium.clickAt("link=Search All Users",
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
@@ -136,6 +136,16 @@ public class TearDownUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+
+				boolean users2Present = selenium.isElementPresent(
+						"//input[@name='_125_rowIds']");
+
+				if (!users2Present) {
+					label = 4;
+
+					continue;
+				}
+
 				selenium.clickAt("//input[@name='_125_allRowIds']",
 					RuntimeVariables.replace("Select All"));
 				selenium.clickAt("//input[@value='Delete']",
@@ -144,11 +154,10 @@ public class TearDownUserTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertEquals(RuntimeVariables.replace("No users were found."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
+
+			case 4:
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 100:
 				label = -1;

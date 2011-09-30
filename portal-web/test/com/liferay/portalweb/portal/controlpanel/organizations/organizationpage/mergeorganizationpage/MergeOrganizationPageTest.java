@@ -59,7 +59,9 @@ public class MergeOrganizationPageTest extends BaseTestCase {
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[6]/span/ul/li/strong/a"));
+		selenium.clickAt("//td[6]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

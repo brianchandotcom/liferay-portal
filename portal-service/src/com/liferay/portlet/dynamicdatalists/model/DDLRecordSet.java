@@ -44,6 +44,5 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.storage.Fields> getRecordsFieldsList()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws java.lang.Exception;
 }

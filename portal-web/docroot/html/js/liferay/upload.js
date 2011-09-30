@@ -106,7 +106,7 @@ AUI().add(
 			instance._fileTypesDescriptionText = options.fileDescription || instance._allowedFileTypes;
 			instance._invalidFileExtensionText = Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions') + instance._allowedFileTypes;
 			instance._invalidFileNameText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
-			instance._invalidFileSizeText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-size');
+			instance._invalidFileSizeText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x');
 			instance._noFilesSelectedText = Liferay.Language.get('no-files-selected');
 			instance._pendingFileText = Liferay.Language.get('these-files-have-been-previously-uploaded-but-not-actually-saved.-please-save-or-delete-them-before-they-are-removed');
 			instance._unexpectedDeleteErrorText = Liferay.Language.get('an-unexpected-error-occurred-while-deleting-the-file');
@@ -221,7 +221,7 @@ AUI().add(
 				var queueError = SWFUpload.QUEUE_ERROR;
 
 				if (error_code == queueError.FILE_EXCEEDS_SIZE_LIMIT || error_code == queueError.ZERO_BYTE_FILE) {
-					var dataBuffer = [file.name, instance._invalidFileSizeText];
+					var dataBuffer = [file.name, instance._invalidFileSizeText.replace('{0}', instance._maxFileSize)];
 
 					if (error_code == queueError.ZERO_BYTE_FILE) {
 						dataBuffer[1] = instance._zeroByteFileText;

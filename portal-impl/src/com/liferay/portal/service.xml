@@ -582,6 +582,11 @@
 			<finder-column name="plid" />
 			<finder-column name="master" />
 		</finder>
+        <finder name="L_P_N" return-type="LayoutBranch" unique="true">
+			<finder-column name="layoutSetBranchId" />
+            <finder-column name="plid" />
+			<finder-column name="name" />
+		</finder>
 	</entity>
 	<entity name="LayoutPrototype" uuid="true" local-service="true" remote-service="true">
 
@@ -2553,6 +2558,7 @@
 		<exception>InvalidRepository</exception>
 		<exception>LARFile</exception>
 		<exception>LARType</exception>
+        <exception>LayoutBranchName</exception>
 		<exception>LayoutSetBranchName</exception>
 		<exception>LayoutFriendlyURL</exception>
 		<exception>LayoutHidden</exception>

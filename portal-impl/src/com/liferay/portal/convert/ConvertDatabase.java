@@ -45,6 +45,9 @@ import javax.servlet.ServletContext;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import org.hibernate.dialect.Dialect;
 
 /**
@@ -120,11 +123,9 @@ public class ConvertDatabase extends ConvertProcess {
 
 					String fieldName = field.getName();
 
-					if (fieldName.equals("TABLE_NAME")) {
-						tuple = getTableDetails(implClass, field, fieldName);
-					}
-					else if (fieldName.startsWith("MAPPING_TABLE_") &&
-							 fieldName.endsWith("_NAME")) {
+					if (fieldName.equals("TABLE_NAME") ||
+						(fieldName.startsWith("MAPPING_TABLE_") &&
+						 fieldName.endsWith("_NAME"))) {
 
 						tuple = getTableDetails(implClass, field, fieldName);
 					}
@@ -143,13 +144,16 @@ public class ConvertDatabase extends ConvertProcess {
 				_log.debug("Migrating database tables");
 			}
 
-			for (int i = 0; i < tableDetails.size(); i++) {
-				if ((i > 0) && (i % (tableDetails.size() / 4) == 0)) {
+			List<Tuple> filteredTableDetails = removeDuplicatedTableNames(
+				tableDetails);
+
+			for (int i = 0; i < filteredTableDetails.size(); i++) {
+				if ((i > 0) && (i % (filteredTableDetails.size() / 4) == 0)) {
 					MaintenanceUtil.appendStatus(
-						 (i * 100 / tableDetails.size()) + "%");
+						 (i * 100 / filteredTableDetails.size()) + "%");
 				}
 
-				Tuple tuple = tableDetails.get(i);
+				Tuple tuple = filteredTableDetails.get(i);
 
 				String table = (String)tuple.getObject(0);
 				Object[][] columns = (Object[][])tuple.getObject(1);
@@ -245,6 +249,34 @@ public class ConvertDatabase extends ConvertProcess {
 		if (tempFileName != null) {
 			table.populateTable(tempFileName, connection);
 		}
+	}
+
+	protected List<Tuple> removeDuplicatedTableNames(
+		final List<Tuple> tableDetails) {
+
+		final List<Tuple> filteredTableDetails = new ArrayList<Tuple>(
+			tableDetails);
+
+		CollectionUtils.filter(filteredTableDetails, new Predicate() {
+			public boolean evaluate(Object o) {
+				Tuple tableDetail = (Tuple)o;
+				String tableName = (String)tableDetail.getObject(0);
+
+				for (Tuple t: tableDetails) {
+					String currTableName = (String)t.getObject(0);
+
+					if ((tableDetail != t) &&
+						tableName.equals(currTableName)) {
+
+						return false;
+					}
+				}
+
+				return true;
+			}
+		});
+
+		return filteredTableDetails;
 	}
 
 	private static final Tuple[] _UNMAPPED_TABLES = new Tuple[] {

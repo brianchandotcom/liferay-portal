@@ -136,6 +136,8 @@ public class EditLayoutBranchAction extends EditLayoutsAction {
 
 		LayoutBranchServiceUtil.deleteLayoutBranch(layoutBranchId);
 
+		SessionMessages.add(actionRequest, "pageVariationDeleted");
+
 		if (layoutBranchId == currentLayoutBranchId) {
 			SessionMessages.add(
 				actionRequest,
@@ -160,10 +162,14 @@ public class EditLayoutBranchAction extends EditLayoutsAction {
 		if (layoutBranchId <= 0) {
 			LayoutBranchServiceUtil.addLayoutBranch(
 				layoutRevisionId, name, description, false, serviceContext);
+
+			SessionMessages.add(actionRequest, "pageVariationAdded");
 		}
 		else {
 			LayoutBranchServiceUtil.updateLayoutBranch(
 				layoutBranchId, name, description, serviceContext);
+
+			SessionMessages.add(actionRequest, "pageVariationUpdated");
 		}
 	}
 

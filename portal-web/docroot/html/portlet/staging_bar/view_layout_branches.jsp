@@ -39,6 +39,10 @@ else {
 request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.valueOf(currentLayoutRevision.getLayoutBranchId()));
 %>
 
+<liferay-ui:success key="pageVariationAdded" message="page-variation-was-added" />
+<liferay-ui:success key="pageVariationDeleted" message="page-variation-was-deleted" />
+<liferay-ui:success key="pageVariationUpdated" message="page-variation-was-updated" />
+
 <div class="portlet-msg-info">
 	<liferay-ui:message key="page-variations-help" />
 </div>

@@ -153,6 +153,8 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 		}
 
 		LayoutSetBranchServiceUtil.deleteLayoutSetBranch(layoutSetBranchId);
+
+		SessionMessages.add(actionRequest, "sitePageVariationDeleted");
 	}
 
 	protected void mergeLayoutSetBranch(ActionRequest actionRequest)
@@ -169,6 +171,8 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 
 		LayoutSetBranchServiceUtil.mergeLayoutSetBranch(
 			layoutSetBranchId, mergeLayoutSetBranchId, serviceContext);
+
+		SessionMessages.add(actionRequest, "sitePageVariationMerged");
 	}
 
 	protected void updateLayoutSetBranch(ActionRequest actionRequest)
@@ -193,10 +197,14 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 			LayoutSetBranchServiceUtil.addLayoutSetBranch(
 				groupId, privateLayout, name, description, false,
 				copyLayoutSetBranchId, serviceContext);
+
+			SessionMessages.add(actionRequest, "sitePageVariationAdded");
 		}
 		else {
 			LayoutSetBranchServiceUtil.updateLayoutSetBranch(
 				groupId, layoutSetBranchId, name, description, serviceContext);
+
+			SessionMessages.add(actionRequest, "sitePageVariationUpdated");
 		}
 	}
 

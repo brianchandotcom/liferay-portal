@@ -192,7 +192,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		final FileEntry fileEntry = localRepository.addFileEntry(
+		FileEntry fileEntry = localRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 
@@ -259,7 +259,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		final FileEntry fileEntry = localRepository.addFileEntry(
+		FileEntry fileEntry = localRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
 
@@ -1437,7 +1437,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
-		final FileEntry fileEntry = localRepository.updateFileEntry(
+		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
@@ -1502,7 +1502,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
-		final FileEntry fileEntry = localRepository.updateFileEntry(
+		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 

@@ -80,7 +80,16 @@ public class DLAppHelperLocalServiceImpl
 		if (fileVersion instanceof LiferayFileVersion) {
 			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
 
-			startWorkflowInstance(userId, dlFileVersion, serviceContext);
+			Map<String, Serializable> workflowContext =
+				new HashMap<String, Serializable>();
+
+			workflowContext.put("event", DLSyncConstants.EVENT_ADD);
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
+				userId, DLFileEntry.class.getName(),
+				dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
+				workflowContext);
 		}
 
 		registerDLProcessorCallback(fileEntry);
@@ -315,7 +324,7 @@ public class DLAppHelperLocalServiceImpl
 
 	public void updateFileEntry(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			boolean checkIn, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		updateAsset(
@@ -324,24 +333,7 @@ public class DLAppHelperLocalServiceImpl
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
-		if (checkIn && (fileVersion instanceof LiferayFileVersion) &&
-		 	(serviceContext.getWorkflowAction() ==
-		 		WorkflowConstants.ACTION_PUBLISH)) {
-
-			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
-
-			startWorkflowInstance(userId, dlFileVersion, serviceContext);
-		}
-
 		registerDLProcessorCallback(fileEntry);
-	}
-
-	public void updateFileEntry(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		updateFileEntry(userId, fileEntry, fileVersion, false, serviceContext);
 	}
 
 	public void updateFolder(Folder folder, ServiceContext serviceContext)
@@ -470,13 +462,33 @@ public class DLAppHelperLocalServiceImpl
 	protected long getFileEntryTypeId(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
-		if (fileEntry instanceof LiferayFileEntry) {
+		FileVersion latestFileVersion = null;
+
+		if (fileEntry.getModel() instanceof DLFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-			return dlFileEntry.getLatestFileVersion(true).getFileEntryTypeId();
+			latestFileVersion = new LiferayFileVersion(
+				dlFileEntry.getLatestFileVersion(true));
+		}
+		else {
+			latestFileVersion = fileEntry.getLatestFileVersion();
 		}
 
-		return 0;
+		FileEntry latestFileEntry = latestFileVersion.getFileEntry();
+
+		LiferayFileEntry liferayFileEntry = null;
+
+		if (latestFileEntry instanceof LiferayFileEntry) {
+			liferayFileEntry = (LiferayFileEntry)latestFileEntry;
+		}
+
+		if (liferayFileEntry == null) {
+			return 0;
+		}
+
+		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
+
+		return dlFileEntry.getFileEntryTypeId();
 	}
 
 	protected boolean isStagingGroup(long groupId) {
@@ -501,22 +513,6 @@ public class DLAppHelperLocalServiceImpl
 				}
 
 			});
-	}
-
-	protected void startWorkflowInstance(
-			long userId, DLFileVersion dlFileVersion,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
-			DLFileEntry.class.getName(), dlFileVersion.getFileVersionId(),
-			dlFileVersion, serviceContext, workflowContext);
 	}
 
 }

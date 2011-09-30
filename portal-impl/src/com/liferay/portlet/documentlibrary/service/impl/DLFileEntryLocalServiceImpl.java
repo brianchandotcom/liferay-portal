@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ResourceConstants;
@@ -62,6 +63,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
@@ -290,6 +292,13 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileVersionPersistence.update(dlFileVersion, false);
 
+		// Asset
+
+		dlAppHelperLocalService.updateAsset(
+			userId, new LiferayFileEntry(dlFileEntry),
+			new LiferayFileVersion(dlFileVersion),
+			dlFileVersion.getFileVersionId());
+
 		// Folder
 
 		if (dlFileEntry.getFolderId() !=
@@ -309,6 +318,21 @@ public class DLFileEntryLocalServiceImpl
 		// Index
 
 		index(dlFileEntry, serviceContext);
+
+		if (serviceContext.getWorkflowAction() ==
+		 		WorkflowConstants.ACTION_PUBLISH) {
+
+			Map<String, Serializable> workflowContext =
+				new HashMap<String, Serializable>();
+
+			workflowContext.put("event", DLSyncConstants.EVENT_UPDATE);
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
+				userId, DLFileEntry.class.getName(),
+				dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
+				workflowContext);
+		}
 
 		lockLocalService.unlock(DLFileEntry.class.getName(), fileEntryId);
 	}
@@ -1545,6 +1569,15 @@ public class DLFileEntryLocalServiceImpl
 				description, changeLog, extraSettings, fileEntryTypeId,
 				fieldsMap, version, size, dlFileVersion.getStatus(),
 				serviceContext.getModifiedDate(now), serviceContext);
+
+			// DLApp
+
+			dlAppHelperLocalService.updateAsset(
+				userId, new LiferayFileEntry(dlFileEntry),
+				new LiferayFileVersion(dlFileVersion),
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds());
 
 			// File
 

@@ -518,6 +518,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			BatchSessionUtil.update(session, dlContent, merge);
 
 			dlContent.setNew(false);
+
+			session.flush();
+			session.clear();
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -693,9 +696,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		}
 
 		dlContent.resetOriginalValues();
-
-		session.flush();
-		session.clear();
 
 		return dlContent;
 	}

@@ -11,6 +11,8 @@ AUI().add(
 
 		var DDLRecordSet = DDL.DDLRecordSet;
 
+		var DLApp = Liferay.Service.DL.DLApp;
+
 		var getObjectKeys = A.Object.keys;
 
 		var JSON = A.JSON;
@@ -173,6 +175,21 @@ AUI().add(
 						);
 					},
 
+					_editCell: function(event) {
+						var instance = this;
+
+						SpreadSheet.superclass._editCell.apply(instance, arguments);
+
+						var column = event.column;
+						var record = event.record;
+
+						var editor = instance.getCellEditor(record, column);
+
+						if (editor) {
+							editor.set('record', record);
+						}
+					},
+
 					_normalizeRecordData: function(data) {
 						var instance = this;
 
@@ -249,83 +266,114 @@ AUI().add(
 					AArray.each(
 						columnset,
 						function(item, index, collection) {
+							var dataType = item.dataType;
+							var label = item.label;
+							var type = item.type;
+
 							item.key = item.name;
 
-							if (editable && item.editable) {
-								var dataType = item.dataType;
-								var label = item.label;
-								var required = item.required;
-								var type = item.type;
+							var EditorClass = instance.TYPE_EDITOR[type] || A.TextCellEditor;
 
-								var EditorClass = instance.TYPE_EDITOR[type] || A.TextCellEditor;
+							var elementName = item.name;
 
-								var config = {
-									validator: {
-										rules: {}
+							var config = {
+								elementName: elementName,
+								validator: {
+									rules: {}
+								}
+							};
+
+							var required = item.required;
+
+							if (required) {
+								item.label += ' (' + Liferay.Language.get('required') + ')';
+							}
+
+							if (type === 'checkbox') {
+								elementName = label;
+
+								config.options = {
+									'true': Liferay.Language.get('true')
+								};
+
+								config.inputFormatter = function(value) {
+									return String(value.length > 0);
+								};
+
+								item.formatter = function(obj) {
+									var data = obj.record.get('data');
+
+									var value = data[item.name];
+
+									if (value !== STR_EMPTY) {
+										value = Liferay.Language.get(value);
 									}
+
+									return value;
+								};
+							}
+							else if (type === 'ddm-date') {
+								config.inputFormatter = function(value) {
+									return A.DataType.Date.parse(value).getTime();
 								};
 
-								var elementName = 'value';
+								item.formatter = function(obj) {
+									var data = obj.record.get('data');
 
-								if (type === 'checkbox') {
-									elementName = label;
+									var value = data[item.name];
 
-									config.options = {
-										'true': Liferay.Language.get('true')
-									};
+									if (value !== STR_EMPTY) {
+										value = parseInt(value, 10);
 
-									config.inputFormatter = function(value) {
-										return String(value.length > 0);
-									};
+										value = A.DataType.Date.format(new Date(value));
+									}
 
-									item.formatter = function(obj) {
-										var data = obj.record.get('data');
+									return value;
+								};
+							}
+							else if ((type === 'ddm-documentlibrary') || (type === 'ddm-fileupload')) {
+								item.formatter = function(obj) {
+									var data = obj.record.get('data');
 
-										var value = data[item.name];
+									var label = STR_EMPTY;
+									var value = data[item.name];
 
-										if (value !== STR_EMPTY) {
-											value = Liferay.Language.get(value);
-										}
+									if (value !== STR_EMPTY) {
+										label = '(' + Liferay.Language.get('file') + ')';	
+									}
 
-										return value;
-									};
-								}
-								else if (type === 'ddm-date') {
-									config.inputFormatter = function(value) {
-										return A.DataType.Date.parse(value).getTime();
-									};
+									return label;
+								};
 
-									item.formatter = function(obj) {
-										var data = obj.record.get('data');
+								var structureField = instance.findStructureFieldByAttribute(structure, 'name', elementName);
 
-										var value = data[item.name];
-
-										if (value !== STR_EMPTY) {
-											value = parseInt(value, 10);
-
-											value = A.DataType.Date.format(new Date(value));
-										}
-
-										return value;
+								if (type === 'ddm-fileupload') {
+									config.validator.rules[elementName] = {
+										acceptFiles: structureField.acceptFiles
 									};
 								}
-								else if ((type === 'radio') || (type === 'select')) {
-									var structureField = instance.findStructureFieldByAttribute(structure, 'name', item.key);
+							}
+							else if ((type === 'radio') || (type === 'select')) {
+								var structureField = instance.findStructureFieldByAttribute(structure, 'name', elementName);
 
-									config.options = instance.getCellEditorOptions(structureField.options);
-								}
+								config.options = instance.getCellEditorOptions(structureField.options);
+							}
 
-								var validatorRules = config.validator.rules;
-								var validatorRuleName = instance.DATATYPE_VALIDATOR[dataType];
+							var validatorRules = config.validator.rules;
+							var validatorRuleName = instance.DATATYPE_VALIDATOR[dataType];
 
-								validatorRules[elementName] = {
+							validatorRules[elementName] = A.mix(
+								{
 									required: required
-								};
+								},
+								validatorRules[elementName]
+							);
 
-								if (validatorRuleName) {
-									validatorRules[elementName][validatorRuleName] = true;
-								}
+							if (validatorRuleName) {
+								validatorRules[elementName][validatorRuleName] = true;
+							}
 
+							if (editable && item.editable) {
 								item.editor = new EditorClass(config);
 							}
 						}
@@ -391,10 +439,65 @@ AUI().add(
 			}
 		);
 
+		SpreadSheet.Util = {
+			getFileEntry: function(fileEntryJSON, callback) {
+				var instance = this;
+
+				try {
+					fileEntryJSON = A.JSON.parse(fileEntryJSON);
+
+					DLApp.getFileEntryByUuidAndGroupId(
+						{
+							uuid: fileEntryJSON.uuid,
+							groupId: fileEntryJSON.groupId
+						},
+						callback
+					);
+				}
+				catch (e) {
+					A.log(e);
+				}
+			},
+
+			getFileEntryLinkNode: function(fileEntryJSON, fileEntryLinkNode) {
+				var instance = this;
+
+				fileEntryLinkNode = fileEntryLinkNode || A.Node.create('<a href="javascript:;"></a>');
+
+				if (fileEntryJSON) {
+					instance.getFileEntry(
+						fileEntryJSON,
+						function(fileEntry) {
+							fileEntryLinkNode.setAttribute('href', instance.getFileEntryURL(fileEntry));
+							fileEntryLinkNode.setContent(fileEntry.title);
+						}
+					);
+				}
+				else {
+					fileEntryLinkNode.setAttribute('href', 'javascript:;');
+					fileEntryLinkNode.setContent('');
+				}
+
+				return fileEntryLinkNode;
+			},
+
+			getFileEntryURL: function(fileEntry) {
+				var instance = this;
+
+				return [
+					themeDisplay.getPathContext(),
+					'documents',
+					fileEntry.groupId,
+					fileEntry.folderId,
+					encodeURIComponent(fileEntry.title)
+				].join('/');
+			}
+		};
+
 		Liferay.SpreadSheet = SpreadSheet;
 	},
 	'',
 	{
-		requires: ['aui-datatable']
+		requires: ['aui-datatable', 'json']
 	}
 );

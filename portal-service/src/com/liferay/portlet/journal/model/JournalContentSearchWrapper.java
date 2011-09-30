@@ -210,10 +210,6 @@ public class JournalContentSearchWrapper implements JournalContentSearch {
 		return _journalContentSearch.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_journalContentSearch.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _journalContentSearch.getPrimaryKeyObj();
 	}

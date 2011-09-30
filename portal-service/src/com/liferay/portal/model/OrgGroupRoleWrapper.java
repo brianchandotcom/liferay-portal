@@ -129,10 +129,6 @@ public class OrgGroupRoleWrapper implements OrgGroupRole {
 		return _orgGroupRole.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_orgGroupRole.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _orgGroupRole.getPrimaryKeyObj();
 	}

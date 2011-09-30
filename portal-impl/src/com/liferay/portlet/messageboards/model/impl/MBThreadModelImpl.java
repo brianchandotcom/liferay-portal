@@ -479,18 +479,13 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	@Override
 	public MBThread toEscapedModel() {
-		if (isEscapedModel()) {
-			return (MBThread)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBThread)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (MBThread)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

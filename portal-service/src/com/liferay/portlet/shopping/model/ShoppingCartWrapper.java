@@ -301,10 +301,6 @@ public class ShoppingCartWrapper implements ShoppingCart {
 		return _shoppingCart.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_shoppingCart.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _shoppingCart.getPrimaryKeyObj();
 	}

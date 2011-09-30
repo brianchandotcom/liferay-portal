@@ -271,18 +271,13 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	@Override
 	public AnnouncementsDelivery toEscapedModel() {
-		if (isEscapedModel()) {
-			return (AnnouncementsDelivery)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (AnnouncementsDelivery)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (AnnouncementsDelivery)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

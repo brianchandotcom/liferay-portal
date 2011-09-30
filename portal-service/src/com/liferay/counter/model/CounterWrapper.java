@@ -110,10 +110,6 @@ public class CounterWrapper implements Counter {
 		return _counter.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_counter.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _counter.getPrimaryKeyObj();
 	}

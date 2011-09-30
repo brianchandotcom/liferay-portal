@@ -276,10 +276,6 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser {
 		return _blogsStatsUser.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_blogsStatsUser.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _blogsStatsUser.getPrimaryKeyObj();
 	}

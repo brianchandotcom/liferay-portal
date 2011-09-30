@@ -670,10 +670,6 @@ public class MBMessageWrapper implements MBMessage {
 		return _mbMessage.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbMessage.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbMessage.getPrimaryKeyObj();
 	}

@@ -248,10 +248,6 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
 		return _announcementsDelivery.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_announcementsDelivery.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _announcementsDelivery.getPrimaryKeyObj();
 	}

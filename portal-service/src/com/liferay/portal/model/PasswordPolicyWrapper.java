@@ -751,10 +751,6 @@ public class PasswordPolicyWrapper implements PasswordPolicy {
 		return _passwordPolicy.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_passwordPolicy.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _passwordPolicy.getPrimaryKeyObj();
 	}

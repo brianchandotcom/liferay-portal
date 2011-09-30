@@ -321,10 +321,6 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink {
 		return _workflowDefinitionLink.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_workflowDefinitionLink.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _workflowDefinitionLink.getPrimaryKeyObj();
 	}

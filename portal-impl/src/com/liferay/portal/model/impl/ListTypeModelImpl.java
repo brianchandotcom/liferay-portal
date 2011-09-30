@@ -192,18 +192,13 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public ListType toEscapedModel() {
-		if (isEscapedModel()) {
-			return (ListType)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ListType)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (ListType)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

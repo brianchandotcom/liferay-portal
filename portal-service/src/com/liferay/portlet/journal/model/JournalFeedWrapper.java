@@ -509,10 +509,6 @@ public class JournalFeedWrapper implements JournalFeed {
 		return _journalFeed.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_journalFeed.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _journalFeed.getPrimaryKeyObj();
 	}

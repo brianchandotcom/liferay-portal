@@ -382,10 +382,6 @@ public class SCProductEntryWrapper implements SCProductEntry {
 		return _scProductEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_scProductEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _scProductEntry.getPrimaryKeyObj();
 	}

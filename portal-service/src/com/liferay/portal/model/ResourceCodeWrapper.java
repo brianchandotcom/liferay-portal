@@ -146,10 +146,6 @@ public class ResourceCodeWrapper implements ResourceCode {
 		return _resourceCode.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_resourceCode.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _resourceCode.getPrimaryKeyObj();
 	}

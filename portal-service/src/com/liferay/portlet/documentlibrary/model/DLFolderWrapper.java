@@ -400,10 +400,6 @@ public class DLFolderWrapper implements DLFolder {
 		return _dlFolder.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFolder.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFolder.getPrimaryKeyObj();
 	}

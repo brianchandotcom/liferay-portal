@@ -200,10 +200,6 @@ public class SocialRelationWrapper implements SocialRelation {
 		return _socialRelation.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialRelation.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialRelation.getPrimaryKeyObj();
 	}

@@ -120,8 +120,6 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow> {
 
 	public boolean isEscapedModel();
 
-	public void setEscapedModel(boolean escapedModel);
-
 	public Serializable getPrimaryKeyObj();
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);

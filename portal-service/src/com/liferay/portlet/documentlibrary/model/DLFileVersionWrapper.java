@@ -607,10 +607,6 @@ public class DLFileVersionWrapper implements DLFileVersion {
 		return _dlFileVersion.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileVersion.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileVersion.getPrimaryKeyObj();
 	}

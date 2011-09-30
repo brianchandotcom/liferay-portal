@@ -148,10 +148,6 @@ public class BrowserTrackerWrapper implements BrowserTracker {
 		return _browserTracker.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_browserTracker.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _browserTracker.getPrimaryKeyObj();
 	}

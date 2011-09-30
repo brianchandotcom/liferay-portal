@@ -147,10 +147,6 @@ public class JournalArticleResourceWrapper implements JournalArticleResource {
 		return _journalArticleResource.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_journalArticleResource.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _journalArticleResource.getPrimaryKeyObj();
 	}

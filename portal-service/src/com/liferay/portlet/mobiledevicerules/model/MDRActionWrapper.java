@@ -567,10 +567,6 @@ public class MDRActionWrapper implements MDRAction {
 		return _mdrAction.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mdrAction.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mdrAction.getPrimaryKeyObj();
 	}

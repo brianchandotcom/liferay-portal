@@ -69,24 +69,8 @@ public interface BaseModel<T>
 	 *
 	 * @return <code>true</code> if this model instance is escaped;
 	 *         <code>false</code> otherwise
-	 * @see    #setEscapedModel(boolean)
 	 */
 	public boolean isEscapedModel();
-
-	/**
-	 * Sets whether this model instance is escaped, meaning that all strings
-	 * returned from getter methods are HTML safe.
-	 *
-	 * <p>
-	 * A model instance can be made escaped by wrapping it with an HTML auto
-	 * escape handler using its <code>toEscapedModel</code> method. For example,
-	 * {@link com.liferay.portal.model.UserModel#toEscapedModel()}.
-	 * </p>
-	 *
-	 * @param escapedModel whether this model instance is escaped
-	 * @see   com.liferay.portal.kernel.bean.AutoEscapeBeanHandler
-	 */
-	public void setEscapedModel(boolean escapedModel);
 
 	/**
 	 * Returns the primary key of this model instance.

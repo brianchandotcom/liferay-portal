@@ -362,18 +362,13 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public Website toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Website)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Website)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Website)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

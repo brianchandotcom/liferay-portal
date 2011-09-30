@@ -299,10 +299,6 @@ public class OrganizationWrapper implements Organization {
 		return _organization.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_organization.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _organization.getPrimaryKeyObj();
 	}

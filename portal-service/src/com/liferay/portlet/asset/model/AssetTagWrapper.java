@@ -256,10 +256,6 @@ public class AssetTagWrapper implements AssetTag {
 		return _assetTag.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_assetTag.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _assetTag.getPrimaryKeyObj();
 	}

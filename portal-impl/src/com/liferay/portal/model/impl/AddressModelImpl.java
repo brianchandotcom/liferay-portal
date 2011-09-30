@@ -476,18 +476,13 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	@Override
 	public Address toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Address)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Address)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Address)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -164,10 +164,6 @@ public class ServiceComponentWrapper implements ServiceComponent {
 		return _serviceComponent.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_serviceComponent.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _serviceComponent.getPrimaryKeyObj();
 	}

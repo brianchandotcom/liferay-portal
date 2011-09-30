@@ -127,6 +127,9 @@ public interface ${entity.name}Model extends
 			 * @param locale the locale of the language
 			 * @return the localized ${column.humanName} of this ${entity.humanName}
 			 */
+			<#if (column.type == "String") >
+				@AutoEscape
+			</#if>
 			public ${column.type} get${column.methodName}(Locale locale);
 
 			/**
@@ -136,6 +139,9 @@ public interface ${entity.name}Model extends
 			 * @param useDefault whether to use the default language if no localization exists for the requested language
 			 * @return the localized ${column.humanName} of this ${entity.humanName}. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 			 */
+			<#if (column.type == "String") >
+				@AutoEscape
+			</#if>
 			public ${column.type} get${column.methodName}(Locale locale, boolean useDefault);
 
 			/**
@@ -144,6 +150,9 @@ public interface ${entity.name}Model extends
 			 * @param languageId the ID of the language
 			 * @return the localized ${column.humanName} of this ${entity.humanName}
 			 */
+			<#if (column.type == "String") >
+				@AutoEscape
+			</#if>
 			public ${column.type} get${column.methodName}(String languageId);
 
 			/**
@@ -153,6 +162,9 @@ public interface ${entity.name}Model extends
 			 * @param useDefault whether to use the default language if no localization exists for the requested language
 			 * @return the localized ${column.humanName} of this ${entity.humanName}
 			 */
+			<#if (column.type == "String") >
+				@AutoEscape
+			</#if>
 			public String get${column.methodName}(String languageId, boolean useDefault);
 
 			/**
@@ -288,8 +300,6 @@ public interface ${entity.name}Model extends
 	public void setCachedModel(boolean cachedModel);
 
 	public boolean isEscapedModel();
-
-	public void setEscapedModel(boolean escapedModel);
 
 	public Serializable getPrimaryKeyObj();
 

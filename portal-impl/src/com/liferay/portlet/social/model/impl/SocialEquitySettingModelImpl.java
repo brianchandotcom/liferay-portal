@@ -263,18 +263,13 @@ public class SocialEquitySettingModelImpl extends BaseModelImpl<SocialEquitySett
 
 	@Override
 	public SocialEquitySetting toEscapedModel() {
-		if (isEscapedModel()) {
-			return (SocialEquitySetting)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SocialEquitySetting)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (SocialEquitySetting)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -191,10 +191,6 @@ public class PluginSettingWrapper implements PluginSetting {
 		return _pluginSetting.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_pluginSetting.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _pluginSetting.getPrimaryKeyObj();
 	}

@@ -243,18 +243,13 @@ public class SocialEquityUserModelImpl extends BaseModelImpl<SocialEquityUser>
 
 	@Override
 	public SocialEquityUser toEscapedModel() {
-		if (isEscapedModel()) {
-			return (SocialEquityUser)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SocialEquityUser)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (SocialEquityUser)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

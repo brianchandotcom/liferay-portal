@@ -128,10 +128,6 @@ public class ResourceWrapper implements Resource {
 		return _resource.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_resource.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _resource.getPrimaryKeyObj();
 	}

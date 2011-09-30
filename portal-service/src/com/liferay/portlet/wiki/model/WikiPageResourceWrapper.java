@@ -146,10 +146,6 @@ public class WikiPageResourceWrapper implements WikiPageResource {
 		return _wikiPageResource.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_wikiPageResource.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _wikiPageResource.getPrimaryKeyObj();
 	}

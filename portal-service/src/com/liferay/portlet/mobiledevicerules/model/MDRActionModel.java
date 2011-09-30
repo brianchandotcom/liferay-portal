@@ -256,6 +256,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 * @param locale the locale of the language
 	 * @return the localized name of this m d r action
 	 */
+	@AutoEscape
 	public String getName(Locale locale);
 
 	/**
@@ -265,6 +266,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized name of this m d r action. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getName(Locale locale, boolean useDefault);
 
 	/**
@@ -273,6 +275,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 * @param languageId the ID of the language
 	 * @return the localized name of this m d r action
 	 */
+	@AutoEscape
 	public String getName(String languageId);
 
 	/**
@@ -282,6 +285,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized name of this m d r action
 	 */
+	@AutoEscape
 	public String getName(String languageId, boolean useDefault);
 
 	/**
@@ -343,6 +347,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 * @param locale the locale of the language
 	 * @return the localized description of this m d r action
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale);
 
 	/**
@@ -352,6 +357,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this m d r action. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale, boolean useDefault);
 
 	/**
@@ -360,6 +366,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 * @param languageId the ID of the language
 	 * @return the localized description of this m d r action
 	 */
+	@AutoEscape
 	public String getDescription(String languageId);
 
 	/**
@@ -369,6 +376,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this m d r action
 	 */
+	@AutoEscape
 	public String getDescription(String languageId, boolean useDefault);
 
 	/**
@@ -458,8 +466,6 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	public void setCachedModel(boolean cachedModel);
 
 	public boolean isEscapedModel();
-
-	public void setEscapedModel(boolean escapedModel);
 
 	public Serializable getPrimaryKeyObj();
 

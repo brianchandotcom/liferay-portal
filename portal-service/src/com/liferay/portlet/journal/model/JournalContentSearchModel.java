@@ -174,8 +174,6 @@ public interface JournalContentSearchModel extends BaseModel<JournalContentSearc
 
 	public boolean isEscapedModel();
 
-	public void setEscapedModel(boolean escapedModel);
-
 	public Serializable getPrimaryKeyObj();
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);

@@ -266,10 +266,6 @@ public class UserNotificationEventWrapper implements UserNotificationEvent {
 		return _userNotificationEvent.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_userNotificationEvent.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _userNotificationEvent.getPrimaryKeyObj();
 	}

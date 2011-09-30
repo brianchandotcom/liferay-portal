@@ -522,10 +522,6 @@ public class JournalStructureWrapper implements JournalStructure {
 		return _journalStructure.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_journalStructure.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _journalStructure.getPrimaryKeyObj();
 	}

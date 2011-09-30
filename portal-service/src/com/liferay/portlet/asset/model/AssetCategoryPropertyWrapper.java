@@ -257,10 +257,6 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty {
 		return _assetCategoryProperty.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_assetCategoryProperty.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _assetCategoryProperty.getPrimaryKeyObj();
 	}

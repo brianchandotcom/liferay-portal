@@ -676,10 +676,6 @@ public class AssetEntryWrapper implements AssetEntry {
 		return _assetEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_assetEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _assetEntry.getPrimaryKeyObj();
 	}

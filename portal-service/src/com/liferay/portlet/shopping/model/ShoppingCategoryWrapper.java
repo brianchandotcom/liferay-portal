@@ -274,10 +274,6 @@ public class ShoppingCategoryWrapper implements ShoppingCategory {
 		return _shoppingCategory.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_shoppingCategory.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _shoppingCategory.getPrimaryKeyObj();
 	}

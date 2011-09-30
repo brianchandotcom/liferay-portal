@@ -527,18 +527,13 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	@Override
 	public CalEvent toEscapedModel() {
-		if (isEscapedModel()) {
-			return (CalEvent)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (CalEvent)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (CalEvent)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

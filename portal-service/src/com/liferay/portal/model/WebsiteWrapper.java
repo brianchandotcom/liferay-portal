@@ -310,10 +310,6 @@ public class WebsiteWrapper implements Website {
 		return _website.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_website.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _website.getPrimaryKeyObj();
 	}

@@ -310,10 +310,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder {
 		return _bookmarksFolder.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_bookmarksFolder.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _bookmarksFolder.getPrimaryKeyObj();
 	}

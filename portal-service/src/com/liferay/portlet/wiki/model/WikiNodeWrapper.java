@@ -292,10 +292,6 @@ public class WikiNodeWrapper implements WikiNode {
 		return _wikiNode.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_wikiNode.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _wikiNode.getPrimaryKeyObj();
 	}

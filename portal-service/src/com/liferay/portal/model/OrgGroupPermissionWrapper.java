@@ -129,10 +129,6 @@ public class OrgGroupPermissionWrapper implements OrgGroupPermission {
 		return _orgGroupPermission.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_orgGroupPermission.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _orgGroupPermission.getPrimaryKeyObj();
 	}

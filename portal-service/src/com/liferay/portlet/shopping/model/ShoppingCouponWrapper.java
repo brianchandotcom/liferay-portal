@@ -427,10 +427,6 @@ public class ShoppingCouponWrapper implements ShoppingCoupon {
 		return _shoppingCoupon.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_shoppingCoupon.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _shoppingCoupon.getPrimaryKeyObj();
 	}

@@ -366,10 +366,6 @@ public class DDLRecordWrapper implements DDLRecord {
 		return _ddlRecord.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddlRecord.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddlRecord.getPrimaryKeyObj();
 	}

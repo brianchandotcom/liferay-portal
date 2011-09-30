@@ -850,10 +850,6 @@ public class UserWrapper implements User {
 		return _user.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_user.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _user.getPrimaryKeyObj();
 	}

@@ -320,10 +320,6 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance {
 		return _mdrRuleGroupInstance.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mdrRuleGroupInstance.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mdrRuleGroupInstance.getPrimaryKeyObj();
 	}

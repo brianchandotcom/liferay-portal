@@ -77,7 +77,8 @@ if ((classNameId == 0) && (classPK == 0) && !permissionChecker.isOmniadmin()) {
 		for (int i = 0; i < results.size(); i++) {
 			AnnouncementsEntry entry = results.get(i);
 
-			entry = entry.toEscapedModel();
+			entry = entry.
+				toEscapedModel();
 
 			ResultRow row = new ResultRow(entry, entry.getEntryId(), i);
 

@@ -209,10 +209,6 @@ public class WebDAVPropsWrapper implements WebDAVProps {
 		return _webDAVProps.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_webDAVProps.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _webDAVProps.getPrimaryKeyObj();
 	}

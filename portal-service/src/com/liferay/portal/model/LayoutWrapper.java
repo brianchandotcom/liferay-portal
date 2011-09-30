@@ -1117,10 +1117,6 @@ public class LayoutWrapper implements Layout {
 		return _layout.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_layout.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _layout.getPrimaryKeyObj();
 	}

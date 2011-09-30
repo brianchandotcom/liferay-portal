@@ -958,10 +958,6 @@ public class JournalArticleWrapper implements JournalArticle {
 		return _journalArticle.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_journalArticle.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _journalArticle.getPrimaryKeyObj();
 	}

@@ -219,18 +219,13 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	@Override
 	public Ticket toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Ticket)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Ticket)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Ticket)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

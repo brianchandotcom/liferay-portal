@@ -321,10 +321,6 @@ public class SocialActivityWrapper implements SocialActivity {
 		return _socialActivity.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialActivity.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialActivity.getPrimaryKeyObj();
 	}

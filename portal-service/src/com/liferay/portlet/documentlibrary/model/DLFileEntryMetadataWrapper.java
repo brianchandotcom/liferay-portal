@@ -200,10 +200,6 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
 		return _dlFileEntryMetadata.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileEntryMetadata.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileEntryMetadata.getPrimaryKeyObj();
 	}

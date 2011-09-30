@@ -445,10 +445,6 @@ public class AddressWrapper implements Address {
 		return _address.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_address.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _address.getPrimaryKeyObj();
 	}

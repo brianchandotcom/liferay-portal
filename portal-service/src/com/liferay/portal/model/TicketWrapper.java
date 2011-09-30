@@ -245,10 +245,6 @@ public class TicketWrapper implements Ticket {
 		return _ticket.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ticket.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ticket.getPrimaryKeyObj();
 	}

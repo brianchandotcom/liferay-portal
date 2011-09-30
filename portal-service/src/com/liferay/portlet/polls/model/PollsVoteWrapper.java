@@ -256,10 +256,6 @@ public class PollsVoteWrapper implements PollsVote {
 		return _pollsVote.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_pollsVote.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _pollsVote.getPrimaryKeyObj();
 	}

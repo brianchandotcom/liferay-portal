@@ -262,10 +262,6 @@ public class PollsChoiceWrapper implements PollsChoice {
 		return _pollsChoice.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_pollsChoice.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _pollsChoice.getPrimaryKeyObj();
 	}

@@ -310,10 +310,6 @@ public class EmailAddressWrapper implements EmailAddress {
 		return _emailAddress.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_emailAddress.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _emailAddress.getPrimaryKeyObj();
 	}

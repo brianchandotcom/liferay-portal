@@ -582,10 +582,6 @@ public class DLFileEntryWrapper implements DLFileEntry {
 		return _dlFileEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileEntry.getPrimaryKeyObj();
 	}

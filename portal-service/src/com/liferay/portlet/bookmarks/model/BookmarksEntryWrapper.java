@@ -364,10 +364,6 @@ public class BookmarksEntryWrapper implements BookmarksEntry {
 		return _bookmarksEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_bookmarksEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _bookmarksEntry.getPrimaryKeyObj();
 	}

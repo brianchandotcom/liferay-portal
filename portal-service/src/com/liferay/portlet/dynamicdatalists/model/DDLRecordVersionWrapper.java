@@ -427,10 +427,6 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion {
 		return _ddlRecordVersion.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddlRecordVersion.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddlRecordVersion.getPrimaryKeyObj();
 	}

@@ -643,10 +643,6 @@ public class ContactWrapper implements Contact {
 		return _contact.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_contact.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _contact.getPrimaryKeyObj();
 	}

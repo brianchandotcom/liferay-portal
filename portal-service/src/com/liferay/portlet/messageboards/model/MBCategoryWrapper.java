@@ -364,10 +364,6 @@ public class MBCategoryWrapper implements MBCategory {
 		return _mbCategory.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbCategory.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbCategory.getPrimaryKeyObj();
 	}

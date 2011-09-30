@@ -202,10 +202,6 @@ public class DLFileRankWrapper implements DLFileRank {
 		return _dlFileRank.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileRank.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileRank.getPrimaryKeyObj();
 	}

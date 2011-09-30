@@ -146,10 +146,6 @@ public class PermissionWrapper implements Permission {
 		return _permission.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_permission.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _permission.getPrimaryKeyObj();
 	}

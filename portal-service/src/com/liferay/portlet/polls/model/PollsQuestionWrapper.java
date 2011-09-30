@@ -504,10 +504,6 @@ public class PollsQuestionWrapper implements PollsQuestion {
 		return _pollsQuestion.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_pollsQuestion.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _pollsQuestion.getPrimaryKeyObj();
 	}

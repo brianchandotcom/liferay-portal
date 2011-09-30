@@ -328,10 +328,6 @@ public class PhoneWrapper implements Phone {
 		return _phone.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_phone.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _phone.getPrimaryKeyObj();
 	}

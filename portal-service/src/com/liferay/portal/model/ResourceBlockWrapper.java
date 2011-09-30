@@ -182,10 +182,6 @@ public class ResourceBlockWrapper implements ResourceBlock {
 		return _resourceBlock.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_resourceBlock.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _resourceBlock.getPrimaryKeyObj();
 	}

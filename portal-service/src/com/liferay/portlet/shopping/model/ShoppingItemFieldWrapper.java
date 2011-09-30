@@ -164,10 +164,6 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField {
 		return _shoppingItemField.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_shoppingItemField.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _shoppingItemField.getPrimaryKeyObj();
 	}

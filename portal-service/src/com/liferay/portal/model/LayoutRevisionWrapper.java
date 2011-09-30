@@ -1235,10 +1235,6 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_layoutRevision.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _layoutRevision.getPrimaryKeyObj();
 	}

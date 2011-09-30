@@ -417,25 +417,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			}
 
 			public String get${column.methodName}(String languageId) {
-				String value = LocalizationUtil.getLocalization(get${column.methodName}(), languageId);
-
-				if (isEscapedModel()) {
-					return HtmlUtil.escape(value);
-				}
-				else {
-					return value;
-				}
+				return LocalizationUtil.getLocalization(get${column.methodName}(), languageId);
 			}
 
 			public String get${column.methodName}(String languageId, boolean useDefault) {
-				String value = LocalizationUtil.getLocalization(get${column.methodName}(), languageId, useDefault);
-
-				if (isEscapedModel()) {
-					return HtmlUtil.escape(value);
-				}
-				else {
-					return value;
-				}
+				return LocalizationUtil.getLocalization(get${column.methodName}(), languageId, useDefault);
 			}
 
 			public Map<Locale, String> get${column.methodName}Map() {
@@ -625,16 +611,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public ${entity.name} toEscapedModel() {
-		if (isEscapedModel()) {
-			return (${entity.name})this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (${entity.name})ProxyUtil.newProxyInstance(_classLoader, _escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (${entity.name})ProxyUtil.newProxyInstance(_classLoader, _escapedModelProxyInterfaces, new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	<#if (entity.PKClassName == "long") && !stringUtil.startsWith(entity.name, "Expando")>

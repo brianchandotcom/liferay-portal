@@ -200,10 +200,6 @@ public class ExpandoColumnWrapper implements ExpandoColumn {
 		return _expandoColumn.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_expandoColumn.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _expandoColumn.getPrimaryKeyObj();
 	}

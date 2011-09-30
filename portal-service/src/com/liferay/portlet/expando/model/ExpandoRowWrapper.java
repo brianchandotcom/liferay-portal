@@ -146,10 +146,6 @@ public class ExpandoRowWrapper implements ExpandoRow {
 		return _expandoRow.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_expandoRow.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _expandoRow.getPrimaryKeyObj();
 	}

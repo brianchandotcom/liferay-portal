@@ -535,10 +535,6 @@ public class CalEventWrapper implements CalEvent {
 		return _calEvent.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_calEvent.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _calEvent.getPrimaryKeyObj();
 	}

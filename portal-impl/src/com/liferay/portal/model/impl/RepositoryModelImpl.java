@@ -304,18 +304,13 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public Repository toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Repository)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Repository)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Repository)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

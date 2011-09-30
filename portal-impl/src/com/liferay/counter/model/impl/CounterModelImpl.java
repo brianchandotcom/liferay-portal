@@ -119,18 +119,13 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 
 	@Override
 	public Counter toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Counter)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Counter)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Counter)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

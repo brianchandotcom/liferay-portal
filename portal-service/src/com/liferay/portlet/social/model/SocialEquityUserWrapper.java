@@ -276,10 +276,6 @@ public class SocialEquityUserWrapper implements SocialEquityUser {
 		return _socialEquityUser.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialEquityUser.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialEquityUser.getPrimaryKeyObj();
 	}

@@ -201,10 +201,6 @@ public class SocialEquityGroupSettingWrapper implements SocialEquityGroupSetting
 		return _socialEquityGroupSetting.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialEquityGroupSetting.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialEquityGroupSetting.getPrimaryKeyObj();
 	}

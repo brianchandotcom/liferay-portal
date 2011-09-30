@@ -155,10 +155,6 @@ public class ClusterGroupWrapper implements ClusterGroup {
 		return _clusterGroup.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_clusterGroup.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _clusterGroup.getPrimaryKeyObj();
 	}

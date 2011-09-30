@@ -221,10 +221,6 @@ public class SocialEquityAssetEntryWrapper implements SocialEquityAssetEntry {
 		return _socialEquityAssetEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialEquityAssetEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialEquityAssetEntry.getPrimaryKeyObj();
 	}

@@ -227,10 +227,6 @@ public class JournalArticleImageWrapper implements JournalArticleImage {
 		return _journalArticleImage.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_journalArticleImage.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _journalArticleImage.getPrimaryKeyObj();
 	}

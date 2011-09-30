@@ -310,10 +310,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch {
 		return _layoutSetBranch.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_layoutSetBranch.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _layoutSetBranch.getPrimaryKeyObj();
 	}

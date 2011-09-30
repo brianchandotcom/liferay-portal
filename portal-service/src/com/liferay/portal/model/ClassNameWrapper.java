@@ -119,10 +119,6 @@ public class ClassNameWrapper implements ClassName {
 		return _className.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_className.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _className.getPrimaryKeyObj();
 	}

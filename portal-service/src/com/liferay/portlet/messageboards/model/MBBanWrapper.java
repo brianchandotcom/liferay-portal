@@ -258,10 +258,6 @@ public class MBBanWrapper implements MBBan {
 		return _mbBan.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbBan.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbBan.getPrimaryKeyObj();
 	}

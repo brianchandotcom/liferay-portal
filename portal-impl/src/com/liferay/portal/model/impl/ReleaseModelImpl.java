@@ -203,18 +203,13 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public Release toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Release)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Release)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Release)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

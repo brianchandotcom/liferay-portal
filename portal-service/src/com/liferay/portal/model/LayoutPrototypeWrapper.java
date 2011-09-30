@@ -305,10 +305,6 @@ public class LayoutPrototypeWrapper implements LayoutPrototype {
 		return _layoutPrototype.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_layoutPrototype.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _layoutPrototype.getPrimaryKeyObj();
 	}

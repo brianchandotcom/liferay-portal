@@ -333,18 +333,13 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	@Override
 	public WorkflowDefinitionLink toEscapedModel() {
-		if (isEscapedModel()) {
-			return (WorkflowDefinitionLink)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (WorkflowDefinitionLink)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (WorkflowDefinitionLink)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

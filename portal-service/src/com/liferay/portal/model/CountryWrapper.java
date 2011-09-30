@@ -236,10 +236,6 @@ public class CountryWrapper implements Country {
 		return _country.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_country.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _country.getPrimaryKeyObj();
 	}

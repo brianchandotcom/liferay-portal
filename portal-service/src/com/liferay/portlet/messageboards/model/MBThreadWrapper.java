@@ -474,10 +474,6 @@ public class MBThreadWrapper implements MBThread {
 		return _mbThread.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbThread.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbThread.getPrimaryKeyObj();
 	}

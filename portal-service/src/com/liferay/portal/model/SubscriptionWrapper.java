@@ -265,10 +265,6 @@ public class SubscriptionWrapper implements Subscription {
 		return _subscription.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_subscription.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _subscription.getPrimaryKeyObj();
 	}

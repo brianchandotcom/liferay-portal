@@ -265,10 +265,6 @@ public class RatingsEntryWrapper implements RatingsEntry {
 		return _ratingsEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ratingsEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ratingsEntry.getPrimaryKeyObj();
 	}

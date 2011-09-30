@@ -418,10 +418,6 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry {
 		return _announcementsEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_announcementsEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _announcementsEntry.getPrimaryKeyObj();
 	}

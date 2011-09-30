@@ -630,10 +630,6 @@ public class JournalTemplateWrapper implements JournalTemplate {
 		return _journalTemplate.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_journalTemplate.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _journalTemplate.getPrimaryKeyObj();
 	}

@@ -301,10 +301,6 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion {
 		return _scFrameworkVersion.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_scFrameworkVersion.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _scFrameworkVersion.getPrimaryKeyObj();
 	}

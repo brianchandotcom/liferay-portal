@@ -540,10 +540,6 @@ public class DDMTemplateWrapper implements DDMTemplate {
 		return _ddmTemplate.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddmTemplate.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddmTemplate.getPrimaryKeyObj();
 	}

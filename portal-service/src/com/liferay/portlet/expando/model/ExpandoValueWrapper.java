@@ -227,10 +227,6 @@ public class ExpandoValueWrapper implements ExpandoValue {
 		return _expandoValue.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_expandoValue.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _expandoValue.getPrimaryKeyObj();
 	}

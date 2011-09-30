@@ -272,10 +272,6 @@ public class CompanyWrapper implements Company {
 		return _company.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_company.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _company.getPrimaryKeyObj();
 	}

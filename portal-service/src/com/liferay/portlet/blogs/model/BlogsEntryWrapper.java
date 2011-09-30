@@ -598,10 +598,6 @@ public class BlogsEntryWrapper implements BlogsEntry {
 		return _blogsEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_blogsEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _blogsEntry.getPrimaryKeyObj();
 	}

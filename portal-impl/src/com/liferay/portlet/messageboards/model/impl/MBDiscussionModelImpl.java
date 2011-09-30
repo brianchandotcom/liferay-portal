@@ -189,18 +189,13 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 	@Override
 	public MBDiscussion toEscapedModel() {
-		if (isEscapedModel()) {
-			return (MBDiscussion)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBDiscussion)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (MBDiscussion)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

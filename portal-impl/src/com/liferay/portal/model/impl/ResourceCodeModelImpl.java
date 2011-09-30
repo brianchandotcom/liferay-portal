@@ -182,18 +182,13 @@ public class ResourceCodeModelImpl extends BaseModelImpl<ResourceCode>
 
 	@Override
 	public ResourceCode toEscapedModel() {
-		if (isEscapedModel()) {
-			return (ResourceCode)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ResourceCode)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (ResourceCode)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

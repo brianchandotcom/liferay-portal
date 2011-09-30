@@ -348,6 +348,7 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	 * @param locale the locale of the language
 	 * @return the localized title of this asset entry
 	 */
+	@AutoEscape
 	public String getTitle(Locale locale);
 
 	/**
@@ -357,6 +358,7 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized title of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getTitle(Locale locale, boolean useDefault);
 
 	/**
@@ -365,6 +367,7 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	 * @param languageId the ID of the language
 	 * @return the localized title of this asset entry
 	 */
+	@AutoEscape
 	public String getTitle(String languageId);
 
 	/**
@@ -374,6 +377,7 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized title of this asset entry
 	 */
+	@AutoEscape
 	public String getTitle(String languageId, boolean useDefault);
 
 	/**
@@ -547,8 +551,6 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	public void setCachedModel(boolean cachedModel);
 
 	public boolean isEscapedModel();
-
-	public void setEscapedModel(boolean escapedModel);
 
 	public Serializable getPrimaryKeyObj();
 

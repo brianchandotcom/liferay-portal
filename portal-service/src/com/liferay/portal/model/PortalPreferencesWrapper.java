@@ -146,10 +146,6 @@ public class PortalPreferencesWrapper implements PortalPreferences {
 		return _portalPreferences.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_portalPreferences.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _portalPreferences.getPrimaryKeyObj();
 	}

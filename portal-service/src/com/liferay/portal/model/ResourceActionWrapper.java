@@ -146,10 +146,6 @@ public class ResourceActionWrapper implements ResourceAction {
 		return _resourceAction.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_resourceAction.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _resourceAction.getPrimaryKeyObj();
 	}

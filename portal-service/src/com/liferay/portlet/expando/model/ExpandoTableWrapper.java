@@ -155,10 +155,6 @@ public class ExpandoTableWrapper implements ExpandoTable {
 		return _expandoTable.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_expandoTable.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _expandoTable.getPrimaryKeyObj();
 	}

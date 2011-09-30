@@ -301,10 +301,6 @@ public class LockWrapper implements Lock {
 		return _lock.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_lock.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _lock.getPrimaryKeyObj();
 	}

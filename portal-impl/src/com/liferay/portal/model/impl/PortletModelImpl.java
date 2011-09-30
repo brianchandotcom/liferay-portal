@@ -233,18 +233,13 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 	@Override
 	public Portlet toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Portlet)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Portlet)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Portlet)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

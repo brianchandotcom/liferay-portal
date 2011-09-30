@@ -388,10 +388,6 @@ public class DDMContentWrapper implements DDMContent {
 		return _ddmContent.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddmContent.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddmContent.getPrimaryKeyObj();
 	}

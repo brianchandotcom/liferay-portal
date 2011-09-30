@@ -427,10 +427,6 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 		return _dlFileShortcut.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileShortcut.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileShortcut.getPrimaryKeyObj();
 	}

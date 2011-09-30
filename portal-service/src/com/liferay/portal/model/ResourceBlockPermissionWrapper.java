@@ -147,10 +147,6 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission {
 		return _resourceBlockPermission.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_resourceBlockPermission.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _resourceBlockPermission.getPrimaryKeyObj();
 	}

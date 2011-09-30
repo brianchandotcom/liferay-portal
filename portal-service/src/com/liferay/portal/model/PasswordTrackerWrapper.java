@@ -166,10 +166,6 @@ public class PasswordTrackerWrapper implements PasswordTracker {
 		return _passwordTracker.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_passwordTracker.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _passwordTracker.getPrimaryKeyObj();
 	}

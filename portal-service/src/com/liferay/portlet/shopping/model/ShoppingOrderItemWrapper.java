@@ -254,10 +254,6 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem {
 		return _shoppingOrderItem.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_shoppingOrderItem.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _shoppingOrderItem.getPrimaryKeyObj();
 	}

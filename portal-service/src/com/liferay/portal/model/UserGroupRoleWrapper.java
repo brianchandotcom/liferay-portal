@@ -149,10 +149,6 @@ public class UserGroupRoleWrapper implements UserGroupRole {
 		return _userGroupRole.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_userGroupRole.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _userGroupRole.getPrimaryKeyObj();
 	}

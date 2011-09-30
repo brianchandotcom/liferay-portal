@@ -236,10 +236,6 @@ public class DLContentWrapper implements DLContent {
 		return _dlContent.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlContent.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlContent.getPrimaryKeyObj();
 	}

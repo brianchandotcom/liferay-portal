@@ -227,10 +227,6 @@ public class ReleaseWrapper implements Release {
 		return _release.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_release.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _release.getPrimaryKeyObj();
 	}

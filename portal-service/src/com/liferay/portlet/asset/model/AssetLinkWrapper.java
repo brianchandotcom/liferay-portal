@@ -256,10 +256,6 @@ public class AssetLinkWrapper implements AssetLink {
 		return _assetLink.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_assetLink.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _assetLink.getPrimaryKeyObj();
 	}

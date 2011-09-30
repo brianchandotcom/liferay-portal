@@ -294,10 +294,6 @@ public class MembershipRequestWrapper implements MembershipRequest {
 		return _membershipRequest.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_membershipRequest.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _membershipRequest.getPrimaryKeyObj();
 	}

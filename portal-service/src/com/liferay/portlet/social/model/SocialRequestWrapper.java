@@ -357,10 +357,6 @@ public class SocialRequestWrapper implements SocialRequest {
 		return _socialRequest.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialRequest.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialRequest.getPrimaryKeyObj();
 	}

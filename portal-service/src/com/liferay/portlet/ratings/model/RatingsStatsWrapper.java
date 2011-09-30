@@ -191,10 +191,6 @@ public class RatingsStatsWrapper implements RatingsStats {
 		return _ratingsStats.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ratingsStats.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ratingsStats.getPrimaryKeyObj();
 	}

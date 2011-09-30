@@ -173,10 +173,6 @@ public class DDMStorageLinkWrapper implements DDMStorageLink {
 		return _ddmStorageLink.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddmStorageLink.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddmStorageLink.getPrimaryKeyObj();
 	}

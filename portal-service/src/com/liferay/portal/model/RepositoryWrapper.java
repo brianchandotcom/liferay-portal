@@ -281,10 +281,6 @@ public class RepositoryWrapper implements Repository {
 		return _repository.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_repository.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _repository.getPrimaryKeyObj();
 	}

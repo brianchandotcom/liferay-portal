@@ -188,18 +188,13 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 	@Override
 	public PasswordPolicyRel toEscapedModel() {
-		if (isEscapedModel()) {
-			return (PasswordPolicyRel)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (PasswordPolicyRel)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (PasswordPolicyRel)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

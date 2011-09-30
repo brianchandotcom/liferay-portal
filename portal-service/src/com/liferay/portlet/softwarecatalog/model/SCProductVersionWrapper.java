@@ -319,10 +319,6 @@ public class SCProductVersionWrapper implements SCProductVersion {
 		return _scProductVersion.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_scProductVersion.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _scProductVersion.getPrimaryKeyObj();
 	}

@@ -202,18 +202,13 @@ public class ResourceModelImpl extends BaseModelImpl<Resource>
 
 	@Override
 	public Resource toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Resource)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Resource)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Resource)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

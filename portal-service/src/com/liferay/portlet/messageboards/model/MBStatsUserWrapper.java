@@ -204,10 +204,6 @@ public class MBStatsUserWrapper implements MBStatsUser {
 		return _mbStatsUser.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbStatsUser.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbStatsUser.getPrimaryKeyObj();
 	}

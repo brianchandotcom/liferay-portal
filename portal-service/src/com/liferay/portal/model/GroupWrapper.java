@@ -373,10 +373,6 @@ public class GroupWrapper implements Group {
 		return _group.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_group.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _group.getPrimaryKeyObj();
 	}

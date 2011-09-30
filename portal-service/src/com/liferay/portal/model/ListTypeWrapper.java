@@ -128,10 +128,6 @@ public class ListTypeWrapper implements ListType {
 		return _listType.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_listType.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _listType.getPrimaryKeyObj();
 	}

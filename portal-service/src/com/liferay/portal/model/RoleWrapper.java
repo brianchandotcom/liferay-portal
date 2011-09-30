@@ -439,10 +439,6 @@ public class RoleWrapper implements Role {
 		return _role.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_role.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _role.getPrimaryKeyObj();
 	}

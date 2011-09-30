@@ -381,8 +381,6 @@ public interface MBThreadModel extends BaseModel<MBThread>, WorkflowedModel {
 
 	public boolean isEscapedModel();
 
-	public void setEscapedModel(boolean escapedModel);
-
 	public Serializable getPrimaryKeyObj();
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);

@@ -146,10 +146,6 @@ public class UserTrackerPathWrapper implements UserTrackerPath {
 		return _userTrackerPath.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_userTrackerPath.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _userTrackerPath.getPrimaryKeyObj();
 	}

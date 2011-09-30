@@ -155,10 +155,6 @@ public class MBDiscussionWrapper implements MBDiscussion {
 		return _mbDiscussion.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbDiscussion.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbDiscussion.getPrimaryKeyObj();
 	}

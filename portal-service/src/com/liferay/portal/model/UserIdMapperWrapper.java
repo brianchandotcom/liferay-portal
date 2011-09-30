@@ -184,10 +184,6 @@ public class UserIdMapperWrapper implements UserIdMapper {
 		return _userIdMapper.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_userIdMapper.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _userIdMapper.getPrimaryKeyObj();
 	}

@@ -173,10 +173,6 @@ public class RegionWrapper implements Region {
 		return _region.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_region.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _region.getPrimaryKeyObj();
 	}

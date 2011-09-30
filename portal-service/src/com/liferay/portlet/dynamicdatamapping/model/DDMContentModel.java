@@ -205,6 +205,7 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel {
 	 * @param locale the locale of the language
 	 * @return the localized name of this d d m content
 	 */
+	@AutoEscape
 	public String getName(Locale locale);
 
 	/**
@@ -214,6 +215,7 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized name of this d d m content. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getName(Locale locale, boolean useDefault);
 
 	/**
@@ -222,6 +224,7 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel {
 	 * @param languageId the ID of the language
 	 * @return the localized name of this d d m content
 	 */
+	@AutoEscape
 	public String getName(String languageId);
 
 	/**
@@ -231,6 +234,7 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized name of this d d m content
 	 */
+	@AutoEscape
 	public String getName(String languageId, boolean useDefault);
 
 	/**
@@ -318,8 +322,6 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel {
 	public void setCachedModel(boolean cachedModel);
 
 	public boolean isEscapedModel();
-
-	public void setEscapedModel(boolean escapedModel);
 
 	public Serializable getPrimaryKeyObj();
 

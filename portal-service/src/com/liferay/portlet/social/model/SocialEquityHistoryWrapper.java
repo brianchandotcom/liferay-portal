@@ -202,10 +202,6 @@ public class SocialEquityHistoryWrapper implements SocialEquityHistory {
 		return _socialEquityHistory.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialEquityHistory.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialEquityHistory.getPrimaryKeyObj();
 	}

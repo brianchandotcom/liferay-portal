@@ -593,10 +593,6 @@ public class WikiPageWrapper implements WikiPage {
 		return _wikiPage.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_wikiPage.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _wikiPage.getPrimaryKeyObj();
 	}

@@ -200,10 +200,6 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot {
 		return _scProductScreenshot.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_scProductScreenshot.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _scProductScreenshot.getPrimaryKeyObj();
 	}

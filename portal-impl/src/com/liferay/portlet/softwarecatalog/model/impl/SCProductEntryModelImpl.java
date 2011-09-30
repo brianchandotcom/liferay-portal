@@ -454,18 +454,13 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	@Override
 	public SCProductEntry toEscapedModel() {
-		if (isEscapedModel()) {
-			return (SCProductEntry)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SCProductEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (SCProductEntry)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

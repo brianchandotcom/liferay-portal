@@ -593,18 +593,13 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public Contact toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Contact)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Contact)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Contact)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override

@@ -549,10 +549,6 @@ public class DDMStructureWrapper implements DDMStructure {
 		return _ddmStructure.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddmStructure.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddmStructure.getPrimaryKeyObj();
 	}

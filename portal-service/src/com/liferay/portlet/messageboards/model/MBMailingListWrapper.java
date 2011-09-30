@@ -607,10 +607,6 @@ public class MBMailingListWrapper implements MBMailingList {
 		return _mbMailingList.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbMailingList.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbMailingList.getPrimaryKeyObj();
 	}

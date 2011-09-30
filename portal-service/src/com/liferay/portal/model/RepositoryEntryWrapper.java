@@ -164,10 +164,6 @@ public class RepositoryEntryWrapper implements RepositoryEntry {
 		return _repositoryEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_repositoryEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _repositoryEntry.getPrimaryKeyObj();
 	}

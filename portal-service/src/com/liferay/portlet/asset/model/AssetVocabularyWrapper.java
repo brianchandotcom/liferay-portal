@@ -504,10 +504,6 @@ public class AssetVocabularyWrapper implements AssetVocabulary {
 		return _assetVocabulary.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_assetVocabulary.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _assetVocabulary.getPrimaryKeyObj();
 	}

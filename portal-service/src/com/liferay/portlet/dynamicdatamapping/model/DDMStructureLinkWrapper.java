@@ -155,10 +155,6 @@ public class DDMStructureLinkWrapper implements DDMStructureLink {
 		return _ddmStructureLink.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddmStructureLink.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddmStructureLink.getPrimaryKeyObj();
 	}

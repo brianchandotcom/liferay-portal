@@ -272,10 +272,6 @@ public class SocialEquitySettingWrapper implements SocialEquitySetting {
 		return _socialEquitySetting.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialEquitySetting.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialEquitySetting.getPrimaryKeyObj();
 	}

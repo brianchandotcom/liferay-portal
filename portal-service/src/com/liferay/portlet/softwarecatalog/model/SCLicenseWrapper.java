@@ -209,10 +209,6 @@ public class SCLicenseWrapper implements SCLicense {
 		return _scLicense.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_scLicense.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _scLicense.getPrimaryKeyObj();
 	}

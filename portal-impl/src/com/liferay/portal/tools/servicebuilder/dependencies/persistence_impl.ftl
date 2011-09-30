@@ -611,6 +611,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			BatchSessionUtil.update(session, ${entity.varName}, merge);
 
 			${entity.varName}.setNew(false);
+
+			<#if entity.hasLazyBlobColumn()>
+				session.flush();
+				session.clear();
+			</#if>
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -788,9 +793,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#if entity.hasLazyBlobColumn()>
 			${entity.varName}.resetOriginalValues();
-
-			session.flush();
-			session.clear();
 		</#if>
 
 		return ${entity.varName};

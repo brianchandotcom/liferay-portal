@@ -16,4 +16,4 @@
 
 <%@ include file="/html/taglib/aui/button_row/init.jsp" %>
 
-<div class="aui-button-holder <%= cssClass %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<div class="aui-button-holder <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + id + '"' : ""%> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>

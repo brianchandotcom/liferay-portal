@@ -15,18 +15,26 @@
 package com.liferay.portal.metadata;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.DummyWriter;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.tika.Tika;
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.WriteOutContentHandler;
+
+import org.xml.sax.ContentHandler;
 
 /**
  * @author Miguel Pastor
  * @author Alexander Chow
+ * @author Shuyang Zhou
  */
 public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
@@ -64,8 +72,8 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		}
 	}
 
-	public void setTika(Tika tika) {
-		_tika = tika;
+	public void setParser(Parser parser) {
+		_parser = parser;
 	}
 
 	protected Metadata extractMetadata(
@@ -76,7 +84,21 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 			metadata = new Metadata();
 		}
 
-		_tika.parse(inputStream, metadata);
+		ParseContext context = new ParseContext();
+
+		context.set(Parser.class, _parser);
+
+		ContentHandler contentHandler = new WriteOutContentHandler(
+			new DummyWriter());
+
+		try {
+			_parser.parse(inputStream, contentHandler, metadata, context);
+		}
+		catch (Exception e) {
+			_log.error("Failed parsing", e);
+
+			throw new IOException(e.getMessage());
+		}
 
 		// Remove potential security risks
 
@@ -86,6 +108,9 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		return metadata;
 	}
 
-	private Tika _tika;
+	private static Log _log = LogFactoryUtil.getLog(
+		TikaRawMetadataProcessor.class);
+
+	private Parser _parser;
 
 }

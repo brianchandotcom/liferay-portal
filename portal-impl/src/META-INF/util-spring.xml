@@ -184,8 +184,12 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.metadata.RawMetadataProcessor" class="com.liferay.portal.metadata.TikaRawMetadataProcessor">
-		<property name="tika">
-			<bean class="org.apache.tika.Tika" />
+		<property name="parser">
+			<bean class="org.apache.tika.parser.AutoDetectParser">
+				<constructor-arg>
+					<bean class="org.apache.tika.config.TikaConfig" />
+				</constructor-arg>
+			</bean>
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil" class="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil">

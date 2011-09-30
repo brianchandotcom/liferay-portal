@@ -5431,8 +5431,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			companyId, PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_RESERVED_EMAIL_ADDRESSES);
 
-		for (int i = 0; i < reservedEmailAddresses.length; i++) {
-			if (emailAddress.equalsIgnoreCase(reservedEmailAddresses[i])) {
+		for (String reservedEmailAddresse : reservedEmailAddresses) {
+			if (emailAddress.equalsIgnoreCase(reservedEmailAddresse)) {
 				throw new ReservedUserEmailAddressException();
 			}
 		}
@@ -5542,8 +5542,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String[] anonymousNames = PrincipalBean.ANONYMOUS_NAMES;
 
-		for (int i = 0; i < anonymousNames.length; i++) {
-			if (screenName.equalsIgnoreCase(anonymousNames[i])) {
+		for (String anonymousName : anonymousNames) {
+			if (screenName.equalsIgnoreCase(anonymousName)) {
 				throw new UserScreenNameException();
 			}
 		}
@@ -5574,8 +5574,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			companyId, PropsKeys.ADMIN_RESERVED_SCREEN_NAMES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_RESERVED_SCREEN_NAMES);
 
-		for (int i = 0; i < reservedScreenNames.length; i++) {
-			if (screenName.equalsIgnoreCase(reservedScreenNames[i])) {
+		for (String reservedScreenName : reservedScreenNames) {
+			if (screenName.equalsIgnoreCase(reservedScreenName)) {
 				throw new ReservedUserScreenNameException();
 			}
 		}

@@ -209,6 +209,8 @@ public interface Repository {
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public Hits search(SearchContext searchContext) throws SearchException;
+
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException;
 

@@ -53,7 +53,7 @@ public class CMISQueryBuilder {
 
 		sb.append("SELECT ");
 		sb.append(PropertyIds.OBJECT_ID);
-		sb.append(", SCORE() AS SCORE FROM ");
+		sb.append(", SCORE() AS HITS FROM ");
 		sb.append(BaseTypeId.CMIS_DOCUMENT.value());
 
 		CMISConjunction cmisConjunction = new CMISConjunction();
@@ -98,7 +98,7 @@ public class CMISQueryBuilder {
 			}
 		}
 		else {
-			sb.append("SCORE DESC");
+			sb.append("HITS DESC");
 		}
 
 		return sb.toString();

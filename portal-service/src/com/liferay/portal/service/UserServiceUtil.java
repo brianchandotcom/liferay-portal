@@ -947,18 +947,41 @@ public class UserServiceUtil {
 	/**
 	* Sets the organizations that the user is in, removing and adding
 	* organizations as necessary.
+	* By default this operation will result in re-indexing of the user.
 	*
 	* @param userId the primary key of the user
 	* @param organizationIds the primary keys of the organizations
+	* @return whether the user was re-indexed or not
 	* @throws PortalException if a user with the primary key could not be
 	found or if the current user did not have permission to update
 	the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void updateOrganizations(long userId, long[] organizationIds)
+	public static boolean updateOrganizations(long userId,
+		long[] organizationIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateOrganizations(userId, organizationIds);
+		return getService().updateOrganizations(userId, organizationIds);
+	}
+
+	/**
+	* Sets the organizations that the user is in, removing and adding
+	* organizations as necessary.
+	*
+	* @param userId the primary key of the user
+	* @param organizationIds the primary keys of the organizations
+	* @param reIndex whether to re-index the user or not
+	* @return whether the user was re-indexed or not
+	* @throws PortalException if a user with the primary key could not be
+	found or if the current user did not have permission to update
+	the user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean updateOrganizations(long userId,
+		long[] organizationIds, boolean reIndex)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateOrganizations(userId, organizationIds, reIndex);
 	}
 
 	/**

@@ -76,6 +76,13 @@
 		</property>
 	</bean>
 
+	<!-- Generic search engine -->
+
+	<bean id="com.liferay.portal.search.generic.GenericSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
+		<property name="luceneBased" value="false" />
+		<property name="name" value="GENERIC_ENGINE" />
+	</bean>
+
 	<!-- Lucene search engine -->
 
 	<bean id="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" class="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" />
@@ -199,6 +206,7 @@
 		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 		<property name="searchEngines">
 			<list>
+				<ref bean="com.liferay.portal.search.generic.GenericSearchEngineImpl" />
 				<ref bean="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" />
 			</list>
 		</property>

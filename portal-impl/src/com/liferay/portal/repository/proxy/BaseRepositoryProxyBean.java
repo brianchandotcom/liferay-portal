@@ -464,6 +464,10 @@ public class BaseRepositoryProxyBean
 		_baseRepository.revertFileEntry(fileEntryId, version, serviceContext);
 	}
 
+	public Hits search(SearchContext searchContext) throws SearchException {
+		return _baseRepository.search(searchContext);
+	}
+
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException {
 

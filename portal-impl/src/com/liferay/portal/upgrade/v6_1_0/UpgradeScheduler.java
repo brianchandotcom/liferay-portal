@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -65,6 +66,10 @@ public class UpgradeScheduler extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			return;
+		}
+
 		List<Object[]> arrays = getUpgradeQuartzData();
 
 		if (arrays.isEmpty()) {

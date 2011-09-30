@@ -69,7 +69,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 </div>
 
 <aui:script position="inline" use="aui-base">
-	var container = A.one('.portlet-search .menu .search-range .<%= randomNamespace %>range');
+	var container = A.one('.portlet-search .menu <%= cssClassSelector %> .<%= randomNamespace %>range');
 
 	if (container) {
 		container.delegate(
@@ -81,7 +81,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 
 				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-				var currentTerms = A.all('.portlet-search .menu .search-range .<%= randomNamespace %>range .facet-value.current-term a');
+				var currentTerms = A.all('.portlet-search .menu <%= cssClassSelector %> .<%= randomNamespace %>range .facet-value.current-term a');
 
 				if (currentTerms) {
 					currentTerms.each(

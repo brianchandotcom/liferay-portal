@@ -54,7 +54,7 @@ DDLRecordVersion recordVersion = record.getRecordVersion(version);
 	Fields fields = null;
 
 	if (recordVersion != null) {
-		fields = StorageEngineUtil.getFields(recordVersion.getDDMStorageId());
+		fields = StorageEngineUtil.getFields(ddmStructure.getStructureId(), recordVersion.getDDMStorageId());
 	}
 	%>
 

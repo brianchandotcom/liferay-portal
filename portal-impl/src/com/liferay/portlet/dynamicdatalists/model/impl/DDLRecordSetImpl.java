@@ -66,9 +66,7 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 		return DDLRecordLocalServiceUtil.getRecords(getRecordSetId());
 	}
 
-	public List<Fields> getRecordsFieldsList()
-		throws PortalException, SystemException {
-
+	public List<Fields> getRecordsFieldsList() throws Exception {
 		List<Fields> fieldsList = new ArrayList<Fields>();
 
 		for (DDLRecord record : getRecords()) {

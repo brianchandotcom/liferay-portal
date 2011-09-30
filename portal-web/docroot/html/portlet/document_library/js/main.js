@@ -397,9 +397,11 @@ AUI().add(
 					},
 
 					_getMoveText: function(selectedItemsCount, targetAvailable) {
-						var moveText = Liferay.Language.get('x-item-is-ready-to-be-moved-to-x');
+						var moveText = STR_BLANK;
 
 						if (targetAvailable) {
+							moveText = Liferay.Language.get('x-item-is-ready-to-be-moved-to-x');
+
 							if (selectedItemsCount > 1) {
 								moveText = Liferay.Language.get('x-items-are-ready-to-be-moved-to-x');
 							}

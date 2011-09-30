@@ -98,13 +98,6 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntries(actionRequest);
 			}
-			else if (cmd.equals(Constants.PREVIEW)) {
-				long entryId = ParamUtil.getLong(actionRequest, "entryId");
-
-				if (entryId > 0) {
-					entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
-				}
-			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribe(actionRequest);
 			}
@@ -166,9 +159,8 @@ public class EditEntryAction extends PortletAction {
 				return;
 			}
 
-			if (cmd.equals(Constants.PREVIEW) ||
-				((entry != null) &&
-				 (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT))) {
+			if ((entry != null) &&
+				 (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
 				redirect = getSaveAndContinueRedirect(
 					portletConfig, actionRequest, entry, redirect);
@@ -284,9 +276,6 @@ public class EditEntryAction extends PortletAction {
 
 		String backURL = ParamUtil.getString(actionRequest, "backURL");
 
-		String title = ParamUtil.getString(actionRequest, "title");
-		String content = ParamUtil.getString(actionRequest, "content");
-
 		boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
 
 		PortletURLImpl portletURL = new PortletURLImpl(
@@ -307,18 +296,11 @@ public class EditEntryAction extends PortletAction {
 		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
 		portletURL.setParameter("redirect", redirect, false);
 		portletURL.setParameter("backURL", backURL, false);
+		portletURL.setParameter(
+			"groupId", String.valueOf(entry.getGroupId()), false);
+		portletURL.setParameter(
+			"entryId", String.valueOf(entry.getEntryId()), false);
 		portletURL.setParameter("preview", String.valueOf(preview), false);
-
-		if (entry != null) {
-			portletURL.setParameter(
-				"groupId", String.valueOf(entry.getGroupId()), false);
-			portletURL.setParameter(
-				"entryId", String.valueOf(entry.getEntryId()), false);
-		}
-		else {
-			portletURL.setParameter("title", title, false);
-			portletURL.setParameter("content", content, false);
-		}
 
 		return portletURL.toString();
 	}

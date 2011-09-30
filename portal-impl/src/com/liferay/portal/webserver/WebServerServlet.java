@@ -663,13 +663,10 @@ public class WebServerServlet extends HttpServlet {
 
 		String fileName = fileVersion.getTitle();
 
-		String extension = GetterUtil.getString(
-			FileUtil.getExtension(fileName));
+		String extension = fileVersion.getExtension();
 
-		if (Validator.isNull(extension) ||
-			!extension.equals(fileVersion.getExtension())) {
-
-			fileName += StringPool.PERIOD + fileVersion.getExtension();
+		if (!fileName.endsWith(StringPool.PERIOD + extension)) {
+			fileName += StringPool.PERIOD + extension;
 		}
 
 		boolean converted = false;

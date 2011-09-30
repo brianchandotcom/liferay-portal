@@ -248,6 +248,7 @@ public class DLAppHelperLocalServiceImpl
 		int width = 0;
 
 		boolean addDraftAssetEntry = false;
+		boolean visible = false;
 
 		if (fileEntry instanceof LiferayFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
@@ -266,13 +267,19 @@ public class DLAppHelperLocalServiceImpl
 				width = largeImage.getWidth();
 			}
 
-			if (!dlFileVersion.isApproved()) {
+			if (dlFileVersion.isApproved()) {
+				visible = true;
+			}
+			else {
 				String version = dlFileVersion.getVersion();
 
 				if (!version.equals(DLFileEntryConstants.VERSION_DEFAULT)) {
 					addDraftAssetEntry = true;
 				}
 			}
+		}
+		else {
+			visible = true;
 		}
 
 		long fileEntryTypeId = getFileEntryTypeId(fileEntry);
@@ -292,9 +299,8 @@ public class DLAppHelperLocalServiceImpl
 				userId, fileEntry.getGroupId(),
 				DLFileEntryConstants.getClassName(),
 				fileEntry.getFileEntryId(), fileEntry.getUuid(),
-				fileEntryTypeId, assetCategoryIds, assetTagNames,
-				fileVersion.isApproved(), null, null, null, null,
-				fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntryTypeId, assetCategoryIds, assetTagNames, visible, null, 
+				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, height, width,
 				null, false);
 
@@ -462,33 +468,14 @@ public class DLAppHelperLocalServiceImpl
 	protected long getFileEntryTypeId(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
-		FileVersion latestFileVersion = null;
-
-		if (fileEntry.getModel() instanceof DLFileEntry) {
+		if (fileEntry instanceof LiferayFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-			latestFileVersion = new LiferayFileVersion(
-				dlFileEntry.getLatestFileVersion(true));
+			return dlFileEntry.getFileEntryTypeId();
 		}
 		else {
-			latestFileVersion = fileEntry.getLatestFileVersion();
-		}
-
-		FileEntry latestFileEntry = latestFileVersion.getFileEntry();
-
-		LiferayFileEntry liferayFileEntry = null;
-
-		if (latestFileEntry instanceof LiferayFileEntry) {
-			liferayFileEntry = (LiferayFileEntry)latestFileEntry;
-		}
-
-		if (liferayFileEntry == null) {
 			return 0;
 		}
-
-		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
-
-		return dlFileEntry.getFileEntryTypeId();
 	}
 
 	protected boolean isStagingGroup(long groupId) {

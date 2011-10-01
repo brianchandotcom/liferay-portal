@@ -86,6 +86,12 @@ public interface PermissionService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void setIndividualPermissions(long groupId, long companyId,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		long resourceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void setOrgGroupPermissions(long organizationId, long groupId,
 		java.lang.String[] actionIds, long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,

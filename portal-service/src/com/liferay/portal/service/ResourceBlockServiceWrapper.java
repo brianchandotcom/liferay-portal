@@ -117,6 +117,15 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService {
 			name, primKey, roleId, actionIds);
 	}
 
+	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockService.setIndividualScopePermissions(companyId, groupId,
+			name, primKey, roleIdsToActionIds);
+	}
+
 	public ResourceBlockService getWrappedResourceBlockService() {
 		return _resourceBlockService;
 	}

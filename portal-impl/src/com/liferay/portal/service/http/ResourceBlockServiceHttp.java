@@ -405,6 +405,42 @@ public class ResourceBlockServiceHttp {
 		}
 	}
 
+	public static void setIndividualScopePermissions(
+		HttpPrincipal httpPrincipal, long companyId, long groupId,
+		java.lang.String name, long primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+					"setIndividualScopePermissions",
+					_setIndividualScopePermissionsParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupId, name, primKey, roleIdsToActionIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ResourceBlockServiceHttp.class);
 	private static final Class<?>[] _addCompanyScopePermissionParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class, long.class,
@@ -450,5 +486,10 @@ public class ResourceBlockServiceHttp {
 		new Class[] {
 			long.class, long.class, java.lang.String.class, long.class,
 			long.class, java.util.List.class
+		};
+	private static final Class<?>[] _setIndividualScopePermissionsParameterTypes10 =
+		new Class[] {
+			long.class, long.class, java.lang.String.class, long.class,
+			java.util.Map.class
 		};
 }

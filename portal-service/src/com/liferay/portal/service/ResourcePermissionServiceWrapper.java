@@ -40,6 +40,15 @@ public class ResourcePermissionServiceWrapper
 	}
 
 	public void setIndividualResourcePermissions(long groupId, long companyId,
+		java.lang.String name, java.lang.String primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_resourcePermissionService.setIndividualResourcePermissions(groupId,
+			companyId, name, primKey, roleIdsToActionIds);
+	}
+
+	public void setIndividualResourcePermissions(long groupId, long companyId,
 		java.lang.String name, java.lang.String primKey, long roleId,
 		java.lang.String[] actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException,

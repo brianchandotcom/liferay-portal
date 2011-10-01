@@ -394,6 +394,18 @@ public interface PermissionLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void setRolesPermissions(long companyId,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		long resourceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void setRolesPermissions(long companyId,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		java.lang.String name, int scope, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void setUserPermissions(long userId, java.lang.String[] actionIds,
 		long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,

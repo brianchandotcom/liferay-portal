@@ -281,6 +281,11 @@ public interface ResourceLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Resource fetchResource(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteResources(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

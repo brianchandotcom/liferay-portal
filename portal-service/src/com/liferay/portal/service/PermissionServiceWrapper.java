@@ -87,6 +87,15 @@ public class PermissionServiceWrapper implements PermissionService {
 			actionIds, resourceId);
 	}
 
+	public void setIndividualPermissions(long groupId, long companyId,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		long resourceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_permissionService.setIndividualPermissions(groupId, companyId,
+			roleIdsToActionIds, resourceId);
+	}
+
 	public void setOrgGroupPermissions(long organizationId, long groupId,
 		java.lang.String[] actionIds, long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,

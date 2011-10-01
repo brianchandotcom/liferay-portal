@@ -468,6 +468,24 @@ public class PermissionLocalServiceWrapper implements PermissionLocalService {
 		_permissionLocalService.setRolePermissions(roleId, actionIds, resourceId);
 	}
 
+	public void setRolesPermissions(long companyId,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		long resourceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_permissionLocalService.setRolesPermissions(companyId,
+			roleIdsToActionIds, resourceId);
+	}
+
+	public void setRolesPermissions(long companyId,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		java.lang.String name, int scope, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_permissionLocalService.setRolesPermissions(companyId,
+			roleIdsToActionIds, name, scope, primKey);
+	}
+
 	public void setUserPermissions(long userId, java.lang.String[] actionIds,
 		long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,

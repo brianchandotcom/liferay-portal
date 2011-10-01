@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.PermissionedModel;
@@ -40,6 +41,7 @@ import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
 import java.nio.ByteBuffer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -651,6 +653,29 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	public void setIndividualScopePermissions(
+			long companyId, long groupId, String name, long primKey,
+			Map<Long, String[]> roleIdsToActionIds)
+		throws PortalException, SystemException {
+
+		PermissionedModel permissionedModel = getPermissionedModel(
+			name, primKey);
+
+		Iterator<Long> itr = roleIdsToActionIds.keySet().iterator();
+
+		while (itr.hasNext()) {
+			Long roleId = itr.next();
+			String[] actionIds = roleIdsToActionIds.get(roleId);
+
+			updateIndividualScopePermissions(
+				companyId, groupId, name, permissionedModel, roleId,
+				getActionIds(name, ListUtil.fromArray(actionIds)),
+				ResourceBlockConstants.OPERATOR_SET, false);
+		}
+
+		PermissionCacheUtil.clearCache();
+	}
+
+	public void setIndividualScopePermissions(
 			long companyId, long groupId, String name,
 			PermissionedModel permissionedModel, long roleId,
 			List<String> actionIds)
@@ -712,6 +737,17 @@ public class ResourceBlockLocalServiceImpl
 			long actionIdsLong, int operator)
 		throws SystemException {
 
+		updateIndividualScopePermissions(
+			companyId, groupId, name, permissionedModel, roleId, actionIdsLong,
+			operator, true);
+	}
+
+	public void updateIndividualScopePermissions(
+			long companyId, long groupId, String name,
+			PermissionedModel permissionedModel, long roleId,
+			long actionIdsLong, int operator, boolean flush)
+		throws SystemException {
+
 		ResourceBlock resourceBlock =
 			resourceBlockPersistence.fetchByPrimaryKey(
 				permissionedModel.getResourceBlockId());
@@ -759,7 +795,9 @@ public class ResourceBlockLocalServiceImpl
 			companyId, groupId, name, permissionedModel, permissionsHash,
 			resourceBlockPermissionsContainer);
 
-		PermissionCacheUtil.clearCache();
+		if (flush) {
+			PermissionCacheUtil.clearCache();
+		}
 	}
 
 	public ResourceBlock updateResourceBlockId(

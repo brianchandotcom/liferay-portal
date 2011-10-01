@@ -477,6 +477,25 @@ public class PermissionLocalServiceUtil {
 		getService().setRolePermissions(roleId, actionIds, resourceId);
 	}
 
+	public static void setRolesPermissions(long companyId,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		long resourceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setRolesPermissions(companyId, roleIdsToActionIds, resourceId);
+	}
+
+	public static void setRolesPermissions(long companyId,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		java.lang.String name, int scope, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setRolesPermissions(companyId, roleIdsToActionIds, name, scope,
+			primKey);
+	}
+
 	public static void setUserPermissions(long userId,
 		java.lang.String[] actionIds, long resourceId)
 		throws com.liferay.portal.kernel.exception.PortalException,

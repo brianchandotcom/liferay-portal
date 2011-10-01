@@ -4,10 +4,14 @@
 	<#assign fieldValue = field.predefinedValue>
 </#if>
 
-<div class="aui-field-wrapper-content lfr-forms-field-wrapper">
-	<@aui.input label=label name=namespacedFieldName type="hidden" value=fieldValue />
+<#if (fieldRawValue?is_date)>
+	<#assign fieldValue = fieldRawValue?string("MM/dd/yyyy")>
+</#if>
 
-	<@aui.input cssClass=cssClass helpMessage=field.tip label=label name="${namespacedFieldName}dateFormat" type="text">
+<div class="aui-field-wrapper-content lfr-forms-field-wrapper">
+	<@aui.input label=label name=namespacedFieldName type="hidden" value=fieldRawValue!"" />
+
+	<@aui.input cssClass=cssClass helpMessage=field.tip label=label name="${namespacedFieldName}formattedDate" type="text" value=fieldValue>
 		<@aui.validator name="date" />
 
 		<#if required>
@@ -19,23 +23,57 @@
 </div>
 
 <@aui.script use="aui-datepicker">
+	var fieldValueInput = A.one('#${portletNamespace}${namespacedFieldName}');
+	var formattedDateInput = A.one('#${portletNamespace}${namespacedFieldName}formattedDate');
+
+	var updateFieldValue = function(value) {
+		var time = '';
+
+		try {
+			time = A.DataType.Date.parse(value).getTime()
+		}
+		catch (e) {};
+
+		fieldValueInput.val(time);
+	};
+
+	updateFieldValue('${fieldValue}');
+
+	formattedDateInput.on(
+		{
+			change: function(event) {
+				var value = formattedDateInput.val();
+
+				updateFieldValue(value);
+			}
+		}
+	);
+
 	new A.DatePicker(
 		{
 			calendar:
 			{
-				dates:
-				[
-					<#if (fieldValue != "")>
-						'${fieldValue}'
-					</#if>
-				],
-				on: {
-					select: function(event) {
-						A.one('#${portletNamespace}${namespacedFieldName}').val(A.DataType.Date.parse(event.date.formatted).getTime());
-					}
-				},
+				dateFormat: '%m/%d/%Y',
+				<#if (fieldValue != "")>
+					dates: ['${fieldValue}'],
+				</#if>
+				selectMultipleDates: false
 			},
-			trigger: '#${portletNamespace}${namespacedFieldName}dateFormat'
+			after: {
+				'calendar:select': function(event) {
+					var date = event.date;
+					var formatted = date.formatted;
+
+					if (formatted.length) {
+						formatted = formatted[0];
+
+						this.get('currentNode').val(formatted);
+						updateFieldValue(formatted);
+					}
+				}
+			},
+			setValue: false,
+			trigger: formattedDateInput
 		}
 	).render();
 </@aui.script>

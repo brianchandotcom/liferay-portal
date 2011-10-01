@@ -85,7 +85,7 @@ if (dataJSONObject.has("values")) {
 </div>
 
 <aui:script position="inline" use="aui-base">
-	var container = A.one('.portlet-search .menu .<%= cssClass %> .asset-entries');
+	var container = A.one('.portlet-search .menu <%= cssClassSelector %> .asset-entries');
 
 	if (container) {
 		container.delegate(
@@ -97,7 +97,7 @@ if (dataJSONObject.has("values")) {
 
 				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-				var currentTerms = A.all('.portlet-search .menu .<%= cssClass %> .asset-entries .facet-value.current-term a');
+				var currentTerms = A.all('.portlet-search .menu <%= cssClassSelector %> .asset-entries .facet-value.current-term a');
 
 				if (currentTerms) {
 					currentTerms.each(

@@ -1195,18 +1195,18 @@ public class SourceFormatter {
 				y = newContent.indexOf("%>", y);
 
 				if ((x != -1) && (y != -1) && (y > x)) {
-					String imports = newContent.substring(x, y);
 
-					imports = StringUtil.replace(
-						imports, new String[] {"\n", "\r"},
-						new String[] {"", ""});
+					// Set compressImports to false to decompress imports
 
-					// Set convertImportsToSingleLine to false to revert imports
-					// from a single line to multiple lines
+					boolean compressImports = true;
 
-					boolean convertImportsToSingleLine = false;
+					if (compressImports) {
+						String imports = newContent.substring(x, y);
 
-					if (convertImportsToSingleLine) {
+						imports = StringUtil.replace(
+							imports, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
+							new String[] {"%><%@\r\n", "%><%@\n"});
+
 						newContent =
 							newContent.substring(0, x) + imports +
 								newContent.substring(y);
@@ -1889,7 +1889,9 @@ public class SourceFormatter {
 
 		String imports = matcher.group();
 
-		imports = StringUtil.replace(imports, "><%@", ">\n<%@");
+		imports = StringUtil.replace(
+			imports, new String[] {"%><%@\r\n", "%><%@\n"},
+			new String[] {"%>\r\n<%@ ", "%>\n<%@ "});
 
 		if (!fileName.endsWith("html/common/init.jsp") &&
 			!fileName.endsWith("html/portal/init.jsp")) {
@@ -1956,7 +1958,7 @@ public class SourceFormatter {
 	private static Map<String, String> _jspContents =
 		new HashMap<String, String>();
 	private static Pattern _jspImportPattern = Pattern.compile(
-		"(<.*page.import=\".*>\n*)+", Pattern.MULTILINE);
+		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private static Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*[.]jsp[f]?");
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();

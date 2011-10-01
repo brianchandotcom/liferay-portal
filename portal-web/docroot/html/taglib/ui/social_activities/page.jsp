@@ -33,6 +33,7 @@
 String className = (String)request.getAttribute("liferay-ui:social-activities:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:social-activities:classPK"));
 List<SocialActivity> activities = (List<SocialActivity>)request.getAttribute("liferay-ui:social-activities:activities");
+boolean displayRSSFeed = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:social-activities:displayRSSFeed"));
 boolean feedEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:social-activities:feedEnabled"));
 String feedTitle = (String)request.getAttribute("liferay-ui:social-activities:feedTitle");
 String feedLink = (String)request.getAttribute("liferay-ui:social-activities:feedLink");
@@ -47,7 +48,7 @@ Format timeFormatDate = FastDateFormatFactoryUtil.getTime(locale, timeZone);
 %>
 
 <c:choose>
-	<c:when test="<%= themeDisplay.isStateExclusive() %>">
+	<c:when test="<%= themeDisplay.isStateExclusive() && displayRSSFeed %>">
 
 		<%
 		SyndFeed syndFeed = new SyndFeedImpl();

@@ -39,6 +39,10 @@ public class SocialActivitiesTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
+	public void setDisplayRSSFeed(boolean displayRSSFeed) {
+		_displayRSSFeed = displayRSSFeed;
+	}
+
 	public void setFeedEnabled(boolean feedEnabled) {
 		_feedEnabled = feedEnabled;
 	}
@@ -60,6 +64,7 @@ public class SocialActivitiesTag extends IncludeTag {
 		_activities = null;
 		_className = StringPool.BLANK;
 		_classPK = 0;
+		_displayRSSFeed = true;
 		_feedEnabled = false;
 		_feedLink = StringPool.BLANK;
 		_feedLinkMessage = StringPool.BLANK;
@@ -80,6 +85,9 @@ public class SocialActivitiesTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:social-activities:classPK", String.valueOf(_classPK));
 		request.setAttribute(
+			"liferay-ui:social-activities:displayRSSFeed",
+			String.valueOf(_displayRSSFeed));
+		request.setAttribute(
 			"liferay-ui:social-activities:feedEnabled",
 			String.valueOf(_feedEnabled));
 		request.setAttribute(
@@ -96,6 +104,7 @@ public class SocialActivitiesTag extends IncludeTag {
 	private List<SocialActivity> _activities;
 	private String _className = StringPool.BLANK;
 	private long _classPK;
+	private boolean _displayRSSFeed;
 	private boolean _feedEnabled;
 	private String _feedLink = StringPool.BLANK;
 	private String _feedLinkMessage = StringPool.BLANK;

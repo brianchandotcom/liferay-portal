@@ -2526,6 +2526,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>displayRSSFeed</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>feedEnabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -728,7 +728,8 @@ public class WebServerServlet extends HttpServlet {
 			converted = true;
 		}
 		else {
-			inputStream = fileEntry.getContentStream(version);
+			inputStream = fileVersion.getContentStream(true);
+			contentLength = fileVersion.getSize();
 
 			if (Validator.isNotNull(targetExtension)) {
 				File convertedFile = DocumentConversionUtil.convert(
@@ -745,21 +746,13 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
-		String contentType = fileEntry.getMimeType(version);
+		String contentType = null;
 
-		if (!converted) {
-			if ((DLUtil.compareVersions(
-					version, fileEntry.getVersion()) >= 0) &&
-				fileVersion.isApproved()) {
-
-				contentLength = fileEntry.getSize();
-			}
-			else {
-				contentLength = fileVersion.getSize();
-			}
+		if (converted) {
+			contentType = MimeTypesUtil.getContentType(fileName);
 		}
 		else {
-			contentType = MimeTypesUtil.getContentType(fileName);
+			contentType = fileVersion.getMimeType();
 		}
 
 		ServletResponseUtil.sendFile(

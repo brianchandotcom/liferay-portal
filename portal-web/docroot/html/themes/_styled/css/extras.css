@@ -56,6 +56,10 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
 	@include border-radius(5px);
 }
 
+.portlet-journal .structure-tree .structure-field {
+	@include border-radius(6px);
+}
+
 .aui-menu-content {
 	@include border-bottom-left-radius(4px);
 	@include border-bottom-right-radius(4px);

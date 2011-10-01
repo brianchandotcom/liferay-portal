@@ -241,10 +241,10 @@
 		}
 
 		.structure-field .structure-field {
-			border-bottom: 1px #CCC solid;
-			border-left: 10px solid #E0E0E0;
+			border: 1px solid #D0D0D0;
+			border-left-width: 10px;
 			margin: 7px 0 0 5px;
-			padding: 7px 0 0 10px;
+			padding: 7px 10px 10px;
 		}
 	}
 
@@ -358,8 +358,8 @@
 	.repeatable-field-image {
 		cursor: pointer;
 		position: absolute;
-		right: 0;
-		top: 0;
+		right: 10px;
+		top: 10px;
 	}
 
 	.repeatable-field-delete {

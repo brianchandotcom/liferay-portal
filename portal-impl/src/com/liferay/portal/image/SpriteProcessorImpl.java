@@ -92,32 +92,32 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 		Collections.sort(images);
 
+		String imagesDirName = String.valueOf(images.get(0).getParentFile());
 		String spriteRootDirName = PropsValues.SPRITE_ROOT_DIR;
 
-		String imagesDirName = images.get(0).getParentFile().toString();
-
 		if (Validator.isNotNull(spriteRootDirName)) {
-			spriteRootDirName = StringUtil.replace(
-				spriteRootDirName, CharPool.BACK_SLASH, CharPool.SLASH);
+			if (spriteRootDirName.endsWith(StringPool.BACK_SLASH) ||
+				spriteRootDirName.endsWith(StringPool.SLASH)) {
 
-			if (spriteRootDirName.endsWith(StringPool.SLASH)) {
 				spriteRootDirName = spriteRootDirName.substring(
 					0, spriteRootDirName.length() - 1);
 			}
 
 			String portletFolder = StringPool.SLASH;
+
 			if (Validator.isNotNull(servletContext.getContextPath())) {
 				portletFolder +=
-					servletContext.getContextPath()	+ StringPool.SLASH;
+					servletContext.getContextPath() + StringPool.SLASH;
 			}
 
 			String contextRoot = ServletContextUtil.getRealPath(
-				servletContext,	StringPool.SLASH);
+				servletContext, StringPool.SLASH);
+
+			spriteRootDirName +=
+				portletFolder + imagesDirName.substring(contextRoot.length());
 
 			spriteRootDirName = StringUtil.replace(
-				spriteRootDirName + portletFolder +
-				imagesDirName.substring(contextRoot.length()),
-				CharPool.BACK_SLASH, CharPool.SLASH);
+				spriteRootDirName, CharPool.BACK_SLASH, CharPool.SLASH);
 		}
 		else {
 			spriteRootDirName = imagesDirName;

@@ -96,7 +96,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 </div>
 
 <aui:script position="inline" use="aui-base">
-	var container = A.one('.portlet-search .menu .<%= cssClass %> .<%= randomNamespace %>asset-tags');
+	var container = A.one('.portlet-search .menu <%= cssClassSelector %> .<%= randomNamespace %>asset-tags');
 
 	if (container) {
 		container.delegate(
@@ -108,7 +108,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-				var currentTerms = A.all('.portlet-search .menu .<%= cssClass %> .<%= randomNamespace %>asset-tags .facet-value.current-term a');
+				var currentTerms = A.all('.portlet-search .menu <%= cssClassSelector %> .<%= randomNamespace %>asset-tags .facet-value.current-term a');
 
 				if (currentTerms) {
 					currentTerms.each(

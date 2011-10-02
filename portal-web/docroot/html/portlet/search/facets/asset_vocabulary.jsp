@@ -76,7 +76,7 @@ if (assetVocabularies.isEmpty()) {
 </div>
 
 <aui:script position="inline" use="aui-base">
-	var container = A.one('.portlet-search .menu .<%= cssClass %> .<%= randomNamespace %>asset-vocabulary');
+	var container = A.one('.portlet-search .menu <%= cssClassSelector %> .<%= randomNamespace %>asset-vocabulary');
 
 	if (container) {
 		container.delegate(
@@ -88,7 +88,7 @@ if (assetVocabularies.isEmpty()) {
 
 				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
 
-				var currentTerms = A.all('.portlet-search .menu .<%= cssClass %> .<%= randomNamespace %>asset-vocabulary .facet-value.current-term a');
+				var currentTerms = A.all('.portlet-search .menu <%= cssClassSelector %> .<%= randomNamespace %>asset-vocabulary .facet-value.current-term a');
 
 				if (currentTerms) {
 					currentTerms.each(

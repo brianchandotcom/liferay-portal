@@ -168,7 +168,7 @@ AUI().add(
 
 					var searchLabelNode = trigger.one(SELECTOR_ANCHOR) || trigger;
 
-					var searchBoxContent = Lang.substitute(
+					var searchBoxContent = Lang.sub(
 						TPL_SEARCH_BOX,
 						{
 							searchId: searchId,
@@ -397,11 +397,9 @@ AUI().add(
 
 					align.points = instance._getAlignPoints(cssClass);
 
-					overlay.set('align', align);
-
-					overlay._syncUIPosAlign();
-
 					overlay.show();
+
+					overlay.set('align', align);
 
 					if (Liferay.Browser.isIe() && Liferay.Browser.getMajorVersion() <= 7) {
 						var searchContainer = menu.one(SELECTOR_SEARCH_CONTAINER);

@@ -16,16 +16,17 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.search.Document" %><%@
-page import="com.liferay.portal.kernel.search.Hits" %><%@
-page import="com.liferay.portal.kernel.search.Indexer" %><%@
-page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
-page import="com.liferay.portal.kernel.search.SearchContext" %><%@
-page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
-page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
-page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
-page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" %><%@
-page import="com.liferay.portlet.blogsadmin.search.EntryDisplayTerms" %><%@
-page import="com.liferay.portlet.blogsadmin.search.EntrySearch" %><%@
-page import="com.liferay.portlet.blogsadmin.search.EntrySearchTerms" %>
+<%@ page import="com.liferay.portal.kernel.search.Document" %>
+<%@ page import="com.liferay.portal.kernel.search.Hits" %>
+<%@ page import="com.liferay.portal.kernel.search.Indexer" %>
+<%@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %>
+<%@ page import="com.liferay.portal.kernel.search.SearchContext" %>
+<%@ page import="com.liferay.portal.kernel.search.SearchContextFactory" %>
+<%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
+<%@ page import="com.liferay.portlet.blogs.model.BlogsEntry" %>
+<%@ page import="com.liferay.portlet.blogs.service.permission.BlogsPermission" %>
+<%@ page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" %>
+<%@ page import="com.liferay.portlet.blogsadmin.search.EntryDisplayTerms" %>
+<%@ page import="com.liferay.portlet.blogsadmin.search.EntrySearch" %>
+<%@ page import="com.liferay.portlet.blogsadmin.search.EntrySearchTerms" %>

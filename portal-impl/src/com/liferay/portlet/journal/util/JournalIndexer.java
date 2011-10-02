@@ -120,13 +120,13 @@ public class JournalIndexer extends BaseIndexer {
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, Field.CLASS_PK, false);
-		addLocalizedSearchTerm(searchQuery, searchContext, Field.CONTENT, true);
+		addLocalizedSearchTerm(searchQuery, searchContext, Field.CONTENT, false);
 		addLocalizedSearchTerm(
-			searchQuery, searchContext, Field.DESCRIPTION, true);
-		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, true);
-		addLocalizedSearchTerm(searchQuery, searchContext, Field.TITLE, true);
+			searchQuery, searchContext, Field.DESCRIPTION, false);
+		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		addLocalizedSearchTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.TYPE, false);
-		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, true);
+		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
@@ -269,7 +269,7 @@ public class JournalIndexer extends BaseIndexer {
 		if (!article.isIndexable() ||
 			(!article.isApproved() &&
 			 (article.getVersion() !=
-			  	JournalArticleConstants.VERSION_DEFAULT))) {
+				  JournalArticleConstants.VERSION_DEFAULT))) {
 
 			SearchEngineUtil.deleteDocument(
 				article.getCompanyId(), document.get(Field.UID));

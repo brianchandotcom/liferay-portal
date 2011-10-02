@@ -417,7 +417,7 @@ public abstract class BaseIndexer implements Indexer {
 			String name = DDMIndexerUtil.encodeName(
 				ddmStructure.getStructureId(), fieldName);
 
-			addSearchTerm(searchQuery, searchContext, name, true);
+			addSearchTerm(searchQuery, searchContext, name, false);
 		}
 	}
 
@@ -457,10 +457,10 @@ public abstract class BaseIndexer implements Indexer {
 
 				if (Validator.isNotNull(keywords)) {
 					if (searchContext.isAndSearch()) {
-						searchQuery.addRequiredTerm(fieldName, keywords, true);
+						searchQuery.addRequiredTerm(fieldName, keywords);
 					}
 					else {
-						searchQuery.addTerm(fieldName, keywords, true);
+						searchQuery.addTerm(fieldName, keywords);
 					}
 				}
 			}

@@ -137,10 +137,10 @@ public class FacetedSearcher extends BaseIndexer {
 					attributeName);
 
 				if (searchContext.isAndSearch()) {
-					searchQuery.addRequiredTerm(fieldName, keywords, true);
+					searchQuery.addRequiredTerm(fieldName, keywords);
 				}
 				else {
-					searchQuery.addTerm(fieldName, keywords, true);
+					searchQuery.addTerm(fieldName, keywords);
 				}
 			}
 		}
@@ -159,7 +159,7 @@ public class FacetedSearcher extends BaseIndexer {
 		if (Validator.isNotNull(keywords)) {
 			searchQuery.addExactTerm(Field.ASSET_CATEGORY_NAMES, keywords);
 			searchQuery.addExactTerm(Field.ASSET_TAG_NAMES, keywords);
-			searchQuery.addTerms(Field.KEYWORDS, keywords, true);
+			searchQuery.addTerms(Field.KEYWORDS, keywords);
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {

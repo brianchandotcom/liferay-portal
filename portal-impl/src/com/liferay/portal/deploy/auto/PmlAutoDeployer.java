@@ -16,8 +16,6 @@
  ******************************************************************************/
 package com.liferay.portal.deploy.auto;
 
-import java.io.File;
-
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,16 +25,18 @@ import com.liferay.portal.tools.deploy.PmlDeployer;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
+
 /**
- * 
+ *
  * @author <a href="mailto:kamesh.sampath@accenture.com">kamesh.sampath</a>
- * 
+ *
  */
 public class PmlAutoDeployer extends PmlDeployer implements AutoDeployer {
 
 	/**
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.liferay.portal.deploy.auto.AutoDeployer#autoDeploy(java.io.File,
 	 *      java.lang.String)
 	 */
@@ -55,7 +55,7 @@ public class PmlAutoDeployer extends PmlDeployer implements AutoDeployer {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param file
 	 * @throws AutoDeployException
 	 */

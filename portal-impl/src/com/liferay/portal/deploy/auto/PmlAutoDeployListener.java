@@ -16,8 +16,6 @@
  ******************************************************************************/
 package com.liferay.portal.deploy.auto;
 
-import java.io.File;
-
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.log.Log;
@@ -27,9 +25,11 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.io.File;
+
 /**
  * @author <a href="mailto:kamesh.sampath@accenture.com">kamesh.sampath</a>
- * 
+ *
  */
 public class PmlAutoDeployListener implements AutoDeployListener {
 
@@ -40,7 +40,7 @@ public class PmlAutoDeployListener implements AutoDeployListener {
 
 	/**
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.liferay.portal.kernel.deploy.auto.AutoDeployListener#deploy(java.
 	 *      io.File, java.lang.String)
 	 */

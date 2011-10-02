@@ -292,7 +292,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<mkdir dir="test-results" />
 
 		<copy todir="test-classes">
-			<fileset dir="test" includes="**/*.properties,**/dependencies/**,**/*.pml" />
+			<fileset dir="test" includes="**/*.properties,**/dependencies/**" />
 		</copy>
 
 		<javac

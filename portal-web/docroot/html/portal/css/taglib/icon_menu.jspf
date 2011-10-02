@@ -124,7 +124,8 @@
 }
 
 .lfr-menu-list-overflow {
-	overflow-y: auto;
+	overflow: auto;
+	overflow-x: hidden;
 }
 
 .lfr-menu-list-search-container {

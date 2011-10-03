@@ -408,10 +408,10 @@
 			background-repeat: no-repeat;
 		}
 
-		.prev-next-navigation {
+		.image-navigation {
 			float: right;
 
-			.left-arrow, .right-arrow {
+			.previous, .next {
 				display: inline-block;
 				height: 25px;
 				margin: 0;
@@ -423,11 +423,11 @@
 				}
 			}
 
-			.left-arrow {
+			.previous {
 				background: url(<%= themeImagesPath %>/document_library/preview_left.png) no-repeat 0 50%;
 			}
 
-			.right-arrow {
+			.next {
 				background: url(<%= themeImagesPath %>/document_library/preview_right.png) no-repeat 0 50%;
 			}
 
@@ -545,24 +545,6 @@
 	.context-pane-content {
 		border-left: 1px solid #7B7B7B;
 		position: relative;
-	}
-
-	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container, .document-library-breadcrumb {
-		background: #D9D9D9 url(<%= themeImagesPath %>/application/subheader_bg.png) 0 0 repeat-x;
-		clear: both;
-		padding: 5px;
-		position: relative;
-	}
-
-	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container {
-		text-align: center;
-	}
-
-	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .view .taglib-search-iterator-page-iterator-bottom {
-		bottom: 0;
-		left: 0;
-		position: absolute;
-		right: 0;
 	}
 
 	.taglib-webdav {
@@ -818,10 +800,46 @@
 			}
 		}
 	}
+
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container, .document-library-breadcrumb {
+		background: #D9D9D9 url(<%= themeImagesPath %>/application/subheader_bg.png) 0 0 repeat-x;
+		clear: both;
+		padding: 5px;
+		position: relative;
+	}
+
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container {
+		text-align: center;
+	}
+
+	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .view .taglib-search-iterator-page-iterator-bottom {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+	}
 }
 
 .active-area-proxy {
 	background: #FFFFE0 url(<%= themeImagesPath %>/portlet/pop_up.png) no-repeat 10px 50%;
 	font-size: 1.2em;
 	padding: 0.3em 0.3em 0.3em 2em;
+}
+
+.ie {
+	.lfr-header-row {
+		.image-navigation {
+			.previous, .next {
+				filter: alpha(opacity=50);
+
+				&:hover {
+					filter: alpha(opacity=100);
+				}
+			}
+
+			.disabled, .disabled:hover {
+				filter: alpha(opacity=10);
+			}
+		}
+	}
 }

@@ -2203,13 +2203,29 @@ public interface UserLocalService extends PersistedModelLocalService {
 
 	/**
 	* Sets the groups the user is in, removing and adding groups as necessary.
+	* By default this operation will result in re-indexing of the user.
 	*
 	* @param userId the primary key of the user
 	* @param newGroupIds the primary keys of the groups
+	* @return whether the user was re-indexed or not
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateGroups(long userId, long[] newGroupIds)
+	public boolean updateGroups(long userId, long[] newGroupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Sets the groups the user is in, removing and adding groups as necessary.
+	*
+	* @param userId the primary key of the user
+	* @param newGroupIds the primary keys of the groups
+	* @param reIndex whether to re-index the user or not
+	* @return whether the user was re-indexed or not
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean updateGroups(long userId, long[] newGroupIds, boolean reIndex)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -2338,14 +2354,33 @@ public interface UserLocalService extends PersistedModelLocalService {
 	/**
 	* Sets the organizations that the user is in, removing and adding
 	* organizations as necessary.
+	* By default this operation will result in re-indexing of the user.
 	*
 	* @param userId the primary key of the user
 	* @param newOrganizationIds the primary keys of the organizations
+	* @return whether the user was re-indexed or not
 	* @throws PortalException if a user with the primary key could not be
 	found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateOrganizations(long userId, long[] newOrganizationIds)
+	public boolean updateOrganizations(long userId, long[] newOrganizationIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Sets the organizations that the user is in, removing and adding
+	* organizations as necessary.
+	*
+	* @param userId the primary key of the user
+	* @param newOrganizationIds the primary keys of the organizations
+	* @param reIndex whether to re-index the user or not
+	* @return whether the user was re-indexed or not
+	* @throws PortalException if a user with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean updateOrganizations(long userId, long[] newOrganizationIds,
+		boolean reIndex)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

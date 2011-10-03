@@ -735,7 +735,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Organizations
 
-		updateOrganizations(userId, organizationIds);
+		boolean forceReIndex = updateOrganizations(
+			userId, organizationIds, false);
 
 		// Roles
 
@@ -774,10 +775,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Indexer
 
-		if (serviceContext.isIndexingEnabled()) {
+		if (forceReIndex || serviceContext.isIndexingEnabled()) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
 			indexer.reindex(user);
+
+			if (forceReIndex) {
+				PermissionCacheUtil.clearCache();
+			}
 		}
 
 		// Workflow
@@ -3875,17 +3880,38 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	/**
 	 * Sets the groups the user is in, removing and adding groups as necessary.
+	 * By default this operation will result in re-indexing of the user.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  newGroupIds the primary keys of the groups
+	 * @return whether the user was re-indexed or not
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void updateGroups(long userId, long[] newGroupIds)
+	public boolean updateGroups(long userId, long[] newGroupIds)
+		throws PortalException, SystemException {
+
+		return updateGroups(userId, newGroupIds, true);
+	}
+
+	/**
+	 * Sets the groups the user is in, removing and adding groups as necessary.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  newGroupIds the primary keys of the groups
+	 * @param  reIndex whether to re-index the user or not
+	 * @return whether the user was re-indexed or not
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean updateGroups(
+			long userId, long[] newGroupIds, boolean reIndex)
 		throws PortalException, SystemException {
 
 		if (newGroupIds == null) {
-			return;
+			// No need to re-index, because there was no change
+
+			return true;
 		}
 
 		List<Group> oldGroups = userPersistence.getGroups(userId);
@@ -3908,11 +3934,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+		if (reIndex) {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(new long[] {userId});
+			indexer.reindex(new long[] {userId});
 
-		PermissionCacheUtil.clearCache();
+			PermissionCacheUtil.clearCache();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -4122,18 +4154,42 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Sets the organizations that the user is in, removing and adding
 	 * organizations as necessary.
+	 * By default this operation will result in re-indexing of the user.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  newOrganizationIds the primary keys of the organizations
+	 * @return whether the user was re-indexed or not
 	 * @throws PortalException if a user with the primary key could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void updateOrganizations(long userId, long[] newOrganizationIds)
+	public boolean updateOrganizations(
+			long userId, long[] newOrganizationIds)
+		throws PortalException, SystemException {
+
+		return updateOrganizations(userId, newOrganizationIds, true);
+	}
+
+	/**
+	 * Sets the organizations that the user is in, removing and adding
+	 * organizations as necessary.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  newOrganizationIds the primary keys of the organizations
+	 * @param  reIndex whether to re-index the user or not
+	 * @return whether the user was re-indexed or not
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean updateOrganizations(
+			long userId, long[] newOrganizationIds, boolean reIndex)
 		throws PortalException, SystemException {
 
 		if (newOrganizationIds == null) {
-			return;
+			// No need to re-index, because there was no change
+
+			return true;
 		}
 
 		List<Organization> oldOrganizations = userPersistence.getOrganizations(
@@ -4158,11 +4214,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+		if (reIndex) {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(new long[] {userId});
+			indexer.reindex(new long[] {userId});
 
-		PermissionCacheUtil.clearCache();
+			PermissionCacheUtil.clearCache();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -4714,13 +4776,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		groupPersistence.update(group, false);
 
-		// Groups
+		// Groups & Organizations
 
-		updateGroups(userId, groupIds);
+		boolean forceReIndex = false;
 
-		// Organizations
+		if (!updateGroups(userId, groupIds, false) ||
+			!updateOrganizations(userId, organizationIds, false)) {
 
-		updateOrganizations(userId, organizationIds);
+			forceReIndex = true;
+		}
 
 		// Roles
 
@@ -4769,10 +4833,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Indexer
 
-		if (serviceContext.isIndexingEnabled()) {
+		if (forceReIndex || serviceContext.isIndexingEnabled()) {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
 			indexer.reindex(user);
+
+			if (forceReIndex) {
+				PermissionCacheUtil.clearCache();
+			}
 		}
 
 		// Email address verification
@@ -5431,8 +5499,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			companyId, PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_RESERVED_EMAIL_ADDRESSES);
 
-		for (int i = 0; i < reservedEmailAddresses.length; i++) {
-			if (emailAddress.equalsIgnoreCase(reservedEmailAddresses[i])) {
+		for (String reservedEmailAddresse : reservedEmailAddresses) {
+			if (emailAddress.equalsIgnoreCase(reservedEmailAddresse)) {
 				throw new ReservedUserEmailAddressException();
 			}
 		}
@@ -5542,8 +5610,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String[] anonymousNames = PrincipalBean.ANONYMOUS_NAMES;
 
-		for (int i = 0; i < anonymousNames.length; i++) {
-			if (screenName.equalsIgnoreCase(anonymousNames[i])) {
+		for (String anonymousName : anonymousNames) {
+			if (screenName.equalsIgnoreCase(anonymousName)) {
 				throw new UserScreenNameException();
 			}
 		}
@@ -5574,8 +5642,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			companyId, PropsKeys.ADMIN_RESERVED_SCREEN_NAMES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_RESERVED_SCREEN_NAMES);
 
-		for (int i = 0; i < reservedScreenNames.length; i++) {
-			if (screenName.equalsIgnoreCase(reservedScreenNames[i])) {
+		for (String reservedScreenName : reservedScreenNames) {
+			if (screenName.equalsIgnoreCase(reservedScreenName)) {
 				throw new ReservedUserScreenNameException();
 			}
 		}

@@ -1262,18 +1262,51 @@ public class UserServiceSoap {
 	/**
 	* Sets the organizations that the user is in, removing and adding
 	* organizations as necessary.
+	* By default this operation will result in re-indexing of the user.
 	*
 	* @param userId the primary key of the user
 	* @param organizationIds the primary keys of the organizations
+	* @return whether the user was re-indexed or not
 	* @throws PortalException if a user with the primary key could not be
 	found or if the current user did not have permission to update
 	the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void updateOrganizations(long userId, long[] organizationIds)
-		throws RemoteException {
+	public static boolean updateOrganizations(long userId,
+		long[] organizationIds) throws RemoteException {
 		try {
-			UserServiceUtil.updateOrganizations(userId, organizationIds);
+			boolean returnValue = UserServiceUtil.updateOrganizations(userId,
+					organizationIds);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Sets the organizations that the user is in, removing and adding
+	* organizations as necessary.
+	*
+	* @param userId the primary key of the user
+	* @param organizationIds the primary keys of the organizations
+	* @param reIndex whether to re-index the user or not
+	* @return whether the user was re-indexed or not
+	* @throws PortalException if a user with the primary key could not be
+	found or if the current user did not have permission to update
+	the user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean updateOrganizations(long userId,
+		long[] organizationIds, boolean reIndex) throws RemoteException {
+		try {
+			boolean returnValue = UserServiceUtil.updateOrganizations(userId,
+					organizationIds, reIndex);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

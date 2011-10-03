@@ -1,4 +1,3 @@
-
 <%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
@@ -53,11 +52,13 @@ if (Validator.isNotNull(onChangeMethod)) {
 			<c:if test="<%= Validator.isNotNull(initMethod) %>">
 				<%= name %>.setHTML(<%= namespace + initMethod %>());
 
-				new A.Resize({
-					handles: 'br',
-					node: '#<%= name %>_container',
-					wrap: true
-				});
+				new A.Resize(
+					{
+						handles: 'br',
+						node: '#<%= name %>_container',
+						wrap: true
+					}
+				);
 			</c:if>
 		},
 

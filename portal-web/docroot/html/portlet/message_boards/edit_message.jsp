@@ -103,7 +103,7 @@ if (Validator.isNull(redirect)) {
 		message.setThreadId(temp.getThreadId());
 		message.setSubject(subject);
 		message.setBody(body);
-		message.setFormat(MBMessageConstants.DEFAULT_FORMAT);
+		message.setFormat(messageFormat);
 		message.setAttachments(temp.isAttachments());
 		message.setAnonymous(temp.isAnonymous());
 	}
@@ -119,7 +119,7 @@ if (Validator.isNull(redirect)) {
 		message.setThreadId(threadId);
 		message.setSubject(subject);
 		message.setBody(body);
-		message.setFormat(MBMessageConstants.DEFAULT_FORMAT);
+		message.setFormat(messageFormat);
 		message.setAttachments(attachments);
 		message.setAnonymous(BeanParamUtil.getBoolean(message, request, "anonymous"));
 	}

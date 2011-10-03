@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
@@ -67,6 +69,13 @@ public class EditFileEntryTypeAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteFileEntryType(actionRequest, actionResponse);
+			}
+
+			if (SessionErrors.isEmpty(actionRequest)) {
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() + ".doRefresh",
+					PortletKeys.DOCUMENT_LIBRARY);
 			}
 
 			sendRedirect(actionRequest, actionResponse);

@@ -26,6 +26,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutSetBranchServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.layoutsadmin.action.EditLayoutsAction;
 
 import javax.portlet.ActionRequest;
@@ -73,7 +74,8 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 			if (SessionErrors.isEmpty(actionRequest)) {
 				SessionMessages.add(
 					actionRequest,
-					portletConfig.getPortletName() + ".doConfigure");
+					portletConfig.getPortletName() + ".doRefresh",
+					PortletKeys.STAGING_BAR);
 			}
 
 			sendRedirect(actionRequest, actionResponse);

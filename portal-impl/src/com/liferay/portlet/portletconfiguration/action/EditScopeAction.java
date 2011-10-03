@@ -88,6 +88,13 @@ public class EditScopeAction extends EditConfigurationAction {
 				actionRequest,
 				portletConfig.getPortletName() + ".doConfigure");
 
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
+
+			SessionMessages.add(
+				actionRequest, portletConfig.getPortletName() + ".doRefresh",
+				portletResource);
+
 			String redirect = PortalUtil.escapeRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
 

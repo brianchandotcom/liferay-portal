@@ -146,16 +146,4 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 			namespace: '<portlet:namespace />'
 		}
 	);
-
-	<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequest, portletName + ".doConfigure") %>'>
-		var data = null;
-
-		<c:if test='<%= SessionMessages.contains(renderRequest, portletName + ".notAjaxable") %>'>
-			data = {
-				portletAjaxable: false
-			};
-		</c:if>
-
-		Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id_<%= PortletKeys.STAGING_BAR %>_', data);
-	</c:if>
 </aui:script>

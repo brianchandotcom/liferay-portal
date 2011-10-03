@@ -51,21 +51,3 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
-
-<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequest, portletName + ".doConfigure") %>'>
-	<aui:script use="aui-base">
-		if (window.parent) {
-			var curPortletBoundaryId = '#p_p_id_<%= portletResource %>_';
-
-			var data;
-
-			<c:if test="<%= !selPortlet.isAjaxable() %>">
-				data = {
-					portletAjaxable: false
-				};
-			</c:if>
-
-			Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
-		}
-	</aui:script>
-</c:if>

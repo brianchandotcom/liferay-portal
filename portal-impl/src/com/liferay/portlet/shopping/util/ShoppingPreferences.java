@@ -292,7 +292,7 @@ public class ShoppingPreferences {
 	public String getEmailFromAddress(long companyId) throws SystemException {
 		return PortalUtil.getEmailFromAddress(
 			_portletPreferences, companyId,
-			PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS);
+			PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS, null);
 	}
 
 	public void setEmailFromAddress(String emailFromAddress)
@@ -304,7 +304,7 @@ public class ShoppingPreferences {
 	public String getEmailFromName(long companyId) throws SystemException {
 		return PortalUtil.getEmailFromAddress(
 			_portletPreferences, companyId,
-			PropsKeys.SHOPPING_EMAIL_FROM_NAME);
+			PropsKeys.SHOPPING_EMAIL_FROM_NAME, null);
 	}
 
 	public void setEmailFromName(String emailFromName)

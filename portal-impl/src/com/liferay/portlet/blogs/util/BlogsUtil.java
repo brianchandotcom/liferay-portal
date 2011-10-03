@@ -160,7 +160,7 @@ public class BlogsUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsKeys.BLOGS_EMAIL_FROM_ADDRESS);
+			preferences, companyId, PropsKeys.BLOGS_EMAIL_FROM_ADDRESS, null);
 	}
 
 	public static String getEmailFromName(
@@ -168,7 +168,7 @@ public class BlogsUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsKeys.BLOGS_EMAIL_FROM_NAME);
+			preferences, companyId, PropsKeys.BLOGS_EMAIL_FROM_NAME, null);
 	}
 
 	public static String getUrlTitle(long entryId, String title) {

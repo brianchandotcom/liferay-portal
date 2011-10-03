@@ -567,11 +567,13 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	public String getEmailFromAddress(
-			PortletPreferences preferences, long companyId, String key)
+			PortletPreferences preferences, long companyId, String key,
+			String defaultValue)
 		throws SystemException;
 
 	public String getEmailFromName(
-			PortletPreferences preferences, long companyId, String key)
+			PortletPreferences preferences, long companyId, String key,
+			String defaultValue)
 		throws SystemException;
 
 	public Map<String, Serializable> getExpandoBridgeAttributes(

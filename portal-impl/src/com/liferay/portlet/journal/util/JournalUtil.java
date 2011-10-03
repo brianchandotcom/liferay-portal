@@ -644,7 +644,7 @@ public class JournalUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsKeys.JOURNAL_EMAIL_FROM_ADDRESS);
+			preferences, companyId, PropsKeys.JOURNAL_EMAIL_FROM_ADDRESS, null);
 	}
 
 	public static String getEmailFromName(
@@ -652,7 +652,7 @@ public class JournalUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsKeys.JOURNAL_EMAIL_FROM_NAME);
+			preferences, companyId, PropsKeys.JOURNAL_EMAIL_FROM_NAME, null);
 	}
 
 	public static Stack<JournalArticle> getRecentArticles(

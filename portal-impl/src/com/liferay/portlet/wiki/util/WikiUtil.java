@@ -110,7 +110,7 @@ public class WikiUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsKeys.WIKI_EMAIL_FROM_ADDRESS);
+			preferences, companyId, PropsKeys.WIKI_EMAIL_FROM_ADDRESS, null);
 	}
 
 	public static String getEmailFromName(
@@ -118,7 +118,7 @@ public class WikiUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsKeys.WIKI_EMAIL_FROM_NAME);
+			preferences, companyId, PropsKeys.WIKI_EMAIL_FROM_NAME, null);
 	}
 
 	public static String getEmailPageAddedBody(PortletPreferences preferences) {

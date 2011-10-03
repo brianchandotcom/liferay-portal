@@ -215,7 +215,7 @@ public class LoginUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsKeys.LOGIN_EMAIL_FROM_ADDRESS);
+			preferences, companyId, PropsKeys.LOGIN_EMAIL_FROM_ADDRESS, null);
 	}
 
 	public static String getEmailFromName(
@@ -223,7 +223,7 @@ public class LoginUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsValues.LOGIN_EMAIL_FROM_NAME);
+			preferences, companyId, PropsValues.LOGIN_EMAIL_FROM_NAME, null);
 	}
 
 	public static String getLogin(

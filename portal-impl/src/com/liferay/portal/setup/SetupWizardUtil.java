@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
@@ -86,7 +85,6 @@ public class SetupWizardUtil {
 			PropertiesParamUtil.getProperties(request, _PROPERTIES_PREFIX);
 
 		_processAdminProperties(request, unicodeProperties);
-		_processDatabaseProperties(request, unicodeProperties);
 
 		unicodeProperties.put(
 			PropsKeys.SETUP_WIZARD_ENABLED, String.valueOf(false));
@@ -167,77 +165,6 @@ public class SetupWizardUtil {
 
 		unicodeProperties.put(
 			PropsKeys.DEFAULT_ADMIN_SCREEN_NAME, defaultAdminScreenName);
-	}
-
-	private static void _processDatabaseProperties(
-			HttpServletRequest request, UnicodeProperties unicodeProperties)
-		throws Exception {
-
-		boolean defaultDatabase = ParamUtil.getBoolean(
-			request, "defaultDatabase", true);
-
-		if (defaultDatabase) {
-			return;
-		}
-
-		String jdbcDefaultDriverClassName = null;
-		String jdbcDefaultURL = null;
-
-		String databaseType = ParamUtil.getString(request, "databaseType");
-		String databaseName = ParamUtil.getString(
-			request, "databaseName", "lportal");
-
-		if (databaseType.equals("db2")) {
-			jdbcDefaultDriverClassName = "com.ibm.db2.jcc.DB2Driver";
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("jdbc:db2://localhost:50000/");
-			sb.append(databaseName);
-			sb.append(":deferPrepares=false;fullyMaterializeInputStreams=");
-			sb.append("true;fullyMaterializeLobData=true;");
-			sb.append("progresssiveLocators=2;progressiveStreaming=2;");
-
-			jdbcDefaultURL = sb.toString();
-		}
-		else if (databaseType.equals("derby")) {
-			jdbcDefaultDriverClassName = "org.apache.derby.jdbc.EmbeddedDriver";
-			jdbcDefaultURL = "jdbc:derby:" + databaseName;
-		}
-		else if (databaseType.equals("ingres")) {
-			jdbcDefaultDriverClassName = "com.ingres.jdbc.IngresDriver";
-			jdbcDefaultURL = "jdbc:ingres://localhost:II7/" + databaseName;
-		}
-		else if (databaseType.equals("mysql")) {
-			jdbcDefaultDriverClassName = "com.mysql.jdbc.Driver";
-			jdbcDefaultURL =
-				"jdbc:mysql://localhost/" + databaseName +
-					"?useUnicode=true&characterEncoding=UTF-8&" +
-						"useFastDateParsing=false";
-		}
-		else if (databaseType.equals("oracle")) {
-			jdbcDefaultDriverClassName =
-				"oracle.jdbc.this.get_driver().OracleDriver";
-			jdbcDefaultURL = "jdbc:oracle:thin:@localhost:1521:xe";
-		}
-		else if (databaseType.equals("postgresql")) {
-			jdbcDefaultDriverClassName = "org.postgresql.Driver";
-			jdbcDefaultURL = "jdbc:postgresql://localhost:5432/" + databaseName;
-		}
-		else if (databaseType.equals("sqlserver")) {
-			jdbcDefaultDriverClassName = "net.sourceforge.jtds.jdbc.Driver";
-			jdbcDefaultURL = "jdbc:jtds:sqlserver://localhost/" + databaseName;
-		}
-		else if (databaseType.equals("sybase")) {
-			jdbcDefaultDriverClassName = "net.sourceforge.jtds.jdbc.Driver";
-			jdbcDefaultURL =
-				"jdbc:jtds:sybase://localhost:5000/" + databaseName;
-		}
-
-		unicodeProperties.put(
-			PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME,
-			jdbcDefaultDriverClassName);
-		unicodeProperties.put(PropsKeys.JDBC_DEFAULT_URL, jdbcDefaultURL);
 	}
 
 	private static void _reloadServletContext(

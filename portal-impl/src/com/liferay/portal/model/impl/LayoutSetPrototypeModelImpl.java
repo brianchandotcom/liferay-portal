@@ -245,6 +245,7 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 		return _nameCurrentLanguageId;
 	}
 
+	@JSON
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
 

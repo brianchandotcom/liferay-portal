@@ -370,6 +370,7 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		return _nameCurrentLanguageId;
 	}
 
+	@JSON
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
 
@@ -459,6 +460,7 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		return _descriptionCurrentLanguageId;
 	}
 
+	@JSON
 	public String getDescriptionCurrentValue() {
 		Locale locale = getLocale(_descriptionCurrentLanguageId);
 

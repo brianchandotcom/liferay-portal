@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -271,6 +272,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		return _nameCurrentLanguageId;
 	}
 
+	@JSON
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
 

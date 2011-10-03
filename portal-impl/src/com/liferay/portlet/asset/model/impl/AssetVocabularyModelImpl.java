@@ -356,6 +356,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		return _titleCurrentLanguageId;
 	}
 
+	@JSON
 	public String getTitleCurrentValue() {
 		Locale locale = getLocale(_titleCurrentLanguageId);
 
@@ -445,6 +446,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		return _descriptionCurrentLanguageId;
 	}
 
+	@JSON
 	public String getDescriptionCurrentValue() {
 		Locale locale = getLocale(_descriptionCurrentLanguageId);
 

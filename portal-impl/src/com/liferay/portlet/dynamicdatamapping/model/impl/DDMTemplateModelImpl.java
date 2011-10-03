@@ -343,6 +343,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _nameCurrentLanguageId;
 	}
 
+	@JSON
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
 
@@ -432,6 +433,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _descriptionCurrentLanguageId;
 	}
 
+	@JSON
 	public String getDescriptionCurrentValue() {
 		Locale locale = getLocale(_descriptionCurrentLanguageId);
 

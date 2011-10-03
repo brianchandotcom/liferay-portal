@@ -339,6 +339,7 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		return _nameCurrentLanguageId;
 	}
 
+	@JSON
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
 
@@ -428,6 +429,7 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		return _descriptionCurrentLanguageId;
 	}
 
+	@JSON
 	public String getDescriptionCurrentValue() {
 		Locale locale = getLocale(_descriptionCurrentLanguageId);
 

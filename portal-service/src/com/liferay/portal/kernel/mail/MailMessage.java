@@ -22,6 +22,8 @@ import java.util.List;
 
 import javax.mail.internet.InternetAddress;
 
+import com.liferay.mail.model.LiferayAttachment;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
@@ -59,13 +61,17 @@ public class MailMessage implements Serializable {
 	}
 
 	public void addAttachment(File attachment) {
+		addAttachment(attachment, null);
+	}
+
+	public void addAttachment(File attachment, String attachmentFileName) {
 		if (attachment != null) {
-			_attachments.add(attachment);
+			_attachments.add(new LiferayAttachment(attachment, attachmentFileName));
 		}
 	}
 
-	public File[] getAttachments() {
-		return _attachments.toArray(new File[_attachments.size()]);
+	public List<LiferayAttachment> getAttachments() {
+		return _attachments;
 	}
 
 	public InternetAddress[] getBCC() {
@@ -191,7 +197,7 @@ public class MailMessage implements Serializable {
 	private InternetAddress[] _replyTo;
 	private String _messageId;
 	private String _inReplyTo;
-	private List<File> _attachments = new ArrayList<File>();
+	private List<LiferayAttachment> _attachments = new ArrayList<LiferayAttachment>();
 	private SMTPAccount _smtpAccount;
 
 }

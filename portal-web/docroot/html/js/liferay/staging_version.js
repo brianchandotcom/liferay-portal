@@ -129,7 +129,7 @@ AUI().add(
 						graphDialog.bodyNode.delegate(
 							'click',
 							function(event) {
-								instance._selectRevision(event.currentTarget);
+								instance._selectRevision(event.target);
 							},
 							'a.layout-revision.selection-handle'
 						);
@@ -186,7 +186,7 @@ AUI().add(
 					var instance = this;
 
 					instance._updateRevision(
-						node,
+						'select_layout_revision',
 						node.attr('data-layoutRevisionId'),
 						node.attr('data-layoutSetBranchId')
 					);

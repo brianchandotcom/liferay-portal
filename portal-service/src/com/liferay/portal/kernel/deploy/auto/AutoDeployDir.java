@@ -35,9 +35,9 @@ public class AutoDeployDir {
 
 	public static final String DEFAULT_NAME = "defaultAutoDeployDir";
 
-	public AutoDeployDir(
-		String name, File deployDir, File destDir, long interval,
-		int blacklistThreshold, List<AutoDeployListener> autoDeployListeners) {
+	public AutoDeployDir(String name, File deployDir, File destDir,
+			long interval, int blacklistThreshold,
+			List<AutoDeployListener> autoDeployListeners) {
 
 		_name = name;
 		_deployDir = deployDir;
@@ -45,7 +45,7 @@ public class AutoDeployDir {
 		_interval = interval;
 		_blacklistThreshold = blacklistThreshold;
 		_autoDeployListeners = new CopyOnWriteArrayList<AutoDeployListener>(
-			autoDeployListeners);
+				autoDeployListeners);
 		_inProcessFiles = new HashMap<String, IntegerWrapper>();
 		_blacklistFiles = new HashSet<String>();
 	}
@@ -96,24 +96,22 @@ public class AutoDeployDir {
 				Thread currentThread = Thread.currentThread();
 
 				_autoDeployScanner = new AutoDeployScanner(
-					currentThread.getThreadGroup(),
-					AutoDeployScanner.class.getName(), this);
+						currentThread.getThreadGroup(),
+						AutoDeployScanner.class.getName(), this);
 
 				_autoDeployScanner.start();
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Auto deploy scanner started for " + _deployDir);
 				}
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				_log.error(e, e);
 
 				stop();
 
 				return;
 			}
-		}
-		else {
+		} else {
 			if (_log.isInfoEnabled()) {
 				_log.info("Auto deploy scanning is disabled for " + _deployDir);
 			}
@@ -147,10 +145,9 @@ public class AutoDeployDir {
 
 		if (_blacklistFiles.contains(fileName)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Skip processing of " + fileName + " because it is " +
-						"blacklisted. You must restart the server to remove " +
-							"the file from the blacklist.");
+				_log.debug("Skip processing of " + fileName + " because it is "
+						+ "blacklisted. You must restart the server to remove "
+						+ "the file from the blacklist.");
 			}
 
 			return;
@@ -166,12 +163,10 @@ public class AutoDeployDir {
 			if (_log.isInfoEnabled()) {
 				_log.info("Processing " + fileName);
 			}
-		}
-		else {
+		} else {
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Processing " + fileName + ". This is attempt " +
-						attempt.getValue() + ".");
+				_log.info("Processing " + fileName + ". This is attempt "
+						+ attempt.getValue() + ".");
 			}
 		}
 
@@ -182,8 +177,7 @@ public class AutoDeployDir {
 
 			if (file.delete()) {
 				_inProcessFiles.remove(fileName);
-			}
-			else {
+			} else {
 				_log.error("Auto deploy failed to remove " + fileName);
 
 				if (_log.isInfoEnabled()) {
@@ -192,8 +186,7 @@ public class AutoDeployDir {
 
 				_blacklistFiles.add(fileName);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.error(e, e);
 
 			attempt.increment();
@@ -214,10 +207,12 @@ public class AutoDeployDir {
 		for (File file : files) {
 			String fileName = file.getName().toLowerCase();
 
-			if ((file.isFile()) &&
-				(fileName.endsWith(".jar") || fileName.endsWith(".lpkg") ||
-				 fileName.endsWith(".war") || fileName.endsWith(".xml") ||
-				 fileName.endsWith(".zip"))) {
+			if ((file.isFile())
+					&& (fileName.endsWith(".jar") || fileName.endsWith(".lpkg")
+							|| fileName.endsWith(".war")
+							|| fileName.endsWith(".xml")
+							|| fileName.endsWith(".pml") || fileName
+								.endsWith(".zip"))) {
 
 				processFile(file);
 			}

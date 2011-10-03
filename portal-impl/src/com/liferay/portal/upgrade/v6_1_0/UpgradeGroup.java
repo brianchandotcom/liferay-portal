@@ -35,6 +35,19 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		try {
+			runSQL("alter_column_type Group_ name VARCHAR(150) null");
+		}
+		catch (Exception e) {
+			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+				GroupTable.TABLE_NAME, GroupTable.TABLE_COLUMNS);
+
+			upgradeTable.setCreateSQL(GroupTable.TABLE_SQL_CREATE);
+			upgradeTable.setIndexesSQL(GroupTable.TABLE_SQL_ADD_INDEXES);
+
+			upgradeTable.updateTable();
+		}
+
 		updateName();
 		updateSite();
 	}
@@ -78,19 +91,6 @@ public class UpgradeGroup extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		try {
-			runSQL("alter_column_type Group_ name VARCHAR(150) null");
-		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				GroupTable.TABLE_NAME, GroupTable.TABLE_COLUMNS);
-
-			upgradeTable.setCreateSQL(GroupTable.TABLE_SQL_CREATE);
-			upgradeTable.setIndexesSQL(GroupTable.TABLE_SQL_ADD_INDEXES);
-
-			upgradeTable.updateTable();
 		}
 	}
 

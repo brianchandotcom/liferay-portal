@@ -3726,18 +3726,20 @@ public class ServiceBuilder {
 	private JavaField[] _getCacheFields(JavaClass javaClass) {
 		List<JavaField> javaFields = new ArrayList<JavaField>();
 
-		for (JavaField javaField : javaClass.getFields()) {
-			Annotation[] annotations = javaField.getAnnotations();
+		if (javaClass != null) {
+			for (JavaField javaField : javaClass.getFields()) {
+				Annotation[] annotations = javaField.getAnnotations();
 
-			for (Annotation annotation : annotations) {
-				Type type = annotation.getType();
+				for (Annotation annotation : annotations) {
+					Type type = annotation.getType();
 
-				String className = type.getFullyQualifiedName();
+					String className = type.getFullyQualifiedName();
 
-				if (className.equals(CacheField.class.getName())) {
-					javaFields.add(javaField);
+					if (className.equals(CacheField.class.getName())) {
+						javaFields.add(javaField);
 
-					break;
+						break;
+					}
 				}
 			}
 		}

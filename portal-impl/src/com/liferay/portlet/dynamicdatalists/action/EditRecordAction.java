@@ -182,12 +182,10 @@ public class EditRecordAction extends PortletAction {
 		for (String fieldName : fieldNames) {
 			Field field = new Field();
 
+			field.setDDMStructureId(ddmStructure.getStructureId());
 			field.setName(fieldName);
 
-			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
-
-			field.setDataType(fieldDataType);
-
+			String fieldDataType = field.getDataType();
 			String fieldValue = ParamUtil.getString(actionRequest, fieldName);
 
 			if (fieldDataType.equals(FieldConstants.DOCUMENT_LIBRARY)) {

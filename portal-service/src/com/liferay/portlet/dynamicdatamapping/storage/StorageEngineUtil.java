@@ -46,18 +46,14 @@ public class StorageEngineUtil {
 		getStorageEngine().deleteByDDMStructure(ddmStructureId);
 	}
 
-	public static Fields getFields(long ddmStructureId, long classPK)
-		throws StorageException {
-
-		return getStorageEngine().getFields(ddmStructureId, classPK);
+	public static Fields getFields(long classPK) throws StorageException {
+		return getStorageEngine().getFields(classPK);
 	}
 
-	public static Fields getFields(
-			long ddmStructureId, long classPK, List<String> fieldNames)
+	public static Fields getFields(long classPK, List<String> fieldNames)
 		throws StorageException {
 
-		return getStorageEngine().getFields(
-			ddmStructureId, classPK, fieldNames);
+		return getStorageEngine().getFields(classPK, fieldNames);
 	}
 
 	public static List<Fields> getFieldsList(

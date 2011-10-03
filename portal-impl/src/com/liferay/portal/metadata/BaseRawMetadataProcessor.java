@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
-import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
@@ -83,7 +82,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 
 			com.liferay.portlet.dynamicdatamapping.storage.Field ddmField =
 				new com.liferay.portlet.dynamicdatamapping.storage.Field(
-					field.getName(), value, FieldConstants.STRING);
+					field.getName(), value);
 
 			ddmFields.put(ddmField);
 		}

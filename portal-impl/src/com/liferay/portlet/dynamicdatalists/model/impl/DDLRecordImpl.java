@@ -57,10 +57,7 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 	public Fields getFields() throws PortalException, SystemException {
 		DDLRecordSet recordSet = getRecordSet();
 
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-		return StorageEngineUtil.getFields(
-			ddmStructure.getStructureId(), getDDMStorageId());
+		return StorageEngineUtil.getFields(getDDMStorageId());
 	}
 
 	public Serializable getFieldType(String fieldName) throws Exception {

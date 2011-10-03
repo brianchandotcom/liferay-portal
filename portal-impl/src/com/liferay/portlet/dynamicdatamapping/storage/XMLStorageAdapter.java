@@ -328,7 +328,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 					FieldConstants.getSerializable(fieldDataType, fieldValue);
 
 				Field field = new Field(
-					fieldName, fieldValueSerializable, fieldDataType);
+					ddmStructureId, fieldName, fieldValueSerializable);
 
 				fields.put(field);
 			}

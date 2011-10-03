@@ -2930,9 +2930,41 @@ executable ZIP file.
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset
 				dir="${simple.server.deploy.dir}"
-				excludes="*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal.war/**,security/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
+				excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal.war/**,security/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
 			/>
 		</delete>
+
+		<if>
+			<and>
+				<contains string="${simple.server.dir}" substring="glassfish" />
+				<or>
+					<isset property="hook.plugins.includes" />
+					<isset property="layouttpl.plugins.includes" />
+					<isset property="portlet.plugins.includes" />
+					<isset property="theme.plugins.includes" />
+					<isset property="web.plugins.includes" />
+				</or>
+			</and>
+			<then>
+				<parallel>
+					<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
+						<arg line="${simple.server.start.executable.arg.line}" />
+					</exec>
+
+					<sequential>
+						<waitfor>
+							<http url="http://localhost:8080/web/guest" />
+						</waitfor>
+
+						<sleep seconds="60" />
+
+						<exec dir="${simple.server.bin.dir}" executable="${simple.server.stop.executable}" resolveexecutable="true">
+							<arg line="${simple.server.stop.executable.arg.line}" />
+						</exec>
+					</sequential>
+				</parallel>
+			</then>
+		</if>
 
 		<if>
 			<isset property="hook.plugins.includes" />
@@ -3030,7 +3062,7 @@ executable ZIP file.
 
 				<if>
 					<or>
-						<equals arg1="${simple.server.start.executable.arg.line}" arg2="start-domain -v" />
+						<contains string="${simple.server.dir}" substring="glassfish" />
 						<isset property="hook.plugins.includes" />
 						<isset property="portlet.plugins.includes" />
 						<isset property="theme.plugins.includes" />

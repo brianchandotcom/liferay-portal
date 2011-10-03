@@ -5,11 +5,11 @@
 
 	<target name="run-glassfish">
 		<antcall target="run-simple-server">
-			<param name="simple.server.dir" value="${app.server.parent.dir}/glassfish-${app.server.glassfish.version}" />
-			<param name="simple.server.bin.dir" value="${app.server.glassfish.dir}/bin" />
-			<param name="simple.server.deploy.dir" value="${app.server.glassfish.instance.dir}/autodeploy" />
-			<param name="simple.server.lib.global.dir" value="${app.server.glassfish.instance.dir}/lib" />
-			<param name="simple.server.portal.dir" value="${app.server.glassfish.portal.dir}/WEB-INF/lib" />
+			<param name="simple.server.dir" value="${app.server.glassfish.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.glassfish.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.glassfish.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.glassfish.instance.dir}/applications/liferay-portal" />
 			<param name="simple.server.start.executable" value="asadmin${file.suffix.bat}" />
 			<param name="simple.server.start.executable.arg.line" value="start-domain -v" />
 			<param name="simple.server.stop.executable" value="asadmin${file.suffix.bat}" />

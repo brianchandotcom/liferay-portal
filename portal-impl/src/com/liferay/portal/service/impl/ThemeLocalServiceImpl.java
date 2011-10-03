@@ -770,7 +770,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		Properties spriteProperties = SpriteProcessorUtil.generate(
 			images, spriteFileName, spritePropertiesFileName,
-			spritePropertiesRootPath, 16, 16, 10240);
+			spritePropertiesRootPath, servletContext, 16, 16, 10240);
 
 		if (spriteProperties == null) {
 			return;

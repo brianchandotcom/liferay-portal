@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -28,12 +30,14 @@ public class SpriteProcessorUtil {
 	public static Properties generate(
 			List<File> images, String spriteFileName,
 			String spritePropertiesFileName, String spritePropertiesRootPath,
-			int maxHeight, int maxWidth, int maxSize)
+			ServletContext servletContext, int maxHeight, int maxWidth,
+			int maxSize)
 		throws IOException {
 
 		return getSpriteProcessor().generate(
 			images, spriteFileName, spritePropertiesFileName,
-			spritePropertiesRootPath, maxHeight, maxWidth, maxSize);
+			spritePropertiesRootPath, servletContext, maxHeight, maxWidth,
+			maxSize);
 	}
 
 	public static SpriteProcessor getSpriteProcessor() {

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.image.ImageProcessorUtil;
 import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -58,6 +59,8 @@ import javax.media.jai.operator.LookupDescriptor;
 import javax.media.jai.operator.MosaicDescriptor;
 import javax.media.jai.operator.TranslateDescriptor;
 
+import javax.servlet.ServletContext;
+
 import org.geotools.image.ImageWorker;
 
 /**
@@ -72,7 +75,8 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 	public Properties generate(
 			List<File> images, String spriteFileName,
 			String spritePropertiesFileName, String spritePropertiesRootPath,
-			int maxHeight, int maxWidth, int maxSize)
+			ServletContext servletContext, int maxHeight, int maxWidth,
+			int maxSize)
 		throws IOException {
 
 		if (images.size() < 1) {
@@ -88,12 +92,35 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 		Collections.sort(images);
 
+		String imagesDirName = String.valueOf(images.get(0).getParentFile());
 		String spriteRootDirName = PropsValues.SPRITE_ROOT_DIR;
 
-		if (Validator.isNull(spriteRootDirName)) {
-			File image = images.get(0);
+		if (Validator.isNotNull(spriteRootDirName)) {
+			if (spriteRootDirName.endsWith(StringPool.BACK_SLASH) ||
+				spriteRootDirName.endsWith(StringPool.SLASH)) {
 
-			spriteRootDirName = String.valueOf(image.getParentFile());
+				spriteRootDirName = spriteRootDirName.substring(
+					0, spriteRootDirName.length() - 1);
+			}
+
+			String portletFolder = StringPool.SLASH;
+
+			if (Validator.isNotNull(servletContext.getContextPath())) {
+				portletFolder +=
+					servletContext.getContextPath() + StringPool.SLASH;
+			}
+
+			String contextRoot = ServletContextUtil.getRealPath(
+				servletContext, StringPool.SLASH);
+
+			spriteRootDirName +=
+				portletFolder + imagesDirName.substring(contextRoot.length());
+
+			spriteRootDirName = StringUtil.replace(
+				spriteRootDirName, CharPool.BACK_SLASH, CharPool.SLASH);
+		}
+		else {
+			spriteRootDirName = imagesDirName;
 		}
 
 		File spritePropertiesFile = new File(
@@ -197,6 +224,8 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 			File spriteFile = new File(
 				spriteRootDirName + StringPool.SLASH + spriteFileName);
+
+			spriteFile.mkdirs();
 
 			ImageIO.write(renderedImage, "png", spriteFile);
 

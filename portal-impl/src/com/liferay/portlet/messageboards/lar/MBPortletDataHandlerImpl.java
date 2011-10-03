@@ -720,8 +720,7 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				MBThread.class);
 
-		long threadId = MapUtil.getLong(
-			threadPKs, message.getThreadId(), message.getThreadId());
+		long threadId = MapUtil.getLong(threadPKs, message.getThreadId(), 0);
 
 		Map<Long, Long> messagePKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

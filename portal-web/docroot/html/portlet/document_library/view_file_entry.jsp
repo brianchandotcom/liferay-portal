@@ -177,40 +177,60 @@ if (portletId.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) && showPrevAndNextNaviga
 
 						FileEntry previousEntry = prevAndNext[0];
 						FileEntry nextEntry = prevAndNext[2];
+
+						String previousTitle = StringPool.BLANK;
+						String nextTitle = StringPool.BLANK;
+
+						String previousCssClass = "previous";
+						String nextCssClass = "next";
+
+						if (Validator.isNotNull(previousEntry)) {
+							previousTitle = previousEntry.getTitle();
+						}
+						else {
+							previousCssClass += " disabled";
+						}
+
+						if (Validator.isNotNull(nextEntry)) {
+							nextTitle = nextEntry.getTitle();
+						}
+						else {
+							nextCssClass += " disabled";
+						}
 						%>
 
-						<div class="prev-next-navigation">
+						<div class="image-navigation">
 							<c:choose>
-								<c:when test="<%= (previousEntry != null) %>">
+								<c:when test="<%= Validator.isNotNull(previousEntry) %>">
 									<portlet:renderURL var="previousEntryURL">
 										<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
 										<portlet:param name="redirect" value="<%= redirect %>" />
 										<portlet:param name="fileEntryId" value="<%= String.valueOf(previousEntry.getFileEntryId()) %>" />
 									</portlet:renderURL>
 
-									<aui:a href="<%= previousEntryURL %>">
-										<span class="left-arrow <%= previousEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+									<aui:a href="<%= previousEntryURL %>" title="<%= previousTitle %>">
+										<span class="<%= previousCssClass %>"></span>
 									</aui:a>
 								</c:when>
 								<c:otherwise>
-									<span class="left-arrow <%= previousEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+									<span class="<%= previousCssClass %>"></span>
 								</c:otherwise>
 							</c:choose>
 
 							<c:choose>
-								<c:when test="<%= (nextEntry != null) %>">
+								<c:when test="<%= Validator.isNotNull(nextEntry) %>">
 									<portlet:renderURL var="nextEntryURL">
 										<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
 										<portlet:param name="redirect" value="<%= redirect %>" />
 										<portlet:param name="fileEntryId" value="<%= String.valueOf(nextEntry.getFileEntryId()) %>" />
 									</portlet:renderURL>
 
-									<aui:a href="<%= nextEntryURL %>">
-										<span class="right-arrow <%= nextEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+									<aui:a href="<%= nextEntryURL %>" title="<%= nextTitle %>">
+										<span class="<%= nextCssClass %>"></span>
 									</aui:a>
 								</c:when>
 								<c:otherwise>
-									<span class="right-arrow <%= nextEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+									<span class="<%= nextCssClass %>"></span>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -390,7 +410,7 @@ if (portletId.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) && showPrevAndNextNaviga
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test ="<%= !hasImages && !supportedAudio && !supportedVideo %>">
+									<c:when test="<%= !hasImages && !supportedAudio && !supportedVideo %>">
 										<div class="lfr-preview-file" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content" id="<portlet:namespace />previewFileContent">
 												<div class="lfr-preview-file-image-current-column">
@@ -863,8 +883,7 @@ if (portletId.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) && showPrevAndNextNaviga
 		);
 	}
 
-	<c:if test = '<%= showActions %>'>
-
+	<c:if test="<%= showActions %>">
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 
 		var fileEntryToolbar = new A.Toolbar(

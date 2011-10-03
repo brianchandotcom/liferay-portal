@@ -421,7 +421,9 @@ public class DDLRecordWrapper implements DDLRecord {
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.storage.Field getField(
-		java.lang.String fieldName) throws java.lang.Exception {
+		java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecord.getField(fieldName);
 	}
 
@@ -432,7 +434,8 @@ public class DDLRecordWrapper implements DDLRecord {
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.storage.Fields getFields()
-		throws java.lang.Exception {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecord.getFields();
 	}
 
@@ -442,7 +445,8 @@ public class DDLRecordWrapper implements DDLRecord {
 	}
 
 	public java.io.Serializable getFieldValue(java.lang.String fieldName)
-		throws java.lang.Exception {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecord.getFieldValue(fieldName);
 	}
 

@@ -250,7 +250,7 @@ public class ThemeUtil {
 			return null;
 		}
 		else {
-			return ((UnsyncStringWriter)writer).toString();
+			return writer.toString();
 		}
 	}
 

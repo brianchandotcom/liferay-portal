@@ -427,7 +427,7 @@ public class DDMXSDImpl implements DDMXSD {
 		FreeMarkerEngineUtil.mergeTemplate(
 			resourcePath, freeMarkerContext, writer);
 
-		return ((UnsyncStringWriter)writer).toString();
+		return writer.toString();
 	}
 
 	private static final String _DEFAULT_NAMESPACE = "alloy";

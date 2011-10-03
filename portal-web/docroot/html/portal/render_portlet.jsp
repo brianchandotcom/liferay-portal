@@ -1012,6 +1012,33 @@ else {
 	</div>
 </c:if>
 
+<c:if test='<%= themeDisplay.isStatePopUp() && SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".doRefresh") %>'>
+
+	<%
+	String p_p_id = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doRefresh");
+
+	if (Validator.isNull(p_p_id) && portletResourcePortlet != null) {
+		p_p_id = portletResourcePortlet.getPortletId();
+	}
+	%>
+
+	<aui:script position="inline" use="aui-base">
+		if (window.parent) {
+			var data = null;
+
+			var curPortletBoundaryId = '#p_p_id_<%= p_p_id %>_';
+
+			<c:if test='<%= (portletResourcePortlet != null && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".notAjaxable") %>'>
+				data = {
+					portletAjaxable: false
+				};
+			</c:if>
+
+			Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
+		}
+	</aui:script>
+</c:if>
+
 <%
 themeDisplay.setScopeGroupId(previousScopeGroupId);
 themeDisplay.setParentGroupId(previousParentGroupId);

@@ -76,7 +76,7 @@ if (record != null) {
 		Fields fields = null;
 
 		if (recordVersion != null) {
-			fields = StorageEngineUtil.getFields(ddmStructure.getStructureId(), recordVersion.getDDMStorageId());
+			fields = StorageEngineUtil.getFields(recordVersion.getDDMStorageId());
 		}
 		%>
 

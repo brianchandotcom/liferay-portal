@@ -98,15 +98,14 @@ public class DLStoreIndexer extends BaseIndexer {
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Fields fields = null;
 
-			long ddmStructureId = ddmStructure.getStructureId();
-
 			try {
 				DLFileEntryMetadata fileEntryMetadata =
 					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-						ddmStructureId, dlFileVersion.getFileVersionId());
+						ddmStructure.getStructureId(),
+						dlFileVersion.getFileVersionId());
 
 				fields = StorageEngineUtil.getFields(
-					ddmStructureId, fileEntryMetadata.getDDMStorageId());
+					fileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
 			}

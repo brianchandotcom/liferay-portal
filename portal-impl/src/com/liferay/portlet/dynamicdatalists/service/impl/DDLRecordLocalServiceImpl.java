@@ -272,14 +272,8 @@ public class DDLRecordLocalServiceImpl
 			return;
 		}
 
-		DDLRecord record = recordVersion.getRecord();
-
-		DDLRecordSet recordSet = record.getRecordSet();
-
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
 		Fields fields = StorageEngineUtil.getFields(
-			ddmStructure.getStructureId(), recordVersion.getDDMStorageId());
+			recordVersion.getDDMStorageId());
 
 		updateRecord(
 			userId, recordId, true, recordVersion.getDisplayIndex(), fields,
@@ -539,16 +533,12 @@ public class DDLRecordLocalServiceImpl
 			long ddmStructureId, Map<String, Serializable> fieldsMap)
 		throws PortalException, SystemException {
 
-		DDMStructure ddmStructure = ddmStructureLocalService.getDDMStructure(
-			ddmStructureId);
-
 		Fields fields = new Fields();
 
 		for (String name : fieldsMap.keySet()) {
 			String value = String.valueOf(fieldsMap.get(name));
 
-			Field field = new Field(
-				name, value, ddmStructure.getFieldDataType(name));
+			Field field = new Field(ddmStructureId, name, value);
 
 			fields.put(field);
 		}

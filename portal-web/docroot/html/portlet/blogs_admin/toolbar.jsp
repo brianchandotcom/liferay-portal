@@ -29,7 +29,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<a href="<%= viewEntriesURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ENTRY) %>">
+	<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -48,7 +48,7 @@ String[] attachments = new String[0];
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
 
-boolean newPage = false;
+boolean newPage = ParamUtil.getBoolean(request, "newPage");
 
 if (wikiPage == null) {
 	newPage = true;
@@ -170,6 +170,7 @@ if (Validator.isNull(redirect)) {
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="originalRedirect" type="hidden" value="<%= originalRedirect %>" />
 	<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
+	<aui:input name="newPage" type="hidden" value="<%= newPage %>" />
 
 	<aui:model-context bean="<%= !newPage ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
 

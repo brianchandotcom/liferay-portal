@@ -231,15 +231,15 @@ public class DDMXSDImpl implements DDMXSD {
 				"meta-data");
 
 			for (Element metadataElement : metadataElements) {
+				if (metadataElement == null) {
+					continue;
+				}
+
 				String locale = metadataElement.attributeValue("locale");
 
 				JSONObject localeMap = JSONFactoryUtil.createJSONObject();
 
 				localizationMapJSONObject.put(locale, localeMap);
-
-				if (metadataElement == null) {
-					continue;
-				}
 
 				for (Element metadataEntryElement :
 						metadataElement.elements()) {

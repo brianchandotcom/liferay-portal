@@ -308,10 +308,12 @@ else if (dlFileEntryType != null) {
 						for (DDMStructure ddmStructure : ddmStructures) {
 							Fields fields = null;
 
-							try {
-								DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+							long ddmStructureId = ddmStructure.getStructureId();
 
-								fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
+							try {
+								DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructureId, fileVersionId);
+
+								fields = StorageEngineUtil.getFields(ddmStructureId, fileEntryMetadata.getDDMStorageId());
 							}
 							catch (Exception e) {
 							}

@@ -482,7 +482,7 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 						centered: true,
 						destroyOnClose: true,
 						modal: true,
-						title: '<liferay-ui:message key="access-from-desktop" />',
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "access-from-desktop") %>',
 						width: 500
 					}
 				).render();

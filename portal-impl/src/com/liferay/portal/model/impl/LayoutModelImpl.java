@@ -404,6 +404,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _nameCurrentLanguageId;
 	}
 
+	@JSON
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
 
@@ -493,6 +494,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _titleCurrentLanguageId;
 	}
 
+	@JSON
 	public String getTitleCurrentValue() {
 		Locale locale = getLocale(_titleCurrentLanguageId);
 
@@ -582,6 +584,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _descriptionCurrentLanguageId;
 	}
 
+	@JSON
 	public String getDescriptionCurrentValue() {
 		Locale locale = getLocale(_descriptionCurrentLanguageId);
 
@@ -674,6 +677,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _keywordsCurrentLanguageId;
 	}
 
+	@JSON
 	public String getKeywordsCurrentValue() {
 		Locale locale = getLocale(_keywordsCurrentLanguageId);
 
@@ -764,6 +768,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _robotsCurrentLanguageId;
 	}
 
+	@JSON
 	public String getRobotsCurrentValue() {
 		Locale locale = getLocale(_robotsCurrentLanguageId);
 

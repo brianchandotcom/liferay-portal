@@ -427,6 +427,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				return _${column.name}CurrentLanguageId;
 			}
 
+			@JSON
 			public String get${column.methodName}CurrentValue() {
 				Locale locale = getLocale(_${column.name}CurrentLanguageId);
 

@@ -369,6 +369,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		return _nameCurrentLanguageId;
 	}
 
+	@JSON
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
 
@@ -458,6 +459,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		return _descriptionCurrentLanguageId;
 	}
 
+	@JSON
 	public String getDescriptionCurrentValue() {
 		Locale locale = getLocale(_descriptionCurrentLanguageId);
 

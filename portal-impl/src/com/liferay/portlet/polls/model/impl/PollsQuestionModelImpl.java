@@ -318,6 +318,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		return _titleCurrentLanguageId;
 	}
 
+	@JSON
 	public String getTitleCurrentValue() {
 		Locale locale = getLocale(_titleCurrentLanguageId);
 
@@ -407,6 +408,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		return _descriptionCurrentLanguageId;
 	}
 
+	@JSON
 	public String getDescriptionCurrentValue() {
 		Locale locale = getLocale(_descriptionCurrentLanguageId);
 

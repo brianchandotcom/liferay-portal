@@ -329,6 +329,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		return _titleCurrentLanguageId;
 	}
 
+	@JSON
 	public String getTitleCurrentValue() {
 		Locale locale = getLocale(_titleCurrentLanguageId);
 
@@ -418,6 +419,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		return _descriptionCurrentLanguageId;
 	}
 
+	@JSON
 	public String getDescriptionCurrentValue() {
 		Locale locale = getLocale(_descriptionCurrentLanguageId);
 

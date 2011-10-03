@@ -376,6 +376,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return _nameCurrentLanguageId;
 	}
 
+	@JSON
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
 
@@ -475,6 +476,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return _descriptionCurrentLanguageId;
 	}
 
+	@JSON
 	public String getDescriptionCurrentValue() {
 		Locale locale = getLocale(_descriptionCurrentLanguageId);
 

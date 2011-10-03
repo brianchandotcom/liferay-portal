@@ -538,6 +538,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _titleCurrentLanguageId;
 	}
 
+	@JSON
 	public String getTitleCurrentValue() {
 		Locale locale = getLocale(_titleCurrentLanguageId);
 

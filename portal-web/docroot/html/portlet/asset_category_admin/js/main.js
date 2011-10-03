@@ -50,11 +50,11 @@ AUI().add(
 
 		var TPL_MESSAGES_VOCABULARY = '<div class="aui-helper-hidden lfr-message-response" id="vocabulary-messages" />';
 
-		var TPL_VOCABULARY_LIST = '<li class="vocabulary-category results-row {cssClassSelected}" data-vocabulary="{name}" data-vocabularyId="{vocabularyId}" tabIndex="0">' +
+		var TPL_VOCABULARY_LIST = '<li class="vocabulary-category results-row {cssClassSelected}" data-vocabulary="{titleCurrentValue}" data-vocabularyId="{vocabularyId}" tabIndex="0">' +
 			'<div class="vocabulary-content-wrapper">' +
-				'<input type="checkbox" class="vocabulary-item-check aui-field-input-choice" name="vocabulary-item-check" data-vocabularyId="{vocabularyId}" data-vocabularyName="{name}">' +
+				'<input type="checkbox" class="vocabulary-item-check aui-field-input-choice" name="vocabulary-item-check" data-vocabularyId="{vocabularyId}" data-vocabularyName="{titleCurrentValue}">' +
 				'<span class="vocabulary-item">' +
-					'<a href="javascript:;" data-vocabularyId="{vocabularyId}" tabIndex="-1">{name}</a>' +
+					'<a href="javascript:;" data-vocabularyId="{vocabularyId}" tabIndex="-1">{titleCurrentValue}</a>' +
 				'</span>' +
 				'<a href="javascript:;" class="vocabulary-item-actions-trigger" data-vocabularyId="{vocabularyId}"></a>' +
 			'</div>' +
@@ -248,7 +248,7 @@ AUI().add(
 									{
 										alwaysShowHitArea: false,
 										id: 'categoryNode' + item.categoryId,
-										label: Liferay.Util.escapeHTML(item.name),
+										label: Liferay.Util.escapeHTML(item.titleCurrentValue),
 										leaf: false,
 										on: {
 											checkedChange: function(event) {
@@ -745,7 +745,7 @@ AUI().add(
 
 										var auxItem = A.clone(item);
 
-										auxItem.name = Liferay.Util.escapeHTML(auxItem.name);
+										auxItem.titleCurrentValue = Liferay.Util.escapeHTML(auxItem.titleCurrentValue);
 
 										buffer.push(Lang.sub(TPL_VOCABULARY_LIST, auxItem));
 									}
@@ -1014,7 +1014,7 @@ AUI().add(
 
 										vocabularyEl.value = item.vocabularyId;
 
-										var vocabularyTextEl = document.createTextNode(item.name);
+										var vocabularyTextEl = document.createTextNode(item.titleCurrentValue);
 
 										vocabularyEl.appendChild(vocabularyTextEl);
 

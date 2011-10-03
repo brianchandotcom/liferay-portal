@@ -92,6 +92,7 @@ else {
 
 					<%
 					for (AssetVocabulary vocabulary : vocabularies) {
+						vocabulary = vocabulary.toEscapedModel();
 					%>
 
 						<aui:option label="<%= vocabulary.getTitle(locale) %>" selected="<%= vocabulary.getVocabularyId() == vocabularyId %>" value="<%= vocabulary.getVocabularyId() %>" />

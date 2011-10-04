@@ -37,6 +37,10 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		return _cssClass;
 	}
 
+	public java.util.Map<java.lang.String,java.lang.Object> getData() {
+		return _data;
+	}
+
 	public boolean getDisabled() {
 		return _disabled;
 	}
@@ -61,6 +65,12 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		_cssClass = cssClass;
 
 		setScopedAttribute("cssClass", cssClass);
+	}
+
+	public void setData(java.util.Map<java.lang.String,java.lang.Object> data) {
+		_data = data;
+
+		setScopedAttribute("data", data);
 	}
 
 	public void setDisabled(boolean disabled) {
@@ -96,6 +106,7 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_cssClass = null;
+		_data = null;
 		_disabled = false;
 		_label = null;
 		_selected = false;
@@ -116,6 +127,7 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "cssClass", _cssClass);
+		setNamespacedAttribute(request, "data", _data);
 		setNamespacedAttribute(request, "disabled", _disabled);
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "selected", _selected);
@@ -132,6 +144,7 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		"/html/taglib/aui/option/start.jsp";
 
 	private java.lang.String _cssClass = null;
+	private java.util.Map<java.lang.String,java.lang.Object> _data = null;
 	private boolean _disabled = false;
 	private java.lang.Object _label = null;
 	private boolean _selected = false;

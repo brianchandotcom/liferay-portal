@@ -16,9 +16,11 @@
 
 <%
 String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-String thumbnailStyle = "height: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT + "; width: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH + ";";
+String thumbnailStyle = "height: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT + "px; width: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH + "px;";
 
-if (ImageProcessor.hasSmallImage(fileEntry.getFileVersion())) {
+Image largeImage = ImageLocalServiceUtil.getImage(fileEntry.getFileVersion().getLargeImageId());
+
+if (largeImage != null) {
 	Image smallImage = ImageLocalServiceUtil.getImage(fileEntry.getSmallImageId());
 
 	long smallImageId = 0;
@@ -34,8 +36,12 @@ if (ImageProcessor.hasSmallImage(fileEntry.getFileVersion())) {
 	int topMargin = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageHeight;
 	int sideMargin = (PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageWidth) / 2;
 
-	thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
-	thumbnailStyle = "height: " + smallImageHeight + "; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; width: " + smallImageWidth + ";";
+	thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
+	thumbnailStyle = "max-height: " + smallImageHeight + "px; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; max-width: " + smallImageWidth + "px;";
+
+	if (smallImage != null) {
+		thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
+	}
 }
 else if (PDFProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
 	thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";

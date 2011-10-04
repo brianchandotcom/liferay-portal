@@ -70,8 +70,12 @@
 
 						if (largeImage != null) {
 							href = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId()) + "&fileName=" + HttpUtil.encodeURL(fileEntry.getTitle() + StringPool.PERIOD + largeImage.getType());
-							src = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId + "&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
-							style = "height: " + smallImageHeight + "; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; width: " + smallImageWidth + ";";
+							src = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&fileEntryId=" + fileEntry.getFileEntryId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
+							style = "max-height: " + smallImageHeight + "px; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; max-width: " + smallImageWidth + "px;";
+
+							if (smallImage != null) {
+								src = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId + "&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
+							}
 						}
 						else if (PDFProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
 							href = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";

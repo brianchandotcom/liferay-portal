@@ -77,6 +77,9 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				else if (ImageProcessor.hasSmallImage(fileEntry.getFileVersion())) {
 					thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + fileEntry.getSmallImageId() +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(fileEntry.getSmallImageId());
 				}
+				else if (ImageProcessor.hasLargeImage(fileEntry.getFileVersion())) {
+					thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + fileEntry.getLargeImageId() +"&fileEntryId=" + fileEntry.getFileEntryId() + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getLargeImageId());
+				}
 				%>
 
 				<div>

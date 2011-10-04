@@ -27,17 +27,17 @@
 	var formattedDateInput = A.one('#${portletNamespace}${namespacedFieldName}formattedDate');
 
 	var updateFieldValue = function(value) {
-		var time = '';
+		var timestamp = '';
 
 		try {
-			time = A.DataType.Date.parse(value).getTime()
+			var date = A.DataType.Date.parse(value);
+
+			timestamp = date.getTime()
 		}
 		catch (e) {};
 
-		fieldValueInput.val(time);
+		fieldValueInput.val(timestamp);
 	};
-
-	updateFieldValue('${fieldValue}');
 
 	formattedDateInput.on(
 		{
@@ -49,16 +49,10 @@
 		}
 	);
 
+	updateFieldValue('${fieldValue}');
+
 	new A.DatePicker(
 		{
-			calendar:
-			{
-				dateFormat: '%m/%d/%Y',
-				<#if (fieldValue != "")>
-					dates: ['${fieldValue}'],
-				</#if>
-				selectMultipleDates: false
-			},
 			after: {
 				'calendar:select': function(event) {
 					var date = event.date;
@@ -71,6 +65,13 @@
 						updateFieldValue(formatted);
 					}
 				}
+			},
+			calendar: {
+				dateFormat: '%m/%d/%Y',
+				<#if (fieldValue != "")>
+					dates: ['${fieldValue}'],
+				</#if>
+				selectMultipleDates: false
 			},
 			setValue: false,
 			trigger: formattedDateInput

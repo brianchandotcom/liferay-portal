@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.portal.smoke;
 
-import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.portal.logout.LogoutTests;
-import com.liferay.portalweb.portal.smoke.SmokeTests;
+import com.liferay.portalweb.portal.BaseTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,16 +22,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SmokeTestSuite extends BaseTests {
+public class SmokeTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(SmokeTests.suite());
-		testSuite.addTest(LogoutTests.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTestSuite(AddPage1Test.class);
+		testSuite.addTestSuite(AddPage2Test.class);
+		testSuite.addTestSuite(AddPage3Test.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
+		testSuite.addTestSuite(ViewTearDownPageTest.class);
 
 		return testSuite;
 	}

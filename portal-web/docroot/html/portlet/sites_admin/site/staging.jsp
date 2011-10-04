@@ -157,17 +157,19 @@ UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribut
 		</div>
 
 		<aui:script use="aui-base">
-			var stagingTypes = A.all('#<portlet:namespace />stagingTypes input');
-			var stagedPortlets = A.one('#<portlet:namespace />stagedPortlets');
 			var remoteStagingOptions = A.one('#<portlet:namespace />remoteStagingOptions');
+			var stagedPortlets = A.one('#<portlet:namespace />stagedPortlets');
+
+			var stagingTypes = A.all('#<portlet:namespace />stagingTypes input');
 
 			stagingTypes.on(
 				'change',
 				function(event) {
-					var value = event.currentTarget.get('value');
+					var value = event.currentTarget.val();
 
-			   		stagedPortlets.toggle(value != '<%= StagingConstants.TYPE_NOT_STAGED %>');
-			    	remoteStagingOptions.toggle(value == '<%= StagingConstants.TYPE_REMOTE_STAGING %>');
+					stagedPortlets.toggle(value != '<%= StagingConstants.TYPE_NOT_STAGED %>');
+
+					remoteStagingOptions.toggle(value == '<%= StagingConstants.TYPE_REMOTE_STAGING %>');
 				}
 			);
 		</aui:script>

@@ -45,6 +45,7 @@ public class DocumentTypePermissionsTests extends BaseTests {
 		testSuite.addTestSuite(Member_AssertPermissionsTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(TearDownDocumentTypeTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownRolesTest.class);
 

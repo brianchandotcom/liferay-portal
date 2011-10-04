@@ -29,14 +29,24 @@
 	<td>Documents and Media</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']</td>
-	<td>Select Document</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Rows</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']</td>
-	<td>Select Document</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -73,7 +83,6 @@
 	<td>//div[@class='portlet-msg-info']</td>
 	<td>There are no documents in this folder.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

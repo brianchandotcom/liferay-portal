@@ -50,8 +50,8 @@ public class Member_AssertViewShortcutTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible(
-				"xPath=(//span[@class='document-title'])[1]"));
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
 		assertTrue(selenium.isVisible(
-				"xPath=(//span[@class='document-title'])[2]"));
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
 	}
 }

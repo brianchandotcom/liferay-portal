@@ -64,10 +64,15 @@ public class AddPermissionAddToPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("index=37"));
+		selenium.typeKeys("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("ddddddd"));
+		selenium.saveScreenShotAndSource();
+		selenium.keyPress("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
+			selenium.getText("//h3"));
 		selenium.check("//input[@value='20ADD_TO_PAGE']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");

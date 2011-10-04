@@ -44,6 +44,7 @@ public class AddDocumentTypeTests extends BaseTests {
 		testSuite.addTestSuite(Member_AddDocumentTypeTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(TearDownDocumentTypeTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownRolesTest.class);
 

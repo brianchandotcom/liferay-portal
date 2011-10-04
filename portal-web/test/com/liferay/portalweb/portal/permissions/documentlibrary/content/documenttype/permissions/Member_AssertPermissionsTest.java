@@ -114,7 +114,7 @@ public class Member_AssertPermissionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Document Type Name"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText("//tr[3]/td[4]/span/a/span"));
 		selenium.clickAt("//tr[3]/td[4]/span/a/span",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");

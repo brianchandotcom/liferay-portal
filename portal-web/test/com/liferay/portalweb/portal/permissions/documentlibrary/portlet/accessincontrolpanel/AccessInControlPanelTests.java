@@ -41,7 +41,8 @@ public class AccessInControlPanelTests extends BaseTests {
 		testSuite.addTestSuite(RemovePermissionAccessInControlPanelTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
-		testSuite.addTestSuite(Member_AssertCannotAccessInControlPanelTest.class);
+		testSuite.addTestSuite(
+			Member_AssertCannotAccessInControlPanelTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

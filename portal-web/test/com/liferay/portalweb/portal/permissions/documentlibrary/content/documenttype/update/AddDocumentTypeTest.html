@@ -60,22 +60,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>link=Add</td>
 	<td>Add</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isTextPresent('Document Type Name'))</td>
-	<td>documentTypeNamePresent</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${documentTypeNamePresent}</td>
-	<td>DocumentTypeNamePresent</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>clickAt</td>
+	<td>link=Add</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -89,9 +79,54 @@
 	<td>Document Type Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>assertText</td>
+	<td>//a/span</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a/span</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=up</td>
+	<td>up</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Default Image's Metadata Set</td>
+	<td>Default Image's Metadata Set</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Default Image's Metadata Set</td>
+	<td>Default Image's Metadata Set</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=up</td>
+	<td>up</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table/tr/td</td>
+	<td>Default Image's Metadata Set</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//table/tr/td</td>
+	<td>Default Image's Metadata Set</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -99,16 +134,10 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>DocumentTypeNamePresent</td>
-	<td></td>
-</tr>
-<tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

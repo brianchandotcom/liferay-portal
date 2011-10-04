@@ -50,6 +50,7 @@ public class Member_AssertCannotViewDocumentTypeTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertFalse(selenium.isElementPresent("link=Document Type Name"));
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 

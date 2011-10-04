@@ -15,12 +15,6 @@
 package com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibraryshortcut;
 
 import com.liferay.portalweb.portal.BaseTests;
-//import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibraryshortcut.adddiscussion.AddDocumentShortcutTests;
-//import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibraryshortcut.delete.DeleteShortcutTests;
-//import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibraryshortcut.deletediscussion.DeleteShortcutDiscussionTests;
-//import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibraryshortcut.permissions.ShortcutPermissionsTests;
-//import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibraryshortcut.update.UpdateShortcutTests;
-//import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibraryshortcut.updatediscussion.UpdateShortcutDiscussionTests;
 import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibraryshortcut.view.ViewShortcutTests;
 
 import junit.framework.Test;
@@ -34,12 +28,6 @@ public class DocumentLibraryShortcutTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-//		testSuite.addTest(AddDocumentDiscussionTests.suite());
-//		testSuite.addTest(DeleteDocumentTests.suite());
-//		testSuite.addTest(DeleteDocumentDiscussionTests.suite());
-//		testSuite.addTest(DocumentPermissionsTests.suite());
-//		testSuite.addTest(UpdateDocumentTests.suite());
-//		testSuite.addTest(UpdateDocumentDiscussionTests.suite());
 		testSuite.addTest(ViewShortcutTests.suite());
 
 		return testSuite;

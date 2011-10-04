@@ -49,10 +49,14 @@ public class Member_DeleteDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible(
-				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']"));
-		selenium.clickAt("//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FileEntryCheckbox']",
-			RuntimeVariables.replace("Select Document"));
+		assertFalse(selenium.isChecked("//input[@id='_20_allRowIdsCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
+			RuntimeVariables.replace("All Rows"));
+		assertTrue(selenium.isChecked("//input[@id='_20_allRowIdsCheckbox']"));
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 

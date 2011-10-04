@@ -49,28 +49,8 @@ public class Member_AssertCannotAddShortcutTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
-			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertFalse(selenium.isPartialText(
-				"//div[@class='lfr-component lfr-menu-list']", "Shortcut"));
+		assertFalse(selenium.isElementPresent(
+				"//span[@title='Add']/ul/li/strong/a"));
+		assertFalse(selenium.isElementPresent("link=Add"));
 	}
 }

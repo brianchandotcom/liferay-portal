@@ -61,7 +61,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_20_file']</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\permissions\documentlibrary\content\documentlibrary\dependencies\Member_TestDocument.txt</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\permissions\documentlibrary\content\dependencies\TestDocument.txt</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -69,11 +69,25 @@
 	<td>Publish</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>TestDocument.txt</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>TestDocument.txt</td>
+</tr>
 </tbody></table>
 </body>
 </html>

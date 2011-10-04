@@ -17,10 +17,7 @@ package com.liferay.portalweb.portal.permissions.documentlibrary.content.documen
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.adddocument.AddDocumentTests;
 import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.adddocumenttype.AddDocumentTypeTests;
-import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.addfolder.AddFolderTests;
 import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.addshortcut.AddShortcutTests;
-//import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.permissions.PermissionsTests;
-//import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.update.UpdateTests;
 import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.view.ViewTests;
 
 import junit.framework.Test;
@@ -37,8 +34,6 @@ public class DocumentLibraryTests extends BaseTests {
 		testSuite.addTest(AddDocumentTests.suite());
 		testSuite.addTest(AddDocumentTypeTests.suite());
 		testSuite.addTest(AddShortcutTests.suite());
-//		testSuite.addTest(PermissionsTests.suite());
-//		testSuite.addTest(UpdateTests.suite());
 		testSuite.addTest(ViewTests.suite());
 
 		return testSuite;

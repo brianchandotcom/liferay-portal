@@ -49,10 +49,15 @@ public class Member_AssertUpdateDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//span[@class='document-title']",
+		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("TestDocument.txt"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
+			selenium.getText("//h2[@class='document-title']"));
 		assertTrue(selenium.isVisible(
 				"//div[@id='_20_fileEntryToolbar']/span/button"));
 		selenium.clickAt("//div[@id='_20_fileEntryToolbar']/span/button",
@@ -60,7 +65,7 @@ public class Member_AssertUpdateDocumentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_title']",
-			RuntimeVariables.replace("TestDocument.txt Edited"));
+			RuntimeVariables.replace("TestDocument Edit.txt"));
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -69,7 +74,7 @@ public class Member_AssertUpdateDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("TestDocument.txt Edited"),
+		assertEquals(RuntimeVariables.replace("TestDocument Edit.txt"),
 			selenium.getText("//h2[@class='document-title']"));
 	}
 }

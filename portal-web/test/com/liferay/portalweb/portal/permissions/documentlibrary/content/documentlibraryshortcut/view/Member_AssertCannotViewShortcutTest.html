@@ -29,16 +29,15 @@
 	<td>Documents and Media</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>xPath=(//span[@class='document-title'])[1]</td>
+	<td>assertText</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]</td>
 	<td>TestDocument.txt</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>xPath=(//span[@class='document-title'])[2]</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]</td>
 	<td>TestDocument.txt</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -104,9 +104,6 @@ public class TearDownRolesTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 			case 100:

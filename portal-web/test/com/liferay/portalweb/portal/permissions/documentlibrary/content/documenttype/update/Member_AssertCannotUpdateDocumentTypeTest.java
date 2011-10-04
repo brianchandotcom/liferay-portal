@@ -115,6 +115,7 @@ public class Member_AssertCannotUpdateDocumentTypeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Document Type Name"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertFalse(selenium.isElementPresent("//tr[3]/td[4]/span/a/span"));
+		assertFalse(selenium.isElementPresent("link=Edit"));
 		selenium.selectFrame("relative=top");
 		selenium.saveScreenShotAndSource();
 	}

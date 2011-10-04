@@ -100,8 +100,7 @@ public class Member_AddDocumentTypeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//span[@class='lfr-toolbar-button add-button ']/a")) {
+				if (selenium.isVisible("link=Add")) {
 					break;
 				}
 			}
@@ -112,18 +111,97 @@ public class Member_AddDocumentTypeTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible(
-				"//span[@class='lfr-toolbar-button add-button ']/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//span[@class='lfr-toolbar-button add-button ']/a"));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_20_name']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_name']",
 			RuntimeVariables.replace("Document Type Name"));
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Select"),
+			selenium.getText("//a/span"));
+		selenium.clickAt("//a/span", RuntimeVariables.replace("Select"));
+		selenium.selectFrame("relative=up");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Default Image's Metadata Set")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Default Image's Metadata Set",
+			RuntimeVariables.replace("Default Image's Metadata Set"));
+		selenium.selectFrame("relative=up");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Default Image's Metadata Set")
+										.equals(selenium.getText(
+								"//table/tr/td"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Default Image's Metadata Set"),
+			selenium.getText("//table/tr/td"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Your request completed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-success']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

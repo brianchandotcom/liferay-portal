@@ -45,6 +45,7 @@ public class ViewDocumentTypeTests extends BaseTests {
 		testSuite.addTestSuite(Member_AssertCannotViewDocumentTypeTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(TearDownDocumentTypeTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownRolesTest.class);
 

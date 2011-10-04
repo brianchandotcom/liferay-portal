@@ -49,9 +49,10 @@ public class Member_AssertCannotViewShortcutTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible(
-				"xPath=(//span[@class='document-title'])[1]"));
+		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
 		assertFalse(selenium.isElementPresent(
-				"xPath=(//span[@class='document-title'])[2]"));
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
 	}
 }

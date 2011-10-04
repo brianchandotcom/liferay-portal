@@ -32,6 +32,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
@@ -101,6 +102,9 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
 				setForward(actionRequest, "portlet.wiki.error");
+			}
+			else if (e instanceof FileSizeException) {
+				SessionErrors.add(actionRequest, e.getClass().getName());
 			}
 			else {
 				throw e;

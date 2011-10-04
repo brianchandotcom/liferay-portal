@@ -82,13 +82,13 @@ public class EditFileEntryTypeAction extends PortletAction {
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchMetadataSetException ||
+			if (e instanceof DuplicateFileEntryTypeException ||
+				e instanceof NoSuchMetadataSetException ||
 				e instanceof StructureDuplicateElementException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
 			}
-			else if (e instanceof DuplicateFileEntryTypeException ||
-					 e instanceof NoSuchFileEntryTypeException ||
+			else if (e instanceof NoSuchFileEntryTypeException ||
 					 e instanceof NoSuchStructureException ||
 					 e instanceof PrincipalException) {
 

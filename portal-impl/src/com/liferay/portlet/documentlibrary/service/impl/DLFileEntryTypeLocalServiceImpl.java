@@ -25,6 +25,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -72,7 +73,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		Date now = new Date();
 
-		validate(ddmStructureIds);
+		validate(groupId, name, ddmStructureIds);
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			fileEntryTypeId);
@@ -256,7 +257,7 @@ public class DLFileEntryTypeLocalServiceImpl
 				ddmStructureIds, dynamicStructureId);
 		}
 
-		validate(ddmStructureIds);
+		validate(dlFileEntryType.getGroupId(), name, ddmStructureIds);
 
 		dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(null));
 		dlFileEntryType.setName(name);
@@ -448,8 +449,16 @@ public class DLFileEntryTypeLocalServiceImpl
 		return 0;
 	}
 
-	protected void validate(long[] ddmStructureIds)
+	protected void validate(
+			long groupId, String fileEntryTypeName, long[] ddmStructureIds)
 		throws PortalException, SystemException {
+
+		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.fetchByG_N(
+			groupId, fileEntryTypeName);
+
+		if (dlFileEntryType != null) {
+			throw new DuplicateFileEntryTypeException(fileEntryTypeName);
+		}
 
 		if (ddmStructureIds.length == 0) {
 			throw new NoSuchMetadataSetException();

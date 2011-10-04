@@ -490,14 +490,14 @@ AUI().add(
 
 						instance._bindCloseEvent(instance._panelEdit);
 
-						instance._panelEdit.after(
+						instance._panelEdit.on(
 							'visibleChange',
 							function(event) {
 								if (!event.newVal) {
+									instance._destroyFloatingPanels(event);
+
 									var body = instance._panelEdit.getStdModNode(A.WidgetStdMod.BODY);
 									body.empty();
-
-									instance._hideFloatingPanels(event);
 								}
 							}
 						);
@@ -669,6 +669,18 @@ AUI().add(
 								vocabularyId: vocabularyId
 							},
 							A.bind(callback, instance)
+						);
+					},
+
+					_destroyFloatingPanels: function(event) {
+						var instance = this;
+
+						instance._processAutoFieldsTriggers(
+							event,
+							function(autoFieldsInstance, panelInstance) {
+								autoFieldsInstance.destroy();
+								panelInstance.destroy();
+							}
 						);
 					},
 
@@ -1174,15 +1186,9 @@ AUI().add(
 					_hideFloatingPanels: function(event) {
 						var instance = this;
 
-						var contextPanel = event.currentTarget;
-						var boundingBox = contextPanel.get('boundingBox');
-						var autoFieldsTriggers = boundingBox.all('.lfr-floating-trigger');
-
-						autoFieldsTriggers.each(
-							function(item, index, collection) {
-								var autoFieldsInstance = item.getData('autoFieldsInstance');
-								var panelInstance = item.getData('panelInstance');
-
+						instance._processAutoFieldsTriggers(
+							event,
+							function(autoFieldsInstance, panelInstance) {
 								instance._resetInputLocalized(autoFieldsInstance, panelInstance);
 							}
 						);
@@ -1806,6 +1812,23 @@ AUI().add(
 						}
 
 						instance._loadData();
+					},
+
+					_processAutoFieldsTriggers: function(event, callback) {
+						var instance = this;
+
+						var contextPanel = event.currentTarget;
+						var boundingBox = contextPanel.get('boundingBox');
+						var autoFieldsTriggers = boundingBox.all('.lfr-floating-trigger');
+
+						autoFieldsTriggers.each(
+							function(item, index, collection) {
+								var autoFieldsInstance = item.getData('autoFieldsInstance');
+								var panelInstance = item.getData('panelInstance');
+
+								callback.call(instance, autoFieldsInstance, panelInstance);
+							}
+						);
 					},
 
 					_processCategoryDeletion: function(result) {

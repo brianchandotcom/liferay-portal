@@ -252,7 +252,7 @@ public class InputTag extends BaseInputTag {
 
 		List<ValidatorTag> validatorTags = ListUtil.fromMapValues(_validators);
 
-		validatorTagsMap.put(_forLabel, validatorTags);
+		validatorTagsMap.put(getName(), validatorTags);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

@@ -44,6 +44,7 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -301,6 +302,8 @@ public class PermissionImporter {
 
 		List<Element> roleElements = permissionsElement.elements("role");
 
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
+
 		for (Element roleElement : roleElements) {
 			String name = roleElement.attributeValue("name");
 
@@ -343,10 +346,17 @@ public class PermissionImporter {
 
 			List<String> actions = getActions(roleElement);
 
-			PermissionLocalServiceUtil.setRolePermissions(
-				role.getRoleId(), actions.toArray(new String[actions.size()]),
-				resource.getResourceId());
+			roleIdsToActionIds.put(
+				role.getRoleId(), actions.toArray(new String[actions.size()]));
 		}
+
+		if (roleIdsToActionIds.isEmpty()) {
+			return;
+		}
+
+		PermissionLocalServiceUtil.setRolesPermissions(
+			companyId, roleIdsToActionIds, resourceName,
+			ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 	}
 
 	protected void importPermissions_6(
@@ -356,6 +366,8 @@ public class PermissionImporter {
 		throws Exception {
 
 		List<Element> roleElements = permissionsElement.elements("role");
+
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
 
 		for (Element roleElement : roleElements) {
 			String name = roleElement.attributeValue("name");
@@ -399,11 +411,17 @@ public class PermissionImporter {
 
 			List<String> actions = getActions(roleElement);
 
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
-				companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-				resourcePrimKey, role.getRoleId(),
-				actions.toArray(new String[actions.size()]));
+			roleIdsToActionIds.put(
+				role.getRoleId(), actions.toArray(new String[actions.size()]));
 		}
+
+		if (roleIdsToActionIds.isEmpty()) {
+			return;
+		}
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+			resourcePrimKey, roleIdsToActionIds);
 	}
 
 	protected void importPortletPermissions(

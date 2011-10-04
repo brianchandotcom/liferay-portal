@@ -40,7 +40,10 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public boolean getFieldDisplayChildLabelAsValue(java.lang.String fieldName);
 
 	public java.lang.String getFieldLabel(java.lang.String fieldName,
-		java.lang.String locale);
+		java.util.Locale locale);
+
+	public java.lang.String getFieldLabel(java.lang.String fieldName,
+		java.lang.String localeLanguageId);
 
 	public java.util.Set<java.lang.String> getFieldNames();
 

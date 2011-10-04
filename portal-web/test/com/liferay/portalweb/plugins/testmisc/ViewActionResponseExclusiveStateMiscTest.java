@@ -61,7 +61,7 @@ public class ViewActionResponseExclusiveStateMiscTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -72,8 +72,8 @@ public class ViewActionResponseExclusiveStateMiscTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add"),
@@ -144,15 +144,19 @@ public class ViewActionResponseExclusiveStateMiscTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("//div[@id='_20_documentContainer']/div[2]/a/span[1]/img",
+		assertEquals(RuntimeVariables.replace(
+				"Portlet Response (ActionResponse,Exclusive State)"),
+			selenium.getText(
+				"link=Portlet Response (ActionResponse,Exclusive State)"));
+		selenium.clickAt("link=Portlet Response (ActionResponse,Exclusive State)",
 			RuntimeVariables.replace(
 				"Portlet Response (ActionResponse,Exclusive State)"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Portlet Response (ActionResponse,Exclusive State)"),
-			selenium.getText("//div[1]/h2"));
-		assertEquals(RuntimeVariables.replace("2.0k"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//h2[@class='document-title']"));
+		assertEquals(RuntimeVariables.replace("Download (2.0k)"),
+			selenium.getText("//span[@class='download-document']/span/a/span"));
 	}
 }

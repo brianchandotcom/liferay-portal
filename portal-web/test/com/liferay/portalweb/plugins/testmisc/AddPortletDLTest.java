@@ -30,7 +30,7 @@ public class AddPortletDLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -41,8 +41,8 @@ public class AddPortletDLTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace("Document Library Test Page"));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
@@ -57,7 +57,7 @@ public class AddPortletDLTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//div[@title='Document Library']/p/a")) {
+							"//div[@title='Documents and Media']/p/a")) {
 					break;
 				}
 			}
@@ -68,7 +68,7 @@ public class AddPortletDLTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@title='Document Library']/p/a",
+		selenium.clickAt("//div[@title='Documents and Media']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

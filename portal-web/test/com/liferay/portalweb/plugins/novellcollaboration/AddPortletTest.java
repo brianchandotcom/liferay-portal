@@ -45,8 +45,10 @@ public class AddPortletTest extends BaseTestCase {
 				"link=Novell Collaboration Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -54,28 +56,7 @@ public class AddPortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("no"));
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@title='Bookmark']/p/a")) {
+				if (selenium.isElementPresent("//div[@title='Bookmark']/p/a")) {
 					break;
 				}
 			}
@@ -87,7 +68,7 @@ public class AddPortletTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@title='Bookmark']/p/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -114,7 +95,8 @@ public class AddPortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='GroupWise Calendar']/p/a")) {
+				if (selenium.isElementPresent(
+							"//div[@title='GroupWise Calendar']/p/a")) {
 					break;
 				}
 			}
@@ -126,7 +108,7 @@ public class AddPortletTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@title='GroupWise Calendar']/p/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -172,7 +154,8 @@ public class AddPortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='GroupWise Mail']/p/a")) {
+				if (selenium.isElementPresent(
+							"//div[@title='GroupWise Mail']/p/a")) {
 					break;
 				}
 			}
@@ -184,7 +167,7 @@ public class AddPortletTest extends BaseTestCase {
 
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@title='GroupWise Mail']/p/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {

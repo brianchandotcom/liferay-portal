@@ -182,6 +182,10 @@ public class DDLRecordLocalServiceImpl
 		}
 	}
 
+	public DDLRecord fetchByPrimaryKey(long recordId) throws SystemException {
+		return ddlRecordPersistence.fetchByPrimaryKey(recordId);
+	}
+
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
 		throws PortalException, SystemException {
 

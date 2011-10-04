@@ -23,7 +23,7 @@ if (Validator.isNotNull(cssClass)) {
 	cssClassHtml = "class=\"".concat(cssClass).concat("\"");
 }
 
-if (themeDisplay.isThemeImagesFastLoad() && !auiImage) {
+if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImage) {
 	SpriteImage spriteImage = null;
 	String spriteFileName = null;
 

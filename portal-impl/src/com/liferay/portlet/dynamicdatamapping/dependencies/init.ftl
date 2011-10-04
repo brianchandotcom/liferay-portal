@@ -60,7 +60,7 @@
 
 <#assign jsonFactoryUtil = utilLocator.findUtil("com.liferay.portal.kernel.json.JSONFactory")>
 
-<#function getFileEntryJSONObject fieldValue>
+<#function getFileJSONObject fieldValue>
 	<#return jsonFactoryUtil.createJSONObject(fieldValue)>>
 </#function>
 

@@ -376,9 +376,12 @@ AUI().add(
 										}
 									);
 
+									var widthVal = field.get('width');
+									var widthCssClassVal = A.getClassName('w' + widthVal);
+
 									buffer.push(
 										fieldCssClassTag.openTag,
-										STR_CDATA_OPEN + A.getClassName('w' + field.get('width')) + STR_CDATA_CLOSE,
+										STR_CDATA_OPEN + widthCssClassVal + STR_CDATA_CLOSE,
 										fieldCssClassTag.closeTag
 									);
 								}

@@ -4,9 +4,9 @@
 <#assign fileEntryURL = "">
 
 <#if (fields??) && (fieldValue != "")>
-	<#assign fileEntryJSONObject = getFileEntryJSONObject(fieldRawValue)>
+	<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
 
-	<#assign fileEntry = getFileEntry(fileEntryJSONObject)>
+	<#assign fileEntry = getFileEntry(fileJSONObject)>
 
 	<#assign fileEntryTitle = fileEntry.getTitle()>
 	<#assign fileEntryURL = getFileEntryURL(fileEntry)>

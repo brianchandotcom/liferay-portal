@@ -24,228 +24,227 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 var SpreadSheet = Liferay.SpreadSheet;
 
 
-var DLFileEntryCellEditor = A.Component.create({
-	NAME: 'document-library-file-entry-cell-editor',
+var DLFileEntryCellEditor = A.Component.create(
+	{
+		NAME: 'document-library-file-entry-cell-editor',
 
-	EXTENDS: A.BaseCellEditor,
+		EXTENDS: A.BaseCellEditor,
 
-	prototype: {
-		ELEMENT_TEMPLATE: '<input type="hidden" />',
+		prototype: {
+			ELEMENT_TEMPLATE: '<input type="hidden" />',
 
-		initializer: function() {
-			var instance = this;
+			initializer: function() {
+				var instance = this;
 
-			Liferay.provide(
-				window,
-				'<%= PortalUtil.getPortletNamespace(PortletKeys.JOURNAL) %>selectDocumentLibrary',
-				A.bind(instance._selectFileEntry, instance),
-				[]
-			);
-		},
+				Liferay.provide(
+					window,
+					'<%= PortalUtil.getPortletNamespace(PortletKeys.JOURNAL) %>selectDocumentLibrary',
+					A.bind(instance._selectFileEntry, instance),
+					[]
+				);
+			},
 
-		getElementsValue: function() {
-			var instance = this;
+			getElementsValue: function() {
+				var instance = this;
 
-			return instance.get('value');
-		},
+				return instance.get('value');
+			},
 
-		_defInitToolbarFn: function() {
-			var instance = this;
+			_defInitToolbarFn: function() {
+				var instance = this;
 
-			DLFileEntryCellEditor.superclass._defInitToolbarFn.apply(instance, arguments);
+				DLFileEntryCellEditor.superclass._defInitToolbarFn.apply(instance, arguments);
 
-			instance.toolbar.add(
-				{
-					handler: A.bind(instance._handleChooseEvent, instance),
-					label: Liferay.Language.get('choose')
-				},
-				1
-			);
-		},
-
-		_handleChooseEvent: function() {
-			var instance = this;
-
-			var portletURL = Liferay.PortletURL.createRenderURL();
-
-			portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-			portletURL.setParameter('struts_action', '/journal/select_document_library');
-
-			portletURL.setPlid(<%= controlPanelPlid %>);
-
-			portletURL.setPortletId('<%= PortletKeys.JOURNAL %>');
-
-			portletURL.setWindowState('pop_up');
-
-			Liferay.Util.openWindow(
-				{
-					uri: portletURL.toString()
-				}
-			);
-		},
-
-		_selectFileEntry: function(url, uuid, version) {
-			var instance = this
-
-			instance.set(
-				'value',
-				A.JSON.stringify(
+				instance.toolbar.add(
 					{
-						groupId: themeDisplay.getScopeGroupId(),
-						uuid: uuid,
-						version: version
+						handler: A.bind(instance._handleChooseEvent, instance),
+						label: Liferay.Language.get('choose')
+					},
+					1
+				);
+			},
+
+			_handleChooseEvent: function() {
+				var instance = this;
+
+				var portletURL = Liferay.PortletURL.createRenderURL();
+
+				portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+				portletURL.setParameter('struts_action', '/journal/select_document_library');
+
+				portletURL.setPlid(<%= controlPanelPlid %>);
+
+				portletURL.setPortletId('<%= PortletKeys.JOURNAL %>');
+
+				portletURL.setWindowState('pop_up');
+
+				Liferay.Util.openWindow(
+					{
+						uri: portletURL.toString()
 					}
-				)
-			);
-		},
+				);
+			},
 
-		_uiSetValue: function(val) {
-			var instance = this;
+			_selectFileEntry: function(url, uuid, version) {
+				var instance = this
 
-			var contentBox = instance.get('contentBox');
-			var fileEntryLinkNode = contentBox.one('a');
+				instance.set(
+					'value',
+					A.JSON.stringify(
+						{
+							groupId: themeDisplay.getScopeGroupId(),
+							uuid: uuid,
+							version: version
+						}
+					)
+				);
+			},
 
-			contentBox.prepend(
-				SpreadSheet.Util.getFileEntryLinkNode(val, fileEntryLinkNode)
-			);
+			_uiSetValue: function(val) {
+				var instance = this;
 
-			instance.elements.set('value', val);
+				var contentBox = instance.get('contentBox');
+				var fileEntryLinkNode = SpreadSheet.Util.getFileEntryLinkNode(val, contentBox.one('a'));
+
+				contentBox.prepend(fileEntryLinkNode);
+
+				instance.elements.val(val);
+			}
 		}
 	}
-});
+);
 
-var FileUploadCellEditor = A.Component.create({
-	NAME: 'fileupload-cell-editor',
+var FileUploadCellEditor = A.Component.create(
+	{
+		NAME: 'fileupload-cell-editor',
 
-	EXTENDS: A.BaseCellEditor,
+		EXTENDS: A.BaseCellEditor,
 
-	ATTRS: {
-		record: {
-			value: null
-		}
-	},
-
-	prototype: {
-		ELEMENT_TEMPLATE: '<input type="file" />',
-
-		getElementsValue: function() {
-			var instance = this;
-
-			return instance.get('value');
+		ATTRS: {
+			record: {
+				value: null
+			}
 		},
 
-		_handleException: function(exception) {
-			var instance = this;
+		prototype: {
+			ELEMENT_TEMPLATE: '<input type="file" />',
 
-			var errorMessage = '';
+			getElementsValue: function() {
+				var instance = this;
 
-			if (exception.indexOf('com.liferay.portlet.documentlibrary.FileSizeException') > -1) {
-				errorMessage = '<%= LanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>';
-			}
+				return instance.get('value');
+			},
 
-			instance._showErrorMessage(errorMessage);
-		},
+			_handleException: function(exception) {
+				var instance = this;
 
-		_handleSaveEvent: function(event) {
-			var instance = this;
+				var errorMessage = '';
 
-			var portletURL = Liferay.PortletURL.createResourceURL();
+				if (exception.indexOf('com.liferay.portlet.documentlibrary.FileSizeException') > -1) {
+					errorMessage = '<%= LanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>';
+				}
 
-			portletURL.setParameter('fieldName', instance.get('elementName'));
-			portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+				instance._showErrorMessage(errorMessage);
+			},
 
-			var record = instance.get('record');
-			var recordData = record.get('data');
+			_handleSaveEvent: function(event) {
+				var instance = this;
 
-			if (recordData.recordId) {
-				portletURL.setParameter('recordId', recordData.recordId);
-			}
+				var portletURL = Liferay.PortletURL.createResourceURL();
 
-			portletURL.setParameter('structureId', <%= ddmStructure.getStructureId() %>);
-			portletURL.setParameter('struts_action', '/dynamic_data_list_display/edit_record_file');
+				portletURL.setParameter('fieldName', instance.get('elementName'));
+				portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
 
-			portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
+				var record = instance.get('record');
+				var recordData = record.get('data');
 
-			portletURL.setWindowState('pop_up');
+				if (recordData.recordId) {
+					portletURL.setParameter('recordId', recordData.recordId);
+				}
 
-			var form = instance.get('contentBox');
-			var uri = portletURL.toString();
+				portletURL.setParameter('ddmStructureId', <%= ddmStructure.getStructureId() %>);
+				portletURL.setParameter('struts_action', '/dynamic_data_list_display/edit_record_file');
 
-			// See http://yuilibrary.com/projects/yui3/ticket/2530515
-			form.setAttribute('action', uri);
+				portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
 
-			A.io.request(
-				uri,
-				{
-					dataType: 'json',
-					form: {
-						id: form,
-						upload: true
-					},
-					method: 'POST',
-					on: {
-						complete: function(ioEvent, id, xhr) {
-							instance._onUploadComplete.apply(instance, [event, xhr]);
+				portletURL.setWindowState('pop_up');
+
+				var uri = portletURL.toString();
+
+				var form = instance.get('contentBox');
+
+				form.attr('action', uri);
+
+				A.io.request(
+					uri,
+					{
+						dataType: 'json',
+						form: {
+							id: form,
+							upload: true
+						},
+						method: 'POST',
+						on: {
+							complete: function(ioEvent, id, xhr) {
+								instance._onUploadComplete.apply(instance, [event, xhr]);
+							}
 						}
 					}
-				}
-			);
-		},
+				);
+			},
 
-		_onUploadComplete: function(event, xhr) {
-			var instance = this;
+			_onUploadComplete: function(event, xhr) {
+				var instance = this;
 
-			var responseText = xhr.responseText;
+				var responseText = xhr.responseText;
 
-			if (responseText) {
-				var data = A.JSON.parse(responseText);
-				var exception = data.exception;
+				if (responseText) {
+					var data = A.JSON.parse(responseText);
+					var exception = data.exception;
 
-				if (!exception) {
-					if (data.uuid) {
-						instance.set('value', responseText);
+					if (!exception) {
+						if (data.uuid) {
+							instance.set('value', responseText);
+						}
+
+						FileUploadCellEditor.superclass._handleSaveEvent.apply(instance, arguments);
 					}
+					else {
+						instance._handleException(exception);
+					}
+				}
+			},
 
-					FileUploadCellEditor.superclass._handleSaveEvent.apply(instance, arguments);
-				}
-				else {
-					instance._handleException(exception);
-				}
+			_showErrorMessage: function(errorMessage) {
+				var instance = this;
+
+				var contentBox = instance.get('contentBox');
+				var messageNode = A.Node.create('<div></div>');
+
+				messageNode.attr('className', 'portlet-msg-error').setContent(errorMessage);
+
+				contentBox.prepend(messageNode);
+
+				A.later(
+					5000,
+					instance,
+					function() {
+						messageNode.remove();
+					}
+				);
+			},
+
+			_uiSetValue: function(val) {
+				var instance = this;
+
+				var contentBox = instance.get('contentBox');
+				var fileEntryLinkNode = SpreadSheet.Util.getFileEntryLinkNode(val, contentBox.one('a'));
+
+				contentBox.prepend(fileEntryLinkNode);
 			}
-		},
-
-		_showErrorMessage: function(errorMessage) {
-			var instance = this;
-
-			var contentBox = instance.get('contentBox');
-			var messageNode = A.Node.create('<div></div>');
-
-			messageNode.attr('className', 'portlet-msg-error');
-			messageNode.setContent(errorMessage);
-
-			contentBox.prepend(messageNode);
-
-			A.later(
-				5000,
-				instance,
-				function() {
-					messageNode.remove();
-				}
-			);
-		},
-
-		_uiSetValue: function(val) {
-			var instance = this;
-
-			var contentBox = instance.get('contentBox');
-			var fileEntryLinkNode = contentBox.one('a');
-
-			contentBox.prepend(
-				SpreadSheet.Util.getFileEntryLinkNode(val, fileEntryLinkNode)
-			);
 		}
 	}
-});
+);
 
 Liferay.SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
 Liferay.SpreadSheet.TYPE_EDITOR['ddm-fileupload'] = FileUploadCellEditor;

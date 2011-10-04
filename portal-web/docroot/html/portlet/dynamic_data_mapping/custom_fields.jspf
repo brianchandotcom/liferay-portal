@@ -21,7 +21,9 @@
 	var camelize = Liferay.Util.camelize;
 	var trim = A.Lang.trim;
 
-	var TPL_BUTTON = '<div class="aui-field-labels-inline"><input type="button" value="<liferay-ui:message key="select" />" /><div>';
+	var TPL_BUTTON = '<div class="aui-field-labels-inline">' +
+						'<input type="button" value="<liferay-ui:message key="select" />" />' +
+					 '<div>';
 
 	var TPL_PARAGRAPH = '<p></p>';
 
@@ -123,7 +125,6 @@
 			},
 
 			prototype: {
-
 				getHTML: function() {
 					return TPL_BUTTON;
 				},
@@ -255,7 +256,6 @@
 			},
 
 			prototype: {
-
 				getPropertyModel: function() {
 					var instance = this;
 

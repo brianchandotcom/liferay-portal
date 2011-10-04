@@ -268,16 +268,15 @@ AUI().add(
 						function(item, index, collection) {
 							var dataType = item.dataType;
 							var label = item.label;
+							var name = item.name;
 							var type = item.type;
 
-							item.key = item.name;
+							item.key = name;
 
 							var EditorClass = instance.TYPE_EDITOR[type] || A.TextCellEditor;
 
-							var elementName = item.name;
-
 							var config = {
-								elementName: elementName,
+								elementName: name,
 								validator: {
 									rules: {}
 								}
@@ -290,8 +289,6 @@ AUI().add(
 							}
 
 							if (type === 'checkbox') {
-								elementName = label;
-
 								config.options = {
 									'true': Liferay.Language.get('true')
 								};
@@ -303,7 +300,7 @@ AUI().add(
 								item.formatter = function(obj) {
 									var data = obj.record.get('data');
 
-									var value = data[item.name];
+									var value = data[name];
 
 									if (value !== STR_EMPTY) {
 										value = Liferay.Language.get(value);
@@ -320,7 +317,7 @@ AUI().add(
 								item.formatter = function(obj) {
 									var data = obj.record.get('data');
 
-									var value = data[item.name];
+									var value = data[name];
 
 									if (value !== STR_EMPTY) {
 										value = parseInt(value, 10);
@@ -336,25 +333,25 @@ AUI().add(
 									var data = obj.record.get('data');
 
 									var label = STR_EMPTY;
-									var value = data[item.name];
+									var value = data[name];
 
 									if (value !== STR_EMPTY) {
-										label = '(' + Liferay.Language.get('file') + ')';	
+										label = '(' + Liferay.Language.get('file') + ')';
 									}
 
 									return label;
 								};
 
-								var structureField = instance.findStructureFieldByAttribute(structure, 'name', elementName);
+								var structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
 								if (type === 'ddm-fileupload') {
-									config.validator.rules[elementName] = {
+									config.validator.rules[name] = {
 										acceptFiles: structureField.acceptFiles
 									};
 								}
 							}
 							else if ((type === 'radio') || (type === 'select')) {
-								var structureField = instance.findStructureFieldByAttribute(structure, 'name', elementName);
+								var structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
 								config.options = instance.getCellEditorOptions(structureField.options);
 							}
@@ -362,15 +359,15 @@ AUI().add(
 							var validatorRules = config.validator.rules;
 							var validatorRuleName = instance.DATATYPE_VALIDATOR[dataType];
 
-							validatorRules[elementName] = A.mix(
+							validatorRules[name] = A.mix(
 								{
 									required: required
 								},
-								validatorRules[elementName]
+								validatorRules[name]
 							);
 
 							if (validatorRuleName) {
-								validatorRules[elementName][validatorRuleName] = true;
+								validatorRules[name][validatorRuleName] = true;
 							}
 
 							if (editable && item.editable) {
@@ -440,16 +437,16 @@ AUI().add(
 		);
 
 		SpreadSheet.Util = {
-			getFileEntry: function(fileEntryJSON, callback) {
+			getFileEntry: function(fileJSON, callback) {
 				var instance = this;
 
 				try {
-					fileEntryJSON = A.JSON.parse(fileEntryJSON);
+					fileJSON = A.JSON.parse(fileJSON);
 
 					DLApp.getFileEntryByUuidAndGroupId(
 						{
-							uuid: fileEntryJSON.uuid,
-							groupId: fileEntryJSON.groupId
+							uuid: fileJSON.uuid,
+							groupId: fileJSON.groupId
 						},
 						callback
 					);
@@ -459,23 +456,23 @@ AUI().add(
 				}
 			},
 
-			getFileEntryLinkNode: function(fileEntryJSON, fileEntryLinkNode) {
+			getFileEntryLinkNode: function(fileJSON, fileEntryLinkNode) {
 				var instance = this;
 
 				fileEntryLinkNode = fileEntryLinkNode || A.Node.create('<a href="javascript:;"></a>');
 
-				if (fileEntryJSON) {
+				if (fileJSON) {
 					instance.getFileEntry(
-						fileEntryJSON,
+						fileJSON,
 						function(fileEntry) {
-							fileEntryLinkNode.setAttribute('href', instance.getFileEntryURL(fileEntry));
-							fileEntryLinkNode.setContent(fileEntry.title);
+							var fileEntryURL = instance.getFileEntryURL(fileEntry);
+
+							fileEntryLinkNode.setContent(fileEntry.title).attr('href', fileEntryURL);
 						}
 					);
 				}
 				else {
-					fileEntryLinkNode.setAttribute('href', 'javascript:;');
-					fileEntryLinkNode.setContent('');
+					fileEntryLinkNode.setContent(STR_EMPTY).attr('href', 'javascript:;');
 				}
 
 				return fileEntryLinkNode;
@@ -484,13 +481,15 @@ AUI().add(
 			getFileEntryURL: function(fileEntry) {
 				var instance = this;
 
-				return [
+				var buffer = [
 					themeDisplay.getPathContext(),
 					'documents',
 					fileEntry.groupId,
 					fileEntry.folderId,
 					encodeURIComponent(fileEntry.title)
-				].join('/');
+				];
+
+				return buffer.join('/');
 			}
 		};
 

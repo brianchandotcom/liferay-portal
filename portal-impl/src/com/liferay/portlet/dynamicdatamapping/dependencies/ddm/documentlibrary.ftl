@@ -18,10 +18,8 @@
 		<#assign fileEntryURL = "">
 
 		<#if (fields??) && (fieldValue != "")>
-			<#assign fileEntryJSONObject = getFileEntryJSONObject(fieldRawValue)>
-
-			<#assign fileEntry = getFileEntry(fileEntryJSONObject)>
-
+			<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
+			<#assign fileEntry = getFileEntry(fileJSONObject)>
 			<#assign fileEntryTitle = fileEntry.getTitle()>
 			<#assign fileEntryURL = getFileEntryURL(fileEntry)>
 		</#if>
@@ -33,56 +31,59 @@
 </@>
 
 <@aui.script use="liferay-portlet-url">
+Liferay.provide(
+	window,
+	'${portalUtil.getPortletNamespace("15")}selectDocumentLibrary',
+	function(url, uuid, version, title) {
+		var inputNode = A.one('#${portletNamespace}${namespacedFieldName}');
 
-A.one('#${namespacedFieldName}').on(
-	'click',
-	function(event) {
-		Liferay.provide(
-			window,
-			'${portalUtil.getPortletNamespace("15")}selectDocumentLibrary',
-			function(url, uuid, version, title) {
-				var inputNode = A.one('#${portletNamespace}${namespacedFieldName}');
+		if (inputNode != null) {
+			inputNode.val(
+				A.JSON.stringify(
+					{
+						groupId: ${scopeGroupId?c},
+						uuid: uuid,
+						version: version
+					}
+				)
+			);
+		}
 
-				if (inputNode != null) {
-					inputNode.val(
-						A.JSON.stringify(
-							{
-								groupId: ${scopeGroupId?c},
-								uuid: uuid,
-								version: version
-							}
-						)
-					);
-				}
+		var labelNode = A.one('#${namespacedFieldName}Label');
 
-				var labelNode = A.one('#${namespacedFieldName}Label');
-
-				if (labelNode != null) {
-					labelNode.setContent(
-						A.Node.create('<a href="' + url + '">' + title + '</a>')
-					);
-				}
-			},
-			['json']
-		);
-
-		var portletURL = Liferay.PortletURL.createRenderURL();
-
-		portletURL.setParameter('groupId', ${scopeGroupId?c});
-		portletURL.setParameter('struts_action', '/journal/select_document_library');
-
-		portletURL.setPlid(${controlPanelPlid?c});
-
-		portletURL.setPortletId('15');
-
-		portletURL.setWindowState('pop_up');
-
-		Liferay.Util.openWindow(
-			{
-				uri: portletURL.toString()
-			}
-		);
-	}
+		if (labelNode != null) {
+			labelNode.setContent(
+				A.Node.create('<a href="' + url + '">' + title + '</a>')
+			);
+		}
+	},
+	['json']
 );
+
+var namespacedField = A.one('#${namespacedFieldName}');
+
+if (namespacedField) {
+	namespacedField.on(
+		'click',
+		function(event) {
+			var portletURL = Liferay.PortletURL.createRenderURL();
+
+			portletURL.setParameter('groupId', ${scopeGroupId?c});
+			portletURL.setParameter('struts_action', '/journal/select_document_library');
+
+			portletURL.setPlid(${controlPanelPlid?c});
+
+			portletURL.setPortletId('15');
+
+			portletURL.setWindowState('pop_up');
+
+			Liferay.Util.openWindow(
+				{
+					uri: portletURL.toString()
+				}
+			);
+		}
+	);
+}
 
 </@>

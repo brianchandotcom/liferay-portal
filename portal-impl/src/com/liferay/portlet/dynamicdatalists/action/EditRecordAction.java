@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -29,6 +30,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
@@ -165,7 +167,6 @@ public class EditRecordAction extends PortletAction {
 			WebKeys.THEME_DISPLAY);
 
 		long recordId = ParamUtil.getLong(actionRequest, "recordId");
-
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 		boolean majorVersion = ParamUtil.getBoolean(
 			actionRequest, "majorVersion");
@@ -177,15 +178,13 @@ public class EditRecordAction extends PortletAction {
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
+		DDLRecord record =
+			DDLRecordLocalServiceUtil.fetchByPrimaryKey(recordId);
+
 		Fields fields = new Fields();
 
 		for (String fieldName : fieldNames) {
-			Field field = new Field();
-
-			field.setDDMStructureId(ddmStructure.getStructureId());
-			field.setName(fieldName);
-
-			String fieldDataType = field.getDataType();
+			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 			String fieldValue = ParamUtil.getString(actionRequest, fieldName);
 
 			if (fieldDataType.equals(FieldConstants.DOCUMENT_LIBRARY)) {
@@ -195,11 +194,26 @@ public class EditRecordAction extends PortletAction {
 				File file = uploadPortletRequest.getFile(fieldName);
 
 				if (file != null) {
-					FileEntry fileEntry = DDLUtil.updateRecordFile(
-						actionRequest, recordId, fieldName, ddmStructure);
+					JSONObject fileJSONObject = null;
+
+					if (record != null) {
+						String oldFieldValue = String.valueOf(
+							record.getFieldValue(fieldName));
+
+						fileJSONObject = JSONFactoryUtil.createJSONObject(
+							oldFieldValue);
+					}
+
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(
+							DLFileEntry.class.getName(), actionRequest);
+
+					FileEntry fileEntry = DDLUtil.uploadFieldFile(
+						ddmStructure, fieldName, fileJSONObject,
+						uploadPortletRequest, serviceContext);
 
 					JSONObject recordFileEntryJSONObject =
-						DDLUtil.getRecordFileEntryJSONObject(fileEntry);
+						DDLUtil.getRecordFileJSONObject(fileEntry);
 
 					fieldValue = recordFileEntryJSONObject.toString();
 				}
@@ -208,7 +222,9 @@ public class EditRecordAction extends PortletAction {
 			Serializable fieldValueSerializable =
 				FieldConstants.getSerializable(fieldDataType, fieldValue);
 
-			field.setValue(fieldValueSerializable);
+			Field field = new Field(
+				ddmStructure.getStructureId(), fieldName,
+				fieldValueSerializable);
 
 			fields.put(field);
 		}
@@ -216,18 +232,16 @@ public class EditRecordAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
 
-		DDLRecord record = null;
-
-		if (recordId <= 0) {
-			record = DDLRecordServiceUtil.addRecord(
-				themeDisplay.getScopeGroupId(), recordSetId,
-				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
-				serviceContext);
-		}
-		else {
+		if (record != null) {
 			record = DDLRecordServiceUtil.updateRecord(
 				recordId, majorVersion,
 				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields, false,
+				serviceContext);
+		}
+		else {
+			record = DDLRecordServiceUtil.addRecord(
+				themeDisplay.getScopeGroupId(), recordSetId,
+				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
 				serviceContext);
 		}
 

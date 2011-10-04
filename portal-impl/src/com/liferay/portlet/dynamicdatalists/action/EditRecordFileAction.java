@@ -17,9 +17,16 @@ package com.liferay.portlet.dynamicdatalists.action;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -45,9 +52,9 @@ public class EditRecordFileAction extends PortletAction {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			FileEntry fileEntry = updateRecordFile(resourceRequest);
+			FileEntry fileEntry = uploadRecordFieldFile(resourceRequest);
 
-			jsonObject = DDLUtil.getRecordFileEntryJSONObject(fileEntry);
+			jsonObject = DDLUtil.getRecordFileJSONObject(fileEntry);
 		}
 		catch (Exception e) {
 			if (e instanceof FileSizeException) {
@@ -61,20 +68,38 @@ public class EditRecordFileAction extends PortletAction {
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
-	protected FileEntry updateRecordFile(ResourceRequest resourceRequest)
+	protected FileEntry uploadRecordFieldFile(ResourceRequest resourceRequest)
 		throws Exception {
 
+		long recordId = ParamUtil.getLong(resourceRequest, "recordId");
+		long structureId = ParamUtil.getLong(resourceRequest, "ddmStructureId");
 		String fieldName = ParamUtil.getString(resourceRequest, "fieldName");
 
-		long recordId = ParamUtil.getLong(resourceRequest, "recordId");
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(structureId);
 
-		long structureId = ParamUtil.getLong(resourceRequest, "structureId");
+		DDLRecord record =
+			DDLRecordLocalServiceUtil.fetchByPrimaryKey(recordId);
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.getDDMStructure(
-			structureId);
+		JSONObject fileJSONObject = null;
 
-		return DDLUtil.updateRecordFile(
-			resourceRequest, recordId, fieldName, structure);
+		if (record != null) {
+			String oldFieldValue = String.valueOf(
+				record.getFieldValue(fieldName));
+
+			fileJSONObject = JSONFactoryUtil.createJSONObject(
+				oldFieldValue);
+		}
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(resourceRequest);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), resourceRequest);
+
+		return DDLUtil.uploadFieldFile(
+			ddmStructure, fieldName, fileJSONObject, uploadPortletRequest,
+			serviceContext);
 	}
 
 }

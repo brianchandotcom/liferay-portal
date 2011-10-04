@@ -188,7 +188,7 @@ int tabIndex = 1;
 			<aui:fieldset>
 				<liferay-ui:error exception="<%= StructureXsdException.class %>" message="please-enter-a-valid-xsd" />
 
-				<aui:input name="xsd" type="hidden" />
+				<aui:input name="xsd" type="hidden" value="<%= JS.encodeURIComponent(xsd) %>" />
 
 				<%
 				String taglibEditElement = renderResponse.getNamespace() + "editElement('add', -1);";
@@ -456,14 +456,18 @@ int tabIndex = 1;
 
 	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoStructureIdCheckbox','<portlet:namespace />newStructureId', true);
 
-	Liferay.Util.inlineEditor(
-		{
-			button: '#<portlet:namespace />editorButton',
-			textarea: '<portlet:namespace />xsdContent',
-			title: '<liferay-ui:message key="editor" />',
-			uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/edit_structure_xsd" /></portlet:renderURL>'
+	Liferay.Util.inlineEditor({
+		button: '#<portlet:namespace />editorButton',
+		id: '<portlet:namespace />xsdContentIFrame',
+		textarea: '<portlet:namespace />xsdContent',
+		title: '<liferay-ui:message key="editor" />',
+		uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/edit_template_xsl" /><portlet:param name="langType" value="xsd" /><portlet:param name="editorContentInputElement" value="<%= \"#\" + renderResponse.getNamespace() + \"xsd\" %>" /><portlet:param name="editorContentOutputElement" value="<%= \"#\" + renderResponse.getNamespace() + \"xsd\" %>" /></portlet:renderURL>',
+		callback: function (dialog) {
+			dialog.on('update', function () {
+				submitForm(document.<portlet:namespace />fm1);
+			});
 		}
-	);
+	});
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		<c:choose>

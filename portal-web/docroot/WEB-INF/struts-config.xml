@@ -640,8 +640,6 @@
 			<forward name="portlet.dynamic_data_mapping.error" path="portlet.dynamic_data_mapping.error" />
 		</action>
 
-		<action path="/dynamic_data_mapping/edit_template_script" forward="portlet.dynamic_data_mapping.edit_template_script" />
-
 		<action path="/dynamic_data_mapping/select_structure" forward="portlet.dynamic_data_mapping.select_structure" />
 
 		<action path="/dynamic_data_mapping/view" forward="portlet.dynamic_data_mapping.view" />
@@ -813,8 +811,6 @@
 			<forward name="portlet.journal.edit_structure" path="portlet.journal.edit_structure" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
-
-		<action path="/journal/edit_structure_xsd" forward="portlet.journal.edit_structure_xsd" />
 
 		<action path="/journal/edit_template" type="com.liferay.portlet.journal.action.EditTemplateAction">
 			<forward name="portlet.journal.edit_template" path="portlet.journal.edit_template" />

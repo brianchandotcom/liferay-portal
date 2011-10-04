@@ -64,6 +64,13 @@ else {
 
 String langType = BeanParamUtil.getString(template, request, "langType", JournalTemplateConstants.LANG_TYPE_VM);
 
+String editorContent = xsl;
+
+if (editorContent.isEmpty()) {
+	// Use default content for selected type
+	editorContent = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(langType)));
+}
+
 boolean cacheable = BeanParamUtil.getBoolean(template, request, "cacheable");
 
 if (template == null) {
@@ -88,6 +95,7 @@ if (template == null) {
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 	<aui:input name="xslContent" type="hidden" value="<%= JS.encodeURIComponent(xsl) %>" />
+	<aui:input name="editorContentInput" type="hidden" value="<%= JS.encodeURIComponent(editorContent) %>" disabled="true" />
 	<aui:input name="saveAndContinue" type="hidden" />
 
 	<liferay-ui:header
@@ -309,10 +317,10 @@ if (template == null) {
 	Liferay.Util.inlineEditor(
 		{
 			button: '#<portlet:namespace />editorButton',
-			id: '<portlet:namespace />xslContent',
+			id: '<portlet:namespace />xslContentIFrame',
 			textarea: '<portlet:namespace />xslContent',
 			title: '<liferay-ui:message key="editor" />',
-			uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/edit_template_xsl" /></portlet:renderURL>&<portlet:namespace />langType=' + document.<portlet:namespace />fm1.<portlet:namespace />langType.value
+			uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/edit_template_xsl" /><portlet:param name="langType" value="<%= langType %>" /><portlet:param name="editorContentInputElement" value="<%= \"#\" + renderResponse.getNamespace() + \"editorContentInput\" %>" /><portlet:param name="editorContentOutputElement" value="<%= \"#\" + renderResponse.getNamespace() + \"xslContent\" %>" /></portlet:renderURL>'
 		}
 	);
 

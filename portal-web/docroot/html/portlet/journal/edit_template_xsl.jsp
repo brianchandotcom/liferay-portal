@@ -19,139 +19,168 @@
 <%
 String langType = ParamUtil.getString(request, "langType");
 
+String editorContentInputElement = ParamUtil.getString(request, "editorContentInputElement");
+String editorContentOutputElement = ParamUtil.getString(request, "editorContentOutputElement");
+
 String editorType = ParamUtil.getString(request, "editorType");
 
 if (Validator.isNotNull(editorType)) {
 	portalPreferences.setValue(PortletKeys.JOURNAL, "editor-type", editorType);
 }
 else {
-	editorType = portalPreferences.getValue(PortletKeys.JOURNAL, "editor-type", "html");
+	editorType = portalPreferences.getValue(PortletKeys.JOURNAL, "editor-type", "plain");
 }
 
-boolean useEditorCodepress = editorType.equals("codepress");
+boolean useRichEditor = editorType.equals("rich");
 
-String defaultContent = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(langType)));
+String editorMode = "php";
+
+if (langType.equals("css")) {
+	editorMode = "css";
+}
+else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xsd")) {
+	editorMode = "xml";
+}
 %>
+
+<style type="text/css">
+	.aui-ace-editor {
+		position: relative;
+		border: 1px solid #A1A2A4;
+		border-radius: 4px;
+		box-shadow: 0 1px 0 white, 0 1px 2px #CCC inset;
+	}
+
+	.ace_gutter {
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px;
+	}
+
+	.lfr-editor-textarea {
+		width: 100%;
+		padding: 0;
+	}
+
+	#plain-editor textarea,
+	#rich-editor.ace_editor {
+		font-family: 'Monaco', 'Menlo', 'Droid Sans Mono', 'Courier New', monospace;
+		font-size: 12px;
+	}
+</style>
 
 <aui:form method="post" name="editorForm">
 	<aui:fieldset>
-		<aui:select name="editorType" onChange='<%= renderResponse.getNamespace() + "updateEditorType();" %>'>
-			<aui:option label="plain" value="1" />
-			<aui:option label="rich" selected="<%= useEditorCodepress %>" value="0" />
+		<aui:select name="editorType">
+			<aui:option label="plain" value="plain" />
+			<aui:option label="rich" selected="<%= useRichEditor %>" value="rich" />
 		</aui:select>
 
-		<c:choose>
-			<c:when test="<%= useEditorCodepress %>">
-				 <aui:input cssClass="lfr-template-editor" inputCssClass="codepress html" label="" name="xslContent" type="textarea" wrap="off" />
-			</c:when>
-			<c:otherwise>
-				<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-textarea" label="" name="xslContent" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" wrap="off" />
-			</c:otherwise>
-		</c:choose>
+		<div id="plain-editor" style="display: <%= useRichEditor ? "none" : "block" %>">
+			<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plain-editor-input" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" wrap="off" value='' />
+		</div>
+		<div id="rich-editor" style="display: <%= useRichEditor ? "block" : "none" %>"></div>
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "updateTemplateXsl();" %>' value="update" />
-
-		<c:if test="<%= !useEditorCodepress %>">
-			<aui:button onClick='<%= "Liferay.Util.selectAndCopy(document." + renderResponse.getNamespace() + "editorForm." + renderResponse.getNamespace() + "xslContent);" %>' value="select-and-copy" />
-		</c:if>
-
+		<aui:button name="update-button" value="update" />
 		<aui:button type="cancel" />
 	</aui:button-row>
 </aui:form>
 
-<c:if test="<%= useEditorCodepress %>">
-	<script src="<%= themeDisplay.getPathContext() %>/html/js/editor/codepress/codepress.js" type="text/javascript"></script>
-</c:if>
-
 <aui:script>
-	function <portlet:namespace />getEditorContent() {
+AUI().use('aui-dialog', 'aui-io-request', 'aui-ace-editor-base', 'aui-ace-editor-mode-<%= editorMode %>', function(A) {
+	// Multiple functions need access to these variables
+	var editorType = '<%= editorType %>';
+	var editorContentOutputElement;
+	var richEditor;
+
+	A.ready(init);
+
+	function init() {
+		richEditor = new A.AceEditor({
+			boundingBox: '#rich-editor',
+			width: '100%',
+			height: '400',
+			mode: '<%= editorMode %>'
+		}).render();
+
 		var openerAUI = Liferay.Util.getOpener().AUI();
 
-		var xslContent = openerAUI.one('input[name=<portlet:namespace />xslContent]');
+		editorContentOutputElement = openerAUI.one('<%= editorContentOutputElement %>');
+		var editorContentInputElement = openerAUI.one('<%= editorContentInputElement %>');
 
-		if (xslContent) {
-			var content = decodeURIComponent(xslContent.val());
+		if (editorContentInputElement) {
+			setEditorContentForType(editorType, decodeURIComponent(editorContentInputElement.val()));
 		}
 
-		if (!content) {
-			content = "<%= UnicodeFormatter.toString(defaultContent) %>";
+		// Register event handlers
+		A.one('#<portlet:namespace />editorType').on('change', updateEditorType);
+		A.one('#<portlet:namespace />update-button').on('click', updateTemplateXsl);
+	}
+
+	function getEditorContentForType(type) {
+		if (type == 'plain') {
+			return A.one('#<portlet:namespace />plain-editor-input').get('value');
+		} else {
+			return richEditor.getSession().getValue();
+		}
+	}
+
+	function setEditorContentForType(type, content) {
+		if (type == 'plain') {
+			return A.one('#<portlet:namespace />plain-editor-input').set('value', content);
+		} else {
+			return richEditor.getSession().setValue(content);
+		}
+	}
+
+	function updateEditorType(event) {
+		var oldEditorType = editorType;
+		var newEditorType = A.one('#<portlet:namespace />editorType').get('value');
+
+		var oldEditorContent = getEditorContentForType(oldEditorType);
+
+		setEditorContentForType(newEditorType, oldEditorContent);
+
+		// Make old editor invisible
+		if (oldEditorType == 'plain') {
+			A.one('#plain-editor').setStyle('display', 'none');
+		} else {
+			A.one('#rich-editor').setStyle('display', 'none');
 		}
 
-		return content;
+		// Make new editor visible
+		if (newEditorType == 'plain') {
+			A.one('#plain-editor').setStyle('display', 'block');
+		} else {
+			A.one('#rich-editor').setStyle('display', 'block');
+
+			// If Ace editor is initialized while it is set to "display: none",
+			// the size will be wrong, so we resize it when we re-display it
+			richEditor.editor.resize();
+		}
+
+		persistEditorType(newEditorType);
+
+		editorType = newEditorType;
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateEditorType',
-		function() {
-			var A = AUI();
-
-			<%
-			String newEditorType = "codepress";
-
-			if (useEditorCodepress) {
-				newEditorType = "html";
-			}
-			%>
-
-			Liferay.Util.switchEditor(
-				{
-					textarea: '<portlet:namespace />xslContent',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/edit_template_xsl" /><portlet:param name="langType" value="<%= langType %>" /><portlet:param name="editorType" value="<%= newEditorType %>" /></portlet:renderURL>'
-				}
-			);
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateTemplateXsl',
-		function() {
-			var openingWindow = Liferay.Util.getOpener();
-
-			var openerAUI = openingWindow.AUI();
-
-			var xslContent = openerAUI.one('input[name=<portlet:namespace />xslContent]');
-			var content = '';
-
-			<c:choose>
-				<c:when test="<%= useEditorCodepress %>">
-					content = <portlet:namespace />xslContent.getCode();
-				</c:when>
-				<c:otherwise>
-					content = document.<portlet:namespace />editorForm.<portlet:namespace />xslContent.value;
-				</c:otherwise>
-			</c:choose>
-
-			xslContent.val(encodeURIComponent(content));
-
-			var dialog = Liferay.Util.getWindow();
-
-			if (dialog) {
-				dialog.close();
-			}
-		},
-		['aui-dialog']
-	);
-
-	Liferay.Util.resizeTextarea('<portlet:namespace />xslContent', <%= useEditorCodepress %>, true);
-</aui:script>
-
-<aui:script use="aui-base">
-	var textarea = '#<portlet:namespace />xslContent';
-
-	if (<%= useEditorCodepress %>) {
-		textarea = '#<portlet:namespace />xslContent_cp';
+	function persistEditorType(editorType) {
+		var uri = '<portlet:renderURL><portlet:param name="struts_action" value="/journal/edit_template_xsl" /></portlet:renderURL>&editorType=' + editorType;
+		var request = A.io.request(uri).start();
 	}
 
-	A.on(
-		'available',
-		function(event) {
-			A.one(textarea).val(<portlet:namespace />getEditorContent());
-		},
-		textarea
-	);
+	function updateTemplateXsl() {
+		var content = getEditorContentForType(editorType);
+
+		editorContentOutputElement.val(encodeURIComponent(content));
+
+		var dialog = Liferay.Util.getWindow();
+
+		if (dialog) {
+			dialog.close();
+			dialog.fire('update');
+		}
+	}
+});
 </aui:script>

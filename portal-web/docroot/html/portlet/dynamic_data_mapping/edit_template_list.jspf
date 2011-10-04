@@ -46,16 +46,28 @@ String language = BeanParamUtil.getString(template, request, "language", DDMTemp
 	<aui:button name="editorButton" value="launch-editor" />
 </aui:field-wrapper>
 
+<%
+// Make the URL for our popup editor
+Group controlPanelGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.CONTROL_PANEL);
+long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
+
+LiferayPortletURL inlineEditorUrl = PortletURLFactoryUtil.create(request, PortletKeys.JOURNAL, controlPanelPlid, PortletRequest.RENDER_PHASE);
+
+inlineEditorUrl.setWindowState(LiferayWindowState.POP_UP);
+inlineEditorUrl.setPortletMode(PortletMode.VIEW);
+inlineEditorUrl.setParameter("struts_action", "/journal/edit_template_xsl");
+inlineEditorUrl.setParameter("editorContentInputElement", "#" + renderResponse.getNamespace() + "scriptContent");
+inlineEditorUrl.setParameter("editorContentOutputElement", "#" + renderResponse.getNamespace() + "scriptContent");
+%>
+
 <aui:script>
-	Liferay.Util.inlineEditor(
-		{
-			button: '#<portlet:namespace />editorButton',
-			id: '<portlet:namespace />scriptContent',
-			textarea: '<portlet:namespace />scriptContent',
-			title: '<liferay-ui:message key="editor" />',
-			uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template_script" /></portlet:renderURL>&<portlet:namespace />language=' + document.<portlet:namespace />fm.<portlet:namespace />language.value
-		}
-	);
+	Liferay.Util.inlineEditor({
+		button: '#<portlet:namespace />editorButton',
+		id: '<portlet:namespace />scriptContentIFrame',
+		textarea: '<portlet:namespace />scriptContent',
+		title: '<liferay-ui:message key="editor" />',
+		uri: '<%= inlineEditorUrl.toString() %>&langType=' + document.<portlet:namespace />fm.<portlet:namespace />language.value
+	});
 
 	Liferay.provide(
 		window,

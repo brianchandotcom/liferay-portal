@@ -13,13 +13,6 @@
 	-->
 
 	<property name="ckeditor.file" value="ckeditor_3.5.3.zip" />
-
-	<!--
-	When upgrading CodePress, make sure to reapply LEP-7427.
-	-->
-
-	<property name="codepress.file" value="codepress-v.0.9.6.zip" />
-
 	<property name="fckeditor.file" value="FCKeditor_2.6.3.zip" />
 	<property name="tinymce.file" value="tinymce_3_2_1.zip" />
 	<property name="vaadin.file" value="vaadin-6.4.10.zip" />
@@ -349,31 +342,6 @@
 		</script>
 
 		<echo file="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
-	</target>
-
-	<target name="build-codepress">
-		<if>
-			<not>
-				<uptodate
-					srcfile="third-party/${codepress.file}"
-					targetfile="docroot/html/js/editor/codepress"
-				/>
-			</not>
-			<then>
-				<delete dir="docroot/html/js/editor/codepress" />
-
-				<unzip src="third-party/${codepress.file}" dest="docroot/html/js/editor" />
-
-				<copy todir="docroot/html/js/editor/codepress" overwrite="true">
-					<fileset dir="docroot/html/js/editor/codepress_diffs" />
-				</copy>
-			</then>
-			<else>
-				<copy todir="docroot/html/js/editor/codepress">
-					<fileset dir="docroot/html/js/editor/codepress_diffs" />
-				</copy>
-			</else>
-		</if>
 	</target>
 
 	<target name="build-css">
@@ -925,7 +893,6 @@ var defaultTypes = []]>
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/js/aui" />
 		<delete dir="docroot/html/js/editor/ckeditor" />
-		<delete dir="docroot/html/js/editor/codepress" />
 		<delete dir="docroot/html/js/editor/fckeditor" />
 		<delete dir="docroot/html/js/editor/tinymce" />
 		<delete dir="docroot/html/portal/aui" />
@@ -1114,7 +1081,6 @@ Please set the property "jdk.6.home" in build.properties.
 	<target name="deploy">
 		<antcall target="build-alloy" />
 		<antcall target="build-ckeditor" />
-		<antcall target="build-codepress" />
 		<antcall target="build-dtd" />
 		<antcall target="build-fckeditor" />
 		<antcall target="build-tinymce" />
@@ -1206,7 +1172,6 @@ Please set the property "jdk.6.home" in build.properties.
 	<target name="war" depends="compile">
 		<antcall target="build-alloy" />
 		<antcall target="build-ckeditor" />
-		<antcall target="build-codepress" />
 		<antcall target="build-dtd" />
 		<antcall target="build-fckeditor" />
 		<antcall target="build-tinymce" />

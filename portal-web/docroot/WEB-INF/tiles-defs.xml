@@ -541,10 +541,6 @@
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/edit_template.jsp" />
 	</definition>
 
-	<definition name="portlet.dynamic_data_mapping.edit_template_script" extends="portlet.dynamic_data_mapping">
-		<put name="portlet_content" value="/portlet/dynamic_data_mapping/edit_template_script.jsp" />
-	</definition>
-
 	<definition name="portlet.dynamic_data_mapping.error" extends="portlet.dynamic_data_mapping">
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/error.jsp" />
 	</definition>
@@ -647,10 +643,6 @@
 
 	<definition name="portlet.journal.edit_structure" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/edit_structure.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.edit_structure_xsd" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/edit_structure_xsd.jsp" />
 	</definition>
 
 	<definition name="portlet.journal.edit_template" extends="portlet.journal">

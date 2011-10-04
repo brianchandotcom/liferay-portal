@@ -576,31 +576,6 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Legend">
-		<attributes>
-			<attribute>
-				<name>cssClass</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-				<defaultValue></defaultValue>
-				<description></description>
-			</attribute>
-			<attribute>
-				<name>helpMessage</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-				<defaultValue></defaultValue>
-				<description></description>
-			</attribute>
-			<attribute>
-				<name>label</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-				<defaultValue></defaultValue>
-				<description></description>
-			</attribute>
-		</attributes>
-	</component>
 	<component name="ModelContext" writeJSP="false">
 		<attributes>
 			<attribute>

@@ -18,7 +18,15 @@
 
 <fieldset class="aui-fieldset <%= cssClass %> <%= column ? "aui-column aui-form-column" : StringPool.BLANK %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:if test="<%= Validator.isNotNull(label) %>">
-		<aui:legend helpMessage="<%= helpMessage %>" label="<%= label %>" />
+		<legend class="aui-fieldset-legend">
+			<span class="aui-legend">
+				<liferay-ui:message key="<%= label %>" />
+
+				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+					<liferay-ui:icon-help message="<%= helpMessage %>" />
+				</c:if>
+			</span>
+		</legend>
 	</c:if>
 
 	<div class="aui-fieldset-content <%= column ? "aui-column-content" : StringPool.BLANK %>">

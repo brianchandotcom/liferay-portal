@@ -1643,6 +1643,14 @@
 				}
 
 				checkbox.previous().val(value);
+
+				Liferay.fire(
+					'checkbox:change',
+					{
+						checkbox: checkbox,
+						value: value
+					}
+				);
 			}
 		},
 		['aui-base']

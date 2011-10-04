@@ -20,6 +20,8 @@ AUI().add(
 
 		var CSS_DOCUMENT_DISPLAY_STYLE_SELECTABLE = '.document-display-style.selectable';
 
+		var CSS_DOCUMENT_DISPLAY_STYLE_SELECTED = '.document-display-style.selected';
+
 		var CSS_SELECTED = 'selected';
 
 		var DATA_FOLDER_ID = 'data-folder-id';
@@ -70,7 +72,11 @@ AUI().add(
 
 		var STRUTS_ACTION = 'struts_action';
 
-		var SRC_HISTORY = 0;
+		var SRC_DISPLAY_STYLE_BUTTONS = 0;
+
+		var SRC_ENTRIES_PAGINATOR = 1;
+
+		var SRC_HISTORY = 2;
 
 		var VIEW_ADD_BREADCRUMB = 'viewBreadcrumb';
 
@@ -103,6 +109,7 @@ AUI().add(
 						instance._dataRetrieveFailure = instance.ns('dataRetrieveFailure');
 						instance._eventDataRequest = instance.ns('dataRequest');
 						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
+						instance._eventEntresDisplayStyle = instance.ns('entriesDisplayStyle');
 						instance._eventPageLoaded = instance.ns('pageLoaded');
 
 						instance._displayStyleToolbarNode = instance.byId(DISPLAY_STYLE_TOOLBAR);
@@ -160,8 +167,9 @@ AUI().add(
 
 						folderPaginator.on('changeRequest', instance._onFolderPaginatorChangeRequest, instance);
 
-						Liferay.on(instance._eventDataRequest, instance._updatePaginatorValues, instance);
+						Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance);
 						Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance);
+						Liferay.on(instance._eventEntresDisplayStyle, instance._onEntresDisplayStyle, instance);
 						Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance);
 
 						Liferay.after(instance._eventDataRequest, instance._afterDataRequest, instance);
@@ -371,6 +379,12 @@ AUI().add(
 						);
 					},
 
+					_getDisplayStyle: function() {
+						var instance = this;
+
+						return History.get(instance._displayStyle) || instance._config.displayStyle;
+					},
+
 					_getIORequest: function() {
 						var instance = this;
 
@@ -518,6 +532,31 @@ AUI().add(
 						}
 					},
 
+					_onDataRequest: function(event) {
+						var instance = this;
+
+						var source = event.src;
+
+						if (source === SRC_DISPLAY_STYLE_BUTTONS || source === SRC_ENTRIES_PAGINATOR) {
+							var displayStyle = instance._getDisplayStyle();
+
+							var selectedEntries;
+
+							if (displayStyle === DISPLAY_STYLE_LIST) {
+								selectedEntries = instance._entriesContainer.all('td>[type=checkbox]:checked');
+							}
+							else {
+								selectedEntries = instance._entriesContainer.all('.document-display-style.selected [type=checkbox]');
+							}
+
+							if (selectedEntries) {
+								instance._selectedEntries = selectedEntries.get('value');
+							}
+						}
+
+						instance._updatePaginatorValues(event);
+					},
+
 					_onDocumentLibraryContainerClick: function(event) {
 						var instance = this;
 
@@ -656,7 +695,7 @@ AUI().add(
 							}
 						);
 
-						var selectedItems = instance._entriesContainer.all('.document-display-style.selected');
+						var selectedItems = instance._entriesContainer.all(CSS_DOCUMENT_DISPLAY_STYLE_SELECTED);
 
 						var selectedItemsCount = selectedItems.size();
 
@@ -675,6 +714,12 @@ AUI().add(
 								selectedItems: selectedItems
 							}
 						);
+					},
+
+					_onEntresDisplayStyle: function(event) {
+						var instance = this;
+
+						instance._entriesDisplayStyle = event.displayStyle
 					},
 
 					_onEntryPaginatorChangeRequest: function(event) {
@@ -697,7 +742,8 @@ AUI().add(
 						Liferay.fire(
 							instance._eventDataRequest,
 							{
-								requestParams: requestParams
+								requestParams: requestParams,
+								src: SRC_ENTRIES_PAGINATOR
 							}
 						);
 					},
@@ -837,6 +883,8 @@ AUI().add(
 							entriesContainer.setContent(entries);
 
 							instance._initDropTargets();
+
+							instance._updateSelectedEntriesStatus();
 						}
 					},
 
@@ -933,7 +981,7 @@ AUI().add(
 						if (length > 1) {
 							var displayStyleToolbar = instance._displayStyleToolbarNode.getData(DISPLAY_STYLE_TOOLBAR);
 
-							var displayStyle = History.get(instance._displayStyle) || config.displayStyle;
+							var displayStyle = instance._getDisplayStyle();
 
 							for (var i = 0; i < length; i++) {
 								displayStyleToolbar.item(i).StateInteraction.set(STR_ACTIVE, displayStyle === displayViews[i]);
@@ -962,7 +1010,7 @@ AUI().add(
 					_toggleHovered: function(event) {
 						var instance = this;
 
-						var displayStyle = History.get(instance._displayStyle) || STR_ICON;
+						var displayStyle = instance._getDisplayStyle();
 
 						if (displayStyle != DISPLAY_STYLE_LIST) {
 							var documentDisplayStyle = event.target.ancestor(CSS_DOCUMENT_DISPLAY_STYLE);
@@ -974,17 +1022,26 @@ AUI().add(
 					},
 
 					_toggleSelected: function(node, preventUpdate) {
-						node = node.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || node;
+						var instance = this;
+						
+						var displayStyle = instance._getDisplayStyle();
 
-						if (!preventUpdate) {
-							var selectElement = node.one('.document-selector input[type=checkbox]');
-
-							selectElement.attr(ATTR_CHECKED, !selectElement.attr(ATTR_CHECKED));
-
-							Liferay.Util.updateCheckboxValue(selectElement);
+						if (displayStyle === DISPLAY_STYLE_LIST) {
+							node.attr(ATTR_CHECKED, !node.attr(ATTR_CHECKED));
 						}
+						else {
+							node = node.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || node;
 
-						node.toggleClass(CSS_SELECTED);
+							if (!preventUpdate) {
+								var selectElement = node.one('.document-selector input[type=checkbox]');
+
+								selectElement.attr(ATTR_CHECKED, !selectElement.attr(ATTR_CHECKED));
+
+								Liferay.Util.updateCheckboxValue(selectElement);
+							}
+
+							node.toggleClass(CSS_SELECTED);
+						}
 					},
 
 					_unselectAllEntries: function() {
@@ -993,6 +1050,36 @@ AUI().add(
 						instance._selectAllCheckbox.attr(CSS_SELECTED, false);
 
 						instance._toggleEntriesSelection();
+					},
+
+					_updateSelectedEntriesStatus: function() {
+						var instance = this;
+
+						var selectedEntries = instance._selectedEntries;
+
+						if (selectedEntries && selectedEntries.length) {
+							A.each(
+								selectedEntries,
+								function(item, index, collection) {
+									var entry;
+
+									var displayStyle = instance._getDisplayStyle();
+
+									if (displayStyle === DISPLAY_STYLE_LIST) {
+										entry = instance._entriesContainer.one('input[value="' + item + '"]');
+									}
+									else {
+										entry = instance._entriesContainer.one('input[value="' + item + '"]');
+									}
+
+									if(entry) {
+										instance._toggleSelected(entry);
+									}
+								}
+							);
+
+							selectedEntries.length = 0;
+						}
 					},
 
 					_updatePaginatorValues: function(event) {
@@ -1016,7 +1103,7 @@ AUI().add(
 								customParams[instance.ns(STR_FOLDER_END)] = folderStartEndParams[1];
 							}
 
-							if (customParams.length > 0) {
+							if (!AObject.isEmpty(customParams)) {
 								A.mix(requestParams, customParams, true);
 							}
 						}

@@ -72,7 +72,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 			Liferay.fire(
 				'<portlet:namespace />dataRequest',
 				{
-					requestParams: config
+					requestParams: config,
+					src: 0
 				}
 			);
 		}

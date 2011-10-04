@@ -102,7 +102,7 @@ public class EntriesChecker extends RowChecker {
 		String name = null;
 
 		if (fileEntry != null) {
-			name = FileEntry.class.getName();
+			name = FileEntry.class.getSimpleName();
 
 			try {
 				if (DLFileEntryPermission.contains(
@@ -117,7 +117,7 @@ public class EntriesChecker extends RowChecker {
 			}
 		}
 		else if (dlFileShortcut != null) {
-			name = DLFileShortcut.class.getName();
+			name = DLFileShortcut.class.getSimpleName();
 
 			try {
 				if (DLFileShortcutPermission.contains(
@@ -131,7 +131,7 @@ public class EntriesChecker extends RowChecker {
 			}
 		}
 		else if (folder != null) {
-			name = Folder.class.getName();
+			name = Folder.class.getSimpleName();
 
 			try {
 				if (DLFolderPermission.contains(
@@ -153,18 +153,15 @@ public class EntriesChecker extends RowChecker {
 		sb.append("['");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(Folder.class.getName());
+		sb.append(Folder.class.getSimpleName());
 		sb.append("Checkbox', '");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(DLFileShortcut.class.getName());
+		sb.append(DLFileShortcut.class.getSimpleName());
 		sb.append("Checkbox', '");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(FileEntry.class.getName());
+		sb.append(FileEntry.class.getSimpleName());
 		sb.append("Checkbox']");
 
 		String checkBoxRowIds = sb.toString();
@@ -172,7 +169,7 @@ public class EntriesChecker extends RowChecker {
 		return getRowCheckBox(
 			checked,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
-				StringPool.UNDERLINE + name + "Checkbox",
+				name + "Checkbox",
 			primaryKey,
 			checkBoxRowIds,
 			"'#" + getAllRowIds() + "Checkbox'",

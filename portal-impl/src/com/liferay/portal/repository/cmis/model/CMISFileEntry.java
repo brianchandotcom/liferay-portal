@@ -104,6 +104,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	public InputStream getContentStream(String version)
 		throws PortalException {
 
+		if (Validator.isNull(version)) {
+			return getContentStream();
+		}
+		
 		for (Document document : _document.getAllVersions()) {
 			if (version.equals(document.getVersionLabel())) {
 				ContentStream contentStream = document.getContentStream();
@@ -154,6 +158,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	public FileVersion getFileVersion(String version)
 		throws PortalException, SystemException {
+		
+		if (Validator.isNull(version)) {
+			return getFileVersion();
+		}
 
 		for (Document document : _document.getAllVersions()) {
 			if (version.equals(document.getVersionLabel())) {
@@ -296,6 +304,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	public String getMimeType(String version) {
+		if (Validator.isNull(version)) {
+			return getMimeType();
+		}
+		
 		for (Document document : _document.getAllVersions()) {
 			if (version.equals(document.getVersionLabel())) {
 				return document.getContentStreamMimeType();
@@ -395,7 +407,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	public String getVersion() {
 		return GetterUtil.get(
-			_document.getVersionLabel(), DLFileEntryConstants.VERSION_DEFAULT);
+			_document.getVersionLabel(), (String) null);
 	}
 
 	public long getVersionUserId() {

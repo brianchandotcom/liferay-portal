@@ -651,9 +651,6 @@ public class WebServerServlet extends HttpServlet {
 			if (Validator.isNotNull(fileEntry.getVersion())) {
 				version = fileEntry.getVersion();
 			}
-			else {
-				throw new NoSuchFileEntryException();
-			}
 		}
 
 		String tempFileId = DLUtil.getTempFileId(

@@ -136,7 +136,14 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 <c:if test="<%= folder != null %>">
 
 	<%
-	String versionText = LanguageUtil.format(pageContext, "version-x", fileVersion.getVersion());
+	String versionText;
+
+	if (Validator.isNotNull(fileVersion.getVersion())) {
+		versionText = LanguageUtil.format(pageContext, "version-x", fileVersion.getVersion());
+	}
+	else {
+		versionText = LanguageUtil.get(pageContext, "not-approved");
+	}
 
 	if (Validator.isNull(fileEntry.getVersion())) {
 		versionText = LanguageUtil.get(pageContext, "not-approved");

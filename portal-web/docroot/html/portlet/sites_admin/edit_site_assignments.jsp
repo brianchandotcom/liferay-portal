@@ -174,7 +174,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 		function() {
 		    var organizationKeywords = document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_organizations;
 
-			if (organizationKeywords && organizationKeywords.value != '') {
+			if (organizationKeywords && organizationKeywords.value) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>.value = organizationKeywords.value;
 
 				submitForm(document.<portlet:namespace />fm, "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="organizations" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>");
@@ -182,7 +182,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 			var userKeywords = document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_users;
 
-			if (userKeywords && userKeywords.value != '') {
+			if (userKeywords && userKeywords.value) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>.value = userKeywords.value;
 
 				submitForm(document.<portlet:namespace />fm, "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="users" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>");
@@ -190,7 +190,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 			var userGroupKeywords = document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_user_groups;
 
-			if (userGroupKeywords && userGroupKeywords.value != '') {
+			if (userGroupKeywords && userGroupKeywords.value) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>.value = userGroupKeywords.value;
 
 				submitForm(document.<portlet:namespace />fm, "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="user-groups" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>");

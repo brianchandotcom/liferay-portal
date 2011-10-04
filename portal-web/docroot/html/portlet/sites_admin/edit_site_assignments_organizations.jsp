@@ -174,7 +174,7 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 				<aui:button type="submit" value="search" />
 
-				<br /> <br />
+				<br /><br />
 
 				<liferay-ui:search-iterator paginate="<%= false %>" />
 
@@ -187,12 +187,12 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
 			<c:if test="<%= total > organizationSearch.getDelta() %>">
-				<%= formButton%>
+				<%= formButton %>
 			</c:if>
 
 			<liferay-ui:search-iterator />
 
-			<%= formButton%>
+			<%= formButton %>
 		</c:when>
 	</c:choose>
 </liferay-ui:search-container>

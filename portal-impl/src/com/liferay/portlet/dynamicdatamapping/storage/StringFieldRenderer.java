@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.Serializable;
@@ -27,7 +26,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 	protected String doRender(
 		ThemeDisplay themeDisplay, Serializable fieldValue) {
 
-		return GetterUtil.getString(fieldValue);
+		return String.valueOf(fieldValue);
 	}
 
 }

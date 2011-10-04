@@ -31,7 +31,9 @@ public abstract class BaseFieldRenderer implements FieldRenderer {
 			return doRender(themeDisplay, fieldValue);
 		}
 		catch (Exception e) {
-			_log.error("Unable to render field", e);
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to render field", e);
+			}
 		}
 
 		return null;

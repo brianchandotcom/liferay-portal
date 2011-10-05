@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 
 import java.util.Set;
 
@@ -59,6 +61,15 @@ public class ParallelDestination extends BaseAsyncDestination {
 			message.put("companyId", CompanyThreadLocal.getCompanyId());
 		}
 
+		if (!message.contains("principalName")) {
+			message.put("principalName", PrincipalThreadLocal.getName());
+		}
+
+		if (!message.contains("principalPassword")) {
+			message.put(
+				"principalPassword", PrincipalThreadLocal.getPassword());
+		}
+
 		ThreadPoolExecutor threadPoolExecutor = getThreadPoolExecutor();
 
 		for (final MessageListener messageListener : messageListeners) {
@@ -66,12 +77,29 @@ public class ParallelDestination extends BaseAsyncDestination {
 
 				public void run() {
 					long companyId = CompanyThreadLocal.getCompanyId();
+					String principalName = PrincipalThreadLocal.getName();
+					String principalPassword = PrincipalThreadLocal.getPassword();
 
 					try {
 						long messageCompanyId = message.getLong("companyId");
 
 						if (messageCompanyId > 0) {
 							CompanyThreadLocal.setCompanyId(messageCompanyId);
+						}
+
+						String messagePrincipalName = message.getString(
+							"principalName");
+
+						if (Validator.isNotNull(messagePrincipalName)) {
+							PrincipalThreadLocal.setName(messagePrincipalName);
+						}
+
+						String messagePrincipalPassword = message.getString(
+							"principalPassword");
+
+						if (Validator.isNotNull(messagePrincipalPassword)) {
+							PrincipalThreadLocal.setPassword(
+								messagePrincipalPassword);
 						}
 
 						messageListener.receive(message);
@@ -81,6 +109,8 @@ public class ParallelDestination extends BaseAsyncDestination {
 					}
 					finally {
 						CompanyThreadLocal.setCompanyId(companyId);
+						PrincipalThreadLocal.setName(principalName);
+						PrincipalThreadLocal.setPassword(principalPassword);
 
 						CentralizedThreadLocal.clearShortLivedThreadLocals();
 					}

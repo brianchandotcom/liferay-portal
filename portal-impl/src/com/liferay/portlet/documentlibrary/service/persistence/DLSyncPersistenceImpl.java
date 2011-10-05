@@ -147,6 +147,9 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 						dlSync.getPrimaryKey()) == null) {
 				cacheResult(dlSync);
 			}
+			else {
+				dlSync.resetOriginalValues();
+			}
 		}
 	}
 
@@ -342,6 +345,17 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 						
 						dlSyncModelImpl.getOriginalModifiedDate(),
 						Long.valueOf(dlSyncModelImpl.getOriginalRepositoryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_M_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_M_R,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlSyncModelImpl.getCompanyId()),
+						
+						dlSyncModelImpl.getModifiedDate(),
+						Long.valueOf(dlSyncModelImpl.getRepositoryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_M_R, args);

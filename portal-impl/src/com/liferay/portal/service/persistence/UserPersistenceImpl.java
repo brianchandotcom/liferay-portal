@@ -323,6 +323,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 						UserImpl.class, user.getPrimaryKey()) == null) {
 				cacheResult(user);
 			}
+			else {
+				user.resetOriginalValues();
+			}
 		}
 	}
 
@@ -661,6 +664,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { userModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((userModelImpl.getColumnBitmask() &
@@ -668,6 +677,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				Object[] args = new Object[] {
 						Long.valueOf(userModelImpl.getOriginalCompanyId())
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] { Long.valueOf(userModelImpl.getCompanyId()) };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -685,6 +701,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMAILADDRESS,
 					args);
+
+				args = new Object[] { userModelImpl.getEmailAddress() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMAILADDRESS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMAILADDRESS,
+					args);
 			}
 
 			if ((userModelImpl.getColumnBitmask() &
@@ -692,6 +715,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				Object[] args = new Object[] {
 						Long.valueOf(userModelImpl.getOriginalCompanyId()),
 						Integer.valueOf(userModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(userModelImpl.getCompanyId()),
+						Integer.valueOf(userModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);

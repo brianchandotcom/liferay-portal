@@ -152,6 +152,9 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 						orgGroupPermission.getPrimaryKey()) == null) {
 				cacheResult(orgGroupPermission);
 			}
+			else {
+				orgGroupPermission.resetOriginalValues();
+			}
 		}
 	}
 
@@ -344,12 +347,29 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(orgGroupPermissionModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((orgGroupPermissionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PERMISSIONID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(orgGroupPermissionModelImpl.getOriginalPermissionId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PERMISSIONID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PERMISSIONID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(orgGroupPermissionModelImpl.getPermissionId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PERMISSIONID,

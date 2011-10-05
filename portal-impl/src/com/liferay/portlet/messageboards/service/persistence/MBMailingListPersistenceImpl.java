@@ -185,6 +185,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 						MBMailingListImpl.class, mbMailingList.getPrimaryKey()) == null) {
 				cacheResult(mbMailingList);
 			}
+			else {
+				mbMailingList.resetOriginalValues();
+			}
 		}
 	}
 
@@ -412,12 +415,26 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { mbMailingListModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((mbMailingListModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Boolean.valueOf(mbMailingListModelImpl.getOriginalActive())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
+					args);
+
+				args = new Object[] {
+						Boolean.valueOf(mbMailingListModelImpl.getActive())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);

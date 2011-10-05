@@ -172,6 +172,9 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 						ddlRecordVersion.getPrimaryKey()) == null) {
 				cacheResult(ddlRecordVersion);
 			}
+			else {
+				ddlRecordVersion.resetOriginalValues();
+			}
 		}
 	}
 
@@ -380,6 +383,14 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECORDID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(ddlRecordVersionModelImpl.getRecordId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECORDID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDID,
+					args);
 			}
 
 			if ((ddlRecordVersionModelImpl.getColumnBitmask() &
@@ -387,6 +398,15 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 				Object[] args = new Object[] {
 						Long.valueOf(ddlRecordVersionModelImpl.getOriginalRecordId()),
 						Integer.valueOf(ddlRecordVersionModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(ddlRecordVersionModelImpl.getRecordId()),
+						Integer.valueOf(ddlRecordVersionModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);

@@ -149,6 +149,9 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 						PermissionImpl.class, permission.getPrimaryKey()) == null) {
 				cacheResult(permission);
 			}
+			else {
+				permission.resetOriginalValues();
+			}
 		}
 	}
 
@@ -378,6 +381,15 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(permissionModelImpl.getOriginalResourceId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(permissionModelImpl.getResourceId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEID,

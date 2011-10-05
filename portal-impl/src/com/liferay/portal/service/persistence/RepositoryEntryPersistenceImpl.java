@@ -187,6 +187,9 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 						repositoryEntry.getPrimaryKey()) == null) {
 				cacheResult(repositoryEntry);
 			}
+			else {
+				repositoryEntry.resetOriginalValues();
+			}
 		}
 	}
 
@@ -417,12 +420,27 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { repositoryEntryModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((repositoryEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPOSITORYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(repositoryEntryModelImpl.getOriginalRepositoryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_REPOSITORYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPOSITORYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(repositoryEntryModelImpl.getRepositoryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_REPOSITORYID,

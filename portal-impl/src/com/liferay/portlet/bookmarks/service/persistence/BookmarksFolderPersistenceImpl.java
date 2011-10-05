@@ -241,6 +241,9 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 						bookmarksFolder.getPrimaryKey()) == null) {
 				cacheResult(bookmarksFolder);
 			}
+			else {
+				bookmarksFolder.resetOriginalValues();
+			}
 		}
 	}
 
@@ -457,6 +460,15 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(bookmarksFolderModelImpl.getResourceBlockId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
+					args);
 			}
 
 			if ((bookmarksFolderModelImpl.getColumnBitmask() &
@@ -468,12 +480,26 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { bookmarksFolderModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((bookmarksFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(bookmarksFolderModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(bookmarksFolderModelImpl.getGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
@@ -491,6 +517,15 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(bookmarksFolderModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((bookmarksFolderModelImpl.getColumnBitmask() &
@@ -498,6 +533,15 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				Object[] args = new Object[] {
 						Long.valueOf(bookmarksFolderModelImpl.getOriginalGroupId()),
 						Long.valueOf(bookmarksFolderModelImpl.getOriginalParentFolderId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(bookmarksFolderModelImpl.getGroupId()),
+						Long.valueOf(bookmarksFolderModelImpl.getParentFolderId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);

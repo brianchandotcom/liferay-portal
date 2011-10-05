@@ -157,6 +157,9 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 						scProductVersion.getPrimaryKey()) == null) {
 				cacheResult(scProductVersion);
 			}
+			else {
+				scProductVersion.resetOriginalValues();
+			}
 		}
 	}
 
@@ -362,6 +365,15 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(scProductVersionModelImpl.getOriginalProductEntryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PRODUCTENTRYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTENTRYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(scProductVersionModelImpl.getProductEntryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PRODUCTENTRYID,

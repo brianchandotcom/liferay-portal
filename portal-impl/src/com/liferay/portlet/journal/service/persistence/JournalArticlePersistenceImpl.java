@@ -667,6 +667,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 						JournalArticleImpl.class, journalArticle.getPrimaryKey()) == null) {
 				cacheResult(journalArticle);
 			}
+			else {
+				journalArticle.resetOriginalValues();
+			}
 		}
 	}
 
@@ -914,12 +917,27 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { journalArticleModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEPRIMKEY.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(journalArticleModelImpl.getOriginalResourcePrimKey())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEPRIMKEY,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEPRIMKEY,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getResourcePrimKey())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEPRIMKEY,
@@ -937,12 +955,29 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(journalArticleModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -961,6 +996,15 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SMALLIMAGEID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getSmallImageId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SMALLIMAGEID,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
@@ -968,6 +1012,15 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				Object[] args = new Object[] {
 						Long.valueOf(journalArticleModelImpl.getOriginalResourcePrimKey()),
 						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_ST, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_ST,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getResourcePrimKey()),
+						Integer.valueOf(journalArticleModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_ST, args);
@@ -986,6 +1039,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						
+						journalArticleModelImpl.getArticleId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
@@ -994,6 +1057,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
 						
 						journalArticleModelImpl.getOriginalUrlTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_UT, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_UT,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						
+						journalArticleModelImpl.getUrlTitle()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_UT, args);
@@ -1012,6 +1085,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						
+						journalArticleModelImpl.getStructureId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
@@ -1020,6 +1103,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
 						
 						journalArticleModelImpl.getOriginalTemplateId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						
+						journalArticleModelImpl.getTemplateId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
@@ -1038,6 +1131,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_L, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_L,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						
+						journalArticleModelImpl.getLayoutUuid()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_L, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_L,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
@@ -1045,6 +1148,15 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				Object[] args = new Object[] {
 						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
 						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_ST, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_ST,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						Integer.valueOf(journalArticleModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_ST, args);
@@ -1062,6 +1174,15 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_V, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_V,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getCompanyId()),
+						Double.valueOf(journalArticleModelImpl.getVersion())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_V, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_V,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
@@ -1069,6 +1190,15 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				Object[] args = new Object[] {
 						Long.valueOf(journalArticleModelImpl.getOriginalCompanyId()),
 						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_ST, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_ST,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getCompanyId()),
+						Integer.valueOf(journalArticleModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_ST, args);
@@ -1082,6 +1212,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 						Long.valueOf(journalArticleModelImpl.getOriginalGroupId()),
 						Long.valueOf(journalArticleModelImpl.getOriginalClassNameId()),
 						Long.valueOf(journalArticleModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						Long.valueOf(journalArticleModelImpl.getClassNameId()),
+						Long.valueOf(journalArticleModelImpl.getClassPK())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
@@ -1101,6 +1241,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						Long.valueOf(journalArticleModelImpl.getClassNameId()),
+						
+						journalArticleModelImpl.getTemplateId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
@@ -1110,6 +1261,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 						Long.valueOf(journalArticleModelImpl.getOriginalClassNameId()),
 						
 						journalArticleModelImpl.getOriginalLayoutUuid()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_L, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_L,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						Long.valueOf(journalArticleModelImpl.getClassNameId()),
+						
+						journalArticleModelImpl.getLayoutUuid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_L, args);
@@ -1129,6 +1291,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_ST, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_ST,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						
+						journalArticleModelImpl.getArticleId(),
+						Integer.valueOf(journalArticleModelImpl.getStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_ST, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_ST,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
@@ -1143,6 +1316,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_UT_ST, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_UT_ST,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getGroupId()),
+						
+						journalArticleModelImpl.getUrlTitle(),
+						Integer.valueOf(journalArticleModelImpl.getStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_UT_ST, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_UT_ST,
+					args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
@@ -1151,6 +1335,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 						Long.valueOf(journalArticleModelImpl.getOriginalCompanyId()),
 						Double.valueOf(journalArticleModelImpl.getOriginalVersion()),
 						Integer.valueOf(journalArticleModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_V_ST, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_V_ST,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleModelImpl.getCompanyId()),
+						Double.valueOf(journalArticleModelImpl.getVersion()),
+						Integer.valueOf(journalArticleModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_V_ST, args);

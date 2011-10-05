@@ -117,6 +117,9 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 						ClassNameImpl.class, className.getPrimaryKey()) == null) {
 				cacheResult(className);
 			}
+			else {
+				className.resetOriginalValues();
+			}
 		}
 	}
 

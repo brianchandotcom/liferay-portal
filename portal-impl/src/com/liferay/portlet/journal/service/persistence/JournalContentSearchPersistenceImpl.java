@@ -302,6 +302,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 						journalContentSearch.getPrimaryKey()) == null) {
 				cacheResult(journalContentSearch);
 			}
+			else {
+				journalContentSearch.resetOriginalValues();
+			}
 		}
 	}
 
@@ -520,6 +523,13 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ARTICLEID,
 					args);
+
+				args = new Object[] { journalContentSearchModelImpl.getArticleId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ARTICLEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ARTICLEID,
+					args);
 			}
 
 			if ((journalContentSearchModelImpl.getColumnBitmask() &
@@ -527,6 +537,15 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				Object[] args = new Object[] {
 						Long.valueOf(journalContentSearchModelImpl.getOriginalGroupId()),
 						Boolean.valueOf(journalContentSearchModelImpl.getOriginalPrivateLayout())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalContentSearchModelImpl.getGroupId()),
+						Boolean.valueOf(journalContentSearchModelImpl.getPrivateLayout())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -545,6 +564,16 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalContentSearchModelImpl.getGroupId()),
+						
+						journalContentSearchModelImpl.getArticleId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+					args);
 			}
 
 			if ((journalContentSearchModelImpl.getColumnBitmask() &
@@ -553,6 +582,16 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 						Long.valueOf(journalContentSearchModelImpl.getOriginalGroupId()),
 						Boolean.valueOf(journalContentSearchModelImpl.getOriginalPrivateLayout()),
 						Long.valueOf(journalContentSearchModelImpl.getOriginalLayoutId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_L, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_L,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalContentSearchModelImpl.getGroupId()),
+						Boolean.valueOf(journalContentSearchModelImpl.getPrivateLayout()),
+						Long.valueOf(journalContentSearchModelImpl.getLayoutId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_L, args);
@@ -572,6 +611,17 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_A, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_A,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalContentSearchModelImpl.getGroupId()),
+						Boolean.valueOf(journalContentSearchModelImpl.getPrivateLayout()),
+						
+						journalContentSearchModelImpl.getArticleId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_A,
+					args);
 			}
 
 			if ((journalContentSearchModelImpl.getColumnBitmask() &
@@ -582,6 +632,18 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 						Long.valueOf(journalContentSearchModelImpl.getOriginalLayoutId()),
 						
 						journalContentSearchModelImpl.getOriginalPortletId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_L_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_L_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalContentSearchModelImpl.getGroupId()),
+						Boolean.valueOf(journalContentSearchModelImpl.getPrivateLayout()),
+						Long.valueOf(journalContentSearchModelImpl.getLayoutId()),
+						
+						journalContentSearchModelImpl.getPortletId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_L_P, args);

@@ -152,6 +152,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 						wikiPageResource.getPrimaryKey()) == null) {
 				cacheResult(wikiPageResource);
 			}
+			else {
+				wikiPageResource.resetOriginalValues();
+			}
 		}
 	}
 
@@ -366,6 +369,12 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				Object[] args = new Object[] {
 						wikiPageResourceModelImpl.getOriginalUuid()
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
+
+				args = new Object[] { wikiPageResourceModelImpl.getUuid() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,

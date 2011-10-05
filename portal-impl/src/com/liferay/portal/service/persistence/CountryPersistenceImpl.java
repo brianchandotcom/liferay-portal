@@ -160,6 +160,9 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 						CountryImpl.class, country.getPrimaryKey()) == null) {
 				cacheResult(country);
 			}
+			else {
+				country.resetOriginalValues();
+			}
 		}
 	}
 
@@ -363,6 +366,14 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Boolean.valueOf(countryModelImpl.getOriginalActive())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
+					args);
+
+				args = new Object[] {
+						Boolean.valueOf(countryModelImpl.getActive())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);

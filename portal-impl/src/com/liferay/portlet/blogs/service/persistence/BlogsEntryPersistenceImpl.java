@@ -484,6 +484,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 						BlogsEntryImpl.class, blogsEntry.getPrimaryKey()) == null) {
 				cacheResult(blogsEntry);
 			}
+			else {
+				blogsEntry.resetOriginalValues();
+			}
 		}
 	}
 
@@ -742,6 +745,12 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { blogsEntryModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((blogsEntryModelImpl.getColumnBitmask() &
@@ -753,12 +762,29 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((blogsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(blogsEntryModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -777,6 +803,15 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_U,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getCompanyId()),
+						Long.valueOf(blogsEntryModelImpl.getUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_U,
+					args);
 			}
 
 			if ((blogsEntryModelImpl.getColumnBitmask() &
@@ -790,6 +825,16 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_LTD, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_LTD,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getCompanyId()),
+						
+						blogsEntryModelImpl.getDisplayDate()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_LTD, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_LTD,
+					args);
 			}
 
 			if ((blogsEntryModelImpl.getColumnBitmask() &
@@ -797,6 +842,15 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				Object[] args = new Object[] {
 						Long.valueOf(blogsEntryModelImpl.getOriginalCompanyId()),
 						Integer.valueOf(blogsEntryModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getCompanyId()),
+						Integer.valueOf(blogsEntryModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -815,6 +869,16 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_LTD, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_LTD,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getGroupId()),
+						
+						blogsEntryModelImpl.getDisplayDate()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_LTD, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_LTD,
+					args);
 			}
 
 			if ((blogsEntryModelImpl.getColumnBitmask() &
@@ -822,6 +886,15 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				Object[] args = new Object[] {
 						Long.valueOf(blogsEntryModelImpl.getOriginalGroupId()),
 						Integer.valueOf(blogsEntryModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getGroupId()),
+						Integer.valueOf(blogsEntryModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -835,6 +908,16 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 						Long.valueOf(blogsEntryModelImpl.getOriginalCompanyId()),
 						Long.valueOf(blogsEntryModelImpl.getOriginalUserId()),
 						Integer.valueOf(blogsEntryModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_U_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getCompanyId()),
+						Long.valueOf(blogsEntryModelImpl.getUserId()),
+						Integer.valueOf(blogsEntryModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_S, args);
@@ -854,6 +937,17 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_LTD_S, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_LTD_S,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getCompanyId()),
+						
+						blogsEntryModelImpl.getDisplayDate(),
+						Integer.valueOf(blogsEntryModelImpl.getStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_LTD_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_LTD_S,
+					args);
 			}
 
 			if ((blogsEntryModelImpl.getColumnBitmask() &
@@ -868,6 +962,17 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_LTD, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_LTD,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getGroupId()),
+						Long.valueOf(blogsEntryModelImpl.getUserId()),
+						
+						blogsEntryModelImpl.getDisplayDate()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_LTD, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_LTD,
+					args);
 			}
 
 			if ((blogsEntryModelImpl.getColumnBitmask() &
@@ -876,6 +981,16 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 						Long.valueOf(blogsEntryModelImpl.getOriginalGroupId()),
 						Long.valueOf(blogsEntryModelImpl.getOriginalUserId()),
 						Integer.valueOf(blogsEntryModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getGroupId()),
+						Long.valueOf(blogsEntryModelImpl.getUserId()),
+						Integer.valueOf(blogsEntryModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
@@ -895,6 +1010,17 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_LTD_S, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_LTD_S,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getGroupId()),
+						
+						blogsEntryModelImpl.getDisplayDate(),
+						Integer.valueOf(blogsEntryModelImpl.getStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_LTD_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_LTD_S,
+					args);
 			}
 
 			if ((blogsEntryModelImpl.getColumnBitmask() &
@@ -905,6 +1031,19 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 						
 						blogsEntryModelImpl.getOriginalDisplayDate(),
 						Integer.valueOf(blogsEntryModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_LTD_S,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_LTD_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(blogsEntryModelImpl.getGroupId()),
+						Long.valueOf(blogsEntryModelImpl.getUserId()),
+						
+						blogsEntryModelImpl.getDisplayDate(),
+						Integer.valueOf(blogsEntryModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_LTD_S,

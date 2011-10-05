@@ -303,7 +303,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 						DLContentImpl.class, dlContent.getPrimaryKey()) == null) {
 				cacheResult(dlContent);
 			}
-
 			else {
 				dlContent.resetOriginalValues();
 			}
@@ -546,6 +545,15 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(dlContentModelImpl.getCompanyId()),
+						Long.valueOf(dlContentModelImpl.getRepositoryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R,
+					args);
 			}
 
 			if ((dlContentModelImpl.getColumnBitmask() &
@@ -560,6 +568,17 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_P,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(dlContentModelImpl.getCompanyId()),
+						Long.valueOf(dlContentModelImpl.getRepositoryId()),
+						
+						dlContentModelImpl.getPath()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_P,
+					args);
 			}
 
 			if ((dlContentModelImpl.getColumnBitmask() &
@@ -569,6 +588,18 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId()),
 						
 						dlContentModelImpl.getOriginalPath()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_LIKEP,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_LIKEP,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlContentModelImpl.getCompanyId()),
+						Long.valueOf(dlContentModelImpl.getRepositoryId()),
+						
+						dlContentModelImpl.getPath()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_LIKEP,
@@ -591,6 +622,19 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P_R_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P_R_P,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(dlContentModelImpl.getCompanyId()),
+						
+						dlContentModelImpl.getPortletId(),
+						Long.valueOf(dlContentModelImpl.getRepositoryId()),
+						
+						dlContentModelImpl.getPath()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P_R_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P_R_P,
+					args);
 			}
 
 			if ((dlContentModelImpl.getColumnBitmask() &
@@ -602,6 +646,20 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId()),
 						
 						dlContentModelImpl.getOriginalPath()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P_R_LIKEP,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P_R_LIKEP,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlContentModelImpl.getCompanyId()),
+						
+						dlContentModelImpl.getPortletId(),
+						Long.valueOf(dlContentModelImpl.getRepositoryId()),
+						
+						dlContentModelImpl.getPath()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P_R_LIKEP,

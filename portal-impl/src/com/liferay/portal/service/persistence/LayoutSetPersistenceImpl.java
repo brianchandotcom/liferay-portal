@@ -163,6 +163,9 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 						LayoutSetImpl.class, layoutSet.getPrimaryKey()) == null) {
 				cacheResult(layoutSet);
 			}
+			else {
+				layoutSet.resetOriginalValues();
+			}
 		}
 	}
 
@@ -366,12 +369,29 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(layoutSetModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((layoutSetModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTSETPROTOTYPEUUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutSetModelImpl.getOriginalLayoutSetPrototypeUuid()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LAYOUTSETPROTOTYPEUUID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTSETPROTOTYPEUUID,
+					args);
+
+				args = new Object[] {
+						layoutSetModelImpl.getLayoutSetPrototypeUuid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LAYOUTSETPROTOTYPEUUID,

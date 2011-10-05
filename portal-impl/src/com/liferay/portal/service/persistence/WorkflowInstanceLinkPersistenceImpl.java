@@ -140,6 +140,9 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 						workflowInstanceLink.getPrimaryKey()) == null) {
 				cacheResult(workflowInstanceLink);
 			}
+			else {
+				workflowInstanceLink.resetOriginalValues();
+			}
 		}
 	}
 
@@ -330,6 +333,17 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalCompanyId()),
 						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalClassNameId()),
 						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(workflowInstanceLinkModelImpl.getGroupId()),
+						Long.valueOf(workflowInstanceLinkModelImpl.getCompanyId()),
+						Long.valueOf(workflowInstanceLinkModelImpl.getClassNameId()),
+						Long.valueOf(workflowInstanceLinkModelImpl.getClassPK())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C, args);

@@ -165,6 +165,9 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 						MDRActionImpl.class, mdrAction.getPrimaryKey()) == null) {
 				cacheResult(mdrAction);
 			}
+			else {
+				mdrAction.resetOriginalValues();
+			}
 		}
 	}
 
@@ -378,12 +381,27 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { mdrActionModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((mdrActionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPINSTANCEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(mdrActionModelImpl.getOriginalRuleGroupInstanceId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPINSTANCEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPINSTANCEID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mdrActionModelImpl.getRuleGroupInstanceId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPINSTANCEID,

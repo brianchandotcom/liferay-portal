@@ -117,6 +117,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 						ticket.getPrimaryKey()) == null) {
 				cacheResult(ticket);
 			}
+			else {
+				ticket.resetOriginalValues();
+			}
 		}
 	}
 

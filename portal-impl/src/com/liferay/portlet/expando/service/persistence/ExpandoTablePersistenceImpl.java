@@ -153,6 +153,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 						ExpandoTableImpl.class, expandoTable.getPrimaryKey()) == null) {
 				cacheResult(expandoTable);
 			}
+			else {
+				expandoTable.resetOriginalValues();
+			}
 		}
 	}
 
@@ -358,6 +361,15 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 				Object[] args = new Object[] {
 						Long.valueOf(expandoTableModelImpl.getOriginalCompanyId()),
 						Long.valueOf(expandoTableModelImpl.getOriginalClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(expandoTableModelImpl.getCompanyId()),
+						Long.valueOf(expandoTableModelImpl.getClassNameId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);

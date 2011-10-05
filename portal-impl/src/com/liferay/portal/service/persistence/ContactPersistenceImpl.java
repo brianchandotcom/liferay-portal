@@ -125,6 +125,9 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 						ContactImpl.class, contact.getPrimaryKey()) == null) {
 				cacheResult(contact);
 			}
+			else {
+				contact.resetOriginalValues();
+			}
 		}
 	}
 
@@ -308,6 +311,15 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(contactModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(contactModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,

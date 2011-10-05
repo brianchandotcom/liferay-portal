@@ -208,6 +208,9 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 						MBCategoryImpl.class, mbCategory.getPrimaryKey()) == null) {
 				cacheResult(mbCategory);
 			}
+			else {
+				mbCategory.resetOriginalValues();
+			}
 		}
 	}
 
@@ -421,12 +424,26 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { mbCategoryModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((mbCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(mbCategoryModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mbCategoryModelImpl.getGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
@@ -444,6 +461,15 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(mbCategoryModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((mbCategoryModelImpl.getColumnBitmask() &
@@ -451,6 +477,15 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				Object[] args = new Object[] {
 						Long.valueOf(mbCategoryModelImpl.getOriginalGroupId()),
 						Long.valueOf(mbCategoryModelImpl.getOriginalParentCategoryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mbCategoryModelImpl.getGroupId()),
+						Long.valueOf(mbCategoryModelImpl.getParentCategoryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);

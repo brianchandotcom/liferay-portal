@@ -317,6 +317,9 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 						SocialActivityImpl.class, socialActivity.getPrimaryKey()) == null) {
 				cacheResult(socialActivity);
 			}
+			else {
+				socialActivity.resetOriginalValues();
+			}
 		}
 	}
 
@@ -540,12 +543,29 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialActivityModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(socialActivityModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialActivityModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -563,12 +583,29 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialActivityModelImpl.getUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
 			}
 
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(socialActivityModelImpl.getOriginalClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialActivityModelImpl.getClassNameId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
@@ -587,6 +624,15 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECEIVERUSERID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialActivityModelImpl.getReceiverUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECEIVERUSERID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECEIVERUSERID,
+					args);
 			}
 
 			if ((socialActivityModelImpl.getColumnBitmask() &
@@ -594,6 +640,15 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				Object[] args = new Object[] {
 						Long.valueOf(socialActivityModelImpl.getOriginalClassNameId()),
 						Long.valueOf(socialActivityModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialActivityModelImpl.getClassNameId()),
+						Long.valueOf(socialActivityModelImpl.getClassPK())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -607,6 +662,16 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 						Long.valueOf(socialActivityModelImpl.getOriginalMirrorActivityId()),
 						Long.valueOf(socialActivityModelImpl.getOriginalClassNameId()),
 						Long.valueOf(socialActivityModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_M_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_M_C_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialActivityModelImpl.getMirrorActivityId()),
+						Long.valueOf(socialActivityModelImpl.getClassNameId()),
+						Long.valueOf(socialActivityModelImpl.getClassPK())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_M_C_C, args);

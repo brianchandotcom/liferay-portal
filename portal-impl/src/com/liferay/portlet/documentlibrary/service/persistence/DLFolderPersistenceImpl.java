@@ -299,6 +299,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 						DLFolderImpl.class, dlFolder.getPrimaryKey()) == null) {
 				cacheResult(dlFolder);
 			}
+			else {
+				dlFolder.resetOriginalValues();
+			}
 		}
 	}
 
@@ -540,6 +543,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { dlFolderModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((dlFolderModelImpl.getColumnBitmask() &
@@ -551,12 +560,27 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] { Long.valueOf(dlFolderModelImpl.getGroupId()) };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((dlFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(dlFolderModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFolderModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -575,6 +599,15 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFolderModelImpl.getGroupId()),
+						Long.valueOf(dlFolderModelImpl.getParentFolderId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+					args);
 			}
 
 			if ((dlFolderModelImpl.getColumnBitmask() &
@@ -588,6 +621,16 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_N, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_N,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFolderModelImpl.getParentFolderId()),
+						
+						dlFolderModelImpl.getName()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_N, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_N,
+					args);
 			}
 
 			if ((dlFolderModelImpl.getColumnBitmask() &
@@ -596,6 +639,16 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 						Long.valueOf(dlFolderModelImpl.getOriginalGroupId()),
 						Long.valueOf(dlFolderModelImpl.getOriginalParentFolderId()),
 						Boolean.valueOf(dlFolderModelImpl.getOriginalMountPoint())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_M, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_M,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFolderModelImpl.getGroupId()),
+						Long.valueOf(dlFolderModelImpl.getParentFolderId()),
+						Boolean.valueOf(dlFolderModelImpl.getMountPoint())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_M, args);

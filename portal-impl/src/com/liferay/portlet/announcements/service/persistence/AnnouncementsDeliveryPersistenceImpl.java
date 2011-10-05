@@ -152,6 +152,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 						announcementsDelivery.getPrimaryKey()) == null) {
 				cacheResult(announcementsDelivery);
 			}
+			else {
+				announcementsDelivery.resetOriginalValues();
+			}
 		}
 	}
 
@@ -356,6 +359,14 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(announcementsDeliveryModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(announcementsDeliveryModelImpl.getUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);

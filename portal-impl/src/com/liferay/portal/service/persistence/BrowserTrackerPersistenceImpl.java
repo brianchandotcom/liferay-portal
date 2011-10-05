@@ -121,6 +121,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 						BrowserTrackerImpl.class, browserTracker.getPrimaryKey()) == null) {
 				cacheResult(browserTracker);
 			}
+			else {
+				browserTracker.resetOriginalValues();
+			}
 		}
 	}
 

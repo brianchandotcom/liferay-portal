@@ -185,6 +185,9 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 						DDLRecordImpl.class, ddlRecord.getPrimaryKey()) == null) {
 				cacheResult(ddlRecord);
 			}
+			else {
+				ddlRecord.resetOriginalValues();
+			}
 		}
 	}
 
@@ -398,12 +401,27 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { ddlRecordModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((ddlRecordModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDSETID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(ddlRecordModelImpl.getOriginalRecordSetId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECORDSETID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDSETID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(ddlRecordModelImpl.getRecordSetId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECORDSETID,
@@ -417,6 +435,15 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 				Object[] args = new Object[] {
 						Long.valueOf(ddlRecordModelImpl.getOriginalRecordSetId()),
 						Long.valueOf(ddlRecordModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_U, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_U,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(ddlRecordModelImpl.getRecordSetId()),
+						Long.valueOf(ddlRecordModelImpl.getUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_U, args);

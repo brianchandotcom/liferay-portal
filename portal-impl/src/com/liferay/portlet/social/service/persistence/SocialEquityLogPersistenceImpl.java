@@ -349,6 +349,9 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 						socialEquityLog.getPrimaryKey()) == null) {
 				cacheResult(socialEquityLog);
 			}
+			else {
+				socialEquityLog.resetOriginalValues();
+			}
 		}
 	}
 
@@ -568,6 +571,14 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
 			}
 
 			if ((socialEquityLogModelImpl.getColumnBitmask() &
@@ -576,6 +587,16 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 						Long.valueOf(socialEquityLogModelImpl.getOriginalAssetEntryId()),
 						Integer.valueOf(socialEquityLogModelImpl.getOriginalType()),
 						Boolean.valueOf(socialEquityLogModelImpl.getOriginalActive())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AEI_T_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_T_A,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getAssetEntryId()),
+						Integer.valueOf(socialEquityLogModelImpl.getType()),
+						Boolean.valueOf(socialEquityLogModelImpl.getActive())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AEI_T_A, args);
@@ -598,6 +619,20 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_AID_A_E,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getAssetEntryId()),
+						
+						socialEquityLogModelImpl.getActionId(),
+						Boolean.valueOf(socialEquityLogModelImpl.getActive()),
+						
+						socialEquityLogModelImpl.getExtraData()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AEI_AID_A_E,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_AID_A_E,
+					args);
 			}
 
 			if ((socialEquityLogModelImpl.getColumnBitmask() &
@@ -610,6 +645,21 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 						Boolean.valueOf(socialEquityLogModelImpl.getOriginalActive()),
 						
 						socialEquityLogModelImpl.getOriginalExtraData()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_AEI_AID_A_E,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_AEI_AID_A_E,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getUserId()),
+						Long.valueOf(socialEquityLogModelImpl.getAssetEntryId()),
+						
+						socialEquityLogModelImpl.getActionId(),
+						Boolean.valueOf(socialEquityLogModelImpl.getActive()),
+						
+						socialEquityLogModelImpl.getExtraData()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_AEI_AID_A_E,
@@ -635,6 +685,22 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_AID_AD_A_T_E,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getUserId()),
+						
+						socialEquityLogModelImpl.getActionId(),
+						Integer.valueOf(socialEquityLogModelImpl.getActionDate()),
+						Boolean.valueOf(socialEquityLogModelImpl.getActive()),
+						Integer.valueOf(socialEquityLogModelImpl.getType()),
+						
+						socialEquityLogModelImpl.getExtraData()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_AID_AD_A_T_E,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_AID_AD_A_T_E,
+					args);
 			}
 
 			if ((socialEquityLogModelImpl.getColumnBitmask() &
@@ -648,6 +714,22 @@ public class SocialEquityLogPersistenceImpl extends BasePersistenceImpl<SocialEq
 						Integer.valueOf(socialEquityLogModelImpl.getOriginalType()),
 						
 						socialEquityLogModelImpl.getOriginalExtraData()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AEI_AID_AD_A_T_E,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AEI_AID_AD_A_T_E,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityLogModelImpl.getAssetEntryId()),
+						
+						socialEquityLogModelImpl.getActionId(),
+						Integer.valueOf(socialEquityLogModelImpl.getActionDate()),
+						Boolean.valueOf(socialEquityLogModelImpl.getActive()),
+						Integer.valueOf(socialEquityLogModelImpl.getType()),
+						
+						socialEquityLogModelImpl.getExtraData()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AEI_AID_AD_A_T_E,

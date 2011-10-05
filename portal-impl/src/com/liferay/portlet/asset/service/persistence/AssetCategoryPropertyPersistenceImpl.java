@@ -196,6 +196,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 						assetCategoryProperty.getPrimaryKey()) == null) {
 				cacheResult(assetCategoryProperty);
 			}
+			else {
+				assetCategoryProperty.resetOriginalValues();
+			}
 		}
 	}
 
@@ -407,12 +410,30 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(assetCategoryPropertyModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((assetCategoryPropertyModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(assetCategoryPropertyModelImpl.getOriginalCategoryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CATEGORYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(assetCategoryPropertyModelImpl.getCategoryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CATEGORYID,
@@ -427,6 +448,16 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 						Long.valueOf(assetCategoryPropertyModelImpl.getOriginalCompanyId()),
 						
 						assetCategoryPropertyModelImpl.getOriginalKey()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_K,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(assetCategoryPropertyModelImpl.getCompanyId()),
+						
+						assetCategoryPropertyModelImpl.getKey()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K, args);

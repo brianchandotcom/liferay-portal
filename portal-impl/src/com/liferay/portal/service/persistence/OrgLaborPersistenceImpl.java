@@ -125,6 +125,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 						OrgLaborImpl.class, orgLabor.getPrimaryKey()) == null) {
 				cacheResult(orgLabor);
 			}
+			else {
+				orgLabor.resetOriginalValues();
+			}
 		}
 	}
 
@@ -308,6 +311,15 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ORGANIZATIONID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(orgLaborModelImpl.getOriginalOrganizationId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ORGANIZATIONID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ORGANIZATIONID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(orgLaborModelImpl.getOrganizationId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ORGANIZATIONID,

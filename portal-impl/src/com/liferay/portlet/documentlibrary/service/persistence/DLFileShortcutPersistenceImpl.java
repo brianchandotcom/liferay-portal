@@ -227,6 +227,9 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 						DLFileShortcutImpl.class, dlFileShortcut.getPrimaryKey()) == null) {
 				cacheResult(dlFileShortcut);
 			}
+			else {
+				dlFileShortcut.resetOriginalValues();
+			}
 		}
 	}
 
@@ -443,12 +446,27 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { dlFileShortcutModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((dlFileShortcutModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TOFILEENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(dlFileShortcutModelImpl.getOriginalToFileEntryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TOFILEENTRYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TOFILEENTRYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileShortcutModelImpl.getToFileEntryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TOFILEENTRYID,
@@ -467,6 +485,15 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileShortcutModelImpl.getGroupId()),
+						Long.valueOf(dlFileShortcutModelImpl.getFolderId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F,
+					args);
 			}
 
 			if ((dlFileShortcutModelImpl.getColumnBitmask() &
@@ -475,6 +502,16 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 						Long.valueOf(dlFileShortcutModelImpl.getOriginalGroupId()),
 						Long.valueOf(dlFileShortcutModelImpl.getOriginalFolderId()),
 						Integer.valueOf(dlFileShortcutModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileShortcutModelImpl.getGroupId()),
+						Long.valueOf(dlFileShortcutModelImpl.getFolderId()),
+						Integer.valueOf(dlFileShortcutModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_S, args);

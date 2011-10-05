@@ -552,6 +552,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						WikiPageImpl.class, wikiPage.getPrimaryKey()) == null) {
 				cacheResult(wikiPage);
 			}
+			else {
+				wikiPage.resetOriginalValues();
+			}
 		}
 	}
 
@@ -815,6 +818,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { wikiPageModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((wikiPageModelImpl.getColumnBitmask() &
@@ -822,6 +831,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				Object[] args = new Object[] {
 						Long.valueOf(wikiPageModelImpl.getOriginalNodeId())
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NODEID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NODEID,
+					args);
+
+				args = new Object[] { Long.valueOf(wikiPageModelImpl.getNodeId()) };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NODEID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NODEID,
@@ -837,6 +852,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FORMAT, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FORMAT,
 					args);
+
+				args = new Object[] { wikiPageModelImpl.getFormat() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FORMAT, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FORMAT,
+					args);
 			}
 
 			if ((wikiPageModelImpl.getColumnBitmask() &
@@ -844,6 +865,15 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				Object[] args = new Object[] {
 						Long.valueOf(wikiPageModelImpl.getOriginalResourcePrimKey()),
 						Long.valueOf(wikiPageModelImpl.getOriginalNodeId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getResourcePrimKey()),
+						Long.valueOf(wikiPageModelImpl.getNodeId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N, args);
@@ -862,6 +892,16 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						
+						wikiPageModelImpl.getTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T,
+					args);
 			}
 
 			if ((wikiPageModelImpl.getColumnBitmask() &
@@ -869,6 +909,15 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				Object[] args = new Object[] {
 						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
 						Boolean.valueOf(wikiPageModelImpl.getOriginalHead())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						Boolean.valueOf(wikiPageModelImpl.getHead())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H, args);
@@ -887,6 +936,16 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_P,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						
+						wikiPageModelImpl.getParentTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_P,
+					args);
 			}
 
 			if ((wikiPageModelImpl.getColumnBitmask() &
@@ -900,6 +959,16 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_R, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_R,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						
+						wikiPageModelImpl.getRedirectTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_R,
+					args);
 			}
 
 			if ((wikiPageModelImpl.getColumnBitmask() &
@@ -907,6 +976,15 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				Object[] args = new Object[] {
 						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
 						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						Integer.valueOf(wikiPageModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_S, args);
@@ -925,6 +1003,16 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_S, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_S,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getResourcePrimKey()),
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						Integer.valueOf(wikiPageModelImpl.getStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_S,
+					args);
 			}
 
 			if ((wikiPageModelImpl.getColumnBitmask() &
@@ -933,6 +1021,16 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						Long.valueOf(wikiPageModelImpl.getOriginalUserId()),
 						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
 						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_N_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_N_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getUserId()),
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						Integer.valueOf(wikiPageModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_N_S, args);
@@ -952,6 +1050,17 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_H, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_H,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						
+						wikiPageModelImpl.getTitle(),
+						Boolean.valueOf(wikiPageModelImpl.getHead())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_H, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_H,
+					args);
 			}
 
 			if ((wikiPageModelImpl.getColumnBitmask() &
@@ -961,6 +1070,17 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						
 						wikiPageModelImpl.getOriginalTitle(),
 						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						
+						wikiPageModelImpl.getTitle(),
+						Integer.valueOf(wikiPageModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_S, args);
@@ -980,6 +1100,17 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						Boolean.valueOf(wikiPageModelImpl.getHead()),
+						
+						wikiPageModelImpl.getParentTitle()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P,
+					args);
 			}
 
 			if ((wikiPageModelImpl.getColumnBitmask() &
@@ -988,6 +1119,16 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
 						Boolean.valueOf(wikiPageModelImpl.getOriginalHead()),
 						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						Boolean.valueOf(wikiPageModelImpl.getHead()),
+						Integer.valueOf(wikiPageModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_S, args);
@@ -1003,6 +1144,18 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						
 						wikiPageModelImpl.getOriginalParentTitle(),
 						Integer.valueOf(wikiPageModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(wikiPageModelImpl.getNodeId()),
+						Boolean.valueOf(wikiPageModelImpl.getHead()),
+						
+						wikiPageModelImpl.getParentTitle(),
+						Integer.valueOf(wikiPageModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P_S, args);

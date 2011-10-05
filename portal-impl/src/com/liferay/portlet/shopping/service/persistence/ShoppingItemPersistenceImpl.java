@@ -190,6 +190,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 						ShoppingItemImpl.class, shoppingItem.getPrimaryKey()) == null) {
 				cacheResult(shoppingItem);
 			}
+			else {
+				shoppingItem.resetOriginalValues();
+			}
 		}
 	}
 
@@ -412,6 +415,15 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 				Object[] args = new Object[] {
 						Long.valueOf(shoppingItemModelImpl.getOriginalGroupId()),
 						Long.valueOf(shoppingItemModelImpl.getOriginalCategoryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(shoppingItemModelImpl.getGroupId()),
+						Long.valueOf(shoppingItemModelImpl.getCategoryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);

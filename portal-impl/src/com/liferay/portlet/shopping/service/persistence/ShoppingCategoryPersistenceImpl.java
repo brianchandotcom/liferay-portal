@@ -157,6 +157,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 						shoppingCategory.getPrimaryKey()) == null) {
 				cacheResult(shoppingCategory);
 			}
+			else {
+				shoppingCategory.resetOriginalValues();
+			}
 		}
 	}
 
@@ -348,6 +351,14 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(shoppingCategoryModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((shoppingCategoryModelImpl.getColumnBitmask() &
@@ -355,6 +366,15 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 				Object[] args = new Object[] {
 						Long.valueOf(shoppingCategoryModelImpl.getOriginalGroupId()),
 						Long.valueOf(shoppingCategoryModelImpl.getOriginalParentCategoryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(shoppingCategoryModelImpl.getGroupId()),
+						Long.valueOf(shoppingCategoryModelImpl.getParentCategoryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);

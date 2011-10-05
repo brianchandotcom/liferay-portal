@@ -140,6 +140,9 @@ public class SocialEquityGroupSettingPersistenceImpl extends BasePersistenceImpl
 						socialEquityGroupSetting.getPrimaryKey()) == null) {
 				cacheResult(socialEquityGroupSetting);
 			}
+			else {
+				socialEquityGroupSetting.resetOriginalValues();
+			}
 		}
 	}
 

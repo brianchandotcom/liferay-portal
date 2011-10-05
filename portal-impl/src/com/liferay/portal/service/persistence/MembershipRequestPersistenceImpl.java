@@ -201,6 +201,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 						membershipRequest.getPrimaryKey()) == null) {
 				cacheResult(membershipRequest);
 			}
+			else {
+				membershipRequest.resetOriginalValues();
+			}
 		}
 	}
 
@@ -393,12 +396,28 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(membershipRequestModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((membershipRequestModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(membershipRequestModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(membershipRequestModelImpl.getUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
@@ -416,6 +435,15 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(membershipRequestModelImpl.getGroupId()),
+						Integer.valueOf(membershipRequestModelImpl.getStatusId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+					args);
 			}
 
 			if ((membershipRequestModelImpl.getColumnBitmask() &
@@ -424,6 +452,16 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 						Long.valueOf(membershipRequestModelImpl.getOriginalGroupId()),
 						Long.valueOf(membershipRequestModelImpl.getOriginalUserId()),
 						Integer.valueOf(membershipRequestModelImpl.getOriginalStatusId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(membershipRequestModelImpl.getGroupId()),
+						Long.valueOf(membershipRequestModelImpl.getUserId()),
+						Integer.valueOf(membershipRequestModelImpl.getStatusId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);

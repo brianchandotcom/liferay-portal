@@ -243,6 +243,9 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 						AssetEntryImpl.class, assetEntry.getPrimaryKey()) == null) {
 				cacheResult(assetEntry);
 			}
+			else {
+				assetEntry.resetOriginalValues();
+			}
 		}
 	}
 
@@ -482,12 +485,29 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(assetEntryModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((assetEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VISIBLE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Boolean.valueOf(assetEntryModelImpl.getOriginalVisible())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VISIBLE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VISIBLE,
+					args);
+
+				args = new Object[] {
+						Boolean.valueOf(assetEntryModelImpl.getVisible())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VISIBLE, args);
@@ -505,6 +525,13 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PUBLISHDATE,
 					args);
+
+				args = new Object[] { assetEntryModelImpl.getPublishDate() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PUBLISHDATE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PUBLISHDATE,
+					args);
 			}
 
 			if ((assetEntryModelImpl.getColumnBitmask() &
@@ -512,6 +539,13 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				Object[] args = new Object[] {
 						assetEntryModelImpl.getOriginalExpirationDate()
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EXPIRATIONDATE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EXPIRATIONDATE,
+					args);
+
+				args = new Object[] { assetEntryModelImpl.getExpirationDate() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EXPIRATIONDATE,
 					args);

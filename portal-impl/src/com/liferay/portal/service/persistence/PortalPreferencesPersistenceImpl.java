@@ -126,6 +126,9 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 						portalPreferences.getPrimaryKey()) == null) {
 				cacheResult(portalPreferences);
 			}
+			else {
+				portalPreferences.resetOriginalValues();
+			}
 		}
 	}
 

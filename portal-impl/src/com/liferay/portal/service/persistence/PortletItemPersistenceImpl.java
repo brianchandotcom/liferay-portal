@@ -179,6 +179,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 						PortletItemImpl.class, portletItem.getPrimaryKey()) == null) {
 				cacheResult(portletItem);
 			}
+			else {
+				portletItem.resetOriginalValues();
+			}
 		}
 	}
 
@@ -393,6 +396,15 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(portletItemModelImpl.getGroupId()),
+						Long.valueOf(portletItemModelImpl.getClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+					args);
 			}
 
 			if ((portletItemModelImpl.getColumnBitmask() &
@@ -402,6 +414,17 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 						
 						portletItemModelImpl.getOriginalPortletId(),
 						Long.valueOf(portletItemModelImpl.getOriginalClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(portletItemModelImpl.getGroupId()),
+						
+						portletItemModelImpl.getPortletId(),
+						Long.valueOf(portletItemModelImpl.getClassNameId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_C, args);

@@ -141,6 +141,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 						PasswordPolicyImpl.class, passwordPolicy.getPrimaryKey()) == null) {
 				cacheResult(passwordPolicy);
 			}
+			else {
+				passwordPolicy.resetOriginalValues();
+			}
 		}
 	}
 

@@ -190,6 +190,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 						workflowDefinitionLink.getPrimaryKey()) == null) {
 				cacheResult(workflowDefinitionLink);
 			}
+			else {
+				workflowDefinitionLink.resetOriginalValues();
+			}
 		}
 	}
 
@@ -407,6 +410,15 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(workflowDefinitionLinkModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
@@ -416,6 +428,17 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 						
 						workflowDefinitionLinkModelImpl.getOriginalWorkflowDefinitionName(),
 						Integer.valueOf(workflowDefinitionLinkModelImpl.getOriginalWorkflowDefinitionVersion())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_W_W, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_W_W,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(workflowDefinitionLinkModelImpl.getCompanyId()),
+						
+						workflowDefinitionLinkModelImpl.getWorkflowDefinitionName(),
+						Integer.valueOf(workflowDefinitionLinkModelImpl.getWorkflowDefinitionVersion())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_W_W, args);

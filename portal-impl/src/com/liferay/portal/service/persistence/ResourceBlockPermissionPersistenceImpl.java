@@ -149,6 +149,9 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 						resourceBlockPermission.getPrimaryKey()) == null) {
 				cacheResult(resourceBlockPermission);
 			}
+			else {
+				resourceBlockPermission.resetOriginalValues();
+			}
 		}
 	}
 
@@ -355,6 +358,15 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(resourceBlockPermissionModelImpl.getOriginalResourceBlockId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(resourceBlockPermissionModelImpl.getResourceBlockId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,

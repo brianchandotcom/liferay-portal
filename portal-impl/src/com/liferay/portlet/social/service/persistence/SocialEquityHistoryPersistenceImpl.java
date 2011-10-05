@@ -111,6 +111,9 @@ public class SocialEquityHistoryPersistenceImpl extends BasePersistenceImpl<Soci
 						socialEquityHistory.getPrimaryKey()) == null) {
 				cacheResult(socialEquityHistory);
 			}
+			else {
+				socialEquityHistory.resetOriginalValues();
+			}
 		}
 	}
 

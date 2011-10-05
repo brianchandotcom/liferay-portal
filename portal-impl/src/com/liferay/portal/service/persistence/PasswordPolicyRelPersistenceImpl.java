@@ -171,6 +171,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 						passwordPolicyRel.getPrimaryKey()) == null) {
 				cacheResult(passwordPolicyRel);
 			}
+			else {
+				passwordPolicyRel.resetOriginalValues();
+			}
 		}
 	}
 
@@ -386,6 +389,15 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PASSWORDPOLICYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(passwordPolicyRelModelImpl.getOriginalPasswordPolicyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PASSWORDPOLICYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PASSWORDPOLICYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(passwordPolicyRelModelImpl.getPasswordPolicyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PASSWORDPOLICYID,

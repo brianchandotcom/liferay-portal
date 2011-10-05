@@ -131,6 +131,9 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 						userTrackerPath.getPrimaryKey()) == null) {
 				cacheResult(userTrackerPath);
 			}
+			else {
+				userTrackerPath.resetOriginalValues();
+			}
 		}
 	}
 
@@ -318,6 +321,15 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERTRACKERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(userTrackerPathModelImpl.getOriginalUserTrackerId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERTRACKERID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERTRACKERID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(userTrackerPathModelImpl.getUserTrackerId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERTRACKERID,

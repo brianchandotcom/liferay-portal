@@ -172,6 +172,9 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 						ddmStructureLink.getPrimaryKey()) == null) {
 				cacheResult(ddmStructureLink);
 			}
+			else {
+				ddmStructureLink.resetOriginalValues();
+			}
 		}
 	}
 
@@ -373,12 +376,30 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(ddmStructureLinkModelImpl.getClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+					args);
 			}
 
 			if ((ddmStructureLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(ddmStructureLinkModelImpl.getOriginalStructureId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(ddmStructureLinkModelImpl.getStructureId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,

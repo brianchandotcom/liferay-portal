@@ -159,6 +159,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 						announcementsFlag.getPrimaryKey()) == null) {
 				cacheResult(announcementsFlag);
 			}
+			else {
+				announcementsFlag.resetOriginalValues();
+			}
 		}
 	}
 
@@ -361,6 +364,14 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(announcementsFlagModelImpl.getOriginalEntryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ENTRYID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(announcementsFlagModelImpl.getEntryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ENTRYID, args);

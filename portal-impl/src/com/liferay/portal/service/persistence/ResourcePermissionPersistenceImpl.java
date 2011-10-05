@@ -387,6 +387,9 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 						resourcePermission.getPrimaryKey()) == null) {
 				cacheResult(resourcePermission);
 			}
+			else {
+				resourcePermission.resetOriginalValues();
+			}
 		}
 	}
 
@@ -607,12 +610,28 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SCOPE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SCOPE,
 					args);
+
+				args = new Object[] {
+						Integer.valueOf(resourcePermissionModelImpl.getScope())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SCOPE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SCOPE,
+					args);
 			}
 
 			if ((resourcePermissionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ROLEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(resourcePermissionModelImpl.getOriginalRoleId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROLEID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ROLEID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(resourcePermissionModelImpl.getRoleId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROLEID, args);
@@ -627,6 +646,17 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 						
 						resourcePermissionModelImpl.getOriginalName(),
 						Integer.valueOf(resourcePermissionModelImpl.getOriginalScope())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(resourcePermissionModelImpl.getCompanyId()),
+						
+						resourcePermissionModelImpl.getName(),
+						Integer.valueOf(resourcePermissionModelImpl.getScope())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_S, args);
@@ -648,6 +678,19 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_S_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_S_P,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(resourcePermissionModelImpl.getCompanyId()),
+						
+						resourcePermissionModelImpl.getName(),
+						Integer.valueOf(resourcePermissionModelImpl.getScope()),
+						
+						resourcePermissionModelImpl.getPrimKey()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_S_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_S_P,
+					args);
 			}
 
 			if ((resourcePermissionModelImpl.getColumnBitmask() &
@@ -659,6 +702,19 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 						
 						resourcePermissionModelImpl.getOriginalPrimKey(),
 						Long.valueOf(resourcePermissionModelImpl.getOriginalOwnerId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_P_O, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_P_O,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(resourcePermissionModelImpl.getCompanyId()),
+						
+						resourcePermissionModelImpl.getName(),
+						
+						resourcePermissionModelImpl.getPrimKey(),
+						Long.valueOf(resourcePermissionModelImpl.getOwnerId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_P_O, args);
@@ -676,6 +732,21 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 						
 						resourcePermissionModelImpl.getOriginalPrimKey(),
 						Long.valueOf(resourcePermissionModelImpl.getOriginalRoleId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_S_P_R,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_S_P_R,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(resourcePermissionModelImpl.getCompanyId()),
+						
+						resourcePermissionModelImpl.getName(),
+						Integer.valueOf(resourcePermissionModelImpl.getScope()),
+						
+						resourcePermissionModelImpl.getPrimKey(),
+						Long.valueOf(resourcePermissionModelImpl.getRoleId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_S_P_R,
@@ -700,6 +771,21 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_P_R_A,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(resourcePermissionModelImpl.getCompanyId()),
+						
+						resourcePermissionModelImpl.getName(),
+						
+						resourcePermissionModelImpl.getPrimKey(),
+						Long.valueOf(resourcePermissionModelImpl.getRoleId()),
+						Long.valueOf(resourcePermissionModelImpl.getActionIds())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_P_R_A,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_P_R_A,
+					args);
 			}
 
 			if ((resourcePermissionModelImpl.getColumnBitmask() &
@@ -713,6 +799,22 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 						resourcePermissionModelImpl.getOriginalPrimKey(),
 						Long.valueOf(resourcePermissionModelImpl.getOriginalRoleId()),
 						Long.valueOf(resourcePermissionModelImpl.getOriginalActionIds())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_S_P_R_A,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_S_P_R_A,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(resourcePermissionModelImpl.getCompanyId()),
+						
+						resourcePermissionModelImpl.getName(),
+						Integer.valueOf(resourcePermissionModelImpl.getScope()),
+						
+						resourcePermissionModelImpl.getPrimKey(),
+						Long.valueOf(resourcePermissionModelImpl.getRoleId()),
+						Long.valueOf(resourcePermissionModelImpl.getActionIds())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_S_P_R_A,

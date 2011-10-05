@@ -241,6 +241,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 						DDMTemplateImpl.class, ddmTemplate.getPrimaryKey()) == null) {
 				cacheResult(ddmTemplate);
 			}
+			else {
+				ddmTemplate.resetOriginalValues();
+			}
 		}
 	}
 
@@ -455,12 +458,26 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { ddmTemplateModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((ddmTemplateModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(ddmTemplateModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(ddmTemplateModelImpl.getGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
@@ -478,6 +495,15 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(ddmTemplateModelImpl.getStructureId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
+					args);
 			}
 
 			if ((ddmTemplateModelImpl.getColumnBitmask() &
@@ -485,6 +511,12 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				Object[] args = new Object[] {
 						ddmTemplateModelImpl.getOriginalType()
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+					args);
+
+				args = new Object[] { ddmTemplateModelImpl.getType() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
@@ -500,6 +532,12 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LANGUAGE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LANGUAGE,
 					args);
+
+				args = new Object[] { ddmTemplateModelImpl.getLanguage() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LANGUAGE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LANGUAGE,
+					args);
 			}
 
 			if ((ddmTemplateModelImpl.getColumnBitmask() &
@@ -508,6 +546,16 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 						Long.valueOf(ddmTemplateModelImpl.getOriginalStructureId()),
 						
 						ddmTemplateModelImpl.getOriginalType()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_S_T, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_T,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(ddmTemplateModelImpl.getStructureId()),
+						
+						ddmTemplateModelImpl.getType()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_S_T, args);

@@ -103,6 +103,9 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 						AccountImpl.class, account.getPrimaryKey()) == null) {
 				cacheResult(account);
 			}
+			else {
+				account.resetOriginalValues();
+			}
 		}
 	}
 

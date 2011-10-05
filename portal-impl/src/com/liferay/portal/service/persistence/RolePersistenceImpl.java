@@ -225,6 +225,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 						RoleImpl.class, role.getPrimaryKey()) == null) {
 				cacheResult(role);
 			}
+			else {
+				role.resetOriginalValues();
+			}
 		}
 	}
 
@@ -468,11 +471,24 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] { Long.valueOf(roleModelImpl.getCompanyId()) };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((roleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { roleModelImpl.getOriginalName() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
+					args);
+
+				args = new Object[] { roleModelImpl.getName() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
@@ -486,6 +502,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SUBTYPE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SUBTYPE,
 					args);
+
+				args = new Object[] { roleModelImpl.getSubtype() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SUBTYPE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SUBTYPE,
+					args);
 			}
 
 			if ((roleModelImpl.getColumnBitmask() &
@@ -494,6 +516,16 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 						Integer.valueOf(roleModelImpl.getOriginalType()),
 						
 						roleModelImpl.getOriginalSubtype()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
+					args);
+
+				args = new Object[] {
+						Integer.valueOf(roleModelImpl.getType()),
+						
+						roleModelImpl.getSubtype()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);

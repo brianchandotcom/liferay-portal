@@ -155,6 +155,9 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 						PluginSettingImpl.class, pluginSetting.getPrimaryKey()) == null) {
 				cacheResult(pluginSetting);
 			}
+			else {
+				pluginSetting.resetOriginalValues();
+			}
 		}
 	}
 
@@ -362,6 +365,15 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(pluginSettingModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(pluginSettingModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,

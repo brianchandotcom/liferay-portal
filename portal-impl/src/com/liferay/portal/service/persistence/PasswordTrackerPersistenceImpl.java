@@ -130,6 +130,9 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 						passwordTracker.getPrimaryKey()) == null) {
 				cacheResult(passwordTracker);
 			}
+			else {
+				passwordTracker.resetOriginalValues();
+			}
 		}
 	}
 
@@ -317,6 +320,14 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(passwordTrackerModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(passwordTrackerModelImpl.getUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);

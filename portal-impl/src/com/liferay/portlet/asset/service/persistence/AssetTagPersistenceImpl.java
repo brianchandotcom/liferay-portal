@@ -137,6 +137,9 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 						AssetTagImpl.class, assetTag.getPrimaryKey()) == null) {
 				cacheResult(assetTag);
 			}
+			else {
+				assetTag.resetOriginalValues();
+			}
 		}
 	}
 
@@ -332,6 +335,12 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 				Object[] args = new Object[] {
 						Long.valueOf(assetTagModelImpl.getOriginalGroupId())
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] { Long.valueOf(assetTagModelImpl.getGroupId()) };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,

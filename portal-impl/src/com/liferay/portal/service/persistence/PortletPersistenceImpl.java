@@ -142,6 +142,9 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 						PortletImpl.class, portlet.getPrimaryKey()) == null) {
 				cacheResult(portlet);
 			}
+			else {
+				portlet.resetOriginalValues();
+			}
 		}
 	}
 
@@ -341,6 +344,15 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(portletModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(portletModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,

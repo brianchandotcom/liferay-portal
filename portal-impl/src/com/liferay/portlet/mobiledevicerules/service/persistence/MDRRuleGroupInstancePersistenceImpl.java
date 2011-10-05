@@ -248,6 +248,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						mdrRuleGroupInstance.getPrimaryKey()) == null) {
 				cacheResult(mdrRuleGroupInstance);
 			}
+			else {
+				mdrRuleGroupInstance.resetOriginalValues();
+			}
 		}
 	}
 
@@ -478,12 +481,27 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { mdrRuleGroupInstanceModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalRuleGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mdrRuleGroupInstanceModelImpl.getRuleGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPID,
@@ -502,6 +520,15 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassNameId()),
+						Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+					args);
 			}
 
 			if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
@@ -510,6 +537,16 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalGroupId()),
 						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalClassNameId()),
 						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mdrRuleGroupInstanceModelImpl.getGroupId()),
+						Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassNameId()),
+						Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassPK())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);

@@ -175,6 +175,9 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 						dlFileEntryType.getPrimaryKey()) == null) {
 				cacheResult(dlFileEntryType);
 			}
+			else {
+				dlFileEntryType.resetOriginalValues();
+			}
 		}
 	}
 
@@ -387,6 +390,14 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileEntryTypeModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((dlFileEntryTypeModelImpl.getColumnBitmask() &
@@ -397,6 +408,18 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 						dlFileEntryTypeModelImpl.getOriginalName(),
 						
 						dlFileEntryTypeModelImpl.getOriginalDescription()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_D, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_D,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileEntryTypeModelImpl.getGroupId()),
+						
+						dlFileEntryTypeModelImpl.getName(),
+						
+						dlFileEntryTypeModelImpl.getDescription()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_D, args);

@@ -160,6 +160,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 						CompanyImpl.class, company.getPrimaryKey()) == null) {
 				cacheResult(company);
 			}
+			else {
+				company.resetOriginalValues();
+			}
 		}
 	}
 
@@ -363,6 +366,14 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SYSTEM.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Boolean.valueOf(companyModelImpl.getOriginalSystem())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SYSTEM, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SYSTEM,
+					args);
+
+				args = new Object[] {
+						Boolean.valueOf(companyModelImpl.getSystem())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SYSTEM, args);

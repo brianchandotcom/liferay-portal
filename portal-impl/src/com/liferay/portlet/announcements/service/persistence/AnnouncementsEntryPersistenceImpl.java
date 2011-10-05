@@ -213,6 +213,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 						announcementsEntry.getPrimaryKey()) == null) {
 				cacheResult(announcementsEntry);
 			}
+			else {
+				announcementsEntry.resetOriginalValues();
+			}
 		}
 	}
 
@@ -414,12 +417,26 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { announcementsEntryModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((announcementsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(announcementsEntryModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(announcementsEntryModelImpl.getUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
@@ -437,6 +454,15 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(announcementsEntryModelImpl.getClassNameId()),
+						Long.valueOf(announcementsEntryModelImpl.getClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+					args);
 			}
 
 			if ((announcementsEntryModelImpl.getColumnBitmask() &
@@ -445,6 +471,16 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 						Long.valueOf(announcementsEntryModelImpl.getOriginalClassNameId()),
 						Long.valueOf(announcementsEntryModelImpl.getOriginalClassPK()),
 						Boolean.valueOf(announcementsEntryModelImpl.getOriginalAlert())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_A,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(announcementsEntryModelImpl.getClassNameId()),
+						Long.valueOf(announcementsEntryModelImpl.getClassPK()),
+						Boolean.valueOf(announcementsEntryModelImpl.getAlert())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_A, args);

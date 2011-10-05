@@ -288,6 +288,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 						GroupImpl.class, group.getPrimaryKey()) == null) {
 				cacheResult(group);
 			}
+			else {
+				group.resetOriginalValues();
+			}
 		}
 	}
 
@@ -607,6 +610,13 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] { Long.valueOf(groupModelImpl.getCompanyId()) };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((groupModelImpl.getColumnBitmask() &
@@ -614,6 +624,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				Object[] args = new Object[] {
 						Integer.valueOf(groupModelImpl.getOriginalType()),
 						Boolean.valueOf(groupModelImpl.getOriginalActive())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A,
+					args);
+
+				args = new Object[] {
+						Integer.valueOf(groupModelImpl.getType()),
+						Boolean.valueOf(groupModelImpl.getActive())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);

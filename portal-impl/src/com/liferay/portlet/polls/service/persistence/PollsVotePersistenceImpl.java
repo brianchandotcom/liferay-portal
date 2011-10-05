@@ -164,6 +164,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 						PollsVoteImpl.class, pollsVote.getPrimaryKey()) == null) {
 				cacheResult(pollsVote);
 			}
+			else {
+				pollsVote.resetOriginalValues();
+			}
 		}
 	}
 
@@ -369,12 +372,29 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(pollsVoteModelImpl.getQuestionId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_QUESTIONID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_QUESTIONID,
+					args);
 			}
 
 			if ((pollsVoteModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(pollsVoteModelImpl.getOriginalChoiceId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CHOICEID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(pollsVoteModelImpl.getChoiceId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CHOICEID, args);

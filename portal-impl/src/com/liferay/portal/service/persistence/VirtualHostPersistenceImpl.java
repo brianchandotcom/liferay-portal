@@ -133,6 +133,9 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 						VirtualHostImpl.class, virtualHost.getPrimaryKey()) == null) {
 				cacheResult(virtualHost);
 			}
+			else {
+				virtualHost.resetOriginalValues();
+			}
 		}
 	}
 

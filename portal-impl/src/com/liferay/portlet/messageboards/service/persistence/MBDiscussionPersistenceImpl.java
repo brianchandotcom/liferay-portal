@@ -158,6 +158,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 						MBDiscussionImpl.class, mbDiscussion.getPrimaryKey()) == null) {
 				cacheResult(mbDiscussion);
 			}
+			else {
+				mbDiscussion.resetOriginalValues();
+			}
 		}
 	}
 
@@ -364,6 +367,15 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(mbDiscussionModelImpl.getOriginalClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mbDiscussionModelImpl.getClassNameId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,

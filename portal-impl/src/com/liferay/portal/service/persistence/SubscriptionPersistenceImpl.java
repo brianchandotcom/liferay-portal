@@ -196,6 +196,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 						SubscriptionImpl.class, subscription.getPrimaryKey()) == null) {
 				cacheResult(subscription);
 			}
+			else {
+				subscription.resetOriginalValues();
+			}
 		}
 	}
 
@@ -406,6 +409,14 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(subscriptionModelImpl.getUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
 			}
 
 			if ((subscriptionModelImpl.getColumnBitmask() &
@@ -413,6 +424,15 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 				Object[] args = new Object[] {
 						Long.valueOf(subscriptionModelImpl.getOriginalUserId()),
 						Long.valueOf(subscriptionModelImpl.getOriginalClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(subscriptionModelImpl.getUserId()),
+						Long.valueOf(subscriptionModelImpl.getClassNameId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
@@ -426,6 +446,16 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 						Long.valueOf(subscriptionModelImpl.getOriginalCompanyId()),
 						Long.valueOf(subscriptionModelImpl.getOriginalClassNameId()),
 						Long.valueOf(subscriptionModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(subscriptionModelImpl.getCompanyId()),
+						Long.valueOf(subscriptionModelImpl.getClassNameId()),
+						Long.valueOf(subscriptionModelImpl.getClassPK())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);

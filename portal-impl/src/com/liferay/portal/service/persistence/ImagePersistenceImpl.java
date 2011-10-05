@@ -125,6 +125,9 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 						ImageImpl.class, image.getPrimaryKey()) == null) {
 				cacheResult(image);
 			}
+			else {
+				image.resetOriginalValues();
+			}
 		}
 	}
 
@@ -309,6 +312,12 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 				Object[] args = new Object[] {
 						Integer.valueOf(imageModelImpl.getOriginalSize())
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTSIZE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTSIZE,
+					args);
+
+				args = new Object[] { Integer.valueOf(imageModelImpl.getSize()) };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTSIZE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTSIZE,

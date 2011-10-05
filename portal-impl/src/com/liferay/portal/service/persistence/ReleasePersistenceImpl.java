@@ -117,6 +117,9 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 						ReleaseImpl.class, release.getPrimaryKey()) == null) {
 				cacheResult(release);
 			}
+			else {
+				release.resetOriginalValues();
+			}
 		}
 	}
 

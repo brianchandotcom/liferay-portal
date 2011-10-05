@@ -141,6 +141,9 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 						ResourceImpl.class, resource.getPrimaryKey()) == null) {
 				cacheResult(resource);
 			}
+			else {
+				resource.resetOriginalValues();
+			}
 		}
 	}
 
@@ -341,6 +344,12 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 				Object[] args = new Object[] {
 						Long.valueOf(resourceModelImpl.getOriginalCodeId())
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CODEID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CODEID,
+					args);
+
+				args = new Object[] { Long.valueOf(resourceModelImpl.getCodeId()) };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CODEID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CODEID,

@@ -163,6 +163,9 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 						MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey()) == null) {
 				cacheResult(mbThreadFlag);
 			}
+			else {
+				mbThreadFlag.resetOriginalValues();
+			}
 		}
 	}
 
@@ -368,12 +371,28 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(mbThreadFlagModelImpl.getUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
 			}
 
 			if ((mbThreadFlagModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(mbThreadFlagModelImpl.getOriginalThreadId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mbThreadFlagModelImpl.getThreadId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);

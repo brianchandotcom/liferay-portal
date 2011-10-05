@@ -173,6 +173,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 						userNotificationEvent.getPrimaryKey()) == null) {
 				cacheResult(userNotificationEvent);
 			}
+			else {
+				userNotificationEvent.resetOriginalValues();
+			}
 		}
 	}
 
@@ -377,12 +380,26 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { userNotificationEventModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((userNotificationEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(userNotificationEventModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(userNotificationEventModelImpl.getUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
@@ -395,6 +412,15 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				Object[] args = new Object[] {
 						Long.valueOf(userNotificationEventModelImpl.getOriginalUserId()),
 						Boolean.valueOf(userNotificationEventModelImpl.getOriginalArchived())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_A,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(userNotificationEventModelImpl.getUserId()),
+						Boolean.valueOf(userNotificationEventModelImpl.getArchived())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_A, args);

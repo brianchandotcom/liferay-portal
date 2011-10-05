@@ -146,6 +146,9 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 						TeamImpl.class, team.getPrimaryKey()) == null) {
 				cacheResult(team);
 			}
+			else {
+				team.resetOriginalValues();
+			}
 		}
 	}
 
@@ -360,6 +363,12 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 				Object[] args = new Object[] {
 						Long.valueOf(teamModelImpl.getOriginalGroupId())
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] { Long.valueOf(teamModelImpl.getGroupId()) };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,

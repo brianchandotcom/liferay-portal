@@ -188,6 +188,9 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 						resourceTypePermission.getPrimaryKey()) == null) {
 				cacheResult(resourceTypePermission);
 			}
+			else {
+				resourceTypePermission.resetOriginalValues();
+			}
 		}
 	}
 
@@ -404,6 +407,14 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROLEID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ROLEID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(resourceTypePermissionModelImpl.getRoleId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROLEID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ROLEID,
+					args);
 			}
 
 			if ((resourceTypePermissionModelImpl.getColumnBitmask() &
@@ -413,6 +424,17 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 						
 						resourceTypePermissionModelImpl.getOriginalName(),
 						Long.valueOf(resourceTypePermissionModelImpl.getOriginalRoleId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_R,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(resourceTypePermissionModelImpl.getCompanyId()),
+						
+						resourceTypePermissionModelImpl.getName(),
+						Long.valueOf(resourceTypePermissionModelImpl.getRoleId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_R, args);

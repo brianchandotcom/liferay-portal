@@ -186,6 +186,9 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 						scFrameworkVersion.getPrimaryKey()) == null) {
 				cacheResult(scFrameworkVersion);
 			}
+			else {
+				scFrameworkVersion.resetOriginalValues();
+			}
 		}
 	}
 
@@ -388,12 +391,29 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(scFrameworkVersionModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((scFrameworkVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(scFrameworkVersionModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(scFrameworkVersionModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -407,6 +427,15 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 				Object[] args = new Object[] {
 						Long.valueOf(scFrameworkVersionModelImpl.getOriginalGroupId()),
 						Boolean.valueOf(scFrameworkVersionModelImpl.getOriginalActive())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(scFrameworkVersionModelImpl.getGroupId()),
+						Boolean.valueOf(scFrameworkVersionModelImpl.getActive())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);

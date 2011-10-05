@@ -230,6 +230,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						DDMStructureImpl.class, ddmStructure.getPrimaryKey()) == null) {
 				cacheResult(ddmStructure);
 			}
+			else {
+				ddmStructure.resetOriginalValues();
+			}
 		}
 	}
 
@@ -458,12 +461,26 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { ddmStructureModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((ddmStructureModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(ddmStructureModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(ddmStructureModelImpl.getGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
@@ -481,6 +498,15 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(ddmStructureModelImpl.getClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+					args);
 			}
 
 			if ((ddmStructureModelImpl.getColumnBitmask() &
@@ -491,6 +517,18 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructureModelImpl.getOriginalName(),
 						
 						ddmStructureModelImpl.getOriginalDescription()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_D, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_D,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(ddmStructureModelImpl.getGroupId()),
+						
+						ddmStructureModelImpl.getName(),
+						
+						ddmStructureModelImpl.getDescription()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_D, args);

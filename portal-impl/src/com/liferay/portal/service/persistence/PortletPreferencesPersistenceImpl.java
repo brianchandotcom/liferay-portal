@@ -207,6 +207,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 						portletPreferences.getPrimaryKey()) == null) {
 				cacheResult(portletPreferences);
 			}
+			else {
+				portletPreferences.resetOriginalValues();
+			}
 		}
 	}
 
@@ -419,6 +422,14 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PLID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(portletPreferencesModelImpl.getPlid())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PLID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID,
+					args);
 			}
 
 			if ((portletPreferencesModelImpl.getColumnBitmask() &
@@ -432,6 +443,16 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_P,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(portletPreferencesModelImpl.getPlid()),
+						
+						portletPreferencesModelImpl.getPortletId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_P,
+					args);
 			}
 
 			if ((portletPreferencesModelImpl.getColumnBitmask() &
@@ -440,6 +461,16 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 						Long.valueOf(portletPreferencesModelImpl.getOriginalOwnerId()),
 						Integer.valueOf(portletPreferencesModelImpl.getOriginalOwnerType()),
 						Long.valueOf(portletPreferencesModelImpl.getOriginalPlid())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_O_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(portletPreferencesModelImpl.getOwnerId()),
+						Integer.valueOf(portletPreferencesModelImpl.getOwnerType()),
+						Long.valueOf(portletPreferencesModelImpl.getPlid())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O_P, args);

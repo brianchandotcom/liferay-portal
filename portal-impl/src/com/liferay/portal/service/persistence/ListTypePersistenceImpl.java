@@ -123,6 +123,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 						ListTypeImpl.class, listType.getPrimaryKey()) == null) {
 				cacheResult(listType);
 			}
+			else {
+				listType.resetOriginalValues();
+			}
 		}
 	}
 
@@ -305,6 +308,12 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			if ((listTypeModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { listTypeModelImpl.getOriginalType() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+					args);
+
+				args = new Object[] { listTypeModelImpl.getType() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,

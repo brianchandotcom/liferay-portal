@@ -193,6 +193,9 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 						MBStatsUserImpl.class, mbStatsUser.getPrimaryKey()) == null) {
 				cacheResult(mbStatsUser);
 			}
+			else {
+				mbStatsUser.resetOriginalValues();
+			}
 		}
 	}
 
@@ -398,12 +401,28 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(mbStatsUserModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((mbStatsUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(mbStatsUserModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mbStatsUserModelImpl.getUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
@@ -417,6 +436,17 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 						Long.valueOf(mbStatsUserModelImpl.getOriginalGroupId()),
 						Long.valueOf(mbStatsUserModelImpl.getOriginalUserId()),
 						Integer.valueOf(mbStatsUserModelImpl.getOriginalMessageCount())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_NOTU_NOTM,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_NOTU_NOTM,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mbStatsUserModelImpl.getGroupId()),
+						Long.valueOf(mbStatsUserModelImpl.getUserId()),
+						Integer.valueOf(mbStatsUserModelImpl.getMessageCount())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_NOTU_NOTM,

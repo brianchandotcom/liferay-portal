@@ -107,6 +107,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 						CounterImpl.class, counter.getPrimaryKey()) == null) {
 				cacheResult(counter);
 			}
+			else {
+				counter.resetOriginalValues();
+			}
 		}
 	}
 

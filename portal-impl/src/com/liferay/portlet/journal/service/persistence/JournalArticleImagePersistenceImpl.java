@@ -223,6 +223,9 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 						journalArticleImage.getPrimaryKey()) == null) {
 				cacheResult(journalArticleImage);
 			}
+			else {
+				journalArticleImage.resetOriginalValues();
+			}
 		}
 	}
 
@@ -445,12 +448,29 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleImageModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((journalArticleImageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPIMAGE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Boolean.valueOf(journalArticleImageModelImpl.getOriginalTempImage())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TEMPIMAGE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPIMAGE,
+					args);
+
+				args = new Object[] {
+						Boolean.valueOf(journalArticleImageModelImpl.getTempImage())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TEMPIMAGE,
@@ -466,6 +486,17 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 						
 						journalArticleImageModelImpl.getOriginalArticleId(),
 						Double.valueOf(journalArticleImageModelImpl.getOriginalVersion())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_V, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_V,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalArticleImageModelImpl.getGroupId()),
+						
+						journalArticleImageModelImpl.getArticleId(),
+						Double.valueOf(journalArticleImageModelImpl.getVersion())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_V, args);

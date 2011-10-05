@@ -125,6 +125,9 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 						RatingsStatsImpl.class, ratingsStats.getPrimaryKey()) == null) {
 				cacheResult(ratingsStats);
 			}
+			else {
+				ratingsStats.resetOriginalValues();
+			}
 		}
 	}
 

@@ -245,6 +245,9 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 						AddressImpl.class, address.getPrimaryKey()) == null) {
 				cacheResult(address);
 			}
+			else {
+				address.resetOriginalValues();
+			}
 		}
 	}
 
@@ -434,6 +437,15 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(addressModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((addressModelImpl.getColumnBitmask() &
@@ -441,6 +453,12 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				Object[] args = new Object[] {
 						Long.valueOf(addressModelImpl.getOriginalUserId())
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
+
+				args = new Object[] { Long.valueOf(addressModelImpl.getUserId()) };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -457,6 +475,15 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(addressModelImpl.getCompanyId()),
+						Long.valueOf(addressModelImpl.getClassNameId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+					args);
 			}
 
 			if ((addressModelImpl.getColumnBitmask() &
@@ -465,6 +492,16 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 						Long.valueOf(addressModelImpl.getOriginalCompanyId()),
 						Long.valueOf(addressModelImpl.getOriginalClassNameId()),
 						Long.valueOf(addressModelImpl.getOriginalClassPK())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(addressModelImpl.getCompanyId()),
+						Long.valueOf(addressModelImpl.getClassNameId()),
+						Long.valueOf(addressModelImpl.getClassPK())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
@@ -484,6 +521,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_M, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_M,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(addressModelImpl.getCompanyId()),
+						Long.valueOf(addressModelImpl.getClassNameId()),
+						Long.valueOf(addressModelImpl.getClassPK()),
+						Boolean.valueOf(addressModelImpl.getMailing())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_M, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_M,
+					args);
 			}
 
 			if ((addressModelImpl.getColumnBitmask() &
@@ -493,6 +541,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 						Long.valueOf(addressModelImpl.getOriginalClassNameId()),
 						Long.valueOf(addressModelImpl.getOriginalClassPK()),
 						Boolean.valueOf(addressModelImpl.getOriginalPrimary())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(addressModelImpl.getCompanyId()),
+						Long.valueOf(addressModelImpl.getClassNameId()),
+						Long.valueOf(addressModelImpl.getClassPK()),
+						Boolean.valueOf(addressModelImpl.getPrimary())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

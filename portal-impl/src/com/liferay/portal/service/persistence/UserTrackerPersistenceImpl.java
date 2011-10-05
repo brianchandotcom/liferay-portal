@@ -164,6 +164,9 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 						UserTrackerImpl.class, userTracker.getPrimaryKey()) == null) {
 				cacheResult(userTracker);
 			}
+			else {
+				userTracker.resetOriginalValues();
+			}
 		}
 	}
 
@@ -356,12 +359,29 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(userTrackerModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((userTrackerModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(userTrackerModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(userTrackerModelImpl.getUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
@@ -374,6 +394,13 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 				Object[] args = new Object[] {
 						userTrackerModelImpl.getOriginalSessionId()
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SESSIONID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SESSIONID,
+					args);
+
+				args = new Object[] { userTrackerModelImpl.getSessionId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SESSIONID,
 					args);

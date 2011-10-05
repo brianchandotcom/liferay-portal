@@ -193,6 +193,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 						OrganizationImpl.class, organization.getPrimaryKey()) == null) {
 				cacheResult(organization);
 			}
+			else {
+				organization.resetOriginalValues();
+			}
 		}
 	}
 
@@ -434,12 +437,30 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(organizationModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((organizationModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LOCATIONS.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(organizationModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LOCATIONS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LOCATIONS,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(organizationModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LOCATIONS,
@@ -453,6 +474,15 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				Object[] args = new Object[] {
 						Long.valueOf(organizationModelImpl.getOriginalCompanyId()),
 						Long.valueOf(organizationModelImpl.getOriginalParentOrganizationId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(organizationModelImpl.getCompanyId()),
+						Long.valueOf(organizationModelImpl.getParentOrganizationId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);

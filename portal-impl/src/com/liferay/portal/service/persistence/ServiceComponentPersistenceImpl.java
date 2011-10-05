@@ -148,6 +148,9 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 						serviceComponent.getPrimaryKey()) == null) {
 				cacheResult(serviceComponent);
 			}
+			else {
+				serviceComponent.resetOriginalValues();
+			}
 		}
 	}
 
@@ -349,6 +352,15 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BUILDNAMESPACE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						serviceComponentModelImpl.getOriginalBuildNamespace()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BUILDNAMESPACE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BUILDNAMESPACE,
+					args);
+
+				args = new Object[] {
+						serviceComponentModelImpl.getBuildNamespace()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BUILDNAMESPACE,

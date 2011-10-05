@@ -144,6 +144,9 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 						ExpandoRowImpl.class, expandoRow.getPrimaryKey()) == null) {
 				cacheResult(expandoRow);
 			}
+			else {
+				expandoRow.resetOriginalValues();
+			}
 		}
 	}
 
@@ -343,6 +346,14 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TABLEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(expandoRowModelImpl.getOriginalTableId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TABLEID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TABLEID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(expandoRowModelImpl.getTableId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TABLEID, args);

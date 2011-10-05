@@ -132,6 +132,9 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 						ShardImpl.class, shard.getPrimaryKey()) == null) {
 				cacheResult(shard);
 			}
+			else {
+				shard.resetOriginalValues();
+			}
 		}
 	}
 

@@ -171,6 +171,9 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 						socialEquitySetting.getPrimaryKey()) == null) {
 				cacheResult(socialEquitySetting);
 			}
+			else {
+				socialEquitySetting.resetOriginalValues();
+			}
 		}
 	}
 
@@ -381,6 +384,17 @@ public class SocialEquitySettingPersistenceImpl extends BasePersistenceImpl<Soci
 						Long.valueOf(socialEquitySettingModelImpl.getOriginalClassNameId()),
 						
 						socialEquitySettingModelImpl.getOriginalActionId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_A,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquitySettingModelImpl.getGroupId()),
+						Long.valueOf(socialEquitySettingModelImpl.getClassNameId()),
+						
+						socialEquitySettingModelImpl.getActionId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_A, args);

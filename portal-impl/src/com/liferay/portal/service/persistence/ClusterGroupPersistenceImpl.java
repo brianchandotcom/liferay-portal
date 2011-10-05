@@ -103,6 +103,9 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 						ClusterGroupImpl.class, clusterGroup.getPrimaryKey()) == null) {
 				cacheResult(clusterGroup);
 			}
+			else {
+				clusterGroup.resetOriginalValues();
+			}
 		}
 	}
 

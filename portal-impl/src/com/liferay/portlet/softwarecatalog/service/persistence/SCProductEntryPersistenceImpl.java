@@ -206,6 +206,9 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 						SCProductEntryImpl.class, scProductEntry.getPrimaryKey()) == null) {
 				cacheResult(scProductEntry);
 			}
+			else {
+				scProductEntry.resetOriginalValues();
+			}
 		}
 	}
 
@@ -424,12 +427,29 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(scProductEntryModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((scProductEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(scProductEntryModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(scProductEntryModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -443,6 +463,15 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				Object[] args = new Object[] {
 						Long.valueOf(scProductEntryModelImpl.getOriginalGroupId()),
 						Long.valueOf(scProductEntryModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(scProductEntryModelImpl.getGroupId()),
+						Long.valueOf(scProductEntryModelImpl.getUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);

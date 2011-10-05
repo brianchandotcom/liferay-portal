@@ -156,6 +156,9 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 						SCLicenseImpl.class, scLicense.getPrimaryKey()) == null) {
 				cacheResult(scLicense);
 			}
+			else {
+				scLicense.resetOriginalValues();
+			}
 		}
 	}
 
@@ -356,6 +359,14 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
+
+				args = new Object[] {
+						Boolean.valueOf(scLicenseModelImpl.getActive())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
+					args);
 			}
 
 			if ((scLicenseModelImpl.getColumnBitmask() &
@@ -363,6 +374,15 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 				Object[] args = new Object[] {
 						Boolean.valueOf(scLicenseModelImpl.getOriginalActive()),
 						Boolean.valueOf(scLicenseModelImpl.getOriginalRecommended())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R,
+					args);
+
+				args = new Object[] {
+						Boolean.valueOf(scLicenseModelImpl.getActive()),
+						Boolean.valueOf(scLicenseModelImpl.getRecommended())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_R, args);

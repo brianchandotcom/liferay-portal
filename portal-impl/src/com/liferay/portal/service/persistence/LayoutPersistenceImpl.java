@@ -345,6 +345,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 						layout.getPrimaryKey()) == null) {
 				cacheResult(layout);
 			}
+			else {
+				layout.resetOriginalValues();
+			}
 		}
 	}
 
@@ -604,6 +607,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { layoutModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
@@ -611,6 +620,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				Object[] args = new Object[] {
 						Long.valueOf(layoutModelImpl.getOriginalGroupId())
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] { Long.valueOf(layoutModelImpl.getGroupId()) };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -627,6 +642,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] { Long.valueOf(layoutModelImpl.getCompanyId()) };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
@@ -634,6 +656,15 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				Object[] args = new Object[] {
 						Long.valueOf(layoutModelImpl.getOriginalGroupId()),
 						Boolean.valueOf(layoutModelImpl.getOriginalPrivateLayout())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(layoutModelImpl.getGroupId()),
+						Boolean.valueOf(layoutModelImpl.getPrivateLayout())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -652,6 +683,16 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_P,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(layoutModelImpl.getGroupId()),
+						Boolean.valueOf(layoutModelImpl.getPrivateLayout()),
+						Long.valueOf(layoutModelImpl.getParentLayoutId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_P,
+					args);
 			}
 
 			if ((layoutModelImpl.getColumnBitmask() &
@@ -661,6 +702,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 						Boolean.valueOf(layoutModelImpl.getOriginalPrivateLayout()),
 						
 						layoutModelImpl.getOriginalType()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_T, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_T,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(layoutModelImpl.getGroupId()),
+						Boolean.valueOf(layoutModelImpl.getPrivateLayout()),
+						
+						layoutModelImpl.getType()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_T, args);

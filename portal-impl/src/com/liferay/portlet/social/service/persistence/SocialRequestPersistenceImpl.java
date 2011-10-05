@@ -351,6 +351,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 						SocialRequestImpl.class, socialRequest.getPrimaryKey()) == null) {
 				cacheResult(socialRequest);
 			}
+			else {
+				socialRequest.resetOriginalValues();
+			}
 		}
 	}
 
@@ -584,12 +587,27 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { socialRequestModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((socialRequestModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(socialRequestModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialRequestModelImpl.getCompanyId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -607,12 +625,29 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialRequestModelImpl.getUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
 			}
 
 			if ((socialRequestModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECEIVERUSERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(socialRequestModelImpl.getOriginalReceiverUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECEIVERUSERID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECEIVERUSERID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialRequestModelImpl.getReceiverUserId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECEIVERUSERID,
@@ -631,6 +666,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_S, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_S,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialRequestModelImpl.getUserId()),
+						Integer.valueOf(socialRequestModelImpl.getStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_S,
+					args);
 			}
 
 			if ((socialRequestModelImpl.getColumnBitmask() &
@@ -638,6 +682,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				Object[] args = new Object[] {
 						Long.valueOf(socialRequestModelImpl.getOriginalReceiverUserId()),
 						Integer.valueOf(socialRequestModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialRequestModelImpl.getReceiverUserId()),
+						Integer.valueOf(socialRequestModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
@@ -659,6 +712,19 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C_T_S,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialRequestModelImpl.getUserId()),
+						Long.valueOf(socialRequestModelImpl.getClassNameId()),
+						Long.valueOf(socialRequestModelImpl.getClassPK()),
+						Integer.valueOf(socialRequestModelImpl.getType()),
+						Integer.valueOf(socialRequestModelImpl.getStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C_T_S,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C_T_S,
+					args);
 			}
 
 			if ((socialRequestModelImpl.getColumnBitmask() &
@@ -669,6 +735,19 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 						Integer.valueOf(socialRequestModelImpl.getOriginalType()),
 						Long.valueOf(socialRequestModelImpl.getOriginalReceiverUserId()),
 						Integer.valueOf(socialRequestModelImpl.getOriginalStatus())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_T_R_S,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_T_R_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialRequestModelImpl.getClassNameId()),
+						Long.valueOf(socialRequestModelImpl.getClassPK()),
+						Integer.valueOf(socialRequestModelImpl.getType()),
+						Long.valueOf(socialRequestModelImpl.getReceiverUserId()),
+						Integer.valueOf(socialRequestModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_T_R_S,

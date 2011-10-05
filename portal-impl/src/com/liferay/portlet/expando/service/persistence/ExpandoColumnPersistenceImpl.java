@@ -155,6 +155,9 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 						ExpandoColumnImpl.class, expandoColumn.getPrimaryKey()) == null) {
 				cacheResult(expandoColumn);
 			}
+			else {
+				expandoColumn.resetOriginalValues();
+			}
 		}
 	}
 
@@ -346,6 +349,14 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TABLEID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TABLEID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(expandoColumnModelImpl.getTableId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TABLEID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TABLEID,
+					args);
 			}
 
 			if ((expandoColumnModelImpl.getColumnBitmask() &
@@ -354,6 +365,16 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 						Long.valueOf(expandoColumnModelImpl.getOriginalTableId()),
 						
 						expandoColumnModelImpl.getOriginalName()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_N, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_N,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(expandoColumnModelImpl.getTableId()),
+						
+						expandoColumnModelImpl.getName()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_N, args);

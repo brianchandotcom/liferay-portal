@@ -179,6 +179,9 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 						scProductScreenshot.getPrimaryKey()) == null) {
 				cacheResult(scProductScreenshot);
 			}
+			else {
+				scProductScreenshot.resetOriginalValues();
+			}
 		}
 	}
 
@@ -396,6 +399,15 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(scProductScreenshotModelImpl.getOriginalProductEntryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PRODUCTENTRYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTENTRYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(scProductScreenshotModelImpl.getProductEntryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PRODUCTENTRYID,

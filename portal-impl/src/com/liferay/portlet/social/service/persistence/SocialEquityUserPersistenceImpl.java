@@ -234,6 +234,9 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 						socialEquityUser.getPrimaryKey()) == null) {
 				cacheResult(socialEquityUser);
 			}
+			else {
+				socialEquityUser.resetOriginalValues();
+			}
 		}
 	}
 
@@ -439,12 +442,29 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityUserModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((socialEquityUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPRANKED.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(socialEquityUserModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPRANKED,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPRANKED,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityUserModelImpl.getGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPRANKED,
@@ -462,12 +482,28 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityUserModelImpl.getUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+					args);
 			}
 
 			if ((socialEquityUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RANK.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Integer.valueOf(socialEquityUserModelImpl.getOriginalRank())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RANK, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RANK,
+					args);
+
+				args = new Object[] {
+						Integer.valueOf(socialEquityUserModelImpl.getRank())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RANK, args);
@@ -480,6 +516,15 @@ public class SocialEquityUserPersistenceImpl extends BasePersistenceImpl<SocialE
 				Object[] args = new Object[] {
 						Long.valueOf(socialEquityUserModelImpl.getOriginalGroupId()),
 						Integer.valueOf(socialEquityUserModelImpl.getOriginalRank())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(socialEquityUserModelImpl.getGroupId()),
+						Integer.valueOf(socialEquityUserModelImpl.getRank())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);

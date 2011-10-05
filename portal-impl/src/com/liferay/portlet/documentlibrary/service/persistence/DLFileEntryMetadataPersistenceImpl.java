@@ -236,6 +236,9 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 						dlFileEntryMetadata.getPrimaryKey()) == null) {
 				cacheResult(dlFileEntryMetadata);
 			}
+			else {
+				dlFileEntryMetadata.resetOriginalValues();
+			}
 		}
 	}
 
@@ -464,12 +467,27 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { dlFileEntryMetadataModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((dlFileEntryMetadataModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYTYPEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(dlFileEntryMetadataModelImpl.getOriginalFileEntryTypeId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYTYPEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYTYPEID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileEntryMetadataModelImpl.getFileEntryTypeId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYTYPEID,
@@ -488,12 +506,30 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileEntryMetadataModelImpl.getFileEntryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYID,
+					args);
 			}
 
 			if ((dlFileEntryMetadataModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEVERSIONID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(dlFileEntryMetadataModelImpl.getOriginalFileVersionId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEVERSIONID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEVERSIONID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileEntryMetadataModelImpl.getFileVersionId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEVERSIONID,

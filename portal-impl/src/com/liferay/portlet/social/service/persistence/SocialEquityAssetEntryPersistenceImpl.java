@@ -128,6 +128,9 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 						socialEquityAssetEntry.getPrimaryKey()) == null) {
 				cacheResult(socialEquityAssetEntry);
 			}
+			else {
+				socialEquityAssetEntry.resetOriginalValues();
+			}
 		}
 	}
 

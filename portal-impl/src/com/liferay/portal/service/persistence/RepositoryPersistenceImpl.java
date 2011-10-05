@@ -130,6 +130,9 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 						RepositoryImpl.class, repository.getPrimaryKey()) == null) {
 				cacheResult(repository);
 			}
+			else {
+				repository.resetOriginalValues();
+			}
 		}
 	}
 
@@ -315,6 +318,14 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(repositoryModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(repositoryModelImpl.getGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);

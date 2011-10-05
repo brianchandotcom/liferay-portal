@@ -251,6 +251,9 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 						journalTemplate.getPrimaryKey()) == null) {
 				cacheResult(journalTemplate);
 			}
+			else {
+				journalTemplate.resetOriginalValues();
+			}
 		}
 	}
 
@@ -488,12 +491,26 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { journalTemplateModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((journalTemplateModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(journalTemplateModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalTemplateModelImpl.getGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
@@ -511,6 +528,13 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEID,
 					args);
+
+				args = new Object[] { journalTemplateModelImpl.getTemplateId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TEMPLATEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEID,
+					args);
 			}
 
 			if ((journalTemplateModelImpl.getColumnBitmask() &
@@ -519,6 +543,16 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 						Long.valueOf(journalTemplateModelImpl.getOriginalGroupId()),
 						
 						journalTemplateModelImpl.getOriginalStructureId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalTemplateModelImpl.getGroupId()),
+						
+						journalTemplateModelImpl.getStructureId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);

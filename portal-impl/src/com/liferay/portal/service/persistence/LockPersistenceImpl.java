@@ -159,6 +159,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 						LockImpl.class, lock.getPrimaryKey()) == null) {
 				cacheResult(lock);
 			}
+			else {
+				lock.resetOriginalValues();
+			}
 		}
 	}
 
@@ -361,6 +364,12 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { lockModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((lockModelImpl.getColumnBitmask() &
@@ -368,6 +377,13 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				Object[] args = new Object[] {
 						lockModelImpl.getOriginalExpirationDate()
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE,
+					args);
+
+				args = new Object[] { lockModelImpl.getExpirationDate() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE,
 					args);

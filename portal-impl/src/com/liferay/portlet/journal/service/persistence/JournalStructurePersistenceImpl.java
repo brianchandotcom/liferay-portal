@@ -237,6 +237,9 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 						journalStructure.getPrimaryKey()) == null) {
 				cacheResult(journalStructure);
 			}
+			else {
+				journalStructure.resetOriginalValues();
+			}
 		}
 	}
 
@@ -466,12 +469,26 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
+
+				args = new Object[] { journalStructureModelImpl.getUuid() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+					args);
 			}
 
 			if ((journalStructureModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(journalStructureModelImpl.getOriginalGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalStructureModelImpl.getGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
@@ -489,6 +506,13 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
 					args);
+
+				args = new Object[] { journalStructureModelImpl.getStructureId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
+					args);
 			}
 
 			if ((journalStructureModelImpl.getColumnBitmask() &
@@ -497,6 +521,16 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 						Long.valueOf(journalStructureModelImpl.getOriginalGroupId()),
 						
 						journalStructureModelImpl.getOriginalParentStructureId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(journalStructureModelImpl.getGroupId()),
+						
+						journalStructureModelImpl.getParentStructureId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);

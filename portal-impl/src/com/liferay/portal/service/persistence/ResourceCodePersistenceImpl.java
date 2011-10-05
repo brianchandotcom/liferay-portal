@@ -167,6 +167,9 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 						ResourceCodeImpl.class, resourceCode.getPrimaryKey()) == null) {
 				cacheResult(resourceCode);
 			}
+			else {
+				resourceCode.resetOriginalValues();
+			}
 		}
 	}
 
@@ -376,6 +379,15 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(resourceCodeModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((resourceCodeModelImpl.getColumnBitmask() &
@@ -383,6 +395,12 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 				Object[] args = new Object[] {
 						resourceCodeModelImpl.getOriginalName()
 					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
+					args);
+
+				args = new Object[] { resourceCodeModelImpl.getName() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,

@@ -121,6 +121,9 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 						WebDAVPropsImpl.class, webDAVProps.getPrimaryKey()) == null) {
 				cacheResult(webDAVProps);
 			}
+			else {
+				webDAVProps.resetOriginalValues();
+			}
 		}
 	}
 

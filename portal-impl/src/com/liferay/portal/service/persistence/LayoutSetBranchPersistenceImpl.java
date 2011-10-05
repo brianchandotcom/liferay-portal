@@ -179,6 +179,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 						layoutSetBranch.getPrimaryKey()) == null) {
 				cacheResult(layoutSetBranch);
 			}
+			else {
+				layoutSetBranch.resetOriginalValues();
+			}
 		}
 	}
 
@@ -389,6 +392,14 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(layoutSetBranchModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((layoutSetBranchModelImpl.getColumnBitmask() &
@@ -396,6 +407,15 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 				Object[] args = new Object[] {
 						Long.valueOf(layoutSetBranchModelImpl.getOriginalGroupId()),
 						Boolean.valueOf(layoutSetBranchModelImpl.getOriginalPrivateLayout())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(layoutSetBranchModelImpl.getGroupId()),
+						Boolean.valueOf(layoutSetBranchModelImpl.getPrivateLayout())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);

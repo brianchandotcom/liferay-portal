@@ -190,6 +190,9 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 						ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey()) == null) {
 				cacheResult(shoppingOrder);
 			}
+			else {
+				shoppingOrder.resetOriginalValues();
+			}
 		}
 	}
 
@@ -395,6 +398,14 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(shoppingOrderModelImpl.getGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
 			}
 
 			if ((shoppingOrderModelImpl.getColumnBitmask() &
@@ -404,6 +415,17 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 						Long.valueOf(shoppingOrderModelImpl.getOriginalUserId()),
 						
 						shoppingOrderModelImpl.getOriginalPpPaymentStatus()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_PPPS, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_PPPS,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(shoppingOrderModelImpl.getGroupId()),
+						Long.valueOf(shoppingOrderModelImpl.getUserId()),
+						
+						shoppingOrderModelImpl.getPpPaymentStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_PPPS, args);

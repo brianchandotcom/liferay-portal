@@ -134,6 +134,9 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 						shoppingItemPrice.getPrimaryKey()) == null) {
 				cacheResult(shoppingItemPrice);
 			}
+			else {
+				shoppingItemPrice.resetOriginalValues();
+			}
 		}
 	}
 
@@ -320,6 +323,14 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(shoppingItemPriceModelImpl.getOriginalItemId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ITEMID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(shoppingItemPriceModelImpl.getItemId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ITEMID, args);

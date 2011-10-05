@@ -170,6 +170,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 						UserGroupImpl.class, userGroup.getPrimaryKey()) == null) {
 				cacheResult(userGroup);
 			}
+			else {
+				userGroup.resetOriginalValues();
+			}
 		}
 	}
 
@@ -406,6 +409,15 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
+
+				args = new Object[] {
+						Long.valueOf(userGroupModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
 			}
 
 			if ((userGroupModelImpl.getColumnBitmask() &
@@ -413,6 +425,15 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 				Object[] args = new Object[] {
 						Long.valueOf(userGroupModelImpl.getOriginalCompanyId()),
 						Long.valueOf(userGroupModelImpl.getOriginalParentUserGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(userGroupModelImpl.getCompanyId()),
+						Long.valueOf(userGroupModelImpl.getParentUserGroupId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);

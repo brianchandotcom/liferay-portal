@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/html/portlet/user_groups_admin/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -30,7 +30,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroupId %>" />
 
-	<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp">
+	<liferay-util:include page="/html/portlet/user_groups_admin/toolbar.jsp">
 		<liferay-util:param name="toolbarItem" value='<%= (userGroup == null) ? "add" : "view" %>' />
 	</liferay-util:include>
 

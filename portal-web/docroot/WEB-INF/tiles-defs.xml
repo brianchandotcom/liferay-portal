@@ -1486,6 +1486,30 @@
 		<put name="portlet_content" value="/portlet/update_manager/view.jsp" />
 	</definition>
 
+    <!-- User Groups Admin -->
+
+    <definition name="portlet.user_groups_admin" extends="portlet" />
+
+    <definition name="portlet.user_groups_admin.error" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/users_admin/error.jsp" />
+	</definition>
+
+    <definition name="portlet.user_groups_admin.view" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/user_groups_admin/view.jsp" />
+	</definition>
+
+	<definition name="portlet.user_groups_admin.edit_user_group" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/user_groups_admin/edit_user_group.jsp" />
+	</definition>
+
+	<definition name="portlet.user_groups_admin.edit_user_group_assignments" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/user_groups_admin/edit_user_group_assignments.jsp" />
+	</definition>
+
+	<definition name="portlet.user_groups_admin.select_user_group" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/user_groups_admin/select_user_group.jsp" />
+	</definition>
+
 	<!-- Users Admin -->
 
 	<definition name="portlet.users_admin" extends="portlet" />
@@ -1506,14 +1530,6 @@
 		<put name="portlet_content" value="/portlet/users_admin/edit_user.jsp" />
 	</definition>
 
-	<definition name="portlet.users_admin.edit_user_group" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_user_group.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.edit_user_group_assignments" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_user_group_assignments.jsp" />
-	</definition>
-
 	<definition name="portlet.users_admin.edit_user_portrait" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/edit_user_portrait.jsp" />
 	</definition>
@@ -1524,10 +1540,6 @@
 
 	<definition name="portlet.users_admin.select_organization" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/select_organization.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.select_user_group" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/select_user_group.jsp" />
 	</definition>
 
 	<definition name="portlet.users_admin.view" extends="portlet.users_admin">

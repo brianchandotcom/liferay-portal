@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
  *
@@ -12,18 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+package com.liferay.portlet.usergroupsadmin.search;
 
-<%
-UserGroupSearch searchContainer = (UserGroupSearch)request.getAttribute("liferay-ui:search:searchContainer");
+import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 
-UserGroupDisplayTerms displayTerms = (UserGroupDisplayTerms)searchContainer.getDisplayTerms();
-%>
+import javax.portlet.PortletRequest;
 
-<span class="aui-search-bar lfr-display-terms-search">
-	<aui:input inlineField="<%= true %>" label="" name="<%= displayTerms.NAME %>" size="30" type="text" value="<%= displayTerms.getName() %>" />
+/**
+ * @author Charles May
+ */
+public class UserGroupSearchTerms extends UserGroupDisplayTerms {
 
-	<aui:button type="submit" value="search" />
-</span>
+	public UserGroupSearchTerms(PortletRequest portletRequest) {
+		super(portletRequest);
+
+		description = DAOParamUtil.getLike(portletRequest, DESCRIPTION);
+		name = DAOParamUtil.getLike(portletRequest, NAME);
+	}
+
+}

@@ -58,6 +58,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroup.getUserGroupId() %>" />
 	<aui:input name="addUserIds" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="removeUserIds" type="hidden" />
 
 	<liferay-ui:search-container

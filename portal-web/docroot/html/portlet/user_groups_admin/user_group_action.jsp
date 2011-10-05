@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/html/portlet/user_groups_admin/init.jsp" %>
 
 <%
 UserGroupSearch searchContainer = (UserGroupSearch)request.getAttribute("liferay-ui:search:searchContainer");
@@ -29,7 +29,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 <liferay-ui:icon-menu>
 	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user_group" />
+			<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
@@ -56,7 +56,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 
 	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user_group_assignments" />
+			<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group_assignments" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
@@ -69,8 +69,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	</c:if>
 
 	<portlet:renderURL var="viewUsersURL">
-		<portlet:param name="struts_action" value="/users_admin/view" />
-		<portlet:param name="tabs1" value="users" />
+		<portlet:param name="struts_action" value="/user_groups_admin/view_users" />
 		<portlet:param name="viewUsersRedirect" value="<%= currentURL %>" />
 		<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />

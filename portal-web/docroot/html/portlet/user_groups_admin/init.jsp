@@ -16,22 +16,24 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.NoSuchOrganizationException" %><%@
-page import="com.liferay.portal.NoSuchUserGroupException" %><%@
+<%@ page import="com.liferay.portal.DuplicateUserGroupException" %><%@
+page import="com.liferay.portal.RequiredUserGroupException" %><%@
+page import="com.liferay.portal.UserGroupNameException" %><%@
+page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
+page import="com.liferay.portal.service.permission.UserGroupPermissionUtil" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
+page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "users");
+boolean filterManageableOrganizations = true;
+boolean filterManageableUserGroups = true;
 
-boolean filterManageableOrganizations = false;
-
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+if (portletName.equals(PortletKeys.MY_ACCOUNT) || permissionChecker.isCompanyAdmin()) {
+	filterManageableOrganizations = false;
+	filterManageableUserGroups = false;
+}
 %>
+
+<%@ include file="/html/portlet/users_admin/init-ext.jsp" %>

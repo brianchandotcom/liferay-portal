@@ -271,12 +271,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			if (EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey()) == null) {
 				cacheResult(${entity.varName});
 			}
-
-			<#if entity.hasLazyBlobColumn()>
-				else {
-					${entity.varName}.resetOriginalValues();
-				}
-			</#if>
+			else {
+				${entity.varName}.resetOriginalValues();
+			}
 		}
 	}
 
@@ -657,6 +654,27 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
 							FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+
+							args = new Object[] {
+								<#list finder.getColumns() as finderCol>
+									<#if finderCol.isPrimitiveType()>
+										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+									</#if>
+
+									${entity.varName}ModelImpl.get${finderCol.methodName}()
+
+									<#if finderCol.isPrimitiveType()>
+										)
+									</#if>
+
+									<#if finderCol_has_next>
+										,
+									</#if>
+								</#list>
+							};
+
+							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+							FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
 						}
 					</#list>
 				}
@@ -690,6 +708,27 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 									</#if>
 
 									${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
+
+									<#if finderCol.isPrimitiveType()>
+										)
+									</#if>
+
+									<#if finderCol_has_next>
+										,
+									</#if>
+								</#list>
+							});
+
+							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+							FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+
+							args = new Object[] {
+								<#list finderColsList as finderCol>
+									<#if finderCol.isPrimitiveType()>
+										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+									</#if>
+
+									${entity.varName}ModelImpl.get${finderCol.methodName}()
 
 									<#if finderCol.isPrimitiveType()>
 										)

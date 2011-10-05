@@ -147,7 +147,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		facetQuery.addExactTerm(Field.ENTRY_CLASS_NAME, className);
 
-		if (searchContext.getUserId() > 0) {
+		if (isFilterSearch() && searchContext.getUserId() > 0) {
 			SearchPermissionChecker searchPermissionChecker =
 				SearchEngineUtil.getSearchPermissionChecker();
 

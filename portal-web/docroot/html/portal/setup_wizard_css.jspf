@@ -27,7 +27,7 @@ body {
 
 #wrapper {
 	margin: auto;
-	max-width: 700px;
+	max-width: 600px;
 	min-width: 0;
 }
 
@@ -57,6 +57,10 @@ body {
 	text-align: right;
 	text-shadow: 1px 1px #FFF;
 	width: 50%;
+}
+
+#testMessages {
+	margin-top: 10px;
 }
 
 .properties-text {

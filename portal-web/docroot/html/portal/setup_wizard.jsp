@@ -136,23 +136,25 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 									<aui:validator name="required" />
 								</aui:input>
 
-								<aui:input label="user-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_USERNAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_USERNAME %>"  >
+								<aui:input id="jdbcDefaultUserName" label="user-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_USERNAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_USERNAME %>"  >
 									<aui:validator name="required" />
 								</aui:input>
 
-								<aui:input label="password" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_PASSWORD + "--" %>' type="password" value="<%= PropsValues.JDBC_DEFAULT_PASSWORD %>"  >
+								<aui:input id="jdbcDefaultPassword" label="password" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_PASSWORD + "--" %>' type="password" value="<%= PropsValues.JDBC_DEFAULT_PASSWORD %>"  >
 									<aui:validator name="required" />
 								</aui:input>
 
+								<aui:button name="testConnectionButton" type="button" value="test-database-connection" />
+								<div id='<portlet:namespace />testMessages'></div>
 							</div>
 						</aui:fieldset>
 
-						<aui:button-row>
+						<aui:button-row id="finishButtonWrapper">
 							<aui:button name="finishButton" type="button" value="finish-configuration" />
 						</aui:button-row>
 					</aui:form>
 
-					<aui:script use="aui-base,aui-loading-mask">
+					<aui:script use="aui-base,aui-io-request,aui-loading-mask">
 						var customDatabaseOptions = A.one('#customDatabaseOptions');
 						var customDatabaseOptionsLink = A.one('#customDatabaseOptionsLink');
 						var databaseMessage = A.one('#databaseMessage');
@@ -163,12 +165,22 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 
 						var jdbcDefaultURL = A.one('#<portlet:namespace />jdbcDefaultURL');
 						var jdbcDefaultDriverClassName = A.one('#<portlet:namespace />jdbcDefaultDriverName');
+						var jdbcDefaultUserName = A.one('#<portlet:namespace />jdbcDefaultUserName');
+						var jdbcDefaultPassword = A.one('#<portlet:namespace />jdbcDefaultPassword');
 
-						var form = A.one('#<portlet:namespace />fm');
+						var setupForm = A.one('#<portlet:namespace />fm');
 						var command = A.one('#<portlet:namespace /><%= Constants.CMD %>');
+
+						var testConnectionButton = A.one('#<portlet:namespace />testConnectionButton');
+
+						var finishButtonWrapper = A.one("#<portlet:namespace />finishButtonWrapper");
+
+						var testMessages = A.one("#<portlet:namespace />testMessages");
 
 						if (databaseSelector.val() != 'hypersonic') {
 							defaultDatabaseOptions.hide();
+
+							finishButtonWrapper.hide();
 
 							customDatabaseOptions.show();
 						}
@@ -181,6 +193,8 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 							defaultDatabaseOptions.toggle(showDefault);
 
 							customDatabaseOptions.toggle(!showDefault);
+
+							finishButtonWrapper.toggle(showDefault);
 
 							defaultDatabase.val(showDefault);
 						};
@@ -203,6 +217,7 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 							var displayMessage = !(/^hypersonic|mysql|postgresql$/.test(value));
 
 							databaseMessage.toggle(displayMessage);
+							finishButtonWrapper.hide(displayMessage);
 						}
 
 						onChangeDatabaseSelector();
@@ -213,7 +228,7 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 							'click',
 							function(event) {
 								command.val('<%= Constants.TRANSLATE %>');
-							    form.submit();
+							    setupForm.submit();
 							}
 						);
 
@@ -229,7 +244,58 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 								);
 
 								command.val('<%= Constants.UPDATE %>');
-							    form.submit();
+							    setupForm.submit();
+							}
+						);
+
+						testConnectionButton.on(
+							'click',
+							function(event) {
+						        command.val('<%=Constants.TEST%>');
+
+								A.io.request(
+									setupForm.action,
+									{
+										form: {
+											id: document.<portlet:namespace />fm
+										},
+										dataType: 'json',
+										on: {
+						                	start: function(event, id) {
+												if (testMessages != null) {
+													testMessages.setContent('');
+						                        }
+
+												var loadingImage = "<img src='<%=themeImagesPath%>/application/loading_indicator.gif' id='<portlet:namespace />loadingImage' />";
+												testMessages.append(loadingImage);
+											}
+										},
+										after: {
+											success: function(event, id, obj) {
+												var item = this.get('responseData');
+
+												var childHTML = null;
+												var messageClass = null;
+
+												if (item.tested) {
+													messageClass = "success";
+													finishButtonWrapper.show();
+												}
+												else {
+													messageClass = "alert";
+												}
+
+												childHTML = "<span class='portlet-msg-" + messageClass + "'>" + item.message + "</span>";
+
+												A.one("#<portlet:namespace />loadingImage").remove(true);
+												testMessages.append(childHTML);
+											},
+											failure: function(event, id, obj) {
+												testMessages.append('<span class="portlet-msg-error"><%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-testing-the-database") %></span>');
+											}
+										}
+									}
+								);
 							}
 						);
 

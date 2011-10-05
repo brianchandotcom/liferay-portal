@@ -18,6 +18,8 @@ import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,6 +49,9 @@ import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -55,6 +60,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import javax.sql.DataSource;
 
 import org.apache.struts.Globals;
 
@@ -207,6 +214,58 @@ public class SetupWizardUtil {
 
 		unicodeProperties.put(
 			PropsKeys.DEFAULT_ADMIN_SCREEN_NAME, defaultAdminScreenName);
+	}
+
+	public static void testDatabase(HttpServletRequest request)
+		throws ClassNotFoundException, SQLException {
+
+		UnicodeProperties unicodeProperties = getUnicodeProperties(request);
+
+		String driverClassName = unicodeProperties.getProperty(
+			PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME);
+		String url = unicodeProperties.getProperty(
+			PropsKeys.JDBC_DEFAULT_URL);
+		String userName = unicodeProperties.getProperty(
+			PropsKeys.JDBC_DEFAULT_USERNAME);
+		String password = unicodeProperties.getProperty(
+			PropsKeys.JDBC_DEFAULT_PASSWORD);
+
+		_checkConnection(driverClassName, url, userName, password);
+	}
+
+	private static void _checkConnection(
+			String driverClassName, String url, String userName,
+			String password)
+		throws ClassNotFoundException, SQLException {
+
+		Class.forName(driverClassName);
+
+        DataSource dataSource = null;
+		Connection connection = null;
+
+		try {
+			dataSource = _getDatasource(
+				driverClassName, url, userName, password);
+
+			connection = dataSource.getConnection();
+		}
+		catch(Exception e) {
+			if ( e instanceof SQLException) {
+				throw (SQLException)e;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(connection);
+		}
+	}
+
+	private static DataSource _getDatasource(
+		String driverClassName, String url, String userName,
+		String password)
+		throws Exception {
+
+		return DataSourceFactoryUtil.initDataSource(
+			driverClassName, url, userName, password);
 	}
 
 	private static void _reloadServletContext(

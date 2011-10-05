@@ -14,8 +14,13 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -24,6 +29,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +70,43 @@ public class SetupWizardAction extends Action {
 				SetupWizardUtil.processPortalLanguage(request, response);
 
 				return mapping.findForward("portal.setup_wizard");
+			}
+			else if (cmd.equals(Constants.TEST)) {
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				try {
+					SetupWizardUtil.testDatabase(request) ;
+
+					jsonObject.put("tested", Boolean.TRUE);
+					jsonObject.put(
+						"message",
+						LanguageUtil.get(
+							themeDisplay.getLocale(),
+							"database-connection-has-been-established-" +
+								"sucessfully"));
+				}
+				catch(ClassNotFoundException cnfe) {
+					jsonObject.put("tested", Boolean.FALSE);
+					jsonObject.put(
+						"message", LanguageUtil.format(
+							themeDisplay.getLocale(),
+							"database-driver-x-is-not-present",
+							cnfe.getLocalizedMessage()));
+				}
+				catch(SQLException sqle) {
+					jsonObject.put("tested", Boolean.FALSE);
+					jsonObject.put(
+						"message", LanguageUtil.get(
+							themeDisplay.getLocale(),
+							"database-connection-has-not-been-established"));
+				}
+
+				response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+
+				ServletResponseUtil.write(response, jsonObject.toString());
+
+				return null;
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				SetupWizardUtil.processSetup(request);

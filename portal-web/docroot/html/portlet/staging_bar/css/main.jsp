@@ -39,6 +39,9 @@
 		.aui-tab, .aui-tab-content {
 			background: none;
 			border-width: 0;
+			height: 28px;
+			min-width: 60px;
+			text-align: center;
 		}
 
 		.aui-tab-active .aui-tab-content {
@@ -261,6 +264,11 @@
 						}
 					}
 				}
+			}
+
+    		.last-publication-user {
+				background: url(<%= themeImagesPath %>/common/time.png) no-repeat 0 50%;
+				padding-left: 20px;
 			}
 
 			.last-publication-variation-details {

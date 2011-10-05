@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -63,7 +64,6 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
@@ -232,6 +232,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			messageId, "text/" + format, body);
 
 		validate(subject, body);
+		subject = _fixEmptySubject(subject, body);
+		body = _fixEmptyBody(subject, body);
 
 		MBMessage message = mbMessagePersistence.create(messageId);
 
@@ -1364,6 +1366,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Date now = new Date();
 
 		validate(subject, body);
+		subject = _fixEmptySubject(subject, body);
+		body = _fixEmptyBody(subject, body);
 
 		message.setModifiedDate(serviceContext.getModifiedDate(now));
 		message.setSubject(subject);
@@ -2103,13 +2107,23 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	protected void validate(String subject, String body)
 		throws PortalException {
 
-		if (Validator.isNull(subject)) {
+		if (Validator.isNull(subject) && Validator.isNull(body)) {
 			throw new MessageSubjectException();
 		}
+	}
 
+	private String _fixEmptyBody(String subject, String body) {
 		if (Validator.isNull(body)) {
-			throw new MessageBodyException();
+			return subject;
 		}
+		return body;
+	}
+
+	private String _fixEmptySubject(String subject, String body) {
+		if (Validator.isNull(subject)) {
+			return StringUtil.shorten(body);
+		}
+		return subject;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

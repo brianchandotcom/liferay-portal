@@ -25,6 +25,11 @@ boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-u
 String type = (String)request.getAttribute("liferay-ui:search:type");
 
 String id = searchContainer.getId();
+
+if (Validator.isNull(id)) {
+	id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+}
+
 int start = searchContainer.getStart();
 int end = searchContainer.getEnd();
 int total = searchContainer.getTotal();
@@ -57,6 +62,14 @@ if (iteratorURL != null) {
 List<String> primaryKeys = new ArrayList<String>();
 
 int sortColumnIndex = -1;
+
+String classNameHover = "hover";
+
+String rowClassNameAlternate = "portlet-section-alternate";
+String rowClassNameAlternateHover = "portlet-section-alternate-hover";
+
+String rowClassNameBody = "portlet-section-body";
+String rowClassNameBodyHover = "portlet-section-body-hover";
 %>
 
 <c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
@@ -72,11 +85,7 @@ int sortColumnIndex = -1;
 		</div>
 	</c:if>
 
-	<div class="results-grid"
-		<c:if test="<%= Validator.isNotNull(id) %>">
-			id="<%= id %>SearchContainer"
-		</c:if>
-	>
+	<div class="results-grid" id="<%= id %>SearchContainer">
 		<table class="taglib-search-iterator">
 
 		<c:if test="<%= headerNames != null %>">
@@ -202,14 +211,14 @@ int sortColumnIndex = -1;
 		for (int i = 0; i < resultRows.size(); i++) {
 			ResultRow row = (ResultRow)resultRows.get(i);
 
-			String rowClassName = "portlet-section-alternate results-row alt";
-			String rowClassHoverName = "portlet-section-alternate-hover results-row alt hover";
+			String rowClassName = rowClassNameAlternate + " results-row alt";
+			String rowClassHoverName = rowClassNameAlternateHover + " results-row alt " + classNameHover;
 
 			primaryKeys.add(row.getPrimaryKey());
 
 			if (MathUtil.isEven(i)) {
-				rowClassName = "portlet-section-body results-row";
-				rowClassHoverName = "portlet-section-body-hover results-row hover";
+				rowClassName = rowClassNameBody + " results-row";
+				rowClassHoverName = rowClassNameBodyHover + " results-row " + classNameHover;
 			}
 
 			if (Validator.isNotNull(row.getClassName())) {
@@ -256,11 +265,7 @@ int sortColumnIndex = -1;
 			}
 		%>
 
-			<tr class="<%= rowClassName %>"
-				<c:if test="<%= searchContainer.isHover() %>">
-					onmouseover="this.className = '<%= rowClassHoverName %>';" onmouseout="this.className = '<%= rowClassName %>';"
-				</c:if>
-			>
+			<tr class="<%= rowClassName %>">
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {
@@ -328,11 +333,47 @@ int sortColumnIndex = -1;
 <c:if test="<%= Validator.isNotNull(id) %>">
 	<input id="<%= id %>PrimaryKeys" name="<%= id %>PrimaryKeys" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
 
-	<aui:script use="liferay-search-container">
+	<aui:script use="liferay-search-container,event-mouseenter">
 		new Liferay.SearchContainer(
 			{
 				id: '<%= id %>'
 			}
 		).render();
+
+		<c:if test="<%= searchContainer.isHover() %>">
+
+			var searchContentNode = A.one('#<%= id %>SearchContainer');
+
+			var onMouseEnter = function(event) {
+				var row = event.currentTarget;
+
+				if (row.hasClass('<%= rowClassNameAlternate %>')) {
+					row.replaceClass('<%= rowClassNameAlternate %>', '<%= rowClassNameAlternateHover %>');
+				}
+				else if (!row.hasClass('<%= rowClassNameBodyHover %>')) {
+					row.replaceClass('<%= rowClassNameBody %>', '<%= rowClassNameBodyHover %>');
+				}
+
+				row.addClass('<%= classNameHover %>');
+			};
+
+			var onMouseLeave = function(event) {
+				var row = event.currentTarget;
+
+				if (row.hasClass('<%= rowClassNameAlternateHover %>')) {
+					row.replaceClass('<%= rowClassNameAlternateHover %>', '<%= rowClassNameAlternate %>');
+				}
+				else if (row.hasClass('<%= rowClassNameBodyHover %>')) {
+					row.replaceClass('<%= rowClassNameBodyHover %>', '<%= rowClassNameBody %>');
+				}
+
+				row.removeClass('<%= classNameHover %>');
+			};
+
+			searchContentNode.delegate('mouseenter', onMouseEnter, 'tr');
+
+			searchContentNode.delegate('mouseleave', onMouseLeave, 'tr');
+
+		</c:if>
 	</aui:script>
 </c:if>

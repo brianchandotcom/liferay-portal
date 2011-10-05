@@ -47,8 +47,18 @@ public class RW_SignInTest extends BaseTestCase {
 			RuntimeVariables.replace("Login as richard"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='password1']",
+			RuntimeVariables.replace("password"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='password2']",
+			RuntimeVariables.replace("password"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Richard Editor"),
-			selenium.getText("//a[@class='user-fullname']"));
+			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Richard Editor."),
 			selenium.getText("//section[@id='portlet_58']/div/div/div"));

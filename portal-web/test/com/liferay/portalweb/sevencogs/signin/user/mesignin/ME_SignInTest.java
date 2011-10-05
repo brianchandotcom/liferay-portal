@@ -47,8 +47,18 @@ public class ME_SignInTest extends BaseTestCase {
 			RuntimeVariables.replace("Login as michelle"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='password1']",
+			RuntimeVariables.replace("password"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='password2']",
+			RuntimeVariables.replace("password"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Michelle Writer"),
-			selenium.getText("//a[@class='user-fullname']"));
+			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Michelle Writer."),
 			selenium.getText("//section[@id='portlet_58']/div/div/div"));

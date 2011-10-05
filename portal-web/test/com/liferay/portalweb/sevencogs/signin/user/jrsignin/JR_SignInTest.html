@@ -29,8 +29,23 @@
 	<td>Login as john</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>//input[@id='password1']</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='password2']</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//a[@class='user-fullname']</td>
+	<td>//a[contains(@class,'user-fullname')]</td>
 	<td>John Regular</td>
 </tr>
 <tr>
@@ -38,8 +53,6 @@
 	<td>//section[@id='portlet_58']/div/div/div</td>
 	<td>You are signed in as John Regular.</td>
 </tr>
-
-
 </tbody></table>
 </body>
 </html>

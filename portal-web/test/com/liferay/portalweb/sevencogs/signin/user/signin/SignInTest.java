@@ -86,7 +86,7 @@ public class SignInTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Test"),
-			selenium.getText("//a[@class='user-fullname']"));
+			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace("You are signed in as Test Test."),
 			selenium.getText("//section[@id='portlet_58']/div/div/div"));
 	}

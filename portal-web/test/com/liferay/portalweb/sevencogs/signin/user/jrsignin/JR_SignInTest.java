@@ -47,8 +47,18 @@ public class JR_SignInTest extends BaseTestCase {
 			RuntimeVariables.replace("Login as john"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='password1']",
+			RuntimeVariables.replace("password"));
+		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='password2']",
+			RuntimeVariables.replace("password"));
+		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("John Regular"),
-			selenium.getText("//a[@class='user-fullname']"));
+			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as John Regular."),
 			selenium.getText("//section[@id='portlet_58']/div/div/div"));

@@ -28,7 +28,6 @@ public class SignInTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTestSuite(SignInTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
 
 		return testSuite;
 	}

@@ -2530,9 +2530,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		try {
 			FileEntry fileEntry = fromRepository.getFileEntry(oldFileEntryId);
 
-			fromRepository.deleteFileEntry(oldFileEntryId);
-
 			dlAppHelperLocalService.deleteFileEntry(fileEntry);
+
+			fromRepository.deleteFileEntry(oldFileEntryId);
 		}
 		catch (PortalException pe) {
 			FileEntry fileEntry = toRepository.getFileEntry(newFileEntryId);

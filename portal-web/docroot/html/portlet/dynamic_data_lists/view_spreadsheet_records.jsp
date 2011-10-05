@@ -137,18 +137,20 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	var numberOfRecordsNode = A.one('#<portlet:namespace />numberOfRecords');
 
-	A.one('#<portlet:namespace />addRecords').on(
-		'click',
-		function(event) {
-			var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
+	if (numberOfRecordsNode) {
+		A.one('#<portlet:namespace />addRecords').on(
+			'click',
+			function(event) {
+				var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
 
-			var recordset = spreadSheet.get('recordset');
+				var recordset = spreadSheet.get('recordset');
 
-			spreadSheet.addEmptyRows(numberOfRecords);
+				spreadSheet.addEmptyRows(numberOfRecords);
 
-			spreadSheet.updateMinDisplayRows(recordset.getLength());
-		}
-	);
+				spreadSheet.updateMinDisplayRows(recordset.getLength());
+			}
+		);
+	}
 
 	window.<portlet:namespace />spreadSheet = spreadSheet;
 </aui:script>

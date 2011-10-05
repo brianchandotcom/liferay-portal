@@ -104,10 +104,9 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", searchContainer.getEnd(
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
+String dlFileEntryTypeName = null;
 List results = null;
 int total = 0;
-
-String dlFileEntryTypeName = null;
 
 if (fileEntryTypeId > 0) {
 	Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
@@ -184,18 +183,18 @@ request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 %>
 
 <c:if test="<%= results.isEmpty() %>">
-		<c:choose>
-			<c:when test="<%= dlFileEntryTypeName != null %>">
-				<div class="portlet-msg-info">
-					<%= LanguageUtil.format(pageContext, "there-are-no-x-in-this-folder", dlFileEntryTypeName) %>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="portlet-msg-info">
-					<%= LanguageUtil.get(pageContext, "there-are-no-documents-or-media-files-in-this-folder") %>
-				</div>
-			</c:otherwise>
-		</c:choose>
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(dlFileEntryTypeName) %>">
+			<div class="portlet-msg-info">
+				<%= LanguageUtil.format(pageContext, "there-are-no-x-files-in-this-folder", StringUtil.lowerCase(dlFileEntryTypeName)) %>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="portlet-msg-info">
+				<%= LanguageUtil.get(pageContext, "there-are-no-documents-or-media-files-in-this-folder") %>
+			</div>
+		</c:otherwise>
+	</c:choose>
 </c:if>
 
 <%

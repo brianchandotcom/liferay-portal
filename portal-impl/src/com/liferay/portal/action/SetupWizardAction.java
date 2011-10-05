@@ -59,7 +59,12 @@ public class SetupWizardAction extends Action {
 		}
 
 		try {
-			if (cmd.equals(Constants.UPDATE)) {
+			if (cmd.equals(Constants.TRANSLATE)) {
+				SetupWizardUtil.processPortalLanguage(request, response);
+
+				return mapping.findForward("portal.setup_wizard");
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
 				SetupWizardUtil.processSetup(request);
 			}
 

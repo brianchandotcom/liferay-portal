@@ -443,6 +443,8 @@ public interface PropsKeys {
 
 	public static final String DEFAULT_LAYOUT_TEMPLATE_ID = "default.layout.template.id";
 
+	public static final String DEFAULT_LOCALE = "default.locale";
+
 	public static final String DEFAULT_LIFERAY_HOME = "default.liferay.home";
 
 	public static final String DEFAULT_LOGOUT_PAGE_PATH = "default.logout.page.path";

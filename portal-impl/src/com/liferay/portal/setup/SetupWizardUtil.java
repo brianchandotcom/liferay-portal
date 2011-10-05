@@ -18,10 +18,13 @@ import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -36,6 +39,7 @@ import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.service.QuartzLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -43,11 +47,16 @@ import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.struts.Globals;
 
 /**
  * @author Manuel de la Peña
@@ -58,6 +67,12 @@ public class SetupWizardUtil {
 
 	public static final String PROPERTIES_FILE_NAME =
 		"portal-setup-wizard.properties";
+
+	public static UnicodeProperties getUnicodeProperties(
+		HttpServletRequest request) {
+
+		return PropertiesParamUtil.getProperties(request, _PROPERTIES_PREFIX);
+	}
 
 	public static boolean isSetupFinished(HttpServletRequest request) {
 		if (!PropsValues.SETUP_WIZARD_ENABLED) {
@@ -78,6 +93,30 @@ public class SetupWizardUtil {
 		return true;
 	}
 
+	public static void processPortalLanguage(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		String languageId = _getParameter(
+			request, PropsKeys.DEFAULT_LOCALE,PropsValues.DEFAULT_LOCALE);
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		List<Locale> availableLocales = ListUtil.fromArray(
+			LanguageUtil.getAvailableLocales());
+
+		if (availableLocales.contains(locale)) {
+			request.getSession().setAttribute(Globals.LOCALE_KEY, locale);
+
+			LanguageUtil.updateCookie(request, response, locale);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+
+			themeDisplay.setLanguageId(languageId);
+			themeDisplay.setLocale(locale);
+		}
+	}
+
 	public static void processSetup(HttpServletRequest request)
 		throws Exception {
 
@@ -95,6 +134,9 @@ public class SetupWizardUtil {
 			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
 
 		boolean propertiesFileUpdated = _writePropertiesFile(unicodeProperties);
+
+		PropsValues.DEFAULT_LOCALE = unicodeProperties.getProperty(
+			PropsKeys.DEFAULT_LOCALE);
 
 		session.setAttribute(
 			WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED, propertiesFileUpdated);

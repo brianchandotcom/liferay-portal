@@ -69,9 +69,16 @@ public class DeviceServicePreAction extends Action {
 				themeDisplay);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Rule group evaluation returned rule group instance " +
-						mdrRuleGroupInstance.getRuleGroupInstanceId());
+				String logMessage =
+					"Rule group evaluation returned rule group instance ";
+
+				if (mdrRuleGroupInstance != null) {
+					logMessage += mdrRuleGroupInstance.getRuleGroupInstanceId();
+				}
+				else {
+					logMessage += "null";
+				}
+				_log.debug(logMessage);
 			}
 		}
 		catch (Exception e) {

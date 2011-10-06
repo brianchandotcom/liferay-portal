@@ -267,6 +267,8 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				>
 
 					<%
+					DLFileShortcut fileShortcut = null;
+
 					String rowHREF = null;
 
 					if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW)) {

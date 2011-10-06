@@ -17,6 +17,13 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-document-library-display {
+	.entry-title {
+		display: block;
+		font-size: 1.15em;
+		font-weight: bold;
+		padding: 1.4em 0 0;
+	}
+
 	.file-entry-list-description {
 		font-style: italic;
 		margin-left: 10px;
@@ -31,24 +38,16 @@
 		margin: 0 0 0.5em 0.5em;
 	}
 
-	img.entry-thumbnail {
-		max-height: 128px;
-		max-width: 128px;
-	}
+	.entry-thumbnail {
+		float: left;
+		margin-right: 1em;
+		position: relative;
 
-	img.shortcut-icon {
-		display: inline;
-		margin-left: 10px;
-		margin-top: 75px;
-		position: absolute;
-		z-index: 10;
-	}
-
-	img.locked-icon {
-		display: inline;
-		margin: 95px 0 0 130px;
-		position: absolute;
-		z-index: 10;
+		.thumbnail {
+			float: left;
+			max-height: 128px;
+			max-width: 128px;
+		}
 	}
 
 	.taglib-webdav {

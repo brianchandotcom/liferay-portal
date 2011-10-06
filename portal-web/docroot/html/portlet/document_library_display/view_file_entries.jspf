@@ -109,9 +109,9 @@
 						tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 					}
 					else {
-						tempRowURL.setParameter("struts_action", "/document_library_display/view_file_shortcut");
+						tempRowURL.setParameter("struts_action", "/document_library_display/view_file_entry");
 						tempRowURL.setParameter("redirect", currentURL);
-						tempRowURL.setParameter("fileShortcutId", String.valueOf(fileShortcut.getFileShortcutId()));
+						tempRowURL.setParameter("fileEntryId", String.valueOf(fileShortcut.getToFileEntryId()));
 					}
 
 					rowHREF = tempRowURL.toString();

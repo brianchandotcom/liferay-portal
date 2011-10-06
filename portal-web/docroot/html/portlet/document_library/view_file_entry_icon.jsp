@@ -18,6 +18,7 @@
 
 <%
 FileEntry fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
+DLFileShortcut fileShortcut = (DLFileShortcut)request.getAttribute("view_entries.jsp-fileShortcut");
 
 PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
 
@@ -36,6 +37,10 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 	<a class="document-link" data-folder="<%= Boolean.FALSE.toString() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(HtmlUtil.unescape(fileEntry.getTitle()) + " - " + HtmlUtil.unescape(fileEntry.getDescription())) %>">
 		<span class="document-thumbnail">
 			<img alt="" border="no" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
+
+			<c:if test="<%= fileShortcut != null %>">
+				<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png">
+			</c:if>
 
 			<c:if test="<%= fileEntry.isCheckedOut() %>">
 				<img alt="<liferay-ui:message key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png">

@@ -84,10 +84,10 @@ public class DLUtil {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_shortcut");
+			"struts_action", "/document_library/view_file_entry");
 		portletURL.setParameter(
-			"fileShortcutId",
-			String.valueOf(dlFileShortcut.getFileShortcutId()));
+			"fileEntryId",
+			String.valueOf(dlFileShortcut.getToFileEntryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, dlFileShortcut.getToTitle(), portletURL.toString());

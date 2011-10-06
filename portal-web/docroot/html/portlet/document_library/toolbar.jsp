@@ -27,12 +27,6 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 Group scopeGroup = themeDisplay.getScopeGroup();
-
-boolean showActionsButton = true;
-
-if(scopeGroup.isStaged()){
-	showActionsButton = scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY);
-}
 %>
 
 <aui:input cssClass="select-documents aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
@@ -40,10 +34,10 @@ if(scopeGroup.isStaged()){
 <liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" disabled="<%= true %>" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= actionsAlowed ? false : true %>">
 
 	<%
-	String taglibUrl = "";
+	String taglibUrl = null;
 	%>
 
-	<c:if test="<%= showActionsButton %>">
+	<c:if test="<%= scopeGroup.isStaged() && (scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) %>">
 
 		<%
 		taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CANCEL_CHECKOUT + "')";

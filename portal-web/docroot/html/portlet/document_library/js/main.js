@@ -109,7 +109,6 @@ AUI().add(
 						instance._dataRetrieveFailure = instance.ns('dataRetrieveFailure');
 						instance._eventDataRequest = instance.ns('dataRequest');
 						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
-						instance._eventEntresDisplayStyle = instance.ns('entriesDisplayStyle');
 						instance._eventPageLoaded = instance.ns('pageLoaded');
 
 						instance._displayStyleToolbarNode = instance.byId(DISPLAY_STYLE_TOOLBAR);
@@ -169,7 +168,6 @@ AUI().add(
 
 						Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance);
 						Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance);
-						Liferay.on(instance._eventEntresDisplayStyle, instance._onEntresDisplayStyle, instance);
 						Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance);
 
 						Liferay.after(instance._eventDataRequest, instance._afterDataRequest, instance);
@@ -379,10 +377,16 @@ AUI().add(
 						);
 					},
 
-					_getDisplayStyle: function() {
+					_getDisplayStyle: function(style) {
 						var instance = this;
 
-						return History.get(instance._displayStyle) || instance._config.displayStyle;
+						var displayStyle = History.get(instance._displayStyle) || instance._config.displayStyle;
+
+						if (style) {
+							displayStyle = (displayStyle == style);
+						}
+
+						return displayStyle;
 					},
 
 					_getIORequest: function() {
@@ -535,22 +539,21 @@ AUI().add(
 					_onDataRequest: function(event) {
 						var instance = this;
 
-						var source = event.src;
+						var src = event.src;
 
-						if (source === SRC_DISPLAY_STYLE_BUTTONS || source === SRC_ENTRIES_PAGINATOR) {
-							var displayStyle = instance._getDisplayStyle();
-
+						if (src === SRC_DISPLAY_STYLE_BUTTONS || src === SRC_ENTRIES_PAGINATOR) {
 							var selectedEntries;
 
-							if (displayStyle === DISPLAY_STYLE_LIST) {
-								selectedEntries = instance._entriesContainer.all('td>[type=checkbox]:checked');
-							}
-							else {
-								selectedEntries = instance._entriesContainer.all('.document-display-style.selected [type=checkbox]');
+							var entriesSelector = CSS_DOCUMENT_DISPLAY_STYLE_SELECTED + ' :checkbox';
+
+							if (instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
+								entriesSelector = 'td > :checkbox:checked';
 							}
 
-							if (selectedEntries) {
-								instance._selectedEntries = selectedEntries.get('value');
+							selectedEntries = instance._entriesContainer.all(entriesSelector);
+
+							if (selectedEntries.size()) {
+								instance._selectedEntries = selectedEntries.val();
 							}
 						}
 
@@ -690,8 +693,8 @@ AUI().add(
 
 						proxyNode.setStyles(
 							{
-								'height': STR_BLANK,
-								'width': STR_BLANK
+								height: STR_BLANK,
+								width: STR_BLANK
 							}
 						);
 
@@ -714,12 +717,6 @@ AUI().add(
 								selectedItems: selectedItems
 							}
 						);
-					},
-
-					_onEntresDisplayStyle: function(event) {
-						var instance = this;
-
-						instance._entriesDisplayStyle = event.displayStyle
 					},
 
 					_onEntryPaginatorChangeRequest: function(event) {
@@ -1002,17 +999,17 @@ AUI().add(
 
 						window[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 
-						var documentDisplayStyle = A.all(CSS_DOCUMENT_DISPLAY_STYLE_SELECTABLE);
+						if (!instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
+							var documentDisplayStyle = A.all(CSS_DOCUMENT_DISPLAY_STYLE_SELECTABLE);
 
-						documentDisplayStyle.toggleClass(CSS_SELECTED, instance._selectAllCheckbox.attr(ATTR_CHECKED));
+							documentDisplayStyle.toggleClass(CSS_SELECTED, instance._selectAllCheckbox.attr(ATTR_CHECKED));
+						}
 					},
 
 					_toggleHovered: function(event) {
 						var instance = this;
 
-						var displayStyle = instance._getDisplayStyle();
-
-						if (displayStyle != DISPLAY_STYLE_LIST) {
+						if (!instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
 							var documentDisplayStyle = event.target.ancestor(CSS_DOCUMENT_DISPLAY_STYLE);
 
 							if (documentDisplayStyle) {
@@ -1023,17 +1020,15 @@ AUI().add(
 
 					_toggleSelected: function(node, preventUpdate) {
 						var instance = this;
-						
-						var displayStyle = instance._getDisplayStyle();
 
-						if (displayStyle === DISPLAY_STYLE_LIST) {
+						if (instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
 							node.attr(ATTR_CHECKED, !node.attr(ATTR_CHECKED));
 						}
 						else {
 							node = node.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || node;
 
 							if (!preventUpdate) {
-								var selectElement = node.one('.document-selector input[type=checkbox]');
+								var selectElement = node.one('.document-selector :checkbox');
 
 								selectElement.attr(ATTR_CHECKED, !selectElement.attr(ATTR_CHECKED));
 
@@ -1058,21 +1053,14 @@ AUI().add(
 						var selectedEntries = instance._selectedEntries;
 
 						if (selectedEntries && selectedEntries.length) {
+							var entriesContainer = instance._entriesContainer;
+
 							A.each(
 								selectedEntries,
 								function(item, index, collection) {
-									var entry;
+									var entry = entriesContainer.one('input[value="' + item + '"]');
 
-									var displayStyle = instance._getDisplayStyle();
-
-									if (displayStyle === DISPLAY_STYLE_LIST) {
-										entry = instance._entriesContainer.one('input[value="' + item + '"]');
-									}
-									else {
-										entry = instance._entriesContainer.one('input[value="' + item + '"]');
-									}
-
-									if(entry) {
+									if (entry) {
 										instance._toggleSelected(entry);
 									}
 								}

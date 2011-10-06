@@ -177,6 +177,11 @@
 	padding: 0 3px;
 }
 
+.lfr-menu-list li.highlited {
+	background-color: #CCCCCC;
+    border-top: 3px double #EEEEEE;
+}
+
 .lfr-menu-list li.last {
 	border-bottom: none;
 }

@@ -48,7 +48,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 				</span>
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:icon-menu align="left" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add">
+				<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button add-button " + (toolbarItem.equals("add") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add">
 					<liferay-ui:icon
 						image="site_icon"
 						message="site"

@@ -22,6 +22,10 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 MBCategory category = messageDisplay.getCategory();
 
 String displayStyle = BeanPropertiesUtil.getString(category, "displayStyle", MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = MBCategoryConstants.DEFAULT_DISPLAY_STYLE;
+}
 %>
 
 <div class="displayStyle-<%= displayStyle %>">

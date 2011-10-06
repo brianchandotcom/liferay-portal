@@ -40,11 +40,15 @@ long folderId = 0;
 long repositoryId = 0;
 
 if (row != null) {
-	folder = (Folder)row.getObject();
+	Object result = row.getObject();
 
-	folderId = folder.getFolderId();
+	if (result instanceof Folder) {
+		folder = (Folder)result;
 
-	repositoryId = folder.getRepositoryId();
+		folderId = folder.getFolderId();
+
+		repositoryId = folder.getRepositoryId();
+	}
 }
 else {
 	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {

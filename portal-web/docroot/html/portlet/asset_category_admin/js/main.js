@@ -494,9 +494,10 @@ AUI().add(
 							'visibleChange',
 							function(event) {
 								if (!event.newVal) {
-									instance._destroyFloatingPanels(event);
+									instance._processAutoFieldsTriggers(event, instance._destroyFloatingPanels);
 
 									var body = instance._panelEdit.getStdModNode(A.WidgetStdMod.BODY);
+
 									body.empty();
 								}
 							}
@@ -672,16 +673,16 @@ AUI().add(
 						);
 					},
 
-					_destroyFloatingPanels: function(event) {
+					_destroyFloatingPanels: function(autoFieldsInstance, panelInstance) {
 						var instance = this;
 
-						instance._processAutoFieldsTriggers(
-							event,
-							function(autoFieldsInstance, panelInstance) {
-								autoFieldsInstance.destroy();
-								panelInstance.destroy();
-							}
-						);
+						if (autoFieldsInstance) {
+							autoFieldsInstance.destroy();
+						}
+
+						if (panelInstance) {
+							panelInstance.destroy();
+						}
 					},
 
 					_displayVocabularyCategoriesImpl: function(categories, callback) {
@@ -1186,12 +1187,7 @@ AUI().add(
 					_hideFloatingPanels: function(event) {
 						var instance = this;
 
-						instance._processAutoFieldsTriggers(
-							event,
-							function(autoFieldsInstance, panelInstance) {
-								instance._resetInputLocalized(autoFieldsInstance, panelInstance);
-							}
-						);
+						instance._processAutoFieldsTriggers(event, instance._resetInputLocalized);
 					},
 
 					_hideSection: function(exp) {
@@ -1818,7 +1814,9 @@ AUI().add(
 						var instance = this;
 
 						var contextPanel = event.currentTarget;
+
 						var boundingBox = contextPanel.get('boundingBox');
+
 						var autoFieldsTriggers = boundingBox.all('.lfr-floating-trigger');
 
 						autoFieldsTriggers.each(

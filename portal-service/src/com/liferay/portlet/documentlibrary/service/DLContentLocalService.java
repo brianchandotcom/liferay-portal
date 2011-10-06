@@ -237,28 +237,26 @@ public interface DLContentLocalService extends PersistedModelLocalService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portlet.documentlibrary.model.DLContent addContent(
-		long companyId, java.lang.String portletId, long groupId,
-		long repositoryId, java.lang.String path, java.lang.String version,
-		byte[] bytes)
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.documentlibrary.model.DLContent addContent(
-		long companyId, java.lang.String portletId, long groupId,
-		long repositoryId, java.lang.String path, java.lang.String version,
-		java.io.InputStream inputStream, long size)
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version, java.io.InputStream inputStream, long size)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteContent(long companyId, java.lang.String portletId,
-		long repositoryId, java.lang.String path, java.lang.String version)
+	public void deleteContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteContents(long companyId, java.lang.String portletId,
-		long repositoryId, java.lang.String path)
+	public void deleteContents(long companyId, long repositoryId,
+		java.lang.String path)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteContentsByDirectory(long companyId,
-		java.lang.String portletId, long repositoryId, java.lang.String dirName)
+	public void deleteContentsByDirectory(long companyId, long repositoryId,
+		java.lang.String dirName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -275,13 +273,6 @@ public interface DLContentLocalService extends PersistedModelLocalService {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLContent getContent(
-		long companyId, java.lang.String portletId, long repositoryId,
-		java.lang.String path, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchContentException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContents(
 		long companyId, long repositoryId)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -292,12 +283,6 @@ public interface DLContentLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContents(
-		long companyId, java.lang.String portletId, long repositoryId,
-		java.lang.String path)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContentsByDirectory(
 		long companyId, long repositoryId, java.lang.String dirName)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -305,11 +290,6 @@ public interface DLContentLocalService extends PersistedModelLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasContent(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasContent(long companyId, java.lang.String portletId,
-		long repositoryId, java.lang.String path, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateDLContent(long companyId, long oldRepositoryId,

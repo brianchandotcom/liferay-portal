@@ -1297,7 +1297,6 @@
 		<field name="contentId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
-		<field name="portletId" type="String" />
 		<field name="repositoryId" type="long" />
 		<field name="path" type="String">
 			<hint name="max-length">255</hint>

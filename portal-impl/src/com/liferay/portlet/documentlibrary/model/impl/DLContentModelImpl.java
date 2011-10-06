@@ -60,14 +60,13 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 			{ "contentId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
-			{ "portletId", Types.VARCHAR },
 			{ "repositoryId", Types.BIGINT },
 			{ "path_", Types.VARCHAR },
 			{ "version", Types.VARCHAR },
 			{ "data_", Types.BLOB },
 			{ "size_", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLContent (contentId LONG not null primary key,groupId LONG,companyId LONG,portletId VARCHAR(75) null,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DLContent (contentId LONG not null primary key,groupId LONG,companyId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLContent";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlContent.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLContent.version DESC";
@@ -85,9 +84,8 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long PATH_COLUMN_BITMASK = 2L;
-	public static long PORTLETID_COLUMN_BITMASK = 4L;
-	public static long REPOSITORYID_COLUMN_BITMASK = 8L;
-	public static long VERSION_COLUMN_BITMASK = 16L;
+	public static long REPOSITORYID_COLUMN_BITMASK = 4L;
+	public static long VERSION_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLContent"));
 
@@ -152,29 +150,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
-	}
-
-	public String getPortletId() {
-		if (_portletId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _portletId;
-		}
-	}
-
-	public void setPortletId(String portletId) {
-		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
-
-		if (_originalPortletId == null) {
-			_originalPortletId = _portletId;
-		}
-
-		_portletId = portletId;
-	}
-
-	public String getOriginalPortletId() {
-		return GetterUtil.getString(_originalPortletId);
 	}
 
 	public long getRepositoryId() {
@@ -315,7 +290,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		dlContentImpl.setContentId(getContentId());
 		dlContentImpl.setGroupId(getGroupId());
 		dlContentImpl.setCompanyId(getCompanyId());
-		dlContentImpl.setPortletId(getPortletId());
 		dlContentImpl.setRepositoryId(getRepositoryId());
 		dlContentImpl.setPath(getPath());
 		dlContentImpl.setVersion(getVersion());
@@ -378,8 +352,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 		dlContentModelImpl._setOriginalCompanyId = false;
 
-		dlContentModelImpl._originalPortletId = dlContentModelImpl._portletId;
-
 		dlContentModelImpl._originalRepositoryId = dlContentModelImpl._repositoryId;
 
 		dlContentModelImpl._setOriginalRepositoryId = false;
@@ -402,14 +374,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		dlContentCacheModel.groupId = getGroupId();
 
 		dlContentCacheModel.companyId = getCompanyId();
-
-		dlContentCacheModel.portletId = getPortletId();
-
-		String portletId = dlContentCacheModel.portletId;
-
-		if ((portletId != null) && (portletId.length() == 0)) {
-			dlContentCacheModel.portletId = null;
-		}
 
 		dlContentCacheModel.repositoryId = getRepositoryId();
 
@@ -436,7 +400,7 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{contentId=");
 		sb.append(getContentId());
@@ -444,8 +408,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
-		sb.append(", portletId=");
-		sb.append(getPortletId());
 		sb.append(", repositoryId=");
 		sb.append(getRepositoryId());
 		sb.append(", path=");
@@ -460,7 +422,7 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLContent");
@@ -477,10 +439,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletId</column-name><column-value><![CDATA[");
-		sb.append(getPortletId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
@@ -513,8 +471,6 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
-	private String _portletId;
-	private String _originalPortletId;
 	private long _repositoryId;
 	private long _originalRepositoryId;
 	private boolean _setOriginalRepositoryId;

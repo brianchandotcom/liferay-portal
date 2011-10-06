@@ -52,7 +52,6 @@
 
 		<!-- Other fields -->
 
-		<column name="portletId" type="String" />
 		<column name="repositoryId" type="long" />
 		<column name="path" type="String" />
 		<column name="version" type="String" />
@@ -83,25 +82,6 @@
 		</finder>
 		<finder name="C_R_P_V" return-type="DLContent" unique="true">
 			<finder-column name="companyId" />
-			<finder-column name="repositoryId" />
-			<finder-column name="path" />
-			<finder-column name="version" />
-		</finder>
-		<finder name="C_P_R_P" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="portletId" />
-			<finder-column name="repositoryId" />
-			<finder-column name="path" />
-		</finder>
-		<finder name="C_P_R_LikeP" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="portletId" />
-			<finder-column name="repositoryId" />
-			<finder-column name="path" comparator="LIKE" />
-		</finder>
-		<finder name="C_P_R_P_V" return-type="DLContent" unique="true">
-			<finder-column name="companyId" />
-			<finder-column name="portletId" />
 			<finder-column name="repositoryId" />
 			<finder-column name="path" />
 			<finder-column name="version" />

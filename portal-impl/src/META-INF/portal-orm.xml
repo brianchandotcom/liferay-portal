@@ -1712,7 +1712,6 @@
 			<id name="contentId" />
 			<basic name="groupId" />
 			<basic name="companyId" />
-			<basic name="portletId" />
 			<basic name="repositoryId" />
 			<basic name="path">
 				<column name="PATH_" />

@@ -1,19 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl.updateDLContent">
-		<![CDATA[
-			UPDATE
-				DLContent
-			SET
-				repositoryId = [$NEW_REPOSITORY_ID$],
-				path_ = '[$NEW_PATH$]'
-			WHERE
-				(companyId = [$COMPANY_ID$]) AND
-				(repositoryId = [$OLD_REPOSITORY_ID$]) AND
-				(path_ = '[$OLD_PATH$]')
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByExtraSettings">
 		<![CDATA[
 			SELECT

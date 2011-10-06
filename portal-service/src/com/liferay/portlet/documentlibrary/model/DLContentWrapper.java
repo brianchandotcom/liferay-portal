@@ -109,24 +109,6 @@ public class DLContentWrapper implements DLContent {
 	}
 
 	/**
-	* Returns the portlet ID of this document library content.
-	*
-	* @return the portlet ID of this document library content
-	*/
-	public java.lang.String getPortletId() {
-		return _dlContent.getPortletId();
-	}
-
-	/**
-	* Sets the portlet ID of this document library content.
-	*
-	* @param portletId the portlet ID of this document library content
-	*/
-	public void setPortletId(java.lang.String portletId) {
-		_dlContent.setPortletId(portletId);
-	}
-
-	/**
 	* Returns the repository ID of this document library content.
 	*
 	* @return the repository ID of this document library content

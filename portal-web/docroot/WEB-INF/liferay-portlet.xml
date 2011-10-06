@@ -1140,7 +1140,7 @@
 		<struts-path>user_groups_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
-		<control-panel-entry-weight>1.5</control-panel-entry-weight>
+		<control-panel-entry-weight>4.5</control-panel-entry-weight>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>

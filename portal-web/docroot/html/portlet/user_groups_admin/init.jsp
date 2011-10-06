@@ -36,4 +36,4 @@ if (portletName.equals(PortletKeys.MY_ACCOUNT) || permissionChecker.isCompanyAdm
 }
 %>
 
-<%@ include file="/html/portlet/users_admin/init-ext.jsp" %>
+<%@ include file="/html/portlet/user_groups_admin/init-ext.jsp" %>

@@ -46,8 +46,7 @@ portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group")
 			if (filterManageableUserGroups) {
 				List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
 
-				userGroups = UsersAdminUtil.filterUserGroups(
-						permissionChecker, userGroups);
+				userGroups = UsersAdminUtil.filterUserGroups(permissionChecker, userGroups);
 
 				total = userGroups.size();
 				results = ListUtil.subList(userGroups, searchContainer.getStart(), searchContainer.getEnd());

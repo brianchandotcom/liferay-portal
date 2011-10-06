@@ -138,7 +138,7 @@ String portletURLString = portletURL.toString();
 			var A = AUI();
 
 			A.io.request(
-				'<%= themeDisplay.getPathMain() %>/users_admin/get_users_count',
+				'<%= themeDisplay.getPathMain() %>/user_groups_admin/get_users_count',
 				{
 					data: {
 						className: className,

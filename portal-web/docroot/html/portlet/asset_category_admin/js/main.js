@@ -490,14 +490,15 @@ AUI().add(
 
 						instance._bindCloseEvent(instance._panelEdit);
 
-						instance._panelEdit.after(
+						instance._panelEdit.on(
 							'visibleChange',
 							function(event) {
 								if (!event.newVal) {
-									var body = instance._panelEdit.getStdModNode(A.WidgetStdMod.BODY);
-									body.empty();
+									instance._processAutoFieldsTriggers(event, instance._destroyFloatingPanels);
 
-									instance._hideFloatingPanels(event);
+									var body = instance._panelEdit.getStdModNode(A.WidgetStdMod.BODY);
+
+									body.empty();
 								}
 							}
 						);
@@ -670,6 +671,18 @@ AUI().add(
 							},
 							A.bind(callback, instance)
 						);
+					},
+
+					_destroyFloatingPanels: function(autoFieldsInstance, panelInstance) {
+						var instance = this;
+
+						if (autoFieldsInstance) {
+							autoFieldsInstance.destroy();
+						}
+
+						if (panelInstance) {
+							panelInstance.destroy();
+						}
 					},
 
 					_displayVocabularyCategoriesImpl: function(categories, callback) {
@@ -1174,18 +1187,7 @@ AUI().add(
 					_hideFloatingPanels: function(event) {
 						var instance = this;
 
-						var contextPanel = event.currentTarget;
-						var boundingBox = contextPanel.get('boundingBox');
-						var autoFieldsTriggers = boundingBox.all('.lfr-floating-trigger');
-
-						autoFieldsTriggers.each(
-							function(item, index, collection) {
-								var autoFieldsInstance = item.getData('autoFieldsInstance');
-								var panelInstance = item.getData('panelInstance');
-
-								instance._resetInputLocalized(autoFieldsInstance, panelInstance);
-							}
-						);
+						instance._processAutoFieldsTriggers(event, instance._resetInputLocalized);
 					},
 
 					_hideSection: function(exp) {
@@ -1806,6 +1808,25 @@ AUI().add(
 						}
 
 						instance._loadData();
+					},
+
+					_processAutoFieldsTriggers: function(event, callback) {
+						var instance = this;
+
+						var contextPanel = event.currentTarget;
+
+						var boundingBox = contextPanel.get('boundingBox');
+
+						var autoFieldsTriggers = boundingBox.all('.lfr-floating-trigger');
+
+						autoFieldsTriggers.each(
+							function(item, index, collection) {
+								var autoFieldsInstance = item.getData('autoFieldsInstance');
+								var panelInstance = item.getData('panelInstance');
+
+								callback.call(instance, autoFieldsInstance, panelInstance);
+							}
+						);
 					},
 
 					_processCategoryDeletion: function(result) {

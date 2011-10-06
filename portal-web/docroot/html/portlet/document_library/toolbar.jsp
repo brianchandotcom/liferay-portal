@@ -26,12 +26,12 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-Group scopedGroup = themeDisplay.getScopeGroup();
+Group scopeGroup = themeDisplay.getScopeGroup();
 
-boolean actionsAlowed = true;
+boolean showActionsButton = true;
 
-if(scopedGroup.isStaged()){
-	actionsAlowed = scopedGroup.isStagingGroup() || !scopedGroup.isStagedPortlet(portletDisplay.getRootPortletId());
+if(scopeGroup.isStaged()){
+	showActionsButton = scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY);
 }
 %>
 
@@ -42,9 +42,11 @@ if(scopedGroup.isStaged()){
 	<%
 	String taglibUrl = "";
 	%>
-	<c:if test="<%= actionsAlowed %>">
+
+	<c:if test="<%= showActionsButton %>">
+
 		<%
-			taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CANCEL_CHECKOUT + "')";
+		taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CANCEL_CHECKOUT + "')";
 		%>
 
 		<liferay-ui:icon
@@ -83,6 +85,7 @@ if(scopedGroup.isStaged()){
 			url="<%= taglibUrl %>"
 		/>
 	</c:if>
+
 	<%
 	taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.DELETE + "')";
 	%>

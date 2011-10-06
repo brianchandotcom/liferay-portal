@@ -29,9 +29,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -79,14 +79,14 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		long[] ddmStructureId = new long[] {ddmStructure.getStructureId()};
 
-		List<DLFileEntryType> dlFileEntryTypes =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
-				groupId, dlFileEntryTypeName, dlFileEntryTypeDescription);
-
-		if (dlFileEntryTypes.isEmpty()) {
+		try {
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				groupId, dlFileEntryTypeName);
+		}
+		catch (NoSuchFileEntryTypeException nsfete) {
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				userId, groupId, dlFileEntryTypeName,
-				dlFileEntryTypeDescription, ddmStructureId,	serviceContext);
+				dlFileEntryTypeDescription, ddmStructureId, serviceContext);
 		}
 	}
 

@@ -290,18 +290,18 @@ public class DLFileEntryTypeLocalServiceWrapper
 		return _dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryTypeLocalService.getFileEntryType(groupId, name);
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryTypeLocalService.getFileEntryTypes(groupId, start,
 			end);
-	}
-
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryTypeLocalService.getFileEntryTypes(groupId, name,
-			description);
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(

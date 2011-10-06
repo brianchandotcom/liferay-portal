@@ -87,9 +87,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFileEntryType"),
 			true);
-	public static long DESCRIPTION_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long NAME_COLUMN_BITMASK = 4L;
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long NAME_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -307,17 +306,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	}
 
 	public void setDescription(String description) {
-		_columnBitmask |= DESCRIPTION_COLUMN_BITMASK;
-
-		if (_originalDescription == null) {
-			_originalDescription = _description;
-		}
-
 		_description = description;
-	}
-
-	public String getOriginalDescription() {
-		return GetterUtil.getString(_originalDescription);
 	}
 
 	public long getColumnBitmask() {
@@ -422,8 +411,6 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 		dlFileEntryTypeModelImpl._setOriginalGroupId = false;
 
 		dlFileEntryTypeModelImpl._originalName = dlFileEntryTypeModelImpl._name;
-
-		dlFileEntryTypeModelImpl._originalDescription = dlFileEntryTypeModelImpl._description;
 
 		dlFileEntryTypeModelImpl._columnBitmask = 0;
 	}
@@ -578,7 +565,6 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	private String _name;
 	private String _originalName;
 	private String _description;
-	private String _originalDescription;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private DLFileEntryType _escapedModelProxy;

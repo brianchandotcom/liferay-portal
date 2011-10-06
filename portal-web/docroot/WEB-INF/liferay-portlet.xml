@@ -360,6 +360,8 @@
 		<configuration-action-class>com.liferay.portlet.documentlibrary.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLDisplayPortletDataHandlerImpl</portlet-data-handler-class>
+		<webdav-storage-token>document_library</webdav-storage-token>
+		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<scopeable>true</scopeable>
@@ -979,6 +981,8 @@
 		<friendly-url-mapping>document_library_display</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/documentlibrary/document-library-display-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLDisplayPortletDataHandlerImpl</portlet-data-handler-class>
+		<webdav-storage-token>document_library</webdav-storage-token>
+		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<instanceable>true</instanceable>

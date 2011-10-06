@@ -43,15 +43,15 @@ if (selLayout != null) {
 
 		if (layoutTemplate != null) {
 			themeId = layoutTemplate.getThemeId();
+
+			String velocityTemplateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + curLayoutTypePortlet.getLayoutTemplateId();
+
+			String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent(curLayoutTypePortlet.getLayoutTemplateId(), false, themeId);
+
+			ServletContext layoutTemplateServletContext = ServletContextPool.get(layoutTemplate.getServletContextName());
+
+			content = RuntimePortletUtil.processCustomizationSettings(layoutTemplateServletContext, request, response, pageContext, velocityTemplateId, velocityTemplateContent);
 		}
-
-		String velocityTemplateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + curLayoutTypePortlet.getLayoutTemplateId();
-
-		String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent(curLayoutTypePortlet.getLayoutTemplateId(), false, themeId);
-
-		ServletContext layoutTemplateServletContext = ServletContextPool.get(layoutTemplate.getServletContextName());
-
-		content = RuntimePortletUtil.processCustomizationSettings(layoutTemplateServletContext, request, response, pageContext, velocityTemplateId, velocityTemplateContent);
 	}
 }
 %>

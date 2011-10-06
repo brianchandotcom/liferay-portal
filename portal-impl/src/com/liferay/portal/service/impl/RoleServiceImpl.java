@@ -36,16 +36,19 @@ import java.util.Map;
 public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 	/**
-	 * Adds a role. The user is reindexed after the role is added.
+	 * Adds a role. The user is reindexed after role is added.
 	 *
 	 * @param  name the role's name
-	 * @param  titleMap the role's title map (optionally <code>null</code>)
-	 * @param  descriptionMap the role's description map (optionally
+	 * @param  titleMap the role's localized titles (optionally
+	 *         <code>null</code>)
+	 * @param  descriptionMap the role's localized descriptions (optionally
 	 *         <code>null</code>)
 	 * @param  type the role's type (optionally <code>0</code>)
 	 * @return the role
-	 * @throws PortalException if the company or the role's name were invalid
-	 *         or if the user did not have permission to add roles
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the user did not have permission to add roles, if the
+	 *         class name or the role name were invalid, or if the role is a
+	 *         duplicate
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Role addRole(
@@ -82,11 +85,13 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	/**
-	 * Deletes the role with the primary key.
+	 * Deletes the role with the primary key and its associated permissions.
 	 *
 	 * @param  roleId the primary key of the role
-	 * @throws PortalException if a role with the primary key could not be
-	 *         found or if the user did not have permission to delete the role
+	 * @throws PortalException if the user did not have permission to delete
+	 *         the role, if a role with the primary key could not be found, if
+	 *         the role is a default system role, or if the role's resource
+	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteRole(long roleId)
@@ -130,6 +135,12 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	/**
 	 * Returns the role with the name in the company.
 	 *
+	 * <p>
+	 * The method searches the system roles map first for default roles. If a
+	 * role with the name is not found, then the method will query the
+	 * database.
+	 * </p>
+	 *
 	 * @param  companyId the primary key of the company
 	 * @param  name the role's name
 	 * @return the role with the name
@@ -150,12 +161,11 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles for the user who is part of a user group in the
-	 * group.
+	 * Returns all the user's roles within the user group.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the group
-	 * @return the roles for the user in a user group in the group
+	 * @return the user's roles within the user group
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Role> getUserGroupGroupRoles(long userId, long groupId)
@@ -165,11 +175,11 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles for the user in the group.
+	 * Returns all the user's roles within the user group.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the group
-	 * @return the roles for the user in the group
+	 * @return the user's roles within the user group
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Role> getUserGroupRoles(long userId, long groupId)
@@ -179,11 +189,11 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles for the user and the groups.
+	 * Returns the union of all the user's roles within the groups.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groups the groups (optionally <code>null</code>)
-	 * @return the roles for the user and groups
+	 * @return the union of all the user's roles within the groups
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Role> getUserRelatedRoles(long userId, List<Group> groups)
@@ -204,17 +214,18 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user is associated with the regular
-	 * role.
+	 * Returns <code>true</code> if the user is associated with the named
+	 * regular role.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the company
 	 * @param  name the name of the role
-	 * @param  inherited whether the role is inherited
+	 * @param  inherited whether to include the user's inherited roles in the
+	 *         search
 	 * @return <code>true</code> if the user is associated with the regular
 	 *         role; <code>false</code> otherwise
 	 * @throws PortalException if a role with the name could not be found in
-	 *         the company or if the default user for the company could not be
+	 *         the company or if a default user for the company could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -226,18 +237,19 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user has any one of the specified
-	 * regular roles.
+	 * Returns <code>true</code> if the user has any one of the named regular
+	 * roles.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the company
 	 * @param  names the names of the roles
-	 * @param  inherited whether the roles are inherited
+	 * @param  inherited whether to include the user's inherited roles in the
+	 *         search
 	 * @return <code>true</code> if the user has any one of the regular roles;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if one of the roles could not be found in the
-	 *         company or if the default user for the company could not be
-	 *         found
+	 * @throws PortalException if any one of the roles with the names could not
+	 *         be found in the company or if the default user for the company
+	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasUserRoles(
@@ -249,15 +261,15 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	/**
-	 * Removes roles associated with the user. The user is reindexed after the
-	 * roles are removed.
+	 * Removes the matching roles associated with the user. The user is
+	 * reindexed after the roles are removed.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  roleIds the primary keys of the roles
 	 * @throws PortalException if a user with the primary key could not be
-	 *         found or if a role with one of the primary keys could not be
-	 *         found or if the user did not have permission to remove members
-	 *         from a role
+	 *         found, if the user did not have permission to remove members
+	 *         from a role, or if a role with any one of the primary keys could
+	 *         not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void unsetUserRoles(long userId, long[] roleIds)
@@ -272,15 +284,16 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 * Updates the role with the primary key.
 	 *
 	 * @param  roleId the primary key of the role
-	 * @param  name the role's name
-	 * @param  titleMap the role's title map (optionally <code>null</code>)
-	 * @param  descriptionMap the role's description map (optionally
-	 *         <code>null</code>)
-	 * @param  subtype the role's subtype (optionally <code>null</code>)
+	 * @param  name the role's new name
+	 * @param  titleMap the new localized titles (optionally <code>null</code>)
+	 *         to replace those existing for the role
+	 * @param  descriptionMap the new localized descriptions (optionally
+	 *         <code>null</code>) to replace those existing for the role
+	 * @param  subtype the role's new subtype (optionally <code>null</code>)
 	 * @return the role with the primary key
-	 * @throws PortalException if a role with the primary key could not be
-	 *         found or if the role's name was invalid or if the user did not
-	 *         have permission to update the role
+	 * @throws PortalException if the user did not have permission to update
+	 *         the role, if a role with the primary could not be found, or if
+	 *         the role's name was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Role updateRole(

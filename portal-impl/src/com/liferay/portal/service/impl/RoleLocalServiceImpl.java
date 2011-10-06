@@ -14,6 +14,15 @@
 
 package com.liferay.portal.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import com.liferay.portal.DuplicateRoleException;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.RequiredRoleException;
@@ -52,15 +61,6 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 /**
  * The implementation of the role local service.
  *
@@ -75,13 +75,15 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the company
 	 * @param  name the role's name
-	 * @param  titleMap the role's title map (optionally <code>null</code>)
-	 * @param  descriptionMap the role's description map (optionally
+	 * @param  titleMap the role's localized titles (optionally
+	 *         <code>null</code>)
+	 * @param  descriptionMap the role's localized descriptions (optionally
 	 *         <code>null</code>)
 	 * @param  type the role's type (optionally <code>0</code>)
 	 * @return the role
-	 * @throws PortalException if the company or the role's name were invalid
-	 *         or if the user with the primary key could not be found
+	 * @throws PortalException if the class name or the role name
+	 *         were invalid, if the role is a duplicate, or if a user with the primary key could not be
+	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Role addRole(
@@ -95,22 +97,24 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a role. The user is reindexed after role is added.
+	 * Adds a role with additional parameters. The user is reindexed after role
+	 * is added.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the company
 	 * @param  name the role's name
-	 * @param  titleMap the role's title map (optionally <code>null</code>)
-	 * @param  descriptionMap the role's description map (optionally
+	 * @param  titleMap the role's localized titles (optionally
+	 *         <code>null</code>)
+	 * @param  descriptionMap the role's localized descriptions (optionally
 	 *         <code>null</code>)
 	 * @param  type the role's type (optionally <code>0</code>)
-	 * @param  className the class name of the class the role is created for
+	 * @param  className the name of the class for which the role is created
 	 *         (optionally <code>null</code>)
-	 * @param  classPK the primary key of the class the role is created for
-	 *         (optionally <code>0</code>)
+	 * @param  classPK the primary key of the class for which the role is
+	 *         created (optionally <code>0</code>)
 	 * @return the role
-	 * @throws PortalException if the company, class name, or the role's name
-	 *         were invalid or if the user with the primary key could not be
+	 * @throws PortalException if the class name or the role name
+	 *         were invalid, if the role is a duplicate, or if a user with the primary key could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -186,10 +190,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Checks to ensure that the system roles map has all the default roles in
-	 * each company.
+	 * Checks to ensure that the system roles map has appropriate default roles
+	 * in each company.
 	 *
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if the current user did not have permission to
+	 *         set applicable permissions on a role
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkSystemRoles() throws PortalException, SystemException {
@@ -201,11 +206,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Checks to ensure that the system roles map has all the default roles in
-	 * the company.
+	 * Checks to ensure that the system roles map has appropriate default roles
+	 * in the company.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if the current user did not have permission to
+	 *         set applicable permissions on a role
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -283,7 +289,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param  roleId the primary key of the role
 	 * @throws PortalException if a role with the primary key could not be
-	 *         found
+	 *         found, if the role is a default system role, or if the role's
+	 *         resource could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -344,9 +351,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	/**
 	 * Returns the role with the name in the company.
 	 *
+	 * <p>
 	 * The method searches the system roles map first for default roles. If a
 	 * role with the name is not found, then the method will query the
 	 * database.
+	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  name the role's name
@@ -370,18 +379,21 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	/**
 	 * Returns the default role for the group with the primary key.
 	 *
-	 * If the group is a site, then the default role is a site member.
-	 * If the group is an organization, then the default role is an
-	 * organization
-	 * user.
-	 * If the group is a user or user group, then the default role is a power
-	 * user.
-	 * For all other group types, the default role is a user.
+	 * <p>
+	 * If the group is a site, then the default role is {@link
+	 * com.liferay.portal.model.RoleConstants#SITE_MEMBER}. If the group is an
+	 * organization, then the default role is {@link
+	 * com.liferay.portal.model.RoleConstants#ORGANIZATION_USER}. If the group
+	 * is a user or user group, then the default role is {@link
+	 * com.liferay.portal.model.RoleConstants#POWER_USER}. For all other group
+	 * types, the default role is {@link
+	 * com.liferay.portal.model.RoleConstants#USER}.
+	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the default role for the group with the primary key
 	 * @throws PortalException if a group with the primary key could not be
-	 *         found, or if a default role could not be found
+	 *         found, or if a default role could not be found for the group
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Role getDefaultGroupRole(long groupId)
@@ -435,7 +447,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a map of role names and action IDs.
+	 * Returns a map of role names to associated action IDs for the named
+	 * resource in the company within the permission scope.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  name the resource name
@@ -454,7 +467,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles.
+	 * Returns all the roles associated with the action ID in the company
+	 * within the permission scope.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  name the resource name
@@ -492,9 +506,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	/**
 	 * Returns the role with the name in the company.
 	 *
+	 * <p>
 	 * The method searches the system roles map first for default roles. If a
 	 * role with the name is not found, then the method will query the
 	 * database.
+	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  name the role's name
@@ -519,11 +535,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles with the type and substype.
+	 * Returns all the roles of the type and subtype.
 	 *
 	 * @param  type the role's type (optionally <code>0</code>)
 	 * @param  subtype the role's subtype (optionally <code>null</code>)
-	 * @return the roles with the type and subtype
+	 * @return the roles of the type and subtype
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Role> getRoles(int type, String subtype)
@@ -548,7 +564,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param  roleIds the primary keys of the roles
 	 * @return the roles with the primary keys
-	 * @throws PortalException if a role with a primary key could not be found
+	 * @throws PortalException if any one of the roles with the primary keys
+	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Role> getRoles(long[] roleIds)
@@ -566,10 +583,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles with the subtype.
+	 * Returns all the roles of the subtype.
 	 *
 	 * @param  subtype the role's subtype (optionally <code>null</code>)
-	 * @return the roles with the subtype
+	 * @return the roles of the subtype
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Role> getSubtypeRoles(String subtype) throws SystemException {
@@ -577,10 +594,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of roles with the subtype.
+	 * Returns the number of roles of the subtype.
 	 *
 	 * @param  subtype the role's subtype (optionally <code>null</code>)
-	 * @return the number of roles with the subtype
+	 * @return the number of roles of the subtype
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getSubtypeRolesCount(String subtype) throws SystemException {
@@ -593,8 +610,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  teamId the primary key of the team
 	 * @return the team role in the company
-	 * @throws PortalException if a role in the team and in the company could
-	 *         not be found
+	 * @throws PortalException if a role could not be found in the team and
+	 *         company
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Role getTeamRole(long companyId, long teamId)
@@ -606,12 +623,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles for the user who is part of a user group in the
-	 * group.
+	 * Returns all the user's roles within the user group.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the group
-	 * @return the roles for the user in a user group in the group
+	 * @return the user's roles within the user group
 	 * @throws SystemException if a system exception occurred
 	 * @see    com.liferay.portal.service.persistence.RoleFinder#findByUserGroupGroupRole(
 	 *         long, long)
@@ -623,11 +639,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles for the user in the group.
+	 * Returns all the user's roles within the user group.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the group
-	 * @return the roles for the user in the group
+	 * @return the user's roles within the user group
 	 * @throws SystemException if a system exception occurred
 	 * @see    com.liferay.portal.service.persistence.RoleFinder#findByUserGroupRole(
 	 *         long, long)
@@ -639,11 +655,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles for the user and the groups.
+	 * Returns the union of all the user's roles within the groups.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groups the groups (optionally <code>null</code>)
-	 * @return the roles for the user and the groups
+	 * @return the union of all the user's roles within the groups
 	 * @throws SystemException if a system exception occurred
 	 * @see    com.liferay.portal.service.persistence.RoleFinder#findByU_G(
 	 *         long, List)
@@ -659,11 +675,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all roles for the user and the group.
+	 * Returns all the user's roles within the group.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the group
-	 * @return the roles for the user and the group
+	 * @return the user's roles within the group
 	 * @throws SystemException if a system exception occurred
 	 * @see    com.liferay.portal.service.persistence.RoleFinder#findByU_G(
 	 *         long, long)
@@ -675,11 +691,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles for the user and the groups.
+	 * Returns the union of all the user's roles within the groups.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupIds the primary keys of the groups
-	 * @return the roles for the user and the groups
+	 * @return the union of all the user's roles within the groups
 	 * @throws SystemException if a system exception occurred
 	 * @see    com.liferay.portal.service.persistence.RoleFinder#findByU_G(
 	 *         long, long[])
@@ -717,17 +733,18 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user is associated with the regular
-	 * role.
+	 * Returns <code>true</code> if the user is associated with the named
+	 * regular role.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the company
 	 * @param  name the name of the role
-	 * @param  inherited whether the role is inherited
+	 * @param  inherited whether to include the user's inherited roles in the
+	 *         search
 	 * @return <code>true</code> if the user is associated with the regular
 	 *         role; <code>false</code> otherwise
 	 * @throws PortalException if a role with the name could not be found in
-	 *         the company or if the default user for the company could not be
+	 *         the company or if a default user for the company could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -786,23 +803,20 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user has any one of the specified
-	 * regular roles.
-	 *
-	 * Calls hasUserRole(userId, companyId, name, inherited) for each role.
+	 * Returns <code>true</code> if the user has any one of the named regular
+	 * roles.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the company
 	 * @param  names the names of the roles
-	 * @param  inherited whether the roles are inherited
+	 * @param  inherited whether to include the user's inherited roles in the
+	 *         search
 	 * @return <code>true</code> if the user has any one of the regular roles;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if one of the roles could not be found in the
-	 *         company or if the default user for the company could not be
-	 *         found
+	 * @throws PortalException if any one of the roles with the names could not
+	 *         be found in the company or if the default user for the company
+	 *         could not be found
 	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portal.service.impl.RoleLocalServiceImpl#hasUserRole(
-	 *         long, long, String, boolean)
 	 */
 	public boolean hasUserRoles(
 			long userId, long companyId, String[] names, boolean inherited)
@@ -838,7 +852,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  name the role's name
 	 * @return the role with the name in the company
-	 * @throws PortalException if the role with the name could not be found in
+	 * @throws PortalException if a role with the name could not be found in
 	 *         the company
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -887,8 +901,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns an ordered range of all the roles that match the keywords and
-	 * types.
+	 * Returns an ordered range of all the roles that match the keywords,
+	 * types, and params.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -904,8 +918,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         role's name or description (optionally <code>null</code>)
 	 * @param  types the role types (optionally <code>null</code>)
-	 * @param  params the finder parameters. For more information, see {@link
-	 *         com.liferay.portal.service.persistence.RoleFiner}
+	 * @param  params the finder parameters. Can specify values for
+	 *         "permissionsResourceId" and "usersRoles" keys. For more
+	 *         information, see {@link
+	 *         com.liferay.portal.service.persistence.RoleFinder}
 	 * @param  start the lower bound of the range of roles to return
 	 * @param  end the upper bound of the range of roles to return (not
 	 *         inclusive)
@@ -967,7 +983,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	/**
 	 * Returns an ordered range of all the roles that match the name,
-	 * description, and types.
+	 * description, types, and params.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -984,7 +1000,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  description the role's description (optionally
 	 *         <code>null</code>)
 	 * @param  types the role types (optionally <code>null</code>)
-	 * @param  params the finder's parameters. For more information, see {@link
+	 * @param  params the finder's parameters. Can specify values for
+	 *         "permissionsResourceId" and "usersRoles" keys. For more
+	 *         information, see {@link
 	 *         com.liferay.portal.service.persistence.RoleFinder}
 	 * @param  start the lower bound of the range of the roles to return
 	 * @param  end the upper bound of the range of the roles to return (not
@@ -1007,7 +1025,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of roles matching the keywords and types.
+	 * Returns the number of roles that match the keywords and types.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  keywords the keywords (space separated), which may occur in the
@@ -1025,7 +1043,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of roles matching the keywords and types.
+	 * Returns the number of roles that match the keywords, types and params.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  keywords the keywords (space separated), which may occur in the
@@ -1045,7 +1063,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of roles matching the name, description, and types.
+	 * Returns the number of roles that match the name, description, and types.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  name the role's name (optionally <code>null</code>)
@@ -1065,14 +1083,17 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of roles matching the name, description, and types.
+	 * Returns the number of roles that match the name, description, types, and
+	 * params.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  name the role's name (optionally <code>null</code>)
 	 * @param  description the role's description (optionally
 	 *         <code>null</code>)
 	 * @param  types the role types (optionally <code>null</code>)
-	 * @param  params the finder parameters. For more information, see {@link
+	 * @param  params the finder parameters. Can specify values for
+	 *         "permissionsResourceId" and "usersRoles" keys. For more
+	 *         information, see {@link
 	 *         com.liferay.portal.service.persistence.RoleFinder}
 	 * @return the number of matching roles
 	 * @throws SystemException if a system exception occurred
@@ -1087,13 +1108,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Sets the roles associated with the user. The user is reindexed after the
-	 * roles are set.
+	 * Sets the roles associated with the user, replacing the user's existing
+	 * roles. The user is reindexed after the roles are set.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  roleIds the primary keys of the roles
 	 * @throws PortalException if a user with the primary could not be found or
-	 *         if a roles with the primary keys could not be found
+	 *         if any one of the roles with the primary keys could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void setUserRoles(long userId, long[] roleIds)
@@ -1111,13 +1132,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Removes roles associated with the user. The user is reindexed after the
-	 * roles are removed.
+	 * Removes the matching roles associated with the user. The user is
+	 * reindexed after the roles are removed.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  roleIds the primary keys of the roles
 	 * @throws PortalException if a user with the primary key could not be
-	 *         found or if a role with one of the primary keys could not be
+	 *         found or if a role with any one of the primary keys could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1139,11 +1160,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * Updates the role with the primary key.
 	 *
 	 * @param  roleId the primary key of the role
-	 * @param  name the role's name
-	 * @param  titleMap the role's title map (optionally <code>null</code>)
-	 * @param  descriptionMap the role's description map (optionally
-	 *         <code>null</code>)
-	 * @param  subtype the role's subtype (optionally <code>null</code>)
+	 * @param  name the role's new name
+	 * @param  titleMap the new localized titles (optionally <code>null</code>)
+	 *         to replace those existing for the role
+	 * @param  descriptionMap the new localized descriptions (optionally
+	 *         <code>null</code>) to replace those existing for the role
+	 * @param  subtype the role's new subtype (optionally <code>null</code>)
 	 * @return the role with the primary key
 	 * @throws PortalException if a role with the primary could not be found or
 	 *         if the role's name was invalid

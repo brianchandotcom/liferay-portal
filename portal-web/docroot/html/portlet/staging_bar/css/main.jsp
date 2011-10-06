@@ -62,7 +62,7 @@
 			border-width: 0;
 
 			.aui-tab-label {
-				padding: 8px 10px 5px;
+				padding: 7px 10px;
 
 				a {
 					color: #BBB;

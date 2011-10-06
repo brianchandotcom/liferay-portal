@@ -151,10 +151,19 @@
 				viewFolderURL.setParameter("struts_action", "/document_library/view");
 				viewFolderURL.setParameter("redirect", currentURL);
 				viewFolderURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+
+				int curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+				int curImagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status);
+
+				String imageFolderSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_empty.png";
+
+				if ((curFoldersCount + curImagesCount) > 0) {
+					imageFolderSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_image.png";
+				}
 				%>
 
 				<a class="image-thumbnail" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
-					<img alt="" border="no" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_document.png" %>" style="height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT %>; width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
+					<img alt="" border="no" src="<%= imageFolderSrc %>" style="height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT %>; width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
 
 					<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
 				</a>

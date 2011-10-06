@@ -327,6 +327,17 @@ for (int i = 0; i < results.size(); i++) {
 				<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 			</liferay-portlet:resourceURL>
 
+			<%
+			int foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+			int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status);
+
+			String imageFolderSrc = "folder_empty";
+
+			if ((foldersCount + fileEntriesCount) > 0) {
+				imageFolderSrc = "folder_full_document";
+			}
+			%>
+
 			<c:choose>
 				<c:when test='<%= !displayStyle.equals("list") %>'>
 					<%
@@ -342,6 +353,8 @@ for (int i = 0; i < results.size(); i++) {
 
 					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 					request.setAttribute("view_entries.jsp-viewEntriesURL", viewEntriesURL);
+
+					request.setAttribute("view_entries.jsp-imageFolderSrc", imageFolderSrc);
 					%>
 
 					<c:choose>
@@ -357,7 +370,7 @@ for (int i = 0; i < results.size(); i++) {
 				<c:otherwise>
 					<liferay-util:buffer var="folderTitle">
 						<liferay-ui:icon
-							image="folder"
+							image="<%= imageFolderSrc %>"
 							label="<%= true %>"
 							message="<%= curFolder.getName() %>"
 						/>

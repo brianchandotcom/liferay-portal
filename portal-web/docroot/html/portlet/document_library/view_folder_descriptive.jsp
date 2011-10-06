@@ -22,7 +22,9 @@ Folder folder = (Folder)request.getAttribute("view_entries.jsp-folder");
 PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
 PortletURL viewEntriesURL = (PortletURL)request.getAttribute("view_entries.jsp-viewEntriesURL");
 
-String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_document.png";
+String imageFolderSrc = (String)request.getAttribute("view_entries.jsp-imageFolderSrc");
+
+String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + imageFolderSrc + ".png";
 
 boolean showCheckBox = DLFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE);
 %>

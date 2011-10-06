@@ -24,6 +24,7 @@ import java.io.InputStream;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Edward Han
  */
 @Transactional(rollbackFor = {PortalException.class, SystemException.class})
 public interface DLStore {
@@ -110,6 +111,10 @@ public interface DLStore {
 		throws PortalException, SystemException;
 
 	public long getFileSize(long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException;
+
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
 	public boolean hasFile(long companyId, long repositoryId, String fileName)

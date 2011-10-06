@@ -58,6 +58,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author Michael Young
  * @author Brian Wing Shun Chan
+ * @author Edward Han
  */
 public class JCRStore extends BaseStore {
 
@@ -551,6 +552,35 @@ public class JCRStore extends BaseStore {
 		}
 
 		return size;
+	}
+
+	@Override
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		Session session = null;
+
+		try {
+			session = JCRFactoryUtil.createSession();
+
+			Node rootNode = getRootNode(session, companyId);
+			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+			Node dirNode = repositoryNode.getNode(dirName);
+
+			return true;
+		}
+		catch (PathNotFoundException pnfe) {
+			return false;
+		}
+		catch (RepositoryException re) {
+			throw new SystemException(re);
+		}
+		finally {
+			if (session != null) {
+				session.logout();
+			}
+		}
 	}
 
 	@Override

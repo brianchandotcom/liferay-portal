@@ -21,6 +21,7 @@ import java.io.InputStream;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Edward Han
  */
 public class StoreProxyBean extends BaseProxyBean implements Store {
 
@@ -124,6 +125,12 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 
 	public long getFileSize(
 		long companyId, long repositoryId, String fileName) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public boolean hasDirectory(
+		long companyId, long repositoryId, String dirName) {
 
 		throw new UnsupportedOperationException();
 	}

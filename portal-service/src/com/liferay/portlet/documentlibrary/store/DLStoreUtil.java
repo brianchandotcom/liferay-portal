@@ -58,6 +58,7 @@ import java.io.InputStream;
  *
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Edward Han
  * @see DLStoreImpl
  */
 public class DLStoreUtil {
@@ -482,6 +483,25 @@ public class DLStoreUtil {
 		}
 
 		return _store;
+	}
+
+	/**
+	 * Returns <code>true</code> if the directory exists.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link CompanyConstants#SYSTEM})
+	 * @param  dirName the directory's name
+	 * @return <code>true</code> if the directory exists; <code>false</code>
+	 *         otherwise
+	 * @throws PortalException if the directory's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public static boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		return getStore().hasDirectory(companyId, repositoryId, dirName);
 	}
 
 	/**

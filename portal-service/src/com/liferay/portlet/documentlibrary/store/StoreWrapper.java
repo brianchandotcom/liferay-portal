@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Edward Han
  */
 public class StoreWrapper implements Store {
 
@@ -156,6 +157,13 @@ public class StoreWrapper implements Store {
 		throws PortalException, SystemException {
 
 		return _store.getFileSize(companyId, repositoryId, fileName);
+	}
+
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		return _store.hasDirectory(companyId, repositoryId, dirName);
 	}
 
 	public boolean hasFile(long companyId, long repositoryId, String fileName)

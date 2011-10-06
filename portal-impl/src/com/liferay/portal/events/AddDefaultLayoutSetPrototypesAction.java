@@ -138,8 +138,8 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		throws Exception {
 
 		LayoutSet layoutSet = addLayoutSetPrototype(
-			companyId, defaultUserId, "Intranet Site", StringPool.BLANK,
-			layoutSetPrototypes);
+			companyId, defaultUserId, "Intranet Site",
+			"Site with Documents, Calendar and News", layoutSetPrototypes);
 
 		if (layoutSet == null) {
 			return;
@@ -151,10 +151,17 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		addPortletId(layout, PortletKeys.ACTIVITIES, "column-1");
 
-		String portletId = addPortletId(
-			layout, PortletKeys.LANGUAGE, "column-2");
+		String portletId = addPortletId(layout, PortletKeys.SEARCH, "column-2");
 
 		Map<String, String> preferences = new HashMap<String, String>();
+
+		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
+
+		updatePortletSetup(layout, portletId, preferences);
+
+		portletId = addPortletId(layout, PortletKeys.LANGUAGE, "column-2");
+
+		preferences = new HashMap<String, String>();
 
 		preferences.put("displayStyle", "3");
 
@@ -246,19 +253,30 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		throws Exception {
 
 		LayoutSet layoutSet = addLayoutSetPrototype(
-			companyId, defaultUserId, "Community Site", StringPool.BLANK,
+			companyId, defaultUserId, "Community Site",
+			"Site with Forums, Calendar and Wiki",
 			layoutSetPrototypes);
 
 		if (layoutSet == null) {
 			return;
 		}
 
-		// Forum layout
+		// Home layout
 
 		Layout layout = addLayout(
-			layoutSet, "Forum", "/forum", "2_columns_iii");
+			layoutSet, "Home", "/home", "2_columns_iii");
 
 		addPortletId(layout, PortletKeys.MESSAGE_BOARDS, "column-1");
+
+		String portletId = addPortletId(layout, PortletKeys.SEARCH, "column-2");
+
+		Map<String, String> preferences = new HashMap<String, String>();
+
+		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
+
+		updatePortletSetup(layout, portletId, preferences);
+
+
 		addPortletId(layout, PortletKeys.POLLS_DISPLAY, "column-2");
 		addPortletId(layout, PortletKeys.TOP_USERS, "column-2");
 
@@ -268,10 +286,10 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		addPortletId(layout, PortletKeys.CALENDAR, "column-1");
 
-		String portletId = addPortletId(
+		portletId = addPortletId(
 			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
 
-		Map<String, String> preferences = new HashMap<String, String>();
+		preferences = new HashMap<String, String>();
 
 		preferences.put("anyAssetType", Boolean.FALSE.toString());
 

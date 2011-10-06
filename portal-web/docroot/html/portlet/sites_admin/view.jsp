@@ -157,13 +157,42 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		// Members
 
+		sb = new StringBundler();
+
 		LinkedHashMap userParams = new LinkedHashMap();
 
 		userParams.put("usersGroups", new Long(group.getGroupId()));
 
-		int membersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
+		int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
 
-		row.addText(String.valueOf(membersCount));
+		if (usersCount > 0) {
+			sb.append("<div>" + LanguageUtil.format(pageContext, usersCount > 1 ? "x-users" : "x-user", usersCount) + "</div>");
+		}
+
+		LinkedHashMap organizationParams = new LinkedHashMap();
+
+		organizationParams.put("organizationsGroups", new Long(group.getGroupId()));
+
+		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams);
+
+		if (group.isOrganization()) {
+			organizationsCount += 1;
+		}
+		if (organizationsCount > 0) {
+			sb.append("<div>" + LanguageUtil.format(pageContext, organizationsCount > 1 ? "x-organizations" : "x-organization", organizationsCount) + "</div>");
+		}
+
+		LinkedHashMap userGroupParams = new LinkedHashMap();
+
+		userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
+
+		int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, null, userGroupParams);
+
+		if (userGroupsCount > 0) {
+			sb.append("<div>" + LanguageUtil.format(pageContext, userGroupsCount > 1 ? "x-user-groups" : "x-user-group", userGroupsCount) + "</div>");
+		}
+
+		row.addText((sb.length() > 0) ? sb.toString() : "0");
 
 		// Online Now
 

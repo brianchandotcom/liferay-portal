@@ -184,10 +184,10 @@ create table DLFileEntryTypes_DLFolders (
 alter table DLFileEntry add repositoryId LONG;
 alter table DLFileEntry add mimeType VARCHAR(75) null;
 alter table DLFileEntry add fileEntryTypeId LONG;
-alter table DLFileEntry add smallImageId bigint;
-alter table DLFileEntry add largeImageId bigint;
-alter table DLFileEntry add custom1ImageId bigint;
-alter table DLFileEntry add custom2ImageId bigint;
+alter table DLFileEntry add smallImageId LONG;
+alter table DLFileEntry add largeImageId LONG;
+alter table DLFileEntry add custom1ImageId LONG;
+alter table DLFileEntry add custom2ImageId LONG;
 
 COMMIT_TRANSACTION;
 
@@ -213,10 +213,10 @@ alter table DLFileVersion add repositoryId LONG;
 alter table DLFileVersion add fileEntryId LONG;
 alter table DLFileVersion add mimeType VARCHAR(75) null;
 alter table DLFileVersion add fileEntryTypeId LONG;
-alter table DLFileVersion add smallImageId bigint;
-alter table DLFileVersion add largeImageId bigint;
-alter table DLFileVersion add custom1ImageId bigint;
-alter table DLFileVersion add custom2ImageId bigint;
+alter table DLFileVersion add smallImageId LONG;
+alter table DLFileVersion add largeImageId LONG;
+alter table DLFileVersion add custom1ImageId LONG;
+alter table DLFileVersion add custom2ImageId LONG;
 
 COMMIT_TRANSACTION;
 

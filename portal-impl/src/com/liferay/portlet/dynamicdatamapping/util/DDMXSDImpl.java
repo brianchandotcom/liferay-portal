@@ -43,6 +43,7 @@ import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.ObjectWrapper;
 
+import java.io.IOException;
 import java.io.Writer;
 
 import java.util.HashMap;
@@ -51,6 +52,10 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
@@ -226,15 +231,15 @@ public class DDMXSDImpl implements DDMXSD {
 				"meta-data");
 
 			for (Element metadataElement : metadataElements) {
+				if (metadataElement == null) {
+					continue;
+				}
+
 				String locale = metadataElement.attributeValue("locale");
 
 				JSONObject localeMap = JSONFactoryUtil.createJSONObject();
 
 				localizationMapJSONObject.put(locale, localeMap);
-
-				if (metadataElement == null) {
-					continue;
-				}
 
 				for (Element metadataEntryElement :
 						metadataElement.elements()) {
@@ -384,10 +389,31 @@ public class DDMXSDImpl implements DDMXSD {
 
 		// FreeMarker JSP tag library support
 
+		final Servlet servlet = (Servlet)pageContext.getPage();
+
+		GenericServlet genericServlet = null;
+
+		if (servlet instanceof GenericServlet) {
+			genericServlet = (GenericServlet) servlet;
+		}
+		else {
+			genericServlet = new GenericServlet() {
+				@Override
+				public void service(
+						ServletRequest servletRequest,
+						ServletResponse servletResponse)
+					throws ServletException, IOException {
+
+					servlet.service(servletRequest, servletResponse);
+				}
+			};
+
+			genericServlet.init(pageContext.getServletConfig());
+		}
+
 		ServletContextHashModel servletContextHashModel =
 			new ServletContextHashModel(
-				(GenericServlet)pageContext.getPage(),
-				ObjectWrapper.DEFAULT_WRAPPER);
+				genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
 
 		freeMarkerContext.put("Application", servletContextHashModel);
 
@@ -401,7 +427,7 @@ public class DDMXSDImpl implements DDMXSD {
 		FreeMarkerEngineUtil.mergeTemplate(
 			resourcePath, freeMarkerContext, writer);
 
-		return ((UnsyncStringWriter)writer).toString();
+		return writer.toString();
 	}
 
 	private static final String _DEFAULT_NAMESPACE = "alloy";

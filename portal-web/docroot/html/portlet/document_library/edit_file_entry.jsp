@@ -323,6 +323,7 @@ else if (dlFileEntryType != null) {
 						}
 					}
 					catch (Exception e) {
+						_log.error(e, e);
 					}
 				}
 				%>
@@ -523,4 +524,7 @@ else {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-file-entry"), currentURL);
 }
+%>
+<%!
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.edit_file_entry_jsp");
 %>

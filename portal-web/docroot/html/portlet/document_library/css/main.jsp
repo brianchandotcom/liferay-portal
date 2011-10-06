@@ -453,8 +453,12 @@
 			}
 		}
 
-		.aui-icon-edit, .aui-icon-move, .aui-icon-lock, .aui-icon-unlock, .aui-icon-permissions {
+		.aui-icon-download, .aui-icon-edit, .aui-icon-move, .aui-icon-lock, .aui-icon-unlock, .aui-icon-permissions {
 			background: url() no-repeat 0 0;
+		}
+
+		.aui-icon-download {
+			background-image: url(<%= themeImagesPath %>/common/download.png);
 		}
 
 		.aui-icon-edit {

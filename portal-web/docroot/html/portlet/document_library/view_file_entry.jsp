@@ -222,10 +222,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&videoThumbnail=1";
 						}
 
-						AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry.getClassName(), assetClassPK);
+						if (layoutAssetEntry != null) {
+							AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry.getClassName(), assetClassPK);
 
-						if (incrementAssetEntry != null) {
-							layoutAssetEntry = incrementAssetEntry;
+							if (incrementAssetEntry != null) {
+								layoutAssetEntry = incrementAssetEntry;
+							}
 						}
 						%>
 

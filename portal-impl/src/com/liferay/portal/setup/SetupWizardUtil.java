@@ -75,12 +75,6 @@ public class SetupWizardUtil {
 	public static final String PROPERTIES_FILE_NAME =
 		"portal-setup-wizard.properties";
 
-	public static UnicodeProperties getUnicodeProperties(
-		HttpServletRequest request) {
-
-		return PropertiesParamUtil.getProperties(request, _PROPERTIES_PREFIX);
-	}
-
 	public static boolean isSetupFinished(HttpServletRequest request) {
 		if (!PropsValues.SETUP_WIZARD_ENABLED) {
 			return true;
@@ -104,7 +98,7 @@ public class SetupWizardUtil {
 		HttpServletRequest request, HttpServletResponse response) {
 
 		String languageId = _getParameter(
-			request, PropsKeys.DEFAULT_LOCALE,PropsValues.DEFAULT_LOCALE);
+			request, PropsKeys.DEFAULT_LOCALE, PropsValues.DEFAULT_LOCALE);
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -112,7 +106,13 @@ public class SetupWizardUtil {
 			LanguageUtil.getAvailableLocales());
 
 		if (availableLocales.contains(locale)) {
-			request.getSession().setAttribute(Globals.LOCALE_KEY, locale);
+			PropsValues.DEFAULT_LOCALE = languageId;
+
+			HttpSession session = request.getSession();
+
+			session.setAttribute(Globals.LOCALE_KEY, locale);
+			session.setAttribute(
+				PropsKeys.DEFAULT_LOCALE, LocaleUtil.toLanguageId(locale));
 
 			LanguageUtil.updateCookie(request, response, locale);
 
@@ -124,13 +124,15 @@ public class SetupWizardUtil {
 		}
 	}
 
-	public static void processSetup(HttpServletRequest request)
+	public static void processSetup(
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties =
 			PropertiesParamUtil.getProperties(request, _PROPERTIES_PREFIX);
 
 		_processAdminProperties(request, unicodeProperties);
+		processPortalLanguage(request, response);
 
 		unicodeProperties.put(
 			PropsKeys.SETUP_WIZARD_ENABLED, String.valueOf(false));
@@ -141,9 +143,6 @@ public class SetupWizardUtil {
 			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
 
 		boolean propertiesFileUpdated = _writePropertiesFile(unicodeProperties);
-
-		PropsValues.DEFAULT_LOCALE = unicodeProperties.getProperty(
-			PropsKeys.DEFAULT_LOCALE);
 
 		session.setAttribute(
 			WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED, propertiesFileUpdated);
@@ -157,7 +156,7 @@ public class SetupWizardUtil {
 
 		name = _PROPERTIES_PREFIX.concat(name).concat(StringPool.DOUBLE_DASH);
 
-		return ParamUtil.getString(request, name);
+		return ParamUtil.getString(request, name, defaultValue);
 	}
 
 	private static void _processAdminProperties(
@@ -219,16 +218,15 @@ public class SetupWizardUtil {
 	public static void testDatabase(HttpServletRequest request)
 		throws ClassNotFoundException, SQLException {
 
-		UnicodeProperties unicodeProperties = getUnicodeProperties(request);
-
-		String driverClassName = unicodeProperties.getProperty(
-			PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME);
-		String url = unicodeProperties.getProperty(
-			PropsKeys.JDBC_DEFAULT_URL);
-		String userName = unicodeProperties.getProperty(
-			PropsKeys.JDBC_DEFAULT_USERNAME);
-		String password = unicodeProperties.getProperty(
-			PropsKeys.JDBC_DEFAULT_PASSWORD);
+		String driverClassName = _getParameter(
+			request, PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME,
+			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME);
+		String url = _getParameter(
+			request, PropsKeys.JDBC_DEFAULT_URL, null);
+		String userName = _getParameter(
+			request, PropsKeys.JDBC_DEFAULT_USERNAME, null);
+		String password = _getParameter(
+			request, PropsKeys.JDBC_DEFAULT_PASSWORD, null);
 
 		_checkConnection(driverClassName, url, userName, password);
 	}
@@ -240,11 +238,10 @@ public class SetupWizardUtil {
 
 		Class.forName(driverClassName);
 
-        DataSource dataSource = null;
 		Connection connection = null;
 
 		try {
-			dataSource = _getDatasource(
+			DataSource dataSource = DataSourceFactoryUtil.initDataSource(
 				driverClassName, url, userName, password);
 
 			connection = dataSource.getConnection();
@@ -257,15 +254,6 @@ public class SetupWizardUtil {
 		finally {
 			DataAccess.cleanUp(connection);
 		}
-	}
-
-	private static DataSource _getDatasource(
-		String driverClassName, String url, String userName,
-		String password)
-		throws Exception {
-
-		return DataSourceFactoryUtil.initDataSource(
-			driverClassName, url, userName, password);
 	}
 
 	private static void _reloadServletContext(

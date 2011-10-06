@@ -17,6 +17,7 @@ package com.liferay.portal.action;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -72,13 +73,12 @@ public class SetupWizardAction extends Action {
 				return mapping.findForward("portal.setup_wizard");
 			}
 			else if (cmd.equals(Constants.TEST)) {
-
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				try {
 					SetupWizardUtil.testDatabase(request) ;
 
-					jsonObject.put("tested", Boolean.TRUE);
+					jsonObject.put("success", Boolean.TRUE);
 					jsonObject.put(
 						"message",
 						LanguageUtil.get(
@@ -87,7 +87,6 @@ public class SetupWizardAction extends Action {
 								"sucessfully"));
 				}
 				catch(ClassNotFoundException cnfe) {
-					jsonObject.put("tested", Boolean.FALSE);
 					jsonObject.put(
 						"message", LanguageUtil.format(
 							themeDisplay.getLocale(),
@@ -95,7 +94,6 @@ public class SetupWizardAction extends Action {
 							cnfe.getLocalizedMessage()));
 				}
 				catch(SQLException sqle) {
-					jsonObject.put("tested", Boolean.FALSE);
 					jsonObject.put(
 						"message", LanguageUtil.get(
 							themeDisplay.getLocale(),
@@ -103,13 +101,16 @@ public class SetupWizardAction extends Action {
 				}
 
 				response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+				response.setHeader(
+					HttpHeaders.CACHE_CONTROL,
+					HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
 				ServletResponseUtil.write(response, jsonObject.toString());
 
 				return null;
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				SetupWizardUtil.processSetup(request);
+				SetupWizardUtil.processSetup(request, response);
 			}
 
 			response.sendRedirect(

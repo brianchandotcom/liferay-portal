@@ -19,13 +19,11 @@
 <%@ page import="com.liferay.portal.setup.SetupWizardUtil" %>
 
 <%
-Locale[] locales = LanguageUtil.getAvailableLocales();
-
-UnicodeProperties unicodeProperties = SetupWizardUtil.getUnicodeProperties(request);
-
-String currentLanguageId = unicodeProperties.getProperty(PropsKeys.DEFAULT_LOCALE,PropsValues.DEFAULT_LOCALE);
+UnicodeProperties unicodeProperties = (UnicodeProperties)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES);
 
 boolean propertiesFileUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_UPDATED));
+
+String currentLanguageId = GetterUtil.getString((String)session.getAttribute(PropsKeys.DEFAULT_LOCALE), PropsValues.DEFAULT_LOCALE);
 
 boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PASSWORD_UPDATED));
 %>
@@ -53,19 +51,22 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 		<div id="main-content">
 			<c:choose>
 				<c:when test="<%= !propertiesFileUpdated && !SetupWizardUtil.isSetupFinished(request) %>">
+
+					<%
+					boolean defaultDatabase = ParamUtil.getBoolean(request,"defaultDatabase", PropsValues.JDBC_DEFAULT_URL.contains("hypersonic"));
+					%>
+
 					<aui:form action='<%= themeDisplay.getPathMain() + "/portal/setup_wizard" %>' method="post" name="fm">
 						<aui:input type="hidden" name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 
 						<aui:fieldset column="<%= true %>" cssClass="aui-w45" label="portal">
-							<aui:input label="portal-name" name='<%= "properties--" + PropsKeys.COMPANY_DEFAULT_WEB_ID + "--" %>' value="<%= PropsValues.COMPANY_DEFAULT_WEB_ID %>" />
+							<aui:input label="portal-name" name='<%= "properties--" + PropsKeys.COMPANY_DEFAULT_WEB_ID + "--" %>' suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "liferay.com") %>' value="<%= PropsValues.COMPANY_DEFAULT_WEB_ID %>" />
 
-							<span class="aui-field-hint">
-								<liferay-ui:message arguments='<%= "liferay.com" %>' key="for-example-x" />
-							</span>
-
-							<aui:select label="default-portal-language" name='<%= "properties--" + PropsKeys.DEFAULT_LOCALE + "--" %>' inlineField="<%= true %>">
+							<aui:select label="default-language" name='<%= "properties--" + PropsKeys.DEFAULT_LOCALE + "--" %>' inlineField="<%= true %>">
 
 								<%
+								Locale[] locales = LanguageUtil.getAvailableLocales();
+
 								for (int j = 0; j < locales.length; j++) {
 								%>
 
@@ -77,8 +78,7 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 
 							</aui:select>
 
-							<aui:button name="changeLanguage" value="change" />
-
+							<aui:button cssClass="change-language" name="changeLanguageButton" value="change" />
 						</aui:fieldset>
 
 						<aui:fieldset column="<%= true %>" cssClass="aui-column-last aui-w50" label="administrator-user">
@@ -86,27 +86,31 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 
 							<aui:input label="last-name" name='<%= "properties--" + PropsKeys.DEFAULT_ADMIN_LAST_NAME + "--" %>' value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
 
-							<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsValues.ADMIN_EMAIL_FROM_ADDRESS %>" />
+							<aui:input label="email" name='<%= "properties--" + PropsKeys.ADMIN_EMAIL_FROM_ADDRESS + "--" %>' value="<%= PropsValues.ADMIN_EMAIL_FROM_ADDRESS %>">
+								<aui:validator name="required" />
+								<aui:validator name="email" />
+							</aui:input>
 						</aui:fieldset>
 
 						<aui:fieldset column="<%= true %>" cssClass="aui-w100" label="database">
-							<aui:input name="defaultDatabase" type="hidden" value='<%= PropsValues.JDBC_DEFAULT_URL.contains("hypersonic") %>' />
+							<aui:input name="defaultDatabase" type="hidden" value='<%= defaultDatabase %>' />
 
-							<div id="defaultDatabaseOptions">
+							<div class='<%= defaultDatabase ? StringPool.BLANK : "aui-helper-hidden" %>' id="defaultDatabaseOptions">
 								<strong><liferay-ui:message key="default-database" /> (<liferay-ui:message key="database.hypersonic" />)</strong>
-								<liferay-ui:message key="hypersonic-is-an-embedded-database-useful-for-development-and-demo'ing-purposes" />
 
-								<a href="javascript;" id="customDatabaseOptionsLink">
+								<liferay-ui:message key="this-database-is-useful-for-development-and-demo'ing-purposes" />
+
+								<a href='<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false) %>' id="customDatabaseOptionsLink">
 									(<liferay-ui:message key="change" />)
 								</a>
 							</div>
 
-							<div class="aui-helper-hidden" id="customDatabaseOptions">
-								<a class="database-options" href="javascript;" id="defaultDatabaseOptionsLink">
+							<div class='<%= defaultDatabase ? "aui-helper-hidden" : StringPool.BLANK %>' id="customDatabaseOptions">
+								<a class="database-options" href='<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>' id="defaultDatabaseOptionsLink">
 									&laquo; <liferay-ui:message key="use-default-database" />
 								</a>
 
-								<aui:select name="databaseType">
+								<aui:select cssClass="database-type" name="databaseType" suffix="in-order-to-use-this-database">
 
 									<%
 									for (int i = 0; i < PropsValues.SETUP_DATABASE_TYPES.length; i++) {
@@ -114,9 +118,14 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 										String driverClassName = PropsUtil.get(PropsKeys.SETUP_DATABASE_DRIVER_CLASS_NAME, new com.liferay.portal.kernel.configuration.Filter(databaseType));
 										String url = PropsUtil.get(PropsKeys.SETUP_DATABASE_URL, new com.liferay.portal.kernel.configuration.Filter(databaseType));
 										boolean selected = PropsValues.JDBC_DEFAULT_URL.contains(databaseType);
+
+										Map<String,Object> data = new HashMap<String,Object>();
+
+										data.put("driverClassName", driverClassName);
+										data.put("url", url);
 									%>
 
-										<aui:option label='<%= "database." + databaseType %>' data-url="<%=url%>" data-driverClassName="<%=driverClassName%>" selected="<%= selected %>" value="<%= databaseType %>" />
+										<aui:option data="<%= data %>" label='<%= "database." + databaseType %>' selected="<%= selected %>" value="<%= databaseType %>" />
 
 									<%
 									}
@@ -124,40 +133,37 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 
 								</aui:select>
 
-								<span class="aui-field-hint aui-helper-hidden" id="databaseMessage">
-									<liferay-ui:message key="in-order-to-use-this-database" />
-								</span>
-
 								<aui:input id="jdbcDefaultURL" label="default-jdbc-url" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_URL + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_URL %>">
 									<aui:validator name="required" />
 								</aui:input>
 
-								<aui:input id="jdbcDefaultDriverName" label="default-jdbc-driver-classname" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %>"  >
+								<aui:input id="jdbcDefaultDriverName" label="default-jdbc-driver-classname" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %>" >
 									<aui:validator name="required" />
 								</aui:input>
 
-								<aui:input id="jdbcDefaultUserName" label="user-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_USERNAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_USERNAME %>"  >
+								<aui:input id="jdbcDefaultUserName" label="user-name" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_USERNAME + "--" %>' value="<%= PropsValues.JDBC_DEFAULT_USERNAME %>" >
 									<aui:validator name="required" />
 								</aui:input>
 
-								<aui:input id="jdbcDefaultPassword" label="password" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_PASSWORD + "--" %>' type="password" value="<%= PropsValues.JDBC_DEFAULT_PASSWORD %>"  >
+								<aui:input id="jdbcDefaultPassword" label="password" name='<%= "properties--" + PropsKeys.JDBC_DEFAULT_PASSWORD + "--" %>' type="password" value="<%= PropsValues.JDBC_DEFAULT_PASSWORD %>" >
 									<aui:validator name="required" />
 								</aui:input>
 
 								<aui:button name="testConnectionButton" type="button" value="test-database-connection" />
-								<div id='<portlet:namespace />testMessages'></div>
+
+								<span id="<portlet:namespace />testMessages"></span>
 							</div>
 						</aui:fieldset>
 
 						<aui:button-row id="finishButtonWrapper">
-							<aui:button name="finishButton" type="button" value="finish-configuration" />
+							<aui:button name="finishButton" type="submit" value="finish-configuration" />
 						</aui:button-row>
 					</aui:form>
 
 					<aui:script use="aui-base,aui-io-request,aui-loading-mask">
 						var customDatabaseOptions = A.one('#customDatabaseOptions');
 						var customDatabaseOptionsLink = A.one('#customDatabaseOptionsLink');
-						var databaseMessage = A.one('#databaseMessage');
+						var databaseMessage = A.one('.database-type .aui-suffix');
 						var databaseSelector = A.one('#databaseType');
 						var defaultDatabase = A.one('#defaultDatabase');
 						var defaultDatabaseOptions = A.one('#defaultDatabaseOptions');
@@ -171,19 +177,9 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 						var setupForm = A.one('#<portlet:namespace />fm');
 						var command = A.one('#<portlet:namespace /><%= Constants.CMD %>');
 
-						var testConnectionButton = A.one('#<portlet:namespace />testConnectionButton');
-
 						var finishButtonWrapper = A.one("#<portlet:namespace />finishButtonWrapper");
 
 						var testMessages = A.one("#<portlet:namespace />testMessages");
-
-						if (databaseSelector.val() != 'hypersonic') {
-							defaultDatabaseOptions.hide();
-
-							finishButtonWrapper.hide();
-
-							customDatabaseOptions.show();
-						}
 
 						var toggleDatabaseOptions = function(showDefault, event) {
 							if (event) {
@@ -209,7 +205,7 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 							var selectedOption = databaseSelector.get("options").item(index);
 
 							var driverClassName = selectedOption.getAttribute('data-driverClassName');
-						    var databaseURL = selectedOption.getAttribute('data-url');
+							var databaseURL = selectedOption.getAttribute('data-url');
 
 							jdbcDefaultURL.val(databaseURL);
 							jdbcDefaultDriverClassName.val(driverClassName);
@@ -224,11 +220,11 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 
 						databaseSelector.on('change', onChangeDatabaseSelector);
 
-						A.one('#<portlet:namespace />changeLanguage').on(
+						A.one('#<portlet:namespace />changeLanguageButton').on(
 							'click',
 							function(event) {
 								command.val('<%= Constants.TRANSLATE %>');
-							    setupForm.submit();
+								setupForm.submit();
 							}
 						);
 
@@ -244,29 +240,27 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 								);
 
 								command.val('<%= Constants.UPDATE %>');
-							    setupForm.submit();
 							}
 						);
 
-						testConnectionButton.on(
+						A.one('#<portlet:namespace />testConnectionButton').on(
 							'click',
 							function(event) {
-						        command.val('<%=Constants.TEST%>');
+								command.val('<%= Constants.TEST %>');
 
 								A.io.request(
-									setupForm.action,
+									setupForm.get('action'),
 									{
 										form: {
 											id: document.<portlet:namespace />fm
 										},
 										dataType: 'json',
 										on: {
-						                	start: function(event, id) {
-												if (testMessages != null) {
-													testMessages.setContent('');
-						                        }
+											start: function(event, id) {
+												testMessages.setContent('');
 
-												var loadingImage = "<img src='<%=themeImagesPath%>/application/loading_indicator.gif' id='<portlet:namespace />loadingImage' />";
+												var loadingImage = "<img src='<%= themeImagesPath %>/application/loading_indicator.gif' id='<portlet:namespace />loadingImage' />";
+
 												testMessages.append(loadingImage);
 											}
 										},
@@ -274,10 +268,9 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 											success: function(event, id, obj) {
 												var item = this.get('responseData');
 
-												var childHTML = null;
 												var messageClass = null;
 
-												if (item.tested) {
+												if (item.success) {
 													messageClass = "success";
 													finishButtonWrapper.show();
 												}
@@ -285,10 +278,9 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 													messageClass = "alert";
 												}
 
-												childHTML = "<span class='portlet-msg-" + messageClass + "'>" + item.message + "</span>";
-
 												A.one("#<portlet:namespace />loadingImage").remove(true);
-												testMessages.append(childHTML);
+
+												testMessages.append("<span class='portlet-msg-" + messageClass + "'>" + item.message + "</span>");
 											},
 											failure: function(event, id, obj) {
 												testMessages.append('<span class="portlet-msg-error"><%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-testing-the-database") %></span>');
@@ -298,7 +290,6 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 								);
 							}
 						);
-
 					</aui:script>
 				</c:when>
 				<c:otherwise>
@@ -347,7 +338,7 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 									</p>
 								</c:if>
 
-							   <aui:button type="submit" value="go-to-my-portal" />
+								<aui:button type="submit" value="go-to-my-portal" />
 							</aui:form>
 						</c:when>
 						<c:otherwise>

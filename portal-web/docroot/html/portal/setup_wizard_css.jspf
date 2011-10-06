@@ -25,9 +25,14 @@ body {
 	padding: 0 !important;
 }
 
+input.aui-button-input-submit {
+	color: #529214;
+	font-size: 1.2em;
+}
+
 #wrapper {
 	margin: auto;
-	max-width: 600px;
+	max-width: 700px;
 	min-width: 0;
 }
 
@@ -59,8 +64,18 @@ body {
 	width: 50%;
 }
 
+#footer {
+	clear: both;
+	padding-top: 2em;
+}
+
 #testMessages {
+	display: inline-block;;
 	margin-top: 10px;
+}
+
+#testMessages .portlet-msg-success, #testMessages .portlet-msg-alert, #testMessages .portlet-msg-error {
+	display: inline;
 }
 
 .properties-text {
@@ -113,6 +128,17 @@ body {
 .aui-field-hint {
 	float: none;
 	font-style: italic;
+}
+
+.aui-suffix {
+	color: #777;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.change-language {
+	display: inline-block;
+	vertical-align: bottom;
 }
 
 .database-options {

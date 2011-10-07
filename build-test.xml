@@ -2441,7 +2441,8 @@ file.
 
 		<replace file="${sql.file}">
 			<replacefilter token="drop database lportal;" value="drop database ${db.db2.schema};"/>
-			<replacefilter token="create database lportal;" value="create database ${db.db2.schema};"/>
+			<replacefilter token="create database lportal;" value="create database ${db.db2.schema} pagesize 8192;"/>
+			<replacefilter token="create database lportal pagesize 8192;" value="create database ${db.db2.schema} pagesize 8192;"/>
 			<replacefilter token="connect to lportal;" value="connect to ${db.db2.schema} USER ${db.db2.username} USING ${db.db2.password};"/>
 		</replace>
 

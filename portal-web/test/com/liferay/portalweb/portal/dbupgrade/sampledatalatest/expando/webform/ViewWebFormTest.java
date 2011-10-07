@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewWebFormTest extends BaseTestCase {
 	public void testViewWebForm() throws Exception {
-		selenium.open("/web/expando-web-form-community/");
+		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class ViewWebFormTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Web Form Page")) {
+				if (selenium.isElementPresent("link=Expando Web Form Community")) {
 					break;
 				}
 			}
@@ -41,10 +41,20 @@ public class ViewWebFormTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Expando Web Form Community",
+			RuntimeVariables.replace("Expando Web Form Community"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Web Form Page",
+			RuntimeVariables.replace("Web Form Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -95,8 +105,5 @@ public class ViewWebFormTest extends BaseTestCase {
 			selenium.getText("//div[3]/div[2]/fieldset/div/div[1]"));
 		assertTrue(selenium.isElementPresent("//input[@value='Export Data']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Delete Data']"));
-		assertFalse(selenium.isElementPresent("//div[3]/span/span/button[1]"));
-		assertFalse(selenium.isElementPresent("//div[4]/span/span/button[1]"));
-		assertFalse(selenium.isElementPresent("//div[5]/span/span/button[1]"));
 	}
 }

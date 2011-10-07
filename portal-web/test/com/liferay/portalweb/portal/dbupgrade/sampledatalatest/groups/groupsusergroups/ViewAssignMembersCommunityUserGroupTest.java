@@ -102,13 +102,9 @@ public class ViewAssignMembersCommunityUserGroupTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("User Group Groups User Groups"),
-			selenium.getText("//tr[3]/td[2]"));
-		assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("User Group Groups User Groups"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"This is a User Group Groups User Groups user group."),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText("//tr[3]/td[2]"));
 	}
 }

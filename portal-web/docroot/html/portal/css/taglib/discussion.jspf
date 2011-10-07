@@ -27,7 +27,7 @@
 .taglib-discussion .lfr-discussion {
 	border-bottom: 1px solid #DDD;
 	margin: 0 0 5px;
-	padding: 5px 0 20px 60px;
+	padding: 5px 0 35px 60px;
 	position: relative;
 	width: auto;
 }
@@ -75,6 +75,7 @@
 	color: #999;
 	float: right;
 	font-size: .9em;
+    padding-top: 1.5em;
 }
 
 .taglib-discussion .lfr-discussion-message {

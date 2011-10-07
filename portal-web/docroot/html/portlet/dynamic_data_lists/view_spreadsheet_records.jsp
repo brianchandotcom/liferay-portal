@@ -135,10 +135,12 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	spreadSheet.get('boundingBox').unselectable();
 
-	var numberOfRecordsNode = A.one('#<portlet:namespace />numberOfRecords');
+	var addRecordsNode = A.one('#<portlet:namespace />addRecords');
 
 	if (numberOfRecordsNode) {
-		A.one('#<portlet:namespace />addRecords').on(
+		var numberOfRecordsNode = A.one('#<portlet:namespace />numberOfRecords');
+
+		addRecordsNode.on(
 			'click',
 			function(event) {
 				var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;

@@ -100,8 +100,7 @@ public class ActivateStagingTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//select[@id='_165_stagingType']")) {
+						if (selenium.isVisible("//input[@id='_165_local']")) {
 							break;
 						}
 					}
@@ -112,7 +111,7 @@ public class ActivateStagingTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.select("//select[@id='_165_stagingType']",
+				selenium.clickAt("//input[@id='_165_local']",
 					RuntimeVariables.replace("Local Live"));
 
 				boolean blogsChecked = selenium.isChecked(
@@ -299,8 +298,6 @@ public class ActivateStagingTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to activate local staging for Site Name[\\s\\S]$"));
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Site Name"),
 					selenium.getText("//td[1]/a"));

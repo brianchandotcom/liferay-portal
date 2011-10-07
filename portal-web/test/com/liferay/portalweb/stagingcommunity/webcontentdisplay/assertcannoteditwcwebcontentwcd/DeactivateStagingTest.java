@@ -95,7 +95,7 @@ public class DeactivateStagingTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//select[@id='_165_stagingType']")) {
+				if (selenium.isVisible("//input[@id='_165_none']")) {
 					break;
 				}
 			}
@@ -106,12 +106,11 @@ public class DeactivateStagingTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.select("//select[@id='_165_stagingType']",
+		selenium.clickAt("//input[@id='_165_none']",
 			RuntimeVariables.replace("None"));
-		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to deactivate staging for Site Name[\\s\\S]$"));
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText("//td[1]/a"));

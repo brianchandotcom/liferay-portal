@@ -42,7 +42,7 @@ public class DDMTemplateLocalServiceImpl
 	public DDMTemplate addTemplate(
 			long userId, long groupId, long structureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String type, String language, String script,
+			String type, String mode, String language, String script,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -68,6 +68,7 @@ public class DDMTemplateLocalServiceImpl
 		template.setNameMap(nameMap);
 		template.setDescriptionMap(descriptionMap);
 		template.setType(type);
+		template.setMode(mode);
 		template.setLanguage(language);
 		template.setScript(script);
 
@@ -211,8 +212,8 @@ public class DDMTemplateLocalServiceImpl
 
 	public DDMTemplate updateTemplate(
 			long templateId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type, String language,
-			String script, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, String type, String mode,
+			String language, String script, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validate(nameMap, script);
@@ -224,6 +225,7 @@ public class DDMTemplateLocalServiceImpl
 		template.setNameMap(nameMap);
 		template.setDescriptionMap(descriptionMap);
 		template.setType(type);
+		template.setMode(mode);
 		template.setLanguage(language);
 		template.setScript(script);
 

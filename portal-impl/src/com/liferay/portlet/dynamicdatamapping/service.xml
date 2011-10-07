@@ -154,6 +154,7 @@
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="type" type="String" />
+		<column name="mode" type="String" />
 		<column name="language" type="String" />
 		<column name="script" type="String" />
 

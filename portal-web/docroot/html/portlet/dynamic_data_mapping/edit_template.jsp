@@ -94,6 +94,13 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateDetailsSectionPanel" persistState="<%= true %>" title="details">
 				<aui:input name="description" />
+
+				<c:if test='<%= type.equals("detail") %>'>
+					<aui:select helpMessage="only-display-required-fields-in-creation-mode" label="mode" name="mode">
+						<aui:option label="create" />
+						<aui:option label="edit" />
+					</aui:select>
+				</c:if>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
 

@@ -618,6 +618,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		ddmTemplateImpl.setName(ddmTemplate.getName());
 		ddmTemplateImpl.setDescription(ddmTemplate.getDescription());
 		ddmTemplateImpl.setType(ddmTemplate.getType());
+		ddmTemplateImpl.setMode(ddmTemplate.getMode());
 		ddmTemplateImpl.setLanguage(ddmTemplate.getLanguage());
 		ddmTemplateImpl.setScript(ddmTemplate.getScript());
 

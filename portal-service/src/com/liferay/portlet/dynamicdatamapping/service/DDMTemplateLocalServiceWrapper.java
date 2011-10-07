@@ -267,13 +267,13 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService {
 		long userId, long groupId, long structureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.addTemplate(userId, groupId,
-			structureId, nameMap, descriptionMap, type, language, script,
+			structureId, nameMap, descriptionMap, type, mode, language, script,
 			serviceContext);
 	}
 
@@ -372,13 +372,13 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService {
 		long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.updateTemplate(templateId, nameMap,
-			descriptionMap, type, language, script, serviceContext);
+			descriptionMap, type, mode, language, script, serviceContext);
 	}
 
 	public DDMTemplateLocalService getWrappedDDMTemplateLocalService() {

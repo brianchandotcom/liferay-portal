@@ -503,6 +503,7 @@ create table DDMTemplate (
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(75) null,
+	mode VARCHAR(75) null,
 	language VARCHAR(75) null,
 	script TEXT null
 );

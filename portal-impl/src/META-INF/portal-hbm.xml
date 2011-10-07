@@ -1694,6 +1694,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
+		<property name="mode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="language" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="script" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>

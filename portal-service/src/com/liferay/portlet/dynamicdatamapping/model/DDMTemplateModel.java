@@ -422,6 +422,21 @@ public interface DDMTemplateModel extends BaseModel<DDMTemplate>, GroupedModel {
 	public void setType(String type);
 
 	/**
+	 * Returns the mode of this d d m template.
+	 *
+	 * @return the mode of this d d m template
+	 */
+	@AutoEscape
+	public String getMode();
+
+	/**
+	 * Sets the mode of this d d m template.
+	 *
+	 * @param mode the mode of this d d m template
+	 */
+	public void setMode(String mode);
+
+	/**
 	 * Returns the language of this d d m template.
 	 *
 	 * @return the language of this d d m template

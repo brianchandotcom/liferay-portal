@@ -47,8 +47,8 @@ public interface DDMTemplateService {
 		long groupId, long structureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -72,8 +72,8 @@ public interface DDMTemplateService {
 		long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

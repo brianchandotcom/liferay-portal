@@ -58,8 +58,8 @@ public class DDMTemplateServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long structureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -68,7 +68,7 @@ public class DDMTemplateServiceHttp {
 					"addTemplate", _addTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					structureId, nameMap, descriptionMap, type, language,
+					structureId, nameMap, descriptionMap, type, mode, language,
 					script, serviceContext);
 
 			Object returnObj = null;
@@ -203,8 +203,8 @@ public class DDMTemplateServiceHttp {
 		HttpPrincipal httpPrincipal, long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -213,7 +213,7 @@ public class DDMTemplateServiceHttp {
 					"updateTemplate", _updateTemplateParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					templateId, nameMap, descriptionMap, type, language,
+					templateId, nameMap, descriptionMap, type, mode, language,
 					script, serviceContext);
 
 			Object returnObj = null;
@@ -246,7 +246,7 @@ public class DDMTemplateServiceHttp {
 	private static final Class<?>[] _addTemplateParameterTypes0 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteTemplateParameterTypes1 = new Class[] {
@@ -261,7 +261,7 @@ public class DDMTemplateServiceHttp {
 	private static final Class<?>[] _updateTemplateParameterTypes4 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 }

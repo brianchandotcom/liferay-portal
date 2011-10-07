@@ -756,32 +756,70 @@ release was successful.</echo>
 	</target>
 
 	<target name="rename-dist-files">
+ 		<antcall target="rename-dist-plugin-files" />
+		<antcall target="rename-dist-portal-files" />
+	</target>
+
+	<target name="rename-dist-plugin-files">
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMdd" />
 		</tstamp>
 
-		<for param="dist.file">
+		<for param="dist.plugin.file">
+			<path>
+				<fileset
+					dir="${lp.plugins.dir}/dist"
+				/>
+			</path>
+			<sequential>
+				<antelope:stringutil string="@{dist.plugin.file}" property="dist.plugin.file.endindex">
+					<antelope:lastindexof string="." />
+				</antelope:stringutil>
+
+				<antelope:stringutil string="@{dist.plugin.file}" property="dist.plugin.file.prefix">
+					<antelope:substring beginindex="0" endindex="${dist.plugin.file.endindex}" />
+				</antelope:stringutil>
+
+				<antelope:stringutil string="@{dist.plugin.file}" property="dist.plugin.file.suffix">
+					<antelope:substring beginindex="${dist.plugin.file.endindex}" />
+				</antelope:stringutil>
+
+				<move
+					file="@{dist.plugin.file}"
+					tofile="${dist.plugin.file.prefix}-${tstamp.value}${dist.plugin.file.suffix}"
+					overwrite="true"
+				/>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="rename-dist-portal-files">
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMdd" />
+		</tstamp>
+
+		<for param="dist.portal.file">
 			<path>
 				<fileset
 					dir="dist"
 				/>
 			</path>
 			<sequential>
-				<antelope:stringutil string="@{dist.file}" property="dist.file.endindex">
+				<antelope:stringutil string="@{dist.portal.file}" property="dist.portal.file.endindex">
 					<antelope:lastindexof string="." />
 				</antelope:stringutil>
 
-				<antelope:stringutil string="@{dist.file}" property="dist.file.prefix">
-					<antelope:substring beginindex="0" endindex="${dist.file.endindex}" />
+				<antelope:stringutil string="@{dist.portal.file}" property="dist.portal.file.prefix">
+					<antelope:substring beginindex="0" endindex="${dist.portal.file.endindex}" />
 				</antelope:stringutil>
 
-				<antelope:stringutil string="@{dist.file}" property="dist.file.suffix">
-					<antelope:substring beginindex="${dist.file.endindex}" />
+				<antelope:stringutil string="@{dist.portal.file}" property="dist.portal.file.suffix">
+					<antelope:substring beginindex="${dist.portal.file.endindex}" />
 				</antelope:stringutil>
 
 				<move
-					file="@{dist.file}"
-					tofile="${dist.file.prefix}-${tstamp.value}${dist.file.suffix}"
+					file="@{dist.portal.file}"
+					tofile="${dist.portal.file.prefix}-${tstamp.value}${dist.portal.file.suffix}"
 					overwrite="true"
 				/>
 			</sequential>

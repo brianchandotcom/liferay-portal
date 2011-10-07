@@ -125,8 +125,8 @@ public class ViewOrganizationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Search All Users"),
-			selenium.getText("//a[@id='_125_allUsersLink']"));
-		selenium.clickAt("//a[@id='_125_allUsersLink']",
+			selenium.getText("//span/a/span"));
+		selenium.clickAt("//span/a/span",
 			RuntimeVariables.replace("Search All Users"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();

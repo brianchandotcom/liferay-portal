@@ -61,13 +61,17 @@
 			background: none;
 			border-width: 0;
 
-			.aui-tab-label a {
-				color: #DDD;
-				text-shadow: none;
-				text-decoration: underline;
+			.aui-tab-label {
+				padding: 7px 10px;
 
-				&:hover {
-					text-decoration: none;
+				a {
+					color: #BBB;
+					text-shadow: none;
+					text-decoration: underline;
+
+					&:hover {
+						text-decoration: none;
+					}
 				}
 			}
 		}

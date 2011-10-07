@@ -476,7 +476,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	public int getThreadAnswersCount(
-		long groupId, long categoryId, long threadId)
+			long groupId, long categoryId, long threadId)
 		throws SystemException {
 
 		return mbMessagePersistence.filterCountByG_C_T_A(
@@ -484,7 +484,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	public int getThreadMessagesCount(
-		long groupId, long categoryId, long threadId, int status)
+			long groupId, long categoryId, long threadId, int status)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {

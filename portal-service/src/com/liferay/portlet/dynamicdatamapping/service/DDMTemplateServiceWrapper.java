@@ -55,9 +55,9 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService {
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long structureId, java.lang.String type)
+		long structureId, java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateService.getTemplates(structureId, type);
+		return _ddmTemplateService.getTemplates(structureId, type, mode);
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(

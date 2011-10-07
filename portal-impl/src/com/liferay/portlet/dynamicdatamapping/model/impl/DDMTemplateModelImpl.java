@@ -101,9 +101,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			true);
 	public static long GROUPID_COLUMN_BITMASK = 1L;
 	public static long LANGUAGE_COLUMN_BITMASK = 2L;
-	public static long STRUCTUREID_COLUMN_BITMASK = 4L;
-	public static long TYPE_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long MODE_COLUMN_BITMASK = 4L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 8L;
+	public static long TYPE_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -528,7 +529,17 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	}
 
 	public void setMode(String mode) {
+		_columnBitmask |= MODE_COLUMN_BITMASK;
+
+		if (_originalMode == null) {
+			_originalMode = _mode;
+		}
+
 		_mode = mode;
+	}
+
+	public String getOriginalMode() {
+		return GetterUtil.getString(_originalMode);
 	}
 
 	@JSON
@@ -683,6 +694,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateModelImpl._setOriginalStructureId = false;
 
 		ddmTemplateModelImpl._originalType = ddmTemplateModelImpl._type;
+
+		ddmTemplateModelImpl._originalMode = ddmTemplateModelImpl._mode;
 
 		ddmTemplateModelImpl._originalLanguage = ddmTemplateModelImpl._language;
 
@@ -926,6 +939,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private String _type;
 	private String _originalType;
 	private String _mode;
+	private String _originalMode;
 	private String _language;
 	private String _originalLanguage;
 	private String _script;

@@ -168,14 +168,15 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		HttpPrincipal httpPrincipal, long structureId, java.lang.String type)
+		HttpPrincipal httpPrincipal, long structureId, java.lang.String type,
+		java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
 					"getTemplates", _getTemplatesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					structureId, type);
+					structureId, type, mode);
 
 			Object returnObj = null;
 
@@ -256,7 +257,7 @@ public class DDMTemplateServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getTemplatesParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, java.lang.String.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateTemplateParameterTypes4 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,

@@ -22,65 +22,70 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 public class DDMTemplateFinderUtil {
 	public static int countByKeywords(long companyId, long groupId,
-		long structureId, java.lang.String keywords, java.lang.String type)
+		long structureId, java.lang.String keywords, java.lang.String type,
+		java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .countByKeywords(companyId, groupId, structureId, keywords,
-			type);
+			type, mode);
 	}
 
-	public static int countByC_G_S_N_D_T_L(long companyId, long groupId,
+	public static int countByC_G_S_N_D_T_M_L(long companyId, long groupId,
 		long structureId, java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String language, boolean andOperator)
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .countByC_G_S_N_D_T_L(companyId, groupId, structureId, name,
-			description, type, language, andOperator);
+				   .countByC_G_S_N_D_T_M_L(companyId, groupId, structureId,
+			name, description, type, mode, language, andOperator);
 	}
 
-	public static int countByC_G_S_N_D_T_L(long companyId, long groupId,
+	public static int countByC_G_S_N_D_T_M_L(long companyId, long groupId,
 		long structureId, java.lang.String[] names,
 		java.lang.String[] descriptions, java.lang.String[] types,
-		java.lang.String[] languages, boolean andOperator)
+		java.lang.String[] modes, java.lang.String[] languages,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .countByC_G_S_N_D_T_L(companyId, groupId, structureId,
-			names, descriptions, types, languages, andOperator);
+				   .countByC_G_S_N_D_T_M_L(companyId, groupId, structureId,
+			names, descriptions, types, modes, languages, andOperator);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByKeywords(
 		long companyId, long groupId, long structureId,
-		java.lang.String keywords, java.lang.String type, int start, int end,
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByKeywords(companyId, groupId, structureId, keywords,
-			type, start, end, orderByComparator);
+			type, mode, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_S_N_D_T_L(
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_S_N_D_T_M_L(
 		long companyId, long groupId, long structureId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String language, boolean andOperator, int start, int end,
+		java.lang.String mode, java.lang.String language, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByC_G_S_N_D_T_L(companyId, groupId, structureId, name,
-			description, type, language, andOperator, start, end,
+				   .findByC_G_S_N_D_T_M_L(companyId, groupId, structureId,
+			name, description, type, mode, language, andOperator, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_S_N_D_T_L(
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_S_N_D_T_M_L(
 		long companyId, long groupId, long structureId,
 		java.lang.String[] names, java.lang.String[] descriptions,
-		java.lang.String[] types, java.lang.String[] languages,
-		boolean andOperator, int start, int end,
+		java.lang.String[] types, java.lang.String[] modes,
+		java.lang.String[] languages, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByC_G_S_N_D_T_L(companyId, groupId, structureId, names,
-			descriptions, types, languages, andOperator, start, end,
-			orderByComparator);
+				   .findByC_G_S_N_D_T_M_L(companyId, groupId, structureId,
+			names, descriptions, types, modes, languages, andOperator, start,
+			end, orderByComparator);
 	}
 
 	public static DDMTemplateFinder getFinder() {

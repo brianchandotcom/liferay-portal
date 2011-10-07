@@ -263,7 +263,7 @@
 			}
 
 			&:hover .document-selector, &.selected .document-selector {
-				clip: auto;
+				clip: rect(auto auto auto auto);
 				position: absolute;
 			}
 
@@ -274,11 +274,13 @@
 
 		&.icon {
 			display: inline-block;
+			float: left;
 			margin: 5px;
 			padding: 10px 0;
 			position: relative;
 			vertical-align: top;
 			width: 200px;
+			height: 160px;
 
 			.document-action {
 				overflow: hidden;
@@ -342,7 +344,7 @@
 		}
 
 		&:hover .overlay, &.hover .overlay, &.selected .document-selector {
-			clip: auto;
+			clip: rect(auto auto auto auto);
 		}
 	}
 
@@ -363,7 +365,7 @@
 		}
 
 		&:hover .overlay, &.hover .overlay {
-			clip: auto;
+			clip: rect(auto auto auto auto);
 		}
 	}
 

@@ -161,53 +161,54 @@ public class DDMTemplateLocalServiceImpl
 		return ddmTemplatePersistence.findByStructureId(structureId);
 	}
 
-	public List<DDMTemplate> getTemplates(long structureId, String type)
+	public List<DDMTemplate> getTemplates(
+			long structureId, String type, String mode)
 		throws SystemException {
 
-		return ddmTemplatePersistence.findByS_T(structureId, type);
+		return ddmTemplatePersistence.findByS_T_M(structureId, type, mode);
 	}
 
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long structureId, String keywords,
-			String type, int start, int end,
+			String type, String mode, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmTemplateFinder.findByKeywords(
-			companyId, groupId, structureId, keywords, type, start, end,
+			companyId, groupId, structureId, keywords, type, mode, start, end,
 			orderByComparator);
 	}
 
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long structureId, String name,
-			String description, String type, String language,
+			String description, String type, String mode, String language,
 			boolean andOperator, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return ddmTemplateFinder.findByC_G_S_N_D_T_L(
-			companyId, groupId, structureId, name, description, type, language,
-			andOperator, start, end, orderByComparator);
+		return ddmTemplateFinder.findByC_G_S_N_D_T_M_L(
+			companyId, groupId, structureId, name, description, type, mode,
+			language, andOperator, start, end, orderByComparator);
 	}
 
 	public int searchCount(
 			long companyId, long groupId, long structureId, String keywords,
-			String type)
+			String type, String mode)
 		throws SystemException {
 
 		return ddmTemplateFinder.countByKeywords(
-			companyId, groupId, structureId, keywords, type);
+			companyId, groupId, structureId, keywords, type, mode);
 	}
 
 	public int searchCount(
 			long companyId, long groupId, long structureId, String name,
-			String description, String type, String language,
+			String description, String type, String mode, String language,
 			boolean andOperator)
 		throws SystemException {
 
-		return ddmTemplateFinder.countByC_G_S_N_D_T_L(
-			companyId, groupId, structureId, name, description, type, language,
-			andOperator);
+		return ddmTemplateFinder.countByC_G_S_N_D_T_M_L(
+			companyId, groupId, structureId, name, description, type, mode,
+			language, andOperator);
 	}
 
 	public DDMTemplate updateTemplate(

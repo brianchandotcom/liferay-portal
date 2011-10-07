@@ -1075,6 +1075,7 @@
 			ddmURL.setParameter('scopeStorageType', config.storageType);
 			ddmURL.setParameter('scopeStructureName', config.structureName);
 			ddmURL.setParameter('scopeStructureType', config.structureType);
+			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
 
 			if (config.showManageTemplates) {

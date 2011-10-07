@@ -30,6 +30,10 @@ public class DDMTemplateConstants {
 	public static final String[] LANG_TYPES = PropsUtil.getArray(
 		PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_TYPES);
 
+	public static final String TEMPLATE_MODE_CREATE = "create";
+
+	public static final String TEMPLATE_MODE_EDIT = "edit";
+
 	public static final String TEMPLATE_TYPE_DETAIL = "detail";
 
 	public static final String TEMPLATE_TYPE_LIST = "list";

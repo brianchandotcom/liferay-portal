@@ -94,11 +94,9 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Organization Groups Orgs"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Regular Organization"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText("//tr[3]/td[3]"));
 	}
 }

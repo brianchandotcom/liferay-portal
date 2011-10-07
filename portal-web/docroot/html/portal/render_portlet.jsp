@@ -1026,7 +1026,7 @@ else {
 		if (window.parent) {
 			var data = null;
 
-			var curPortletBoundaryId = '#doRefreshPortletId_<%= doRefreshPortletId %>_';
+			var curPortletBoundaryId = '#p_p_id_<%= doRefreshPortletId %>_';
 
 			<c:if test='<%= (portletResourcePortlet != null && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".notAjaxable") %>'>
 				data = {

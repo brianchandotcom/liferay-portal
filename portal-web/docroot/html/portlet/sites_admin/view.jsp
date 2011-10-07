@@ -166,7 +166,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
 
 		if (usersCount > 0) {
-			sb.append("<div>" + LanguageUtil.format(pageContext, usersCount > 1 ? "x-users" : "x-user", usersCount) + "</div>");
+			sb.append("<div class=\"user-count\">" + LanguageUtil.format(pageContext, usersCount > 1 ? "x-users" : "x-user", usersCount) + "</div>");
 		}
 
 		LinkedHashMap organizationParams = new LinkedHashMap();
@@ -179,7 +179,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			organizationsCount += 1;
 		}
 		if (organizationsCount > 0) {
-			sb.append("<div>" + LanguageUtil.format(pageContext, organizationsCount > 1 ? "x-organizations" : "x-organization", organizationsCount) + "</div>");
+			sb.append("<div class=\"organization-count\">" + LanguageUtil.format(pageContext, organizationsCount > 1 ? "x-organizations" : "x-organization", organizationsCount) + "</div>");
 		}
 
 		LinkedHashMap userGroupParams = new LinkedHashMap();
@@ -189,7 +189,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, null, userGroupParams);
 
 		if (userGroupsCount > 0) {
-			sb.append("<div>" + LanguageUtil.format(pageContext, userGroupsCount > 1 ? "x-user-groups" : "x-user-group", userGroupsCount) + "</div>");
+			sb.append("<div class=\"user-group-count\">" + LanguageUtil.format(pageContext, userGroupsCount > 1 ? "x-user-groups" : "x-user-group", userGroupsCount) + "</div>");
 		}
 
 		row.addText((sb.length() > 0) ? sb.toString() : "0");

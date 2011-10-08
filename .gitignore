@@ -54,6 +54,7 @@
 /portal-impl/ServiceBuilder.temp
 /portal-impl/test-classes
 /portal-impl/test-results
+/portal-impl/test-coverage
 
 /portal-impl/src/portal-ext.properties
 /portal-impl/src/system-ext.properties
@@ -72,6 +73,7 @@
 /portal-service/portal-service*.jar
 /portal-service/test-classes
 /portal-service/test-results
+/portal-service/test-coverage
 
 /portal-web/*.iml
 /portal-web/*.ipr

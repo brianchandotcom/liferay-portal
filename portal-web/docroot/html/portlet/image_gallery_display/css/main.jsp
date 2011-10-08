@@ -37,7 +37,7 @@
 		padding-top: 3px;
 	}
 
-	.image-thumbnail {
+	.image-thumbnail, .folder-thumbnail {
 		border: 2px solid #eee;
 		float: left;
 		height: 162px;

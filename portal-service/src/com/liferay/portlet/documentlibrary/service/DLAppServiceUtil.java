@@ -790,6 +790,13 @@ public class DLAppServiceUtil {
 				   .getFileEntriesCount(repositoryId, folderId, fileEntryTypeId);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileEntriesPrevAndNext(fileEntryId, obc);
+	}
+
 	/**
 	* Returns the file entry with the primary key.
 	*

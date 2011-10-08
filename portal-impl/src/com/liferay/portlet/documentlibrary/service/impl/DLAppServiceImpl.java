@@ -938,6 +938,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return repository.getFileEntriesCount(folderId, fileEntryTypeId);
 	}
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+			long fileEntryId, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		return repository.getFileEntriesPrevAndNext(fileEntryId, obc);
+	}
+
 	/**
 	 * Returns the file entry with the primary key.
 	 *

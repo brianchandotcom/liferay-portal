@@ -601,6 +601,8 @@ public class PropsValues {
 
 	public static final String[] IG_IMAGE_THUMBNAIL_MIME_TYPES = PropsUtil.getArray(PropsKeys.IG_IMAGE_THUMBNAIL_MIME_TYPES);
 
+	public static final boolean IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED));
+
 	public static final boolean IG_PUBLISH_TO_LIVE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IG_PUBLISH_TO_LIVE_BY_DEFAULT));
 
 	public static final boolean IMAGE_AUTO_SCALE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGE_AUTO_SCALE));

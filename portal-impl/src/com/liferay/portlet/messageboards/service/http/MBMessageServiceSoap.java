@@ -236,6 +236,21 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static int getThreadAnswersCount(long groupId, long categoryId,
+		long threadId) throws RemoteException {
+		try {
+			int returnValue = MBMessageServiceUtil.getThreadAnswersCount(groupId,
+					categoryId, threadId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getThreadMessagesCount(long groupId, long categoryId,
 		long threadId, int status) throws RemoteException {
 		try {

@@ -60,6 +60,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 				group.getGroupId(),
 				StringPool.SLASH + commandArgument.getCurrentFolder());
 
+			long repositoryId = folder.getRepositoryId();
 			long parentFolderId = folder.getFolderId();
 			String name = commandArgument.getNewFolder();
 			String description = StringPool.BLANK;
@@ -70,7 +71,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			serviceContext.setAddGuestPermissions(true);
 
 			DLAppServiceUtil.addFolder(
-				group.getGroupId(), parentFolderId, name, description,
+				repositoryId, parentFolderId, name, description,
 				serviceContext);
 		}
 		catch (Exception e) {
@@ -91,6 +92,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			Folder folder = _getFolder(
 				group.getGroupId(), commandArgument.getCurrentFolder());
 
+			long repositoryId = folder.getRepositoryId();
 			long folderId = folder.getFolderId();
 			String title = fileName;
 			String description = StringPool.BLANK;
@@ -102,7 +104,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			serviceContext.setAddGuestPermissions(true);
 
 			DLAppServiceUtil.addFileEntry(
-				group.getGroupId(), folderId, title, contentType, title,
+				repositoryId, folderId, title, contentType, title,
 				description, changeLog, inputStream, size, serviceContext);
 		}
 		catch (Exception e) {
@@ -165,7 +167,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			group.getGroupId(), commandArgument.getCurrentFolder());
 
 		List<FileEntry> fileEntries = DLAppServiceUtil.getFileEntries(
-			group.getGroupId(), folder.getFolderId());
+			folder.getRepositoryId(), folder.getFolderId());
 
 		for (FileEntry fileEntry : fileEntries) {
 			Element fileElement = document.createElement("File");
@@ -219,6 +221,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 
 		dlFolder.setFolderId(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		dlFolder.setGroupId(groupId);
+		dlFolder.setRepositoryId(groupId);
 
 		Folder folder = new LiferayFolder(dlFolder);
 
@@ -232,7 +235,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			String curFolderName = st.nextToken();
 
 			List<Folder> folders = DLAppServiceUtil.getFolders(
-				groupId, folder.getFolderId());
+				folder.getRepositoryId(), folder.getFolderId());
 
 			for (Folder curFolder : folders) {
 				if (curFolder.getName().equals(curFolderName)) {
@@ -264,7 +267,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 				group.getGroupId(), commandArgument.getCurrentFolder());
 
 			List<Folder> folders = DLAppServiceUtil.getFolders(
-				group.getGroupId(), folder.getFolderId());
+				folder.getRepositoryId(), folder.getFolderId());
 
 			for (Folder curFolder : folders) {
 				Element folderElement = document.createElement("Folder");

@@ -22,6 +22,7 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
+String navigation = ParamUtil.getString(request, "navigation", "documents-home");
 
 if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
@@ -39,7 +40,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 				'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search" %>',
 				'<portlet:namespace />displayStyle': displayStyle,
 				'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
-				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
+				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>,
+				'<portlet:namespace />navigation': '<%= navigation %>'
 			};
 
 			if (<%= Validator.isNull(keywords) %>) {

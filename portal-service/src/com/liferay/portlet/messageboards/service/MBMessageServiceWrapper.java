@@ -171,6 +171,13 @@ public class MBMessageServiceWrapper implements MBMessageService {
 			threadId, status, start, end);
 	}
 
+	public int getThreadAnswersCount(long groupId, long categoryId,
+		long threadId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageService.getThreadAnswersCount(groupId, categoryId,
+			threadId);
+	}
+
 	public int getThreadMessagesCount(long groupId, long categoryId,
 		long threadId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {

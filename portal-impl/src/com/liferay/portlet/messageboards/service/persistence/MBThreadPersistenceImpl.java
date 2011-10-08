@@ -324,9 +324,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 						MBThreadImpl.class, mbThread.getPrimaryKey()) == null) {
 				cacheResult(mbThread);
 			}
-			else {
-				mbThread.resetOriginalValues();
-			}
 		}
 	}
 
@@ -524,12 +521,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
-
-				args = new Object[] { Long.valueOf(mbThreadModelImpl.getGroupId()) };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
-					args);
 			}
 
 			if ((mbThreadModelImpl.getColumnBitmask() &
@@ -537,15 +528,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				Object[] args = new Object[] {
 						Long.valueOf(mbThreadModelImpl.getOriginalGroupId()),
 						Long.valueOf(mbThreadModelImpl.getOriginalCategoryId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
-					args);
-
-				args = new Object[] {
-						Long.valueOf(mbThreadModelImpl.getGroupId()),
-						Long.valueOf(mbThreadModelImpl.getCategoryId())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
@@ -563,15 +545,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_NOTC, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_NOTC,
 					args);
-
-				args = new Object[] {
-						Long.valueOf(mbThreadModelImpl.getGroupId()),
-						Long.valueOf(mbThreadModelImpl.getCategoryId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_NOTC, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_NOTC,
-					args);
 			}
 
 			if ((mbThreadModelImpl.getColumnBitmask() &
@@ -579,15 +552,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				Object[] args = new Object[] {
 						Long.valueOf(mbThreadModelImpl.getOriginalGroupId()),
 						Integer.valueOf(mbThreadModelImpl.getOriginalStatus())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
-					args);
-
-				args = new Object[] {
-						Long.valueOf(mbThreadModelImpl.getGroupId()),
-						Integer.valueOf(mbThreadModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -605,15 +569,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P,
 					args);
-
-				args = new Object[] {
-						Long.valueOf(mbThreadModelImpl.getCategoryId()),
-						Double.valueOf(mbThreadModelImpl.getPriority())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P,
-					args);
 			}
 
 			if ((mbThreadModelImpl.getColumnBitmask() &
@@ -621,15 +576,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				Object[] args = new Object[] {
 						mbThreadModelImpl.getOriginalLastPostDate(),
 						Double.valueOf(mbThreadModelImpl.getOriginalPriority())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_L_P,
-					args);
-
-				args = new Object[] {
-						mbThreadModelImpl.getLastPostDate(),
-						Double.valueOf(mbThreadModelImpl.getPriority())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P, args);
@@ -649,17 +595,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_L, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_L,
 					args);
-
-				args = new Object[] {
-						Long.valueOf(mbThreadModelImpl.getGroupId()),
-						Long.valueOf(mbThreadModelImpl.getCategoryId()),
-						
-						mbThreadModelImpl.getLastPostDate()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_L, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_L,
-					args);
 			}
 
 			if ((mbThreadModelImpl.getColumnBitmask() &
@@ -673,16 +608,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_S,
 					args);
-
-				args = new Object[] {
-						Long.valueOf(mbThreadModelImpl.getGroupId()),
-						Long.valueOf(mbThreadModelImpl.getCategoryId()),
-						Integer.valueOf(mbThreadModelImpl.getStatus())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_S,
-					args);
 			}
 
 			if ((mbThreadModelImpl.getColumnBitmask() &
@@ -691,16 +616,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 						Long.valueOf(mbThreadModelImpl.getOriginalGroupId()),
 						Long.valueOf(mbThreadModelImpl.getOriginalCategoryId()),
 						Integer.valueOf(mbThreadModelImpl.getOriginalStatus())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_NOTC_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_NOTC_S,
-					args);
-
-				args = new Object[] {
-						Long.valueOf(mbThreadModelImpl.getGroupId()),
-						Long.valueOf(mbThreadModelImpl.getCategoryId()),
-						Integer.valueOf(mbThreadModelImpl.getStatus())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_NOTC_S, args);

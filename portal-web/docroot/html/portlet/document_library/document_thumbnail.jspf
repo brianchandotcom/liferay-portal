@@ -33,11 +33,8 @@ if (largeImage != null) {
 		smallImageWidth = smallImage.getWidth();
 	}
 
-	int topMargin = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageHeight;
-	int sideMargin = (PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageWidth) / 2;
-
 	thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
-	thumbnailStyle = "max-height: " + smallImageHeight + "px; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; max-width: " + smallImageWidth + "px;";
+	thumbnailStyle = "max-height: " + smallImageHeight + "px; max-width: " + smallImageWidth + "px;";
 
 	if (smallImage != null) {
 		thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);

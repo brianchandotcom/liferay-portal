@@ -207,20 +207,46 @@
 			text-decoration: none;
 		}
 
+		.document-thumbnail {
+			img {
+				background: #EAEAEA;
+			    border: 1px solid #CCC;
+				margin: 0;
+				padding: 5px;
+			}
+		}
+
+		&:hover .document-thumbnail img {
+			background-color: #B0D2E1;
+			border-color: #7ABFDD;
+		}
+
+		&.selected .document-thumbnail img {
+			background-color: #B0D2E1;
+			border-color: #057CB0;
+		}
+
 		&.descriptive {
 			display: block;
-			height: 140px;
 			margin: 5px;
-			padding-bottom: 5px;
-			padding-top: 5px;
+			padding: 5px 0;
+			padding-left: 20px;
 			position: relative;
 			text-align: left;
+
+			&:after {
+				clear: both;
+				content: ".";
+				display: block;
+				height: 0;
+				visibility: hidden;
+			}
 
 			.entry-title {
 				display: block;
 				font-size: 1.15em;
 				font-weight: bold;
-				padding: 1.4em 0 0;
+				padding: 5px 0 0;
 			}
 
 			.document-description {
@@ -245,7 +271,7 @@
 
 			.document-thumbnail {
 				float: left;
-				margin: 5px 10px;
+				margin: 5px 10px 5px 5px;
 				position: relative;
 				text-align: center;
 			}
@@ -285,7 +311,7 @@
 			.document-action {
 				overflow: hidden;
 				position: absolute;
-				right: 10px;
+				right: 5px;
 			}
 
 			.document-selector {
@@ -796,4 +822,12 @@
 	background: #FFFFE0 url(<%= themeImagesPath %>/portlet/pop_up.png) no-repeat 10px 50%;
 	font-size: 1.2em;
 	padding: 0.3em 0.3em 0.3em 2em;
+}
+
+.ie6, .ie7 {
+	.portlet-document-library, .portlet-document-library-display {
+		.document-display-style.descriptive {
+			zoom: 1;
+		}
+	}
 }

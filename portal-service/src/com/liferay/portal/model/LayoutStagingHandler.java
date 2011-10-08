@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.NoSuchLayoutBranchException;
 import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -221,12 +222,19 @@ public class LayoutStagingHandler implements InvocationHandler {
 			}
 		}
 
-		LayoutBranch layoutBranch =
-			LayoutBranchLocalServiceUtil.addLayoutBranch(
+		LayoutBranch layoutBranch = null;
+
+		try {
+			layoutBranch = LayoutBranchLocalServiceUtil.getMasterLayoutBranch(
+				layoutSetBranchId, layout.getPlid());
+		}
+		catch (NoSuchLayoutBranchException nslbe) {
+			layoutBranch = LayoutBranchLocalServiceUtil.addLayoutBranch(
 				layoutSetBranchId, layout.getPlid(),
 				LayoutBranchConstants.MASTER_BRANCH_NAME,
 				LayoutBranchConstants.MASTER_BRANCH_DESCRIPTION, true,
 				serviceContext);
+		}
 
 		layoutRevision = LayoutRevisionLocalServiceUtil.addLayoutRevision(
 			serviceContext.getUserId(), layoutSetBranchId,

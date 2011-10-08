@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= showTabs && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) %>">
+	<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) %>">
 
 		<%
 		String topLink = ParamUtil.getString(request, "topLink", "documents-home");
@@ -31,72 +31,73 @@
 		boolean viewFolder = GetterUtil.getBoolean((String)request.getAttribute("view.jsp-viewFolder"));
 
 		boolean useAssetEntryQuery = GetterUtil.getBoolean((String)request.getAttribute("view.jsp-useAssetEntryQuery"));
-
-		String documentsHomeMessage = "documents-home";
-		String recentDocumentsMessage = "recent-documents";
-		String myDocumentsMessage = "my-documents";
-
-		if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
-			documentsHomeMessage = "images-home";
-			recentDocumentsMessage = "recent-images";
-			myDocumentsMessage = "my-images";
-		}
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("categoryId", StringPool.BLANK);
-		portletURL.setParameter("tag", StringPool.BLANK);
 		%>
 
 		<div class="top-links-container">
 			<div class="top-links">
-				<div class="top-links-navigation">
-
-					<%
-					portletURL.setParameter("topLink", documentsHomeMessage);
-					%>
-
-					<liferay-ui:icon
-						cssClass="top-link"
-						image="../aui/home"
-						label="<%= true %>"
-						message="<%= documentsHomeMessage %>"
-						url='<%= (topLink.equals(documentsHomeMessage) && (folderId == defaultFolderId) && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
-					/>
-
-					<%
-					portletURL.setParameter("topLink", recentDocumentsMessage);
-					%>
-
-					<liferay-ui:icon
-						cssClass='<%= "top-link" + (themeDisplay.isSignedIn() ? StringPool.BLANK : " last") %>'
-						image="../aui/clock"
-						label="<%= true %>"
-						message="<%= recentDocumentsMessage %>"
-						url='<%= (topLink.equals(recentDocumentsMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
-					/>
-
-					<c:if test="<%= themeDisplay.isSignedIn() %>">
+				<c:if test="<%= showTabs %>">
+					<div class="top-links-navigation">
 
 						<%
-						portletURL.setParameter("topLink", myDocumentsMessage);
+						String documentsHomeMessage = "documents-home";
+						String recentDocumentsMessage = "recent-documents";
+						String myDocumentsMessage = "my-documents";
+
+						if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
+							documentsHomeMessage = "images-home";
+							recentDocumentsMessage = "recent-images";
+							myDocumentsMessage = "my-images";
+						}
+
+						PortletURL portletURL = renderResponse.createRenderURL();
+
+						portletURL.setParameter("categoryId", StringPool.BLANK);
+						portletURL.setParameter("tag", StringPool.BLANK);
+						portletURL.setParameter("topLink", documentsHomeMessage);
 						%>
 
 						<liferay-ui:icon
-							cssClass="top-link last"
-							image="../aui/person"
+							cssClass="top-link"
+							image="../aui/home"
 							label="<%= true %>"
-							message="<%= myDocumentsMessage %>"
-							url='<%= (topLink.equals(myDocumentsMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+							message="<%= documentsHomeMessage %>"
+							url='<%= (topLink.equals(documentsHomeMessage) && (folderId == defaultFolderId) && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
 						/>
-					</c:if>
-				</div>
 
-				<liferay-portlet:renderURL varImpl="searchURL">
-					<portlet:param name="struts_action" value="/document_library_display/search" />
-				</liferay-portlet:renderURL>
+						<%
+						portletURL.setParameter("topLink", recentDocumentsMessage);
+						%>
+
+						<liferay-ui:icon
+							cssClass='<%= "top-link" + (themeDisplay.isSignedIn() ? StringPool.BLANK : " last") %>'
+							image="../aui/clock"
+							label="<%= true %>"
+							message="<%= recentDocumentsMessage %>"
+							url='<%= (topLink.equals(recentDocumentsMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+						/>
+
+						<c:if test="<%= themeDisplay.isSignedIn() %>">
+
+							<%
+							portletURL.setParameter("topLink", myDocumentsMessage);
+							%>
+
+							<liferay-ui:icon
+								cssClass="top-link last"
+								image="../aui/person"
+								label="<%= true %>"
+								message="<%= myDocumentsMessage %>"
+								url='<%= (topLink.equals(myDocumentsMessage) && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+							/>
+						</c:if>
+					</div>
+				</c:if>
 
 				<c:if test="<%= showFoldersSearch %>">
+					<liferay-portlet:renderURL varImpl="searchURL">
+						<portlet:param name="struts_action" value="/document_library_display/search" />
+					</liferay-portlet:renderURL>
+
 					<div class="folder-search">
 						<aui:form action="<%= searchURL %>" method="get" name="searchFm">
 							<liferay-portlet:renderURLParams varImpl="searchURL" />
@@ -122,7 +123,7 @@
 			</div>
 		</div>
 	</c:when>
-	<c:when test="<%= showTabs && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
+	<c:when test="<%= (showTabs || showFoldersSearch) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
 		<liferay-ui:header
 			title="documents-home"
 		/>

@@ -207,6 +207,7 @@ public class EditTemplateAction extends PortletAction {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
+		String mode = ParamUtil.getString(uploadPortletRequest, "mode");
 		String language = ParamUtil.getString(
 			uploadPortletRequest, "language",
 			DDMTemplateConstants.LANG_TYPE_VM);
@@ -230,12 +231,12 @@ public class EditTemplateAction extends PortletAction {
 
 			template = DDMTemplateServiceUtil.addTemplate(
 				groupId, structure.getStructureId(), nameMap, descriptionMap,
-				type, language, script, serviceContext);
+				type, mode, language, script, serviceContext);
 		}
 		else {
 			template = DDMTemplateServiceUtil.updateTemplate(
-				templateId, nameMap, descriptionMap, type, language, script,
-				serviceContext);
+				templateId, nameMap, descriptionMap, type, mode, language,
+				script, serviceContext);
 		}
 
 		String portletResource = ParamUtil.getString(

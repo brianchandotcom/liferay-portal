@@ -18,12 +18,12 @@
 TemplateSearchTerms searchTerms = (TemplateSearchTerms)searchContainer.getSearchTerms();
 
 if (searchTerms.isAdvancedSearch()) {
-	results = DDMTemplateLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMTemplateLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, null, searchTerms.isAndOperator());
+	results = DDMTemplateLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, scopeTemplateMode, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDMTemplateLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, null, null, searchTerms.isAndOperator());
 }
 else {
-	results = DDMTemplateLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getKeywords(), templateTypeValue, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMTemplateLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getKeywords(), templateTypeValue);
+	results = DDMTemplateLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDMTemplateLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, structure.getStructureId(), searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode);
 }
 
 pageContext.setAttribute("results", results);

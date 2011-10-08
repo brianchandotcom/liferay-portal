@@ -1585,6 +1585,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="type" type="String" />
+		<field name="mode" type="String" />
 		<field name="language" type="String" />
 		<field name="script" type="String">
 			<hint-collection name="CLOB" />

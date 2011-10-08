@@ -2129,6 +2129,7 @@
 			<basic name="type">
 				<column name="TYPE_" />
 			</basic>
+			<basic name="mode" />
 			<basic name="language" />
 			<basic name="script" />
 			<transient name="descriptionCurrentLanguageId" />

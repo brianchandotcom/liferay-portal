@@ -509,6 +509,24 @@ public class DDMTemplateWrapper implements DDMTemplate {
 	}
 
 	/**
+	* Returns the mode of this d d m template.
+	*
+	* @return the mode of this d d m template
+	*/
+	public java.lang.String getMode() {
+		return _ddmTemplate.getMode();
+	}
+
+	/**
+	* Sets the mode of this d d m template.
+	*
+	* @param mode the mode of this d d m template
+	*/
+	public void setMode(java.lang.String mode) {
+		_ddmTemplate.setMode(mode);
+	}
+
+	/**
 	* Returns the language of this d d m template.
 	*
 	* @return the language of this d d m template

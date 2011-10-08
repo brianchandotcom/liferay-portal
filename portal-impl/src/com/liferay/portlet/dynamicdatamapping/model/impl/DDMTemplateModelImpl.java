@@ -81,10 +81,11 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
+			{ "mode", Types.VARCHAR },
 			{ "language", Types.VARCHAR },
 			{ "script", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureId LONG,name STRING null,description STRING null,type_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureId LONG,name STRING null,description STRING null,type_ VARCHAR(75) null,mode VARCHAR(75) null,language VARCHAR(75) null,script TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -100,9 +101,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			true);
 	public static long GROUPID_COLUMN_BITMASK = 1L;
 	public static long LANGUAGE_COLUMN_BITMASK = 2L;
-	public static long STRUCTUREID_COLUMN_BITMASK = 4L;
-	public static long TYPE_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long MODE_COLUMN_BITMASK = 4L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 8L;
+	public static long TYPE_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -125,6 +127,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setType(soapModel.getType());
+		model.setMode(soapModel.getMode());
 		model.setLanguage(soapModel.getLanguage());
 		model.setScript(soapModel.getScript());
 
@@ -516,6 +519,30 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	}
 
 	@JSON
+	public String getMode() {
+		if (_mode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _mode;
+		}
+	}
+
+	public void setMode(String mode) {
+		_columnBitmask |= MODE_COLUMN_BITMASK;
+
+		if (_originalMode == null) {
+			_originalMode = _mode;
+		}
+
+		_mode = mode;
+	}
+
+	public String getOriginalMode() {
+		return GetterUtil.getString(_originalMode);
+	}
+
+	@JSON
 	public String getLanguage() {
 		if (_language == null) {
 			return StringPool.BLANK;
@@ -599,6 +626,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateImpl.setName(getName());
 		ddmTemplateImpl.setDescription(getDescription());
 		ddmTemplateImpl.setType(getType());
+		ddmTemplateImpl.setMode(getMode());
 		ddmTemplateImpl.setLanguage(getLanguage());
 		ddmTemplateImpl.setScript(getScript());
 
@@ -666,6 +694,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateModelImpl._setOriginalStructureId = false;
 
 		ddmTemplateModelImpl._originalType = ddmTemplateModelImpl._type;
+
+		ddmTemplateModelImpl._originalMode = ddmTemplateModelImpl._mode;
 
 		ddmTemplateModelImpl._originalLanguage = ddmTemplateModelImpl._language;
 
@@ -744,6 +774,14 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			ddmTemplateCacheModel.type = null;
 		}
 
+		ddmTemplateCacheModel.mode = getMode();
+
+		String mode = ddmTemplateCacheModel.mode;
+
+		if ((mode != null) && (mode.length() == 0)) {
+			ddmTemplateCacheModel.mode = null;
+		}
+
 		ddmTemplateCacheModel.language = getLanguage();
 
 		String language = ddmTemplateCacheModel.language;
@@ -765,7 +803,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -791,6 +829,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(getDescription());
 		sb.append(", type=");
 		sb.append(getType());
+		sb.append(", mode=");
+		sb.append(getMode());
 		sb.append(", language=");
 		sb.append(getLanguage());
 		sb.append(", script=");
@@ -801,7 +841,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.dynamicdatamapping.model.DDMTemplate");
@@ -856,6 +896,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>mode</column-name><column-value><![CDATA[");
+		sb.append(getMode());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>language</column-name><column-value><![CDATA[");
 		sb.append(getLanguage());
 		sb.append("]]></column-value></column>");
@@ -894,6 +938,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private String _descriptionCurrentLanguageId;
 	private String _type;
 	private String _originalType;
+	private String _mode;
+	private String _originalMode;
 	private String _language;
 	private String _originalLanguage;
 	private String _script;

@@ -43,6 +43,7 @@ public class DDMTemplateSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
+		soapModel.setMode(model.getMode());
 		soapModel.setLanguage(model.getLanguage());
 		soapModel.setScript(model.getScript());
 
@@ -193,6 +194,14 @@ public class DDMTemplateSoap implements Serializable {
 		_type = type;
 	}
 
+	public String getMode() {
+		return _mode;
+	}
+
+	public void setMode(String mode) {
+		_mode = mode;
+	}
+
 	public String getLanguage() {
 		return _language;
 	}
@@ -221,6 +230,7 @@ public class DDMTemplateSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private String _type;
+	private String _mode;
 	private String _language;
 	private String _script;
 }

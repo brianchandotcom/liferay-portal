@@ -57,6 +57,7 @@ import java.io.InputStream;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Edward Han
  */
 public class DLStoreImpl implements DLStore, IdentifiableBean {
 
@@ -275,6 +276,13 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		throws PortalException, SystemException {
 
 		return store.getFileSize(companyId, repositoryId, fileName);
+	}
+
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		return store.hasDirectory(companyId, repositoryId, dirName);
 	}
 
 	public boolean hasFile(long companyId, long repositoryId, String fileName)

@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -55,6 +56,7 @@ import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 
 /**
  * @author Alexander Chow
+ * @author Edward Han
  */
 public class CMISStore extends BaseStore {
 
@@ -247,6 +249,26 @@ public class CMISStore extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 
 		return document.getContentStreamLength();
+	}
+
+	@Override
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		Folder folder = getRepositoryFolder(companyId, repositoryId);
+
+		String[] dirNames = StringUtil.split(dirName, CharPool.SLASH);
+
+		for (String curDirName : dirNames) {
+			Folder subFolder = getFolder(folder, curDirName);
+
+			if (subFolder == null) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public String getHeadVersionLabel(

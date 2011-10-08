@@ -24,6 +24,7 @@ import java.io.InputStream;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Edward Han
  */
 public class SafeFileNameStoreWrapper implements Store {
 
@@ -304,6 +305,15 @@ public class SafeFileNameStoreWrapper implements Store {
 		}
 
 		return _store.getFileSize(companyId, repositoryId, safeFileName);
+	}
+
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		String safeDirName = FileUtil.encodeSafeFileName(dirName);
+
+		return _store.hasDirectory(companyId, repositoryId, safeDirName);
 	}
 
 	public boolean hasFile(long companyId, long repositoryId, String fileName)

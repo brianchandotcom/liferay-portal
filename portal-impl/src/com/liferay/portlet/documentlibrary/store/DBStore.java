@@ -257,6 +257,14 @@ public class DBStore extends BaseStore {
 	}
 
 	@Override
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		return true;
+	}
+
+	@Override
 	public boolean hasFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)

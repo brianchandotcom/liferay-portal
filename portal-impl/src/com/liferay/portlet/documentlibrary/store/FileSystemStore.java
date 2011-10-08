@@ -38,6 +38,7 @@ import java.util.Arrays;
  * @author Brian Wing Shun Chan
  * @author Sten Martinez
  * @author Alexander Chow
+ * @author Edward Han
  */
 public class FileSystemStore extends BaseStore {
 
@@ -260,6 +261,16 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		return fileNameVersionFile.length();
+	}
+
+	@Override
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
+
+		return dirNameDir.exists();
 	}
 
 	@Override

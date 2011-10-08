@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.action;
+package com.liferay.portlet.usergroupsadmin.action;
 
 import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -65,7 +65,7 @@ public class EditUserGroupAssignmentsAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
-				setForward(actionRequest, "portlet.users_admin.error");
+				setForward(actionRequest, "portlet.user_groups_admin.error");
 			}
 			else {
 				throw e;
@@ -88,7 +88,7 @@ public class EditUserGroupAssignmentsAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass().getName());
 
-				return mapping.findForward("portlet.users_admin.error");
+				return mapping.findForward("portlet.user_groups_admin.error");
 			}
 			else {
 				throw e;
@@ -97,7 +97,7 @@ public class EditUserGroupAssignmentsAction extends PortletAction {
 
 		return mapping.findForward(getForward(
 			renderRequest,
-			"portlet.users_admin.edit_user_group_assignments"));
+			"portlet.user_groups_admin.edit_user_group_assignments"));
 	}
 
 	protected void updateUserGroupUsers(ActionRequest actionRequest)

@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
  *
@@ -11,23 +12,4 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-package com.liferay.portlet.usersadmin.search;
-
-import com.liferay.portal.kernel.dao.search.DAOParamUtil;
-
-import javax.portlet.PortletRequest;
-
-/**
- * @author Charles May
- */
-public class UserGroupSearchTerms extends UserGroupDisplayTerms {
-
-	public UserGroupSearchTerms(PortletRequest portletRequest) {
-		super(portletRequest);
-
-		description = DAOParamUtil.getLike(portletRequest, DESCRIPTION);
-		name = DAOParamUtil.getLike(portletRequest, NAME);
-	}
-
-}
+--%>

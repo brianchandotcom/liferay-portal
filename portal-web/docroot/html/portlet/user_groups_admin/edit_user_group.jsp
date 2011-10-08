@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/html/portlet/user_groups_admin/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -30,7 +30,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroupId %>" />
 
-	<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp">
+	<liferay-util:include page="/html/portlet/user_groups_admin/toolbar.jsp">
 		<liferay-util:param name="toolbarItem" value='<%= (userGroup == null) ? "add" : "view" %>' />
 	</liferay-util:include>
 
@@ -217,7 +217,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 <aui:script>
 	function <portlet:namespace />saveUserGroup() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (userGroup == null) ? Constants.ADD : Constants.UPDATE %>";
-		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_group" /></portlet:actionURL>");
+		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>");
 	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

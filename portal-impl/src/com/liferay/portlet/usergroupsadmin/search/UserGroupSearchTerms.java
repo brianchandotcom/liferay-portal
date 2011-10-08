@@ -12,38 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.search;
+package com.liferay.portlet.usergroupsadmin.search;
 
-import com.liferay.portal.kernel.dao.search.DisplayTerms;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 
 import javax.portlet.PortletRequest;
 
 /**
  * @author Charles May
  */
-public class UserGroupDisplayTerms extends DisplayTerms {
+public class UserGroupSearchTerms extends UserGroupDisplayTerms {
 
-	public static final String DESCRIPTION = "description";
-
-	public static final String NAME = "name";
-
-	public UserGroupDisplayTerms(PortletRequest portletRequest) {
+	public UserGroupSearchTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
-		description = ParamUtil.getString(portletRequest, DESCRIPTION);
-		name = ParamUtil.getString(portletRequest, NAME);
+		description = DAOParamUtil.getLike(portletRequest, DESCRIPTION);
+		name = DAOParamUtil.getLike(portletRequest, NAME);
 	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	protected String description;
-	protected String name;
 
 }

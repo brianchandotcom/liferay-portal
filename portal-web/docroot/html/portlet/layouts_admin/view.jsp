@@ -19,8 +19,8 @@
 <%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
 
 <c:choose>
-	<c:when test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
-		<c:if test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
+	<c:when test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) %>">
+		<c:if test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) %>">
 			<liferay-ui:header
 				backURL="<%= backURL %>"
 				localizeTitle="<%= false %>"

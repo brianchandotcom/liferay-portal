@@ -37,10 +37,10 @@ page import="com.liferay.portlet.portletconfiguration.util.PublicRenderParameter
 page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
 page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %><%@
+page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
+page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserGroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserGroupSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
 

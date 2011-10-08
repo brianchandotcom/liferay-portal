@@ -14,14 +14,14 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/html/portlet/user_groups_admin/init.jsp" %>
 
 <%
 String target = ParamUtil.getString(request, "target");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/users_admin/select_user_group");
+portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group");
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -33,7 +33,7 @@ portletURL.setParameter("struts_action", "/users_admin/select_user_group");
 		searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 	>
 		<liferay-ui:search-form
-			page="/html/portlet/users_admin/user_group_search.jsp"
+			page="/html/portlet/user_groups_admin/user_group_search.jsp"
 		/>
 
 		<%

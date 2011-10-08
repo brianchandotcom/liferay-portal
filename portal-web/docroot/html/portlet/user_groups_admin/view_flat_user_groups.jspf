@@ -22,7 +22,7 @@
 	<aui:input name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<liferay-ui:search-form
-		page="/html/portlet/users_admin/user_group_search.jsp"
+		page="/html/portlet/user_groups_admin/user_group_search.jsp"
 	/>
 
 	<%
@@ -47,7 +47,7 @@
 		modelVar="userGroup"
 	>
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user_group" />
+			<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" />
 			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
@@ -74,7 +74,7 @@
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
-			path="/html/portlet/users_admin/user_group_action.jsp"
+			path="/html/portlet/user_groups_admin/user_group_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

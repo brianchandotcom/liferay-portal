@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/html/portlet/user_groups_admin/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1");
@@ -28,7 +28,7 @@ UserGroup userGroup = (UserGroup)request.getAttribute(WebKeys.USER_GROUP);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/users_admin/edit_user_group_assignments");
+portletURL.setParameter("struts_action", "/user_groups_admin/edit_user_group_assignments");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
@@ -48,7 +48,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 />
 
 <portlet:actionURL var="editAssignmentsURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_user_group_assignments" />
+	<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group_assignments" />
 </portlet:actionURL>
 
 <aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
@@ -58,6 +58,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroup.getUserGroupId() %>" />
 	<aui:input name="addUserIds" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="removeUserIds" type="hidden" />
 
 	<liferay-ui:search-container

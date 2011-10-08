@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.search;
+package com.liferay.portlet.usergroupsadmin.search;
 
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.log.Log;

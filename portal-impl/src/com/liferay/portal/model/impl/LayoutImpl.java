@@ -622,6 +622,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 	}
 
+	public void setLayoutSet(LayoutSet layoutSet) {
+		_layoutSet = layoutSet;
+	}
+
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		_typeSettingsProperties = null;

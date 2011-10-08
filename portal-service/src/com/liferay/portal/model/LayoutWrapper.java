@@ -1454,6 +1454,10 @@ public class LayoutWrapper implements Layout {
 		return _layout.isTypeURL();
 	}
 
+	public void setLayoutSet(com.liferay.portal.model.LayoutSet layoutSet) {
+		_layout.setLayoutSet(layoutSet);
+	}
+
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_layout.setTypeSettingsProperties(typeSettingsProperties);

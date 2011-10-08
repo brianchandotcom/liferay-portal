@@ -77,9 +77,11 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			if (Validator.isNull(classPK)) {
 				classPK = document.get(Field.ENTRY_CLASS_PK);
 			}
+			
+			Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
 			if (Validator.isNotNull(className) &&
-				Validator.isNotNull(classPK)) {
+				Validator.isNotNull(classPK) && indexer.isFilterSearch()) {
 
 				if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
 					doAddPermissionFields_5(

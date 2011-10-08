@@ -453,28 +453,32 @@
 			}
 		}
 
-		.aui-icon-edit, .aui-icon-move, .aui-icon-lock, .aui-icon-unlock, .aui-icon-permissions {
+		.aui-icon-download, .aui-icon-edit, .aui-icon-lock, .aui-icon-move, .aui-icon-permissions, .aui-icon-unlock {
 			background: url() no-repeat 0 0;
+		}
+
+		.aui-icon-download {
+			background-image: url(<%= themeImagesPath %>/common/download.png);
 		}
 
 		.aui-icon-edit {
 			background-image: url(<%= themeImagesPath %>/common/edit.png);
 		}
 
-		.aui-icon-move {
-			background-image: url(<%= themeImagesPath %>/common/submit.png);
-		}
-
 		.aui-icon-lock {
 			background-image: url(<%= themeImagesPath %>/common/lock.png);
 		}
 
-		.aui-icon-unlock {
-			background-image: url(<%= themeImagesPath %>/common/unlock.png);
+		.aui-icon-move {
+			background-image: url(<%= themeImagesPath %>/common/submit.png);
 		}
 
 		.aui-icon-permissions {
 			background-image: url(<%= themeImagesPath %>/common/permissions.png);
+		}
+
+		.aui-icon-unlock {
+			background-image: url(<%= themeImagesPath %>/common/unlock.png);
 		}
 	}
 

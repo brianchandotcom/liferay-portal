@@ -814,6 +814,19 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			activeState: false,
 			boundingBox: buttonRow,
 			children: [
+
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+
+					{
+						handler: function(event) {
+							location.href = '<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileVersion.getVersion() %>';
+						},
+						icon: 'download',
+						label: '<liferay-ui:message key="download" />'
+					},
+
+				</c:if>
+
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">
 					{
 
@@ -885,6 +898,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				</c:if>
 
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
+
 					{
 
 						<liferay-security:permissionsURL
@@ -900,7 +914,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						icon: 'permissions',
 						label: '<liferay-ui:message key="permissions" />'
 					}
+
 				</c:if>
+
 			]
 		}
 	).render();

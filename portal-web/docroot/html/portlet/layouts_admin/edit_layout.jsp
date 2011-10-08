@@ -43,16 +43,12 @@ String layoutSetBranchName = StringPool.BLANK;
 boolean incomplete = false;
 
 if (layoutRevision != null) {
-	LayoutSet layoutSet = selLayout.getLayoutSet();
+	long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
 
-	long recentLayoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, layoutSet.getLayoutSetId());
-
-	incomplete = StagingUtil.isIncomplete(selLayout, recentLayoutSetBranchId);
+	incomplete = StagingUtil.isIncomplete(selLayout, layoutSetBranchId);
 
 	if (incomplete) {
-		layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(recentLayoutSetBranchId, selLayout.getPlid(), false);
-
-		LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(recentLayoutSetBranchId);
+		LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
 
 		layoutSetBranchName = layoutSetBranch.getName();
 	}

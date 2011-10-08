@@ -135,20 +135,24 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	spreadSheet.get('boundingBox').unselectable();
 
-	var numberOfRecordsNode = A.one('#<portlet:namespace />numberOfRecords');
+	var addRecordsNode = A.one('#<portlet:namespace />addRecords');
 
-	A.one('#<portlet:namespace />addRecords').on(
-		'click',
-		function(event) {
-			var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
+	if (numberOfRecordsNode) {
+		var numberOfRecordsNode = A.one('#<portlet:namespace />numberOfRecords');
 
-			var recordset = spreadSheet.get('recordset');
+		addRecordsNode.on(
+			'click',
+			function(event) {
+				var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
 
-			spreadSheet.addEmptyRows(numberOfRecords);
+				var recordset = spreadSheet.get('recordset');
 
-			spreadSheet.updateMinDisplayRows(recordset.getLength());
-		}
-	);
+				spreadSheet.addEmptyRows(numberOfRecords);
+
+				spreadSheet.updateMinDisplayRows(recordset.getLength());
+			}
+		);
+	}
 
 	window.<portlet:namespace />spreadSheet = spreadSheet;
 </aui:script>

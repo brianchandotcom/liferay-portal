@@ -49,7 +49,7 @@ body {
 }
 
 #banner .site-title {
-	clip: auto;
+	clip: rect(auto auto auto auto);
 	float: right;
 	font-size: 1.8em;
 	margin: 0.5em 0;

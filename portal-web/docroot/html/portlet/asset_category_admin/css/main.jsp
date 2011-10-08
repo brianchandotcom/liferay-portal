@@ -115,7 +115,7 @@
 
 	.vocabulary-category {
 		&:hover .vocabulary-item-actions-trigger, &:focus .vocabulary-item-actions-trigger, .vocabulary-item-actions-trigger:focus {
-			clip: auto;
+			clip: rect(auto auto auto auto);
 		}
 	}
 

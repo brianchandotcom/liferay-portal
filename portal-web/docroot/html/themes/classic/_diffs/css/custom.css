@@ -71,7 +71,7 @@ body #banner .logo a {
 }
 
 #skip-to-content:focus {
-	clip: auto;
+	clip: rect(auto auto auto auto);
 	right: 0;
 	z-index: 200;
 }

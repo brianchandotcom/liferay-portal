@@ -116,7 +116,7 @@
 
 .taglib-discussion .lfr-discussion:hover .lfr-discussion-actions li a,
 .taglib-discussion .lfr-discussion .lfr-discussion-actions li a:focus {
-	clip: auto;
+	clip: rect(auto auto auto auto);
 	position: static;
 }
 

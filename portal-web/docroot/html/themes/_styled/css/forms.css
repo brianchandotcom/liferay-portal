@@ -155,7 +155,7 @@ input, textarea {
 		}
 	}
 
-	&:disabled {
+	&.disabled, &.disabled:hover {
 		&, ul {
 			@include button-disabled;
 		}

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -53,7 +54,14 @@ public class CMISQueryBuilder {
 
 		sb.append("SELECT ");
 		sb.append(PropertyIds.OBJECT_ID);
-		sb.append(", SCORE() AS HITS FROM ");
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		if (queryConfig.isScoreEnabled()) {
+			sb.append(", SCORE() AS HITS");
+		}
+
+		sb.append(" FROM ");
 		sb.append(BaseTypeId.CMIS_DOCUMENT.value());
 
 		CMISConjunction cmisConjunction = new CMISConjunction();
@@ -65,9 +73,13 @@ public class CMISQueryBuilder {
 			sb.append(cmisConjunction.toQueryFragment());
 		}
 
-		sb.append(" ORDER BY ");
-
 		Sort[] sorts = searchContext.getSorts();
+
+		if (queryConfig.isScoreEnabled() ||
+			((sorts != null) && sorts.length > 0)) {
+
+			sb.append(" ORDER BY ");
+		}
 
 		if ((sorts != null) && (sorts.length > 0)) {
 			for (int i = 0; i < sorts.length; i++) {
@@ -97,7 +109,7 @@ public class CMISQueryBuilder {
 				}
 			}
 		}
-		else {
+		else if (queryConfig.isScoreEnabled()) {
 			sb.append("HITS DESC");
 		}
 
@@ -278,7 +290,6 @@ public class CMISQueryBuilder {
 	static {
 		_supportedFields = new HashSet<String>();
 
-		_supportedFields.add(Field.CONTENT);
 		_supportedFields.add(Field.CREATE_DATE);
 		_supportedFields.add(Field.FOLDER_ID);
 		_supportedFields.add(Field.NAME);

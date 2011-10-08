@@ -1521,33 +1521,32 @@ public class CMISRepository extends BaseCmisRepository {
 		ItemIterable<QueryResult> queryResults = session.query(
 			queryString, false);
 
-		long total = queryResults.getTotalNumItems();
-
 		int start = searchContext.getStart();
 		int end = searchContext.getEnd();
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
 			start = 0;
-			end = (int)total;
 		}
 
-		int subsetTotal = end - start;
-
-		com.liferay.portal.kernel.search.Document[] documents =
-			new DocumentImpl[subsetTotal];
-		String[] snippets = new String[subsetTotal];
-		float[] scores = new float[subsetTotal];
-
+		List<com.liferay.portal.kernel.search.Document> documents =
+			new ArrayList<com.liferay.portal.kernel.search.Document>();
+		List<String> snippets = new ArrayList<String>();
+		List<Float> scores = new ArrayList<Float>();
+	
 		QueryConfig queryConfig = query.getQueryConfig();
 
-		int index = 0;
-
-		queryResults = queryResults.skipTo(start);
+		int total = 0;
 
 		Iterator<QueryResult> itr = queryResults.iterator();
 
-		for (int i = start; i < end; i++) {
+		while (itr.hasNext()) {
 			QueryResult queryResult = itr.next();
+
+			total++;
+
+			if (total > end && end != QueryUtil.ALL_POS) {
+				continue;
+			}
 
 			com.liferay.portal.kernel.search.Document document =
 				new DocumentImpl();
@@ -1563,7 +1562,7 @@ public class CMISRepository extends BaseCmisRepository {
 				Field.ENTRY_CLASS_PK, fileEntry.getFileEntryId());
 			document.addKeyword(Field.TITLE, fileEntry.getTitle());
 
-			documents[index] = document;
+			documents.add(document);
 
 			if (queryConfig.isScoreEnabled()) {
 				Object scoreObj = queryResult.getPropertyValueByQueryName(
@@ -1572,19 +1571,17 @@ public class CMISRepository extends BaseCmisRepository {
 				if (scoreObj instanceof BigDecimal) {
 					BigDecimal scoreBigDecimal = (BigDecimal)scoreObj;
 
-					scores[index] = scoreBigDecimal.floatValue();
+					scores.add(scoreBigDecimal.floatValue());
 				}
 				else {
-					scores[index] = (Float)scoreObj;
+					scores.add((Float)scoreObj);
 				}
 			}
 			else {
-				scores[index] = 1;
+				scores.add(1.0f);
 			}
 
-			snippets[index] = StringPool.BLANK;
-
-			index++;
+			snippets.add(StringPool.BLANK);
 		}
 
 		float searchTime =
@@ -1592,13 +1589,15 @@ public class CMISRepository extends BaseCmisRepository {
 
 		Hits hits = new HitsImpl();
 
-		hits.setDocs(documents);
+		hits.setDocs(
+			documents.toArray(
+				new com.liferay.portal.kernel.search.Document[0]));
 		hits.setLength((int)total);
 		hits.setQuery(query);
 		hits.setQueryTerms(new String[0]);
-		hits.setScores(scores);
+		hits.setScores(scores.toArray(new Float[0]));
 		hits.setSearchTime(searchTime);
-		hits.setSnippets(snippets);
+		hits.setSnippets(snippets.toArray(new String[0]));
 		hits.setStart(startTime);
 
 		return hits;

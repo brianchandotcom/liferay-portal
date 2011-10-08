@@ -71,7 +71,7 @@ td.lfr-middle {
 }
 
 .js .lfr-js-required {
-	clip: auto;
+	clip: rect(auto auto auto auto);
 	position: static;
 }
 

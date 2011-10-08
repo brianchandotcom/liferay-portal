@@ -68,7 +68,7 @@
 	}
 
 	[class~="aui-form-validator-message"] {
-		clip: auto;
+		clip: rect(auto auto auto auto);
 		width: auto;
 	}
 }

@@ -111,13 +111,13 @@
 	.tag-item-container {
 		&:hover, &:focus {
 			.tag-item-actions-trigger {
-				clip: auto;
+				clip: rect(auto auto auto auto);
 			}
 		}
 	}
 
 	.tag-item-actions-trigger:focus {
-		clip: auto;
+		clip: rect(auto auto auto auto);
 	}
 
 	.tags-admin-list {

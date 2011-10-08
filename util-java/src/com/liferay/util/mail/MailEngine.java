@@ -14,6 +14,7 @@
 
 package com.liferay.util.mail;
 
+import com.liferay.mail.model.LiferayAttachment;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -33,6 +34,7 @@ import java.net.SocketException;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -155,7 +157,7 @@ public class MailEngine {
 			InternetAddress[] bcc, InternetAddress[] bulkAddresses,
 			String subject, String body, boolean htmlFormat,
 			InternetAddress[] replyTo, String messageId, String inReplyTo,
-			File[] attachments)
+			List<LiferayAttachment> attachments)
 		throws MailEngineException {
 
 		send(
@@ -168,7 +170,7 @@ public class MailEngine {
 			InternetAddress[] bcc, InternetAddress[] bulkAddresses,
 			String subject, String body, boolean htmlFormat,
 			InternetAddress[] replyTo, String messageId, String inReplyTo,
-			File[] attachments, SMTPAccount smtpAccount)
+			List<LiferayAttachment> attachments, SMTPAccount smtpAccount)
 		throws MailEngineException {
 
 		StopWatch stopWatch = null;
@@ -191,13 +193,16 @@ public class MailEngine {
 			_log.debug("In Reply To: " + inReplyTo);
 
 			if (attachments != null) {
-				for (int i = 0; i < attachments.length; i++) {
-					File attachment = attachments[i];
+				for (int i = 0; i < attachments.size(); i++) {
+					LiferayAttachment liferayAttachment = attachments.get(i);
 
-					if (attachment != null) {
-						String path = attachment.getAbsolutePath();
+					if (liferayAttachment.getAttachment() != null) {
+						String path = liferayAttachment.getAttachment().getAbsolutePath();
 
-						_log.debug("Attachment #" + (i + 1) + ": " + path);
+						_log.debug("Attachment # path" + (i + 1) + ": " + path);
+						if (liferayAttachment.getAttachmentFileName() != null) {
+							_log.debug("Attachment # fileName" + (i + 1) + ": " + liferayAttachment.getAttachmentFileName());
+						}
 					}
 				}
 			}
@@ -230,7 +235,7 @@ public class MailEngine {
 
 			message.setSubject(subject);
 
-			if ((attachments != null) && (attachments.length > 0)) {
+			if ((attachments != null) && (attachments.size() > 0)) {
 				MimeMultipart rootMultipart = new MimeMultipart(
 					_MULTIPART_TYPE_MIXED);
 
@@ -258,17 +263,21 @@ public class MailEngine {
 					messageMultipart.addBodyPart(bodyPart);
 				}
 
-				for (int i = 0; i < attachments.length; i++) {
-					File attachment = attachments[i];
+				for (int i = 0; i < attachments.size(); i++) {
+					LiferayAttachment liferayAttachment = attachments.get(i);
 
-					if (attachment != null) {
+					if (liferayAttachment.getAttachment() != null) {
 						MimeBodyPart bodyPart = new MimeBodyPart();
 
-						DataSource source = new FileDataSource(attachment);
+						DataSource source = new FileDataSource(liferayAttachment.getAttachment());
 
 						bodyPart.setDisposition(Part.ATTACHMENT);
 						bodyPart.setDataHandler(new DataHandler(source));
-						bodyPart.setFileName(attachment.getName());
+						if (liferayAttachment.getAttachmentFileName() != null) {
+							bodyPart.setFileName(liferayAttachment.getAttachmentFileName());
+						} else {
+							bodyPart.setFileName(liferayAttachment.getAttachment().getName());
+						}
 
 						rootMultipart.addBodyPart(bodyPart);
 					}

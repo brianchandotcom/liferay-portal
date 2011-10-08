@@ -233,7 +233,7 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
-		<finder name="G_U" return-type="Collection" where="categoryId != -1">
+		<finder name="G_U" return-type="Collection" where="categoryId != -1 and anonymous = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 		</finder>

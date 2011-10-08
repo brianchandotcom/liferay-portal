@@ -129,6 +129,27 @@ public class SQLTransformer {
 		return sql;
 	}
 
+	private String _replaceBoolean(String newSQL) {
+		if (_vendorHypersonic | _vendorInterbase | _vendorPostgreSQL) {
+			return StringUtil.replace(
+				newSQL,
+				new String[] {"[$TRUE$]", "[$FALSE$]"},
+				new String[] {"true", "false"});
+		}
+		else if (_vendorInformix) {
+			return StringUtil.replace(
+				newSQL,
+				new String[] {"[$TRUE$]", "[$FALSE$]"},
+				new String[] {"T", "F"});
+		}
+		else {
+			return StringUtil.replace(
+				newSQL,
+				new String[] {"[$TRUE$]", "[$FALSE$]"},
+				new String[] {"1", "0"});
+		}
+	}
+
 	private String _replaceBitwiseCheck(String sql) {
 		Matcher matcher = _bitwiseCheckPattern.matcher(sql);
 
@@ -213,6 +234,7 @@ public class SQLTransformer {
 		String newSQL = sql;
 
 		newSQL = _replaceBitwiseCheck(newSQL);
+		newSQL = _replaceBoolean(newSQL);
 		newSQL = _replaceCastText(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
 

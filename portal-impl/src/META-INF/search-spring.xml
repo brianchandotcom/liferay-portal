@@ -114,8 +114,8 @@
 		</constructor-arg>
 		<constructor-arg>
 			<util:map>
-				<entry key="assetCategoryNames" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
-				<entry key="assetTagNames" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="assetCategoryNames" value-ref="org.apache.lucene.analysis.standard.StandardAnalyzer" />
+				<entry key="assetTagNames" value-ref="org.apache.lucene.analysis.standard.StandardAnalyzer" />
 				<entry key="entryClassName" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="extension" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="installedVersion" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />

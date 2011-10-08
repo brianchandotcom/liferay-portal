@@ -203,7 +203,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 				boolean approved = false;
 				boolean pending = false;
 
-				if (article != null) {
+				if (article != null && version != 0) {
 					approved = article.isApproved();
 					pending = article.isPending();
 				}

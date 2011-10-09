@@ -389,6 +389,12 @@ public class StripFilter extends BasePortalFilter {
 			return;
 		}
 
+		if (KMPSearch.search(
+				charBuffer, 0, endPos, 
+				_MARKER_TYPE_JS, _MARKER_TYPE_JS_NEXTS) == -1) {
+			return;
+		}
+
 		writer.append(charBuffer, 0, endPos);
 
 		charBuffer.position(charBuffer.position() + endPos);
@@ -593,6 +599,11 @@ public class StripFilter extends BasePortalFilter {
 
 	private static final char[] _MARKER_INPUT_OPEN = "input".toCharArray();
 
+	private static final String _MARKER_TYPE_JS = "type=\"text/javascript\"";
+	
+	private static final int[] _MARKER_TYPE_JS_NEXTS = 
+		KMPSearch.generateNexts(_MARKER_TYPE_JS);
+	
 	private static final String _MARKER_PRE_CLOSE = "/pre>";
 
 	private static final int[] _MARKER_PRE_CLOSE_NEXTS =

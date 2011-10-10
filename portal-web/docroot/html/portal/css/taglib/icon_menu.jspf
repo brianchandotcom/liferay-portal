@@ -178,8 +178,8 @@
 }
 
 .lfr-menu-list li.highlited {
-	background-color: #CCCCCC;
-    border-top: 3px double #EEEEEE;
+	background-color: #CCC;
+	border-top: 3px double #EEE;
 }
 
 .lfr-menu-list li.last {

@@ -333,47 +333,17 @@ String rowClassNameBodyHover = "portlet-section-body-hover";
 <c:if test="<%= Validator.isNotNull(id) %>">
 	<input id="<%= id %>PrimaryKeys" name="<%= id %>PrimaryKeys" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
 
-	<aui:script use="liferay-search-container,event-mouseenter">
+	<aui:script use="liferay-search-container">
 		new Liferay.SearchContainer(
 			{
-				id: '<%= id %>'
+				classNameHover: '<%= classNameHover %>',
+				hover: <%= searchContainer.isHover() %>,
+				id: '<%= id %>',
+				rowClassNameAlternate: '<%= rowClassNameAlternate %>',
+				rowClassNameAlternateHover: '<%= rowClassNameAlternateHover %>',
+				rowClassNameBody: '<%= rowClassNameBody %>',
+				rowClassNameBodyHover: '<%= rowClassNameBody %>'
 			}
 		).render();
-
-		<c:if test="<%= searchContainer.isHover() %>">
-
-			var searchContentNode = A.one('#<%= id %>SearchContainer');
-
-			var onMouseEnter = function(event) {
-				var row = event.currentTarget;
-
-				if (row.hasClass('<%= rowClassNameAlternate %>')) {
-					row.replaceClass('<%= rowClassNameAlternate %>', '<%= rowClassNameAlternateHover %>');
-				}
-				else if (!row.hasClass('<%= rowClassNameBodyHover %>')) {
-					row.replaceClass('<%= rowClassNameBody %>', '<%= rowClassNameBodyHover %>');
-				}
-
-				row.addClass('<%= classNameHover %>');
-			};
-
-			var onMouseLeave = function(event) {
-				var row = event.currentTarget;
-
-				if (row.hasClass('<%= rowClassNameAlternateHover %>')) {
-					row.replaceClass('<%= rowClassNameAlternateHover %>', '<%= rowClassNameAlternate %>');
-				}
-				else if (row.hasClass('<%= rowClassNameBodyHover %>')) {
-					row.replaceClass('<%= rowClassNameBodyHover %>', '<%= rowClassNameBody %>');
-				}
-
-				row.removeClass('<%= classNameHover %>');
-			};
-
-			searchContentNode.delegate('mouseenter', onMouseEnter, 'tr');
-
-			searchContentNode.delegate('mouseleave', onMouseLeave, 'tr');
-
-		</c:if>
 	</aui:script>
 </c:if>

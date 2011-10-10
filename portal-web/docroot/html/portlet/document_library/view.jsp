@@ -182,7 +182,9 @@ if (folder != null) {
 
 			var disabled = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox').length == 0);
 
-			actionsButton.toggleClass('disabled', disabled);
+			if (actionsButton) {
+				actionsButton.toggleClass('disabled', disabled);
+			}
 		},
 		['liferay-util-list-fields']
 	);

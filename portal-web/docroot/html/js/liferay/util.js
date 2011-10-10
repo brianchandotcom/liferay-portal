@@ -711,7 +711,7 @@
 	Liferay.provide(
 		Util,
 		'checkAll',
-		function(form, name, allBox) {
+		function(form, name, allBox, selectClassName) {
 			var selector;
 
 			if (isArray(name)) {
@@ -724,6 +724,10 @@
 			form = A.one(form);
 
 			form.all(selector).set('checked', A.one(allBox).get('checked'));
+
+			if (selectClassName) {
+				form.all(selectClassName).toggleClass('selected', A.one(allBox).get('checked'));
+			}
 		},
 		['aui-base']
 	);

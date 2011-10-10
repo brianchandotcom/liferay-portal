@@ -73,7 +73,7 @@
 			'portlet-base': ['aui-base'],
 			'portlet-url': ['aui-base', 'aui-io-request', 'querystring-stringify-simple'],
 			'ratings': ['aui-io-request', 'aui-rating'],
-			'search-container': ['aui-base'],
+			'search-container': ['aui-base', 'event-mouseenter'],
 			'session': ['aui-io', 'aui-task-manager', 'cookie', 'liferay-notice'],
 			'service-datasource': ['aui-base', 'datasource-local'],
 			'staging': ['aui-dialog', 'aui-io-plugin'],

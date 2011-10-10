@@ -65,7 +65,7 @@ public class RowChecker {
 			sb.append("AUI().one(this).ancestor('");
 			sb.append("table.taglib-search-iterator'), '");
 			sb.append(_rowIds);
-			sb.append("', this");
+			sb.append("', this, '.results-row'");
 			sb.append(");\">");
 
 			return sb.toString();
@@ -181,6 +181,8 @@ public class RowChecker {
 			sb.append(", ");
 			sb.append(checkBoxAllRowIds);
 			sb.append(");");
+			sb.append("AUI().one(this).ancestor('.results-row').toggleClass('");
+			sb.append("selected');");
 
 			if (Validator.isNotNull(checkBoxPostOnClick)) {
 				sb.append(checkBoxPostOnClick);

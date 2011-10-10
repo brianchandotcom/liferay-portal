@@ -10,7 +10,25 @@ AUI().add(
 				NAME: 'searchcontainer',
 
 				ATTRS: {
+					classNameHover: {
+						value: ''
+					},
+					hover: {
+						value: ''
+					},
 					id: {
+						value: ''
+					},
+					rowClassNameAlternate: {
+						value: ''
+					},
+					rowClassNameAlternateHover: {
+						value: ''
+					},
+					rowClassNameBody: {
+						value: ''
+					},
+					rowClassNameBodyHover: {
 						value: ''
 					}
 				},
@@ -81,6 +99,46 @@ AUI().add(
 								defaultFn: instance._deleteRow
 							}
 						);
+
+						if (instance.get('hover')) {
+							var classNameHover = instance.get('classNameHover');
+
+							var rowClassNameAlternate = instance.get('rowClassNameAlternate');
+							var rowClassNameAlternateHover = instance.get('rowClassNameAlternateHover');
+
+							var rowClassNameBody = instance.get('rowClassNameBody');
+							var rowClassNameBodyHover = instance.get('rowClassNameBodyHover');
+
+							instance._hoverHandle = instance.get('contentBox').delegate(
+								['mouseenter', 'mouseleave'],
+								function(event) {
+									var mouseenter = (event.type == 'mouseenter');
+									var row = event.currentTarget;
+
+									var endAlternate = rowClassNameAlternateHover;
+									var endBody = rowClassNameAlternateHover;
+									var startAlternate = rowClassNameAlternate;
+									var startBody = rowClassNameBody;
+
+									if (mouseenter) {
+										endAlternate = rowClassNameAlternate;
+										endBody = rowClassNameBody;
+										startAlternate = rowClassNameAlternateHover;
+										startBody = rowClassNameBodyHover;
+									}
+
+									if (row.hasClass(startAlternate)) {
+										row.replaceClass(startAlternate, endAlternate);
+									}
+									else if (row.hasClass(startBody)) {
+										row.replaceClass(startBody, endBody);
+									}
+
+									row.toggleClass(classNameHover, mouseenter);
+								},
+								'tr'
+							);
+						}
 					},
 
 					syncUI: function() {
@@ -257,6 +315,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base', 'event-mouseenter']
 	}
 );

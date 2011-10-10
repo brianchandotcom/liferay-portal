@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.wiki.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -68,7 +71,20 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD)) {
+			if (Validator.isNull(cmd)) {
+				UploadException uploadException =
+					(UploadException)actionRequest.getAttribute(
+						WebKeys.UPLOAD_EXCEPTION);
+
+				if (uploadException != null) {
+					if (uploadException.isExceededSizeLimit()) {
+						throw new FileSizeException(uploadException.getCause());
+					}
+
+					throw new PortalException(uploadException.getCause());
+				}
+			}
+			else if (cmd.equals(Constants.ADD)) {
 				addAttachment(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {

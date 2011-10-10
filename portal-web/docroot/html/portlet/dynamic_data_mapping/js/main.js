@@ -317,11 +317,11 @@ AUI().add(
 
 						AArray.each(
 							availableLocales,
-							function(item, index, collection) {
+							function(item1, index1, collection1) {
 								var metadata = instance._createDynamicNode(
 									'meta-data',
 									{
-										locale: item
+										locale: item1
 									}
 								);
 
@@ -329,8 +329,8 @@ AUI().add(
 
 								AArray.each(
 									field.getProperties(),
-									function(property) {
-										var attributeName = property.attributeName;
+									function(item2, index2, collection2) {
+										var attributeName = item2.attributeName;
 
 										var attributeTag = instance._createDynamicNode(
 											'entry',
@@ -339,7 +339,7 @@ AUI().add(
 											}
 										);
 
-										var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item);
+										var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item1);
 
 										if (attributeName === 'folder') {
 											attributeValue = A.JSON.stringify(attributeValue);

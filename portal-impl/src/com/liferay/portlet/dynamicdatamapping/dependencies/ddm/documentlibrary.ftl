@@ -30,14 +30,16 @@
 	<@aui.button id=namespacedFieldName value="select" />
 </@>
 
-<@aui.script use="liferay-portlet-url">
+<@aui.script>
 Liferay.provide(
 	window,
 	'${portalUtil.getPortletNamespace("15")}selectDocumentLibrary',
 	function(url, uuid, version, title) {
+		var A = AUI();
+
 		var inputNode = A.one('#${portletNamespace}${namespacedFieldName}');
 
-		if (inputNode != null) {
+		if (inputNode) {
 			inputNode.val(
 				A.JSON.stringify(
 					{
@@ -51,15 +53,15 @@ Liferay.provide(
 
 		var labelNode = A.one('#${namespacedFieldName}Label');
 
-		if (labelNode != null) {
-			labelNode.setContent(
-				A.Node.create('<a href="' + url + '">' + title + '</a>')
-			);
+		if (labelNode) {
+			labelNode.setContent('<a href="' + url + '">' + title + '</a>');
 		}
 	},
 	['json']
 );
+</@>
 
+<@aui.script use="liferay-portlet-url">
 var namespacedField = A.one('#${namespacedFieldName}');
 
 if (namespacedField) {
@@ -85,5 +87,4 @@ if (namespacedField) {
 		}
 	);
 }
-
 </@>

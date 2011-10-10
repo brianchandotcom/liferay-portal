@@ -126,7 +126,7 @@ String portletURLString = portletURL.toString();
 				return;
 			}
 
-			<portlet:namespace />doDeleteOrUserGroup('<%= UserGroup.class.getName() %>', userGroupIds);
+			<portlet:namespace />doDeleteUserGroup('<%= UserGroup.class.getName() %>', userGroupIds);
 		},
 		['liferay-util-list-fields']
 	);

@@ -19,32 +19,30 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-MDRAction action = (MDRAction) row.getObject();
+MDRAction action = (MDRAction)row.getObject();
 
-PortletURL portletURL = (PortletURL) request.getAttribute("view_rule_group_instance_actions.jsp-portletURL");
+String redirect = (String)request.getAttribute("view_actions.jsp-redirect");
 %>
 
 <liferay-ui:icon-menu>
+	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, action.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editActionURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_action" />
+			<portlet:param name="actionId" value="<%= Long.toString(action.getActionId()) %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+		</portlet:renderURL>
 
-    <c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, action.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
-        <portlet:renderURL var="editActionURL">
-            <portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_action" />
-            <portlet:param name="<%= MDRPortletConstants.MDR_ACTION_ID %>" value="<%= Long.toString(action.getActionId()) %>" />
-            <portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-        </portlet:renderURL>
+		<liferay-ui:icon image="edit" url="<%= editActionURL.toString() %>" />
+	</c:if>
 
-        <liferay-ui:icon image="edit" url="<%= editActionURL.toString() %>"/>
-    </c:if>
+	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, action.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
+		<portlet:actionURL var="deleteURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_action" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="actionId" value="<%= Long.toString(action.getActionId()) %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+		</portlet:actionURL>
 
-    <c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, action.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
-        <portlet:actionURL var="deleteURL">
-            <portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_action" />
-            <portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-            <portlet:param name="<%= MDRPortletConstants.MDR_ACTION_ID %>" value="<%= Long.toString(action.getActionId()) %>" />
-            <portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-        </portlet:actionURL>
-
-        <liferay-ui:icon image="delete" url="<%= deleteURL.toString() %>"/>
-    </c:if>
-
+		<liferay-ui:icon image="delete" url="<%= deleteURL.toString() %>" />
+	</c:if>
 </liferay-ui:icon-menu>

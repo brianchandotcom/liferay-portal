@@ -17,119 +17,66 @@
 <%@ include file="/html/portlet/mobile_device_rules_admin/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
 String redirect = ParamUtil.getString(request, "redirect");
 
-MDRRuleGroup ruleGroup = (MDRRuleGroup) renderRequest.getAttribute(
-	MDRPortletConstants.MDR_RULE_GROUP);
+MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
 
-long ruleGroupId = 0;
-
-boolean isAdd = Validator.isNull(ruleGroup);
-
-if (!isAdd) {
-	ruleGroupId = ruleGroup.getRuleGroupId();
-
-	groupId = ruleGroup.getGroupId();
-}
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter(
-	"struts_action", "/mobile_device_rules_admin/edit_rule_group");
-portletURL.setParameter(
-	MDRPortletConstants.MDR_RULE_GROUP_ID, String.valueOf(ruleGroupId));
-portletURL.setParameter(
-	MDRPortletConstants.GROUP_ID, String.valueOf(groupId));
-portletURL.setParameter("redirect", redirect);
-
-request.setAttribute("view_rule_group_rules.jsp-portletURL", portletURL);
+long ruleGroupId = BeanParamUtil.getLong(ruleGroup, request, "ruleGroupId");
 %>
 
-<c:if test='<%=isAdd%>'>
-	<liferay-ui:header title="add-rule-group" backURL="<%= redirect %>" />
-</c:if>
-<c:if test='<%=!isAdd%>'>
-	<liferay-ui:header title="edit-rule-group" backURL="<%= redirect %>" />
-</c:if>
+<liferay-ui:header
+	backURL="<%= backURL %>"
+	localizeTitle="<%= (ruleGroup == null) %>"
+	title='<%= (ruleGroup == null) ? "add-rule-group" : ruleGroup.getName(locale) %>'
+/>
 
 <portlet:actionURL var="editRuleGroupURL">
-	<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule_group"/>
-	<portlet:param name="redirect" value="<%= redirect %>"/>
+	<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule_group" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRuleGroupURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "saveRuleGroup();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden"/>
-	<aui:input name="<%= MDRPortletConstants.GROUP_ID %>" type="hidden" value="<%= groupId %>"/>
-	<aui:input name="<%= MDRPortletConstants.MDR_RULE_GROUP_ID %>" type="hidden" value="<%= ruleGroupId %>"/>
+<aui:form action="<%= editRuleGroupURL %>" enctype="multipart/form-data" method="post" name="fm">
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (ruleGroup == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="ruleGroupId" type="hidden" value="<%= ruleGroupId %>" />
 
-	<liferay-ui:error exception="<%= NoSuchRuleGroupException.class %>" message="rule-group-does-not-exist"/>
+	<liferay-ui:error exception="<%= NoSuchRuleGroupException.class %>" message="rule-group-does-not-exist" />
 
-	<aui:model-context bean="<%= ruleGroup %>" model="<%= MDRRuleGroup.class %>"/>
+	<aui:model-context bean="<%= ruleGroup %>" model="<%= MDRRuleGroup.class %>" />
 
 	<aui:fieldset>
-		<aui:input name="name"/>
-		<aui:input name="description"/>
+		<aui:input name="name" />
+
+		<aui:input name="description" />
 	</aui:fieldset>
 
-	<c:if test="<%= !isAdd %>">
+	<c:if test="<%= ruleGroup != null %>">
+		<aui:fieldset>
+			<c:if test="<%= MDRRuleLocalServiceUtil.getRulesCount(ruleGroupId) == 0 %>">
+				<div class="portlet-msg-info">
+					<liferay-ui:message key="no-rules-are-configured-for-this-rule-group" />
+				</div>
+			</c:if>
 
-		<h4><%= LanguageUtil.get(pageContext, "rules") %></h4>
+			<liferay-portlet:renderURL varImpl="editRulesURL">
+				<portlet:param name="struts_action" value="/mobile_device_rules_admin/view_rules" />
+				<portlet:param name="<%= MDRPortletConstants.MDR_RULE_GROUP_ID %>" value="<%= String.valueOf(ruleGroupId) %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</liferay-portlet:renderURL>
 
-		<liferay-portlet:renderURL varImpl="addURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule"/>
-			<portlet:param name="<%= MDRPortletConstants.MDR_RULE_GROUP_ID %>" value="<%= String.valueOf(ruleGroupId) %>" />
-			<portlet:param name="redirect" value="<%= portletURL.toString() %>"/>
-		</liferay-portlet:renderURL>
-
-		<liferay-ui:search-container
-			curParam="cur1"
-			delta="<%= 5 %>"
-			deltaConfigurable="<%= false %>"
-			emptyResultsMessage="no-rules-are-configured-for-this-rule-group"
-			headerNames="name,type"
-			iteratorURL="<%= portletURL %>"
-		>
-
-			<liferay-ui:search-container-results
-				results="<%= MDRRuleLocalServiceUtil.getRules(ruleGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				total="<%= MDRRuleLocalServiceUtil.getRulesCount(ruleGroupId) %>"
+			<liferay-ui:icon
+				image="manage_nodes"
+				label="<%= true %>"
+				message="manage-rules"
+				url="<%= editRulesURL.toString() %>"
 			/>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.portlet.mobiledevicerules.model.MDRRule"
-				escapedModel="<%= true %>"
-				keyProperty="ruleId"
-				modelVar="rule"
-			>
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule"/>
-					<portlet:param name="redirect" value="<%= portletURL.toString() %>"/>
-					<portlet:param name="<%= MDRPortletConstants.MDR_RULE_ID %>" value="<%= String.valueOf(rule.getRuleId()) %>"/>
-				</liferay-portlet:renderURL>
-
-				<%@ include file="/html/portlet/mobile_device_rules_admin/device_rule_columns.jspf" %>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator type="more"/>
-		</liferay-ui:search-container>
-
-		<liferay-ui:icon
-			image="add"
-			label="<%= true %>"
-			message="add"
-			url='<%= addURL.toString() %>'
-		/>
+		</aui:fieldset>
 	</c:if>
 
 	<aui:button-row>
-		<aui:button type="submit"/>
-		<aui:button href="<%= redirect %>" value="cancel"/>
+		<aui:button type="submit" />
+		<aui:button href="<%= redirect %>" value="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace/>saveRuleGroup() {
-		document.<portlet:namespace/>fm.<portlet:namespace/><%= Constants.CMD %>.value = "<%= isAdd ? Constants.ADD : Constants.EDIT %>";
-		submitForm(document.<portlet:namespace/>fm);
-	}
-</aui:script>

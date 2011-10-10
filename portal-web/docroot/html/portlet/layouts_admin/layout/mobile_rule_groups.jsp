@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
+themeDisplay.setIncludeServiceJs(true);
+
 Group group = (Group)request.getAttribute("edit_pages.jsp-group");
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
@@ -29,9 +31,5 @@ PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redire
 String className = Layout.class.getName();
 long classPK = selLayout.getPlid();
 %>
-
-<liferay-ui:error-marker key="errorSection" value="device" />
-
-<h3><liferay-ui:message key="mobile-rule-groups" /></h3>
 
 <%@ include file="/html/portlet/layouts_admin/mobile_device_rules_manage.jspf" %>

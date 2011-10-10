@@ -18,13 +18,19 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
-
-String addURL = ParamUtil.getString(request, "addURL");
 %>
+
 <c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+	<liferay-portlet:renderURL varImpl="addURL">
+		<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule_group" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</liferay-portlet:renderURL>
+
 	<div class="lfr-portlet-toolbar">
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addURL %>"><liferay-ui:message key="add"/></a>
+			<a href="<%= addURL %>"><liferay-ui:message key="add-rule-group" /></a>
 		</span>
 	</div>
 </c:if>

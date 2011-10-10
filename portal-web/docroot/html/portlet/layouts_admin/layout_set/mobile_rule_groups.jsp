@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
+themeDisplay.setIncludeServiceJs(true);
+
 LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLayoutSet"));
 
 long companyId = selLayoutSet.getCompanyId();
@@ -26,10 +28,6 @@ String className = LayoutSet.class.getName();
 long classPK = selLayoutSet.getLayoutSetId();
 %>
 
-<liferay-ui:error-marker key="errorSection" value="device" />
-
 <aui:model-context bean="<%= selLayoutSet %>" model="<%= LayoutSet.class %>" />
-
-<h3><liferay-ui:message key="mobile-rule-groups" /></h3>
 
 <%@ include file="/html/portlet/layouts_admin/mobile_device_rules_manage.jspf" %>

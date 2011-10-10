@@ -20,29 +20,29 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 MDRRule rule = (MDRRule)row.getObject();
-
-PortletURL portletURL = (PortletURL) request.getAttribute("view_rule_group_rules.jsp-portletURL");
 %>
 
 <liferay-ui:icon-menu>
-    <c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, rule.getRuleGroupId(), ActionKeys.UPDATE) %>">
-        <liferay-portlet:renderURL varImpl="editURL">
-            <portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule" />
-            <portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-            <portlet:param name="<%= MDRPortletConstants.MDR_RULE_ID %>" value="<%= String.valueOf(rule.getRuleId()) %>" />
-        </liferay-portlet:renderURL>
+	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, rule.getRuleGroupId(), ActionKeys.UPDATE) %>">
+		<liferay-portlet:renderURL varImpl="editURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ruleId" value="<%= String.valueOf(rule.getRuleId()) %>" />
+		</liferay-portlet:renderURL>
 
-        <liferay-ui:icon image="edit" url="<%= editURL.toString() %>"/>
-    </c:if>
+		<liferay-ui:icon image="edit" url="<%= editURL.toString() %>" />
+	</c:if>
 
-    <c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, rule.getRuleGroupId(), ActionKeys.UPDATE) %>">
-        <portlet:actionURL var="deleteURL">
-            <portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule" />
-            <portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-            <portlet:param name="<%= MDRPortletConstants.MDR_RULE_ID %>" value="<%= String.valueOf(rule.getRuleId()) %>" />
-            <portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-        </portlet:actionURL>
+	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, rule.getRuleGroupId(), ActionKeys.UPDATE) %>">
+		<portlet:actionURL var="deleteURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ruleId" value="<%= String.valueOf(rule.getRuleId()) %>" />
+		</portlet:actionURL>
 
-        <liferay-ui:icon image="delete" url="<%= deleteURL.toString() %>"/>
-    </c:if>
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+	</c:if>
 </liferay-ui:icon-menu>

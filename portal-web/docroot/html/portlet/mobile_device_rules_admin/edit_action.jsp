@@ -19,10 +19,10 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance) renderRequest.getAttribute(MDRPortletConstants.MDR_RULE_GROUP_INSTANCE);
-MDRAction action = (MDRAction) renderRequest.getAttribute(MDRPortletConstants.MDR_ACTION);
-String type = (String) renderRequest.getAttribute(MDRPortletConstants.TYPE);
-String editorJSP = (String) renderRequest.getAttribute(MDRPortletConstants.EDITOR_JSP);
+MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_INSTANCE);
+MDRAction action = (MDRAction)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION);
+String type = (String)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_TYPE);
+String editorJSP = (String)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_EDITOR_JSP);
 
 boolean isAdd = Validator.isNull(action);
 
@@ -35,13 +35,13 @@ if (!isAdd) {
 Collection<ActionHandler> actionHandlers = ActionHandlerManagerUtil.getActionHandlers();
 %>
 
-<c:if test='<%=isAdd%>'>
+<c:if test='<%= isAdd %>'>
 	<liferay-ui:header
 		title="add-action"
 		backURL="<%= redirect %>"
 	/>
 </c:if>
-<c:if test='<%=!isAdd%>'>
+<c:if test='<%= !isAdd %>'>
 	<liferay-ui:header
 		title="edit-action"
 		backURL="<%= redirect %>"
@@ -53,11 +53,11 @@ Collection<ActionHandler> actionHandlers = ActionHandlerManagerUtil.getActionHan
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editActionURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "saveAction();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<aui:form action="<%= editActionURL %>" enctype="multipart/form-data" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= isAdd ? Constants.ADD : Constants.UPDATE %>" />
 
-	<aui:input name="<%= MDRPortletConstants.MDR_RULE_GROUP_INSTANCE_ID %>" type="hidden" value="<%= ruleGroupInstance.getRuleGroupInstanceId() %>" />
-	<aui:input name="<%= MDRPortletConstants.MDR_ACTION_ID %>" type="hidden" value="<%= actionId %>" />
+	<aui:input name="actionId" type="hidden" value="<%= actionId %>" />
+	<aui:input name="ruleGroupInstanceId" type="hidden" value="<%= ruleGroupInstance.getRuleGroupInstanceId() %>" />
 
 	<liferay-ui:error exception="<%= NoSuchRuleGroupException.class %>" message="unable-to-edit-a-non-existing-device-rule-group" />
 	<liferay-ui:error exception="<%= NoSuchRuleGroupInstanceException.class %>" message="unable-to-edit-a-non-existing-device-rule" />
@@ -126,12 +126,6 @@ Collection<ActionHandler> actionHandlers = ActionHandlerManagerUtil.getActionHan
 	function <portlet:namespace />displayForm(id, obj) {
 		document.getElementById('<portlet:namespace />typeSettings').innerHTML=obj.responseText;
 	}
-
-	function <portlet:namespace />saveAction() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= isAdd ? Constants.ADD : Constants.EDIT %>";
-		submitForm(document.<portlet:namespace />fm);
-	}
-
 </aui:script>
 
 <portlet:resourceURL var="layoutsURL">

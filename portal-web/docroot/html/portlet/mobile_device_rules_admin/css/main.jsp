@@ -154,3 +154,51 @@
 .selected-color-scheme img {
 	border: 3px solid #369;
 }
+
+.rule-group-instance-container {
+	.rule-group-instance {
+		border-bottom: 1px solid #D7D7D7;
+		cursor: move;
+		display: block;
+		margin: 3px 0;
+		padding: 10px;
+
+		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+		border-radius: 4px;
+
+		-moz-box-shadow: 1px 1px 2px #999;
+		-webkit-box-shadow: 1px 1px 2px #999;
+		box-shadow: 1px 1px 2px #999;
+
+		.rule-group-instance-handle {
+			float: left;
+		}
+
+		.rule-group-instance-priority {
+			float: right;
+		}
+	}
+
+	.rule-group-instance:hover {
+		background-color: #F5F8FB;
+	}
+}
+
+.rule-group-instance-container.yui3-dd-drop-active-valid .rule-group-instance-priority {
+	display: none;
+}
+
+.rule-group-instance-dragging {
+	background-color: #F5F8FB;
+	height: 18px !important;
+	width: 402px !important;
+
+	.rule-group-instance-priority {
+		display: block !important;
+	}
+}
+
+.rule-group-instance-dragging:hover {
+	background-color: #F5F8FB;
+}

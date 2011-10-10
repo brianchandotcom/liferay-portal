@@ -1,0 +1,140 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
+%>
+
+<div class="lfr-portlet-toolbar">
+	<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
+		<span class="lfr-toolbar-button add-button">
+			<a href="javascript:;" id="<portlet:namespace />saveInstance"><liferay-ui:message key="select-rule-group" /></a>
+		</span>
+
+		<span class="lfr-toolbar-button view-structures">
+			<a href="javascript:;" id="<portlet:namespace />managePriorities"><liferay-ui:message key="manage-rule-groups-priorities" /></a>
+		</span>
+	</c:if>
+</div>
+
+<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" varImpl="selectRuleGroupURL">
+	<portlet:param name="struts_action" value="/mobile_device_rules_admin/view" />
+	<portlet:param name="chooseCallback" value='<%= namespace + "saveRuleGroupInstance" %>'/>
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="<%= MDRPortletConstants.CLASS_NAME %>" value="<%= className %>" />
+	<portlet:param name="<%= MDRPortletConstants.CLASS_PK %>" value="<%= String.valueOf(classPK) %>" />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" varImpl="managePrioritiesURL">
+	<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule_group_instance" />
+	<portlet:param name="saveCallback" value='<%= namespace + "saveRuleGroupsPriorities" %>'/>
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="<%= MDRPortletConstants.CLASS_NAME %>" value="<%= className %>" />
+	<portlet:param name="<%= MDRPortletConstants.CLASS_PK %>" value="<%= String.valueOf(classPK) %>" />
+</liferay-portlet:renderURL>
+
+<aui:script use="aui-base">
+	var config = {
+		dialog: {
+			width: 820,
+			align: Liferay.Util.Window.ALIGN_CENTER,
+		}
+	};
+
+	A.one('#<portlet:namespace />saveInstance').on('click', function() {
+		config.dialog.title = '<liferay-ui:message key="rule-groups" />';
+
+		config.uri = '<%= selectRuleGroupURL %>';
+
+		Liferay.Util.openWindow(config);
+	});
+
+	A.one('#<portlet:namespace />managePriorities').on('click', function() {
+		config.dialog.title = '<liferay-ui:message key="rule-groups-priorities" />';
+		config.dialog.width = 460;
+
+		config.uri = '<%= managePrioritiesURL %>';
+
+		Liferay.Util.openWindow(config);
+	});
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveRuleGroupInstance',
+		function(ruleGroupId, ruleGroupName, dialog) {
+			var A = AUI();
+
+			if (dialog) {
+				if (Liferay.Util.getTop() === window) {
+					dialog.plug(
+						A.LoadingMask
+					).render();
+				}
+				else {
+					dialog.close();
+				}
+			}
+
+			var serviceParameterTypes = [
+				'long',
+				'java.lang.String',
+				'long',
+				'long',
+				'com.liferay.portal.service.ServiceContext'
+			];
+
+			Liferay.Service.MDR.MDRRuleGroupInstance.addRuleGroupInstance(
+				{
+					groupId: <%= groupId %>,
+					className: '<%= className %>',
+					classPK: <%= classPK %>,
+					ruleGroupId: ruleGroupId,
+					serviceContext: A.JSON.stringify(
+						{
+							scopeGroupId: themeDisplay.getScopeGroupId(),
+							userId: themeDisplay.getUserId()
+						}
+					),
+					serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+				},
+				function(response, xhr) {
+					location.href = '<%= redirect %>';
+				}
+			);
+		},
+		[]
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveRuleGroupsPriorities',
+		function(dialog) {
+			if (dialog) {
+				if (Liferay.Util.getTop() === window) {
+					dialog.plug(
+						A.LoadingMask
+					).render();
+				}
+				else {
+					dialog.close();
+				}
+			}
+
+			location.href = '<%= redirect %>';
+		},
+		[]
+	);
+</aui:script>

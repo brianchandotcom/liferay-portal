@@ -14,19 +14,16 @@
  */
 --%>
 
-<%
-	OrderByComparator orderByComparator = new RuleGroupInstancePriorityComparator();
-%>
-
 <liferay-ui:search-container
-	delta="<%= 2 %>"
+	curParam="cur1"
 	deltaConfigurable="<%= false %>"
 	emptyResultsMessage="no-rule-group-instances-are-configured"
 	headerNames="name,description,priority"
+	iteratorURL="<%= portletURL %>"
 >
 
 	<liferay-ui:search-container-results
-		results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
+		results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), new RuleGroupInstancePriorityComparator()) %>"
 		total="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) %>"
 	/>
 
@@ -36,26 +33,14 @@
 		keyProperty="ruleGroupInstanceId"
 		modelVar="ruleGroupInstance"
 	>
-		<%
-			MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(ruleGroupInstance.getRuleGroupId());
-		%>
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules_admin/view_actions" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstance.getRuleGroupInstanceId()) %>" />
+		</liferay-portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			name="name"
-			value="<%= ruleGroup.getName(locale) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="description"
-			value="<%= ruleGroup.getDescription(locale) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="priority"
-			value="<%= String.valueOf(ruleGroupInstance.getPriority()) %>"
-		/>
-
+		<%@ include file="/html/portlet/mobile_device_rules_admin/device_rule_group_instance_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator type="article"/>
+	<liferay-ui:search-iterator type="more" />
 </liferay-ui:search-container>

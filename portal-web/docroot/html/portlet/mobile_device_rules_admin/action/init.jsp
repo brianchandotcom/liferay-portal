@@ -26,8 +26,7 @@
 <%@ include file="/html/portlet/mobile_device_rules_admin/init.jsp" %>
 
 <%
-MDRAction action = (MDRAction) request.getAttribute(
-	MDRPortletConstants.MDR_ACTION);
+MDRAction action = (MDRAction)request.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION);
 
 boolean isAdd = Validator.isNull(action);
 

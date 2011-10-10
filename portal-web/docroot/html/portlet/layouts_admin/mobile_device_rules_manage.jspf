@@ -17,57 +17,33 @@
 <%
 String namespace = StringPool.BLANK;
 
+PortletURL portletURL = null;
+
 if (renderResponse != null) {
 	namespace = renderResponse.getNamespace();
+
+	portletURL = renderResponse.createRenderURL();
 }
 else if (resourceResponse != null) {
 	namespace = resourceResponse.getNamespace();
+
+	portletURL = resourceResponse.createRenderURL();
 }
+
+portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
+portletURL.setParameter("classPK", String.valueOf(classPK));
+portletURL.setParameter("className", className);
+portletURL.setParameter("historyKey", "mobileRuleGroups");
+
+String redirect = portletURL.toString();
+
+request.setAttribute("view.jsp-redirect", redirect);
 %>
 
-<aui:button-row>
-    <aui:button onClick='<%= namespace + "openMDRPortlet(" + groupId + ");" %>' value="manage" />
-</aui:button-row>
+<liferay-ui:error-marker key="errorSection" value="device" />
 
-<div id="<%= renderResponse.getNamespace() %>ruleGroupInstances">
-	<%@ include file="/html/portlet/layouts_admin/mobile_device_rules_display.jspf" %>
-</div>
-<portlet:resourceURL var="displayURL">
-    <portlet:param name="struts_action" value="/layouts_admin/get_device_rule_group" />
-</portlet:resourceURL>
+<h3><liferay-ui:message key="selected-mobile-device-rule-groups" /></h3>
 
-<aui:script>
+<%@ include file="/html/portlet/layouts_admin/mobile_device_rules_toolbar.jspf" %>
 
-	Liferay.provide(
-		window,
-        '<portlet:namespace />openMDRPortlet',
-        function(groupId) {
-            var config = {
-                chooseCallback: '<portlet:namespace />finishCall',
-                dialog: {
-                    stack: false,
-                    width: 820,
-                    align: Liferay.Util.Window.ALIGN_CENTER
-                }
-            };
-
-            var dpURL = Liferay.PortletURL.createRenderURL();
-
-            dpURL.setEscapeXML(false);
-
-            dpURL.setParameter('struts_action', '/mobile_device_rules_admin/view_rule_group_instance');
-            dpURL.setParameter("groupId", groupId);
-			dpURL.setParameter('chooseCallback', config.chooseCallback);
-			dpURL.setParameter("className", '<%= className %>');
-			dpURL.setParameter("classPK", '<%= classPK %>');
-
-            dpURL.setPortletId(<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>);
-            dpURL.setWindowState('pop_up');
-
-            config.uri = dpURL.toString();
-
-            Liferay.Util.openWindow(config);
-        },
-        ['liferay-portlet-url']
-    );
-</aui:script>
+<%@ include file="/html/portlet/layouts_admin/mobile_device_rules_display.jspf" %>

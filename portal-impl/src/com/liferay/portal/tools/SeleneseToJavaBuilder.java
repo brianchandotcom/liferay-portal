@@ -852,7 +852,7 @@ public class SeleneseToJavaBuilder {
 					 param1.equals("waitForVisible")) {
 
 				sb.append("for (int second = 0;; second++) {");
-				sb.append("if (second >= 60) {");
+				sb.append("if (second >= 90) {");
 				sb.append("fail(\"timeout\");");
 				sb.append("}");
 
@@ -984,64 +984,6 @@ public class SeleneseToJavaBuilder {
 			else {
 				System.out.println(
 					testFileName + " has an unknown command " + param1);
-			}
-
-			Boolean takeScreenShot = takeScreenShots.get(x);
-
-			if (takeScreenShot == null) {
-				takeScreenShot = Boolean.TRUE;
-			}
-
-			if (takeScreenShot) {
-				if (param1.equals("assertChecked") ||
-					param1.equals("assertConfirmation") ||
-					param1.equals("assertNotChecked") ||
-					param1.equals("clickAndWait") ||
-					param1.equals("clickAtAndWait") ||
-					param1.equals("keyPressAndWait") ||
-					param1.equals("selectAndWait") ||
-					param1.equals("selectWindow") ||
-					param1.equals("waitForElementNotPresent") ||
-					param1.equals("waitForNotPartialText") ||
-					param1.equals("waitForNotSelectedLabel") ||
-					param1.equals("waitForNotTable") ||
-					param1.equals("waitForNotText") ||
-					param1.equals("waitForNotValue") ||
-					param1.equals("waitForNotVisible") ||
-					param1.equals("waitForPartialText") ||
-					param1.equals("waitForSelectedLabel") ||
-					param1.equals("waitForTable") ||
-					param1.equals("waitForText") ||
-					param1.equals("waitForTextNotPresent") ||
-					param1.equals("waitForTextPresent") ||
-					param1.equals("waitForValue") ||
-					param1.equals("waitForVisible")) {
-
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
-				else if (param1.equals("selectFrame") &&
-						 param2.equals("relative=top")) {
-
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
-				else if (param1.equals("type") && !param2.equals("//body")) {
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
-				else if (
-					param1.equals("typeKeys") && !param2.equals("//body")) {
-
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
-				else if (param1.equals("waitForElementPresent") &&
-						!param2.equals("_15_editor") &&
-						!param2.equals(
-							"_15_structure_el_TextAreaField_content") &&
-						!param2.equals("_33_editor") &&
-						!param2.equals("cke_contents_CKEditor1") &&
-						!param2.equals("FCKeditor1___Frame")) {
-
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
 			}
 		}
 

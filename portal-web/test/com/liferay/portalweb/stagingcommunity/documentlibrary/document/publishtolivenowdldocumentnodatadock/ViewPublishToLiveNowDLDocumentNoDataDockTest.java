@@ -54,7 +54,7 @@ public class ViewPublishToLiveNowDLDocumentNoDataDockTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
 		assertEquals(RuntimeVariables.replace(
-				"There are no documents in this folder."),
+				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("DL Document Title"));
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));

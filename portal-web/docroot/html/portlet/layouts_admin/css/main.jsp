@@ -209,7 +209,7 @@
 	.lfr-header-row {
 		margin-bottom: 0.5em;
 
-		.aui-icon-add, .aui-icon-copy, .aui-icon-delete, .aui-icon-export, .aui-icon-permissions {
+		.aui-icon-add, .aui-icon-copy, .aui-icon-delete, .aui-icon-export, .aui-icon-permissions, .aui-icon-search {
 			background: url() no-repeat 0 0;
 		}
 
@@ -231,6 +231,10 @@
 
 		.aui-icon-permissions {
 			background-image: url(<%= themeImagesPath %>/common/permissions.png);
+		}
+
+		.aui-icon-search {
+			background-image: url(<%= themeImagesPath %>/common/search.png);
 		}
 	}
 

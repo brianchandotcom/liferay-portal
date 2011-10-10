@@ -34,7 +34,8 @@
 
 			timestamp = date.getTime()
 		}
-		catch (e) {};
+		catch (e) {
+		};
 
 		fieldValueInput.val(timestamp);
 	};

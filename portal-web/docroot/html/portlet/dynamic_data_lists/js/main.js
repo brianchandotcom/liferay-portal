@@ -284,6 +284,8 @@ AUI().add(
 
 							var required = item.required;
 
+							var structureField;
+
 							if (required) {
 								item.label += ' (' + Liferay.Language.get('required') + ')';
 							}
@@ -342,7 +344,7 @@ AUI().add(
 									return label;
 								};
 
-								var structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
+								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
 								if (type === 'ddm-fileupload') {
 									config.validator.rules[name] = {
@@ -351,13 +353,14 @@ AUI().add(
 								}
 							}
 							else if ((type === 'radio') || (type === 'select')) {
-								var structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
+								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
 								config.options = instance.getCellEditorOptions(structureField.options);
 							}
 
-							var validatorRules = config.validator.rules;
 							var validatorRuleName = instance.DATATYPE_VALIDATOR[dataType];
+
+							var validatorRules = config.validator.rules;
 
 							validatorRules[name] = A.mix(
 								{
@@ -452,7 +455,6 @@ AUI().add(
 					);
 				}
 				catch (e) {
-					A.log(e);
 				}
 			},
 

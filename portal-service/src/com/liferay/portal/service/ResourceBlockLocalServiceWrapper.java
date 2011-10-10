@@ -683,16 +683,6 @@ public class ResourceBlockLocalServiceWrapper
 			groupId, name, permissionedModel, roleId, actionIdsLong, operator);
 	}
 
-	public void updateIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name,
-		com.liferay.portal.model.PermissionedModel permissionedModel,
-		long roleId, long actionIdsLong, int operator, boolean flush)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourceBlockLocalService.updateIndividualScopePermissions(companyId,
-			groupId, name, permissionedModel, roleId, actionIdsLong, operator,
-			flush);
-	}
-
 	public com.liferay.portal.model.ResourceBlock updateResourceBlockId(
 		long companyId, long groupId, java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,

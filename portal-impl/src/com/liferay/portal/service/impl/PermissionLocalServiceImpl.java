@@ -37,6 +37,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionCheckerBag;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.base.PermissionLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.OrgGroupPermissionPK;
@@ -1018,23 +1019,34 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			long resourceId)
 		throws SystemException {
 
-		for (Map.Entry<Long, String[]> entry : roleIdsToActionIds.entrySet()) {
-			long roleId = entry.getKey();
-			String[] actionIds = entry.getValue();
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
 
-			List<Permission> permissions = permissionFinder.findByR_R(
-				roleId, resourceId);
+		PermissionThreadLocal.setIndexEnabled(false);
 
-			rolePersistence.removePermissions(roleId, permissions);
+		try {
+			for (Map.Entry<Long, String[]> entry :
+					roleIdsToActionIds.entrySet()) {
 
-			permissions = getPermissions(companyId, actionIds, resourceId);
+				long roleId = entry.getKey();
+				String[] actionIds = entry.getValue();
 
-			rolePersistence.addPermissions(roleId, permissions);
+				List<Permission> permissions = permissionFinder.findByR_R(
+					roleId, resourceId);
+
+				rolePersistence.removePermissions(roleId, permissions);
+
+				permissions = getPermissions(companyId, actionIds, resourceId);
+
+				rolePersistence.addPermissions(roleId, permissions);
+			}
 		}
+		finally {
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
 
-		PermissionCacheUtil.clearCache();
+			PermissionCacheUtil.clearCache();
 
-		SearchEngineUtil.updatePermissionFields(resourceId);
+			SearchEngineUtil.updatePermissionFields(resourceId);
+		}
 	}
 
 	/**

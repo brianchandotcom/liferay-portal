@@ -33,6 +33,7 @@ import com.liferay.portal.model.ResourceBlockConstants;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
@@ -659,20 +660,31 @@ public class ResourceBlockLocalServiceImpl
 			Map<Long, String[]> roleIdsToActionIds)
 		throws PortalException, SystemException {
 
-		PermissionedModel permissionedModel = getPermissionedModel(
-			name, primKey);
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
 
-		for (Map.Entry<Long, String[]> entry : roleIdsToActionIds.entrySet()) {
-			long roleId = entry.getKey();
-			String[] actionIds = entry.getValue();
+		PermissionThreadLocal.setIndexEnabled(false);
 
-			updateIndividualScopePermissions(
-				companyId, groupId, name, permissionedModel, roleId,
-				getActionIds(name, ListUtil.fromArray(actionIds)),
-				ResourceBlockConstants.OPERATOR_SET, false);
+		try {
+			PermissionedModel permissionedModel = getPermissionedModel(
+				name, primKey);
+
+			for (Map.Entry<Long, String[]> entry :
+					roleIdsToActionIds.entrySet()) {
+
+				long roleId = entry.getKey();
+				String[] actionIds = entry.getValue();
+
+				updateIndividualScopePermissions(
+					companyId, groupId, name, permissionedModel, roleId,
+					getActionIds(name, ListUtil.fromArray(actionIds)),
+					ResourceBlockConstants.OPERATOR_SET);
+			}
 		}
+		finally {
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
 
-		PermissionCacheUtil.clearCache();
+			PermissionCacheUtil.clearCache();
+		}
 	}
 
 	public void setIndividualScopePermissions(
@@ -737,17 +749,6 @@ public class ResourceBlockLocalServiceImpl
 			long actionIdsLong, int operator)
 		throws SystemException {
 
-		updateIndividualScopePermissions(
-			companyId, groupId, name, permissionedModel, roleId, actionIdsLong,
-			operator, true);
-	}
-
-	public void updateIndividualScopePermissions(
-			long companyId, long groupId, String name,
-			PermissionedModel permissionedModel, long roleId,
-			long actionIdsLong, int operator, boolean flush)
-		throws SystemException {
-
 		ResourceBlock resourceBlock =
 			resourceBlockPersistence.fetchByPrimaryKey(
 				permissionedModel.getResourceBlockId());
@@ -795,9 +796,7 @@ public class ResourceBlockLocalServiceImpl
 			companyId, groupId, name, permissionedModel, permissionsHash,
 			resourceBlockPermissionsContainer);
 
-		if (flush) {
-			PermissionCacheUtil.clearCache();
-		}
+		PermissionCacheUtil.clearCache();
 	}
 
 	public ResourceBlock updateResourceBlockId(

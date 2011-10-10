@@ -539,12 +539,6 @@ public interface ResourceBlockLocalService extends PermissionedModelLocalService
 		long roleId, long actionIdsLong, int operator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void updateIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name,
-		com.liferay.portal.model.PermissionedModel permissionedModel,
-		long roleId, long actionIdsLong, int operator, boolean flush)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public com.liferay.portal.model.ResourceBlock updateResourceBlockId(
 		long companyId, long groupId, java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,

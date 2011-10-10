@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.ClassedModel;
@@ -35,6 +36,7 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.impl.ResourceImpl;
+import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.PermissionsListFilter;
 import com.liferay.portal.security.permission.PermissionsListFilterFactory;
@@ -566,15 +568,28 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		// Permissions
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			addModelResources_6(
-				companyId, groupId, userId, resource, groupPermissions,
-				guestPermissions, permissionedModel);
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
+
+		PermissionThreadLocal.setIndexEnabled(false);
+
+		try {
+			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+				addModelResources_6(
+					companyId, groupId, userId, resource, groupPermissions,
+					guestPermissions, permissionedModel);
+			}
+			else {
+				addModelResources_1to5(
+					companyId, groupId, userId, resource, groupPermissions,
+					guestPermissions);
+			}
 		}
-		else {
-			addModelResources_1to5(
-				companyId, groupId, userId, resource, groupPermissions,
-				guestPermissions);
+		finally {
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
+
+			PermissionCacheUtil.clearCache();
+
+			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
 	}
 
@@ -849,6 +864,10 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		// Permissions
 
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
+
+		PermissionThreadLocal.setIndexEnabled(false);
+
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionPersistence.findByC_N_S_P(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
@@ -889,6 +908,12 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 		finally {
 			ResourcePermissionsThreadLocal.setResourcePermissions(null);
+
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
+
+			PermissionCacheUtil.clearCache();
+
+			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
 	}
 

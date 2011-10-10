@@ -61,7 +61,7 @@ else if (resourceResponse != null) {
 			dpURL.setParameter("className", '<%= className %>');
 			dpURL.setParameter("classPK", '<%= classPK %>');
 
-            dpURL.setPortletId(<%= PortletKeys.MOBILE_DEVICE_ADMIN_SITE %>);
+            dpURL.setPortletId(<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>);
             dpURL.setWindowState('pop_up');
 
             config.uri = dpURL.toString();

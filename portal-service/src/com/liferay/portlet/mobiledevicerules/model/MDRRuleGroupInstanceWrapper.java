@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
-import com.liferay.portal.model.ModelWrapper;
-
 /**
  * <p>
  * This class is a wrapper for {@link MDRRuleGroupInstance}.
@@ -25,8 +23,7 @@ import com.liferay.portal.model.ModelWrapper;
  * @see       MDRRuleGroupInstance
  * @generated
  */
-public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
-	ModelWrapper<MDRRuleGroupInstance> {
+public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance {
 	public MDRRuleGroupInstanceWrapper(
 		MDRRuleGroupInstance mdrRuleGroupInstance) {
 		_mdrRuleGroupInstance = mdrRuleGroupInstance;
@@ -377,14 +374,12 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 		_mdrRuleGroupInstance.persist();
 	}
 
-	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
-	 */
-	public MDRRuleGroupInstance getWrappedMDRRuleGroupInstance() {
-		return _mdrRuleGroupInstance;
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getRuleGroup()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupInstance.getRuleGroup();
 	}
 
-	public MDRRuleGroupInstance getWrappedModel() {
+	public MDRRuleGroupInstance getWrappedMDRRuleGroupInstance() {
 		return _mdrRuleGroupInstance;
 	}
 

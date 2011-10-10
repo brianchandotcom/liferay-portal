@@ -84,6 +84,25 @@ public class MDRRuleGroupInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap addRuleGroupInstance(
+		long groupId, java.lang.String className, long classPK,
+		long ruleGroupId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance returnValue =
+				MDRRuleGroupInstanceServiceUtil.addRuleGroupInstance(groupId,
+					className, classPK, ruleGroupId, serviceContext);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteRuleGroupInstance(long ruleGroupInstanceId)
 		throws RemoteException {
 		try {

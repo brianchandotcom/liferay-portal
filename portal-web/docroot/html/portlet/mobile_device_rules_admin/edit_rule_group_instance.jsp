@@ -114,7 +114,7 @@ else if (className.equals(Layout.class.getName())) {
 			mdrURL.setParameter('chooseCallback', config.chooseCallback);
 			mdrURL.setParameter("groupId", '<%= groupId %>');
 
-            mdrURL.setPortletId(<%= PortletKeys.MOBILE_DEVICE_ADMIN_SITE %>);
+            mdrURL.setPortletId(<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>);
             mdrURL.setWindowState('pop_up');
 
             config.uri = mdrURL.toString();

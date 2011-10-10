@@ -152,7 +152,7 @@ String[][] categorySections = {mainSections};
 
 								Liferay.Util.focusFormField(content.one('input:text'));
 							},
-							icon: 'circle-plus',
+							icon: 'add',
 							label: '<liferay-ui:message key="add-page" />'
 						},
 					</c:if>
@@ -219,7 +219,7 @@ String[][] categorySections = {mainSections};
 
 								exportPopup.io.start();
 							},
-							icon: 'arrowthick-1-b',
+							icon: 'export',
 							label: '<liferay-ui:message key="export" />'
 						},
 						{

@@ -182,7 +182,7 @@ String[][] categorySections = {mainSections};
 
 													Liferay.Util.focusFormField(content.one('input:text'));
 												},
-												icon: 'circle-plus',
+												icon: 'add',
 												label: '<liferay-ui:message key="add-child-page" />'
 											},
 										</c:if>
@@ -202,7 +202,7 @@ String[][] categorySections = {mainSections};
 														}
 													);
 												},
-												icon: 'key',
+												icon: 'permissions',
 												label: '<liferay-ui:message key="permissions" />'
 											},
 										</c:if>
@@ -212,7 +212,7 @@ String[][] categorySections = {mainSections};
 												handler: function(event) {
 													<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
 												},
-												icon: 'circle-minus',
+												icon: 'delete',
 												label: '<liferay-ui:message key="delete" />'
 											},
 										</c:if>
@@ -264,7 +264,7 @@ String[][] categorySections = {mainSections};
 
 													exportPopup.io.start();
 												},
-												icon: 'arrowthick-1-b',
+												icon: 'export',
 												label: '<liferay-ui:message key="export" />'
 											}
 										</c:if>

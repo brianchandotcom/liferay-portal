@@ -48,6 +48,19 @@ public class MDRRuleGroupInstanceServiceImpl
 			groupId, className, classPK, ruleGroupId, priority, serviceContext);
 	}
 
+	public MDRRuleGroupInstance addRuleGroupInstance(
+			long groupId, String className, long classPK, long ruleGroupId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		MDRPermissionUtil.check(
+			getPermissionChecker(), groupId,
+			ActionKeys.ADD_RULE_GROUP_INSTANCE);
+
+		return  mdrRuleGroupInstanceLocalService.addRuleGroupInstance(
+			groupId, className, classPK, ruleGroupId, serviceContext);
+	}
+
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
 		throws PortalException, SystemException {
 

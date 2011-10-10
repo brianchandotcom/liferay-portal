@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mobiledevicerules.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -23,6 +24,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
+import com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator;
 
 import java.util.Date;
 import java.util.List;
@@ -43,7 +45,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 		Date now = new Date();
 
-		validate(ruleGroupId);
+		validate(classNameId, classPK, ruleGroupId);
 
 		long ruleGroupInstanceId = counterLocalService.increment();
 
@@ -64,6 +66,28 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		ruleGroupInstance.setPriority(priority);
 
 		return updateMDRRuleGroupInstance(ruleGroupInstance, false);
+	}
+
+	public MDRRuleGroupInstance addRuleGroupInstance(
+			long groupId, String className, long classPK, long ruleGroupId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		List<MDRRuleGroupInstance> ruleGroupInstances = getRuleGroupInstances(
+			className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new RuleGroupInstancePriorityComparator());
+
+		int priority = 0;
+
+		if (ruleGroupInstances.size() > 0) {
+			MDRRuleGroupInstance higherPriorityRuleGroupInstance =
+				ruleGroupInstances.get(ruleGroupInstances.size() - 1);
+
+			priority = higherPriorityRuleGroupInstance.getPriority() + 1;
+		}
+
+		return addRuleGroupInstance(
+			groupId, className, classPK, ruleGroupId, priority, serviceContext);
 	}
 
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
@@ -190,10 +214,18 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		return ruleGroupInstance;
 	}
 
-	protected void validate(long ruleGroupId)
+	protected void validate(long classNameId, long classPK, long ruleGroupId)
 		throws PortalException, SystemException {
 
 		mdrRuleGroupLocalService.getMDRRuleGroup(ruleGroupId);
+
+		MDRRuleGroupInstance ruleGroupInstance =
+			mdrRuleGroupInstancePersistence.fetchByC_C_R(
+				classNameId, classPK, ruleGroupId);
+
+		if (ruleGroupInstance != null) {
+			throw new DuplicateRuleGroupInstanceException();
+		}
 	}
 
 }

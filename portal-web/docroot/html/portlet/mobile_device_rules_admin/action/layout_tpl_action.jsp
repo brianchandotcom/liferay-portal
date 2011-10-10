@@ -30,7 +30,7 @@ if (!isAdd) {
 List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
 %>
 
-<liferay-ui:error-marker key="errorSection" value="layout"/>
+<liferay-ui:error-marker key="errorSection" value="layout" />
 
 <h5><%= LanguageUtil.get(pageContext, "layout-template") %></h5>
 

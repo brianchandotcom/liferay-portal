@@ -29,7 +29,7 @@
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="type"
-    translate="<%= true %>"
+	translate="<%= true %>"
 	value="<%= action.getType() %>"
 />
 

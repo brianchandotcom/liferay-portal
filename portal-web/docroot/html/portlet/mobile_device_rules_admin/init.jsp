@@ -22,12 +22,10 @@
 <%@ page import="com.liferay.portal.kernel.mobile.device.rulegroup.rule.UnknownRuleHandlerException" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.Validator" %>
-<%@ page import="com.liferay.portal.mobile.device.rulegroup.rule.impl.SimpleRuleHandler" %>
-<%@ page import="com.liferay.portal.model.Portlet" %>
 <%@ page import="com.liferay.portal.service.GroupLocalServiceUtil" %>
-<%@ page import="com.liferay.portal.theme.ThemeDisplay" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.util.PortletCategoryKeys" %>
+<%@ page import="com.liferay.portlet.mobiledevicerules.MDRPortletConstants" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.NoSuchActionException" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.NoSuchRuleException" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException" %>
@@ -36,21 +34,18 @@
 <%@ page import="com.liferay.portlet.mobiledevicerules.model.MDRRule" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance" %>
-<%@ page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupSearch" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupDisplayTerms" %>
+<%@ page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupSearch" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupSearchTerms" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleServiceUtil" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionUtil" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator" %>
-<%@ page import="com.liferay.portlet.mobiledevicerules.MDRPortletConstants" %>
-
 
 <%@ include file="/html/portlet/init.jsp" %>
 

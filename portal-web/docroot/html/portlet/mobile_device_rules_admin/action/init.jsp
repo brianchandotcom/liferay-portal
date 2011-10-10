@@ -20,8 +20,8 @@
 <%@ page import="com.liferay.portal.plugin.PluginUtil" %>
 <%@ page import="com.liferay.portal.service.LayoutLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %>
-<%@ page import="com.liferay.portlet.mobiledevicerules.model.MDRAction" %>
 <%@ page import="com.liferay.portlet.mobiledevicerules.MDRPortletConstants" %>
+<%@ page import="com.liferay.portlet.mobiledevicerules.model.MDRAction" %>
 
 <%@ include file="/html/portlet/mobile_device_rules_admin/init.jsp" %>
 

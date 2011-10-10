@@ -41,7 +41,7 @@ else if (renderResponse != null) {
 %>
 
 <aui:select label="site" name="groupId" onChange='<%= namespace + "changeDisplay();" %>'>
-	<aui:option label="select-a-site" value="0" selected="<%= actionGroupId == 0%>" disabled="<%= true %>"/>
+	<aui:option label="select-a-site" value="0" selected="<%= actionGroupId == 0%>" disabled="<%= true %>" />
 	<%
 	int groupCount = 0;
 	for (Group selGroup : groups) {
@@ -59,7 +59,7 @@ else if (renderResponse != null) {
 	</c:if>
 </aui:select>
 
-<aui:input name="originalLayoutId" value="<%=actionLayoutId%>" type="hidden"/>
+<aui:input name="originalLayoutId" value="<%=actionLayoutId%>" type="hidden" />
 
 <div id="<%= namespace %>layouts">
 	<c:import url="/html/portlet/mobile_device_rules_admin/action/site_url_action_layouts.jsp" />

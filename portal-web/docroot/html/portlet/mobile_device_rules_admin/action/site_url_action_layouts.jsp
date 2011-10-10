@@ -46,10 +46,10 @@ while (layoutIterator.hasNext()) {
 
 
 <aui:select label="page" name="layoutId">
-	<aui:option label="select-a-layout" value="0" selected="<%= actionLayoutId == 0%>" disabled="<%= true %>"/>
+	<aui:option label="select-a-layout" value="0" selected="<%= actionLayoutId == 0%>" disabled="<%= true %>" />
 
-	<c:if test="<%=!publicLayouts.isEmpty()%>">
-		<aui:option label="public-layouts" value="0" disabled="<%= true %>"/>
+	<c:if test="<%=!publicLayouts.isEmpty() %>">
+		<aui:option label="public-layouts" value="0" disabled="<%= true %>" />
 		<%
 			for (Layout publicLayout : publicLayouts) {
 		%>
@@ -59,8 +59,8 @@ while (layoutIterator.hasNext()) {
 		%>
 	</c:if>
 
-	<c:if test="<%=!privateLayouts.isEmpty()%>">
-		<aui:option label="private-layouts" value="0" disabled="<%= true %>"/>
+	<c:if test="<%=!privateLayouts.isEmpty() %>">
+		<aui:option label="private-layouts" value="0" disabled="<%= true %>" />
 		<%
 			for (Layout privateLayout : privateLayouts) {
 		%>
@@ -70,7 +70,7 @@ while (layoutIterator.hasNext()) {
 		%>
 	</c:if>
 
-	<c:if test="<%=publicLayouts.isEmpty() && privateLayouts.isEmpty()%>">
-		<aui:option label="no-available-layouts" value="0" disabled="<%= true %>"/>
+	<c:if test="<%=publicLayouts.isEmpty() && privateLayouts.isEmpty() %>">
+		<aui:option label="no-available-layouts" value="0" disabled="<%= true %>" />
 	</c:if>
 </aui:select>

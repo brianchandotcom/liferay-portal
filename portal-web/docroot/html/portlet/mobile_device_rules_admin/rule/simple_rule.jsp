@@ -46,20 +46,20 @@ else {
 %>
 
 <aui:select name="<%= MDRPortletConstants.OS %>" multiple="<%= true %>">
-	<aui:option label="any-os" value="" selected="<%= oses.isEmpty() %>"/>
+	<aui:option label="any-os" value="" selected="<%= oses.isEmpty() %>" />
 	<%
 	Set<VersionableName> knownOSes = DeviceDetectionUtil.getKnownOperatingSystems();
 
 	for (VersionableName versionableName : knownOSes) {
 	%>
-		<aui:option label="<%= versionableName.getName() %>" selected="<%= oses.contains(versionableName.getName()) %>"/>
+		<aui:option label="<%= versionableName.getName() %>" selected="<%= oses.contains(versionableName.getName()) %>" />
 	<%
 	}
 	%>
 </aui:select>
 
 <aui:select name="<%= MDRPortletConstants.TABLET %>">
-	<aui:option label="any" value="" selected="<%= tablet == 0 %>"/>
-	<aui:option label="true" selected="<%= tablet == 1 %>"/>
-	<aui:option label="false" selected="<%= tablet == 2 %>"/>
+	<aui:option label="any" value="" selected="<%= tablet == 0 %>" />
+	<aui:option label="true" selected="<%= tablet == 1 %>" />
+	<aui:option label="false" selected="<%= tablet == 2 %>" />
 </aui:select>

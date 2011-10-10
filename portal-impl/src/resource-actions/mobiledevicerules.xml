@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>176</portlet-name>
+		<portlet-name>177</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>CONFIGURATION</action-key>
@@ -22,7 +22,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.mobiledevicerules</model-name>
 		<portlet-ref>
-			<portlet-name>176</portlet-name>
+			<portlet-name>177</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -46,7 +46,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup</model-name>
 		<portlet-ref>
-			<portlet-name>176</portlet-name>
+			<portlet-name>177</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -67,7 +67,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance</model-name>
 		<portlet-ref>
-			<portlet-name>176</portlet-name>
+			<portlet-name>177</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

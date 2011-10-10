@@ -114,9 +114,9 @@ public class PortletKeys {
 
 	public static final String METADATA_SET_ADMIN = "171";
 
-	public static final String MOBILE_DEVICE_GLOBAL_ADMIN = "176";
+	public static final String MOBILE_DEVICE_GLOBAL_ADMIN = "177";
 
-	public static final String MOBILE_DEVICE_SITE_ADMIN = "177";
+	public static final String MOBILE_DEVICE_SITE_ADMIN = "178";
 
 	public static final String MONITORING = "131";
 

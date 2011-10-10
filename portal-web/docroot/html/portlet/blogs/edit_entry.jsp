@@ -232,7 +232,9 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 
 			<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveEntry(true, false);" %>' type="submit" value="<%= saveButtonLabel %>" />
 
-			<aui:button name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewEntry();" %>' value="preview" />
+			<c:if test="<%= entry == null || entry.isDraft() %>">
+				<aui:button name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewEntry();" %>' value="preview" />
+			</c:if>
 
 			<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "saveEntry(false, false);" %>' type="submit" value="<%= publishButtonLabel %>" />
 

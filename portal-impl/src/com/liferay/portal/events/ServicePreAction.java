@@ -423,7 +423,16 @@ public class ServicePreAction extends Action {
 					permissionChecker, layout, controlPanelCategory,
 					ActionKeys.VIEW);
 
-				if (!isViewableGroup && group.isStagingGroup()) {
+				boolean isViewableStaging = GroupPermissionUtil.contains(
+					permissionChecker, group.getGroupId(),
+					ActionKeys.VIEW_STAGING);
+
+				if (isViewableStaging) {
+					layouts = LayoutLocalServiceUtil.getLayouts(
+						layout.getGroupId(), layout.isPrivateLayout(),
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+				}
+				else if (!isViewableGroup && group.isStagingGroup()) {
 					layout = null;
 				}
 				else if (!isViewableGroup) {
@@ -505,10 +514,19 @@ public class ServicePreAction extends Action {
 
 		LayoutSet layoutSet = null;
 
+		boolean hasCustomizeLayoutPermission = false;
+		boolean hasUpdateLayoutPermission = false;
+
 		boolean customizedView = SessionParamUtil.getBoolean(
 			request, "customized_view", true);
 
 		if (layout != null) {
+			hasCustomizeLayoutPermission = LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.CUSTOMIZE);
+
+			hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.UPDATE);
+
 			layoutSet = layout.getLayoutSet();
 
 			if (company.isSiteLogo()) {
@@ -565,13 +583,10 @@ public class ServicePreAction extends Action {
 			}
 
 			layoutTypePortlet.setCustomizedView(customizedView);
-			layoutTypePortlet.setUpdatePermission(
-				LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.UPDATE));
+			layoutTypePortlet.setUpdatePermission(hasUpdateLayoutPermission);
 
 			if (signedIn && customizable && customizedView &&
-				LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
+				hasCustomizeLayoutPermission) {
 
 				PortalPreferences portalPreferences =
 					PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -890,10 +905,6 @@ public class ServicePreAction extends Action {
 
 				themeDisplay.setFreeformLayout(freeformLayout);
 
-				boolean hasUpdateLayoutPermission =
-					LayoutPermissionUtil.contains(
-						permissionChecker, layout, ActionKeys.UPDATE);
-
 				if (hasUpdateLayoutPermission) {
 					themeDisplay.setShowAddContentIconPermission(true);
 
@@ -902,7 +913,10 @@ public class ServicePreAction extends Action {
 					}
 
 					themeDisplay.setShowLayoutTemplatesIcon(true);
-					themeDisplay.setShowPageCustomizationIcon(true);
+
+					if (!group.isUser()) {
+						themeDisplay.setShowPageCustomizationIcon(true);
+					}
 
 					themeDisplay.setURLAddContent(
 						"Liferay.LayoutConfiguration.toggle('".concat(
@@ -912,10 +926,7 @@ public class ServicePreAction extends Action {
 						"Liferay.LayoutConfiguration.showTemplates();");
 				}
 
-				boolean hasCustomizePermission = LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.CUSTOMIZE);
-
-				if (hasCustomizePermission && customizedView) {
+				if (hasCustomizeLayoutPermission && customizedView) {
 					themeDisplay.setShowAddContentIconPermission(true);
 
 					if (!LiferayWindowState.isMaximized(request)) {
@@ -928,24 +939,19 @@ public class ServicePreAction extends Action {
 				}
 			}
 
-			boolean hasManageLayoutsPermission = false;
-
 			if (signedIn) {
-				hasManageLayoutsPermission = GroupPermissionUtil.contains(
-					permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS);
-
 				if (group.isUser()) {
 					if ((layout.isPrivateLayout() &&
 						 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE) ||
 						(layout.isPublicLayout() &&
 						 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE)) {
 
-						hasManageLayoutsPermission = false;
+						hasUpdateLayoutPermission = false;
 					}
 				}
 			}
 
-			if (hasManageLayoutsPermission) {
+			if (hasUpdateLayoutPermission) {
 				themeDisplay.setShowPageSettingsIcon(true);
 
 				PortletURL pageSettingsURL = new PortletURLImpl(
@@ -971,40 +977,56 @@ public class ServicePreAction extends Action {
 
 				themeDisplay.setURLPageSettings(pageSettingsURL);
 
-				if (group.isSite()) {
+				if (group.isSite() &&
+					GroupPermissionUtil.contains(
+						permissionChecker, scopeGroupId,
+						ActionKeys.ASSIGN_MEMBERS)) {
+
 					themeDisplay.setShowManageSiteMembershipsIcon(true);
+
+					PortletURL manageSiteMembershipsURL = new PortletURLImpl(
+						request, PortletKeys.SITE_MEMBERSHIPS_ADMIN,
+						controlPanelPlid, PortletRequest.RENDER_PHASE);
+
+					manageSiteMembershipsURL.setWindowState(
+						LiferayWindowState.POP_UP);
+					manageSiteMembershipsURL.setPortletMode(PortletMode.VIEW);
+
+					manageSiteMembershipsURL.setParameter(
+						"struts_action", "/sites_admin/edit_site_assignments");
+					manageSiteMembershipsURL.setParameter(
+						"groupId", String.valueOf(scopeGroupId));
+					manageSiteMembershipsURL.setParameter(
+						"selPlid", String.valueOf(plid));
+
+					themeDisplay.setURLManageSiteMemberships(
+						manageSiteMembershipsURL);
 				}
 				else {
 					themeDisplay.setShowManageSiteMembershipsIcon(false);
 				}
-
-				PortletURL manageSiteMembershipsURL = new PortletURLImpl(
-					request, PortletKeys.SITE_MEMBERSHIPS_ADMIN,
-					controlPanelPlid, PortletRequest.RENDER_PHASE);
-
-				manageSiteMembershipsURL.setWindowState(
-					LiferayWindowState.POP_UP);
-				manageSiteMembershipsURL.setPortletMode(PortletMode.VIEW);
-
-				manageSiteMembershipsURL.setParameter(
-					"struts_action", "/sites_admin/edit_site_assignments");
-				manageSiteMembershipsURL.setParameter(
-					"groupId", String.valueOf(scopeGroupId));
-				manageSiteMembershipsURL.setParameter(
-					"selPlid", String.valueOf(plid));
-
-				themeDisplay.setURLManageSiteMemberships(
-					manageSiteMembershipsURL);
 			}
 
-			if (!group.isControlPanel() && !group.isUser() &&
-				!group.isUserGroup() &&
-				(GroupPermissionUtil.contains(
-					permissionChecker, group.getGroupId(),
-					ActionKeys.MANAGE_STAGING) ||
+			boolean hasAddLayoutLayoutPermission =
+				LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.ADD_LAYOUT);
+			boolean hasAddLayoutGroupPermission =
 				GroupPermissionUtil.contains(
-					permissionChecker, group.getGroupId(),
-					ActionKeys.UPDATE))) {
+					permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT);
+			boolean hasManageLayoutsGroupPermission =
+				GroupPermissionUtil.contains(
+					permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS);
+			boolean hasManageStagingPermission = GroupPermissionUtil.contains(
+				permissionChecker, scopeGroupId, ActionKeys.MANAGE_STAGING);
+			boolean hasPublishStagingPermission = GroupPermissionUtil.contains(
+				permissionChecker, scopeGroupId, ActionKeys.PUBLISH_STAGING);
+			boolean hasUpdateGroupPermission = GroupPermissionUtil.contains(
+				permissionChecker, scopeGroupId, ActionKeys.UPDATE);
+			boolean hasViewStagingPermission = GroupPermissionUtil.contains(
+				permissionChecker, scopeGroupId, ActionKeys.VIEW_STAGING);
+
+			if (!group.isControlPanel() && !group.isUser() &&
+				!group.isUserGroup() && hasUpdateGroupPermission) {
 
 				themeDisplay.setShowSiteSettingsIcon(true);
 
@@ -1024,7 +1046,10 @@ public class ServicePreAction extends Action {
 				themeDisplay.setURLSiteSettings(siteSettingsURL);
 			}
 
-			if (hasManageLayoutsPermission && !group.isLayoutPrototype()) {
+			if (!group.isLayoutPrototype() &&
+				(hasAddLayoutGroupPermission || hasAddLayoutLayoutPermission ||
+				 hasManageLayoutsGroupPermission || hasUpdateGroupPermission)) {
+
 				themeDisplay.setShowSiteMapSettingsIcon(true);
 
 				PortletURL siteMapSettingsURL = new PortletURLImpl(
@@ -1065,12 +1090,9 @@ public class ServicePreAction extends Action {
 			// LEP-4987
 
 			if (group.isStaged() || group.isStagingGroup()) {
-				boolean hasPublishStagingPermission =
-					GroupPermissionUtil.contains(
-						permissionChecker, scopeGroupId,
-						ActionKeys.PUBLISH_STAGING);
+				if (hasManageStagingPermission || hasPublishStagingPermission ||
+					hasUpdateLayoutPermission || hasViewStagingPermission) {
 
-				if (hasManageLayoutsPermission || hasPublishStagingPermission) {
 					themeDisplay.setShowStagingIcon(true);
 				}
 
@@ -1553,10 +1575,18 @@ public class ServicePreAction extends Action {
 			return new Object[] {layout, layouts};
 		}
 
+		Group group = layout.getGroup();
+
 		boolean hasUpdateLayoutPermission = false;
+		boolean hasViewStagingPermission =
+			(group.isStagingGroup() || group.isStagedRemotely()) &&
+			 GroupPermissionUtil.contains(
+				 permissionChecker, group.getGroupId(),
+				 ActionKeys.VIEW_STAGING);
 
 		if (LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.VIEW)) {
+				permissionChecker, layout, ActionKeys.VIEW) ||
+			hasViewStagingPermission) {
 
 			hasUpdateLayoutPermission = true;
 		}
@@ -1567,8 +1597,9 @@ public class ServicePreAction extends Action {
 			Layout curLayout = layouts.get(i);
 
 			if (!curLayout.isHidden() &&
-				LayoutPermissionUtil.contains(
-					permissionChecker, curLayout, ActionKeys.VIEW)) {
+				(LayoutPermissionUtil.contains(
+					permissionChecker, curLayout, ActionKeys.VIEW) ||
+				 hasViewStagingPermission)) {
 
 				if (accessibleLayouts.isEmpty() && !hasUpdateLayoutPermission) {
 					layout = curLayout;

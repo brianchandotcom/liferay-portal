@@ -35,7 +35,7 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		layoutSetLocalService.updateLogo(
 			groupId, privateLayout, logo, inputStream);
@@ -47,7 +47,7 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		pluginSettingLocalService.checkPermission(
 			getUserId(), themeId, Plugin.TYPE_THEME);
@@ -61,7 +61,7 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		return layoutSetLocalService.updateSettings(
 			groupId, privateLayout, settings);

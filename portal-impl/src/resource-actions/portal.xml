@@ -284,15 +284,19 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.Group</model-name>
 		<portlet-ref>
+			<portlet-name>125</portlet-name>
 			<portlet-name>134</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
+				<action-key>ADD_LAYOUT</action-key>
 				<action-key>ADD_LAYOUT_BRANCH</action-key>
 				<action-key>ADD_LAYOUT_SET_BRANCH</action-key>
 				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>EXPORT_IMPORT_LAYOUTS</action-key>
+				<action-key>EXPORT_IMPORT_PORTLET_INFO</action-key>
 				<action-key>MANAGE_ANNOUNCEMENTS</action-key>
 				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
 				<action-key>MANAGE_LAYOUTS</action-key>
@@ -303,15 +307,19 @@
 				<action-key>PUBLISH_TO_REMOTE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW_MEMBERS</action-key>
+				<action-key>VIEW_STAGING</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
+				<action-key>ADD_LAYOUT</action-key>
 				<action-key>ADD_LAYOUT_BRANCH</action-key>
 				<action-key>ADD_LAYOUT_SET_BRANCH</action-key>
 				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>EXPORT_IMPORT_LAYOUTS</action-key>
+				<action-key>EXPORT_IMPORT_PORTLET_INFO</action-key>
 				<action-key>MANAGE_ANNOUNCEMENTS</action-key>
 				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
 				<action-key>MANAGE_LAYOUTS</action-key>
@@ -322,12 +330,14 @@
 				<action-key>PUBLISH_TO_REMOTE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW_MEMBERS</action-key>
+				<action-key>VIEW_STAGING</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.portal.model.LayoutBranch</model-name>
 		<portlet-ref>
+			<portlet-name>125</portlet-name>
 			<portlet-name>134</portlet-name>
 		</portlet-ref>
 		<permissions>
@@ -348,6 +358,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.LayoutSetBranch</model-name>
 		<portlet-ref>
+			<portlet-name>125</portlet-name>
 			<portlet-name>134</portlet-name>
 		</portlet-ref>
 		<permissions>
@@ -370,7 +381,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.LayoutPrototype</model-name>
 		<portlet-ref>
-			<portlet-name>134</portlet-name>
+			<portlet-name>146</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -393,7 +404,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.LayoutSetPrototype</model-name>
 		<portlet-ref>
-			<portlet-name>134</portlet-name>
+			<portlet-name>149</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -420,46 +431,26 @@
 		</portlet-ref>
 		<permissions>
 			<supports>
-				<action-key>ADD_LAYOUT</action-key>
-				<action-key>ADD_LAYOUT_BRANCH</action-key>
-				<action-key>ADD_LAYOUT_SET_BRANCH</action-key>
-				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>MANAGE_ANNOUNCEMENTS</action-key>
-				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
-				<action-key>MANAGE_LAYOUTS</action-key>
-				<action-key>MANAGE_STAGING</action-key>
 				<action-key>MANAGE_SUBORGANIZATIONS</action-key>
-				<action-key>MANAGE_TEAMS</action-key>
 				<action-key>MANAGE_USERS</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>PUBLISH_STAGING</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
-				<action-key>VIEW_MEMBERS</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>ADD_LAYOUT</action-key>
-				<action-key>ADD_LAYOUT_BRANCH</action-key>
-				<action-key>ADD_LAYOUT_SET_BRANCH</action-key>
-				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>MANAGE_ANNOUNCEMENTS</action-key>
-				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
-				<action-key>MANAGE_LAYOUTS</action-key>
-				<action-key>MANAGE_STAGING</action-key>
 				<action-key>MANAGE_SUBORGANIZATIONS</action-key>
-				<action-key>MANAGE_TEAMS</action-key>
 				<action-key>MANAGE_USERS</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>PUBLISH_STAGING</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
-				<action-key>VIEW_MEMBERS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
@@ -550,7 +541,6 @@
 				<action-key>DELETE</action-key>
 				<action-key>MANAGE_ANNOUNCEMENTS</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>MANAGE_LAYOUTS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>

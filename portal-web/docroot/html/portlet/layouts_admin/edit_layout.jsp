@@ -161,7 +161,7 @@ String[][] categorySections = {mainSections};
 									activeState: false,
 									boundingBox: buttonRow,
 									children: [
-										<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_LAYOUT) %>">
+										<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) %>">
 											{
 												handler: function(event) {
 													if (!popup) {
@@ -187,32 +187,37 @@ String[][] categorySections = {mainSections};
 											},
 										</c:if>
 
-										{
-											handler: function(event) {
-												Liferay.Util.openWindow(
-													{
-														cache: false,
-														dialog: {
-															width: 700
-														},
-														id: '<portlet:namespace /><%= selPlid %>_permissions',
-														title: '<liferay-ui:message key="permissions" />',
-														uri: '<%= permissionURL %>'
-													}
-												);
+										<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) %>">
+											{
+												handler: function(event) {
+													Liferay.Util.openWindow(
+														{
+															cache: false,
+															dialog: {
+																width: 700
+															},
+															id: '<portlet:namespace /><%= selPlid %>_permissions',
+															title: '<liferay-ui:message key="permissions" />',
+															uri: '<%= permissionURL %>'
+														}
+													);
+												},
+												icon: 'key',
+												label: '<liferay-ui:message key="permissions" />'
 											},
-											icon: 'key',
-											label: '<liferay-ui:message key="permissions" />'
-										},
-										{
-											handler: function(event) {
-												<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
-											},
-											icon: 'circle-minus',
-											label: '<liferay-ui:message key="delete" />'
-										},
+										</c:if>
 
-										<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.MANAGE_LAYOUTS) %>">
+										<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.DELETE) %>">
+											{
+												handler: function(event) {
+													<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
+												},
+												icon: 'circle-minus',
+												label: '<liferay-ui:message key="delete" />'
+											},
+										</c:if>
+
+										<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 											{
 												type: 'ToolbarSpacer'
 											},
@@ -277,7 +282,7 @@ String[][] categorySections = {mainSections};
 				categoryNames="<%= _CATEGORY_NAMES %>"
 				categorySections="<%= categorySections %>"
 				jspPath="/html/portlet/layouts_admin/layout/"
-				showButtons="<%= !SitesUtil.isLayoutLocked(selLayout) %>"
+				showButtons="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) && !SitesUtil.isLayoutLocked(selLayout) %>"
 			/>
 		</c:otherwise>
 	</c:choose>

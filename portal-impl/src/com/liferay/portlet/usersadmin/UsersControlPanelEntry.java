@@ -52,12 +52,14 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 				return true;
 			}
 
+			/*
 			if (OrganizationPermissionUtil.contains(
 					permissionChecker, organization.getOrganizationId(),
 					ActionKeys.VIEW)) {
 
 				return true;
 			}
+			*/
 		}
 
 		return false;

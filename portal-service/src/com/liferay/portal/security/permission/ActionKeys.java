@@ -157,6 +157,10 @@ public class ActionKeys {
 
 	public static final String EXPORT_ALL_EVENTS = "EXPORT_ALL_EVENTS";
 
+	public static final String EXPORT_IMPORT_LAYOUTS = "EXPORT_IMPORT_LAYOUTS";
+
+	public static final String EXPORT_IMPORT_PORTLET_INFO = "EXPORT_IMPORT_PORTLET_INFO";
+
 	public static final String EXPORT_USER = "EXPORT_USER";
 
 	public static final String GUEST_PREFERENCES = "GUEST_PREFERENCES";
@@ -229,6 +233,8 @@ public class ActionKeys {
 	public static final String VIEW_CONTROL_PANEL = "VIEW_CONTROL_PANEL";
 
 	public static final String VIEW_MEMBERS = "VIEW_MEMBERS";
+
+	public static final String VIEW_STAGING = "VIEW_STAGING";
 
 	public static final String VIEW_TREE = "VIEW_TREE";
 

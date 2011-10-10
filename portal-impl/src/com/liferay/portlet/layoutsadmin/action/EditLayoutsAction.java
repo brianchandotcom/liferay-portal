@@ -363,9 +363,51 @@ public class EditLayoutsAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
 
+		long selPlid = ParamUtil.getLong(portletRequest, "selPlid");
+		long parentPlid = ParamUtil.getLong(portletRequest, "parentPlid");
+
+		if (selPlid > 0) {
+			layout = LayoutLocalServiceUtil.getLayout(selPlid);
+		}
+
 		if (cmd.equals("reset_customized_view")) {
 			if (!LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
+
+				throw new PrincipalException();
+			}
+			else {
+				return;
+			}
+		}
+		else if (cmd.equals(Constants.ADD)) {
+			if ((parentPlid == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
+				if (!GroupPermissionUtil.contains(
+						permissionChecker, group.getGroupId(),
+						ActionKeys.ADD_LAYOUT)) {
+
+					throw new PrincipalException();
+				}
+				else {
+					return;
+				}
+			}
+			else {
+				layout = LayoutLocalServiceUtil.getLayout(parentPlid);
+
+				if (!LayoutPermissionUtil.contains(
+						permissionChecker, layout, ActionKeys.ADD_LAYOUT)) {
+
+					throw new PrincipalException();
+				}
+				else {
+					return;
+				}
+			}
+		}
+		else if (cmd.equals(Constants.DELETE)) {
+			if (!LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.DELETE)) {
 
 				throw new PrincipalException();
 			}
@@ -383,19 +425,26 @@ public class EditLayoutsAction extends PortletAction {
 
 		boolean hasPermission = true;
 
-		if (group.isSite()) {
-			boolean publishToLive =
-				GroupPermissionUtil.contains(
+		if (cmd.equals("publish_to_live")) {
+			if (group.isSite()) {
+				boolean publishToLive = GroupPermissionUtil.contains(
 					permissionChecker, group.getGroupId(),
-					ActionKeys.PUBLISH_STAGING) &&
-				cmd.equals("publish_to_live");
+					ActionKeys.PUBLISH_STAGING);
 
-			if (!GroupPermissionUtil.contains(
-					permissionChecker, group.getGroupId(),
-					ActionKeys.MANAGE_LAYOUTS) &&
-				!hasUpdateLayoutPermission && !publishToLive) {
+				if (!hasUpdateLayoutPermission && !publishToLive) {
+					hasPermission = false;
+				}
+			}
+			else if (group.isOrganization()) {
+				long organizationId = group.getOrganizationId();
 
-				hasPermission = false;
+				boolean publishToLive = OrganizationPermissionUtil.contains(
+					permissionChecker, organizationId,
+					ActionKeys.PUBLISH_STAGING);
+
+				if (!hasUpdateLayoutPermission && !publishToLive) {
+					hasPermission = false;
+				}
 			}
 		}
 
@@ -411,23 +460,6 @@ public class EditLayoutsAction extends PortletAction {
 		else if (group.isLayoutSetPrototype()) {
 			LayoutSetPrototypePermissionUtil.check(
 				permissionChecker, group.getClassPK(), ActionKeys.UPDATE);
-		}
-		else if (group.isOrganization()) {
-			long organizationId = group.getOrganizationId();
-
-			boolean publishToLive =
-				OrganizationPermissionUtil.contains(
-					permissionChecker, organizationId,
-					ActionKeys.PUBLISH_STAGING) &&
-				cmd.equals("publish_to_live");
-
-			if (!OrganizationPermissionUtil.contains(
-					permissionChecker, organizationId,
-					ActionKeys.MANAGE_LAYOUTS) &&
-				!hasUpdateLayoutPermission && !publishToLive) {
-
-				hasPermission = false;
-			}
 		}
 		else if (group.isUser()) {
 			long groupUserId = group.getClassPK();

@@ -35,20 +35,6 @@ Group group = (Group)row.getObject();
 		/>
 	</c:if>
 
-	<%--<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PERMISSIONS) %>">
-		<liferay-security:permissionsURL
-			modelResource="<%= Group.class.getName() %>"
-			modelResourceDescription="<%= group.getName() %>"
-			resourcePrimKey="<%= String.valueOf(group.getGroupId()) %>"
-			var="permissionsURL"
-		/>
-
-		<liferay-ui:icon
-			image="permissions"
-			url="<%= permissionsURL %>"
-		/>
-	</c:if>--%>
-
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_LAYOUTS) %>">
 		<liferay-portlet:renderURL doAsGroupId="<%= group.getGroupId() %>" portletName="<%= PortletKeys.GROUP_PAGES %>" var="managePagesURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

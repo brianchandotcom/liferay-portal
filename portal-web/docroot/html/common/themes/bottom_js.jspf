@@ -122,7 +122,7 @@ if (layout != null) {
 						</c:if>
 
 						navBlock: navBlock,
-						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>
+						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) %>
 					}
 				);
 			}
@@ -152,7 +152,7 @@ if (layout != null) {
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
 		<c:choose>
-			<c:when test="<%= (group != null) && group.isControlPanel() %>">
+			<c:when test="<%= (group != null) && group.isControlPanel() && !LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) && !(layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
 				Liferay._editControlsState = 'visible';
 			</c:when>
 			<c:otherwise>

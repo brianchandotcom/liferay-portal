@@ -160,11 +160,10 @@
 		margin: 0 0 0.5em 0.5em;
 	}
 
-	img.shortcut-icon {
-		display: inline;
-		margin-left: 10px;
-		margin-top: 75px;
+	img.locked-icon, img.shortcut-icon {
+		bottom: 12px;
 		position: absolute;
+		right: 0;
 		z-index: 10;
 	}
 
@@ -282,12 +281,6 @@
 				text-decoration: none;
 			}
 
-			img.locked-icon {
-				bottom: 10px;
-				right: 0;
-				position: absolute;
-			}
-
 			&:hover .document-selector, &.selected .document-selector {
 				clip: rect(auto auto auto auto);
 				position: absolute;
@@ -323,12 +316,6 @@
 			.document-thumbnail {
 				text-align: center;
 				position: relative;
-			}
-
-			img.locked-icon {
-				bottom: 0;
-				position: absolute;
-				right: 0;
 			}
 
 			.entry-title {

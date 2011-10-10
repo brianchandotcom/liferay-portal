@@ -20,30 +20,32 @@ String thumbnailStyle = "height: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT 
 
 Image largeImage = ImageLocalServiceUtil.getImage(fileEntry.getFileVersion().getLargeImageId());
 
-if (largeImage != null) {
-	Image smallImage = ImageLocalServiceUtil.getImage(fileEntry.getSmallImageId());
-
-	long smallImageId = 0;
-	int smallImageHeight = 100;
-	int smallImageWidth = 100;
-
-	if (smallImage != null) {
-		smallImageId = smallImage.getImageId();
-		smallImageHeight = smallImage.getHeight();
-		smallImageWidth = smallImage.getWidth();
+if (fileShortcut == null) {	
+	if (largeImage != null) {
+		Image smallImage = ImageLocalServiceUtil.getImage(fileEntry.getSmallImageId());
+	
+		long smallImageId = 0;
+		int smallImageHeight = 100;
+		int smallImageWidth = 100;
+	
+		if (smallImage != null) {
+			smallImageId = smallImage.getImageId();
+			smallImageHeight = smallImage.getHeight();
+			smallImageWidth = smallImage.getWidth();
+		}
+	
+		thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
+		thumbnailStyle = "max-height: " + smallImageHeight + "px; max-width: " + smallImageWidth + "px;";
+	
+		if (smallImage != null) {
+			thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
+		}
 	}
-
-	thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
-	thumbnailStyle = "max-height: " + smallImageHeight + "px; max-width: " + smallImageWidth + "px;";
-
-	if (smallImage != null) {
-		thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
+	else if (PDFProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
+		thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";
 	}
-}
-else if (PDFProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
-	thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";
-}
-else if (VideoProcessor.hasVideo(fileEntry, fileEntry.getVersion())) {
-	thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&videoThumbnail=1";
-}
+	else if (VideoProcessor.hasVideo(fileEntry, fileEntry.getVersion())) {
+		thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&videoThumbnail=1";
+	}
+}	
 %>

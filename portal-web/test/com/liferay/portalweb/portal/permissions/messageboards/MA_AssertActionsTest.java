@@ -25,7 +25,7 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//a/strong"));
 		assertTrue(selenium.isElementPresent("//input[@value='Add Category']"));
@@ -54,7 +52,7 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -70,20 +68,18 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//input[@id='_19_name']"));
 		assertTrue(selenium.isVisible("//textarea[@id='_19_description']"));
 		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -98,11 +94,9 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
@@ -110,7 +104,7 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -126,21 +120,19 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -155,11 +147,9 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText("//div[2]/div/span/a/span[1]"));
 		assertEquals(RuntimeVariables.replace("Banned Users"),
@@ -167,25 +157,22 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='top-links-navigation']/span[6]/a",
 			RuntimeVariables.replace("Banned Users"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("There are no banned users."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//div[@class='top-links-navigation']/span[1]/a",
 			RuntimeVariables.replace("Message Boards Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -201,7 +188,6 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
@@ -222,7 +208,6 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Reply"),
 			selenium.getText(
 				"//ul[@class='edit-controls lfr-component']/li[2]/span/a"));

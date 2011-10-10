@@ -25,7 +25,7 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,20 +40,16 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."),
 			selenium.getText("//div[@class='portlet-msg-info']/a"));
@@ -61,14 +57,12 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Attachments",
 			RuntimeVariables.replace("Attachments"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -86,21 +80,18 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"This page does not have any file attachments."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//input[@value='Add Attachments']",
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.windowFocus();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -116,11 +107,10 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click("//a[@class='use-fallback using-new-uploader']");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -135,15 +125,12 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_36_file1']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\wiki\\wikipage\\addfrontpagecreolelinkedimage\\dependencies\\Wiki_Attachment.jpg"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

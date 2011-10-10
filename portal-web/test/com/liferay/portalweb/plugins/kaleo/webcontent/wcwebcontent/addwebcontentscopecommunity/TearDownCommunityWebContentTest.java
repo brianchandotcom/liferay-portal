@@ -30,7 +30,7 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,16 +45,14 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//strong/a/span",
 					RuntimeVariables.replace("Scope Selector"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -70,17 +68,15 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Community Name"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -97,13 +93,11 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Community Name"),
 					selenium.getText("//strong/a/span"));
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean webContent1Present = selenium.isElementPresent(
 						"_15_rowIds");
@@ -121,7 +115,6 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -141,7 +134,6 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -161,7 +153,6 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -181,7 +172,6 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -201,7 +191,6 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 6:
 			case 100:

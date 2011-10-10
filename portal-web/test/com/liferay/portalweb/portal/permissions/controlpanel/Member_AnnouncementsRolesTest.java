@@ -24,11 +24,9 @@ public class Member_AnnouncementsRolesTest extends BaseTestCase {
 	public void testMember_AnnouncementsRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Announcements"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.uncheck("_128_rowIds");
 		selenium.uncheck(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.announcements.model.AnnouncementsEntryUPDATE']");
@@ -36,7 +34,6 @@ public class Member_AnnouncementsRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.announcements.model.AnnouncementsEntryVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

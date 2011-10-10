@@ -30,7 +30,7 @@ public class AddSuborganizationTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,19 +45,15 @@ public class AddSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Search All Organizations",
 					RuntimeVariables.replace("Search All Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -73,18 +69,16 @@ public class AddSuborganizationTest extends BaseTestCase {
 			case 2:
 				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("Test Organization"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//td[8]/span/ul/li/strong/a/span"));
 				selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -100,7 +94,6 @@ public class AddSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Add Regular Organization"),
 					selenium.getText(
@@ -108,10 +101,9 @@ public class AddSuborganizationTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -128,22 +120,19 @@ public class AddSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Test Organization"),
 					selenium.getText("//td[1]/a"));
 				selenium.type("//input[@id='_125_name']",
 					RuntimeVariables.replace("Test Child"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -158,12 +147,11 @@ public class AddSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//a[@id='_125_addressesLink']",
 					RuntimeVariables.replace("Addresses"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -179,23 +167,19 @@ public class AddSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_125_addressStreet1_0']",
 					RuntimeVariables.replace("11111 Main Street USA"));
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_125_addressTypeId0']",
 					RuntimeVariables.replace("Billing"));
 				selenium.type("//input[@id='_125_addressZip0']",
 					RuntimeVariables.replace("90210"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_125_addressCity0']",
 					RuntimeVariables.replace("Cerritos"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_125_addressPrimary0']",
 					RuntimeVariables.replace("Primary"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -212,14 +196,13 @@ public class AddSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_125_addressCountryId0']",
 					RuntimeVariables.replace("United States"));
 				selenium.clickAt("//input[@id='_125_addressMailing0Checkbox']",
 					RuntimeVariables.replace("Mailing"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -236,13 +219,11 @@ public class AddSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_125_addressRegionId0']",
 					RuntimeVariables.replace("Florida"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

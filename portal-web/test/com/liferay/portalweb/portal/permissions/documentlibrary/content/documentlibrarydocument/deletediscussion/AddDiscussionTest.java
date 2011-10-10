@@ -25,7 +25,7 @@ public class AddDiscussionTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,25 +40,21 @@ public class AddDiscussionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("TestDocument.txt"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("link=Be the first."));
 		selenium.clickAt("link=Be the first.",
 			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -73,15 +69,13 @@ public class AddDiscussionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@name='_20_postReplyBody0']",
 			RuntimeVariables.replace("Test Comment"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -96,7 +90,6 @@ public class AddDiscussionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}

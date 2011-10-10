@@ -25,7 +25,7 @@ public class SA_DefineBARoleTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,35 +40,27 @@ public class SA_DefineBARoleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_128_keywords']",
 			RuntimeVariables.replace("Blogs"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Administrator"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Blogs Administrator"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Define Permissions",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Blogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//form/div[1]/div/table/tbody/tr/th/input",
 			RuntimeVariables.replace("Select All"));
 		selenium.clickAt("//form/div[2]/div/table/tbody/tr/th/input",
@@ -76,20 +68,17 @@ public class SA_DefineBARoleTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("index=28"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//form/div[1]/div/table/tbody/tr/th/input",
 			RuntimeVariables.replace("Select All"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

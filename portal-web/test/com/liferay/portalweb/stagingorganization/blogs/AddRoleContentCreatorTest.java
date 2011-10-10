@@ -25,7 +25,7 @@ public class AddRoleContentCreatorTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,27 +40,20 @@ public class AddRoleContentCreatorTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Roles", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_name",
 			RuntimeVariables.replace("Organization Content Creator"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Content Creator Role."));
-		selenium.saveScreenShotAndSource();
 		selenium.select("_128_type",
 			RuntimeVariables.replace("label=Organization"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//section/div/div/div/div"));

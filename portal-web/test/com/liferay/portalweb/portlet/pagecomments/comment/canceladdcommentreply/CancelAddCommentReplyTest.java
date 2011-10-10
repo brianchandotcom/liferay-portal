@@ -25,7 +25,7 @@ public class CancelAddCommentReplyTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,16 @@ public class CancelAddCommentReplyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Post Reply"),
 			selenium.getText("//li[1]/span/a/span"));
 		selenium.clickAt("//li[1]/span/a/span",
 			RuntimeVariables.replace("Post Reply"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -67,16 +65,14 @@ public class CancelAddCommentReplyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//textarea[@name='_107_postReplyBody1']"));
 		selenium.type("//textarea[@name='_107_postReplyBody1']",
 			RuntimeVariables.replace("PC Comment Reply"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@value='Cancel'])[2]",
 			RuntimeVariables.replace("Cancel"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -92,7 +88,6 @@ public class CancelAddCommentReplyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("PC Comment Reply"));
 		assertFalse(selenium.isVisible(
 				"//textarea[@name='_107_postReplyBody1']"));

@@ -25,7 +25,7 @@ public class EditSubfolderTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class EditSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -52,7 +50,7 @@ public class EditSubfolderTest extends BaseTestCase {
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -69,14 +67,13 @@ public class EditSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a[2]"));
 		selenium.clickAt("xPath=(//span[@class='overlay document-action']/span/ul/li/strong/a)[2]",
 			RuntimeVariables.replace("Drop Down"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -92,24 +89,19 @@ public class EditSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_name']",
 			RuntimeVariables.replace("DML Subfolder Name Edit"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_20_description']",
 			RuntimeVariables.replace("DML Subfolder Description Edit"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -120,7 +112,7 @@ public class EditSubfolderTest extends BaseTestCase {
 			RuntimeVariables.replace("List View"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -137,7 +129,6 @@ public class EditSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Subfolder Name Edit"),
 			selenium.getText("//tr[3]/td[2]/a/span/span"));
 		assertEquals(RuntimeVariables.replace("0k"),
@@ -148,7 +139,7 @@ public class EditSubfolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Icon View"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -165,7 +156,6 @@ public class EditSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Subfolder Name Edit"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));

@@ -25,7 +25,7 @@ public class AssertAssignMembersSitesTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,26 +40,21 @@ public class AssertAssignMembersSitesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Community Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -75,14 +70,12 @@ public class AssertAssignMembersSitesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Manage Memberships"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("selen01 lenn nium01"));
 	}
 }

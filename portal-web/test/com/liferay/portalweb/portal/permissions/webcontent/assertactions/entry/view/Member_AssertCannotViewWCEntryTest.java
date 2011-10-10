@@ -25,7 +25,7 @@ public class Member_AssertCannotViewWCEntryTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,12 @@ public class Member_AssertCannotViewWCEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("Web Content Name"));

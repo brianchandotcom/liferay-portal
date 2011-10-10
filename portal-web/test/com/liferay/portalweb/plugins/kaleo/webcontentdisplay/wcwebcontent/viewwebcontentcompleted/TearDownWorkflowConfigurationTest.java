@@ -25,7 +25,7 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,14 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Default Configuration",
 			RuntimeVariables.replace("Default Configuration"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']",
 			RuntimeVariables.replace("No workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.User']",
@@ -69,7 +65,6 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -97,7 +92,6 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 		selenium.clickAt("link=Workflow Configuration",
 			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']",
 			RuntimeVariables.replace("Default: No workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
@@ -113,7 +107,6 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -26,7 +26,7 @@ public class UserSN_ViewWebContentAssignedUserTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,17 +41,13 @@ public class UserSN_ViewWebContentAssignedUserTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Pending"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
@@ -66,7 +62,6 @@ public class UserSN_ViewWebContentAssignedUserTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isElementPresent("link=My Submissions"));

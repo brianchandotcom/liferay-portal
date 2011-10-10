@@ -25,7 +25,7 @@ public class SOFr_ViewPMMessageAttachmentTest extends BaseTestCase {
 		selenium.open("/user/socialofficefriendsn/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,10 +40,8 @@ public class SOFr_ViewPMMessageAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -58,11 +56,9 @@ public class SOFr_ViewPMMessageAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div[1]/ul/li[4]/a",
 			RuntimeVariables.replace("Private Messaging"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Private Messaging"),
 			selenium.getText("//h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -74,7 +70,6 @@ public class SOFr_ViewPMMessageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//td[4]/a",
 			RuntimeVariables.replace("Message Subject\n Message Body"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Message Subject"),
 			selenium.getText("//div[1]/h1/span"));
 		assertEquals(RuntimeVariables.replace("Between Joe Bloggs and you"),

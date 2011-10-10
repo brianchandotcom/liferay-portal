@@ -26,7 +26,7 @@ public class PublishSaveAsDraftBlogsEntryDetailsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class PublishSaveAsDraftBlogsEntryDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//div[@class='entry-content']/h3"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
@@ -56,12 +54,10 @@ public class PublishSaveAsDraftBlogsEntryDetailsTest extends BaseTestCase {
 			selenium.getText("//span/a/span"));
 		selenium.click(RuntimeVariables.replace("//span/a/span"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

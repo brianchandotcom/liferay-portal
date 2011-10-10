@@ -25,7 +25,7 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,15 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,7 +64,6 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -75,7 +72,7 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,20 +87,18 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_entriesPerPage']",
 			RuntimeVariables.replace("5"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -118,11 +113,9 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
@@ -144,7 +137,7 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			RuntimeVariables.replace("Next"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -161,7 +154,6 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder6 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
@@ -174,7 +166,7 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			RuntimeVariables.replace("Previous"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -191,7 +183,6 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
@@ -212,7 +203,7 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			RuntimeVariables.replace("Last"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -229,7 +220,6 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder6 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
@@ -242,7 +232,7 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			RuntimeVariables.replace("First"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -259,7 +249,6 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
@@ -279,7 +268,7 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 		selenium.clickAt("//a[@page='2']", RuntimeVariables.replace("2"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -296,7 +285,6 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder6 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
@@ -308,7 +296,7 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 		selenium.clickAt("//a[@page='1']", RuntimeVariables.replace("1"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -325,7 +313,6 @@ public class ConfigurePortletFoldersPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));

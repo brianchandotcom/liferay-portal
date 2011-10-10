@@ -27,7 +27,7 @@ public class WithdrawSubmissionTaskWCAssignedToMeDetailsTest
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,18 +42,14 @@ public class WithdrawSubmissionTaskWCAssignedToMeDetailsTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Submissions",
 			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
@@ -68,14 +64,12 @@ public class WithdrawSubmissionTaskWCAssignedToMeDetailsTest
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Withdraw Submission"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[1]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[1]/a",
 			RuntimeVariables.replace("Withdraw Submission"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

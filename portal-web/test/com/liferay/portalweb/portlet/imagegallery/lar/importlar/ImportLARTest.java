@@ -25,7 +25,7 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,13 @@ public class ImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click("//strong/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -63,23 +61,18 @@ public class ImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Export / Import", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Import", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_86_importFileName",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\imagegallery\\lar\\importlar\\dependencies\\Image_Gallery-Selenium.portlet.lar"));
-		selenium.saveScreenShotAndSource();
 		selenium.check("_86_DELETE_PORTLET_DATACheckbox");
 		selenium.check("_86_PORTLET_DATACheckbox");
 		selenium.clickAt("//input[@value='Import']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
 	}

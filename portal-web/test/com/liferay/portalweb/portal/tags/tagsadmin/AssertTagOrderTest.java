@@ -25,7 +25,7 @@ public class AssertTagOrderTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,14 @@ public class AssertTagOrderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,7 +62,6 @@ public class AssertTagOrderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("blue"),
 			selenium.getText("//div[2]/ul/li[1]/div/span/a"));
 		assertEquals(RuntimeVariables.replace("blue car"),

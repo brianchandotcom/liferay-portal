@@ -25,7 +25,7 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
@@ -55,7 +53,7 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -71,14 +69,13 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -93,7 +90,6 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
@@ -102,7 +98,6 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -111,7 +106,7 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -126,11 +121,9 @@ public class DeleteBlogsEntryAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 	}

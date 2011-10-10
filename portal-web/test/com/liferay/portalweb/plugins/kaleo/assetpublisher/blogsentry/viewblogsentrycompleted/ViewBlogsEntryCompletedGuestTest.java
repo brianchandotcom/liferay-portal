@@ -25,7 +25,7 @@ public class ViewBlogsEntryCompletedGuestTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewBlogsEntryCompletedGuestTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Page",
 			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//section"));
 		assertEquals(RuntimeVariables.replace("Asset Publisher"),
 			selenium.getText("//h1/span[2]"));
@@ -56,7 +54,6 @@ public class ViewBlogsEntryCompletedGuestTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("There are no results."));
 		selenium.clickAt("//div[2]/a", RuntimeVariables.replace("Read More"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[1]/h1/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),

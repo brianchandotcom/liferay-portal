@@ -25,7 +25,7 @@ public class Member_AssertCannotAddToPageTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class Member_AssertCannotAddToPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Document Library Permissions Page",
 			RuntimeVariables.replace("Document Library Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//a[@id='_145_addApplication']"));
 	}
 }

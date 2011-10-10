@@ -26,7 +26,7 @@ public class AssertDefaultUserAssociationsRoleTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,30 +41,24 @@ public class AssertDefaultUserAssociationsRoleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("selen01"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("selen01"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("selen01"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -79,7 +73,6 @@ public class AssertDefaultUserAssociationsRoleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));
 		assertEquals(RuntimeVariables.replace("Administrator"),

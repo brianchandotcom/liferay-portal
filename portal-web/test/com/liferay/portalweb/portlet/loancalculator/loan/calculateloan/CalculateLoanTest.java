@@ -25,7 +25,7 @@ public class CalculateLoanTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,22 +40,17 @@ public class CalculateLoanTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Loan Calculator Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_61_loanAmount", RuntimeVariables.replace("1,000"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_61_interest", RuntimeVariables.replace("4.75"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_61_years", RuntimeVariables.replace("20"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Calculate']",
 			RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -72,7 +67,6 @@ public class CalculateLoanTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1,551"),
 			selenium.getText("//tr[6]/td[2]/strong"));
 	}

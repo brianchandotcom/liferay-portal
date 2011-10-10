@@ -25,7 +25,7 @@ public class AssertUnlockFolderDocumentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class AssertUnlockFolderDocumentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -52,7 +50,7 @@ public class AssertUnlockFolderDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -69,7 +67,6 @@ public class AssertUnlockFolderDocumentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertFalse(selenium.isElementPresent("//img[@class='locked-icon']"));
@@ -79,7 +76,6 @@ public class AssertUnlockFolderDocumentTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(
 				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."));
 		assertFalse(selenium.isElementPresent(
@@ -88,7 +84,6 @@ public class AssertUnlockFolderDocumentTest extends BaseTestCase {
 			selenium.getText("//button[1]"));
 		selenium.clickAt("//button[1]", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(
 				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."));
 		assertFalse(selenium.isElementPresent(

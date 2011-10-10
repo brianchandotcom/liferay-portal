@@ -25,7 +25,7 @@ public class AssertTagsInTagsAdminTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,13 @@ public class AssertTagsInTagsAdminTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Tags", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -64,7 +61,6 @@ public class AssertTagsInTagsAdminTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=selenium1 liferay1"));
 		assertTrue(selenium.isElementPresent("link=selenium2 liferay2"));
 		assertTrue(selenium.isElementPresent("link=selenium3 liferay3"));

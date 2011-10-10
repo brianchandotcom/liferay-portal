@@ -26,7 +26,7 @@ public class LoginAbleTest extends BaseTestCase {
 		selenium.open("/web/guest/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,32 +41,22 @@ public class LoginAbleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Sign In"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("test@able.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_58_password']",
 			RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 			RuntimeVariables.replace("Remember Me"));
 		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='I Agree']"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("reminderQueryAnswer", RuntimeVariables.replace("Test"));
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

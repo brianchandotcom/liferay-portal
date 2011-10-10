@@ -25,7 +25,7 @@ public class AddQuestionTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,41 +40,30 @@ public class AddQuestionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Question']",
 			RuntimeVariables.replace("Add Question"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_25_title_en_US']",
 			RuntimeVariables.replace("PD Question Title"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_25_description_en_US']",
 			RuntimeVariables.replace("PD Question Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_25_choiceDescriptiona_en_US']",
 			RuntimeVariables.replace("PD Question ChoiceA"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_25_choiceDescriptionb_en_US']",
 			RuntimeVariables.replace("PD Question ChoiceB"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Choice']",
 			RuntimeVariables.replace("Add Choice"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_25_choiceDescriptionc_en_US']",
 			RuntimeVariables.replace("PD Question ChoiceC"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -25,7 +25,7 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,12 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -64,7 +62,6 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
@@ -72,7 +69,7 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -87,11 +84,9 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
@@ -101,7 +96,7 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -116,7 +111,6 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//div[@id='_20_folderContainer']",
 				"DM Folder Name"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
@@ -124,7 +118,6 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='document-title']",
 			RuntimeVariables.replace("DM Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),

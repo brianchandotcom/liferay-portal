@@ -32,7 +32,7 @@ public class AddChildPage1Test extends BaseTestCase {
 					RuntimeVariables.replace("Dockbar"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -48,12 +48,11 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -70,7 +69,6 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
@@ -89,7 +87,7 @@ public class AddChildPage1Test extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -106,7 +104,6 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Welcome"),
 					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
@@ -115,7 +112,7 @@ public class AddChildPage1Test extends BaseTestCase {
 					RuntimeVariables.replace("Manage Pages Test Page"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -132,13 +129,12 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals("Manage Pages Test Page",
 					selenium.getValue(
 						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -153,14 +149,13 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Add Child Page"),
 					selenium.getText("//div/span/button[1]"));
 				selenium.clickAt("//div/span/button[1]",
 					RuntimeVariables.replace("Add Child Page"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -175,14 +170,11 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_88_name_en_US']",
 					RuntimeVariables.replace("Child Test Page1"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Add Page']",
 					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -202,7 +194,7 @@ public class AddChildPage1Test extends BaseTestCase {
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -219,7 +211,6 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Welcome"),
 					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
@@ -240,7 +231,7 @@ public class AddChildPage1Test extends BaseTestCase {
 			case 4:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -257,13 +248,12 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -278,11 +268,10 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.mouseOver("link=Manage Pages Test Page");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -297,12 +286,10 @@ public class AddChildPage1Test extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isVisible("link=Child Test Page1"));
 				selenium.clickAt("link=Child Test Page1",
 					RuntimeVariables.replace("Child Test Page1"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//nav/ul/li[3]/span/a"));
 

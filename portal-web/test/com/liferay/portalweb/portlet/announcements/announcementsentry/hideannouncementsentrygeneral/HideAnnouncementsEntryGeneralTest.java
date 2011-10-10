@@ -25,7 +25,7 @@ public class HideAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,16 @@ public class HideAnnouncementsEntryGeneralTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Show"),
 			selenium.getText("//td[@class='control-entry']/a"));
 		selenium.clickAt("//td[@class='control-entry']/a",
 			RuntimeVariables.replace("Show"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -68,7 +66,6 @@ public class HideAnnouncementsEntryGeneralTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Hide"),
 			selenium.getText("//td[@class='control-entry']/a"));
 		assertTrue(selenium.isVisible("//p"));
@@ -76,7 +73,7 @@ public class HideAnnouncementsEntryGeneralTest extends BaseTestCase {
 			RuntimeVariables.replace("Hide"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -93,7 +90,6 @@ public class HideAnnouncementsEntryGeneralTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Show"),
 			selenium.getText("//td[@class='control-entry']/a"));
 		assertFalse(selenium.isVisible("//p"));

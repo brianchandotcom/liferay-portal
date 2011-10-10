@@ -25,7 +25,7 @@ public class AssertNodeTwoTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,12 @@ public class AssertNodeTwoTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("test@liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_58_password']",
 			RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_2$]"),
 			selenium.getText("//div[@id='content']/div[3]"));
 	}

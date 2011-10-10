@@ -30,7 +30,7 @@ public class TearDownArticleTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class TearDownArticleTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Knowledge Base (Admin)",
 					RuntimeVariables.replace("Knowledge Base (Admin)"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean KBArticle1Present = selenium.isElementPresent(
 						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
@@ -71,7 +68,6 @@ public class TearDownArticleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean KBArticle2Present = selenium.isElementPresent(
 						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
@@ -89,7 +85,6 @@ public class TearDownArticleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean KBArticle3Present = selenium.isElementPresent(
 						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
@@ -107,7 +102,6 @@ public class TearDownArticleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean KBArticle4Present = selenium.isElementPresent(
 						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
@@ -125,7 +119,6 @@ public class TearDownArticleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean KBArticle5Present = selenium.isElementPresent(
 						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
@@ -143,7 +136,6 @@ public class TearDownArticleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 			case 3:

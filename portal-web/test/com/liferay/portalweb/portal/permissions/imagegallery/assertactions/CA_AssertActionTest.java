@@ -25,7 +25,7 @@ public class CA_AssertActionTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class CA_AssertActionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Image Gallery Permissions Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Configuration"));
 		assertTrue(selenium.isElementPresent("link=Look and Feel"));
 		assertTrue(selenium.isElementPresent("link=Export / Import"));
@@ -74,12 +72,11 @@ public class CA_AssertActionTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Subfolder"),
 			selenium.getText("//div[2]/ul/li[4]/a"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -95,27 +92,22 @@ public class CA_AssertActionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Image Gallery Permissions Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Images", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Edited Permissions Image"));
 		selenium.clickAt("link=Recent Images", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("Edited Permissions Image"));
 		selenium.clickAt("link=Image Gallery Permissions Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -130,14 +122,11 @@ public class CA_AssertActionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Export / Import", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//input[@value='Export']"));
 		selenium.clickAt("link=Import", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//input[@value='Import']"));
 	}
 }

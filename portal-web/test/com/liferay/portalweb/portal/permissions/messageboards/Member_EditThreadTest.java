@@ -25,7 +25,7 @@ public class Member_EditThreadTest extends BaseTestCase {
 		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,35 +40,29 @@ public class Member_EditThreadTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Thread Subject 2"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Thread Subject 2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible(
 				"//td[@class='thread-bottom']/ul/li[2]/span/a"));
 		selenium.clickAt("//td[@class='thread-bottom']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("Thread Subject 2 Edited"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -84,15 +78,12 @@ public class Member_EditThreadTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
 		selenium.type("//body", RuntimeVariables.replace("Thread Body 2 Edited"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

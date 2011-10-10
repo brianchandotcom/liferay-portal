@@ -25,7 +25,7 @@ public class EditWCWebContentWCDDetailsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,26 +40,22 @@ public class EditWCWebContentWCDDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.clickAt("//img[@alt='Edit Web Content']",
 			RuntimeVariables.replace("Edit Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Version: 1.0"),
 			selenium.getText("//span[@class='workflow-version']"));
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WCD Web Content Title Edit"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -75,17 +71,14 @@ public class EditWCWebContentWCDDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("WCD Web Content Content Edit"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("WCD Web Content Content Edit"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}

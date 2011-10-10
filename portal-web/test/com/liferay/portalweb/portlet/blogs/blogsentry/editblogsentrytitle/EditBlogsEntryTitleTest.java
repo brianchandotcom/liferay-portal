@@ -25,7 +25,7 @@ public class EditBlogsEntryTitleTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class EditBlogsEntryTitleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
@@ -53,13 +51,11 @@ public class EditBlogsEntryTitleTest extends BaseTestCase {
 			selenium.getText("//span/a/span"));
 		selenium.click(RuntimeVariables.replace("//span/a/span"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title Edit"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -75,15 +71,12 @@ public class EditBlogsEntryTitleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.type("//body", RuntimeVariables.replace("Blogs Entry Content"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

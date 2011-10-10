@@ -25,7 +25,7 @@ public class AddNullDescriptionPollTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,35 +40,27 @@ public class AddNullDescriptionPollTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Question']",
 			RuntimeVariables.replace("Add Question"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_25_title_en_US']",
 			RuntimeVariables.replace("Null Description Poll Test Title"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_25_description_en_US']",
 			RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_25_choiceDescriptiona_en_US']",
 			RuntimeVariables.replace("Null Description Poll Test Choice A"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_25_choiceDescriptionb_en_US']",
 			RuntimeVariables.replace("Null Description Poll Test Choice B"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -84,7 +76,6 @@ public class AddNullDescriptionPollTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("This field is required."),
 			selenium.getText("//label/div"));
 	}

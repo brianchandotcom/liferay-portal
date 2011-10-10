@@ -25,7 +25,7 @@ public class Member_AssertUpdateDocumentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,22 +40,18 @@ public class Member_AssertUpdateDocumentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("TestDocument.txt"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertTrue(selenium.isVisible(
@@ -63,14 +59,11 @@ public class Member_AssertUpdateDocumentTest extends BaseTestCase {
 		selenium.clickAt("//div[@id='_20_fileEntryToolbar']/span/button",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("TestDocument Edit.txt"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

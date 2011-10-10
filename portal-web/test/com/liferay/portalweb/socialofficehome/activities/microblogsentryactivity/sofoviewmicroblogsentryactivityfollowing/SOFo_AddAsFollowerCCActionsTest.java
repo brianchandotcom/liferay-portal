@@ -25,7 +25,7 @@ public class SOFo_AddAsFollowerCCActionsTest extends BaseTestCase {
 		selenium.open("/user/socialofficefollowersn/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,10 +40,8 @@ public class SOFo_AddAsFollowerCCActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -58,24 +56,19 @@ public class SOFo_AddAsFollowerCCActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Find People"),
 			selenium.getText("//span[3]/a/span"));
 		selenium.clickAt("//span[3]/a/span",
 			RuntimeVariables.replace("Find People"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//form/span/span[1]/span/span/input",
 			RuntimeVariables.replace("test@liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//span[2]/span/input",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//div[2]/div[1]/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
@@ -83,7 +76,7 @@ public class SOFo_AddAsFollowerCCActionsTest extends BaseTestCase {
 		selenium.clickAt("//strong/a/img", RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -98,12 +91,10 @@ public class SOFo_AddAsFollowerCCActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Follow"),
 			selenium.getText("//li[4]/a"));
 		selenium.click(RuntimeVariables.replace("//li[4]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

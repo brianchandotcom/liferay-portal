@@ -25,7 +25,7 @@ public class DeleteBlogsEntryCommentCPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,20 +40,16 @@ public class DeleteBlogsEntryCommentCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
@@ -64,7 +60,7 @@ public class DeleteBlogsEntryCommentCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Delete"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -81,12 +77,10 @@ public class DeleteBlogsEntryCommentCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Comment Body"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 	}
 }

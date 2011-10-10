@@ -25,7 +25,7 @@ public class Member_DeleteMessageTest extends BaseTestCase {
 		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,23 +40,20 @@ public class Member_DeleteMessageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Thread Subject 2 Edited"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -72,7 +69,6 @@ public class Member_DeleteMessageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -81,10 +77,9 @@ public class Member_DeleteMessageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -100,7 +95,6 @@ public class Member_DeleteMessageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

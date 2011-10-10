@@ -25,7 +25,7 @@ public class AssignToMeMessageActionsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,11 @@ public class AssignToMeMessageActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -64,7 +61,7 @@ public class AssignToMeMessageActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -80,14 +77,13 @@ public class AssignToMeMessageActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Assign to Me"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -102,10 +98,8 @@ public class AssignToMeMessageActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/button[1]", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

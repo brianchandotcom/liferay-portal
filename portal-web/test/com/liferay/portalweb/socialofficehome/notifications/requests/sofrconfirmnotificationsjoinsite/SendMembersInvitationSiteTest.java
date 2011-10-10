@@ -25,7 +25,7 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,14 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div/ul/li/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[3]/div/section/header/h1/span"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,14 +63,12 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 			RuntimeVariables.replace("Open Site Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//h2/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),
@@ -80,7 +76,6 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[7]/a/span",
 			RuntimeVariables.replace("Members"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Invite Members"),
 			selenium.getText("//div[2]/div/section/header/h1/span"));
 		assertEquals(RuntimeVariables.replace("Invite members to this site."),
@@ -89,7 +84,7 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Invite members to this site."));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -104,7 +99,6 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
 			selenium.getText("//div[@class='user'][1]/span"));
@@ -113,7 +107,7 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -128,7 +122,6 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln socialofficefriendea@liferay.com"),
 			selenium.getText("//div[@class='user-invited']/div/div"));
@@ -138,7 +131,7 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Send Invitations"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -153,7 +146,6 @@ public class SendMembersInvitationSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

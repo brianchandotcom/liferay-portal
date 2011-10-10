@@ -25,7 +25,7 @@ public class Portlet_AssertCannotAddCommentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,12 @@ public class Portlet_AssertCannotAddCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@class='lfr-panel-title']/span"));
 		assertFalse(selenium.isElementPresent("link=Be the first."));

@@ -30,7 +30,7 @@ public class AddScopeCommunityPageTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,18 +45,15 @@ public class AddScopeCommunityPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Communities",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -71,18 +68,15 @@ public class AddScopeCommunityPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("_134_name",
 					RuntimeVariables.replace("Scope Community"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -97,12 +91,11 @@ public class AddScopeCommunityPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -118,21 +111,19 @@ public class AddScopeCommunityPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//li[1]/span/span/a"));
 				assertEquals(RuntimeVariables.replace("Pages"),
 					selenium.getText("//ul[2]/li[1]/span/span/a"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -149,10 +140,8 @@ public class AddScopeCommunityPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -167,14 +156,11 @@ public class AddScopeCommunityPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("_134_name_en_US",
 					RuntimeVariables.replace("Scope Test Page"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Add Page']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isTextPresent(
 						"Your request completed successfully."));
 
@@ -193,7 +179,7 @@ public class AddScopeCommunityPageTest extends BaseTestCase {
 				selenium.click("//li/div/div[1]");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -208,7 +194,6 @@ public class AddScopeCommunityPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isVisible("//li/ul/li/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Scope Test Page"),
 					selenium.getText("//li/ul/li/div/div[3]/a"));

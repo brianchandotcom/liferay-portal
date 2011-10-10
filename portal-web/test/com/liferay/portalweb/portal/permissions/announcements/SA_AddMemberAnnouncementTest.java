@@ -25,7 +25,7 @@ public class SA_AddMemberAnnouncementTest extends BaseTestCase {
 		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,32 +40,25 @@ public class SA_AddMemberAnnouncementTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Permissions Page",
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("label=Site Member"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Entry']",
 			RuntimeVariables.replace("Add Entry"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_84_title']",
 			RuntimeVariables.replace("Test Member Announcement"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_84_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -81,16 +74,13 @@ public class SA_AddMemberAnnouncementTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("This is a test Member Announcement."));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Member Announcement"),
 			selenium.getText("//tr[3]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("General"),

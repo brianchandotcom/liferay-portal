@@ -26,7 +26,7 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,15 +41,12 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
@@ -68,7 +65,7 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -84,14 +81,13 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Update Due Date"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -106,7 +102,6 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_153_dueDateMonth']",
 			RuntimeVariables.replace("label=December"));
 		selenium.select("//select[@id='_153_dueDateDay']",
@@ -124,7 +119,6 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 		selenium.clickAt("//div[3]/span/span/button",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

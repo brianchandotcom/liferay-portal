@@ -25,7 +25,7 @@ public class AddSubfolder1Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,28 +40,21 @@ public class AddSubfolder1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Subfolder"),
 			selenium.getText("//div[2]/ul/li[4]/a"));
 		selenium.clickAt("//div[2]/ul/li[4]/a",
 			RuntimeVariables.replace("Add Subfolder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_28_name", RuntimeVariables.replace("Test1 Subfolder1"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_28_description",
 			RuntimeVariables.replace("This is a test1 subfolder1."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//section/div/div/div/div[1]"));

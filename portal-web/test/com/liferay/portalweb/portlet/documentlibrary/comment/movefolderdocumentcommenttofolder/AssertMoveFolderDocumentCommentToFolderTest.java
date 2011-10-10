@@ -26,7 +26,7 @@ public class AssertMoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class AssertMoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -55,7 +53,7 @@ public class AssertMoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -70,11 +68,9 @@ public class AssertMoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder2 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
@@ -82,7 +78,7 @@ public class AssertMoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("DML Folder2 Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -99,14 +95,12 @@ public class AssertMoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder1 Document Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Document Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}

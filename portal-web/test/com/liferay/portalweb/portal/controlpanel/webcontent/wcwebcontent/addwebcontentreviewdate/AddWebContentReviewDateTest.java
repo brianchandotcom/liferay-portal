@@ -25,7 +25,7 @@ public class AddWebContentReviewDateTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,26 +40,21 @@ public class AddWebContentReviewDateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -75,12 +70,10 @@ public class AddWebContentReviewDateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.type("//body", RuntimeVariables.replace("Web Content Content"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//select[@id='_15_reviewDateMonth' and @disabled='disabled']"));
 		assertTrue(selenium.isElementPresent(
@@ -94,11 +87,9 @@ public class AddWebContentReviewDateTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent(
 				"//select[@name='_15_reviewDateAmPm' and @disabled='disabled']"));
 		assertTrue(selenium.isChecked("//input[@id='_15_neverReviewCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_15_neverReviewCheckbox']",
 			RuntimeVariables.replace("Never Review"));
 		assertFalse(selenium.isChecked("//input[@id='_15_neverReviewCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent(
 				"//select[@id='_15_reviewDateMonth' and @disabled='disabled']"));
 		assertFalse(selenium.isElementPresent(
@@ -126,7 +117,6 @@ public class AddWebContentReviewDateTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -137,10 +127,8 @@ public class AddWebContentReviewDateTest extends BaseTestCase {
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertFalse(selenium.isChecked("//input[@id='_15_neverReviewCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals("December",
 			selenium.getSelectedLabel("//select[@id='_15_reviewDateMonth']"));
 		assertEquals("31",

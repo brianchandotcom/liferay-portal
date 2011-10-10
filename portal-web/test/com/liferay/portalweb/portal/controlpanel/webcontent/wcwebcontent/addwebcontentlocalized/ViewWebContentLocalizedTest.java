@@ -25,7 +25,7 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,21 +40,17 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Hello World Localized Article"),
 			selenium.getText("//td[3]/a"));
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("Hello World Localized Article"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertEquals("Hello World Localized Article",
 			selenium.getValue("//input[@id='_15_title_en_US']"));
@@ -69,7 +65,7 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -84,7 +80,6 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe[@id='_15_zh_CN']");
 		assertEquals(RuntimeVariables.replace("Hello World Localized Article"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -98,6 +93,5 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 		assertEquals("\u4e16\u754c\u60a8\u597d Page Description",
 			selenium.getValue("//input[@id='page-description']"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 	}
 }

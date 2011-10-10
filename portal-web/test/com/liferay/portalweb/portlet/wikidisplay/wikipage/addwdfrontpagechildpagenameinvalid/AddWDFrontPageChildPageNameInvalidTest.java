@@ -26,7 +26,7 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,25 +41,21 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//div/span[1]/span/span/input",
 			RuntimeVariables.replace(
 				"Wiki\\ Front\\ Page\\ Child\\ Page\\ Title\\"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -74,17 +70,14 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace(
 				"Wiki\\ Front\\ Page\\ Child\\ Page\\ Content\\"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
@@ -92,20 +85,17 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//div/span[1]/span/span/input",
 			RuntimeVariables.replace("Wiki] Front] Page] Child] Page] Title]"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -120,16 +110,13 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Wiki] Front] Page] Child] Page] Content]"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
@@ -137,20 +124,17 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//div/span[1]/span/span/input",
 			RuntimeVariables.replace("Wiki[ Front[ Page[ Child[ Page[ Title["));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -165,16 +149,13 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Wiki[ Front[ Page[ Child[ Page[ Content["));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
@@ -182,20 +163,17 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//div/span[1]/span/span/input",
 			RuntimeVariables.replace("Wiki; Front; Page; Child; Page; Title;"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -210,16 +188,13 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Wiki; Front; Page; Child; Page; Content;"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
@@ -227,20 +202,17 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//div/span[1]/span/span/input",
 			RuntimeVariables.replace("Wiki: Front: Page: Child: Page: Title:"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -255,16 +227,13 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Wiki: Front: Page: Child: Page: Content:"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
@@ -272,20 +241,17 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//div/span[1]/span/span/input",
 			RuntimeVariables.replace("Wiki| Front| Page| Child| Page| Title|"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -300,16 +266,13 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Wiki| Front| Page| Child| Page| Content|"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
@@ -317,20 +280,17 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//div/span[1]/span/span/input",
 			RuntimeVariables.replace("Wiki< Front< Page< Child< Page< Title<"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -345,16 +305,13 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Wiki< Front< Page< Child< Page< Content<"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
@@ -362,20 +319,17 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		selenium.clickAt("link=FrontPage", RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//div/span[1]/span/span/input",
 			RuntimeVariables.replace("Wiki> Front> Page> Child> Page> Title>"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -390,16 +344,13 @@ public class AddWDFrontPageChildPageNameInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Wiki> Front> Page> Child> Page> Content>"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));

@@ -32,7 +32,7 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					RuntimeVariables.replace("Dockbar"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -48,12 +48,11 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -70,7 +69,6 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
@@ -89,7 +87,7 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -104,7 +102,6 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Welcome"),
 					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
@@ -113,7 +110,7 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					RuntimeVariables.replace("Manage Pages Test Page"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -130,14 +127,13 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals("Manage Pages Test Page",
 					selenium.getValue(
 						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -155,12 +151,11 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_88_type']",
 					RuntimeVariables.replace("Embedded"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -175,21 +170,18 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_88_url']",
 					RuntimeVariables.replace("http://www.liferay.com"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -204,16 +196,14 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Manage Pages Test Page",
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
 					selenium.getText("//nav/ul/li[2]/span/a"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -228,7 +218,6 @@ public class SavePageTypeEmbeddedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isVisible("//img[@alt='Liferay']"));
 
 			case 100:

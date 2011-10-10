@@ -25,7 +25,7 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,14 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div/ul/li/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[3]/div/section/header/h1/span"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -64,14 +62,13 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Site"),
 			selenium.getText("//form/div[2]/span/span/button[1]"));
 		selenium.clickAt("//form/div[2]/span/span/button[1]",
 			RuntimeVariables.replace("Add Site"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -86,23 +83,20 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Information"),
 			selenium.getText("//h1/span"));
 		assertTrue(selenium.isVisible("//input"));
 		selenium.type("//input",
 			RuntimeVariables.replace("Default Page None Name"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//textarea"));
 		selenium.type("//textarea",
 			RuntimeVariables.replace("Default Page None Description"));
-		selenium.saveScreenShotAndSource();
 		assertEquals("Next", selenium.getValue("//input[@value='Next']"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -117,7 +111,6 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Settings"),
 			selenium.getText("//div[2]/div[1]/h1/span"));
 		assertTrue(selenium.isVisible("//select"));
@@ -130,7 +123,7 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Next"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -145,7 +138,6 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Customization"),
 			selenium.getText("//div[3]/div[1]/h1/span"));
 		assertFalse(selenium.isElementPresent("//div[4]/span[1]/input"));
@@ -160,7 +152,7 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -175,7 +167,6 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

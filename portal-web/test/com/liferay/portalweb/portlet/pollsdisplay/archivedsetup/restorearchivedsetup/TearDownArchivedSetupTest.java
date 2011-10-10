@@ -30,7 +30,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,18 +45,16 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Polls Display Test Page",
 					RuntimeVariables.replace("Polls Display Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -72,7 +70,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -80,7 +77,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					RuntimeVariables.replace("Configuration"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -96,14 +93,12 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Archive/Restore Setup"),
 					selenium.getText(
 						"//div[@class='archived-setups']/span/a/span"));
 				selenium.clickAt("//div[@class='archived-setups']/span/a/span",
 					RuntimeVariables.replace("Archive/Restore Setup"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean pdArchivedSetup1Present = selenium.isElementPresent(
 						"//tr[3]/td[4]/span/ul/li/strong/a");
@@ -118,7 +113,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -134,7 +129,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
@@ -143,7 +137,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -160,7 +153,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -176,7 +169,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
@@ -185,7 +177,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -202,7 +193,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -218,7 +209,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
@@ -227,7 +217,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -244,7 +233,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -260,7 +249,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
@@ -269,7 +257,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -286,7 +273,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -302,7 +289,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[@id='_86_ctvk']"));
@@ -311,7 +297,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 6:
 			case 100:

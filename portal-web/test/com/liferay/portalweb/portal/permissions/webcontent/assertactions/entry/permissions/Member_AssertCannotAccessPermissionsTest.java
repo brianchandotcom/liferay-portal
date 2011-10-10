@@ -26,7 +26,7 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,22 +41,18 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//tr[3]/td[3]/a"));
 		assertFalse(selenium.isElementPresent("link=Permissions"));
 		selenium.clickAt("//tr[3]/td[3]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("Permissions"));
 	}
 }

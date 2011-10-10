@@ -25,7 +25,7 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,20 +40,17 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//img[@alt='Add Web Content']",
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_15_selectTemplateLink']",
 			RuntimeVariables.replace("Select Template"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -68,7 +65,6 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Localized Template Name"),
 			selenium.getText("//td[2]/a"));
@@ -76,7 +72,7 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Localized Template Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -93,7 +89,7 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 		}
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -111,7 +107,6 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Localized Structure Name"),
 			selenium.getText("//span[@class='structure-name-label']"));
@@ -120,17 +115,13 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 			selenium.getText("//span[@class='template-name-label']"));
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Hello World Localized Article"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='page-name']",
 			RuntimeVariables.replace("Hello World Page Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='page-description']",
 			RuntimeVariables.replace("Hello World Page Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Hello World Page Name"),
 			selenium.getText("//td[@class='page-name']"));
 		assertEquals(RuntimeVariables.replace("Hello World Page Description"),

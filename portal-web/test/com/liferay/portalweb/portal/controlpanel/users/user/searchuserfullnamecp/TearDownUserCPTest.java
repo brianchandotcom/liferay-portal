@@ -30,7 +30,7 @@ public class TearDownUserCPTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,19 +45,16 @@ public class TearDownUserCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -73,14 +70,12 @@ public class TearDownUserCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("All Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basic1Visible = selenium.isVisible("link=\u00ab Basic");
 
@@ -96,11 +91,9 @@ public class TearDownUserCPTest extends BaseTestCase {
 			case 2:
 				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("selenium"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean UsersExists = selenium.isPartialText("//div[5]",
 						"No users were found");
@@ -118,13 +111,12 @@ public class TearDownUserCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -140,19 +132,17 @@ public class TearDownUserCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("All Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Advanced \u00bb",
 					RuntimeVariables.replace("Advanced \u00bb"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -167,13 +157,11 @@ public class TearDownUserCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_125_status']",
 					RuntimeVariables.replace("Inactive"));
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean user1Deleted = selenium.isElementPresent(
 						"//input[@name='_125_rowIds']");
@@ -191,7 +179,6 @@ public class TearDownUserCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean user2Deleted = selenium.isElementPresent(
 						"//input[@name='_125_rowIds']");
@@ -209,7 +196,6 @@ public class TearDownUserCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean user3Deleted = selenium.isElementPresent(
 						"//input[@name='_125_rowIds']");
@@ -227,7 +213,6 @@ public class TearDownUserCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean user4Deleted = selenium.isElementPresent(
 						"//input[@name='_125_rowIds']");
@@ -245,7 +230,6 @@ public class TearDownUserCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean user5Deleted = selenium.isElementPresent(
 						"//input[@name='_125_rowIds']");
@@ -263,7 +247,6 @@ public class TearDownUserCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 			case 5:
@@ -273,7 +256,7 @@ public class TearDownUserCPTest extends BaseTestCase {
 				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -289,14 +272,12 @@ public class TearDownUserCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("All Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basic2Visible = selenium.isVisible("link=\u00ab Basic");
 

@@ -26,7 +26,7 @@ public class AddOrganizationEmailAddressInvalidTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,30 +41,24 @@ public class AddOrganizationEmailAddressInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("Selenium"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Selenium"),
 			selenium.getText("//a[2]/strong"));
 		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -79,14 +73,12 @@ public class AddOrganizationEmailAddressInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[3]/div/div[2]/ul/li[1]/a",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -102,12 +94,11 @@ public class AddOrganizationEmailAddressInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_125_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -123,10 +114,8 @@ public class AddOrganizationEmailAddressInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_emailAddressAddress0']",
 			RuntimeVariables.replace("SeleniumSelenium.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_125_emailAddressTypeId0']",
 			RuntimeVariables.replace("label=Email Address"));
 		selenium.clickAt("//input[@id='_125_emailAddressPrimary0']",

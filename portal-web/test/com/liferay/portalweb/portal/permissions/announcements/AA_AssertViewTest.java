@@ -25,7 +25,7 @@ public class AA_AssertViewTest extends BaseTestCase {
 		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class AA_AssertViewTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Permissions Page",
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test AA Announcement"),
 			selenium.getText("xPath=(//h3[@class='entry-title'])[1]/a"));
 		assertEquals(RuntimeVariables.replace("Test General Announcement"),
@@ -62,23 +60,19 @@ public class AA_AssertViewTest extends BaseTestCase {
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("label=Announcements Administrator"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test AA Announcement"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("label=Guest"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Guest Announcement"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("label=Site Member"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Member Announcement"),
 			selenium.getText("//tr[3]/td/a"));
 	}

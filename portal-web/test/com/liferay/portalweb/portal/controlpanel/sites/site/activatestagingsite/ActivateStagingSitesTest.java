@@ -30,7 +30,7 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,28 +45,23 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_134_name']",
 					RuntimeVariables.replace("Community"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
 				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -82,17 +77,15 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Edit Settings"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -107,7 +100,6 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_165_stagingLink']", "Staging"));
 				selenium.clickAt("//a[@id='_165_stagingLink']",
@@ -116,20 +108,16 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 					RuntimeVariables.replace("label=Local Live"));
 				assertFalse(selenium.isChecked(
 						"//input[@id='_165_branchingPublicCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_165_branchingPublicCheckbox']",
 					RuntimeVariables.replace("Enabled on Public Pages"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_165_branchingPublicCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isChecked(
 						"//input[@id='_165_branchingPrivateCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_165_branchingPrivateCheckbox']",
 					RuntimeVariables.replace("Enabled on Private Pages"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_165_branchingPrivateCheckbox']"));
-				selenium.saveScreenShotAndSource();
 
 				boolean blogsChecked = selenium.isChecked(
 						"_165_staged-portlet_161Checkbox");
@@ -247,7 +235,6 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to activate local staging for Community Name[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

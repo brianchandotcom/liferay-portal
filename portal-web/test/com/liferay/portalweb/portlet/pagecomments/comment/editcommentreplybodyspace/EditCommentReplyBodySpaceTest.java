@@ -25,7 +25,7 @@ public class EditCommentReplyBodySpaceTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class EditCommentReplyBodySpaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("PC Comment Reply"),
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
@@ -54,7 +52,7 @@ public class EditCommentReplyBodySpaceTest extends BaseTestCase {
 			RuntimeVariables.replace("Edit"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -70,15 +68,13 @@ public class EditCommentReplyBodySpaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@name='_107_editReplyBody2']",
 			RuntimeVariables.replace(" "));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@value='Publish'])[2]",
 			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -95,7 +91,6 @@ public class EditCommentReplyBodySpaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Please enter a valid message."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-error']"));
@@ -106,7 +101,7 @@ public class EditCommentReplyBodySpaceTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -121,11 +116,9 @@ public class EditCommentReplyBodySpaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("PC Comment Reply"),
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[2]"));

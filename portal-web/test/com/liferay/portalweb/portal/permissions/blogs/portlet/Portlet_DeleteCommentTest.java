@@ -25,7 +25,7 @@ public class Portlet_DeleteCommentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,15 @@ public class Portlet_DeleteCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -67,17 +64,15 @@ public class Portlet_DeleteCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText("//li[@class='lfr-discussion-delete']/span/a"));
 		selenium.clickAt("//li[@class='lfr-discussion-delete']/span/a",
 			RuntimeVariables.replace("Delete"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -93,7 +88,6 @@ public class Portlet_DeleteCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

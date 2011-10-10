@@ -27,7 +27,7 @@ public class ViewScopeDefaultWCWebContentNullCurrentPageTest
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,11 +42,9 @@ public class ViewScopeDefaultWCWebContentNullCurrentPageTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page2",
 			RuntimeVariables.replace("Web Content Display Test Page2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Display (Web Content Display Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));

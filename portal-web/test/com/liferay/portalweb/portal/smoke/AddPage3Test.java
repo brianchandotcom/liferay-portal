@@ -27,7 +27,7 @@ public class AddPage3Test extends BaseTestCase {
 			RuntimeVariables.replace("Navigation"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,12 +42,11 @@ public class AddPage3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='addPage']",
 			RuntimeVariables.replace("Add Page"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -62,15 +61,13 @@ public class AddPage3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Test Page3"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -85,10 +82,8 @@ public class AddPage3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Test Page3",
 			RuntimeVariables.replace("Test Page3"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

@@ -26,7 +26,7 @@ public class SOFr_AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 		selenium.open("/user/socialofficefriendsn/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class SOFr_AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//nav/ul/li[1]/a/span",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("What's happening?"),
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
@@ -58,7 +56,7 @@ public class SOFr_AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 			selenium.getText("//span/select"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -73,10 +71,8 @@ public class SOFr_AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Whats Happening Content"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//span/select",
 			RuntimeVariables.replace("label=Everyone"));
 		assertEquals(RuntimeVariables.replace("128"),
@@ -85,7 +81,7 @@ public class SOFr_AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Post"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -100,7 +96,6 @@ public class SOFr_AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
 		assertEquals(RuntimeVariables.replace(
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)"),

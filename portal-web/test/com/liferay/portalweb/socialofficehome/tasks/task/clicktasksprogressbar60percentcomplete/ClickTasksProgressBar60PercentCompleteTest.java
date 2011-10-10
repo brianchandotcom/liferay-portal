@@ -26,7 +26,7 @@ public class ClickTasksProgressBar60PercentCompleteTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,13 +41,11 @@ public class ClickTasksProgressBar60PercentCompleteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//nav/ul/li[1]/a/span"));
 		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Tasks"),
 			selenium.getText("//h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
@@ -55,14 +53,13 @@ public class ClickTasksProgressBar60PercentCompleteTest extends BaseTestCase {
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//td[1]/div[1]/a"));
 		assertTrue(selenium.isPartialText("//td[2]/div/div[1]/div[2]", "3/16/16"));
 		selenium.clickAt("//div[3]/a[3]", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -77,13 +74,12 @@ public class ClickTasksProgressBar60PercentCompleteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//div[@style='width: 60%;']"));
 		selenium.clickAt("//td[1]/div[1]/a",
 			RuntimeVariables.replace("Task Description"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -99,7 +95,6 @@ public class ClickTasksProgressBar60PercentCompleteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//h1/span"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),

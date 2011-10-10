@@ -25,7 +25,7 @@ public class ConfigurePortletEnableRatingsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,16 @@ public class ConfigurePortletEnableRatingsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -67,7 +65,6 @@ public class ConfigurePortletEnableRatingsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -75,7 +72,7 @@ public class ConfigurePortletEnableRatingsTest extends BaseTestCase {
 			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -91,24 +88,19 @@ public class ConfigurePortletEnableRatingsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_enableRatingsCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_86_enableRatingsCheckbox']",
 			RuntimeVariables.replace("Enable Ratings"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_enableRatingsCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_enableRatingsCheckbox']"));
-		selenium.saveScreenShotAndSource();
 	}
 }

@@ -25,7 +25,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ScreengrabSignInTest extends BaseTestCase {
 	public void testScreengrabSignIn() throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,11 @@ public class ScreengrabSignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Sign Out"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.open("web/themetesting/testpage01");
 		selenium.type("_58_login", RuntimeVariables.replace("test@liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_58_password", RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@type='checkbox']");
 		FileUtil.mkdirs(RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test-output\\brochure\\"));
@@ -57,6 +53,5 @@ public class ScreengrabSignInTest extends BaseTestCase {
 			"");
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

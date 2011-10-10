@@ -30,7 +30,7 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,11 +45,9 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Asset Publisher Test Page",
 					RuntimeVariables.replace("Asset Publisher Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean blogsEntry1Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -66,7 +64,6 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean blogsEntry2Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -83,7 +80,6 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean blogsEntry3Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -100,7 +96,6 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean blogsEntry4Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -117,7 +112,6 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean blogsEntry5Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -134,7 +128,6 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 			case 3:

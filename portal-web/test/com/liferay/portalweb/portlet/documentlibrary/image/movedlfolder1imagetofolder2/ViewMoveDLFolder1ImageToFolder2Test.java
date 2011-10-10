@@ -25,7 +25,7 @@ public class ViewMoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewMoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
@@ -52,7 +50,7 @@ public class ViewMoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -70,7 +68,6 @@ public class ViewMoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -78,7 +75,7 @@ public class ViewMoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -93,11 +90,9 @@ public class ViewMoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
@@ -105,7 +100,7 @@ public class ViewMoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			RuntimeVariables.replace("DL Folder2 Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -122,7 +117,6 @@ public class ViewMoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder1 Image Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));

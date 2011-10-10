@@ -25,7 +25,7 @@ public class AddSubcategory1Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,12 @@ public class AddSubcategory1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category Name\nShopping Category Description"),
 			selenium.getText("//td[1]/a"));
@@ -56,21 +53,16 @@ public class AddSubcategory1Test extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Shopping Category Name\nShopping Category Description"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Subcategory']",
 			RuntimeVariables.replace("Add Subcategory"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_name']",
 			RuntimeVariables.replace("Shopping Subcategory1 Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_34_description']",
 			RuntimeVariables.replace("Shopping Subcategory1 Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

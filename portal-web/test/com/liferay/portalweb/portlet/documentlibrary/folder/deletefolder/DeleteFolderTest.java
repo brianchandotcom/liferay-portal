@@ -25,7 +25,7 @@ public class DeleteFolderTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,25 +40,21 @@ public class DeleteFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_20_rowIdsFolderCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_20_rowIdsFolderCheckbox']",
 			RuntimeVariables.replace("Entry Check Box"));
 		assertTrue(selenium.isChecked("//input[@id='_20_rowIdsFolderCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -74,7 +70,6 @@ public class DeleteFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -83,10 +78,9 @@ public class DeleteFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -104,7 +98,6 @@ public class DeleteFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

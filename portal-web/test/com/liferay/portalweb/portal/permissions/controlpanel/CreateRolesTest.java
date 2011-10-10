@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class CreateRolesTest extends BaseTestCase {
 	public void testCreateRoles() throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -38,13 +38,11 @@ public class CreateRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Roles", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -59,13 +57,11 @@ public class CreateRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -80,22 +76,17 @@ public class CreateRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_name", RuntimeVariables.replace("Community Admin"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the CommunityAdmin Role."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Community Admin"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -110,22 +101,17 @@ public class CreateRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_name", RuntimeVariables.replace("Member"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Member Role."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Member"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -140,22 +126,17 @@ public class CreateRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_name", RuntimeVariables.replace("Portlet"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Portlet Role."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Portlet"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -170,22 +151,17 @@ public class CreateRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_name", RuntimeVariables.replace("Publisher"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Publisher Role."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Publisher"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -200,22 +176,17 @@ public class CreateRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_name", RuntimeVariables.replace("Scope"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Scope Role."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Scope"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -230,15 +201,11 @@ public class CreateRolesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_name", RuntimeVariables.replace("Writer"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Writer Role."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Writer"));
 	}
 }

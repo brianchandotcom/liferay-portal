@@ -27,7 +27,7 @@ public class ViewPortletCurrentMBCategoryThreadMessageAPTest
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,11 +42,9 @@ public class ViewPortletCurrentMBCategoryThreadMessageAPTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//h3[@class='asset-title']/a"));

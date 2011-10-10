@@ -30,7 +30,7 @@ public class AdvancedSearchWebContentTypeTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class AdvancedSearchWebContentTypeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				String webContentID = selenium.getText("//td[2]/a");
 				RuntimeVariables.setValue("webContentID", webContentID);
@@ -73,7 +70,7 @@ public class AdvancedSearchWebContentTypeTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -88,13 +85,11 @@ public class AdvancedSearchWebContentTypeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_15_type']",
 					RuntimeVariables.replace("label=Announcements"));
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_15_type']",
 					RuntimeVariables.replace("label="));
 				selenium.select("//select[@id='_15_type']",
@@ -102,7 +97,6 @@ public class AdvancedSearchWebContentTypeTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_15_type']",
 					RuntimeVariables.replace("label="));
 				assertFalse(selenium.isElementPresent("link=Web Content Name"));

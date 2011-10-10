@@ -25,7 +25,7 @@ public class ViewPortletForgotPasswordTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,28 +40,22 @@ public class ViewPortletForgotPasswordTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Sign In Test Page",
 			RuntimeVariables.replace("Sign In Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Forgot Password"),
 			selenium.getText("//li[3]/a/span"));
 		selenium.clickAt("//li[3]/a/span",
 			RuntimeVariables.replace("Forgot Password"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//input[@id='_58_emailAddress']"));
 		selenium.type("//input[@id='_58_emailAddress']",
 			RuntimeVariables.replace("test@liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_58_captchaText']",
 			RuntimeVariables.replace("1111"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
@@ -70,14 +64,11 @@ public class ViewPortletForgotPasswordTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@id='_58_emailAddress']"));
 		selenium.type("//input[@id='_58_emailAddress']",
 			RuntimeVariables.replace("testfake@liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_58_captchaText']",
 			RuntimeVariables.replace("1111"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));

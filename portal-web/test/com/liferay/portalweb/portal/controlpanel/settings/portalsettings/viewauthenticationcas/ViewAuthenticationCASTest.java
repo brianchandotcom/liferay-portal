@@ -25,7 +25,7 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,15 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,13 +63,12 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_authenticationLink']",
 			RuntimeVariables.replace("Authentication"));
 		selenium.clickAt("link=CAS", RuntimeVariables.replace("CAS"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,7 +84,6 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//input[@name='_130_settings--cas.import.from.ldap--Checkbox']"));
 		assertTrue(selenium.isElementPresent(

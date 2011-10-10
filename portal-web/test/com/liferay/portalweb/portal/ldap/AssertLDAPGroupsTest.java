@@ -25,7 +25,7 @@ public class AssertLDAPGroupsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,22 +40,19 @@ public class AssertLDAPGroupsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText(
 				"//a[@id='_130_authenticationLink']", "Authentication"));
 		selenium.clickAt("//a[@id='_130_authenticationLink']",
 			RuntimeVariables.replace("Authentication"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -70,11 +67,10 @@ public class AssertLDAPGroupsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=LDAP", RuntimeVariables.replace("LDAP"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,20 +86,17 @@ public class AssertLDAPGroupsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked(
 				"//input[@id='_130_ldap.auth.enabledCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test LDAP 1"),
 			selenium.getText("//fieldset[2]/div/div/table/tbody/tr/td[1]"));
 		selenium.clickAt("//img[@alt='Edit']", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Test LDAP Groups']",
 			RuntimeVariables.replace("Test LDAP Groups"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -118,10 +111,8 @@ public class AssertLDAPGroupsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -137,7 +128,6 @@ public class AssertLDAPGroupsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("usergroup"),
 			selenium.getText("//td[2]"));
 		assertEquals(RuntimeVariables.replace(""), selenium.getText("//td[3]"));

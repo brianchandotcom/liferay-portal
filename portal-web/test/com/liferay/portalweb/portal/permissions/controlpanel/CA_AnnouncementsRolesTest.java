@@ -24,11 +24,9 @@ public class CA_AnnouncementsRolesTest extends BaseTestCase {
 	public void testCA_AnnouncementsRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Announcements"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.check("_128_rowIds");
 		selenium.check(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.announcements.model.AnnouncementsEntryUPDATE']");
@@ -36,22 +34,18 @@ public class CA_AnnouncementsRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.announcements.model.AnnouncementsEntryVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 		selenium.typeKeys("_128_add-permissions",
 			RuntimeVariables.replace("aaaaa"));
-		selenium.saveScreenShotAndSource();
 		selenium.keyPress("_128_add-permissions",
 			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.check("_128_rowIds");
 		selenium.check(
 			"//input[@name='_128_rowIds' and @value='84CONFIGURATION']");
 		selenium.check("//input[@name='_128_rowIds' and @value='84VIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

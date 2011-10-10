@@ -26,7 +26,7 @@ public class SOFo_ViewUnfollowCCFollowerRMenuTest extends BaseTestCase {
 		selenium.open("/user/socialofficefollowersn/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class SOFo_ViewUnfollowCCFollowerRMenuTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("You have no contacts."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Find People"),
@@ -53,14 +51,11 @@ public class SOFo_ViewUnfollowCCFollowerRMenuTest extends BaseTestCase {
 		selenium.clickAt("//span[3]/a/span",
 			RuntimeVariables.replace("Find People"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_1_WAR_contactsportlet_keywords1']",
 			RuntimeVariables.replace("test@liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//div[2]/div[1]/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
@@ -68,7 +63,7 @@ public class SOFo_ViewUnfollowCCFollowerRMenuTest extends BaseTestCase {
 		selenium.clickAt("//strong/a/img", RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -83,7 +78,6 @@ public class SOFo_ViewUnfollowCCFollowerRMenuTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Follow"),
 			selenium.getText("//li[4]/a"));
 	}

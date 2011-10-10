@@ -30,7 +30,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Password Policies",
 					RuntimeVariables.replace("Password Policies"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean defaultPasswordPolicyFirst1 = selenium.isPartialText("//td[1]/a",
 						"Default Password Policy");
@@ -68,7 +65,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -84,13 +81,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -107,7 +102,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -123,13 +118,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -146,7 +139,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -162,13 +155,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -185,7 +176,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -201,13 +192,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -224,7 +213,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -240,13 +229,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 6:
 
@@ -263,7 +250,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -279,13 +266,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 7:
 
@@ -302,7 +287,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -318,13 +303,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 8:
 
@@ -341,7 +324,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -357,13 +340,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 9:
 
@@ -380,7 +361,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -396,13 +377,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 10:
 
@@ -419,7 +398,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -435,13 +414,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 11:
 			case 100:

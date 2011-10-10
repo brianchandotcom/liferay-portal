@@ -25,7 +25,7 @@ public class ViewUserNameAndImageTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewUserNameAndImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Recent Bloggers Test Page",
 			RuntimeVariables.replace("Recent Bloggers Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//img[@class='avatar']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//span[@class='user-name']"));

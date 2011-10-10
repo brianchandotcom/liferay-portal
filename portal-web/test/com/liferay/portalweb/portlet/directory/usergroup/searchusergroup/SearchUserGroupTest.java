@@ -25,7 +25,7 @@ public class SearchUserGroupTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,33 +40,26 @@ public class SearchUserGroupTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Directory Test Page",
 			RuntimeVariables.replace("Directory Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=User Groups",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_11_name']",
 			RuntimeVariables.replace("User Group Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("User Group Name"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("User Group Description"),
 			selenium.getText("//tr[3]/td[2]"));
 		selenium.type("//input[@id='_11_name']",
 			RuntimeVariables.replace("User1 Group1 Name1"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("User Group Name"));
 		assertFalse(selenium.isTextPresent("User Group Description"));
 	}

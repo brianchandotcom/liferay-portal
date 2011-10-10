@@ -25,7 +25,7 @@ public class AddPortletOpenSocialGadgetTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,16 @@ public class AddPortletOpenSocialGadgetTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=OpenSocial Test Page",
 			RuntimeVariables.replace("OpenSocial Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -67,12 +65,11 @@ public class AddPortletOpenSocialGadgetTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@title='Hello World!']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -87,7 +84,6 @@ public class AddPortletOpenSocialGadgetTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Hello World!"),
 			selenium.getText("//header/h1/span"));
 		Thread.sleep(5000);
@@ -95,6 +91,5 @@ public class AddPortletOpenSocialGadgetTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Hello, world!"),
 			selenium.getText("//body"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 	}
 }

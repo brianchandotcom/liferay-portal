@@ -25,7 +25,7 @@ public class ViewWikiPageOutgoingLinksTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,30 +40,24 @@ public class ViewWikiPageOutgoingLinksTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Page1 Title"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page1 Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText("//div[3]/span[2]/a/span"));
 		selenium.clickAt("//div[3]/span[2]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Outgoing Links",
 			RuntimeVariables.replace("Outgoing Links"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
 			selenium.getText("//td[1]/a"));
 		assertFalse(selenium.isTextPresent("This page has no links."));

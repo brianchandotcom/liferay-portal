@@ -25,7 +25,7 @@ public class SelectBirthdayTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,13 +40,12 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -61,14 +60,13 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.click("//select[@id='_2_birthdayMonth']");
 		selenium.select("//select[@id='_2_birthdayMonth']",
 			RuntimeVariables.replace("March"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -84,12 +82,11 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_2_birthdayYear']",
 			RuntimeVariables.replace("1986"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -105,10 +102,8 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -123,12 +118,11 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='buttonTest']",
 			RuntimeVariables.replace("Date Picker"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -143,13 +137,12 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("March 1986"),
 			selenium.getText("//div[@class='aui-calendar-title']"));
 		selenium.clickAt("link=Prev", RuntimeVariables.replace("Prev"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -166,13 +159,12 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("April 1986"),
 			selenium.getText("//div[@class='aui-calendar-title']"));
 		selenium.clickAt("link=Prev", RuntimeVariables.replace("Prev"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -189,12 +181,11 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("May 1986"),
 			selenium.getText("//div[@class='aui-calendar-title']"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -209,11 +200,10 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=31", RuntimeVariables.replace("31"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -228,7 +218,6 @@ public class SelectBirthdayTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals("May",
 			selenium.getSelectedLabel("//select[@id='_2_birthdayMonth']"));
 		assertEquals("31",
@@ -238,7 +227,6 @@ public class SelectBirthdayTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

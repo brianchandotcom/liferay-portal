@@ -25,7 +25,7 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,24 +40,21 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("link=Web Content"));
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//div/span/ul/li/strong/a/span"));
 		selenium.clickAt("//div/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -73,49 +70,38 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Localized Structure"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Hello World Localized Article"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//span[2]/div/span/span/span/input[2]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//span[2]/div/span/span/span/input[2]",
 			RuntimeVariables.replace("Localizable"));
 		assertTrue(selenium.isChecked("//span[2]/div/span/span/span/input[2]"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//li[2]/span[2]/div/span/span/span/input[2]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//li[2]/span[2]/div/span/span/span/input[2]",
 			RuntimeVariables.replace("Localizable"));
 		assertTrue(selenium.isChecked(
 				"//li[2]/span[2]/div/span/span/span/input[2]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save as Draft']",
 			RuntimeVariables.replace("Save as Draft"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		Thread.sleep(5000);
 		selenium.type("//input[@id='page-name']",
 			RuntimeVariables.replace("Hello World Page Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='page-description']",
 			RuntimeVariables.replace("Hello World Page Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save as Draft']",
 			RuntimeVariables.replace("Save as Draft"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -126,7 +112,7 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Translation"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -142,7 +128,6 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Chinese (China)"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
@@ -150,7 +135,7 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -165,21 +150,16 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//iframe[@id='_15_zh_CN']");
 		selenium.type("//input[@id='page-name']",
 			RuntimeVariables.replace("\u4e16\u754c\u60a8\u597d Page Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='page-description']",
 			RuntimeVariables.replace(
 				"\u4e16\u754c\u60a8\u597d Page Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -187,7 +167,6 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

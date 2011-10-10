@@ -25,7 +25,7 @@ public class GetMapTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,12 @@ public class GetMapTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Google Maps Test Page",
 			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//form/input[1]",
 			RuntimeVariables.replace("17730 Antonio Ave, Cerritos, CA, 90703"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//form/input[3]", RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Get Map']",
 			RuntimeVariables.replace("Get Map"));
 		Thread.sleep(5000);

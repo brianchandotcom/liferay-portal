@@ -30,7 +30,7 @@ public class SearchUserQuotesTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,11 +45,9 @@ public class SearchUserQuotesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -65,27 +63,21 @@ public class SearchUserQuotesTest extends BaseTestCase {
 			case 2:
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("\"userfn usermn userln\""));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent("link=userfn"));
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("\"userfn\""));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent("link=userfn"));
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("\"userfn1\""));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("userfn"));
 
 			case 100:

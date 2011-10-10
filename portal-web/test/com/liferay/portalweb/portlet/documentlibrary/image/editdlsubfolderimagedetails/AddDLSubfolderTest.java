@@ -25,7 +25,7 @@ public class AddDLSubfolderTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class AddDLSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -52,7 +50,7 @@ public class AddDLSubfolderTest extends BaseTestCase {
 			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -68,14 +66,13 @@ public class AddDLSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
 		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -91,24 +88,19 @@ public class AddDLSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Subfolder"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("Subfolder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_name']",
 			RuntimeVariables.replace("DL Subfolder Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_20_description']",
 			RuntimeVariables.replace("DL Subfolder Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Subfolder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));

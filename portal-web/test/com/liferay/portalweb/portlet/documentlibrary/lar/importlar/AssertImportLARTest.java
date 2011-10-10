@@ -25,7 +25,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
@@ -55,7 +53,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace("DML Folder1 Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -72,7 +70,6 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
 			selenium.getText("//li[@class='folder selected']/a[2]"));
 		assertEquals(RuntimeVariables.replace("DML Folder1 Subfolder Name"),
@@ -82,7 +79,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace("DML Folder1 Subfolder Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -99,7 +96,6 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder1 Subfolder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertEquals(RuntimeVariables.replace(
@@ -110,7 +106,6 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"DML Folder1 Subfolder Document Title Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"DML Folder1 Subfolder Document Title Edit"),
 			selenium.getText("//h2[@class='document-title']"));
@@ -122,7 +117,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -137,11 +132,9 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder2 Name Edit"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
@@ -149,7 +142,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace("DML Folder2 Name Edit"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -166,7 +159,6 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder2 Name Edit"),
 			selenium.getText("//li[@class='folder selected']/a[2]"));
 		assertEquals(RuntimeVariables.replace("DML Folder2 Subfolder Name Edit"),

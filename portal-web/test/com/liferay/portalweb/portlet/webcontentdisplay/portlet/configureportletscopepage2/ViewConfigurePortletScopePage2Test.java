@@ -25,7 +25,7 @@ public class ViewConfigurePortletScopePage2Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,15 @@ public class ViewConfigurePortletScopePage2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page3",
 			RuntimeVariables.replace("Web Content Display Test Page3"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,14 +64,13 @@ public class ViewConfigurePortletScopePage2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,10 +85,8 @@ public class ViewConfigurePortletScopePage2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals("Select Layout",
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		assertEquals("Web Content Display Test Page2",
@@ -99,7 +94,7 @@ public class ViewConfigurePortletScopePage2Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -114,11 +109,9 @@ public class ViewConfigurePortletScopePage2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page3",
 			RuntimeVariables.replace("Web Content Display Test Page3"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Display (Web Content Display Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));

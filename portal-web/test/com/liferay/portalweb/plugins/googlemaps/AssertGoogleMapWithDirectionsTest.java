@@ -25,7 +25,7 @@ public class AssertGoogleMapWithDirectionsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class AssertGoogleMapWithDirectionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Google Maps Test Page",
 			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertEquals("11947 Del Amo Blvd, Cerritos, CA, 90703",
 			selenium.getValue("//form/input[1]"));

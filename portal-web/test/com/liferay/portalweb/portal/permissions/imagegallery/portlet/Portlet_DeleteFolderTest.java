@@ -25,7 +25,7 @@ public class Portlet_DeleteFolderTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,18 +41,16 @@ public class Portlet_DeleteFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Image Gallery Permissions Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a/strong",
 				"Portlet2 Temporary2 Folder2"));
 		assertTrue(selenium.isElementPresent("link=Delete"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -68,7 +66,6 @@ public class Portlet_DeleteFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
@@ -77,7 +74,6 @@ public class Portlet_DeleteFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
 		assertFalse(selenium.isElementPresent(

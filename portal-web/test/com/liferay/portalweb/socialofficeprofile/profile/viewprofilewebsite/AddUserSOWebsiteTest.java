@@ -25,7 +25,7 @@ public class AddUserSOWebsiteTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,34 +40,28 @@ public class AddUserSOWebsiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("socialofficefriendfn"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("socialofficefriendfn"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("socialofficefriendfn"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
 			selenium.getText("//div[2]/h1/span"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -82,14 +76,12 @@ public class AddUserSOWebsiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_125_websitesLink']",
 				"Websites"));
 		selenium.clickAt("//a[@id='_125_websitesLink']",
 			RuntimeVariables.replace("Websites"));
 		selenium.type("//input[@id='_125_websiteUrl0']",
 			RuntimeVariables.replace("http://www.socialofficefriendfn.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_125_websiteTypeId0']",
 			RuntimeVariables.replace("label=Personal"));
 		selenium.clickAt("//input[@id='_125_websitePrimary0']",
@@ -97,10 +89,9 @@ public class AddUserSOWebsiteTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -115,7 +106,6 @@ public class AddUserSOWebsiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -124,6 +114,5 @@ public class AddUserSOWebsiteTest extends BaseTestCase {
 		assertEquals("Personal",
 			selenium.getSelectedLabel("//select[@id='_125_websiteTypeId0']"));
 		assertTrue(selenium.isChecked("//input[@id='_125_websitePrimary0']"));
-		selenium.saveScreenShotAndSource();
 	}
 }

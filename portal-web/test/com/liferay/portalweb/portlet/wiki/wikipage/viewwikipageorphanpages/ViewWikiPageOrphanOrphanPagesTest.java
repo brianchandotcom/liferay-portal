@@ -25,7 +25,7 @@ public class ViewWikiPageOrphanOrphanPagesTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,12 @@ public class ViewWikiPageOrphanOrphanPagesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Orphan Pages",
 			RuntimeVariables.replace("Orphan Pages"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
 			selenium.getText("//tr[5]/td[1]/a"));
 	}

@@ -27,7 +27,7 @@ public class UpdateDueDateWebContentAssignedToMyRolesActionsTest
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,15 +42,12 @@ public class UpdateDueDateWebContentAssignedToMyRolesActionsTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -69,7 +66,7 @@ public class UpdateDueDateWebContentAssignedToMyRolesActionsTest
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -85,14 +82,13 @@ public class UpdateDueDateWebContentAssignedToMyRolesActionsTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Update Due Date"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -107,7 +103,6 @@ public class UpdateDueDateWebContentAssignedToMyRolesActionsTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_153_dueDateMonth']",
 			RuntimeVariables.replace("label=December"));
 		selenium.select("//select[@id='_153_dueDateDay']",
@@ -125,7 +120,6 @@ public class UpdateDueDateWebContentAssignedToMyRolesActionsTest
 		selenium.clickAt("//div[3]/span/span/button",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

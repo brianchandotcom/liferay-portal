@@ -25,7 +25,7 @@ public class ViewDeleteTasksTaskAssignedToMeTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,13 +40,11 @@ public class ViewDeleteTasksTaskAssignedToMeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//nav/ul/li[1]/a/span"));
 		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Tasks"),
 			selenium.getText("//h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
@@ -54,10 +52,9 @@ public class ViewDeleteTasksTaskAssignedToMeTest extends BaseTestCase {
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -72,16 +69,14 @@ public class ViewDeleteTasksTaskAssignedToMeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No tasks were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isChecked("//td[1]/input"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[1]/input",
 			RuntimeVariables.replace("Show Completed Tasks"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -96,7 +91,6 @@ public class ViewDeleteTasksTaskAssignedToMeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No tasks were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 	}

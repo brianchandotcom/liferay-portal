@@ -26,7 +26,7 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,22 +41,17 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div[2]/div[1]/div/span",
 			RuntimeVariables.replace("Activities"));
 		assertEquals(RuntimeVariables.replace(
@@ -70,7 +65,7 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -85,22 +80,17 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Submissions",
 			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div[3]/div[1]/div",
 			RuntimeVariables.replace("Activities"));
 		assertEquals(RuntimeVariables.replace(
@@ -114,7 +104,7 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -129,25 +119,19 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Submissions",
 			RuntimeVariables.replace("Submissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div[3]/div[1]/div",
 			RuntimeVariables.replace("Activities"));
 		assertEquals(RuntimeVariables.replace(

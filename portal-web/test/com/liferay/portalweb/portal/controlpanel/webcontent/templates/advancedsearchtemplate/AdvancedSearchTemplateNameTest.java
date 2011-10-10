@@ -30,7 +30,7 @@ public class AdvancedSearchTemplateNameTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,19 +45,15 @@ public class AdvancedSearchTemplateNameTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -74,7 +70,7 @@ public class AdvancedSearchTemplateNameTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -89,17 +85,13 @@ public class AdvancedSearchTemplateNameTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_name']",
 					RuntimeVariables.replace("web content template name"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_name']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Web Content Template Name"),
 					selenium.getText("//td[3]/a"));
@@ -108,14 +100,11 @@ public class AdvancedSearchTemplateNameTest extends BaseTestCase {
 					selenium.getText("//td[4]/a"));
 				selenium.type("//input[@id='_15_name']",
 					RuntimeVariables.replace("web1 content1 template1 name1"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_name']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("Web Content Template Name"));
 				assertFalse(selenium.isTextPresent(
 						"Web Content Template Description"));

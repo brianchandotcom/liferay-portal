@@ -30,7 +30,7 @@ public class TearDownConfigurationTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,16 +45,14 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -70,7 +68,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -78,7 +75,7 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					RuntimeVariables.replace("Configuration"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -93,14 +90,12 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Payment Settings",
 					RuntimeVariables.replace("Payment Settings"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -116,8 +111,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				boolean amexAvailable = selenium.isPartialText("_86_available_cc_types",
 						"American Express");
 
@@ -131,7 +124,7 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					RuntimeVariables.replace("label=American Express"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -147,12 +140,11 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/div/span/span/button[2]",
 					RuntimeVariables.replace("Left Arrow"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -169,12 +161,10 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -190,8 +180,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				boolean discoverAvailable = selenium.isPartialText("_86_available_cc_types",
 						"Discover");
 
@@ -205,7 +193,7 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					RuntimeVariables.replace("label=Discover"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -221,12 +209,11 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/div/span/span/button[2]",
 					RuntimeVariables.replace("Left Arrow"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -243,12 +230,10 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -264,8 +249,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				boolean masterCardAvailable = selenium.isPartialText("_86_available_cc_types",
 						"MasterCard");
 
@@ -279,7 +262,7 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					RuntimeVariables.replace("label=MasterCard"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -295,12 +278,11 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/div/span/span/button[2]",
 					RuntimeVariables.replace("Left Arrow"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -317,12 +299,10 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 			case 4:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -338,8 +318,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				boolean visaAvailable = selenium.isPartialText("_86_available_cc_types",
 						"Visa");
 
@@ -353,7 +331,7 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					RuntimeVariables.replace("label=Visa"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -369,12 +347,11 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/div/span/span/button[2]",
 					RuntimeVariables.replace("Left Arrow"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -391,8 +368,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 			case 5:
 				selenium.select("//select[@id='_86_currencyId']",
 					RuntimeVariables.replace("USD"));
@@ -400,64 +375,47 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					RuntimeVariables.replace("California"));
 				selenium.type("//input[@id='_86_taxRate']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_minOrder']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Shipping Calculation",
 					RuntimeVariables.replace("Shipping Calculation"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_86_shippingFormula']",
 					RuntimeVariables.replace("Flat Amount"));
 				selenium.type("//input[@id='_86_shipping0']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_shipping1']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_shipping2']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_shipping3']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_shipping4']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Insurance Calculation",
 					RuntimeVariables.replace("Insurance Calculation"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_86_insuranceFormula']",
 					RuntimeVariables.replace("Flat Amount"));
 				selenium.type("//input[@id='_86_insurance0']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_insurance1']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_insurance2']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_insurance3']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_insurance4']",
 					RuntimeVariables.replace("0"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

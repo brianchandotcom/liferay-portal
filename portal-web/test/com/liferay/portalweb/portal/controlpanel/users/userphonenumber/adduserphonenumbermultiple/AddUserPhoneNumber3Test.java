@@ -25,7 +25,7 @@ public class AddUserPhoneNumber3Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,28 +40,22 @@ public class AddUserPhoneNumber3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("selen01"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -76,14 +70,13 @@ public class AddUserPhoneNumber3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_125_phoneNumbersLink']",
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_125_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -98,24 +91,20 @@ public class AddUserPhoneNumber3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div[1]/span/span/button[1]",
 			RuntimeVariables.replace("Add Row"));
 		selenium.type("//input[@id='_125_phoneNumber3']",
 			RuntimeVariables.replace("1231231234"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_phoneExtension3']",
 			RuntimeVariables.replace("123"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_125_phoneTypeId3']",
 			RuntimeVariables.replace("label=Business"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -130,7 +119,6 @@ public class AddUserPhoneNumber3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

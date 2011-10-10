@@ -25,7 +25,7 @@ public class Member_EditWCEntryTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,28 +40,23 @@ public class Member_EditWCEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//tr[3]/td[3]/a"));
 		selenium.clickAt("//tr[3]/td[3]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name Edited"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -77,18 +72,15 @@ public class Member_EditWCEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Web Content Content Edited"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//input[@value='Publish']"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
 			selenium.getText("//tr[3]/td[3]/a"));
 	}

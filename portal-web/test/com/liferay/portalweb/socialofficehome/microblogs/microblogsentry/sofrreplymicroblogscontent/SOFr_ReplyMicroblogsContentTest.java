@@ -25,7 +25,7 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 		selenium.open("/user/socialofficefriendsn/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,14 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
 			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -64,7 +62,6 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
@@ -75,7 +72,7 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 		selenium.clickAt("//span[2]/a/span", RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,7 +87,6 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
@@ -98,7 +94,7 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			selenium.getText("//div[@class='content']"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -113,17 +109,15 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Content Repl"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("117"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -138,11 +132,10 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/span/a/img"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -160,7 +153,6 @@ public class SOFr_ReplyMicroblogsContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln (socialofficefriendsn)"),
 			selenium.getText("//div[@class='my-entry-bubble ']/div[1]"));

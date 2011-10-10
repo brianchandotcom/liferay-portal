@@ -25,7 +25,7 @@ public class EditFrontPageCommentBodyTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class EditFrontPageCommentBodyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment Body"),
 			selenium.getText("//div/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -52,12 +50,11 @@ public class EditFrontPageCommentBodyTest extends BaseTestCase {
 		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
 		selenium.type("//textarea[@name='_36_editReplyBody1']",
 			RuntimeVariables.replace("Wiki Front Page Comment Body Edit"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -73,7 +70,6 @@ public class EditFrontPageCommentBodyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

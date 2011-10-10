@@ -30,7 +30,7 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,14 +45,11 @@ public class TearDownUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Users", RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basic1Visible = selenium.isVisible("link=\u00ab Basic");
 
@@ -68,11 +65,9 @@ public class TearDownUserTest extends BaseTestCase {
 			case 2:
 				selenium.type("_125_keywords",
 					RuntimeVariables.replace("selenium"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean user1Deactivated = selenium.isElementPresent(
 						"_125_rowIds");
@@ -89,7 +84,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -108,7 +102,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -127,7 +120,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -146,7 +138,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 6:
 
@@ -165,14 +156,13 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 7:
 				selenium.clickAt("link=Advanced \u00bb",
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -187,13 +177,11 @@ public class TearDownUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("_125_active",
 					RuntimeVariables.replace("label=No"));
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean user1Deleted = selenium.isElementPresent("_125_rowIds");
 
@@ -209,7 +197,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 8:
 
@@ -227,7 +214,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 9:
 
@@ -245,7 +231,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 10:
 
@@ -263,7 +248,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 11:
 
@@ -281,7 +265,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 12:
 				selenium.clickAt("link=\u00ab Basic",

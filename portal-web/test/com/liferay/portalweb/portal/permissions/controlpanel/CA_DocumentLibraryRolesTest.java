@@ -24,11 +24,9 @@ public class CA_DocumentLibraryRolesTest extends BaseTestCase {
 	public void testCA_DocumentLibraryRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Document Library"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.check("_128_rowIds");
 		selenium.check(
 			"//input[@value='com.liferay.portlet.documentlibraryADD_FOLDER']");
@@ -82,7 +80,6 @@ public class CA_DocumentLibraryRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibrary.model.DLFileShortcutVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

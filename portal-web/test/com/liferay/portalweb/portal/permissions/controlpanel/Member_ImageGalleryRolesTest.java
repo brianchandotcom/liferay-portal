@@ -24,11 +24,9 @@ public class Member_ImageGalleryRolesTest extends BaseTestCase {
 	public void testMember_ImageGalleryRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Image Gallery"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.uncheck("_128_rowIds");
 		selenium.uncheck(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.imagegalleryADD_IMAGE']");
@@ -60,7 +58,6 @@ public class Member_ImageGalleryRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.imagegallery.model.IGImageVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

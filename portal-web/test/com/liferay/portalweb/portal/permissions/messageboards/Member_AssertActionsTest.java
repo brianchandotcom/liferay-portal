@@ -25,7 +25,7 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		selenium.open("/web/site-name/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class Member_AssertActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//input[@value='Search']"));
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText("//div[2]/div/span/a/span[1]"));
@@ -63,7 +61,6 @@ public class Member_AssertActionsTest extends BaseTestCase {
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Thread Subject"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -75,7 +72,6 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Reply"),
 			selenium.getText(
 				"//ul[@class='edit-controls lfr-component']/li[2]/span/a"));

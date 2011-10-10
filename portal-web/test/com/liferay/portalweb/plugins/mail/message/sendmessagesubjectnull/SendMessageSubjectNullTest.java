@@ -25,7 +25,7 @@ public class SendMessageSubjectNullTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class SendMessageSubjectNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Mail Test Page",
 			RuntimeVariables.replace("Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"liferay.qa.testing.trunk@gmail.com"),
 			selenium.getText("//div/div/div[1]/div/ul/li/span/span/a"));
@@ -53,7 +51,7 @@ public class SendMessageSubjectNullTest extends BaseTestCase {
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -70,7 +68,6 @@ public class SendMessageSubjectNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Compose Email"),
 			selenium.getText("//a[@class='compose-message']"));
 		selenium.clickAt("//a[@class='compose-message']",
@@ -78,7 +75,7 @@ public class SendMessageSubjectNullTest extends BaseTestCase {
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -93,14 +90,11 @@ public class SendMessageSubjectNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_1_WAR_mailportlet_to']",
 			RuntimeVariables.replace("liferay.qa2@gmail.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Send']",
 			RuntimeVariables.replace("Send"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Sent successfully."),
 			selenium.getText("//span[@class='message portlet-msg-success']"));
 	}

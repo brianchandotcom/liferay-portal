@@ -25,7 +25,7 @@ public class SearchCouponTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,11 @@ public class SearchCouponTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Coupon Name\nShopping Coupon Description"),
 			selenium.getText("//td[3]/a"));
@@ -56,18 +53,16 @@ public class SearchCouponTest extends BaseTestCase {
 		RuntimeVariables.setValue("codeSearch", codeSearch);
 		selenium.type("//input[@id='_34_code']",
 			RuntimeVariables.replace(RuntimeVariables.getValue("codeSearch")));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Coupon Name\nShopping Coupon Description"),
 			selenium.getText("//td[3]/a"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -82,24 +77,18 @@ public class SearchCouponTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_code']",
 			RuntimeVariables.replace(RuntimeVariables.getValue("codeSearch")));
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("//input[@id='_34_code']",
 			RuntimeVariables.replace("1"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(
 				"Shopping Coupon Name\nShopping Coupon Description"));
 	}

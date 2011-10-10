@@ -25,7 +25,7 @@ public class AddUserSOSocialNetworkTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,34 +40,28 @@ public class AddUserSOSocialNetworkTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("socialofficefriendfn"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("socialofficefriendfn"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("socialofficefriendfn"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
 			selenium.getText("//div[2]/h1/span"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -82,14 +76,13 @@ public class AddUserSOSocialNetworkTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_125_socialNetworkLink']",
 				"Social Network"));
 		selenium.clickAt("//a[@id='_125_socialNetworkLink']",
 			RuntimeVariables.replace("Social Network"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -104,23 +97,18 @@ public class AddUserSOSocialNetworkTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_facebookSn']",
 			RuntimeVariables.replace("socialofficefriendfn"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_mySpaceSn']",
 			RuntimeVariables.replace("socialofficefriendfn"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_twitterSn']",
 			RuntimeVariables.replace("socialofficefriendfn"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -135,7 +123,6 @@ public class AddUserSOSocialNetworkTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

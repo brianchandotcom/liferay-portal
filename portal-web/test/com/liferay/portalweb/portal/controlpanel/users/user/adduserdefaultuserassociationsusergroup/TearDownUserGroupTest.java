@@ -30,7 +30,7 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,19 +45,16 @@ public class TearDownUserGroupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -73,14 +70,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("User Groups"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean userGroup1Present = selenium.isElementPresent(
 						"//td[2]/a");
@@ -93,21 +88,18 @@ public class TearDownUserGroupTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@name='_125_allRowIds']",
 					RuntimeVariables.replace("All Rows"));
 				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -123,14 +115,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("User Groups"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean userGroup2Present = selenium.isElementPresent(
 						"//td[2]/a");
@@ -143,21 +133,18 @@ public class TearDownUserGroupTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@name='_125_allRowIds']",
 					RuntimeVariables.replace("All Rows"));
 				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -173,14 +160,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("User Groups"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean userGroup3Present = selenium.isElementPresent(
 						"//td[2]/a");
@@ -193,21 +178,18 @@ public class TearDownUserGroupTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@name='_125_allRowIds']",
 					RuntimeVariables.replace("All Rows"));
 				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -223,14 +205,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("User Groups"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean userGroup4Present = selenium.isElementPresent(
 						"//td[2]/a");
@@ -243,21 +223,18 @@ public class TearDownUserGroupTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@name='_125_allRowIds']",
 					RuntimeVariables.replace("All Rows"));
 				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -273,14 +250,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("User Groups"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean userGroup5Present = selenium.isElementPresent(
 						"//td[2]/a");
@@ -293,17 +268,14 @@ public class TearDownUserGroupTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@name='_125_allRowIds']",
 					RuntimeVariables.replace("All Rows"));
 				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 			case 3:

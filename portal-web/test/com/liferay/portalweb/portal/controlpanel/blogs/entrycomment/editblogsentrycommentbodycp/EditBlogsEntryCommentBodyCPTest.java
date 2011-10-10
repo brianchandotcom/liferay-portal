@@ -25,7 +25,7 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,20 +40,16 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
@@ -63,7 +59,7 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -79,10 +75,8 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@name='_161_editReplyBody1']",
 			RuntimeVariables.replace("Blogs Entry Comment Body Edited"));
-		selenium.saveScreenShotAndSource();
 		selenium.keyPress("//textarea[@name='_161_editReplyBody1']",
 			RuntimeVariables.replace("\\48"));
 		selenium.keyPress("//textarea[@name='_161_editReplyBody1']",
@@ -91,7 +85,7 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -108,12 +102,11 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -130,7 +123,6 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body Edited"),
 			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
 	}

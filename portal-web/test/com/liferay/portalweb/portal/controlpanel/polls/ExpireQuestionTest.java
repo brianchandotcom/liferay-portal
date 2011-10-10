@@ -25,7 +25,7 @@ public class ExpireQuestionTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,14 @@ public class ExpireQuestionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Edited Test Question 2",
 			RuntimeVariables.replace("Edited Test Question 2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//div[2]/div/span[1]/span/span/input"));
 		assertTrue(selenium.isElementPresent("//span[2]/span/span/input"));
@@ -60,12 +56,11 @@ public class ExpireQuestionTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Cancel']",
 			RuntimeVariables.replace("Cancel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[5]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -81,23 +76,19 @@ public class ExpireQuestionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked("//input[@id='_25_neverExpireCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_25_neverExpireCheckbox']",
 			RuntimeVariables.replace("Never Expire"));
 		assertFalse(selenium.isChecked("//input[@id='_25_neverExpireCheckbox']"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -113,7 +104,6 @@ public class ExpireQuestionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_25_expirationDateYear']",
 			RuntimeVariables.replace("label=2008"));
 		selenium.select("//select[@id='_25_expirationDateMonth']",
@@ -129,7 +119,6 @@ public class ExpireQuestionTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

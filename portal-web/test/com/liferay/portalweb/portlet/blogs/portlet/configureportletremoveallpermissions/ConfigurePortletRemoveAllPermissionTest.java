@@ -26,7 +26,7 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,18 +41,16 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -68,14 +66,13 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,12 +87,11 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -110,54 +106,41 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='16_ACTION_VIEW']",
 			RuntimeVariables.replace("Guest View"));
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked(
 				"//input[@name='10150_ACTION_ADD_TO_PAGE']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='10150_ACTION_ADD_TO_PAGE']",
 			RuntimeVariables.replace("Owner Add to Page"));
 		assertFalse(selenium.isChecked(
 				"//input[@name='10150_ACTION_ADD_TO_PAGE']"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked(
 				"//input[@name='10150_ACTION_CONFIGURATION']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='10150_ACTION_CONFIGURATION']",
 			RuntimeVariables.replace("Owner Configuration"));
 		assertFalse(selenium.isChecked(
 				"//input[@name='10150_ACTION_CONFIGURATION']"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked("//input[@name='10150_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='10150_ACTION_VIEW']",
 			RuntimeVariables.replace("Owner View"));
 		assertFalse(selenium.isChecked("//input[@name='10150_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked(
 				"//input[@name='10150_ACTION_PERMISSIONS']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='10150_ACTION_PERMISSIONS']",
 			RuntimeVariables.replace("Owner Permissions"));
 		assertFalse(selenium.isChecked(
 				"//input[@name='10150_ACTION_PERMISSIONS']"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked("//input[@name='10155_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='10155_ACTION_VIEW']",
 			RuntimeVariables.replace("Site Member View"));
 		assertFalse(selenium.isChecked("//input[@name='10155_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -175,14 +158,13 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -197,16 +179,14 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -222,14 +202,13 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -244,12 +223,11 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -264,21 +242,14 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@name='10150_ACTION_ADD_TO_PAGE']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@name='10150_ACTION_CONFIGURATION']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@name='10150_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@name='10150_ACTION_PERMISSIONS']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@name='10155_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 	}
 }

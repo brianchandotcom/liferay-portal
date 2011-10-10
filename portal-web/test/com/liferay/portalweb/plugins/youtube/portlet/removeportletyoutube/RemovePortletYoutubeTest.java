@@ -25,7 +25,7 @@ public class RemovePortletYoutubeTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,12 @@ public class RemovePortletYoutubeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Youtube Test Page",
 			RuntimeVariables.replace("Youtube Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//div/section"));
 	}
 }

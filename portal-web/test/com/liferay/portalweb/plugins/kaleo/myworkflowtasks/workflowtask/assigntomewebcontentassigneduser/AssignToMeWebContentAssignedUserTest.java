@@ -26,7 +26,7 @@ public class AssignToMeWebContentAssignedUserTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,24 +41,18 @@ public class AssignToMeWebContentAssignedUserTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Submissions",
 			RuntimeVariables.replace("Submissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//td[2]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Never"),
@@ -71,7 +65,6 @@ public class AssignToMeWebContentAssignedUserTest extends BaseTestCase {
 		selenium.clickAt("//div[3]/span/span/button",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -82,7 +75,7 @@ public class AssignToMeWebContentAssignedUserTest extends BaseTestCase {
 			RuntimeVariables.replace("Activities"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -98,7 +91,6 @@ public class AssignToMeWebContentAssignedUserTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"userfn userln assigned the task to himself."),
 			selenium.getText(

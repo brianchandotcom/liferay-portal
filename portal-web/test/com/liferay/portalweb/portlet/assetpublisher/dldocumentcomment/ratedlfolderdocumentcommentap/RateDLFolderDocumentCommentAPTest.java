@@ -25,7 +25,7 @@ public class RateDLFolderDocumentCommentAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,12 @@ public class RateDLFolderDocumentCommentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -64,14 +62,13 @@ public class RateDLFolderDocumentCommentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText(
 				"//div[@class='aui-rating-label-element']", "0 Votes"));
 		selenium.clickAt("//a[@title=' Rate this as good. ']",
 			RuntimeVariables.replace("Rate this as good."));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,7 +85,6 @@ public class RateDLFolderDocumentCommentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isElementPresent(
@@ -97,7 +93,7 @@ public class RateDLFolderDocumentCommentAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Rate this as bad."));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -114,7 +110,6 @@ public class RateDLFolderDocumentCommentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isElementPresent(

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.BaseTestCase;
 public class ExtendSessionTest extends BaseTestCase {
 	public void testExtendSession() throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -38,12 +38,11 @@ public class ExtendSessionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(30000);
 		Thread.sleep(15000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -58,11 +57,10 @@ public class ExtendSessionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@value='Extend']");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -76,7 +74,5 @@ public class ExtendSessionTest extends BaseTestCase {
 
 			Thread.sleep(1000);
 		}
-
-		selenium.saveScreenShotAndSource();
 	}
 }

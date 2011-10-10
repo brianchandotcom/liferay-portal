@@ -25,7 +25,7 @@ public class AddTemplateScriptTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,37 +40,28 @@ public class AddTemplateScriptTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Templates", RuntimeVariables.replace("Templates"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Template']",
 			RuntimeVariables.replace("Add Template"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_15_name_en_US']",
 			RuntimeVariables.replace("Web Content Template Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_15_description_en_US']",
 			RuntimeVariables.replace("Web Content Template Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_15_xsl']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\webcontent\\templates\\addtemplatescript\\dependencies\\Template.htm"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

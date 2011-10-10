@@ -25,7 +25,7 @@ public class AddPortletUCDuplicateTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,16 @@ public class AddPortletUCDuplicateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Unit Converter Test Page",
 			RuntimeVariables.replace("Unit Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -67,13 +65,11 @@ public class AddPortletUCDuplicateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("u"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,7 +84,6 @@ public class AddPortletUCDuplicateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isVisible("//div[@title='Unit Converter']/p/a"));
 	}
 }

@@ -25,7 +25,7 @@ public class AddWHEntryContent150CharacterTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class AddWHEntryContent150CharacterTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("What's happening?"),
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
@@ -54,7 +52,7 @@ public class AddWHEntryContent150CharacterTest extends BaseTestCase {
 			RuntimeVariables.replace("Whats happening content"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -69,18 +67,16 @@ public class AddWHEntryContent150CharacterTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace(
 				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15|"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -95,7 +91,6 @@ public class AddWHEntryContent150CharacterTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs test@liferay.com"),
 			selenium.getText("//div[@class='user-name']"));

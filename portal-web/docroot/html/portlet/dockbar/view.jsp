@@ -375,7 +375,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 				<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
 
 				<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) %>">
-					<liferay-ui:icon-help message="customizable-admin-helpp" />
+					<liferay-ui:icon-help message="customizable-admin-help" />
 				</c:if>
 			</c:otherwise>
 		</c:choose>

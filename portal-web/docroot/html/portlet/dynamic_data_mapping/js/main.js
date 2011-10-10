@@ -14,46 +14,6 @@ AUI().add(
 
 		var STR_BLANK = '';
 
-		var MAP_ATTR_DISPLAY_CHILD_LABEL_AS_VALUE = {
-			name: 'displayChildLabelAsValue'
-		};
-
-		var MAP_ATTR_FIELD_CSS_CLASS = {
-			name: 'fieldCssClass'
-		};
-
-		var MAP_ATTR_LABEL = {
-			name: 'label'
-		};
-
-		var MAP_ATTR_MULTIPLE = {
-			name: 'multiple'
-		};
-
-		var MAP_ATTR_PREDEFINED_VALUE = {
-			name: 'predefinedValue'
-		};
-
-		var MAP_ATTR_REQUIRED = {
-			name: 'required'
-		};
-
-		var MAP_ATTR_SHOW_LABEL = {
-			name: 'showLabel'
-		};
-
-		var MAP_ATTR_STYLE = {
-			name: 'style'
-		};
-
-		var MAP_ATTR_TIP = {
-			name: 'tip'
-		};
-
-		var MAP_ATTR_WIDTH = {
-			name: 'width'
-		};
-
 		var MAP_ELEMENT_DATA = {
 			attributeList: STR_BLANK,
 			nodeName: STR_BLANK
@@ -300,14 +260,20 @@ AUI().add(
 					_appendStructureOptionMetaData: function(option, buffer) {
 						var instance = this;
 
-						var label = instance._createDynamicNode('entry', MAP_ATTR_LABEL);
 						var localizationMap = option.localizationMap;
+
+						var labelTag = instance._createDynamicNode(
+							'entry',
+							{
+								name: 'label'
+							}
+						);
 
 						A.each(
 							localizationMap,
 							function(item, index, collection) {
 								if (isObject(item)) {
-									var metadata = instance._createDynamicNode(
+									var metadataTag = instance._createDynamicNode(
 										'meta-data',
 										{
 											locale: index
@@ -317,11 +283,11 @@ AUI().add(
 									var labelVal = instance.normalizeValue(item.label);
 
 									buffer.push(
-										metadata.openTag,
-										label.openTag,
+										metadataTag.openTag,
+										labelTag.openTag,
 										STR_CDATA_OPEN + labelVal + STR_CDATA_CLOSE,
-										label.closeTag,
-										metadata.closeTag
+										labelTag.closeTag,
+										metadataTag.closeTag
 									);
 								}
 							}
@@ -341,26 +307,6 @@ AUI().add(
 							}
 						);
 
-						var displayChildLabelAsValue = instance._createDynamicNode('entry', MAP_ATTR_DISPLAY_CHILD_LABEL_AS_VALUE);
-
-						var entryRequired = instance._createDynamicNode('entry', MAP_ATTR_REQUIRED);
-
-						var fieldCssClass = instance._createDynamicNode('entry', MAP_ATTR_FIELD_CSS_CLASS);
-
-						var label = instance._createDynamicNode('entry', MAP_ATTR_LABEL);
-
-						var multiple = instance._createDynamicNode('entry', MAP_ATTR_MULTIPLE);
-
-						var predefinedValue = instance._createDynamicNode('entry', MAP_ATTR_PREDEFINED_VALUE);
-
-						var showLabel = instance._createDynamicNode('entry', MAP_ATTR_SHOW_LABEL);
-
-						var style = instance._createDynamicNode('entry', MAP_ATTR_STYLE);
-
-						var tip = instance._createDynamicNode('entry', MAP_ATTR_TIP);
-
-						var width = instance._createDynamicNode('entry', MAP_ATTR_WIDTH);
-
 						buffer.push(typeElement.openTag);
 
 						instance._appendStructureFieldOptionsBuffer(field, buffer);
@@ -371,94 +317,72 @@ AUI().add(
 
 						AArray.each(
 							availableLocales,
-							function(item, index, collection) {
+							function(item1, index1, collection1) {
 								var metadata = instance._createDynamicNode(
 									'meta-data',
 									{
-										locale: item
+										locale: item1
 									}
 								);
 
 								buffer.push(metadata.openTag);
 
-								var requiredVal = instance.getFieldLocalizedValue(field, 'required', item);
+								AArray.each(
+									field.getProperties(),
+									function(item2, index2, collection2) {
+										var attributeName = item2.attributeName;
 
-								buffer.push(
-										entryRequired.openTag,
-										STR_CDATA_OPEN + requiredVal + STR_CDATA_CLOSE,
-										entryRequired.closeTag
-								);
+										var attributeTag = instance._createDynamicNode(
+											'entry',
+											{
+												name: attributeName
+											}
+										);
 
-								var fieldLabelVal = instance.getFieldLocalizedValue(field, 'label', item);
+										var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item1);
 
-								buffer.push(
-										label.openTag,
-										STR_CDATA_OPEN + fieldLabelVal + STR_CDATA_CLOSE,
-										label.closeTag
+										if (attributeName === 'folder') {
+											attributeValue = A.JSON.stringify(attributeValue);
+										}
+
+										buffer.push(
+											attributeTag.openTag,
+											STR_CDATA_OPEN + attributeValue + STR_CDATA_CLOSE,
+											attributeTag.closeTag
+										);
+									}
 								);
 
 								if (instanceOf(field, A.FormBuilderMultipleChoiceField)) {
-									var multipleVal = instance.getFieldLocalizedValue(field, 'multiple', item);
-
-									buffer.push(
-											multiple.openTag,
-											STR_CDATA_OPEN + multipleVal + STR_CDATA_CLOSE,
-											multiple.closeTag
+									var displayChildLabelAsValueTag = instance._createDynamicNode(
+										'entry',
+										{
+											name: 'displayChildLabelAsValue'
+										}
 									);
 
 									buffer.push(
-											displayChildLabelAsValue.openTag,
-											STR_CDATA_OPEN + true + STR_CDATA_CLOSE,
-											displayChildLabelAsValue.closeTag
+										displayChildLabelAsValueTag.openTag,
+										STR_CDATA_OPEN + true + STR_CDATA_CLOSE,
+										displayChildLabelAsValueTag.closeTag
 									);
 								}
 
-								var predefinedValueVal = instance.getFieldLocalizedValue(field, 'predefinedValue', item);
-
-								buffer.push(
-										predefinedValue.openTag,
-										STR_CDATA_OPEN + predefinedValueVal + STR_CDATA_CLOSE,
-										predefinedValue.closeTag
-								);
-
-								var showLabelVal = instance.getFieldLocalizedValue(field, 'showLabel', item);
-
-								buffer.push(
-										showLabel.openTag,
-										STR_CDATA_OPEN + showLabelVal + STR_CDATA_CLOSE,
-										showLabel.closeTag
-								);
-
-								var styleVal = instance.getFieldLocalizedValue(field, 'style', item);
-
-								buffer.push(
-									style.openTag,
-									STR_CDATA_OPEN + styleVal + STR_CDATA_CLOSE,
-									style.closeTag
-								);
-
-								var tipVal = instance.getFieldLocalizedValue(field, 'tip', item);
-
-								buffer.push(
-										tip.openTag,
-										STR_CDATA_OPEN + tipVal + STR_CDATA_CLOSE,
-										tip.closeTag
-								);
-
 								if (instanceOf(field, A.FormBuilderTextField)) {
-									var widthVal = instance.getFieldLocalizedValue(field, 'width', item);
+									var fieldCssClassTag = instance._createDynamicNode(
+										'entry',
+										{
+											name: 'fieldCssClass'
+										}
+									);
+
+									var widthVal = field.get('width');
 									var widthCssClassVal = A.getClassName('w' + widthVal);
 
 									buffer.push(
-											fieldCssClass.openTag,
-											STR_CDATA_OPEN + widthCssClassVal + STR_CDATA_CLOSE,
-											fieldCssClass.closeTag
-									);
-
-									buffer.push(
-											width.openTag,
-											STR_CDATA_OPEN + widthVal + STR_CDATA_CLOSE,
-											width.closeTag
+										fieldCssClassTag.openTag,
+										STR_CDATA_OPEN + widthCssClassVal + STR_CDATA_CLOSE,
+										fieldCssClassTag.closeTag
 									);
 								}
 
@@ -711,6 +635,16 @@ AUI().add(
 				},
 				{
 					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					label: Liferay.Language.get('document-library'),
+					type: 'ddm-documentlibrary'
+				},
+				{
+					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					label: Liferay.Language.get('file-upload'),
+					type: 'ddm-fileupload'
+				},
+				{
+					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
 					label: Liferay.Language.get('integer'),
 					type: 'ddm-integer'
 				},
@@ -764,6 +698,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-form-validator', 'aui-text', 'liferay-translation-manager']
+		requires: ['aui-form-builder', 'aui-form-validator', 'aui-text', 'json', 'liferay-translation-manager']
 	}
 );

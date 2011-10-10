@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,9 +71,13 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			getFieldProperty(fieldName, "displayChildLabelAsValue"));
 	}
 
-	public String getFieldLabel(String fieldName, String locale) {
+	public String getFieldLabel(String fieldName, Locale locale) {
+		return getFieldLabel(fieldName, locale.getLanguage());
+	}
+
+	public String getFieldLabel(String fieldName, String localeLanguageId) {
 		return GetterUtil.getString(
-			getFieldProperty(fieldName, "label", locale), fieldName);
+			getFieldProperty(fieldName, "label", localeLanguageId), fieldName);
 	}
 
 	public Set<String> getFieldNames() {

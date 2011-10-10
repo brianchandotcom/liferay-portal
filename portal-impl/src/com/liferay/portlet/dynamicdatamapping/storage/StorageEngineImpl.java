@@ -59,7 +59,9 @@ public class StorageEngineImpl implements StorageEngine {
 		storageAdapter.deleteByDDMStructure(ddmStructureId);
 	}
 
-	public Fields getFields(long classPK) throws StorageException {
+	public Fields getFields(long classPK)
+		throws StorageException {
+
 		return getFields(classPK, null);
 	}
 

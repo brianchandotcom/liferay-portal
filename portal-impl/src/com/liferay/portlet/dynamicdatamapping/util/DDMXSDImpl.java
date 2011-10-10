@@ -329,7 +329,7 @@ public class DDMXSDImpl implements DDMXSD {
 		Element dynamicElementElement, Locale locale) {
 
 		FreeMarkerContext freeMarkerContext =
-			FreeMarkerEngineUtil.getWrappedRestrictedToolsContext();
+			FreeMarkerEngineUtil.getWrappedStandardToolsContext();
 
 		Map<String, Object> fieldContext = getFieldContext(
 			dynamicElementElement, locale);

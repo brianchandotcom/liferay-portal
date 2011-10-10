@@ -14,12 +14,16 @@
  */
 --%>
 
-<aui:script use="aui-datepicker,liferay-portlet-dynamic-data-mapping">
+<aui:script use="aui-datepicker,json,liferay-portlet-dynamic-data-mapping">
 	var FormBuilderTextField = A.FormBuilderTextField;
 	var FormBuilderTypes = A.FormBuilder.types;
 
 	var camelize = Liferay.Util.camelize;
 	var trim = A.Lang.trim;
+
+	var TPL_BUTTON = '<div class="aui-field-labels-inline">' +
+						'<input type="button" value="<liferay-ui:message key="select" />" />' +
+					 '<div>';
 
 	var TPL_PARAGRAPH = '<p></p>';
 
@@ -66,7 +70,7 @@
 								collection[index] = {
 									attributeName: attributeName,
 									editor: new A.DateCellEditor(),
-									name: Liferay.Language.get('predefined-value')
+									name: '<liferay-ui:message key="predefined-value" />'
 								};
 							}
 						}
@@ -100,6 +104,192 @@
 				dataType: {
 					value: 'double'
 				}
+			}
+
+		}
+	);
+
+	var DDMDocumentLibraryField = A.Component.create(
+		{
+			EXTENDS: A.FormBuilderField,
+
+			NAME: 'ddm-documentlibrary',
+
+			ATTRS: {
+				dataType: {
+					value: 'document-library'
+				},
+				fieldNamespace: {
+					value: 'ddm'
+				}
+			},
+
+			prototype: {
+				getHTML: function() {
+					return TPL_BUTTON;
+				},
+
+				getPropertyModel: function() {
+					var instance = this;
+
+					var model = DDMDocumentLibraryField.superclass.getPropertyModel.apply(instance, arguments);
+
+					A.Array.each(
+						model,
+						function(item, index, collection) {
+							if (item.attributeName === 'predefinedValue') {
+								item.editor = false;
+							}
+						}
+					);
+
+					return model;
+				},
+
+				_uiSetValue: function() {
+					return '<liferay-ui:message key="select" />';
+				}
+
+			}
+
+		}
+	);
+
+	var DLFolderCellEditor = A.Component.create({
+		NAME: 'document-library-folder-cell-editor',
+
+		EXTENDS: A.BaseCellEditor,
+
+		prototype: {
+			ELEMENT_TEMPLATE: '<div><label></label></div>',
+
+			initializer: function() {
+				var instance = this;
+
+				Liferay.provide(
+					window,
+					'<%= PortalUtil.getPortletNamespace(PortletKeys.DOCUMENT_LIBRARY) %>selectFolder',
+					A.bind(instance._selectFolder, instance),
+					[]
+				);
+			},
+
+			getElementsValue: function() {
+				var instance = this;
+
+				return instance.get('value');
+			},
+
+			_defInitToolbarFn: function() {
+				var instance = this;
+
+				DLFolderCellEditor.superclass._defInitToolbarFn.apply(instance, arguments);
+
+				instance.toolbar.add(
+					{
+						handler: A.bind(instance._handleChooseEvent, instance),
+						label: '<liferay-ui:message key="choose" />'
+					},
+					1
+				);
+			},
+
+			_handleChooseEvent: function(event) {
+				var folderWindow = window.open('<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" portletName='<%= PortletKeys.DOCUMENT_LIBRARY %>'><portlet:param name="struts_action" value="/document_library/select_folder" /></liferay-portlet:renderURL>', 'folder', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=830');
+
+				folderWindow.focus();
+			},
+
+			_selectFolder: function(folderId, folderName) {
+				var instance = this;
+
+				instance.set(
+					'value',
+					{
+						folderId: folderId,
+						folderName: folderName
+					}
+				);
+			},
+
+			_uiSetValue: function(val) {
+				var instance = this;
+
+				instance.elements.one('label').setContent(val.folderName);
+			}
+
+		}
+	});
+
+	var DDMFileUploadField = A.Component.create(
+		{
+			EXTENDS: A.FormBuilderFileUploadField,
+
+			NAME: 'ddm-fileupload',
+
+			ATTRS: {
+				acceptFiles: {
+					value: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+				},
+				dataType: {
+					value: 'document-library'
+				},
+				fieldNamespace: {
+					value: 'ddm'
+				},
+				folder: {
+					setter: function(val) {
+						if (!A.Lang.isObject(val)) {
+							val = A.JSON.parse(val);
+						}
+
+						return val
+					},
+					value: {
+						folderId: <%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>,
+						folderName: '<liferay-ui:message key="documents-home" />'
+					}
+				},
+				tip: {
+					value: '<%= LanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>'
+				}
+			},
+
+			prototype: {
+				getPropertyModel: function() {
+					var instance = this;
+
+					var model = DDMFileUploadField.superclass.getPropertyModel.apply(instance, arguments);
+
+					A.Array.each(
+						model,
+						function(item, index, collection) {
+							if (item.attributeName === 'predefinedValue') {
+								item.editor = false;
+							}
+						}
+					);
+
+					model.push(
+						{
+							attributeName: 'acceptFiles',
+							name: '<liferay-ui:message key="allowed-file-extensions" />'
+						},
+						{
+							attributeName: 'folder',
+							editor: new DLFolderCellEditor(),
+							formatter: function(o) {
+								var data = o.record.get('data');
+
+								return data.value.folderName;
+							},
+							name: '<liferay-ui:message key="folder" />'
+						}
+					);
+
+					return model;
+				}
+
 			}
 
 		}
@@ -169,17 +359,17 @@
 						{
 							attributeName: 'type',
 							editor: false,
-							name: Liferay.Language.get('type')
+							name: '<liferay-ui:message key="type" />'
 						},
 						{
 							attributeName: 'label',
 							editor: new A.TextAreaCellEditor(),
-							name: Liferay.Language.get('text')
+							name: '<liferay-ui:message key="text" />'
 						},
 						{
 							attributeName: 'style',
 							editor: new A.TextAreaCellEditor(),
-							name: Liferay.Language.get('style')
+							name: '<liferay-ui:message key="style" />'
 						}
 					];
 				},
@@ -245,7 +435,7 @@
 						{
 							attributeName: 'type',
 							editor: false,
-							name: Liferay.Language.get('type')
+							name: '<liferay-ui:message key="type" />'
 						}
 					];
 				}
@@ -255,6 +445,8 @@
 
 	FormBuilderTypes['ddm-date'] = DDMDateField;
 	FormBuilderTypes['ddm-decimal'] = DDMDecimalField;
+	FormBuilderTypes['ddm-documentlibrary'] = DDMDocumentLibraryField;
+	FormBuilderTypes['ddm-fileupload'] = DDMFileUploadField;
 	FormBuilderTypes['ddm-integer'] = DDMIntegerField;
 	FormBuilderTypes['ddm-number'] = DDMNumberField;
 	FormBuilderTypes['ddm-paragraph'] = DDMParagraphField;

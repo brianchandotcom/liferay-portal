@@ -644,8 +644,13 @@ public class DDMStructureWrapper implements DDMStructure {
 	}
 
 	public java.lang.String getFieldLabel(java.lang.String fieldName,
-		java.lang.String locale) {
+		java.util.Locale locale) {
 		return _ddmStructure.getFieldLabel(fieldName, locale);
+	}
+
+	public java.lang.String getFieldLabel(java.lang.String fieldName,
+		java.lang.String localeLanguageId) {
+		return _ddmStructure.getFieldLabel(fieldName, localeLanguageId);
 	}
 
 	public java.util.Set<java.lang.String> getFieldNames() {

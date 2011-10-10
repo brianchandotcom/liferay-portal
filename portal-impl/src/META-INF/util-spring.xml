@@ -158,10 +158,9 @@
 			<bean class="com.liferay.portal.image.SpriteProcessorImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.json.JSONFactory" class="com.liferay.portal.json.JSONFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.json.JSONFactoryUtil" class="com.liferay.portal.kernel.json.JSONFactoryUtil">
-		<property name="JSONFactory">
-			<bean class="com.liferay.portal.json.JSONFactoryImpl" />
-		</property>
+		<property name="JSONFactory" ref="com.liferay.portal.kernel.json.JSONFactory" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" class="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil">
 		<property name="JSONWebServiceActionsManager">
@@ -550,6 +549,21 @@
 				</entry>
 				<entry key="xml">
 					<bean class="com.liferay.portlet.dynamicdatalists.util.DDLXMLExporter" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory" class="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory">
+		<property name="fieldRenderers">
+			<map>
+				<entry key="date">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.DateFieldRenderer" />
+				</entry>
+				<entry key="document-library">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.DocumentLibraryFieldRenderer" />
+				</entry>
+				<entry key="string">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.StringFieldRenderer" />
 				</entry>
 			</map>
 		</property>

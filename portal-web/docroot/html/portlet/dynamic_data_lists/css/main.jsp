@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
+.aui-document-library-file-entry-cell-editor-hidden, .aui-fileupload-cell-editor-hidden {
+	display: none;
+}
+
 .portlet-dynamic-data-lists {
 	.lfr-spreadsheet-add-rows-buttons {
 		padding: 5px;

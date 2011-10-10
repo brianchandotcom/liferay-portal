@@ -103,12 +103,7 @@ for (int i = 0; i < results.size(); i++) {
 		if (fieldsModel.contains(name)) {
 			com.liferay.portlet.dynamicdatamapping.storage.Field field = fieldsModel.get(name);
 
-			if (dataType.equals(FieldConstants.DATE)) {
-				value = dateFormatDate.format(field.getValue());
-			}
-			else {
-				value = String.valueOf(field.getValue());
-			}
+			value = field.getRenderedValue(themeDisplay);
 
 			if (ddmStructure.getFieldDisplayChildLabelAsValue(name)) {
 				Map<String, String> childFields = ddmStructure.getFields(name, FieldConstants.VALUE, value);

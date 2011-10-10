@@ -25,12 +25,9 @@ Set<String> fieldNames = structure.getFieldNames();
 
 JSONArray readOnlyAttributesJSONArray = JSONFactoryUtil.createJSONArray();
 
-readOnlyAttributesJSONArray.put("label");
 readOnlyAttributesJSONArray.put("name");
 readOnlyAttributesJSONArray.put("options");
-readOnlyAttributesJSONArray.put("predefinedValue");
 readOnlyAttributesJSONArray.put("required");
-readOnlyAttributesJSONArray.put("showLabel");
 
 JSONArray structureAvailableFieldsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -69,6 +66,19 @@ if (Validator.isNotNull(portletResourceNamespace)){
 <aui:input name="language" type="hidden" value="xsd" />
 <aui:input name="script" type="hidden" />
 
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveTemplate',
+		function() {
+			document.<portlet:namespace />fm.<portlet:namespace />script.value = window.<portlet:namespace />formBuilder.getXSD();
+
+			submitForm(document.<portlet:namespace />fm);
+		},
+		['aui-base']
+	);
+</aui:script>
+
 <aui:script use="liferay-portlet-dynamic-data-mapping">
 	var availableFields = A.Array(<%= structureAvailableFieldsJSONArray.toString() %>);
 
@@ -80,15 +90,4 @@ if (Validator.isNotNull(portletResourceNamespace)){
 	);
 
 	window.<%= namespace %>structureAvailableFields = availableFields.concat(Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveTemplate',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />script.value = window.<portlet:namespace />formBuilder.getXSD();
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
 </aui:script>

@@ -257,7 +257,9 @@ if (layout != null) {
 							<span class="layout-set-branch-description"><%= layoutSetBranch.getDescription() %></span>
 						</c:if>
 
-						<span class="layout-set-branch-pages"><liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' /></span>
+						<span class="layout-set-branch-pages">
+							<liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' />
+						</span>
 					</div>
 
 					<div class="staging-details">
@@ -280,9 +282,11 @@ if (layout != null) {
 
 							<div class="layout-info">
 								<div class="layout-title">
-									<label><liferay-ui:message key="current-page" />:</label>
+									<span class="layout-title-label"><liferay-ui:message key="current-page" />:</span>
 
-									<span class="layout-breadcrumb"><liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= false %>" /> </span>
+									<span class="layout-breadcrumb">
+										<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= false %>" />
+									</span>
 								</div>
 
 								<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
@@ -398,7 +402,9 @@ if (layout != null) {
 
 								<div class="aui-tabview-content variations-tabview-content">
 									<c:if test="<%= Validator.isNotNull(layoutBranch.getDescription()) %>">
-										<div class="layout-branch-description"><%= layoutBranch.getDescription() %></div>
+										<div class="layout-branch-description">
+											<%= layoutBranch.getDescription() %>
+										</div>
 									</c:if>
 
 									<%
@@ -543,23 +549,33 @@ if (layout != null) {
 													<c:if test="<%= (Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1)) || Validator.isNotNull(lastImportLayoutRevisionId) %>">
 														<span class="last-publication-variation-details">(
 															<c:if test="<%= Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1) %>">
-																<span class="variation-name"><liferay-ui:message key="variation" />: <strong><%= lastImportLayoutBranchName %></strong></span>
+																<span class="variation-name">
+																	<liferay-ui:message key="variation" />: <strong><%= lastImportLayoutBranchName %></strong>
+																</span>
 															</c:if>
 
 															<c:if test="<%= Validator.isNotNull(lastImportLayoutRevisionId) %>">
-																<span class="layout-version"><liferay-ui:message key="version" />: <strong><%= lastImportLayoutRevisionId %></strong></span>
+																<span class="layout-version">
+																	<liferay-ui:message key="version" />: <strong><%= lastImportLayoutRevisionId %></strong>
+																</span>
 															</c:if>
 														)</span>
 													</c:if>
 												</span>
 
-												<span class="last-publication-user"><liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(pageContext, (System.currentTimeMillis() - lastImportDate), true), publisherName} %>" key="x-ago-by-x" /></span>
+												<span class="last-publication-user">
+													<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(pageContext, (System.currentTimeMillis() - lastImportDate), true), publisherName} %>" key="x-ago-by-x" />
+												</span>
 											</c:if>
 										</c:when>
 										<c:otherwise>
-											<span class="staging-live-group-name"><liferay-ui:message arguments="<%= liveGroup.getDescriptiveName() %>" key="x-is-staged" /></span>
+											<span class="staging-live-group-name">
+												<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName() %>" key="x-is-staged" />
+											</span>
 
-											<span class="staging-live-help"><liferay-ui:message arguments="<%= liveGroup.getDescriptiveName() %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : "staging-live-help-x" %>' /></span>
+											<span class="staging-live-help">
+												<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName() %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : "staging-live-help-x" %>' />
+											</span>
 										</c:otherwise>
 									</c:choose>
 							</c:otherwise>

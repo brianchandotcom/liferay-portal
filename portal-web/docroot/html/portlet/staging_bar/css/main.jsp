@@ -234,7 +234,7 @@
 				.layout-title {
 					font-size: 1.2em;
 
-					label {
+					.layout-title-label {
 						float: left;
 					}
 

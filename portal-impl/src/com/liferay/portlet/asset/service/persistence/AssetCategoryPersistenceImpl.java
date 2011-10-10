@@ -6455,6 +6455,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 			if (list.isEmpty()) {
 				if (parentCategoryId > 0) {
+					session.clear();
+
 					AssetCategory parentAssetCategory = findByPrimaryKey(parentCategoryId);
 
 					return parentAssetCategory.getLeftCategoryId();

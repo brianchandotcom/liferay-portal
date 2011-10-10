@@ -35,7 +35,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 	Group scopeGroup = themeDisplay.getScopeGroup();
 	%>
 
-	<c:if test="<%= scopeGroup.isStaged() && (scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) %>">
+	<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
 
 		<%
 		String taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CANCEL_CHECKOUT + "')";

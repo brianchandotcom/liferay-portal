@@ -23,11 +23,6 @@ UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribut
 %>
 
 <c:choose>
-	<c:when test="<%= windowState.equals(LiferayWindowState.POP_UP) %>">
-		<div class="portlet-msg-alert">
-			<liferay-ui:message key="this-operation-can-only-be-performed-from-the-control-panel" />
-		</div>
-	</c:when>
 	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.MANAGE_STAGING) %>">
 		<liferay-ui:error exception="<%= SystemException.class %>">
 

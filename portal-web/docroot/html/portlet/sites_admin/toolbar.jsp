@@ -42,7 +42,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		</liferay-portlet:renderURL>
 
 		<c:choose>
-			<c:when test="<%= layoutSetPrototypes.isEmpty() %>">
+			<c:when test="<%= layoutSetPrototypes.isEmpty() && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
 				<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
 					<a href="<%= addSiteURL %>"><liferay-ui:message key="add" /></a>
 				</span>
@@ -72,6 +72,21 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 					}
 					%>
 
+					<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
+						<liferay-portlet:renderURL varImpl="manageSiteTemplateURL" portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>">
+							<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="backURL" value="<%= currentURL %>" />
+						</liferay-portlet:renderURL>
+
+						<liferay-ui:icon
+							cssClass="highlited"
+							image="configuration"
+							message="manage-site-template"
+							method="get"
+							url='<%= manageSiteTemplateURL.toString() %>'
+						/>
+					</c:if>
 				</liferay-ui:icon-menu>
 			</c:otherwise>
 		</c:choose>

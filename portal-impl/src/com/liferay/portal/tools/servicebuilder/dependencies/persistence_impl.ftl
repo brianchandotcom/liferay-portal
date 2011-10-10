@@ -3647,6 +3647,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				if (list.isEmpty()) {
 					if (parent${pkColumn.methodName} > 0) {
+						session.clear();
+					
 						${entity.name} parent${entity.name} = findByPrimaryKey(parent${pkColumn.methodName});
 
 						return parent${entity.name}.getLeft${pkColumn.methodName}();

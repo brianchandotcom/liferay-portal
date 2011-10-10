@@ -591,33 +591,6 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<name>legend</name>
-		<tag-class>com.liferay.taglib.aui.LegendTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description><![CDATA[]]></description>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[]]></description>
-			<name>helpMessage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[]]></description>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<dynamic-attributes>true</dynamic-attributes>
-	</tag>
-	<tag>
 		<name>model-context</name>
 		<tag-class>com.liferay.taglib.aui.ModelContextTag</tag-class>
 		<body-content>JSP</body-content>

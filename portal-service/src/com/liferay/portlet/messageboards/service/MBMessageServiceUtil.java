@@ -187,6 +187,12 @@ public class MBMessageServiceUtil {
 			start, end);
 	}
 
+	public static int getThreadAnswersCount(long groupId, long categoryId,
+		long threadId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getThreadAnswersCount(groupId, categoryId, threadId);
+	}
+
 	public static int getThreadMessagesCount(long groupId, long categoryId,
 		long threadId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {

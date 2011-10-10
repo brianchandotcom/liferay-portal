@@ -998,6 +998,7 @@ Liferay.Service.registerClass(
 		getMessage: true,
 		getMessageDisplay: true,
 		getThreadMessages: true,
+		getThreadAnswersCount: true,
 		getThreadMessagesCount: true,
 		subscribeMessage: true,
 		unsubscribeMessage: true,

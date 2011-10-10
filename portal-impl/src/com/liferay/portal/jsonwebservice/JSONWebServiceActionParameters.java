@@ -62,6 +62,9 @@ public class JSONWebServiceActionParameters {
 	}
 
 	public List<KeyValue<String, Object>> getInnerParameters(String baseName) {
+		if (_innerParameters == null) {
+			return null;
+		}
 		return _innerParameters.get(baseName);
 	}
 
@@ -85,6 +88,13 @@ public class JSONWebServiceActionParameters {
 		}
 
 		return names;
+	}
+
+	public String getParameterTypeName(String name) {
+		if (_parameterTypes == null) {
+			return null;
+		}
+		return _parameterTypes.get(name);
 	}
 
 	private void _addDefaultParameters() {
@@ -146,8 +156,7 @@ public class JSONWebServiceActionParameters {
 
 			if (name.startsWith(StringPool.DASH)) {
 				name = name.substring(1);
-			}
-			else {
+			} else if (!name.startsWith(StringPool.PLUS)) {
 				i++;
 
 				value = pathParametersParts[i];
@@ -323,9 +332,9 @@ public class JSONWebServiceActionParameters {
 		return serviceContext;
 	}
 
-	private Map<String, List<KeyValue<String, Object>>> _innerParameters =
-		new HashMap<String, List<KeyValue<String, Object>>>();
+	private Map<String, List<KeyValue<String, Object>>> _innerParameters;
 	private JSONRPCRequest _jsonRpcRequest;
+	private Map<String, String> _parameterTypes;
 	private Map<String, Object> _parameters = new HashMap<String, Object>() {
 
 		@Override
@@ -335,6 +344,26 @@ public class JSONWebServiceActionParameters {
 				key = key.substring(1);
 
 				value = null;
+			} else  if (key.startsWith(StringPool.PLUS)) {
+				key = key.substring(1);
+
+				int colonIndex = key.indexOf(CharPool.COLON);
+
+				if (colonIndex != -1) {
+					value = key.substring(colonIndex + 1);
+
+					key = key.substring(0, colonIndex);
+				}
+
+				if (Validator.isNotNull(value)) {
+					if (_parameterTypes == null) {
+						_parameterTypes = new HashMap<String, String>();
+					}
+
+					_parameterTypes.put(key, value.toString());
+				}
+
+				value = Void.TYPE;
 			}
 
 			int pos = key.indexOf(CharPool.PERIOD);
@@ -343,6 +372,11 @@ public class JSONWebServiceActionParameters {
 				String baseName = key.substring(0, pos);
 
 				String innerName = key.substring(pos + 1);
+
+				if (_innerParameters == null) {
+					_innerParameters =
+						new HashMap<String, List<KeyValue<String, Object>>>();
+				}
 
 				List<KeyValue<String, Object>> values =
 					_innerParameters.get(baseName);

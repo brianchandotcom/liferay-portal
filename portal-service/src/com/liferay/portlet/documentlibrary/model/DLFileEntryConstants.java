@@ -30,6 +30,10 @@ public class DLFileEntryConstants {
 
 	public static final String PRIVATE_WORKING_COPY_VERSION = "PWC";
 
+	public static final String TYPE_IMAGE = "Image";
+
+	public static final String TYPE_VIDEO = "Video";
+
 	public static final String VERSION_DEFAULT = "1.0";
 
 	public static String getClassName() {

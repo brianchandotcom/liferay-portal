@@ -185,10 +185,19 @@ request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 
 <c:if test="<%= results.isEmpty() %>">
 	<c:choose>
-		<c:when test="<%= Validator.isNotNull(dlFileEntryTypeName) %>">
-			<div class="portlet-msg-info">
-				<%= LanguageUtil.format(pageContext, "there-are-no-x-files-in-this-folder", StringUtil.lowerCase(dlFileEntryTypeName), false) %>
-			</div>
+		<c:when test="<%= Validator.isNotNull(dlFileEntryTypeName) && ((dlFileEntryTypeName.equals(DLFileEntryConstants.TYPE_IMAGE) || dlFileEntryTypeName.equals(DLFileEntryConstants.TYPE_VIDEO))) %>">
+			<c:choose>
+				<c:when test="<%= dlFileEntryTypeName.equals(DLFileEntryConstants.TYPE_IMAGE) %>">
+					<div class="portlet-msg-info">
+						<%= LanguageUtil.get(pageContext, "there-are-no-images-in-this-folder") %>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="portlet-msg-info">
+						<%= LanguageUtil.get(pageContext, "there-are-no-videos-in-this-folder") %>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:otherwise>
 			<div class="portlet-msg-info">

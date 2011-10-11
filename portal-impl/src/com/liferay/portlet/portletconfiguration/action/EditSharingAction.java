@@ -80,7 +80,7 @@ public class EditSharingAction extends EditConfigurationAction {
 		else if (tabs2.equals("friends")) {
 			updateFriends(actionRequest, preferences);
 		}
-		else if (tabs2.equals("google-gadget")) {
+		else if (tabs2.equals("opensocial-gadget")) {
 			updateGoogleGadget(actionRequest, preferences);
 		}
 		else if (tabs2.equals("netvibes")) {

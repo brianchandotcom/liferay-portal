@@ -17,7 +17,8 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect", currentURL);
+String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect");
+String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedirect);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 

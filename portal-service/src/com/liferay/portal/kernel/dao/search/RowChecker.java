@@ -94,8 +94,8 @@ public class RowChecker {
 
 	public String getRowCheckBox(boolean checked, String primaryKey) {
 		return getRowCheckBox(
-			checked, _rowIds, primaryKey, "'" + _rowIds + "'", _allRowIds,
-			StringPool.BLANK);
+			checked, _rowIds, primaryKey, "'" + _rowIds + "'",
+			"'" + _allRowIds + "'", StringPool.BLANK);
 	}
 
 	public String getRowId() {

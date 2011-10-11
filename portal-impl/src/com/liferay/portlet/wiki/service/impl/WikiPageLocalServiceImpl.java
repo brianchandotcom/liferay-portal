@@ -714,8 +714,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			Boolean exists = entry.getValue();
 
 			if (exists) {
-				if (!pages.containsKey(curTitle)) {
-					pages.put(curTitle, getPage(nodeId, curTitle));
+				WikiPage wikiPage = getPage(nodeId, curTitle);
+
+				if (!pages.containsKey(wikiPage.getTitle())) {
+					pages.put(wikiPage.getTitle(), wikiPage);
 				}
 			}
 			else {

@@ -25,7 +25,7 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,15 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Account",
 			RuntimeVariables.replace("My Account"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,14 +63,13 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_2_addressesLink']",
 				"Addresses"));
 		selenium.clickAt("//a[@id='_2_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,27 +84,21 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_2_addressStreet1_0']",
 			RuntimeVariables.replace("1220 Brea Canyon Rd"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_2_addressStreet2_0']",
 			RuntimeVariables.replace("Ste 12"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_2_addressTypeId0']",
 			RuntimeVariables.replace("label=Business"));
 		selenium.type("//input[@id='_2_addressZip0']",
 			RuntimeVariables.replace("91789"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_2_addressStreet3_0']",
 			RuntimeVariables.replace("Walnut"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_2_addressCity0']",
 			RuntimeVariables.replace("Los Angeles"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -125,7 +115,6 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_2_addressCountryId0']",
 			RuntimeVariables.replace("label=United States"));
 		selenium.clickAt("//input[@id='_2_addressPrimary0']",
@@ -134,7 +123,7 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 			RuntimeVariables.replace("Mailing Checkbox"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -150,17 +139,15 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_2_addressRegionId0']",
 			RuntimeVariables.replace("label=California"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -176,10 +163,8 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -195,10 +180,8 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -213,7 +196,6 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -231,10 +213,8 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 		assertEquals("United States",
 			selenium.getSelectedLabel("//select[@id='_2_addressCountryId0']"));
 		assertTrue(selenium.isChecked("//input[@id='_2_addressPrimary0']"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked(
 				"//input[@id='_2_addressMailing0Checkbox']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals("California",
 			selenium.getSelectedLabel("//select[@id='_2_addressRegionId0']"));
 	}

@@ -26,7 +26,7 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,14 +41,12 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,7 +64,6 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -86,7 +83,7 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 		selenium.clickAt("//a[@page='2']", RuntimeVariables.replace("2"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -103,14 +100,13 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
 			selenium.getText("//span[@class='document-title']"));
 		assertFalse(selenium.isTextPresent("DL Folder2 Name"));
 		selenium.clickAt("//a[@page='1']", RuntimeVariables.replace("1"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -127,7 +123,6 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//span[@class='document-title']"));
 		assertFalse(selenium.isTextPresent("DL Folder3 Name"));
@@ -135,7 +130,7 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			RuntimeVariables.replace("Next"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -152,7 +147,6 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
 			selenium.getText("//span[@class='document-title']"));
 		assertFalse(selenium.isTextPresent("DL Folder2 Name"));
@@ -160,7 +154,7 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			RuntimeVariables.replace("Previous"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -177,7 +171,6 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//span[@class='document-title']"));
 		assertFalse(selenium.isTextPresent("DL Folder3 Name"));
@@ -185,7 +178,7 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			RuntimeVariables.replace("Last"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -202,7 +195,6 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
 			selenium.getText("//span[@class='document-title']"));
 		assertFalse(selenium.isTextPresent("DL Folder2 Name"));
@@ -210,7 +202,7 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			RuntimeVariables.replace("First"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -227,7 +219,6 @@ public class ViewConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//span[@class='document-title']"));
 		assertFalse(selenium.isTextPresent("DL Folder3 Name"));

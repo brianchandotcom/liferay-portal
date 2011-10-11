@@ -30,7 +30,7 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 				selenium.open("/web/expando-web-content-community/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,34 +45,26 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content Display Page",
 					RuntimeVariables.replace("Web Content Display Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Add Template']",
 					RuntimeVariables.replace("Add Template"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_name_en_US']",
 					RuntimeVariables.replace("Expando Template Test"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//textarea[@id='_15_description_en_US']",
 					RuntimeVariables.replace(
 						"This is an expando template test."));
-				selenium.saveScreenShotAndSource();
 
 				boolean cacheableChecked = selenium.isChecked(
 						"_15_cacheableCheckbox");
@@ -92,7 +84,7 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -107,13 +99,12 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//td[2]/a",
 					RuntimeVariables.replace(
 						"Expando Structure Test\nThis is an expando structure test."));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -130,20 +121,17 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Expando Structure Test"),
 					selenium.getText("//a[@id='_15_structureName']"));
 				selenium.type("//input[@id='_15_xsl']",
 					RuntimeVariables.replace(
 						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata606\\expando\\webcontent\\dependencies\\Expando.htm"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -159,7 +147,6 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

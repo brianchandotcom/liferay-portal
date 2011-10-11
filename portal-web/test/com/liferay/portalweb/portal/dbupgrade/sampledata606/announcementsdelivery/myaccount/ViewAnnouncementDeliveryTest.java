@@ -25,7 +25,7 @@ public class ViewAnnouncementDeliveryTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,14 @@ public class ViewAnnouncementDeliveryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Account", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("announcementsLink", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,24 +63,17 @@ public class ViewAnnouncementDeliveryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked(
 				"_2_announcementsTypegeneralEmailCheckbox"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked("_2_announcementsTypegeneralSmsCheckbox"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_2_announcementsTypegeneralWebsiteCheckbox' and @disabled='']"));
 		assertTrue(selenium.isChecked("_2_announcementsTypenewsSmsCheckbox"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked("_2_announcementsTypenewsSmsCheckbox"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_2_announcementsTypenewsWebsiteCheckbox' and @disabled='']"));
 		assertTrue(selenium.isChecked("_2_announcementsTypetestEmailCheckbox"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked("_2_announcementsTypetestSmsCheckbox"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_2_announcementsTypetestWebsiteCheckbox' and @disabled='']"));
 	}

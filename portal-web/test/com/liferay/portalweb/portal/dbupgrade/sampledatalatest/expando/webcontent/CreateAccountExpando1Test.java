@@ -25,7 +25,7 @@ public class CreateAccountExpando1Test extends BaseTestCase {
 		selenium.open("/web/expando-web-content-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,26 +40,19 @@ public class CreateAccountExpando1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Page",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Create Account']",
 			RuntimeVariables.replace("Create Account"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//td[2]/input", RuntimeVariables.replace("Michael"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//tr[2]/td[2]/input",
 			RuntimeVariables.replace("Hashimoto"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//tr[3]/td[2]/input", RuntimeVariables.replace("100"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Michael"),
 			selenium.getText("//td[2]"));
 		assertEquals(RuntimeVariables.replace("Hashimoto"),

@@ -605,9 +605,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-		repository.deleteFileEntry(fileEntryId);
-
 		dlAppHelperLocalService.deleteFileEntry(fileEntry);
+
+		repository.deleteFileEntry(fileEntryId);
 	}
 
 	/**
@@ -627,9 +627,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileEntry fileEntry = repository.getFileEntry(folderId, title);
 
-		repository.deleteFileEntry(folderId, title);
-
 		dlAppHelperLocalService.deleteFileEntry(fileEntry);
+
+		repository.deleteFileEntry(folderId, title);
 	}
 
 	/**

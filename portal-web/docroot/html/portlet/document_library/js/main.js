@@ -559,6 +559,8 @@ AUI().add(
 							}
 						}
 
+						instance._processDefaultParams(event);
+
 						instance._updatePaginatorValues(event);
 					},
 
@@ -789,6 +791,21 @@ AUI().add(
 						var instance = this;
 
 						instance._toggleEntriesSelection();
+					},
+
+					_processDefaultParams: function(event) {
+						var instance = this;
+
+						var requestParams = event.requestParams;
+
+						AObject.each(
+							instance._config.defaultParams,
+							function(item, index, collection) {
+								if (!Lang.isValue(History.get(index))) {
+									requestParams[index] = item;
+								}
+							}
+						);
 					},
 
 					_restoreState: function() {

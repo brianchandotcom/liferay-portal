@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
@@ -54,6 +55,7 @@ public class FindPageAction extends Action {
 
 		try {
 			long plid = ParamUtil.getLong(request, "p_l_id");
+			String redirect = ParamUtil.getString(request, "redirect");
 			long pageResourcePrimKey = ParamUtil.getLong(
 				request, "pageResourcePrimKey");
 
@@ -76,12 +78,26 @@ public class FindPageAction extends Action {
 			portletURL.setParameter("nodeName", node.getName());
 			portletURL.setParameter("title", pageResource.getTitle());
 
+			if (Validator.isNotNull(redirect)) {
+				portletURL.setParameter("redirect", redirect);
+			}
+
 			response.sendRedirect(portletURL.toString());
 
 			return null;
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			String noSuchEntryRedirect = ParamUtil.getString(
+				request, "noSuchEntryRedirect");
+
+			if (e.getClass().equals(NoSuchLayoutException.class) &&
+				Validator.isNotNull(noSuchEntryRedirect)) {
+
+				response.sendRedirect(noSuchEntryRedirect);
+			}
+			else {
+				PortalUtil.sendError(e, request, response);
+			}
 
 			return null;
 		}

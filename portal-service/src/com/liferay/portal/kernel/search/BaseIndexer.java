@@ -147,7 +147,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		facetQuery.addExactTerm(Field.ENTRY_CLASS_NAME, className);
 
-		if (isFilterSearch() && searchContext.getUserId() > 0) {
+		if (searchContext.getUserId() > 0) {
 			SearchPermissionChecker searchPermissionChecker =
 				SearchEngineUtil.getSearchPermissionChecker();
 
@@ -680,8 +680,9 @@ public abstract class BaseIndexer implements Indexer {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					entryClassName);
 
-				if (indexer.hasPermission(
-						permissionChecker, entryClassPK, ActionKeys.VIEW)) {
+				if ((indexer.isFilterSearch() && indexer.hasPermission(
+						permissionChecker, entryClassPK, ActionKeys.VIEW)) ||
+					!indexer.isFilterSearch()) {
 
 					docs.add(document);
 					scores.add(hits.score(i));

@@ -126,7 +126,6 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 		Liferay.Util.openWindow(
 			{
 				dialog: {
-					stack: false,
 					width:820
 				},
 				title: '<liferay-ui:message key="document-types" />',
@@ -139,7 +138,6 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 		Liferay.Util.openDDMPortlet(
 			{
 				dialog: {
-					stack: false,
 					width:820
 				},
 				showManageTemplates: 'false',

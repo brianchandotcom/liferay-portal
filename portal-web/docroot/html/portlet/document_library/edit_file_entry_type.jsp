@@ -135,7 +135,6 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		Liferay.Util.openDDMPortlet(
 			{
 				dialog: {
-					stack: false,
 					width:680
 				},
 				saveCallback: '<%= renderResponse.getNamespace() + "selectDDMStructure" %>',

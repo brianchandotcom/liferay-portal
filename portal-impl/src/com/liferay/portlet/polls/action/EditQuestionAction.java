@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.action;
 
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.CharPool;
@@ -28,6 +29,9 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.polls.DuplicateVoteException;
@@ -56,8 +60,10 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -90,7 +96,21 @@ public class EditQuestionAction extends PortletAction {
 				deleteQuestion(actionRequest);
 			}
 
-			if (Validator.isNotNull(cmd)) {
+			WindowState windowState = actionRequest.getWindowState();
+
+			if (Validator.isNull(cmd)) {
+				return;
+			}
+
+			if (windowState.equals(LiferayWindowState.POP_UP)) {
+				String redirect = PortalUtil.escapeRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
+
+				if (Validator.isNotNull(redirect)) {
+					actionResponse.sendRedirect(redirect);
+				}
+			}
+			else {
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}
@@ -144,6 +164,39 @@ public class EditQuestionAction extends PortletAction {
 
 		return mapping.findForward(
 			getForward(renderRequest, "portlet.polls.edit_question"));
+	}
+
+	protected void addAndStoreSelection(
+			PortletConfig portletConfig, PortletRequest portletRequest,
+			PollsQuestion question)
+		throws Exception {
+
+		String referringPortletResource = ParamUtil.getString(
+			portletRequest, "referringPortletResource");
+
+		if (Validator.isNull(referringPortletResource)) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			themeDisplay.getRefererPlid());
+
+		PortletPreferences preferences =
+			PortletPreferencesFactoryUtil.getPortletSetup(
+				layout, referringPortletResource, StringPool.BLANK);
+
+		preferences.setValue(
+			"questionId", String.valueOf(question.getQuestionId()));
+
+		preferences.store();
+
+		SessionMessages.add(
+			portletRequest, portletConfig.getPortletName() + ".doRefresh",
+			referringPortletResource);
+
 	}
 
 	protected void deleteQuestion(ActionRequest actionRequest)
@@ -239,43 +292,19 @@ public class EditQuestionAction extends PortletAction {
 				titleMap, descriptionMap, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, choices, serviceContext);
+
+			// Poll display
+
+			addAndStoreSelection(portletConfig, actionRequest, question);
 		}
 		else {
 
 			// Update question
 
-			question = PollsQuestionServiceUtil.updateQuestion(
+			PollsQuestionServiceUtil.updateQuestion(
 				questionId, titleMap, descriptionMap, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, choices, serviceContext);
-		}
-
-		// Poll display
-
-		String portletResource = ParamUtil.getString(
-			actionRequest, "referringPortletResource");
-
-		long plid = ParamUtil.getLong(actionRequest, "referringPlid", 0);
-
-		if (Validator.isNotNull(portletResource) && plid > 0) {
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				PortletPreferences preferences =
-					PortletPreferencesFactoryUtil.getPortletSetup(
-						layout, portletResource, StringPool.BLANK);
-
-				preferences.setValue(
-					"questionId", String.valueOf(question.getQuestionId()));
-
-				preferences.store();
-
-				SessionMessages.add(
-					actionRequest,
-					portletConfig.getPortletName() + ".doRefresh",
-					portletResource);
-			} catch (Exception e) {
-			}
 		}
 	}
 

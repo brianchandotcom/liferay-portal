@@ -134,15 +134,21 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditPollIcon || sho
 	Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
 	long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
+
+	PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+	redirectURL.setWindowState(LiferayWindowState.POP_UP);
+
+	redirectURL.setParameter("struts_action", "/polls_display/add_question_redirect");
 	%>
 
 	<div class="lfr-meta-actions icons-container">
 		<div class="icon-actions">
 			<c:if test="<%= showEditPollIcon %>">
-				<liferay-portlet:renderURL doAsGroupId="<%= scopeGroupId %>" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.POLLS %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="editPollURL">
+				<liferay-portlet:renderURL doAsGroupId="<%= scopeGroupId %>" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.POLLS %>" refererPlid="<%= plid %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="editPollURL">
 					<liferay-portlet:param name="struts_action" value="/polls/edit_question" />
 					<liferay-portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
-					<liferay-portlet:param name="referringPlid" value="<%= String.valueOf(plid) %>" />
+					<liferay-portlet:param name="redirect" value="<%= HtmlUtil.escapeURL(redirectURL.toString()) %>" />
 					<liferay-portlet:param name="questionId" value="<%= String.valueOf(question.getQuestionId()) %>" />
 				</liferay-portlet:renderURL>
 
@@ -168,10 +174,10 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditPollIcon || sho
 			</c:if>
 
 			<c:if test="<%= showAddPollIcon %>">
-			   	<liferay-portlet:renderURL doAsGroupId="<%= scopeGroupId %>" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.POLLS %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="addPollURL">
+			   	<liferay-portlet:renderURL doAsGroupId="<%= scopeGroupId %>" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.POLLS %>" refererPlid="<%= plid %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="addPollURL">
 					<liferay-portlet:param name="struts_action" value="/polls/edit_question" />
 					<liferay-portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
-					<liferay-portlet:param name="referringPlid" value="<%= String.valueOf(plid) %>" />
+					<liferay-portlet:param name="redirect" value="<%= HtmlUtil.escapeURL(redirectURL.toString()) %>" />
 				</liferay-portlet:renderURL>
 
 				<%

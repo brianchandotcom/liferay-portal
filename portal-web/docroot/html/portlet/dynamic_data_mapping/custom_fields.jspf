@@ -418,7 +418,7 @@
 
 					var passwordNode = A.Node.create(instance.getHTML());
 
-					passwordNode.setAttribute('type', 'password');
+					passwordNode.attr('type', 'password');
 
 					return passwordNode;
 				}

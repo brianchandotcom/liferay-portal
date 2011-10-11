@@ -16476,7 +16476,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static final String _FINDER_COLUMN_THREADREPLIES_THREADID_2 = "mbMessage.threadId = ? AND mbMessage.parentMessageId != 0";
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "mbMessage.userId = ?";
 	private static final String _FINDER_COLUMN_G_U_GROUPID_2 = "mbMessage.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_U_USERID_2 = "mbMessage.userId = ? AND mbMessage.categoryId != -1";
+	private static final String _FINDER_COLUMN_G_U_USERID_2 = "mbMessage.userId = ? AND mbMessage.categoryId != -1 and mbMessage.anonymous = [$FALSE$]";
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "mbMessage.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_CATEGORYID_2 = "mbMessage.categoryId = ?";
 	private static final String _FINDER_COLUMN_G_S_GROUPID_2 = "mbMessage.groupId = ? AND ";

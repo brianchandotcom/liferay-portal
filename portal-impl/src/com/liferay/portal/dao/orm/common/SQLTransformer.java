@@ -51,6 +51,8 @@ public class SQLTransformer {
 
 		String dbType = db.getType();
 
+		_db = db;
+
 		if (dbType.equals(DB.TYPE_DB2)) {
 			_vendorDB2 = true;
 		}
@@ -149,6 +151,13 @@ public class SQLTransformer {
 		}
 	}
 
+	private String _replaceBoolean(String newSQL) {
+		return StringUtil.replace(
+			newSQL,
+			new String[] {"[$FALSE$]", "[$TRUE$]"},
+			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
+	}
+
 	private String _replaceCastText(String sql) {
 		Matcher matcher = _castTextPattern.matcher(sql);
 
@@ -213,6 +222,7 @@ public class SQLTransformer {
 		String newSQL = sql;
 
 		newSQL = _replaceBitwiseCheck(newSQL);
+		newSQL = _replaceBoolean(newSQL);
 		newSQL = _replaceCastText(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
 
@@ -350,6 +360,7 @@ public class SQLTransformer {
 	private static Pattern _unionAllPattern = Pattern.compile(
 		"SELECT \\* FROM(.*)TEMP_TABLE(.*)", Pattern.CASE_INSENSITIVE);
 
+	private DB _db;
 	private boolean _vendorDB2;
 	private boolean _vendorDerby;
 	private boolean _vendorFirebird;

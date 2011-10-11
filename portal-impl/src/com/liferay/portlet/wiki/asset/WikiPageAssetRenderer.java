@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.asset;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -151,7 +152,9 @@ public class WikiPageAssetRenderer extends BaseAssetRenderer {
 				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPathMain() +
-			"/wiki/find_page?pageResourcePrimKey=" + _page.getResourcePrimKey();
+			"/wiki/find_page?noSuchEntryRedirect=" +
+				HttpUtil.encodeURL(noSuchEntryRedirect) +
+					"&pageResourcePrimKey=" + _page.getResourcePrimKey();
 	}
 
 	public long getUserId() {

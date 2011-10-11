@@ -382,6 +382,8 @@
 			<forward name="portlet.bookmarks.error" path="portlet.bookmarks.error" />
 		</action>
 
+		<action path="/bookmarks/find_entry" type="com.liferay.portlet.bookmarks.action.FindEntryAction" />
+
 		<action path="/bookmarks/open_entry" type="com.liferay.portlet.bookmarks.action.OpenEntryAction" />
 
 		<action path="/bookmarks/search" forward="portlet.bookmarks.search" />

@@ -17,6 +17,7 @@ package com.liferay.portlet.calendar.asset;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -115,7 +116,9 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPathMain() +
-			"/calendar/find_event?eventId=" + _event.getEventId();
+			"/calendar/find_event?noSuchEntryRedirect=" +
+				HttpUtil.encodeURL(noSuchEntryRedirect) + "&eventId=" +
+					_event.getEventId();
 	}
 
 	public long getUserId() {

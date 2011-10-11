@@ -62,7 +62,7 @@ public class FindEventAction extends Action {
 				request, PortletKeys.CALENDAR, plid,
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setWindowState(WindowState.MAXIMIZED);
+			portletURL.setWindowState(WindowState.NORMAL);
 			portletURL.setPortletMode(PortletMode.VIEW);
 
 			portletURL.setParameter("struts_action", "/calendar/view_event");
@@ -78,7 +78,17 @@ public class FindEventAction extends Action {
 			return null;
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			String noSuchEntryRedirect = ParamUtil.getString(
+				request, "noSuchEntryRedirect");
+
+			if (e.getClass().equals(NoSuchLayoutException.class) &&
+				Validator.isNotNull(noSuchEntryRedirect)) {
+
+				response.sendRedirect(noSuchEntryRedirect);
+			}
+			else {
+				PortalUtil.sendError(e, request, response);
+			}
 
 			return null;
 		}

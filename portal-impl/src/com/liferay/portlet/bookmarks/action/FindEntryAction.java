@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.action;
+package com.liferay.portlet.bookmarks.action;
 
 import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
@@ -25,7 +24,8 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLImpl;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -42,9 +42,8 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Juan Fernández
- * @author Ryan Park
  */
-public class FindFileEntryAction extends Action {
+public class FindEntryAction extends Action {
 
 	@Override
 	public ActionForward execute(
@@ -55,23 +54,24 @@ public class FindFileEntryAction extends Action {
 		try {
 			long plid = ParamUtil.getLong(request, "p_l_id");
 			String redirect = ParamUtil.getString(request, "redirect");
-			long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
+			long entryId = ParamUtil.getLong(request, "entryId");
 
-			plid = getPlid(plid, fileEntryId);
+			plid = getPlid(plid, entryId);
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, getPortletId(plid), plid, PortletRequest.RENDER_PHASE);
+				request, PortletKeys.BOOKMARKS, plid,
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setWindowState(WindowState.NORMAL);
 			portletURL.setPortletMode(PortletMode.VIEW);
 
-			portletURL.setParameter(
-				"struts_action", "/document_library/view_file_entry");
-			portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
+			portletURL.setParameter("struts_action", "/bookmarks/view_entry");
 
 			if (Validator.isNotNull(redirect)) {
 				portletURL.setParameter("redirect", redirect);
 			}
+
+			portletURL.setParameter("entryId", String.valueOf(entryId));
 
 			response.sendRedirect(portletURL.toString());
 
@@ -94,7 +94,7 @@ public class FindFileEntryAction extends Action {
 		}
 	}
 
-	protected long getPlid(long plid, long fileEntryId) throws Exception {
+	protected long getPlid(long plid, long entryId) throws Exception {
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			try {
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
@@ -102,13 +102,7 @@ public class FindFileEntryAction extends Action {
 				LayoutTypePortlet layoutTypePortlet =
 					(LayoutTypePortlet)layout.getLayoutType();
 
-				if (layoutTypePortlet.hasPortletId(
-						PortletKeys.DOCUMENT_LIBRARY) ||
-					layoutTypePortlet.hasPortletId(
-						PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
-					layoutTypePortlet.hasPortletId(
-						PortletKeys.IMAGE_GALLERY_DISPLAY)) {
-
+				if (layoutTypePortlet.hasPortletId(PortletKeys.BOOKMARKS)) {
 					return plid;
 				}
 			}
@@ -116,48 +110,17 @@ public class FindFileEntryAction extends Action {
 			}
 		}
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(entryId);
 
 		plid = PortalUtil.getPlidFromPortletId(
-			fileEntry.getRepositoryId(), PortletKeys.DOCUMENT_LIBRARY);
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
-		}
-
-		plid = PortalUtil.getPlidFromPortletId(
-			fileEntry.getRepositoryId(), PortletKeys.DOCUMENT_LIBRARY_DISPLAY);
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
-		}
-
-		plid = PortalUtil.getPlidFromPortletId(
-			fileEntry.getRepositoryId(), PortletKeys.IMAGE_GALLERY_DISPLAY);
+			entry.getGroupId(), PortletKeys.BOOKMARKS);
 
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			return plid;
 		}
 
 		throw new NoSuchLayoutException(
-			"No page was found with the Document Library portlet");
-	}
-
-	protected String getPortletId(long plid) throws Exception {
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		for (String portletId : layoutTypePortlet.getPortletIds()) {
-			if (portletId.startsWith(PortletKeys.DOCUMENT_LIBRARY) ||
-				portletId.startsWith(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
-
-				return portletId;
-			}
-		}
-
-		return PortletKeys.DOCUMENT_LIBRARY;
+			"No page was found with the Bookmarks portlet");
 	}
 
 }

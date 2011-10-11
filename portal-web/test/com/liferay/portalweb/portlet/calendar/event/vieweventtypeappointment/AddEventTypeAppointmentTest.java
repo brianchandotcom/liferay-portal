@@ -25,7 +25,7 @@ public class AddEventTypeAppointmentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,25 +40,19 @@ public class AddEventTypeAppointmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_8_title", RuntimeVariables.replace("Test Event"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_8_description",
 			RuntimeVariables.replace("This is a Test Event."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("_8_timeZoneSensitiveCheckbox",
 			RuntimeVariables.replace(""));
 		selenium.select("_8_type", RuntimeVariables.replace("label=Appointment"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
 		assertEquals(RuntimeVariables.replace("Test Event"),

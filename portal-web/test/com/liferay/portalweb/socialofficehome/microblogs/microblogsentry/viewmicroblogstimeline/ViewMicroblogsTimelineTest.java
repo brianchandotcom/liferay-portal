@@ -25,7 +25,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
 			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Timeline"),
@@ -52,7 +50,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 		selenium.clickAt("link=Timeline", RuntimeVariables.replace("Timeline"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -68,7 +66,6 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[1]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("xPath=(//div[@class='user-name'])[1]"));
@@ -76,7 +73,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='content'])[1]"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -92,7 +89,6 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[2]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("xPath=(//div[@class='user-name'])[2]"));
@@ -100,7 +96,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='content'])[2]"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -116,7 +112,6 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[3]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("xPath=(//div[@class='user-name'])[3]"));
@@ -124,7 +119,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='content'])[3]"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -140,7 +135,6 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("xPath=(//div/span/a/img)[4]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("xPath=(//div[@class='user-name'])[4]"));

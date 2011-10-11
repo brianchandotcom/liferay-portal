@@ -26,7 +26,7 @@ public class PermissionsBookmarksEntryGuestViewOffTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,24 +41,21 @@ public class PermissionsBookmarksEntryGuestViewOffTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Bookmarks Entry Name"),
 			selenium.getText("//td[1]/a"));
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("Bookmarks Entry Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText("//div[2]/ul/li[2]/a"));
 		selenium.clickAt("//div[2]/ul/li[2]/a",
 			RuntimeVariables.replace("Permissions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -73,20 +70,15 @@ public class PermissionsBookmarksEntryGuestViewOffTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		selenium.uncheck("//input[@name='16_ACTION_VIEW']");
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 	}
 }

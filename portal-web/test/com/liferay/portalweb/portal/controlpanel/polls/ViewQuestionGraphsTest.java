@@ -25,7 +25,7 @@ public class ViewQuestionGraphsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,28 +40,22 @@ public class ViewQuestionGraphsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Test Poll Question",
 			RuntimeVariables.replace("Test Poll Question"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Area", RuntimeVariables.replace("Area"));
 		selenium.waitForPopUp("viewChart", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("viewChart");
-		selenium.saveScreenShotAndSource();
 		selenium.close();
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -76,18 +70,15 @@ public class ViewQuestionGraphsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Horizontal Bar",
 			RuntimeVariables.replace("Horizontal Bar"));
 		selenium.waitForPopUp("viewChart", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("viewChart");
-		selenium.saveScreenShotAndSource();
 		selenium.close();
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -102,17 +93,14 @@ public class ViewQuestionGraphsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Line", RuntimeVariables.replace("Line"));
 		selenium.waitForPopUp("viewChart", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("viewChart");
-		selenium.saveScreenShotAndSource();
 		selenium.close();
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -127,17 +115,14 @@ public class ViewQuestionGraphsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Pie", RuntimeVariables.replace("Pie"));
 		selenium.waitForPopUp("viewChart", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("viewChart");
-		selenium.saveScreenShotAndSource();
 		selenium.close();
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -152,14 +137,11 @@ public class ViewQuestionGraphsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Vertical Bar",
 			RuntimeVariables.replace("Vertical Bar"));
 		selenium.waitForPopUp("viewChart", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("viewChart");
-		selenium.saveScreenShotAndSource();
 		selenium.close();
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 	}
 }

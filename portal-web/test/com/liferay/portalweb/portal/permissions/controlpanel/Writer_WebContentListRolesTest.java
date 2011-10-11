@@ -24,17 +24,14 @@ public class Writer_WebContentListRolesTest extends BaseTestCase {
 	public void testWriter_WebContentListRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Web Content List"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.check("//input[@value='62VIEW']");
 		selenium.check("//input[@value='62ADD_TO_PAGE']");
 		selenium.check("//input[@value='62CONFIGURATION']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

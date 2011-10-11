@@ -25,7 +25,7 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,14 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1 Attachment"),
 			selenium.getText("//div[@class='article-actions']/span[2]/a/span"));
 		selenium.clickAt("//div[@class='article-actions']/span[2]/a/span",
 			RuntimeVariables.replace("1 Attachment"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki_Attachment.jpg"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Delete"),
@@ -59,7 +56,6 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -67,7 +63,7 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -82,11 +78,9 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("0 Attachments"),
 			selenium.getText("//div[@class='article-actions']/span[2]/a/span"));
 		assertFalse(selenium.isTextPresent("link=1 Attachment"));

@@ -25,7 +25,7 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,20 +40,17 @@ public class SearchMultipleUserTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[1]/span[1]/ul/li/strong/a/span",
 			RuntimeVariables.replace("View"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -69,21 +66,17 @@ public class SearchMultipleUserTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("All Users"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("john joe"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("johndoe"));
 		assertTrue(selenium.isTextPresent("johnsmith"));
 		assertTrue(selenium.isTextPresent("joesmith"));
@@ -91,11 +84,9 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("janedoe"));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("john jane"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("johndoe"));
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("johnsmith"));
@@ -103,11 +94,9 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("joesmith"));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("jane joe"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("joesmith"));
 		assertTrue(selenium.isTextPresent("janesmith"));
@@ -115,11 +104,9 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("johndoe"));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("smith doe"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("joesmith"));
 		assertTrue(selenium.isTextPresent("janesmith"));
@@ -127,11 +114,9 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		assertTrue(selenium.isTextPresent("johndoe"));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("new york chicago"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("johndoe"));
 		assertTrue(selenium.isTextPresent("joesmith"));
@@ -139,11 +124,9 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("janesmith"));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("new york new jersey"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("joesmith"));
 		assertTrue(selenium.isTextPresent("johnsmith"));
@@ -151,11 +134,9 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("johndoe"));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("new york boston"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("joesmith"));
 		assertTrue(selenium.isTextPresent("janesmith"));
@@ -163,11 +144,9 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("johndoe"));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("chicago new jersey"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("joesmith"));
 		assertTrue(selenium.isTextPresent("johnsmith"));
@@ -175,11 +154,9 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("janesmith"));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("chicago boston"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("janesmith"));
 		assertTrue(selenium.isTextPresent("johndoe"));
 		assertFalse(selenium.isTextPresent("johnsmith"));
@@ -187,11 +164,9 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("janedoe"));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("new jersey boston"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("joesmith"));
 		assertTrue(selenium.isTextPresent("janesmith"));

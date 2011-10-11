@@ -30,7 +30,7 @@ public class CheckoutOrderTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,38 +45,29 @@ public class CheckoutOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"),
 					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//input[@value='Checkout']",
 					RuntimeVariables.replace("Checkout"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_34_billingStreet']",
 					RuntimeVariables.replace("1234 Sesame Street"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_34_billingCity']",
 					RuntimeVariables.replace("Gotham City"));
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_34_billingStateSel']",
 					RuntimeVariables.replace("California"));
 				selenium.type("//input[@id='_34_billingZip']",
 					RuntimeVariables.replace("90028"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_34_billingCountry']",
 					RuntimeVariables.replace("USA"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_34_billingPhone']",
 					RuntimeVariables.replace("626-589-1453"));
-				selenium.saveScreenShotAndSource();
 
 				boolean sameAsBillingChecked = selenium.isChecked(
 						"_34_shipToBillingCheckbox");
@@ -93,21 +84,17 @@ public class CheckoutOrderTest extends BaseTestCase {
 			case 2:
 				assertTrue(selenium.isChecked(
 						"//input[@id='_34_shipToBillingCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_34_ccType']",
 					RuntimeVariables.replace("Visa"));
 				selenium.type("//input[@id='_34_ccNumber']",
 					RuntimeVariables.replace("4111111111111111"));
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_34_ccExpYear']",
 					RuntimeVariables.replace("2014"));
 				selenium.type("//textarea[@id='_34_comments']",
 					RuntimeVariables.replace("Shopping Category Item Comments"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Continue']",
 					RuntimeVariables.replace("Continue"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("1234 Sesame Street"),
 					selenium.getText("//tr[5]/td[2]"));
 				assertEquals(RuntimeVariables.replace("In Stock"),
@@ -115,14 +102,13 @@ public class CheckoutOrderTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Finished']",
 					RuntimeVariables.replace("Finished"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Thank you for your purchase."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -137,15 +123,12 @@ public class CheckoutOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Orders",
 					RuntimeVariables.replace("Orders"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 					selenium.getText("//tr[3]/td[5]"));
 				assertEquals(RuntimeVariables.replace("Checkout"),
@@ -153,7 +136,6 @@ public class CheckoutOrderTest extends BaseTestCase {
 				selenium.clickAt("//td[4]/a",
 					RuntimeVariables.replace("Checkout"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isTextPresent(
 						"Shopping Category Item Comments"));
 

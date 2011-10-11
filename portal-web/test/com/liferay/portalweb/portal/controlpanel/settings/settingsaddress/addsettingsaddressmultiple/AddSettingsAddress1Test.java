@@ -25,7 +25,7 @@ public class AddSettingsAddress1Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,15 @@ public class AddSettingsAddress1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,27 +63,22 @@ public class AddSettingsAddress1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
 		selenium.type("//input[@id='_130_addressStreet1_0']",
 			RuntimeVariables.replace("123. Liferay Ln."));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_130_addressCity0']",
 			RuntimeVariables.replace("Rays of Light"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_130_addressZip0']",
 			RuntimeVariables.replace("12345"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_130_addressTypeId0']",
 			RuntimeVariables.replace("label=Billing"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -101,13 +93,12 @@ public class AddSettingsAddress1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -122,7 +113,6 @@ public class AddSettingsAddress1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals("123. Liferay Ln.",
 			selenium.getValue("//input[@id='_130_addressStreet1_0']"));
 		assertEquals("Rays of Light",

@@ -30,7 +30,7 @@ public class AdvancedSearchStructureIDTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,19 +45,15 @@ public class AdvancedSearchStructureIDTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Structures",
 					RuntimeVariables.replace("Structures"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				String structureID = selenium.getText("//td[2]/a");
 				RuntimeVariables.setValue("structureID", structureID);
@@ -77,7 +73,7 @@ public class AdvancedSearchStructureIDTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -93,18 +89,14 @@ public class AdvancedSearchStructureIDTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_searchStructureId']",
 					RuntimeVariables.replace(RuntimeVariables.getValue(
 							"structureID")));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_searchStructureId']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Web Content Structure Name"),
 					selenium.getText("//td[3]/a"));
@@ -113,14 +105,11 @@ public class AdvancedSearchStructureIDTest extends BaseTestCase {
 					selenium.getText("//td[4]/a"));
 				selenium.type("//input[@id='_15_searchStructureId']",
 					RuntimeVariables.replace("test"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_searchStructureId']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("Web Content Structure Name"));
 				assertFalse(selenium.isTextPresent(
 						"Web Content Structure Description"));

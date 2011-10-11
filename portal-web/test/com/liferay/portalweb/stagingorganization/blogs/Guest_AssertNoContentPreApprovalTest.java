@@ -26,7 +26,7 @@ public class Guest_AssertNoContentPreApprovalTest extends BaseTestCase {
 		selenium.open("/web/organization-name/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class Guest_AssertNoContentPreApprovalTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Staging Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("link=Staging Blogs Test Entry"));
 		assertTrue(selenium.isTextPresent("Showing 0 results."));
 	}

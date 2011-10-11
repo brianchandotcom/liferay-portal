@@ -30,7 +30,7 @@ public class SearchStructureTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,19 +45,15 @@ public class SearchStructureTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Structures",
 					RuntimeVariables.replace("Structures"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -73,7 +69,7 @@ public class SearchStructureTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -88,17 +84,13 @@ public class SearchStructureTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@name='_15_keywords']",
 					RuntimeVariables.replace("structure"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@name='_15_keywords']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Web Content Structure Name"),
 					selenium.getText("//td[3]/a"));
@@ -107,14 +99,11 @@ public class SearchStructureTest extends BaseTestCase {
 					selenium.getText("//td[4]/a"));
 				selenium.type("//input[@name='_15_keywords']",
 					RuntimeVariables.replace("structure1"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@name='_15_keywords']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("Web Content Structure Name"));
 				assertFalse(selenium.isTextPresent(
 						"Web Content Structure Description"));

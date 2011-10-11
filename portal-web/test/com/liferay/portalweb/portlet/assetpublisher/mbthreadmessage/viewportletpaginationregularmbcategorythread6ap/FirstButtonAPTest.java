@@ -25,7 +25,7 @@ public class FirstButtonAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,21 +40,17 @@ public class FirstButtonAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select", RuntimeVariables.replace("3"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals("3", selenium.getSelectedLabel("//select"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		selenium.clickAt("//a[@class='first']",
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//a[@class='first']"));
 		assertFalse(selenium.isElementPresent("//a[@class='previous']"));
 		assertEquals(RuntimeVariables.replace("Next"),
@@ -65,7 +61,7 @@ public class FirstButtonAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -80,21 +76,17 @@ public class FirstButtonAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select", RuntimeVariables.replace("2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals("2", selenium.getSelectedLabel("//select"));
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		selenium.clickAt("//a[@class='first']",
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//a[@class='first']"));
 		assertFalse(selenium.isElementPresent("//a[@class='previous']"));
 		assertEquals(RuntimeVariables.replace("Next"),

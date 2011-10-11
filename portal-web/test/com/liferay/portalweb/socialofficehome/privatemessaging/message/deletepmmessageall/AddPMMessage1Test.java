@@ -25,7 +25,7 @@ public class AddPMMessage1Test extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,10 +40,8 @@ public class AddPMMessage1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -58,11 +56,9 @@ public class AddPMMessage1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div[1]/ul/li[4]/a",
 			RuntimeVariables.replace("Private Messaging"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Private Messaging"),
 			selenium.getText("//h1/span[2]"));
 		assertEquals("Mark as Unread",
@@ -74,7 +70,7 @@ public class AddPMMessage1Test extends BaseTestCase {
 			RuntimeVariables.replace("New Message"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -89,7 +85,6 @@ public class AddPMMessage1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//span[2]/span/button",
 			RuntimeVariables.replace("Dropdown"));
 		assertEquals(RuntimeVariables.replace(
@@ -103,15 +98,13 @@ public class AddPMMessage1Test extends BaseTestCase {
 		assertTrue(selenium.isVisible("//span[1]/span/span/input"));
 		selenium.type("//span[1]/span/span/input",
 			RuntimeVariables.replace("Message Subject"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//textarea"));
 		selenium.type("//textarea", RuntimeVariables.replace("Message Body"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Send']",
 			RuntimeVariables.replace("Send"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -126,7 +119,6 @@ public class AddPMMessage1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

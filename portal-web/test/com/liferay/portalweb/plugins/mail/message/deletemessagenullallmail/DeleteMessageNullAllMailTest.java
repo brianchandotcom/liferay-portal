@@ -25,7 +25,7 @@ public class DeleteMessageNullAllMailTest extends BaseTestCase {
 		selenium.open("/web/guest/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,10 +40,8 @@ public class DeleteMessageNullAllMailTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"liferay.qa.testing.trunk@gmail.com"),
 			selenium.getText("//div/div/div[1]/div/ul/li/span/span/a"));
@@ -51,7 +49,7 @@ public class DeleteMessageNullAllMailTest extends BaseTestCase {
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,13 +64,12 @@ public class DeleteMessageNullAllMailTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//div[9]/div/a", "All Mail"));
 		selenium.clickAt("//div[9]/div/a", RuntimeVariables.replace("All Mail"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -87,12 +84,11 @@ public class DeleteMessageNullAllMailTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -109,7 +105,6 @@ public class DeleteMessageNullAllMailTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No messages selected."),
 			selenium.getText("//span[@class='message portlet-msg-error']"));
 	}

@@ -30,7 +30,7 @@ public class AdvancedSearchOrganizationTypeTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class AdvancedSearchOrganizationTypeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Organizations",
 					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -70,7 +67,7 @@ public class AdvancedSearchOrganizationTypeTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -86,7 +83,6 @@ public class AdvancedSearchOrganizationTypeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
 					RuntimeVariables.replace("Any"));
 				selenium.select("//select[@id='_11_type']",
@@ -94,7 +90,6 @@ public class AdvancedSearchOrganizationTypeTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_type']",
 					RuntimeVariables.replace("Any"));
 				assertTrue(selenium.isElementPresent("link=Test Organization"));
@@ -103,7 +98,6 @@ public class AdvancedSearchOrganizationTypeTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_type']",
 					RuntimeVariables.replace("Any"));
 				selenium.select("//select[@id='_11_andOperator']",

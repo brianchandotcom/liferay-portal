@@ -25,7 +25,7 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,15 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,12 +63,11 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_130_displaySettingsLink']",
 			RuntimeVariables.replace("Display Settings"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -86,13 +82,11 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_130_languageId']",
 			RuntimeVariables.replace("label=English (United States)"));
 		selenium.type("//input[@id='_130_locales']",
 			RuntimeVariables.replace(
 				"ar_SA,eu_ES,bg_BG,ca_AD,ca_ES,zh_CN,zh_TW,cs_CZ,nl_NL,en_US,et_EE,fi_FI,fr_FR,gl_ES,de_DE,el_GR,iw_IL,hi_IN,hu_HU,it_IT,ja_JP,ko_KR,nb_NO,fa_IR,pl_PL,pt_BR,pt_PT,ru_RU,sk_SK,es_ES,sv_SE,tr_TR,uk_UA,vi_VN"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@name='_130_timeZoneId']",
 			RuntimeVariables.replace("label=(UTC ) Coordinated Universal Time"));
 		selenium.select("//select[@name='_130_settings--default.regular.theme.id--']",
@@ -107,7 +101,7 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 			RuntimeVariables.replace("Google Apps"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -123,16 +117,12 @@ public class TearDownSettingsMiscellaneousTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_130_settings--google.apps.username--']",
 			RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_130_settings--google.apps.password--']",
 			RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

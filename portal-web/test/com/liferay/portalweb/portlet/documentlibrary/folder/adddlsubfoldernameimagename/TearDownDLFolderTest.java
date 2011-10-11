@@ -30,7 +30,7 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,11 +46,9 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean dlFolder1Present = selenium.isElementPresent(
 						"//div/a/span[1]/img");
@@ -63,19 +61,17 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//form/div[1]/div/span[1]/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
 					RuntimeVariables.replace("Document Checkbox"));
 				assertTrue(selenium.isChecked(
 						"//form/div[1]/div/span[1]/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[2]/ul/li/strong/a/span"));
 				selenium.clickAt("//span[2]/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -91,7 +87,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -100,7 +95,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -115,7 +109,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//form/div[1]/div/span[1]/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
 					RuntimeVariables.replace("Document Checkbox"));
 				assertEquals(RuntimeVariables.replace("Actions"),
@@ -124,7 +117,7 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -140,7 +133,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -149,7 +141,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -164,19 +155,17 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//form/div[1]/div/span[1]/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
 					RuntimeVariables.replace("Document Checkbox"));
 				assertTrue(selenium.isChecked(
 						"//form/div[1]/div/span[1]/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[2]/ul/li/strong/a/span"));
 				selenium.clickAt("//span[2]/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -192,7 +181,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -201,7 +189,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -216,19 +203,17 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//form/div[1]/div/span[1]/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
 					RuntimeVariables.replace("Document Checkbox"));
 				assertTrue(selenium.isChecked(
 						"//form/div[1]/div/span[1]/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[2]/ul/li/strong/a/span"));
 				selenium.clickAt("//span[2]/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -244,7 +229,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -253,7 +237,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -268,19 +251,17 @@ public class TearDownDLFolderTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//form/div[1]/div/span[1]/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
 					RuntimeVariables.replace("Document Checkbox"));
 				assertTrue(selenium.isChecked(
 						"//form/div[1]/div/span[1]/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[2]/ul/li/strong/a/span"));
 				selenium.clickAt("//span[2]/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -296,7 +277,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -305,7 +285,6 @@ public class TearDownDLFolderTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 6:
 			case 100:

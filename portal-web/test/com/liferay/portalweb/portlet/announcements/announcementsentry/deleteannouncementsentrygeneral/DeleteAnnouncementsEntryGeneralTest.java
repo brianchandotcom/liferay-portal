@@ -25,7 +25,7 @@ public class DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Announcements Entry Title"),
 			selenium.getText("//h3[@class='entry-title']/a"));
 		assertEquals(RuntimeVariables.replace("General"),
@@ -59,7 +57,6 @@ public class DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("Announcements Entry Title"));
 		assertFalse(selenium.isTextPresent(
 				"General Announcements Entry Content"));

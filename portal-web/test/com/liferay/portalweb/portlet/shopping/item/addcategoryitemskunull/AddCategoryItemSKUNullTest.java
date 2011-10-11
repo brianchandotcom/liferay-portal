@@ -25,7 +25,7 @@ public class AddCategoryItemSKUNullTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,12 @@ public class AddCategoryItemSKUNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category Name\nShopping Category Description"),
 			selenium.getText("//td[1]/a"));
@@ -56,43 +53,31 @@ public class AddCategoryItemSKUNullTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Shopping Category Name\nShopping Category Description"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Item']",
 			RuntimeVariables.replace("Add Item"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_sku']", RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_name']",
 			RuntimeVariables.replace("Shopping Category Item Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_34_description']",
 			RuntimeVariables.replace("Shopping Category Item Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_34_properties']",
 			RuntimeVariables.replace("Shopping Category Item Properties"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_34_requiresShippingCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_34_requiresShippingCheckbox']",
 			RuntimeVariables.replace("Requires Shipping"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_34_requiresShippingCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_stockQuantity']",
 			RuntimeVariables.replace("50"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_price0']",
 			RuntimeVariables.replace("$9.99"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_minQuantity0']",
 			RuntimeVariables.replace("1"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));

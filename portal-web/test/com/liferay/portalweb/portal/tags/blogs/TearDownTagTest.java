@@ -30,7 +30,7 @@ public class TearDownTagTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,14 +45,11 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Tags", RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(500);
 
 				boolean tag1Present = selenium.isElementPresent(
@@ -68,7 +65,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -83,12 +80,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				Thread.sleep(500);
@@ -106,7 +101,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -121,12 +116,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 				Thread.sleep(500);
@@ -144,7 +137,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -159,12 +152,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 				Thread.sleep(500);
@@ -182,7 +173,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -197,12 +188,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 				Thread.sleep(500);
@@ -220,7 +209,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -235,12 +224,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 6:
 				Thread.sleep(500);
@@ -258,7 +245,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -273,12 +260,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 7:
 				Thread.sleep(500);
@@ -296,7 +281,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -311,12 +296,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 8:
 				Thread.sleep(500);
@@ -334,7 +317,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -349,12 +332,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 9:
 				Thread.sleep(500);
@@ -372,7 +353,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -387,12 +368,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 10:
 				Thread.sleep(500);
@@ -410,7 +389,7 @@ public class TearDownTagTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -425,12 +404,10 @@ public class TearDownTagTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 11:
 			case 100:

@@ -30,7 +30,7 @@ public class TearDownWebContentTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class TearDownWebContentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean webContentPresent = selenium.isElementPresent(
 						"_15_rowIds");
@@ -71,13 +68,11 @@ public class TearDownWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.clickAt("link=Structures",
 					RuntimeVariables.replace("Structures"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean structurePresent = selenium.isElementPresent(
 						"_15_rowIds");
@@ -95,13 +90,11 @@ public class TearDownWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean templatePresent = selenium.isElementPresent(
 						"_15_rowIds");
@@ -119,7 +112,6 @@ public class TearDownWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 			case 100:

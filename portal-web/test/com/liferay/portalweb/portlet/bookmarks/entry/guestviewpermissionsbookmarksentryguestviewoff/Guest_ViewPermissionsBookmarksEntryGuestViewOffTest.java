@@ -27,7 +27,7 @@ public class Guest_ViewPermissionsBookmarksEntryGuestViewOffTest
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,11 +42,9 @@ public class Guest_ViewPermissionsBookmarksEntryGuestViewOffTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"There are no bookmarks in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

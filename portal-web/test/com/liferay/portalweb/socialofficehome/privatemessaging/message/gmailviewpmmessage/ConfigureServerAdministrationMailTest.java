@@ -26,7 +26,7 @@ public class ConfigureServerAdministrationMailTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,57 +41,40 @@ public class ConfigureServerAdministrationMailTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Server Administration",
 			RuntimeVariables.replace("Server Administration"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Mail", RuntimeVariables.replace("Mail"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_137_pop3Host']",
 			RuntimeVariables.replace("pop.gmail.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_137_pop3Port']",
 			RuntimeVariables.replace("995"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_137_pop3SecureCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_137_pop3SecureCheckbox']",
 			RuntimeVariables.replace("Use a Secure Network Connection"));
 		assertTrue(selenium.isChecked("//input[@id='_137_pop3SecureCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_137_pop3User']",
 			RuntimeVariables.replace("liferay.qa.server.trunk@gmail.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_137_pop3Password']",
 			RuntimeVariables.replace("loveispatient"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_137_smtpHost']",
 			RuntimeVariables.replace("smtp.gmail.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_137_smtpPort']",
 			RuntimeVariables.replace("465"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_137_smtpSecureCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@id='_137_smtpSecureCheckbox']");
 		assertTrue(selenium.isChecked("//input[@id='_137_smtpSecureCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_137_smtpUser']",
 			RuntimeVariables.replace("liferay.qa.server.trunk@gmail.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_137_smtpPassword']",
 			RuntimeVariables.replace("loveispatient"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -99,7 +82,6 @@ public class ConfigureServerAdministrationMailTest extends BaseTestCase {
 			selenium.getValue("//input[@id='_137_pop3Host']"));
 		assertEquals("995", selenium.getValue("//input[@id='_137_pop3Port']"));
 		assertTrue(selenium.isChecked("//input[@id='_137_pop3SecureCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals("liferay.qa.server.trunk@gmail.com",
 			selenium.getValue("//input[@id='_137_pop3User']"));
 		assertEquals("loveispatient",
@@ -108,7 +90,6 @@ public class ConfigureServerAdministrationMailTest extends BaseTestCase {
 			selenium.getValue("//input[@id='_137_smtpHost']"));
 		assertEquals("465", selenium.getValue("//input[@id='_137_smtpPort']"));
 		assertTrue(selenium.isChecked("//input[@id='_137_smtpSecureCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals("liferay.qa.server.trunk@gmail.com",
 			selenium.getValue("//input[@id='_137_smtpUser']"));
 		assertEquals("loveispatient",

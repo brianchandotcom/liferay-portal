@@ -30,7 +30,7 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,11 +45,9 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("true"),
 					selenium.getText(
 						"//div[@class='portlet-body']/table/tbody/tr[2]/td[4]"));
@@ -58,7 +56,7 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -73,8 +71,6 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				boolean onlineStatusChecked = selenium.isChecked("onlineStatus");
 
 				if (!onlineStatusChecked) {
@@ -84,18 +80,16 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 				}
 
 				assertTrue(selenium.isChecked("//input[@id='onlineStatus']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='onlineStatus']",
 					RuntimeVariables.replace("Show me as online."));
 				assertFalse(selenium.isChecked("//input[@id='onlineStatus']"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.clickAt("//input[@id='saveSettings']",
 					RuntimeVariables.replace("Save Settings"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -111,13 +105,12 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isElementPresent(
 						"//li[@class='chat-settings saved']"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -132,11 +125,9 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("false"),
 					selenium.getText(
 						"//div[@class='portlet-body']/table/tbody/tr[2]/td[4]"));

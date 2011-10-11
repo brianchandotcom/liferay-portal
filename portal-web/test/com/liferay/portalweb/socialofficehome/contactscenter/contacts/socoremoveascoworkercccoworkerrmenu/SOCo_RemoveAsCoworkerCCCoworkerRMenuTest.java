@@ -26,7 +26,7 @@ public class SOCo_RemoveAsCoworkerCCCoworkerRMenuTest extends BaseTestCase {
 		selenium.open("/user/socialofficecoworkersn/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class SOCo_RemoveAsCoworkerCCCoworkerRMenuTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/a/img"));
 		assertEquals(RuntimeVariables.replace("Manage 1 coworkers."),
 			selenium.getText("//div[1]/div/div/div/div[2]/a"));
@@ -56,10 +54,9 @@ public class SOCo_RemoveAsCoworkerCCCoworkerRMenuTest extends BaseTestCase {
 			selenium.getText("//div[3]/span"));
 		selenium.clickAt("//div[1]/a/img", RuntimeVariables.replace("Thumbnail"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -74,7 +71,6 @@ public class SOCo_RemoveAsCoworkerCCCoworkerRMenuTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//div[2]/h1/span"));
 		assertEquals(RuntimeVariables.replace("Coworker"),
@@ -84,7 +80,6 @@ public class SOCo_RemoveAsCoworkerCCCoworkerRMenuTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/ul/li[2]/a",
 			RuntimeVariables.replace("Remove as Coworker"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

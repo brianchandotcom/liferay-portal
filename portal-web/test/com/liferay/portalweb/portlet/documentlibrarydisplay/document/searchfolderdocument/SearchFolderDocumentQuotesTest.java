@@ -25,7 +25,7 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,19 +41,16 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@title='Search Documents']",
 			RuntimeVariables.replace("\"DL Folder Document Title\""));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -69,19 +66,17 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
 			selenium.getText("//td[3]/a"));
 		selenium.type("//input[@title='Search Documents']",
 			RuntimeVariables.replace("\"DL2 Folder2 Document2 Title2\""));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -99,7 +94,6 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"No documents were found that matched the keywords: \"DL2 Folder2 Document2 Title2\"."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

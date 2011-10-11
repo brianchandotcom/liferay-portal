@@ -25,7 +25,7 @@ public class AddFrontPageCreoleItalicsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class AddFrontPageCreoleItalicsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."),
 			selenium.getText("//div[@class='wiki-body']/div/a"));
@@ -52,7 +50,6 @@ public class AddFrontPageCreoleItalicsTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertTrue(selenium.isVisible("//span[@id='cke_34_label']"));
 		selenium.clickAt("//span[@id='cke_34_label']",
@@ -61,14 +58,12 @@ public class AddFrontPageCreoleItalicsTest extends BaseTestCase {
 				"//td[@id='cke_contents__36_editor']/textarea"));
 		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
 			RuntimeVariables.replace("//Wiki Front Page Content//"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//span[@id='cke_34_label']",
 			RuntimeVariables.replace("Source"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

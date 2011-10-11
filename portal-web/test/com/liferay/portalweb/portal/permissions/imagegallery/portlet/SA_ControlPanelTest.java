@@ -40,13 +40,11 @@ public class SA_ControlPanelTest extends BaseTestCase {
 				selenium.clickAt("//li[4]/ul/li[1]/a[1]",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

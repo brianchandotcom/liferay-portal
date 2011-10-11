@@ -25,7 +25,7 @@ public class ViewPortletChineseLocalizedTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,13 @@ public class ViewPortletChineseLocalizedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Test Localized Page",
 			RuntimeVariables.replace("Test Localized Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Chinese"),
 			selenium.getText("//section/div/div/div/a[1]"));
 		selenium.click(RuntimeVariables.replace("//section/div/div/div/a[1]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Override a portal language entry from a hook."),
 			selenium.getText("//td[1]"));

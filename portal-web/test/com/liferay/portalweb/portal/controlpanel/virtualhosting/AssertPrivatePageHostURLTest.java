@@ -39,16 +39,13 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("test@liferay.com"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("test"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 					RuntimeVariables.replace("Remember Me Checkbox"));
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
@@ -60,7 +57,6 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 				selenium.clickAt("link=Private Page",
 					RuntimeVariables.replace("Private Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"http://www.baker.com:8080/private-page"),
 					selenium.getLocation());

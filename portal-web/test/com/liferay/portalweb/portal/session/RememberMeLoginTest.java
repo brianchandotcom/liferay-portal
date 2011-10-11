@@ -41,18 +41,15 @@ public class RememberMeLoginTest extends BaseTestCase {
 
 				selenium.click(RuntimeVariables.replace("link=Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.type("_58_login",
 					RuntimeVariables.replace("test@liferay.com"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("_58_password", RuntimeVariables.replace("test"));
-				selenium.saveScreenShotAndSource();
 				selenium.click("_58_rememberMeCheckbox");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -68,14 +65,12 @@ public class RememberMeLoginTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Sign In']"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -91,11 +86,9 @@ public class RememberMeLoginTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"link=Session Expiration Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

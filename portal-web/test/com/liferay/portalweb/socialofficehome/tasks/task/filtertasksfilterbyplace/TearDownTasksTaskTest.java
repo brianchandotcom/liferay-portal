@@ -30,7 +30,7 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 				selenium.open("/user/joebloggs/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,18 +46,15 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div/div/div/div[1]/ul/li[5]/a",
 					RuntimeVariables.replace("Tasks"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Tasks"),
 					selenium.getText(
 						"//div[2]/div/div/div/section/header/h1/span[2]"));
 				selenium.clickAt("link=I Have Created",
 					RuntimeVariables.replace("I Have Created"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean showCompleted1Checked = selenium.isChecked(
 						"//td[1]/input");
@@ -86,7 +83,7 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					RuntimeVariables.replace("Task"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -103,20 +100,17 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Created by Joe Bloggs"),
 					selenium.getText("//div[2]/div[2]/div[2]"));
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this entry[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 				selenium.clickAt("link=I Have Created",
 					RuntimeVariables.replace("I Have Created"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean showCompleted2Checked = selenium.isChecked(
 						"//td[1]/input");
@@ -145,7 +139,7 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					RuntimeVariables.replace("Task"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -162,20 +156,17 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Created by Joe Bloggs"),
 					selenium.getText("//div[2]/div[2]/div[2]"));
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this entry[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 				selenium.clickAt("link=I Have Created",
 					RuntimeVariables.replace("I Have Created"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean showCompleted3Checked = selenium.isChecked(
 						"//td[1]/input");
@@ -204,7 +195,7 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					RuntimeVariables.replace("Task"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -221,20 +212,17 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Created by Joe Bloggs"),
 					selenium.getText("//div[2]/div[2]/div[2]"));
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this entry[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 7:
 				selenium.clickAt("link=I Have Created",
 					RuntimeVariables.replace("I Have Created"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean showCompleted4Checked = selenium.isChecked(
 						"//td[1]/input");
@@ -263,7 +251,7 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					RuntimeVariables.replace("Task"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -280,20 +268,17 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Created by Joe Bloggs"),
 					selenium.getText("//div[2]/div[2]/div[2]"));
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this entry[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 9:
 				selenium.clickAt("link=I Have Created",
 					RuntimeVariables.replace("I Have Created"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean showCompleted5Checked = selenium.isChecked(
 						"//td[1]/input");
@@ -322,7 +307,7 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					RuntimeVariables.replace("Task"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -339,14 +324,12 @@ public class TearDownTasksTaskTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Created by Joe Bloggs"),
 					selenium.getText("//div[2]/div[2]/div[2]"));
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this entry[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 11:
 			case 100:

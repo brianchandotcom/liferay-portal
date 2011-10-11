@@ -26,7 +26,7 @@ public class RevertEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class RevertEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Content Edit"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
@@ -53,10 +51,8 @@ public class RevertEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.clickAt("//div[3]/span[2]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1.2 (Minor Edit)"),
 			selenium.getText("//td[4]/a"));
 		assertFalse(selenium.isTextPresent("1.3"));
@@ -65,7 +61,6 @@ public class RevertEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.clickAt("//td[8]/span/a/span",
 			RuntimeVariables.replace("Revert"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1.3"),
 			selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Reverted to 1.1"),
@@ -73,7 +68,7 @@ public class RevertEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,11 +83,9 @@ public class RevertEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertFalse(selenium.isTextPresent("Wiki Front Page Content Edit"));
@@ -101,7 +94,6 @@ public class RevertEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.clickAt("//div[3]/span[2]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("Minor Edit"));
 	}
 }

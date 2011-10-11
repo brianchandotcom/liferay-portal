@@ -30,7 +30,7 @@ public class TearDownSettingsTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,17 +45,15 @@ public class TearDownSettingsTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
 					RuntimeVariables.replace("Settings"));
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -70,10 +68,8 @@ public class TearDownSettingsTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='statusMessage']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 
 				boolean onlineStatusChecked = selenium.isChecked("onlineStatus");
 
@@ -103,7 +99,7 @@ public class TearDownSettingsTest extends BaseTestCase {
 					RuntimeVariables.replace("Save Settings"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -119,12 +115,11 @@ public class TearDownSettingsTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='saveSettings']",
 					RuntimeVariables.replace("Save Settings"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -140,7 +135,6 @@ public class TearDownSettingsTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isElementPresent(
 						"//li[@class='chat-settings saved']"));
 

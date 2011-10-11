@@ -25,7 +25,7 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -52,7 +50,7 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -69,7 +67,6 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
@@ -78,23 +75,19 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//button[1]"));
 		selenium.clickAt("//button[1]", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_document.txt"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -109,7 +102,6 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -117,27 +109,22 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@id='documentLibraryVersionHistoryPanel']/div[2]/div/div/table/tbody/tr[3]/td[2]"));
 		assertFalse(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[1]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@name='_20_rowIds'])[1]",
 			RuntimeVariables.replace("1.1 Check Box"));
 		assertTrue(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[1]"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[2]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@name='_20_rowIds'])[2]",
 			RuntimeVariables.replace("1.0 Check Box"));
 		assertTrue(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[2]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Compare Versions']",
 			RuntimeVariables.replace("Compare Versions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//section/div/div/div",
 				"There are no differences between DML Folder Document Title 1.0 and DML Folder Document Title 1.1."));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -152,11 +139,9 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -164,7 +149,7 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			RuntimeVariables.replace("DML Folder Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -181,7 +166,6 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
@@ -190,23 +174,19 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DML Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//button[1]"));
 		selenium.clickAt("//button[1]", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_CompareVersionsTest.txt"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -221,7 +201,6 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -229,21 +208,16 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@id='documentLibraryVersionHistoryPanel']/div[2]/div/div/table/tbody/tr[3]/td[2]"));
 		assertFalse(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[1]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@name='_20_rowIds'])[1]",
 			RuntimeVariables.replace("1.2 Check Box"));
 		assertTrue(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[1]"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[2]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@name='_20_rowIds'])[2]",
 			RuntimeVariables.replace("1.1 Check Box"));
 		assertTrue(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[2]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Compare Versions']",
 			RuntimeVariables.replace("Compare Versions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("CompareVersionsTest"),
 			selenium.getText("//ins"));
 		assertEquals(RuntimeVariables.replace("This is a test document."),

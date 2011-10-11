@@ -25,7 +25,7 @@ public class AddNullServerInstanceMDTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,15 @@ public class AddNullServerInstanceMDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Instances",
 			RuntimeVariables.replace("Portal Instances"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,22 +63,16 @@ public class AddNullServerInstanceMDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("//input[@id='_135_webId']",
 			RuntimeVariables.replace("lifera1.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_135_webId']",
 			RuntimeVariables.replace("liferay1.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_135_virtualHostname']",
 			RuntimeVariables.replace("localhost1"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_135_mx']", RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("This field is required."),

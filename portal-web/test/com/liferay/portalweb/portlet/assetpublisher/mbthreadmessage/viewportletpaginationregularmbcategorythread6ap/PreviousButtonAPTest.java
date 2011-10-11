@@ -25,7 +25,7 @@ public class PreviousButtonAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,13 @@ public class PreviousButtonAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -60,7 +57,6 @@ public class PreviousButtonAPTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -73,7 +69,6 @@ public class PreviousButtonAPTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//a[@class='first']"));
 		assertFalse(selenium.isElementPresent("//a[@class='previous']"));
 		assertEquals(RuntimeVariables.replace("Next"),

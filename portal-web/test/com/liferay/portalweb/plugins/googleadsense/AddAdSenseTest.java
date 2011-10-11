@@ -25,7 +25,7 @@ public class AddAdSenseTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,13 @@ public class AddAdSenseTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Google Adsense Test Page",
 			RuntimeVariables.replace("Google Adsense Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -64,14 +62,13 @@ public class AddAdSenseTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -86,30 +83,22 @@ public class AddAdSenseTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_86_adClient",
 			RuntimeVariables.replace("ca-pub-7910614330042482"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_86_adChannel", RuntimeVariables.replace("12345678"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("_86_adType", RuntimeVariables.replace("label=Text"));
 		selenium.select("_86_adFormat",
 			RuntimeVariables.replace("label=(728 x 90) - Leaderboard"));
 		selenium.type("_86_colorBorder", RuntimeVariables.replace("FFFFFF"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_86_colorBg", RuntimeVariables.replace("0000FF"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_86_colorLink", RuntimeVariables.replace("FFFFFF"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_86_colorText", RuntimeVariables.replace("000000"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_86_colorUrl", RuntimeVariables.replace("008000"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -127,7 +116,6 @@ public class AddAdSenseTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

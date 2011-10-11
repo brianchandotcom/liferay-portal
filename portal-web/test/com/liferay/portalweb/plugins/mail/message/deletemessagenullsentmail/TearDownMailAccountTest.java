@@ -25,7 +25,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 		selenium.open("/web/guest/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class TearDownMailAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Mail Test Page",
 			RuntimeVariables.replace("Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"liferay.qa.testing.trunk@gmail.com"),
 			selenium.getText("//div/div/div[1]/div/ul/li/span/span/a"));
@@ -52,7 +50,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -69,7 +67,6 @@ public class TearDownMailAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Edit Account"),
 			selenium.getText("//a[@class='edit-account']"));
 		selenium.clickAt("//a[@class='edit-account']",
@@ -77,7 +74,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -92,17 +89,15 @@ public class TearDownMailAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//a[@class='delete-account']"));
 		selenium.clickAt("//a[@class='delete-account']",
 			RuntimeVariables.replace("Delete Account"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this account[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 		selenium.open("/web/guest/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -117,11 +112,9 @@ public class TearDownMailAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Mail Test Page",
 			RuntimeVariables.replace("Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("//div[1]/div/ul/li/span/span/a"));
 	}
 }

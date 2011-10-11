@@ -199,6 +199,6 @@ public class LiferayDefaultSelenium
 	private static final String _SELENIUM_EXECUTABLE_DIR =
 		TestPropsValues.SELENIUM_EXECUTABLE_DIR;
 
-	private String _timeout = "30000";
+	private String _timeout = "90000";
 
 }

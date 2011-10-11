@@ -31,7 +31,7 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -47,18 +47,16 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -74,7 +72,6 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -82,7 +79,7 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 					RuntimeVariables.replace("Configuration"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -97,11 +94,10 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.selectFrame("//iframe");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -117,8 +113,6 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				boolean showSearchChecked = selenium.isChecked(
 						"_86_showFoldersSearchCheckbox");
 
@@ -130,30 +124,25 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@id='_86_showFoldersSearchCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_86_showFoldersSearchCheckbox']",
 					RuntimeVariables.replace("Show Search"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_86_showFoldersSearchCheckbox']"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_86_showFoldersSearchCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.selectFrame("relative=top");
-				selenium.saveScreenShotAndSource();
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -169,11 +158,9 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isVisible("//input[@id='_20_keywords']"));
 				assertTrue(selenium.isVisible("//input[@value='Search']"));
 

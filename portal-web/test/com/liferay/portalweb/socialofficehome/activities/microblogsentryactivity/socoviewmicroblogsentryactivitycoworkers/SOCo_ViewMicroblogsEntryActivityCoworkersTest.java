@@ -26,7 +26,7 @@ public class SOCo_ViewMicroblogsEntryActivityCoworkersTest extends BaseTestCase 
 		selenium.open("/user/socialofficecoworkersn/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class SOCo_ViewMicroblogsEntryActivityCoworkersTest extends BaseTestCase 
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Activities"),
 			selenium.getText("//div[2]/div/section/header/h1/span"));
 		assertEquals(RuntimeVariables.replace("Coworkers"),
@@ -53,7 +51,6 @@ public class SOCo_ViewMicroblogsEntryActivityCoworkersTest extends BaseTestCase 
 		selenium.clickAt("//div/ul/li[2]/span/a",
 			RuntimeVariables.replace("Coworkers"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/span[1]/img"));
 		assertTrue(selenium.isVisible("//span[2]/span/img"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),

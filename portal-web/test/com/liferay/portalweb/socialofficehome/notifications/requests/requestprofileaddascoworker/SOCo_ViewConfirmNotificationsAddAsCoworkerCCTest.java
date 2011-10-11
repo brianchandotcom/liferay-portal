@@ -27,7 +27,7 @@ public class SOCo_ViewConfirmNotificationsAddAsCoworkerCCTest
 		selenium.open("/user/socialofficecoworkersn/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,11 +42,9 @@ public class SOCo_ViewConfirmNotificationsAddAsCoworkerCCTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/a/img"));
 		assertEquals(RuntimeVariables.replace("Manage 1 coworkers."),
 			selenium.getText("//div[1]/div/div/div/div[2]/a"));

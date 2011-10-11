@@ -31,7 +31,7 @@ public class AdvancedSearchWebContentWorkflowTaskTypeTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,19 +46,15 @@ public class AdvancedSearchWebContentWorkflowTaskTypeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=My Workflow Tasks",
 					RuntimeVariables.replace("My Workflow Tasks"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Pending",
 					RuntimeVariables.replace("Pending"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -75,7 +71,7 @@ public class AdvancedSearchWebContentWorkflowTaskTypeTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -91,18 +87,15 @@ public class AdvancedSearchWebContentWorkflowTaskTypeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_153_andOperator']",
 					RuntimeVariables.replace("label=Any"));
 				selenium.type("//input[@id='_153_name']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_153_type']",
 					RuntimeVariables.replace("label=Web Content"));
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"There are no pending tasks assigned to you with the specified search criteria."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
@@ -120,7 +113,6 @@ public class AdvancedSearchWebContentWorkflowTaskTypeTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("Web Content Name"));
 				assertEquals(RuntimeVariables.replace(
 						"There are no pending tasks assigned to you with the specified search criteria."),

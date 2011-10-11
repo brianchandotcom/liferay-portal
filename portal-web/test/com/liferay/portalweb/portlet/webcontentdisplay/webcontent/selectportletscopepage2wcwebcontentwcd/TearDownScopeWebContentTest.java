@@ -30,7 +30,7 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
 						"Scope: Default"));
 				selenium.clickAt("//div/span/ul/li/strong/a",
@@ -62,7 +59,6 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 					selenium.getText("//a"));
 				selenium.clickAt("//a", RuntimeVariables.replace("Default"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean defaultScopeWebContentPresent = selenium.isElementPresent(
 						"_15_rowIds");
@@ -80,11 +76,9 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean templatePresent = selenium.isElementPresent(
 						"_15_rowIds");
@@ -102,13 +96,11 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.clickAt("link=Structures",
 					RuntimeVariables.replace("Structures"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean structurePresent = selenium.isElementPresent(
 						"_15_rowIds");
@@ -126,7 +118,6 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 			case 4:
@@ -140,7 +131,6 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 				selenium.clickAt("//li[2]/a",
 					RuntimeVariables.replace("Web Content Display Test Page2"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean page2ScopeWebContentPresent = selenium.isElementPresent(
 						"_15_rowIds");
@@ -158,11 +148,9 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean template2Present = selenium.isElementPresent(
 						"_15_rowIds");
@@ -180,13 +168,11 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 				selenium.clickAt("link=Structures",
 					RuntimeVariables.replace("Structures"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean structure2Present = selenium.isElementPresent(
 						"_15_rowIds");
@@ -204,7 +190,6 @@ public class TearDownScopeWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 6:
 			case 7:

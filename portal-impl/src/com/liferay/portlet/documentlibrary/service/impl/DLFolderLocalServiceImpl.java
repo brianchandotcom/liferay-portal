@@ -161,6 +161,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return dlFolderPersistence.countByCompanyId(companyId);
 	}
 
+	public DLFolder fetchByPrimaryKey(long folderId) throws SystemException {
+		return dlFolderPersistence.fetchByPrimaryKey(folderId);
+	}
+
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, int start, int end)
 		throws SystemException {

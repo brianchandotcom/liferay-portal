@@ -214,6 +214,13 @@ else if (dlFileEntryType != null) {
 			</c:if>
 		</aui:field-wrapper>
 
+		<c:if test="<%= DLFolderLocalServiceUtil.fetchByPrimaryKey(folderId) == null %>">
+			<% folderId = 0; %>
+			<aui:script>
+				document.<portlet:namespace />fm.<portlet:namespace />folderId.value = 0;
+			</aui:script>
+		</c:if>
+		
 		<%
 		String folderName = StringPool.BLANK;
 

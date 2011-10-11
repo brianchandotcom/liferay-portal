@@ -19,6 +19,10 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
+long referringPlid = ParamUtil.getLong(request, "referringPlid");
+
 PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUESTION);
 
 long questionId = BeanParamUtil.getLong(question, request, "questionId");
@@ -66,6 +70,8 @@ if (choiceName > 0) {
 	<aui:input name="questionId" type="hidden" value="<%= questionId %>" />
 	<aui:input name="choicesCount" type="hidden" value="<%= choicesCount %>" />
 	<aui:input name="choiceName" type="hidden" value="" />
+	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
+	<aui:input name="referringPlid" type="hidden" value="<%= referringPlid %>" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"

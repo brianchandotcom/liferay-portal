@@ -15,15 +15,20 @@
 package com.liferay.portlet.polls.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.polls.DuplicateVoteException;
 import com.liferay.portlet.polls.NoSuchChoiceException;
@@ -34,6 +39,7 @@ import com.liferay.portlet.polls.QuestionExpirationDateException;
 import com.liferay.portlet.polls.QuestionExpiredException;
 import com.liferay.portlet.polls.QuestionTitleException;
 import com.liferay.portlet.polls.model.PollsChoice;
+import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.service.PollsQuestionServiceUtil;
 import com.liferay.portlet.polls.service.persistence.PollsChoiceUtil;
 
@@ -49,6 +55,7 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -74,8 +81,10 @@ public class EditQuestionAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateQuestion(actionRequest);
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_VOTE) ||
+				cmd.equals(Constants.UPDATE)) {
+
+				updateQuestion(portletConfig, actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteQuestion(actionRequest);
@@ -146,7 +155,8 @@ public class EditQuestionAction extends PortletAction {
 
 	}
 
-	protected void updateQuestion(ActionRequest actionRequest)
+	protected void updateQuestion(
+			PortletConfig portletConfig, ActionRequest actionRequest)
 		throws Exception {
 
 		long questionId = ParamUtil.getLong(actionRequest, "questionId");
@@ -219,11 +229,13 @@ public class EditQuestionAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BookmarksEntry.class.getName(), actionRequest);
 
+		PollsQuestion question = null;
+
 		if (questionId <= 0) {
 
 			// Add question
 
-			PollsQuestionServiceUtil.addQuestion(
+			question = PollsQuestionServiceUtil.addQuestion(
 				titleMap, descriptionMap, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, choices, serviceContext);
@@ -232,10 +244,38 @@ public class EditQuestionAction extends PortletAction {
 
 			// Update question
 
-			PollsQuestionServiceUtil.updateQuestion(
+			question = PollsQuestionServiceUtil.updateQuestion(
 				questionId, titleMap, descriptionMap, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, choices, serviceContext);
+		}
+
+		// Poll display
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "referringPortletResource");
+
+		long plid = ParamUtil.getLong(actionRequest, "referringPlid", 0);
+
+		if (Validator.isNotNull(portletResource) && plid > 0) {
+			try {
+				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+				PortletPreferences preferences =
+					PortletPreferencesFactoryUtil.getPortletSetup(
+						layout, portletResource, StringPool.BLANK);
+
+				preferences.setValue(
+					"questionId", String.valueOf(question.getQuestionId()));
+
+				preferences.store();
+
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() + ".doRefresh",
+					portletResource);
+			} catch (Exception e) {
+			}
 		}
 	}
 

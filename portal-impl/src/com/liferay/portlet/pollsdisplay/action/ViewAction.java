@@ -54,17 +54,16 @@ public class ViewAction extends PortletAction {
 				PollsQuestionServiceUtil.getQuestion(questionId);
 
 			renderRequest.setAttribute(WebKeys.POLLS_QUESTION, question);
-
-			return mapping.findForward("portlet.polls_display.view");
 		}
 		catch (NoSuchQuestionException nsqe) {
-			return mapping.findForward("/portal/portlet_not_setup");
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass().getName());
 
 			return mapping.findForward("portlet.polls_display.error");
 		}
+
+		return mapping.findForward("portlet.polls_display.view");
 	}
 
 }

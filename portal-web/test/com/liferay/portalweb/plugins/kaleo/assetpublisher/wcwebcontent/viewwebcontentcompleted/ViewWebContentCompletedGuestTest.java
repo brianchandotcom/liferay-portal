@@ -48,8 +48,10 @@ public class ViewWebContentCompletedGuestTest extends BaseTestCase {
 			selenium.getText("//h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//h3/a"));
-		assertTrue(selenium.isPartialText("//div[2]/a", "Read More"));
-		selenium.clickAt("//div[2]/a", RuntimeVariables.replace("Read More"));
+		assertTrue(selenium.isPartialText("//div[@class='asset-more']/a",
+				"Read More"));
+		selenium.clickAt("//div[@class='asset-more']/a",
+			RuntimeVariables.replace("Read More"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//div[1]/h1/span"));

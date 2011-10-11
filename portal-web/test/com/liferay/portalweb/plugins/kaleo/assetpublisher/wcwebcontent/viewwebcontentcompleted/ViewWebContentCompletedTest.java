@@ -45,9 +45,11 @@ public class ViewWebContentCompletedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//h3/a"));
-		assertTrue(selenium.isPartialText("//div[2]/a", "Read More"));
+		assertTrue(selenium.isPartialText("//div[@class='asset-more']/a",
+				"Read More"));
 		assertFalse(selenium.isTextPresent("Web Content Name is not approved."));
-		selenium.clickAt("//div[2]/a", RuntimeVariables.replace("Read More"));
+		selenium.clickAt("//div[@class='asset-more']/a",
+			RuntimeVariables.replace("Read More"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//div[1]/h1/span"));

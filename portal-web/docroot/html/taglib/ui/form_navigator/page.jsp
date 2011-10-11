@@ -151,7 +151,7 @@ if (Validator.isNotNull(historyKey)) {
 				<aui:button-row>
 					<aui:button type="submit" />
 
-					<aui:button href="<%= backURL %>" type="cancel" />
+					<aui:button href="<%= backURL %>" onClick="location.href = '';" type="cancel" />
 				</aui:button-row>
 			</c:if>
 

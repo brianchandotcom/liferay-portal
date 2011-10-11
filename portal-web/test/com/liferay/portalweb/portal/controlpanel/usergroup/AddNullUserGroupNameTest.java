@@ -25,7 +25,7 @@ public class AddNullUserGroupNameTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,52 +40,24 @@ public class AddNullUserGroupNameTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users and Organizations"));
+		selenium.clickAt("link=User Groups",
+			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("link=Add"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("User Group"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_125_name']")) {
+				if (selenium.isVisible("//input[@id='_127_name']")) {
 					break;
 				}
 			}
@@ -95,17 +67,14 @@ public class AddNullUserGroupNameTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.type("//input[@id='_125_name']", RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@id='_125_description']",
+		selenium.type("//input[@id='_127_name']", RuntimeVariables.replace(""));
+		selenium.type("//textarea[@id='_127_description']",
 			RuntimeVariables.replace("This is a null user group test."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -120,7 +89,6 @@ public class AddNullUserGroupNameTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("This field is required."),
 			selenium.getText("//label/div"));
 	}

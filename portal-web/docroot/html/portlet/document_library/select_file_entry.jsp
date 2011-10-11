@@ -73,17 +73,6 @@ if (folder != null) {
 		rowURL.setParameter("groupId", String.valueOf(groupId));
 		rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 
-		// Name
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<img align=\"left\" border=\"0\" src=\"");
-		sb.append(themeDisplay.getPathThemeImages());
-		sb.append("/common/folder.png\">");
-		sb.append(curFolder.getName());
-
-		row.addText(sb.toString(), rowURL);
-
 		// Statistics
 
 		List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(groupId, curFolder.getFolderId(), false);
@@ -97,6 +86,24 @@ if (folder != null) {
 
 		row.addText(String.valueOf(foldersCount), rowURL);
 		row.addText(String.valueOf(fileEntriesCount), rowURL);
+
+		// Name
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<img align=\"left\" border=\"0\" src=\"");
+		sb.append(themeDisplay.getPathThemeImages());
+
+		if ((foldersCount + fileEntriesCount) > 0) {
+			sb.append("/common/folder_full_document.png\">");
+		}
+		else {
+			sb.append("/common/folder_empty.png\">");
+		}
+
+		sb.append(curFolder.getName());
+
+		row.addText(sb.toString(), rowURL);
 
 		// Add result row
 

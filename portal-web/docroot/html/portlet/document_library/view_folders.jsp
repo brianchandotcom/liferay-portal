@@ -411,6 +411,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 						<%
 						for (Folder curFolder : folders) {
 							int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, curFolder.getFolderId());
+							int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
 
 							request.setAttribute("view_entries.jsp-folder", curFolder);
 							request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
@@ -455,7 +456,14 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								</c:if>
 
 								<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" data-show-siblings="<%= Boolean.TRUE.toString() %>" href="<%= viewURL.toString() %>">
-									<liferay-ui:icon image="folder" />
+									<c:choose>
+										<c:when test="<%= (foldersCount + fileEntriesCount) > 0 %>">
+											<liferay-ui:icon image="folder_full_document" />
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:icon image="folder_empty" />
+										</c:otherwise>
+									</c:choose>
 
 									<span class="entry-title">
 										<%= curFolder.getName() %>

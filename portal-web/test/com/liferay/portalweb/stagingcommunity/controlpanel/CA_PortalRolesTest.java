@@ -24,11 +24,9 @@ public class CA_PortalRolesTest extends BaseTestCase {
 	public void testCA_PortalRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Community administration"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.uncheck(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.GroupASSIGN_MEMBERS']");
 		selenium.uncheck(
@@ -55,7 +53,6 @@ public class CA_PortalRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.LayoutVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

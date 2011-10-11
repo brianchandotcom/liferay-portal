@@ -31,7 +31,7 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,21 +46,16 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_134_name']",
 					RuntimeVariables.replace("Site Name"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Site Name"),
 					selenium.getText("//tr[3]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Actions"),
@@ -69,7 +64,7 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -85,27 +80,24 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Edit Settings"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 					RuntimeVariables.replace("Edit Settings"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_165_stagingLink']", "Staging"));
 				selenium.clickAt("//a[@id='_165_stagingLink']",
 					RuntimeVariables.replace("Staging"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//select[@id='_165_stagingType']")) {
+						if (selenium.isVisible("//input[@id='_165_local']")) {
 							break;
 						}
 					}
@@ -115,12 +107,11 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.select("//select[@id='_165_stagingType']",
+				selenium.clickAt("//input[@id='_165_local']",
 					RuntimeVariables.replace("Local Live"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -136,8 +127,6 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				boolean documentLibraryChecked = selenium.isChecked(
 						"_165_staged-portlet_20Checkbox");
 
@@ -149,26 +138,20 @@ public class ActivateSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 
 				assertTrue(selenium.isChecked(
 						"//input[@id='_165_staged-portlet_20Checkbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_165_staged-portlet_20Checkbox']",
 					RuntimeVariables.replace("Document Library"));
 				assertFalse(selenium.isChecked(
 						"//input[@id='_165_staged-portlet_20Checkbox']"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to activate local staging for Site Name[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Site Name"),
 					selenium.getText("//td[1]/a"));
 				selenium.clickAt("//td[1]/a",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Site Name (Staging)"),
 					selenium.getText("//h1[@class='header-title']/span"));
 

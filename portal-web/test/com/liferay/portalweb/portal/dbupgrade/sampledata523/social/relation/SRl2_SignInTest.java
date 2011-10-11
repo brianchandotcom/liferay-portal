@@ -30,7 +30,7 @@ public class SRl2_SignInTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,18 +45,14 @@ public class SRl2_SignInTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("_58_login",
 					RuntimeVariables.replace("socialrelationea2@liferay.com"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("_58_password", RuntimeVariables.replace("test"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("_58_rememberMeCheckbox",
 					RuntimeVariables.replace("Checkbox"));
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean iAgreeVisible = selenium.isElementPresent("//input[3]");
 
@@ -69,7 +65,6 @@ public class SRl2_SignInTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='I Agree']",
 					RuntimeVariables.replace("I Agree"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -84,11 +79,9 @@ public class SRl2_SignInTest extends BaseTestCase {
 
 				selenium.type("reminderQueryAnswer",
 					RuntimeVariables.replace("test"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 			case 100:

@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ViewCategoryItemTest</title>
 </head>
 <body>
@@ -19,37 +16,42 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td></td>
+	<td>link=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name</td>
+	<td>//input[@id='_134_name']</td>
 	<td>Shopping Item Community</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Shopping Item Community</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//td[2]/a</td>
 	<td>Open</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Shopping Item Page</td>
-	<td></td>
+	<td>link=Shopping Item Community</td>
+	<td>Shopping Item Community</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

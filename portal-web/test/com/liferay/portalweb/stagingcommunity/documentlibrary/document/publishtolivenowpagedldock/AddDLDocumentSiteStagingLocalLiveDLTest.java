@@ -26,7 +26,7 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.open("/web/site-name-staging/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
 		assertFalse(selenium.isElementPresent(
@@ -60,7 +58,7 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -76,14 +74,12 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Document"),
+		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent(
 				"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."));
 		assertFalse(selenium.isElementPresent(
@@ -91,18 +87,15 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\stagingcommunity\\documentlibrary\\dependencies\\DLDocument.docx"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DL Document Title"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_20_description']",
 			RuntimeVariables.replace("DL Document Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -120,7 +113,6 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -129,7 +121,6 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='document-link']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("DL Document Description"),

@@ -25,7 +25,7 @@ public class AddCategoryItemTest extends BaseTestCase {
 		selenium.open("/web/shopping-item-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,57 +40,42 @@ public class AddCategoryItemTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Item Page",
 			RuntimeVariables.replace("Shopping Item Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("//td[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Item']",
 			RuntimeVariables.replace("Add Item"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_sku']", RuntimeVariables.replace("1111"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_name']",
 			RuntimeVariables.replace("Item Test"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_34_description']",
 			RuntimeVariables.replace("This is an item test."));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_stockQuantity']",
 			RuntimeVariables.replace("50"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_34_properties']",
 			RuntimeVariables.replace("Limited Time Only"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_34_requiresShippingCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_34_requiresShippingCheckbox']",
 			RuntimeVariables.replace("Requires Shipping Checkbox"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_34_requiresShippingCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_price0']",
 			RuntimeVariables.replace("$9.99"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_minQuantity0']",
 			RuntimeVariables.replace("1"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -105,7 +90,6 @@ public class AddCategoryItemTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -25,7 +25,7 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,49 +40,38 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_134_name",
 			RuntimeVariables.replace("Document Library Shortcut Community"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//tr[4]/td[1]/a[2]/strong",
 			RuntimeVariables.replace("Test2 Folder2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Add Shortcut"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right ']/ul/li[6]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right ']/ul/li[6]/a",
 			RuntimeVariables.replace("Add Shortcut"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/span[2]/span/input",
 			RuntimeVariables.replace("Community"));
 		selenium.waitForPopUp("toGroup", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("toGroup");
-		selenium.saveScreenShotAndSource();
 		selenium.click("link=Document Library Shortcut Community");
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -100,7 +89,6 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Document Library Shortcut Community"),
 			selenium.getText("_20_toGroupName"));
@@ -108,16 +96,13 @@ public class AddShortcutTest extends BaseTestCase {
 			RuntimeVariables.replace("Document"));
 		selenium.waitForPopUp("toGroup", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("toGroup");
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Test1 Folder1"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click("//td[1]/a");
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -134,15 +119,13 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
 			selenium.getText("_20_toFileEntryTitle"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -160,13 +143,12 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//section/div/div/div/div"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -183,12 +165,11 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
 			selenium.getText("//a/span/span"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -204,7 +185,6 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("This is test1 document1."),
 			selenium.getText("//a/div"));
 	}

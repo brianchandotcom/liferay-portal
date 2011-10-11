@@ -26,7 +26,7 @@ public class ViewAnnouncementsEntryTest extends BaseTestCase {
 			"/web/announcements-entry-community/announcements-entry-page");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,18 +41,15 @@ public class ViewAnnouncementsEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Entry Page",
 			RuntimeVariables.replace("Announcements Entry Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Announcements Entry Name"),
 			selenium.getText("//div/h3/a"));
 		assertTrue(selenium.isPartialText("//p", "Announcements Entry Content"));
 		selenium.clickAt("//div/h3/a",
 			RuntimeVariables.replace("Announcements Entry Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//img[@alt='Liferay']"));
 	}
 }

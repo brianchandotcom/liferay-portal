@@ -27,7 +27,7 @@ public class SRq_AddPageSummaryTest extends BaseTestCase {
 			RuntimeVariables.replace("Navigation"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,12 +42,11 @@ public class SRq_AddPageSummaryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='addPage']",
 			RuntimeVariables.replace("Add Page"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -62,14 +61,12 @@ public class SRq_AddPageSummaryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input", RuntimeVariables.replace("Summary Test Page"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -84,10 +81,8 @@ public class SRq_AddPageSummaryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Summary Test Page",
 			RuntimeVariables.replace("Summary Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

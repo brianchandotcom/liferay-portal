@@ -25,7 +25,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,12 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,18 +63,16 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("Document3"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -93,14 +89,13 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document3 Title.txt"),
 			selenium.getText("//span[@class='document-title']"));
 		selenium.clickAt("//span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions Arrow"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -116,7 +111,6 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Download (0.5k)"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
@@ -125,7 +119,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -140,14 +134,12 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -164,7 +156,6 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Add"),
@@ -173,7 +164,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -189,30 +180,26 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Document"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.uploadFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("DL_Folder2_Document3_Title.txt"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Temp_DL_Folder2_Document3_Title.txt"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -227,19 +214,16 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("Temp_DL_Folder2_Document3_Title.txt"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -257,7 +241,6 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Temp_DL_Folder2_Document3_Title.txt"),
 			selenium.getText("//span[@class='document-title']"));
@@ -265,7 +248,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			RuntimeVariables.replace("Temp_DL_Folder2_Document3_Title.txt"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -283,7 +266,6 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Temp_DL_Folder2_Document3_Title.txt"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -294,7 +276,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -309,19 +291,16 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("Temp_DL_Folder2_Document3_Title.txt"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -339,20 +318,17 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_20_allRowIdsCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
 			RuntimeVariables.replace("All Rows"));
 		assertTrue(selenium.isChecked("//input[@id='_20_allRowIdsCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -368,7 +344,6 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -377,6 +352,5 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 	}
 }

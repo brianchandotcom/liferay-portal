@@ -25,7 +25,7 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,15 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Account",
 			RuntimeVariables.replace("My Account"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,14 +63,13 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_2_addressesLink']",
 				"Addresses"));
 		selenium.clickAt("//a[@id='_2_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,10 +84,8 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -107,10 +101,8 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -126,7 +118,6 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals("1220 Brea Canyon Rd",
 			selenium.getValue("//input[@id='_2_addressStreet1_0']"));
 		assertEquals("Ste 12",
@@ -141,10 +132,8 @@ public class ViewAddress1MyAccountTest extends BaseTestCase {
 		assertEquals("United States",
 			selenium.getSelectedLabel("//select[@id='_2_addressCountryId0']"));
 		assertTrue(selenium.isChecked("//input[@id='_2_addressPrimary0']"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked(
 				"//input[@id='_2_addressMailing0Checkbox']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals("California",
 			selenium.getSelectedLabel("//select[@id='_2_addressRegionId0']"));
 	}

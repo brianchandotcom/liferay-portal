@@ -25,7 +25,7 @@ public class ViewBookmarksFolderTest extends BaseTestCase {
 		selenium.open("/web/bookmarks-folder-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewBookmarksFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Bookmarks Entry Page",
 			RuntimeVariables.replace("Bookmarks Entry Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Bookmarks Folder Name"),
 			selenium.getText("//a/strong"));
 		assertTrue(selenium.isPartialText("//tr[3]/td[1]/a",
@@ -52,7 +50,6 @@ public class ViewBookmarksFolderTest extends BaseTestCase {
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("Bookmarks Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Bookmarks Folder Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 	}

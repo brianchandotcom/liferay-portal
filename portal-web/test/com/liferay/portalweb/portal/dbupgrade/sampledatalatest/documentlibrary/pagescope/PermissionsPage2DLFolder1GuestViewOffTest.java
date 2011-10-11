@@ -26,7 +26,7 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,14 +41,12 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,7 +63,6 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
@@ -74,7 +71,7 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 			RuntimeVariables.replace("Actions Arrow"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,30 +87,24 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='16_ACTION_VIEW']",
 			RuntimeVariables.replace("Guest View"));
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.saveScreenShotAndSource();
 	}
 }

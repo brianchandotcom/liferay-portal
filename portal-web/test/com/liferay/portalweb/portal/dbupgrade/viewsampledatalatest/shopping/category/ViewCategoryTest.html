@@ -16,37 +16,42 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td></td>
+	<td>link=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name</td>
+	<td>//input[@id='_134_name']</td>
 	<td>Shopping Category Community</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Shopping Category Community</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//td[2]/a</td>
 	<td>Open</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Shopping Category Page</td>
-	<td></td>
+	<td>link=Shopping Category Community</td>
+	<td>Shopping Category Community</td>
 </tr>
 <tr>
 	<td>assertText</td>

@@ -30,7 +30,7 @@ public class ViewOrganizationTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class ViewOrganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Organizations",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -69,15 +66,13 @@ public class ViewOrganizationTest extends BaseTestCase {
 			case 2:
 				selenium.type("_126_keywords",
 					RuntimeVariables.replace("organization sample test"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//strong/span", RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -92,11 +87,9 @@ public class ViewOrganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Assign Members",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 					selenium.getText(
 						"//tr[@class='portlet-section-body results-row']/td[2]"));
@@ -106,11 +99,10 @@ public class ViewOrganizationTest extends BaseTestCase {
 				selenium.clickAt("_126_tabs2TabsBack",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//strong/span", RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -125,10 +117,8 @@ public class ViewOrganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=View Users", RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Joe"),
 					selenium.getText(
 						"//tr[@class='portlet-section-body results-row']/td[2]"));

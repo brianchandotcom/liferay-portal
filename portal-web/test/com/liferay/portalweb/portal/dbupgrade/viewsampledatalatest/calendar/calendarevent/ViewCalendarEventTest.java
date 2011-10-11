@@ -25,7 +25,7 @@ public class ViewCalendarEventTest extends BaseTestCase {
 		selenium.open("/web/calendar-event-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,11 @@ public class ViewCalendarEventTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Event Page",
 			RuntimeVariables.replace("Calendar Event Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("5/31/10"),
 			selenium.getText("//td[1]/a"));
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
@@ -57,7 +54,6 @@ public class ViewCalendarEventTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("5/31/10"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("5/31/10"),
 			selenium.getText("//dd[1]"));
 		assertEquals(RuntimeVariables.replace("This is so much fun!"),

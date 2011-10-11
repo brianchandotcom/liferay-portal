@@ -25,7 +25,7 @@ public class ViewWebContentImageAssociationTest extends BaseTestCase {
 		selenium.open("/web/web-content-image-association-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewWebContentImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Page",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Text Test"),
 			selenium.getText("//h1[@id='web-content-title']"));
 		assertEquals(RuntimeVariables.replace("Image Test:"),

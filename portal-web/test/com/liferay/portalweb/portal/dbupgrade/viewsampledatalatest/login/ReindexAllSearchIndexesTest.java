@@ -25,7 +25,7 @@ public class ReindexAllSearchIndexesTest extends BaseTestCase {
 		selenium.open("/web/guest/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,21 +40,17 @@ public class ReindexAllSearchIndexesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Server Administration",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Clear the database cache."),
 			selenium.getText("//tr[4]/td[1]"));
 		assertEquals("Execute", selenium.getValue("//tr[4]/td[2]/input"));
 		selenium.clickAt("//tr[4]/td[2]/input",
 			RuntimeVariables.replace("Execute"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -64,7 +60,6 @@ public class ReindexAllSearchIndexesTest extends BaseTestCase {
 		selenium.clickAt("//tr[5]/td[2]/input",
 			RuntimeVariables.replace("Execute"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -25,7 +25,7 @@ public class AddBookmarksFolderTest extends BaseTestCase {
 		selenium.open("/web/bookmarks-entry-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,28 +40,22 @@ public class AddBookmarksFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Bookmarks Entry Page",
 			RuntimeVariables.replace("Bookmarks Entry Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/ul/li[2]/a",
 			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_28_name']",
 			RuntimeVariables.replace("Bookmarks Folder Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_28_description']",
 			RuntimeVariables.replace("Bookmarks Folder Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -76,7 +70,6 @@ public class AddBookmarksFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

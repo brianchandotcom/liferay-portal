@@ -26,7 +26,7 @@ public class AddPage1DLFolder1Document1Comment1Test extends BaseTestCase {
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,14 +41,12 @@ public class AddPage1DLFolder1Document1Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,7 +63,6 @@ public class AddPage1DLFolder1Document1Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
@@ -74,7 +71,7 @@ public class AddPage1DLFolder1Document1Comment1Test extends BaseTestCase {
 			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,7 +87,6 @@ public class AddPage1DLFolder1Document1Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
@@ -99,7 +95,7 @@ public class AddPage1DLFolder1Document1Comment1Test extends BaseTestCase {
 			RuntimeVariables.replace("DL Folder1 Document1 Title.doc"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -115,14 +111,13 @@ public class AddPage1DLFolder1Document1Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText("//fieldset[contains(@class,'add-comment')]/div/a"));
 		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/a",
 			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -137,15 +132,13 @@ public class AddPage1DLFolder1Document1Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@name='_20_postReplyBody0']",
 			RuntimeVariables.replace("DL Folder1 Document1 Comment1 Body"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -161,7 +154,6 @@ public class AddPage1DLFolder1Document1Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@id='_20_discussion-status-messages']"));

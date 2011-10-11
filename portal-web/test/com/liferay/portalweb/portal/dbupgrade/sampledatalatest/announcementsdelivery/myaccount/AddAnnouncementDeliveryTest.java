@@ -30,7 +30,7 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,18 +45,15 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=My Account",
 					RuntimeVariables.replace("My Account"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -72,14 +69,13 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_2_announcementsLink']", "Announcements"));
 				selenium.clickAt("//a[@id='_2_announcementsLink']",
 					RuntimeVariables.replace("Announcements"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -94,8 +90,6 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean generalEmailChecked = selenium.isChecked(
 						"_2_announcementsTypegeneralEmailCheckbox");
@@ -183,10 +177,9 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -202,32 +195,25 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_2_announcementsTypegeneralEmailCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isChecked(
 						"//input[@id='_2_announcementsTypegeneralSmsCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_2_announcementsTypegeneralWebsiteCheckbox' and @disabled='']"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_2_announcementsTypenewsEmailCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isChecked(
 						"//input[@id='_2_announcementsTypenewsSmsCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_2_announcementsTypenewsWebsiteCheckbox' and @disabled='']"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_2_announcementsTypetestEmailCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isChecked(
 						"//input[@id='_2_announcementsTypetestSmsCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_2_announcementsTypetestWebsiteCheckbox' and @disabled='']"));
 

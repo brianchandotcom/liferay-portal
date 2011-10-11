@@ -25,7 +25,7 @@ public class ExportLARCPWikiUseCaseTest extends BaseTestCase {
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,24 +40,21 @@ public class ExportLARCPWikiUseCaseTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki"),
 			selenium.getText("//ul[@class='category-portlets']/li[12]/a"));
 		selenium.clickAt("//ul[@class='category-portlets']/li[12]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//menu/span/ul/li/strong/a"));
 		selenium.clickAt("//menu/span/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -73,39 +70,30 @@ public class ExportLARCPWikiUseCaseTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Export"),
 			selenium.getText("//li[1]/span/span"));
 		selenium.type("//input[@id='_86_exportFileName']",
 			RuntimeVariables.replace("Wiki_Use_Case.CP.lar"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_PORTLET_DATA_154Checkbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_86_PORTLET_DATA_154Checkbox']",
 			RuntimeVariables.replace("Data"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_PORTLET_DATA_154Checkbox']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_86_PERMISSIONSCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_86_PERMISSIONSCheckbox']",
 			RuntimeVariables.replace("Permissions"));
 		assertTrue(selenium.isChecked("//input[@id='_86_PERMISSIONSCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_86_CATEGORIESCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_86_CATEGORIESCheckbox']",
 			RuntimeVariables.replace("Categories"));
 		assertTrue(selenium.isChecked("//input[@id='_86_CATEGORIESCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		selenium.downloadFile("Wiki_Use_Case.CP.lar");

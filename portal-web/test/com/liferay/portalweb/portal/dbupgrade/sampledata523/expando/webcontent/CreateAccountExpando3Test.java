@@ -25,7 +25,7 @@ public class CreateAccountExpando3Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,44 +40,32 @@ public class CreateAccountExpando3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_134_name",
 			RuntimeVariables.replace("Expando Web Content Community"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//tr[@class='portlet-section-body results-row']/td[1]/a",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Create Account']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//table[@class='lfr-table']/tbody/tr[1]/td[2]/input",
 			RuntimeVariables.replace("Michael"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//table[@class='lfr-table']/tbody/tr[2]/td[2]/input",
 			RuntimeVariables.replace("Saechang"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//table[@class='lfr-table']/tbody/tr[3]/td[2]/input",
 			RuntimeVariables.replace("1000000"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Michael"),
 			selenium.getText("//table[@class='lfr-table']/tbody/tr[4]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Saechang"),

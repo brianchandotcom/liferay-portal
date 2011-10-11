@@ -33,7 +33,7 @@ public class SA_SetupTest extends BaseTestCase {
 				selenium.clickAt("navigation", RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -48,11 +48,10 @@ public class SA_SetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("addPage", RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -67,14 +66,12 @@ public class SA_SetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input",
 					RuntimeVariables.replace("Blogs Staging Test Page"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("save", RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -89,15 +86,13 @@ public class SA_SetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Blogs Staging Test Page",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -112,19 +107,16 @@ public class SA_SetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Sites", RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -140,25 +132,21 @@ public class SA_SetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Settings"),
 					selenium.getText("//ul[1]/li[3]/span/span/a"));
 				selenium.clickAt("//ul[1]/li[3]/span/span/a",
 					RuntimeVariables.replace("Settings"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Staging", RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("_134_stagingType",
 					RuntimeVariables.replace("label=Local Live"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -172,8 +160,6 @@ public class SA_SetupTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean blogsChecked = selenium.isChecked(
 						"_134_staged-portlet_33Checkbox");
@@ -192,7 +178,7 @@ public class SA_SetupTest extends BaseTestCase {
 					RuntimeVariables.replace("label=3"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -207,7 +193,6 @@ public class SA_SetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("_134_workflowRoleName_1",
 					RuntimeVariables.replace("label=Content Administrator"));
 				selenium.select("_134_workflowRoleName_Last",
@@ -217,7 +202,6 @@ public class SA_SetupTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to activate local staging for Liferay[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isTextPresent(
 						"Your request completed successfully."));
 

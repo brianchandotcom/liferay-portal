@@ -25,7 +25,7 @@ public class SRl_ConfirmTest extends BaseTestCase {
 		selenium.open("/web/socialrelationsn1/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,13 @@ public class SRl_ConfirmTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Confirm"),
 			selenium.getText("//td[2]/ul/li[1]/a/span"));
 		selenium.clickAt("//td[2]/ul/li[1]/a/span",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("Confirm"));
 	}
 }

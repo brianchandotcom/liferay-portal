@@ -25,7 +25,7 @@ public class AddUserMRTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,29 +40,21 @@ public class AddUserMRTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_125_prefixId", RuntimeVariables.replace("label=Mr."));
 		selenium.type("_125_screenName",
 			RuntimeVariables.replace("requestmembersn"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_125_emailAddress",
 			RuntimeVariables.replace("requestmemberea@liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_125_firstName",
 			RuntimeVariables.replace("requestmemberfn"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_125_lastName",
 			RuntimeVariables.replace("requestmemberln"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("_125_birthdayMonth",
 			RuntimeVariables.replace("label=April"));
 		selenium.select("_125_birthdayDay", RuntimeVariables.replace("label=10"));
@@ -71,7 +63,6 @@ public class AddUserMRTest extends BaseTestCase {
 		selenium.select("_125_male", RuntimeVariables.replace("label=Male"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

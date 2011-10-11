@@ -31,7 +31,7 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 				selenium.open("/web/guest/home");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -47,19 +47,15 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Blogs Portlet Permissions Page",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Configuration",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Permissions",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean guestViewChecked = selenium.isChecked("13_ACTION_VIEW");
 
@@ -75,11 +71,9 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Submit']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isTextPresent(
 						"Your request processed successfully."));
 				assertFalse(selenium.isChecked("13_ACTION_VIEW"));
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

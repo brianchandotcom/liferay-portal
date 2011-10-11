@@ -25,7 +25,7 @@ public class ViewCheckOutOrderTest extends BaseTestCase {
 		selenium.open("/web/shopping-order-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,13 @@ public class ViewCheckOutOrderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Order Page",
 			RuntimeVariables.replace("Shopping Order Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Orders", RuntimeVariables.replace("Orders"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Order Number"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Joe"),
 			selenium.getText("//td[1]/table/tbody/tr[1]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Joe"),

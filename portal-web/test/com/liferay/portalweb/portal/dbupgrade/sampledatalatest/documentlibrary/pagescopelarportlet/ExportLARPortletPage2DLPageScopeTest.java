@@ -26,7 +26,7 @@ public class ExportLARPortletPage2DLPageScopeTest extends BaseTestCase {
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,14 +41,12 @@ public class ExportLARPortletPage2DLPageScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,7 +64,6 @@ public class ExportLARPortletPage2DLPageScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -75,7 +72,7 @@ public class ExportLARPortletPage2DLPageScopeTest extends BaseTestCase {
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -91,40 +88,30 @@ public class ExportLARPortletPage2DLPageScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_86_exportFileName']",
 			RuntimeVariables.replace("DL_Page_Scope.Page2.Portlet.lar"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_PORTLET_USER_PREFERENCESCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_86_PORTLET_USER_PREFERENCESCheckbox']",
 			RuntimeVariables.replace("User Preferences"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_PORTLET_USER_PREFERENCESCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_PORTLET_DATA_20Checkbox']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_86_PERMISSIONSCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_86_PERMISSIONSCheckbox']",
 			RuntimeVariables.replace("Permissions"));
 		assertTrue(selenium.isChecked("//input[@id='_86_PERMISSIONSCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_86_CATEGORIESCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_86_CATEGORIESCheckbox']",
 			RuntimeVariables.replace("Categories"));
 		assertTrue(selenium.isChecked("//input[@id='_86_CATEGORIESCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		selenium.downloadFile("DL_Page_Scope.Page2.Portlet.lar");

@@ -25,7 +25,7 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,14 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Account", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("addressesLink", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,10 +62,8 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -83,12 +78,11 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div/span/span/button[1]",
 			RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -103,23 +97,17 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_2_addressStreet1_3",
 			RuntimeVariables.replace("1220 Brea Canyon Rd"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("_2_addressTypeId3",
 			RuntimeVariables.replace("label=Business"));
 		selenium.type("_2_addressStreet2_3", RuntimeVariables.replace("Ste 12"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_2_addressZip3", RuntimeVariables.replace("91789"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_2_addressStreet3_3", RuntimeVariables.replace("Walnut"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_2_addressCity3", RuntimeVariables.replace("Los Angeles"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -135,12 +123,11 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("_2_addressCountryId3",
 			RuntimeVariables.replace("label=United States"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -155,16 +142,14 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("_2_addressRegionId3",
 			RuntimeVariables.replace("label=California"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -180,10 +165,8 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -199,7 +182,6 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//section/div/div/div/div[1]"));

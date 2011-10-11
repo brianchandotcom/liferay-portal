@@ -26,7 +26,7 @@ public class AddWikiFrontPageChildPageComment1Test extends BaseTestCase {
 		selenium.open("/web/wiki-use-case-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,24 +41,21 @@ public class AddWikiFrontPageChildPageComment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//div[@class='child-pages']/ul/li/a"));
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText("//fieldset/div/a"));
 		selenium.clickAt("//fieldset/div/a",
 			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -73,10 +70,8 @@ public class AddWikiFrontPageChildPageComment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@name='_36_postReplyBody0']",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Comment1 Body"));
-		selenium.saveScreenShotAndSource();
 		selenium.keyPress("//textarea[@name='_36_postReplyBody0']",
 			RuntimeVariables.replace("\\48"));
 		selenium.keyPress("//textarea[@name='_36_postReplyBody0']",
@@ -85,7 +80,7 @@ public class AddWikiFrontPageChildPageComment1Test extends BaseTestCase {
 			RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -103,7 +98,6 @@ public class AddWikiFrontPageChildPageComment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

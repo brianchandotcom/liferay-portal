@@ -25,7 +25,7 @@ public class ViewSubscribeMBCategoryThreadTest extends BaseTestCase {
 		selenium.open("/web/category-thread-mb-subscription-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,22 +40,18 @@ public class ViewSubscribeMBCategoryThreadTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace("Message Boards Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Category Test"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Test"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("MB Category Subscription Thread"),
 			selenium.getText("//td[1]/a"));
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Category Subscription Thread"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Unsubscribe"),
 			selenium.getText("//td[2]/span/a/span"));
 	}

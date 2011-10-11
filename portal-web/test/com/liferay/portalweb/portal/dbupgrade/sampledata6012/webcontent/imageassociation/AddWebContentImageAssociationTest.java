@@ -25,7 +25,7 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,47 +40,35 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_134_name",
 			RuntimeVariables.replace("Web Content Image Association Community"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Web Content']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_15_title",
 			RuntimeVariables.replace("Image Web Content Test"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("_15_changeStructureBtn", RuntimeVariables.replace(""));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Selecting a new structure will change the available input fields and available templates[\\s\\S] Do you want to proceed[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 		selenium.waitForPopUp("ChangeStructure",
 			RuntimeVariables.replace("30000"));
 		selenium.selectWindow("ChangeStructure");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -95,13 +83,11 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click("link=TEST_IMAGE");
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -119,23 +105,19 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Image Structure Test (Use Default)"),
 			selenium.getText("_15_structureNameLabel"));
 		selenium.type("text-test", RuntimeVariables.replace("Text Test"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("image-test",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6011\\webcontent\\imageassociation\\dependencies\\Image.jpg"));
-		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@value='Select']");
 		selenium.waitForPopUp("ImageGallery", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=ImageGallery");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -150,20 +132,15 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Folder Test", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

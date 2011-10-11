@@ -24,11 +24,9 @@ public class CC_BlogsRolesTest extends BaseTestCase {
 	public void testCC_BlogsRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Blogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.check(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.blogsADD_ENTRY']");
 		selenium.uncheck(
@@ -47,7 +45,6 @@ public class CC_BlogsRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.blogs.model.BlogsEntryVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

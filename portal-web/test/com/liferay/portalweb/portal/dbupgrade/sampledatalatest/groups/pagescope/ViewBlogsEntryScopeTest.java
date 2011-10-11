@@ -25,7 +25,7 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 		selenium.open("/web/group-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Page Scope Current Page",
 			RuntimeVariables.replace("Blogs Page Scope Current Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Scope Current Page"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace(
@@ -52,7 +50,7 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 			selenium.getText("//div[@class='entry-body']/p"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -67,11 +65,9 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Page Scope Default",
 			RuntimeVariables.replace("Blogs Page Scope Default"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("Blogs Entry Scope Current Page"));
 		assertFalse(selenium.isElementPresent(
 				"//div[@class='entry-title']/h2/a"));

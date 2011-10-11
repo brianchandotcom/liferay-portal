@@ -27,7 +27,7 @@ public class ViewOrganizationStagingOrganizationWCDPublishToLiveTest
 		selenium.open("/web/staging-organization-wcd/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -43,26 +43,21 @@ public class ViewOrganizationStagingOrganizationWCDPublishToLiveTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
 			RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//li[2]/span/a",
 			RuntimeVariables.replace("Staged Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
 			selenium.getText("//p"));
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[3]/a"));
@@ -75,7 +70,7 @@ public class ViewOrganizationStagingOrganizationWCDPublishToLiveTest
 		selenium.open("/web/staging-organization-wcd/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -91,22 +86,18 @@ public class ViewOrganizationStagingOrganizationWCDPublishToLiveTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
 			RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
 			selenium.getText("//p"));
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[3]/a"));

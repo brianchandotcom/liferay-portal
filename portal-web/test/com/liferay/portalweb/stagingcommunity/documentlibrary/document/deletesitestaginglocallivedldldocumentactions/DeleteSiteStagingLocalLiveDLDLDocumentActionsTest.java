@@ -27,7 +27,7 @@ public class DeleteSiteStagingLocalLiveDLDLDocumentActionsTest
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,14 +42,11 @@ public class DeleteSiteStagingLocalLiveDLDLDocumentActionsTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
 		assertFalse(selenium.isElementPresent(
@@ -57,24 +54,21 @@ public class DeleteSiteStagingLocalLiveDLDLDocumentActionsTest
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//a[@class='document-link']"));
 		assertFalse(selenium.isChecked(
 				"//form/div[1]/div/span[1]/span/span/input[2]"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//form/div[1]/div/span[1]/span/span/input[2]",
 			RuntimeVariables.replace("Document Checkbox"));
 		assertTrue(selenium.isChecked(
 				"//form/div[1]/div/span[1]/span/span/input[2]"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[2]/ul/li/strong/a/span"));
 		selenium.clickAt("//span[2]/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,7 +84,6 @@ public class DeleteSiteStagingLocalLiveDLDLDocumentActionsTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -99,12 +92,11 @@ public class DeleteSiteStagingLocalLiveDLDLDocumentActionsTest
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"There are no documents in this folder."),
+				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("DL Document Title"));
 	}

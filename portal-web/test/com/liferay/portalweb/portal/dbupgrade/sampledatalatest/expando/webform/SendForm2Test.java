@@ -25,7 +25,7 @@ public class SendForm2Test extends BaseTestCase {
 		selenium.open("/web/expando-web-form-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,11 @@ public class SendForm2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Saechang"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@type='checkbox']",
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Male']",
@@ -55,14 +52,12 @@ public class SendForm2Test extends BaseTestCase {
 		selenium.select("//select", RuntimeVariables.replace("label=Excellent"));
 		selenium.type("//textarea",
 			RuntimeVariables.replace("This is a comment. Saechang."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Send']",
 			RuntimeVariables.replace("Send"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -77,7 +72,6 @@ public class SendForm2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"The form information was sent successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

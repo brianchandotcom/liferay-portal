@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddContentPublisherTest extends BaseTestCase {
 	public void testAddContentPublisher() throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -38,13 +38,11 @@ public class AddContentPublisherTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -59,13 +57,11 @@ public class AddContentPublisherTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -80,18 +76,13 @@ public class AddContentPublisherTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_125_screenName",
 			RuntimeVariables.replace("ContentPublisher"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_125_emailAddress",
 			RuntimeVariables.replace("CP@liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("_125_prefixId", RuntimeVariables.replace("label=Mrs."));
 		selenium.type("_125_firstName", RuntimeVariables.replace("Publisher"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_125_lastName", RuntimeVariables.replace("Liferay"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("_125_suffixId", RuntimeVariables.replace("label=PhD."));
 		selenium.select("_125_birthdayMonth",
 			RuntimeVariables.replace("label=September"));
@@ -101,11 +92,10 @@ public class AddContentPublisherTest extends BaseTestCase {
 		selenium.select("_125_male", RuntimeVariables.replace("label=Female"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("passwordLink", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -120,14 +110,10 @@ public class AddContentPublisherTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_125_password1", RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_125_password2", RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
 	}

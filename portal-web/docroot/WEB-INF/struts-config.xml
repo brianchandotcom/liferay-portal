@@ -1820,6 +1820,11 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 		</action>
 
+		<action path="/users_admin/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		</action>
+
 		<action path="/users_admin/edit_organization" type="com.liferay.portlet.usersadmin.action.EditOrganizationAction">
 			<forward name="portlet.users_admin.edit_organization" path="portlet.users_admin.edit_organization" />
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />

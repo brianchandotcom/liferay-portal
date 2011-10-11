@@ -91,7 +91,7 @@
 		}
 
 		.add-translations-menu {
-			display: inline;
+			display: inline-block;
 			float: none;
 			margin-left: 2em;
 			padding: 0.4em 0;

@@ -22,7 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 String saveCallback = ParamUtil.getString(request, "saveCallback");
 
 if (Validator.isNotNull(saveCallback)) {
-	saveCallback = "Liferay.Util.getTop()." + saveCallback + "(Liferay.Util.getWindow());";
+	saveCallback = "Liferay.Util.getOpener()." + saveCallback + "(Liferay.Util.getWindow());";
 
 	redirect = null;
 }

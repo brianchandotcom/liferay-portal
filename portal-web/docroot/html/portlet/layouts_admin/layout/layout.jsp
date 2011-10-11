@@ -28,6 +28,14 @@ if (selLayout != null) {
 
 	selTheme = selLayout.getTheme();
 }
+
+String layoutTemplateId = StringPool.BLANK;
+
+if (selLayoutTypePortlet != null) {
+	layoutTemplateId = selLayoutTypePortlet.getLayoutTemplateId();	
+}
+
+List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
 %>
 
 <liferay-ui:error-marker key="errorSection" value="layout" />

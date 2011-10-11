@@ -21,12 +21,10 @@ themeDisplay.setIncludeServiceJs(true);
 
 Group group = (Group)request.getAttribute("edit_pages.jsp-group");
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
+long selPlid = ((Long)request.getAttribute("edit_pages.jsp-selPlid")).longValue();
 
 long companyId = selLayout.getCompanyId();
 long groupId = selLayout.getGroupId();
-
-String rootNodeName = (String)request.getAttribute("edit_pages.jsp-rootNodeName");
-PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
 
 String className = Layout.class.getName();
 long classPK = selLayout.getPlid();

@@ -20,6 +20,7 @@
 themeDisplay.setIncludeServiceJs(true);
 
 LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLayoutSet"));
+long selPlid = ((Long)request.getAttribute("edit_pages.jsp-selPlid")).longValue();
 
 long companyId = selLayoutSet.getCompanyId();
 long groupId = selLayoutSet.getGroupId();

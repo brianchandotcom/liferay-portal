@@ -66,29 +66,27 @@ AUI().add(
 					var layoutRevisionDetails = A.one('#' + namespace + 'layoutRevisionDetails');
 
 					if (layoutRevisionDetails) {
-						Liferay.publish(
+						Liferay.onceAfter(
 							'updatedLayout',
-							{
-								defaultFn: function(event) {
-									A.io.request(
-										themeDisplay.getPathMain() + '/staging_bar/view_layout_revision_details',
-										{
-											data: {
-												p_l_id: themeDisplay.getPlid()
-											},
-											method: 'GET',
-											on: {
-												success: function(event, id, obj) {
-													var response = this.get('responseData');
+							function(event) {
+								A.io.request(
+									themeDisplay.getPathMain() + '/staging_bar/view_layout_revision_details',
+									{
+										data: {
+											p_l_id: themeDisplay.getPlid()
+										},
+										method: 'GET',
+										on: {
+											success: function(event, id, obj) {
+												var response = this.get('responseData');
 
-													layoutRevisionDetails.plug(A.Plugin.ParseContent);
+												layoutRevisionDetails.plug(A.Plugin.ParseContent);
 
-													layoutRevisionDetails.setContent(response);
-												}
+												layoutRevisionDetails.setContent(response);
 											}
 										}
-									);
-								}
+									}
+								);
 							}
 						);
 					}

@@ -664,11 +664,30 @@ create index IX_82E39A0C on SocialActivity (classNameId);
 create index IX_A853C757 on SocialActivity (classNameId, classPK);
 create index IX_64B1BC66 on SocialActivity (companyId);
 create index IX_2A2468 on SocialActivity (groupId);
+create index IX_FB604DC7 on SocialActivity (groupId, userId, classNameId, classPK, type_, receiverUserId);
 create unique index IX_8F32DEC9 on SocialActivity (groupId, userId, createDate, classNameId, classPK, type_, receiverUserId);
 create index IX_1271F25F on SocialActivity (mirrorActivityId);
 create index IX_1F00C374 on SocialActivity (mirrorActivityId, classNameId, classPK);
 create index IX_121CA3CB on SocialActivity (receiverUserId);
 create index IX_3504B8BC on SocialActivity (userId);
+
+create index IX_8FC62F3 on SocialActivityAchievement (groupId, firstUnlock);
+create index IX_8F6408F0 on SocialActivityAchievement (groupId, name);
+create unique index IX_9B9C9B7E on SocialActivityAchievement (groupId, name, unlockedBy);
+create index IX_1ACAFF on SocialActivityAchievement (groupId, unlockedBy);
+create index IX_1387F0A5 on SocialActivityAchievement (groupId, unlockedBy, firstUnlock);
+
+create index IX_B15863FA on SocialActivityLimit (classNameId, classPK);
+create unique index IX_6388397F on SocialActivityLimit (groupId, userId, classNameId, classPK, activityKey, statName);
+
+create index IX_AEB44CD0 on SocialActivitySetting (groupId, activityKey);
+create index IX_EFF0DCA2 on SocialActivitySetting (groupId, classNameId, activityKey);
+create index IX_F527AAE1 on SocialActivitySetting (groupId, classNameId, activityKey, name);
+
+create index IX_BDC70DE on SocialActivityStats (classNameId, classPK);
+create index IX_115DCB2C on SocialActivityStats (groupId, classNameId, classPK, classType);
+create unique index IX_89C0F657 on SocialActivityStats (groupId, classNameId, classPK, classType, statName, statPeriodEnd);
+create unique index IX_C28D19E on SocialActivityStats (groupId, classNameId, classPK, classType, statName, statPeriodStart);
 
 create unique index IX_22F6B5CB on SocialEquityAssetEntry (assetEntryId);
 

@@ -223,7 +223,14 @@ import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.asset.service.AssetEntryService;
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadService;
+import com.liferay.portlet.messageboards.service.persistence.MBThreadFinder;
+import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence;
+import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.SocialEquityLogLocalService;
+import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
+import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistence;
 
 import java.io.Serializable;
@@ -4040,6 +4047,136 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the message boards thread local service.
+	 *
+	 * @return the message boards thread local service
+	 */
+	public MBThreadLocalService getMBThreadLocalService() {
+		return mbThreadLocalService;
+	}
+
+	/**
+	 * Sets the message boards thread local service.
+	 *
+	 * @param mbThreadLocalService the message boards thread local service
+	 */
+	public void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+		this.mbThreadLocalService = mbThreadLocalService;
+	}
+
+	/**
+	 * Returns the message boards thread remote service.
+	 *
+	 * @return the message boards thread remote service
+	 */
+	public MBThreadService getMBThreadService() {
+		return mbThreadService;
+	}
+
+	/**
+	 * Sets the message boards thread remote service.
+	 *
+	 * @param mbThreadService the message boards thread remote service
+	 */
+	public void setMBThreadService(MBThreadService mbThreadService) {
+		this.mbThreadService = mbThreadService;
+	}
+
+	/**
+	 * Returns the message boards thread persistence.
+	 *
+	 * @return the message boards thread persistence
+	 */
+	public MBThreadPersistence getMBThreadPersistence() {
+		return mbThreadPersistence;
+	}
+
+	/**
+	 * Sets the message boards thread persistence.
+	 *
+	 * @param mbThreadPersistence the message boards thread persistence
+	 */
+	public void setMBThreadPersistence(MBThreadPersistence mbThreadPersistence) {
+		this.mbThreadPersistence = mbThreadPersistence;
+	}
+
+	/**
+	 * Returns the message boards thread finder.
+	 *
+	 * @return the message boards thread finder
+	 */
+	public MBThreadFinder getMBThreadFinder() {
+		return mbThreadFinder;
+	}
+
+	/**
+	 * Sets the message boards thread finder.
+	 *
+	 * @param mbThreadFinder the message boards thread finder
+	 */
+	public void setMBThreadFinder(MBThreadFinder mbThreadFinder) {
+		this.mbThreadFinder = mbThreadFinder;
+	}
+
+	/**
+	 * Returns the social activity local service.
+	 *
+	 * @return the social activity local service
+	 */
+	public SocialActivityLocalService getSocialActivityLocalService() {
+		return socialActivityLocalService;
+	}
+
+	/**
+	 * Sets the social activity local service.
+	 *
+	 * @param socialActivityLocalService the social activity local service
+	 */
+	public void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+		this.socialActivityLocalService = socialActivityLocalService;
+	}
+
+	/**
+	 * Returns the social activity persistence.
+	 *
+	 * @return the social activity persistence
+	 */
+	public SocialActivityPersistence getSocialActivityPersistence() {
+		return socialActivityPersistence;
+	}
+
+	/**
+	 * Sets the social activity persistence.
+	 *
+	 * @param socialActivityPersistence the social activity persistence
+	 */
+	public void setSocialActivityPersistence(
+		SocialActivityPersistence socialActivityPersistence) {
+		this.socialActivityPersistence = socialActivityPersistence;
+	}
+
+	/**
+	 * Returns the social activity finder.
+	 *
+	 * @return the social activity finder
+	 */
+	public SocialActivityFinder getSocialActivityFinder() {
+		return socialActivityFinder;
+	}
+
+	/**
+	 * Sets the social activity finder.
+	 *
+	 * @param socialActivityFinder the social activity finder
+	 */
+	public void setSocialActivityFinder(
+		SocialActivityFinder socialActivityFinder) {
+		this.socialActivityFinder = socialActivityFinder;
+	}
+
+	/**
 	 * Returns the social equity log local service.
 	 *
 	 * @return the social equity log local service
@@ -4514,6 +4651,20 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
+	@BeanReference(type = MBThreadLocalService.class)
+	protected MBThreadLocalService mbThreadLocalService;
+	@BeanReference(type = MBThreadService.class)
+	protected MBThreadService mbThreadService;
+	@BeanReference(type = MBThreadPersistence.class)
+	protected MBThreadPersistence mbThreadPersistence;
+	@BeanReference(type = MBThreadFinder.class)
+	protected MBThreadFinder mbThreadFinder;
+	@BeanReference(type = SocialActivityLocalService.class)
+	protected SocialActivityLocalService socialActivityLocalService;
+	@BeanReference(type = SocialActivityPersistence.class)
+	protected SocialActivityPersistence socialActivityPersistence;
+	@BeanReference(type = SocialActivityFinder.class)
+	protected SocialActivityFinder socialActivityFinder;
 	@BeanReference(type = SocialEquityLogLocalService.class)
 	protected SocialEquityLogLocalService socialEquityLogLocalService;
 	@BeanReference(type = SocialEquityLogPersistence.class)

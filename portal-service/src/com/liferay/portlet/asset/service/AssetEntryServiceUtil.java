@@ -76,11 +76,11 @@ public class AssetEntryServiceUtil {
 		return getService().getEntry(entryId);
 	}
 
-	public static com.liferay.portlet.asset.model.AssetEntry incrementViewCounter(
-		java.lang.String className, long classPK)
+	public static void incrementViewCounter(java.lang.String className,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().incrementViewCounter(className, classPK);
+		getService().incrementViewCounter(className, classPK);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetEntryDisplay[] searchEntryDisplays(

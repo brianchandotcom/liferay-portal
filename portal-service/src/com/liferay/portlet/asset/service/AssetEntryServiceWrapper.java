@@ -66,11 +66,10 @@ public class AssetEntryServiceWrapper implements AssetEntryService {
 		return _assetEntryService.getEntry(entryId);
 	}
 
-	public com.liferay.portlet.asset.model.AssetEntry incrementViewCounter(
-		java.lang.String className, long classPK)
+	public void incrementViewCounter(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _assetEntryService.incrementViewCounter(className, classPK);
+		_assetEntryService.incrementViewCounter(className, classPK);
 	}
 
 	public com.liferay.portlet.asset.model.AssetEntryDisplay[] searchEntryDisplays(

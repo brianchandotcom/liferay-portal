@@ -448,6 +448,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
+			"-//Liferay//DTD Social 6.1.0//EN",
+			"liferay-social_6_1_0.dtd"
+		),
+
+		new KeyValuePair(
 			"-//Liferay//DTD Theme Loader 4.3.0//EN",
 			"liferay-theme-loader_4_3_0.dtd"
 		),

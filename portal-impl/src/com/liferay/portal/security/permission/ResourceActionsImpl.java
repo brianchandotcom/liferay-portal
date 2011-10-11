@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
@@ -50,12 +52,17 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletResourceBundles;
 import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.social.model.SocialActivityCounter;
+import com.liferay.portlet.social.model.SocialActivityDefinition;
+import com.liferay.portlet.social.model.SocialActivityHandler;
 import com.liferay.portlet.social.model.SocialEquityActionMapping;
 import com.liferay.util.UniqueList;
 
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -107,6 +114,8 @@ public class ResourceActionsImpl implements ResourceActions {
 			new HashMap<String, List<String>>();
 		_modelResourceOwnerDefaultActions =
 			new HashMap<String, List<String>>();
+		_socialActivityDefinitions =
+			new HashMap<String, Map<Integer, SocialActivityDefinition>>();
 		_socialEquityActionMappings =
 			new HashMap<String, Map<String, SocialEquityActionMapping>>();
 
@@ -529,6 +538,79 @@ public class ResourceActionsImpl implements ResourceActions {
 		return roles;
 	}
 
+	public String[] getSocialActivityClassNames() {
+		Set<String> classNames = _socialActivityDefinitions.keySet();
+
+		return classNames.toArray(new String[classNames.size()]);
+	}
+
+	public Collection<String> getSocialActivityCounters() {
+		return getSocialActivityCounters(
+			SocialActivityConstants.OWNER_TYPE_ALL);
+	}
+
+	public Collection<String> getSocialActivityCounters(int ownerType) {
+		Set<String> counterSet =
+			new HashSet<String>();
+
+		for (Map<Integer, SocialActivityDefinition> classNameMap :
+				_socialActivityDefinitions.values()) {
+
+			for (SocialActivityDefinition definition : classNameMap.values()) {
+				for (SocialActivityCounter counter : definition.getCounters()) {
+					if (ownerType == SocialActivityConstants.OWNER_TYPE_ALL ||
+						counter.getOwnerType() == ownerType) {
+
+						counterSet.add(counter.getName());
+					}
+				}
+			}
+		}
+
+		return counterSet;
+	}
+
+	public SocialActivityDefinition getSocialActivityDefinition(
+		String modelName, int activityKey) {
+
+		Map<Integer, SocialActivityDefinition> socialActivityDefinitions =
+			_socialActivityDefinitions.get(modelName);
+
+		if (socialActivityDefinitions == null) {
+			return null;
+		}
+
+		return socialActivityDefinitions.get(activityKey);
+	}
+
+	public List<SocialActivityDefinition> getSocialActivityDefinitions(
+		String modelName) {
+
+		Map<Integer, SocialActivityDefinition> socialActivityDefinitions =
+			_socialActivityDefinitions.get(modelName);
+
+		if (socialActivityDefinitions == null) {
+			return Collections.emptyList();
+		}
+
+		List<SocialActivityDefinition> SocialActivityDefinitionList =
+			new ArrayList<SocialActivityDefinition>();
+
+		for (Map.Entry<Integer, SocialActivityDefinition> entry :
+				socialActivityDefinitions.entrySet()) {
+
+			SocialActivityDefinitionList.add(entry.getValue());
+		}
+
+		return SocialActivityDefinitionList;
+	}
+
+	public String[] getSocialActivityDefinitonModels() {
+		Set<String> classNames = _socialActivityDefinitions.keySet();
+
+		return classNames.toArray(new String[classNames.size()]);
+	}
+
 	public SocialEquityActionMapping getSocialEquityActionMapping(
 		String name, String actionId) {
 
@@ -730,6 +812,18 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (!actions.contains(ActionKeys.VIEW)) {
 			actions.add(ActionKeys.VIEW);
 		}
+	}
+
+	protected int decodeLimitPeriod(String limitPeriod) {
+		for (int i=0; i < _LIMIT_PERIODS.length; i++) {
+			if (_LIMIT_PERIODS[i].equalsIgnoreCase(limitPeriod)) {
+				return i + 1;
+			}
+		}
+
+		_log.error("Invalid time period given in resource xml: " + limitPeriod);
+
+		return 0;
 	}
 
 	protected List<String> getActions(
@@ -1025,6 +1119,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		readOwnerDefaultActions(
 			modelResourceElement, _modelResourceOwnerDefaultActions, name);
 
+		readSocialActivities(modelResourceElement, name);
+
 		readSocialEquity(modelResourceElement, name);
 	}
 
@@ -1087,6 +1183,215 @@ public class ResourceActionsImpl implements ResourceActions {
 		readLayoutManagerActions(
 			portletResourceElement, _portletResourceLayoutManagerActions, name,
 			supportsActions);
+	}
+
+	protected void readSocialActivities(Element parentElement, String name) {
+		Element socialActivitiesElement = parentElement.element(
+			"social-activities");
+
+		if (socialActivitiesElement == null) {
+			return;
+		}
+
+		for (Element socialActivityDefinitionElement :
+				socialActivitiesElement.elements("activity")) {
+
+			readSocialActivityDefintion(socialActivityDefinitionElement, name);
+		}
+	}
+
+	protected void readSocialActivityCounter(
+		Element socialActivityCounterElement,
+		SocialActivityDefinition activityDefinition) {
+
+		String name = socialActivityCounterElement.elementText("name");
+
+		String ownerType = socialActivityCounterElement.elementText("owner");
+
+		int increment = GetterUtil.getInteger(
+			socialActivityCounterElement.elementText("increment"), 1);
+
+		SocialActivityCounter counter = new SocialActivityCounter();
+
+		counter.setName(name);
+		counter.setOwnerType(ownerType);
+		counter.setIncrement(increment);
+
+		if (counter.getOwnerType() == 0) {
+			_log.warn(
+				"Unknown owner type '"+ ownerType +
+				"' in social activity configuration for model '" +
+				activityDefinition.getModelName() + "'");
+
+			return;
+		}
+
+		activityDefinition.addCounter(counter);
+	}
+
+	protected void readSocialActivityDefintion(
+		Element socialActivityDefinitionElement, String modelName) {
+
+		Element activityIdElement =
+			socialActivityDefinitionElement.element("activity-key");
+
+		if (activityIdElement == null) {
+			return;
+		}
+
+		String activityKey = activityIdElement.getTextTrim();
+
+		if (Validator.isNull(activityKey)) {
+			return;
+		}
+
+		Map<Integer, SocialActivityDefinition> socialActivityDefinitions =
+			_socialActivityDefinitions.get(modelName);
+
+		if (socialActivityDefinitions == null) {
+			socialActivityDefinitions =
+				new HashMap<Integer, SocialActivityDefinition>();
+
+			_socialActivityDefinitions.put(
+				modelName, socialActivityDefinitions);
+		}
+
+		SocialActivityDefinition socialActivityDefinition =
+			socialActivityDefinitions.get(activityKey);
+
+		if (socialActivityDefinition == null) {
+
+			String languageKey = socialActivityDefinitionElement.elementText(
+				"language-key");
+
+			boolean logActivity = GetterUtil.getBoolean(
+				socialActivityDefinitionElement.elementText("log-activity"));
+
+			SocialActivityHandler activityHandler = null;
+
+			String handlerClassName =
+				socialActivityDefinitionElement.elementText("handler-class");
+
+			if (handlerClassName != null) {
+				Set<String> portletResources = _modelPortletResources.get(
+					modelName);
+
+				for (String portletName : portletResources) {
+					ClassLoader classLoader =
+						PortletClassLoaderUtil.getClassLoader(portletName);
+
+					if (classLoader == null) {
+						classLoader = PortalClassLoaderUtil.getClassLoader();
+					}
+
+					if (classLoader != null) {
+						try {
+							activityHandler =
+								(SocialActivityHandler)classLoader.loadClass(
+									handlerClassName).newInstance();
+						}
+						catch (ClassNotFoundException cnfe) {
+						}
+						catch (Exception e) {
+							_log.error(
+								"Cannot instantiate social activity handler " +
+								handlerClassName, e);
+						}
+					}
+					else {
+						_log.error("Cannot find class loader to load activity "+
+							"handler class " + handlerClassName);
+
+					}
+				}
+			}
+
+			socialActivityDefinition = new SocialActivityDefinition();
+
+			socialActivityDefinition.setModelName(modelName);
+			socialActivityDefinition.setActivityKey(
+				GetterUtil.getInteger(activityKey));
+			socialActivityDefinition.setActivityHandler(activityHandler);
+			socialActivityDefinition.setLanguageKey(languageKey);
+			socialActivityDefinition.setLogActivity(logActivity);
+
+			Element contributionValueElement =
+				socialActivityDefinitionElement.element("contribution-value");
+			Element contributionLimitElement =
+				socialActivityDefinitionElement.element("contribution-limit");
+
+			if (contributionValueElement != null) {
+				SocialActivityCounter contributionCounter =
+					new SocialActivityCounter(
+						SocialActivityConstants.STAT_CONTRIBUTION,
+						SocialActivityConstants.OWNER_TYPE_CREATOR);
+
+				contributionCounter.setIncrement(
+					GetterUtil.getInteger(contributionValueElement.getText()));
+
+				if (contributionLimitElement != null) {
+					contributionCounter.setLimit(
+						GetterUtil.getInteger(
+							contributionLimitElement.getText()));
+					contributionCounter.setLimitType(
+						decodeLimitPeriod(
+							contributionLimitElement.attributeValue("period")));
+				}
+
+				SocialActivityCounter popularityCounter =
+					new SocialActivityCounter(
+						SocialActivityConstants.STAT_POPULARITY,
+						SocialActivityConstants.OWNER_TYPE_ASSET);
+
+				popularityCounter.setIncrement(
+					contributionCounter.getIncrement());
+				popularityCounter.setLimitType(
+					contributionCounter.getLimitType());
+				popularityCounter.setLimit(contributionCounter.getLimit());
+
+				socialActivityDefinition.addCounter(contributionCounter);
+
+				socialActivityDefinition.addCounter(popularityCounter);
+			}
+
+			Element participationValueElement =
+				socialActivityDefinitionElement.element("participation-value");
+			Element participationLimitElement =
+				socialActivityDefinitionElement.element("participation-limit");
+
+			if (participationValueElement != null) {
+				SocialActivityCounter participationCounter =
+					new SocialActivityCounter(
+						SocialActivityConstants.STAT_PARTICIPATION,
+						SocialActivityConstants.OWNER_TYPE_ACTOR);
+
+				participationCounter.setIncrement(
+					GetterUtil.getInteger(participationValueElement.getText()));
+
+				if (participationLimitElement != null) {
+					participationCounter.setLimit(
+						GetterUtil.getInteger(
+							participationLimitElement.getText()));
+					participationCounter.setLimitType(
+						decodeLimitPeriod(
+							participationLimitElement.attributeValue(
+								"period")));
+				}
+
+				socialActivityDefinition.addCounter(participationCounter);
+			}
+
+			socialActivityDefinitions.put(
+				socialActivityDefinition.getActivityKey(),
+				socialActivityDefinition);
+		}
+
+		for (Element socialActivityCounterElement :
+				socialActivityDefinitionElement.elements("counter")) {
+
+			readSocialActivityCounter(
+				socialActivityCounterElement, socialActivityDefinition);
+		}
 	}
 
 	protected void readSocialEquity(Element parentElement, String name) {
@@ -1200,6 +1505,10 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	private static final String _ACTION_NAME_PREFIX = "action.";
 
+	private static final String[] _LIMIT_PERIODS = {
+		"day", "lifetime", "period"
+	};
+
 	private static final String _MODEL_RESOURCE_NAME_PREFIX = "model.resource.";
 
 	private static final String[] _ORGANIZATION_MODEL_RESOURCES = {
@@ -1229,6 +1538,8 @@ public class ResourceActionsImpl implements ResourceActions {
 	private Map<String, List<String>> _portletResourceGuestDefaultActions;
 	private Map<String, List<String>> _portletResourceGuestUnsupportedActions;
 	private Map<String, List<String>> _portletResourceLayoutManagerActions;
+	private Map<String, Map<Integer, SocialActivityDefinition>>
+		_socialActivityDefinitions;
 	private Map<String, Map<String, SocialEquityActionMapping>>
 		_socialEquityActionMappings;
 

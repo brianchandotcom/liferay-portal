@@ -249,6 +249,34 @@ public class SocialActivityLocalServiceWrapper
 	}
 
 	/**
+	* Records an activity with its mirror activity (if there is any) to the
+	* database.
+	*
+	* <p>
+	* This method is executed asynchronously to leverage performance as the
+	* social statistics service is called from here.
+	* </p>
+	*
+	* <p>
+	* This method is designed to be called from within this service. It is
+	* only made public to accommodate the <code>Async</code> annotation.
+	* </p>
+	*
+	* @param activity the activity
+	* @param mirrorActivity the mirror activity (optionally
+	<code>null</code>)
+	* @throws PortalException if there was a problem in the statistics service
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addActivity(
+		com.liferay.portlet.social.model.SocialActivity activity,
+		com.liferay.portlet.social.model.SocialActivity mirrorActivity)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityLocalService.addActivity(activity, mirrorActivity);
+	}
+
+	/**
 	* Records an activity with the given time in the database.
 	*
 	* <p>
@@ -284,19 +312,16 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social activity or <code>null</code> if an import is
-	processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addActivity(
-		long userId, long groupId, java.util.Date createDate,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addActivity(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _socialActivityLocalService.addActivity(userId, groupId,
-			createDate, className, classPK, type, extraData, receiverUserId);
+		_socialActivityLocalService.addActivity(userId, groupId, createDate,
+			className, classPK, type, extraData, receiverUserId);
 	}
 
 	/**
@@ -310,18 +335,16 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social activity or <code>null</code> if an import is
-	processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addActivity(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public void addActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _socialActivityLocalService.addActivity(userId, groupId,
-			className, classPK, type, extraData, receiverUserId);
+		_socialActivityLocalService.addActivity(userId, groupId, className,
+			classPK, type, extraData, receiverUserId);
 	}
 
 	/**
@@ -341,19 +364,15 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social stored activity, or the existing activity if it
-	matches the parameters, or <code>null</code> if an import is
-	processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addUniqueActivity(
-		long userId, long groupId, java.util.Date createDate,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addUniqueActivity(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _socialActivityLocalService.addUniqueActivity(userId, groupId,
+		_socialActivityLocalService.addUniqueActivity(userId, groupId,
 			createDate, className, classPK, type, extraData, receiverUserId);
 	}
 
@@ -373,17 +392,15 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social stored activity, or an existing activity that matches
-	the parameters, or <code>null</code> if an import is processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addUniqueActivity(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public void addUniqueActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _socialActivityLocalService.addUniqueActivity(userId, groupId,
+		_socialActivityLocalService.addUniqueActivity(userId, groupId,
 			className, classPK, type, extraData, receiverUserId);
 	}
 

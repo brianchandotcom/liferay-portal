@@ -31,6 +31,10 @@ import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.asset.service.AssetEntryService;
+import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
+import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.BlogsEntryService;
 import com.liferay.portlet.blogs.service.BlogsStatsUserLocalService;
@@ -46,7 +50,10 @@ import com.liferay.portlet.ratings.service.persistence.RatingsEntryFinder;
 import com.liferay.portlet.ratings.service.persistence.RatingsEntryPersistence;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
+import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.SocialEquityLogLocalService;
+import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
+import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistence;
 
 import javax.sql.DataSource;
@@ -365,6 +372,80 @@ public abstract class RatingsEntryServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the asset entry local service.
+	 *
+	 * @return the asset entry local service
+	 */
+	public AssetEntryLocalService getAssetEntryLocalService() {
+		return assetEntryLocalService;
+	}
+
+	/**
+	 * Sets the asset entry local service.
+	 *
+	 * @param assetEntryLocalService the asset entry local service
+	 */
+	public void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+		this.assetEntryLocalService = assetEntryLocalService;
+	}
+
+	/**
+	 * Returns the asset entry remote service.
+	 *
+	 * @return the asset entry remote service
+	 */
+	public AssetEntryService getAssetEntryService() {
+		return assetEntryService;
+	}
+
+	/**
+	 * Sets the asset entry remote service.
+	 *
+	 * @param assetEntryService the asset entry remote service
+	 */
+	public void setAssetEntryService(AssetEntryService assetEntryService) {
+		this.assetEntryService = assetEntryService;
+	}
+
+	/**
+	 * Returns the asset entry persistence.
+	 *
+	 * @return the asset entry persistence
+	 */
+	public AssetEntryPersistence getAssetEntryPersistence() {
+		return assetEntryPersistence;
+	}
+
+	/**
+	 * Sets the asset entry persistence.
+	 *
+	 * @param assetEntryPersistence the asset entry persistence
+	 */
+	public void setAssetEntryPersistence(
+		AssetEntryPersistence assetEntryPersistence) {
+		this.assetEntryPersistence = assetEntryPersistence;
+	}
+
+	/**
+	 * Returns the asset entry finder.
+	 *
+	 * @return the asset entry finder
+	 */
+	public AssetEntryFinder getAssetEntryFinder() {
+		return assetEntryFinder;
+	}
+
+	/**
+	 * Sets the asset entry finder.
+	 *
+	 * @param assetEntryFinder the asset entry finder
+	 */
+	public void setAssetEntryFinder(AssetEntryFinder assetEntryFinder) {
+		this.assetEntryFinder = assetEntryFinder;
+	}
+
+	/**
 	 * Returns the blogs entry local service.
 	 *
 	 * @return the blogs entry local service
@@ -496,6 +577,63 @@ public abstract class RatingsEntryServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the social activity local service.
+	 *
+	 * @return the social activity local service
+	 */
+	public SocialActivityLocalService getSocialActivityLocalService() {
+		return socialActivityLocalService;
+	}
+
+	/**
+	 * Sets the social activity local service.
+	 *
+	 * @param socialActivityLocalService the social activity local service
+	 */
+	public void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+		this.socialActivityLocalService = socialActivityLocalService;
+	}
+
+	/**
+	 * Returns the social activity persistence.
+	 *
+	 * @return the social activity persistence
+	 */
+	public SocialActivityPersistence getSocialActivityPersistence() {
+		return socialActivityPersistence;
+	}
+
+	/**
+	 * Sets the social activity persistence.
+	 *
+	 * @param socialActivityPersistence the social activity persistence
+	 */
+	public void setSocialActivityPersistence(
+		SocialActivityPersistence socialActivityPersistence) {
+		this.socialActivityPersistence = socialActivityPersistence;
+	}
+
+	/**
+	 * Returns the social activity finder.
+	 *
+	 * @return the social activity finder
+	 */
+	public SocialActivityFinder getSocialActivityFinder() {
+		return socialActivityFinder;
+	}
+
+	/**
+	 * Sets the social activity finder.
+	 *
+	 * @param socialActivityFinder the social activity finder
+	 */
+	public void setSocialActivityFinder(
+		SocialActivityFinder socialActivityFinder) {
+		this.socialActivityFinder = socialActivityFinder;
+	}
+
+	/**
 	 * Returns the social equity log local service.
 	 *
 	 * @return the social equity log local service
@@ -616,6 +754,14 @@ public abstract class RatingsEntryServiceBaseImpl extends PrincipalBean
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = AssetEntryLocalService.class)
+	protected AssetEntryLocalService assetEntryLocalService;
+	@BeanReference(type = AssetEntryService.class)
+	protected AssetEntryService assetEntryService;
+	@BeanReference(type = AssetEntryPersistence.class)
+	protected AssetEntryPersistence assetEntryPersistence;
+	@BeanReference(type = AssetEntryFinder.class)
+	protected AssetEntryFinder assetEntryFinder;
 	@BeanReference(type = BlogsEntryLocalService.class)
 	protected BlogsEntryLocalService blogsEntryLocalService;
 	@BeanReference(type = BlogsEntryService.class)
@@ -630,6 +776,12 @@ public abstract class RatingsEntryServiceBaseImpl extends PrincipalBean
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 	@BeanReference(type = BlogsStatsUserFinder.class)
 	protected BlogsStatsUserFinder blogsStatsUserFinder;
+	@BeanReference(type = SocialActivityLocalService.class)
+	protected SocialActivityLocalService socialActivityLocalService;
+	@BeanReference(type = SocialActivityPersistence.class)
+	protected SocialActivityPersistence socialActivityPersistence;
+	@BeanReference(type = SocialActivityFinder.class)
+	protected SocialActivityFinder socialActivityFinder;
 	@BeanReference(type = SocialEquityLogLocalService.class)
 	protected SocialEquityLogLocalService socialEquityLogLocalService;
 	@BeanReference(type = SocialEquityLogPersistence.class)

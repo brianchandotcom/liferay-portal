@@ -20,10 +20,12 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
+import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialEquityActionMapping;
 
 import java.io.InputStream;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -114,6 +116,18 @@ public interface ResourceActions {
 	public List<Role> getRoles(
 			long companyId, Group group, String modelResource, int[] roleTypes)
 		throws SystemException;
+
+	public String[] getSocialActivityClassNames();
+
+	public Collection<String> getSocialActivityCounters();
+
+	public Collection<String> getSocialActivityCounters(int ownerType);
+
+	public SocialActivityDefinition getSocialActivityDefinition(
+			String modelName, int activityId);
+
+	public List<SocialActivityDefinition> getSocialActivityDefinitions(
+			String modelName);
 
 	public SocialEquityActionMapping getSocialEquityActionMapping(
 		String name, String actionId);

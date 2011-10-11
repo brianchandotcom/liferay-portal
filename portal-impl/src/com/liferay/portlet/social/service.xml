@@ -63,6 +63,14 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="G_U_C_C_T_R" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="type" />
+			<finder-column name="receiverUserId" />
+		</finder>
 		<finder name="G_U_CD_C_C_T_R" return-type="SocialActivity" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
@@ -75,10 +83,214 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
 	</entity>
+		<entity name="SocialActivityAchievement" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="activityAchievementId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="unlockDate" type="Date" />
+		<column name="unlockedBy" type="long" />
+		<column name="firstUnlock" type="boolean" />
+
+		<!-- Finder methods -->
+
+		<finder name="G_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="firstUnlock" />
+		</finder>
+		
+		<finder name="G_N" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
+		
+		<finder name="G_UB" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="unlockedBy" />
+		</finder>
+		
+		<finder name="G_N_UB" return-type="SocialActivityAchievement" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+			<finder-column name="unlockedBy" />
+		</finder>
+		
+		<finder name="G_UB_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="unlockedBy" />
+			<finder-column name="firstUnlock" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
+	</entity>
 	<entity name="SocialActivityInterpreter" local-service="true" remote-service="false" tx-manager="none" />
+	<entity name="SocialActivityLimit" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="activityLimitId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="activityKey" type="int" />
+		<column name="statName" type="String" />
+		<column name="value" type="String" />
+		
+		<!-- Finder methods -->
+
+		<finder name="CN_CP" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+
+		<finder name="G_U_CN_CP_A_S" return-type="SocialActivityLimit" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="activityKey" />
+			<finder-column name="statName" />
+		</finder>
+		
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />				
+	</entity>
+	<entity name="SocialActivitySetting" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="activitySettingId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="activityKey" type="int" />
+		<column name="name" type="String" />
+		<column name="value" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="activityKey" />
+		</finder>
+
+		<finder name="G_C_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="activityKey" />
+		</finder>
+		
+		<finder name="G_C_A_N" return-type="SocialActivitySetting">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="activityKey" />
+			<finder-column name="name" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
+	</entity>
+	<entity name="SocialActivityStatsEntry" local-service="true" remote-service="false" table="SocialActivityStats">
+
+		<!-- PK fields -->
+
+		<column name="activityStatsEntryId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="classType" type="int" />
+		<column name="statName" type="String" />
+		<column name="currentValue" type="int" />
+		<column name="overallValue" type="int" />
+		<column name="graceValue" type="int" />
+		<column name="statPeriodStart" type="int" />
+		<column name="statPeriodEnd" type="int" />
+		
+		<!-- Finder methods -->
+
+		<finder name="CN_CP" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+
+		<finder name="G_CN_CP_CT" return-type="Collection" where="statPeriodEnd = -1">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="classType" />
+		</finder>
+		<finder name="G_CN_CP_CT_SN_SPE" return-type="SocialActivityStatsEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="classType" />
+			<finder-column name="statName" />
+			<finder-column name="statPeriodEnd" />
+		</finder>
+		<finder name="G_CN_CP_CT_SN_SPS" return-type="SocialActivityStatsEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="classType" />
+			<finder-column name="statName" />
+			<finder-column name="statPeriodStart" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portal" entity="Group" />	
+	</entity>
 	<entity name="SocialEquityAssetEntry" local-service="false" remote-service="false">
 
 		<!-- PK fields -->

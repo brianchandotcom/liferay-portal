@@ -18,12 +18,15 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.NoSuchActivityException;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -46,9 +49,66 @@ import java.util.List;
  * </p>
  *
  * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
 public class SocialActivityLocalServiceImpl
 	extends SocialActivityLocalServiceBaseImpl {
+
+	/**
+	 * Records an activity with its mirror activity (if there is any) to the
+	 * database.
+	 *
+	 * <p>
+	 * This method is executed asynchronously to leverage performance as the
+	 * social statistics service is called from here.
+	 * </p>
+	 *
+	 * <p>
+	 * This method is designed to be called from within this service. It is
+	 * only made public to accommodate the <code>Async</code> annotation.
+	 * </p>
+	 *
+	 * @param  activity the activity
+	 * @param  mirrorActivity the mirror activity (optionally
+	 *         <code>null</code>)
+	 * @throws PortalException if there was a problem in the statistics service
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Async
+	public void addActivity(
+			SocialActivity activity, SocialActivity mirrorActivity)
+		throws PortalException, SystemException {
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		SocialActivityDefinition activityDefinition =
+			socialActivitySettingLocalService.getActivityDefinition(
+				activity.getGroupId(), activity.getClassName(),
+				activity.getType());
+
+		if (activityDefinition == null || activityDefinition.isLogActivity()) {
+			long activityId = counterLocalService.increment(
+				SocialActivity.class.getName());
+
+			activity.setPrimaryKey(activityId);
+
+			socialActivityPersistence.update(activity, false);
+
+			if (mirrorActivity != null) {
+				long mirrorActivityId = counterLocalService.increment(
+						SocialActivity.class.getName());
+
+				mirrorActivity.setPrimaryKey(mirrorActivityId);
+				mirrorActivity.setMirrorActivityId(activity.getPrimaryKey());
+
+				socialActivityPersistence.update(mirrorActivity, false);
+			}
+		}
+
+		socialActivityStatsEntryLocalService.addActivityStats(activity);
+	}
 
 	/**
 	 * Records an activity with the given time in the database.
@@ -86,22 +146,22 @@ public class SocialActivityLocalServiceImpl
 	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
 	 * @param  receiverUserId the primary key of the receiving user
-	 * @return the social activity or <code>null</code> if an import is
-	 *         processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialActivity addActivity(
+	public void addActivity(
 			long userId, long groupId, Date createDate, String className,
 			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException, SystemException {
 
 		if (ImportExportThreadLocal.isImportInProcess()) {
-			return null;
+			return;
 		}
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = PortalUtil.getClassNameId(className);
+		AssetEntry assetEntry = assetEntryPersistence.fetchByC_C(
+			classNameId, classPK);
 
 		if (groupId > 0) {
 			Group group = groupLocalService.getGroup(groupId);
@@ -114,11 +174,7 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		long activityId = counterLocalService.increment(
-			SocialActivity.class.getName());
-
-		SocialActivity activity = socialActivityPersistence.create(
-			activityId);
+		SocialActivity activity = socialActivityPersistence.create(0);
 
 		activity.setGroupId(groupId);
 		activity.setCompanyId(user.getCompanyId());
@@ -130,31 +186,26 @@ public class SocialActivityLocalServiceImpl
 		activity.setType(type);
 		activity.setExtraData(extraData);
 		activity.setReceiverUserId(receiverUserId);
+		activity.setAssetEntry(assetEntry);
 
-		socialActivityPersistence.update(activity, false);
+		SocialActivity mirrorActivity = null;
 
 		if ((receiverUserId > 0) && (userId != receiverUserId)) {
-			long mirrorActivityId = counterLocalService.increment(
-				SocialActivity.class.getName());
-
-			SocialActivity mirrorActivity = socialActivityPersistence.create(
-				mirrorActivityId);
+			mirrorActivity = socialActivityPersistence.create(0);
 
 			mirrorActivity.setGroupId(groupId);
 			mirrorActivity.setCompanyId(user.getCompanyId());
 			mirrorActivity.setUserId(receiverUserId);
 			mirrorActivity.setCreateDate(createDate.getTime());
-			mirrorActivity.setMirrorActivityId(activityId);
 			mirrorActivity.setClassNameId(classNameId);
 			mirrorActivity.setClassPK(classPK);
 			mirrorActivity.setType(type);
 			mirrorActivity.setExtraData(extraData);
 			mirrorActivity.setReceiverUserId(user.getUserId());
-
-			socialActivityPersistence.update(mirrorActivity, false);
+			mirrorActivity.setAssetEntry(assetEntry);
 		}
 
-		return activity;
+		socialActivityLocalService.addActivity(activity, mirrorActivity);
 	}
 
 	/**
@@ -168,15 +219,17 @@ public class SocialActivityLocalServiceImpl
 	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
 	 * @param  receiverUserId the primary key of the receiving user
-	 * @return the social activity or <code>null</code> if an import is
-	 *         processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialActivity addActivity(
+	public void addActivity(
 			long userId, long groupId, String className, long classPK, int type,
 			String extraData, long receiverUserId)
 		throws PortalException, SystemException {
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			return;
+		}
 
 		Date createDate = new Date();
 
@@ -196,7 +249,7 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		return addActivity(
+		addActivity(
 			userId, groupId, createDate, className, classPK, type, extraData,
 			receiverUserId);
 	}
@@ -218,13 +271,10 @@ public class SocialActivityLocalServiceImpl
 	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
 	 * @param  receiverUserId the primary key of the receiving user
-	 * @return the social stored activity, or the existing activity if it
-	 *         matches the parameters, or <code>null</code> if an import is
-	 *         processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialActivity addUniqueActivity(
+	public void addUniqueActivity(
 			long userId, long groupId, Date createDate, String className,
 			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException, SystemException {
@@ -237,10 +287,10 @@ public class SocialActivityLocalServiceImpl
 				type, receiverUserId);
 
 		if (socialActivity != null) {
-			return socialActivity;
+			return;
 		}
 
-		return addActivity(
+		addActivity(
 			userId, groupId, createDate, className, classPK, type, extraData,
 			receiverUserId);
 	}
@@ -261,18 +311,26 @@ public class SocialActivityLocalServiceImpl
 	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
 	 * @param  receiverUserId the primary key of the receiving user
-	 * @return the social stored activity, or an existing activity that matches
-	 *         the parameters, or <code>null</code> if an import is processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialActivity addUniqueActivity(
+	public void addUniqueActivity(
 			long userId, long groupId, String className, long classPK, int type,
 			String extraData, long receiverUserId)
 		throws PortalException, SystemException {
 
-		return addUniqueActivity(
-			userId, groupId, new Date(), className, classPK, type, extraData,
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		List<SocialActivity> socialActivities =
+			socialActivityPersistence.findByG_U_C_C_T_R(
+				groupId, userId, classNameId, classPK, type, receiverUserId);
+
+		if (socialActivities.size() > 0) {
+			return;
+		}
+
+		addActivity(
+			userId, groupId, className, classPK, type, extraData,
 			receiverUserId);
 	}
 
@@ -288,6 +346,9 @@ public class SocialActivityLocalServiceImpl
 		throws SystemException {
 
 		socialActivityPersistence.removeByC_C(classNameId, classPK);
+
+		socialActivityStatsEntryLocalService.deleteActivityStats(
+			classNameId, classPK);
 	}
 
 	/**
@@ -365,6 +426,9 @@ public class SocialActivityLocalServiceImpl
 		for (SocialActivity activity : activities) {
 			socialActivityPersistence.remove(activity);
 		}
+
+		socialActivityStatsEntryLocalService.deleteActivityStats(
+			PortalUtil.getClassNameId(User.class.getName()), userId);
 	}
 
 	/**

@@ -895,6 +895,147 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 			com.liferay.portlet.social.NoSuchActivityException;
 
 	/**
+	* Returns all the social activities where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param receiverUserId the receiver user ID
+	* @return the matching social activities
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.social.model.SocialActivity> findByG_U_C_C_T_R(
+		long groupId, long userId, long classNameId, long classPK, int type,
+		long receiverUserId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the social activities where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param receiverUserId the receiver user ID
+	* @param start the lower bound of the range of social activities
+	* @param end the upper bound of the range of social activities (not inclusive)
+	* @return the range of matching social activities
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.social.model.SocialActivity> findByG_U_C_C_T_R(
+		long groupId, long userId, long classNameId, long classPK, int type,
+		long receiverUserId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the social activities where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param receiverUserId the receiver user ID
+	* @param start the lower bound of the range of social activities
+	* @param end the upper bound of the range of social activities (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching social activities
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.social.model.SocialActivity> findByG_U_C_C_T_R(
+		long groupId, long userId, long classNameId, long classPK, int type,
+		long receiverUserId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param receiverUserId the receiver user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching social activity
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.social.model.SocialActivity findByG_U_C_C_T_R_First(
+		long groupId, long userId, long classNameId, long classPK, int type,
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivityException;
+
+	/**
+	* Returns the last social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param receiverUserId the receiver user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching social activity
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a matching social activity could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.social.model.SocialActivity findByG_U_C_C_T_R_Last(
+		long groupId, long userId, long classNameId, long classPK, int type,
+		long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivityException;
+
+	/**
+	* Returns the social activities before and after the current social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param activityId the primary key of the current social activity
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param receiverUserId the receiver user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next social activity
+	* @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.social.model.SocialActivity[] findByG_U_C_C_T_R_PrevAndNext(
+		long activityId, long groupId, long userId, long classNameId,
+		long classPK, int type, long receiverUserId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivityException;
+
+	/**
 	* Returns the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; or throws a {@link com.liferay.portlet.social.NoSuchActivityException} if it could not be found.
 	*
 	* @param groupId the group ID
@@ -1072,6 +1213,21 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the social activities where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param receiverUserId the receiver user ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByG_U_C_C_T_R(long groupId, long userId,
+		long classNameId, long classPK, int type, long receiverUserId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1179,6 +1335,22 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*/
 	public int countByM_C_C(long mirrorActivityId, long classNameId,
 		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of social activities where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param receiverUserId the receiver user ID
+	* @return the number of matching social activities
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_U_C_C_T_R(long groupId, long userId, long classNameId,
+		long classPK, int type, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

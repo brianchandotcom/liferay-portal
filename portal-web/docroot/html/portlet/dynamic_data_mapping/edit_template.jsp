@@ -96,10 +96,25 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				<aui:input name="description" />
 
 				<c:if test='<%= type.equals("detail") %>'>
-					<aui:select helpMessage="only-display-required-fields-in-creation-mode" label="mode" name="mode">
+					<aui:select helpMessage="only-display-required-fields-in-creation-mode" label="mode" name="mode" onChange='<%= renderResponse.getNamespace() + "onTemplateModeChange(this.value)" %>'>
 						<aui:option label="create" />
 						<aui:option label="edit" />
 					</aui:select>
+
+					<aui:script>
+						Liferay.provide(
+							window,
+							'<portlet:namespace />onTemplateModeChange',
+							function(value) {
+								var A = AUI();
+
+								var msgNode = A.one('#<portlet:namespace />modeEditMessage');
+
+								msgNode.toggle(value === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
+							},
+							['aui-base']
+						);
+					</aui:script>
 				</c:if>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
@@ -116,6 +131,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 </aui:form>
 
 <c:if test='<%= type.equals("detail") %>'>
+	<div class="portlet-msg-info <%=  ((template != null) && template.getMode().equals(DDMTemplateConstants.TEMPLATE_MODE_EDIT)) ? StringPool.BLANK : "aui-helper-hidden" %> " id="<portlet:namespace />modeEditMessage"><liferay-ui:message key="the-required-fields-will-not-be-displayed-when-the-form-is-rendered" /></div>
+
 	<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
 </c:if>
 

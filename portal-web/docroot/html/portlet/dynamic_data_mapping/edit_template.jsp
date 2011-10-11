@@ -96,23 +96,19 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				<aui:input name="description" />
 
 				<c:if test='<%= type.equals("detail") %>'>
-					<aui:select helpMessage="only-display-required-fields-in-creation-mode" label="mode" name="mode" onChange='<%= renderResponse.getNamespace() + "onTemplateModeChange(this.value)" %>'>
+					<aui:select helpMessage="only-display-required-fields-in-creation-mode" label="mode" name="mode">
 						<aui:option label="create" />
 						<aui:option label="edit" />
 					</aui:select>
 
-					<aui:script>
-						Liferay.provide(
-							window,
-							'<portlet:namespace />onTemplateModeChange',
-							function(value) {
-								var A = AUI();
-
+					<aui:script use="aui-base,event-valuechange">
+						A.one('#<portlet:namespace />mode').on(
+							'valueChange',
+							function(event) {
 								var msgNode = A.one('#<portlet:namespace />modeEditMessage');
 
-								msgNode.toggle(value === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
-							},
-							['aui-base']
+								msgNode.toggle(event.newVal === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
+							}
 						);
 					</aui:script>
 				</c:if>

@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.action;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
@@ -40,6 +41,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
+ * @author Juan Fernández
  * @author Ryan Park
  */
 public class FindFileEntryAction extends Action {
@@ -52,6 +54,7 @@ public class FindFileEntryAction extends Action {
 
 		try {
 			long plid = ParamUtil.getLong(request, "p_l_id");
+			String redirect = ParamUtil.getString(request, "redirect");
 			long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 
 			plid = getPlid(plid, fileEntryId);
@@ -66,12 +69,26 @@ public class FindFileEntryAction extends Action {
 				"struts_action", "/document_library/view_file_entry");
 			portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
+			if (Validator.isNotNull(redirect)) {
+				portletURL.setParameter("redirect", redirect);
+			}
+
 			response.sendRedirect(portletURL.toString());
 
 			return null;
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			String noSuchEntryRedirect = ParamUtil.getString(
+				request, "noSuchEntryRedirect");
+
+			if (e.getClass().equals(NoSuchLayoutException.class) &&
+				Validator.isNotNull(noSuchEntryRedirect)) {
+
+				response.sendRedirect(noSuchEntryRedirect);
+			}
+			else {
+				PortalUtil.sendError(e, request, response);
+			}
 
 			return null;
 		}

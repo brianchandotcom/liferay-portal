@@ -3469,6 +3469,7 @@
 	<entity class="com.liferay.portal.model.impl.LayoutImpl" name="Layout">
 		<table name="Layout" />
 		<attributes>
+			<transient name="layoutSet" />
 			<transient name="typeSettingsProperties" />
 		</attributes>
 	</entity>

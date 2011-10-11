@@ -629,6 +629,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 		_layoutSet = null;
 	}
 
+	public void setLayoutSet(LayoutSet layoutSet) {
+		_layoutSet = layoutSet;
+	}
+
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
 		super.setPrivateLayout(privateLayout);

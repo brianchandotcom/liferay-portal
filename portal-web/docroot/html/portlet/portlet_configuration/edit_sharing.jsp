@@ -41,7 +41,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 </liferay-util:include>
 
 <liferay-ui:tabs
-	names="any-website,facebook,google-gadget,netvibes,friends"
+	names="any-website,facebook,opensocial-gadget,netvibes,friends"
 	param="tabs2"
 	url="<%= portletURL.toString() %>"
 />
@@ -124,17 +124,17 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<aui:input inlineLabel="left" label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-facebook", portletDisplay.getTitle()) %>' name="facebookShowAddAppLink" type="checkbox" value="<%= facebookShowAddAppLink %>" />
 				</c:if>
 			</c:when>
-			<c:when test='<%= tabs2.equals("google-gadget") %>'>
+			<c:when test='<%= tabs2.equals("opensocial-gadget") %>'>
 
 				<%
 				boolean iGoogleShowAddAppLink = PrefsParamUtil.getBoolean(preferences, request, "lfrIgoogleShowAddAppLink");
 				%>
 
 				<div class="portlet-msg-info">
-					<liferay-ui:message key="use-the-google-gadget-url-to-create-a-google-gadget" />
+					<liferay-ui:message key="use-the-opensocial-gadget-url-to-create-an-opensocial-gadget" />
 				</div>
 
-				<label><liferay-ui:message key="google-gadget-url" /></label>
+				<label><liferay-ui:message key="opensocial-gadget-url" /></label>
 
 				<liferay-ui:input-resource url="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
 

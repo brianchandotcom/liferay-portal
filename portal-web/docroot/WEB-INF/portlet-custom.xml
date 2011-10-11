@@ -241,7 +241,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>20</portlet-name>
-		<display-name>Document Library</display-name>
+		<display-name>Documents and Media</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -416,7 +416,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
-		<display-name>Image Gallery</display-name>
+		<display-name>Media Gallery</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -1458,7 +1458,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>110</portlet-name>
-		<display-name>Document Library Display</display-name>
+		<display-name>Documents and Media Display</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>

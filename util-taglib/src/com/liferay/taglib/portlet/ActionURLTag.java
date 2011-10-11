@@ -49,7 +49,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			String lifecycle, String windowState, String portletMode,
 			String var, String varImpl, Boolean secure,
 			Boolean copyCurrentRenderParameters, Boolean escapeXml, String name,
-			String resourceID, String cacheability, long plid,
+			String resourceID, String cacheability, long plid, long refererPlid,
 			String portletName, Boolean anchor, Boolean encrypt,
 			long doAsGroupId, long doAsUserId, Boolean portletConfiguration,
 			Map<String, String[]> params, PageContext pageContext)
@@ -71,6 +71,10 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 					"called within the context of a portlet");
 
 			return;
+		}
+
+		if (refererPlid > LayoutConstants.DEFAULT_PLID) {
+			liferayPortletURL.setRefererPlid(refererPlid);
 		}
 
 		if (Validator.isNotNull(windowState)) {
@@ -173,9 +177,9 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			doTag(
 				getLifecycle(), _windowState, _portletMode, _var, _varImpl,
 				_secure, _copyCurrentRenderParameters, _escapeXml, _name,
-				_resourceID, _cacheability, _plid, _portletName, _anchor,
-				_encrypt, _doAsGroupId, _doAsUserId, _portletConfiguration,
-				getParams(), pageContext);
+				_resourceID, _cacheability, _plid, _refererPlid, _portletName,
+				_anchor, _encrypt, _doAsGroupId, _doAsUserId,
+				_portletConfiguration, getParams(), pageContext);
 
 			return EVAL_PAGE;
 		}
@@ -244,6 +248,10 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 
 	public void setPlid(long plid) {
 		_plid = plid;
+	}
+
+	public void setRefererPlid(long refererPlid) {
+		_refererPlid = refererPlid;
 	}
 
 	public void setPortletName(String portletName) {
@@ -319,6 +327,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 	private String _resourceID;
 	private String _cacheability;
 	private long _plid = LayoutConstants.DEFAULT_PLID;
+	private long _refererPlid = LayoutConstants.DEFAULT_PLID;
 	private String _portletName;
 	private Boolean _anchor;
 	private Boolean _encrypt;

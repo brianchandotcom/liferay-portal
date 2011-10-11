@@ -94,6 +94,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>refererPlid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>secure</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -317,6 +322,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>refererPlid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>secure</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -431,6 +441,11 @@
 		</attribute>
 		<attribute>
 			<name>portletName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>refererPlid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

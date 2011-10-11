@@ -293,4 +293,11 @@ public interface LiferayPortletURL
 	 */
 	public void setPortletId(String portletId);
 
+	/**
+	 * Sets the referer layout ID.
+	 *
+	 * @param refererPlid the referer layout ID
+	 */
+	public void setRefererPlid(long refererPlid);
+
 }

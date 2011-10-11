@@ -18,7 +18,14 @@
 
 <%
 if (Validator.isNotNull(href)) {
-	onClick = "location.href = '" + HtmlUtil.escapeJS(PortalUtil.escapeRedirect(href)) + "';";
+	String escapedHref = HtmlUtil.escapeJS(PortalUtil.escapeRedirect(href));
+
+	if (Validator.isNotNull(escapedHref)) {
+		onClick = "location.href = '" + escapedHref + "';";
+	}
+	else {
+		onClick = "location.href = '';";
+	}
 }
 else if (onClick.startsWith(Http.HTTP_WITH_SLASH) || onClick.startsWith(Http.HTTPS_WITH_SLASH) || onClick.startsWith(StringPool.SLASH)) {
 	onClick = "location.href = '" + HtmlUtil.escape(PortalUtil.escapeRedirect(onClick)) + "';";

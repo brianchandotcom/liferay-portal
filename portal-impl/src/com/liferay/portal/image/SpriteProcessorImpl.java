@@ -85,8 +85,8 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			return null;
 		}
 
-		if (spritePropertiesRootPath.endsWith(StringPool.SLASH) ||
-			spritePropertiesRootPath.endsWith(StringPool.BACK_SLASH)) {
+		if (spritePropertiesRootPath.endsWith(StringPool.BACK_SLASH) ||
+			spritePropertiesRootPath.endsWith(StringPool.SLASH)) {
 
 			spritePropertiesRootPath = spritePropertiesRootPath.substring(
 				0, spritePropertiesRootPath.length() - 1);
@@ -94,47 +94,47 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 		Collections.sort(images);
 
+		String imagesDirName = images.get(0).getParentFile().toString();
 		String spriteRootDirName = PropsValues.SPRITE_ROOT_DIR;
 
-		String imagesDirName = images.get(0).getParentFile().toString();
-
 		if (Validator.isNotNull(spriteRootDirName)) {
-
-			if ((!spriteRootDirName.endsWith(StringPool.SLASH)) &&
-				(!spriteRootDirName.endsWith(StringPool.BACK_SLASH))) {
+			if (!spriteRootDirName.endsWith(StringPool.BACK_SLASH) &&
+				!spriteRootDirName.endsWith(StringPool.SLASH)) {
 
 				spriteRootDirName += StringPool.SLASH;
 			}
 
 			String portalProxyPath = PropsUtil.get(PropsKeys.PORTAL_PROXY_PATH);
-			if (Validator.isNotNull(portalProxyPath)) {
 
+			if (Validator.isNotNull(portalProxyPath)) {
 				spriteRootDirName += portalProxyPath + StringPool.SLASH;
 			}
 
 			String portalContext = PropsUtil.get(PropsKeys.PORTAL_CTX);
-			if ((Validator.isNotNull(portalContext)) &&
-				(!StringPool.SLASH.equals(portalContext))) {
+
+			if (Validator.isNotNull(portalContext) &&
+				!portalContext.equals(StringPool.SLASH)) {
 
 				spriteRootDirName += portalContext + StringPool.SLASH;
 			}
 
 			String portletContext = servletContext.getContextPath();
+
 			if (Validator.isNotNull(portletContext)) {
 				spriteRootDirName +=
-					servletContext.getContextPath()	+ StringPool.SLASH;
+					servletContext.getContextPath() + StringPool.SLASH;
 			}
 
 			String contextRoot = ServletContextUtil.getRealPath(
-				servletContext,	StringPool.SLASH);
+				servletContext, StringPool.SLASH);
 
 			spriteRootDirName = StringUtil.replace(
-				spriteRootDirName + imagesDirName.substring(
-					contextRoot.length()),
+				spriteRootDirName +
+					imagesDirName.substring(contextRoot.length()),
 				CharPool.BACK_SLASH, CharPool.SLASH);
 
-			if ((spriteRootDirName.endsWith(StringPool.SLASH)) ||
-				(spriteRootDirName.endsWith(StringPool.BACK_SLASH))) {
+			if (spriteRootDirName.endsWith(StringPool.BACK_SLASH) ||
+				spriteRootDirName.endsWith(StringPool.SLASH)) {
 
 				spriteRootDirName = spriteRootDirName.substring(
 					0, spriteRootDirName.length() - 1);

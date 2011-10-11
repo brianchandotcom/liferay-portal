@@ -56,6 +56,8 @@ String scopeStructureType = ParamUtil.getString(request, "scopeStructureType");
 String scopeTemplateMode = ParamUtil.getString(request, "scopeTemplateMode");
 String scopeTemplateType = ParamUtil.getString(request, "scopeTemplateType");
 
+boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
+
 String chooseCallback = ParamUtil.getString(request, "chooseCallback");
 String saveCallback = ParamUtil.getString(request, "saveCallback");
 

@@ -261,41 +261,43 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	public List<DDMStructure> search(
-			long companyId, long groupId, long[] classNameIds, String keywords,
-			int start, int end, OrderByComparator orderByComparator)
+			long companyId, long[] groupIds, long[] classNameIds,
+			String keywords, int start, int end,
+			OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmStructureFinder.findByKeywords(
-			companyId, groupId, classNameIds, keywords, start, end,
+			companyId, groupIds, classNameIds, keywords, start, end,
 			orderByComparator);
 	}
 
 	public List<DDMStructure> search(
-			long companyId, long groupId, long[] classNameIds, String name,
+			long companyId, long[] groupIds, long[] classNameIds, String name,
 			String description, String storageType, boolean andOperator,
 			int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmStructureFinder.findByC_G_C_N_D_S(
-			companyId, groupId, classNameIds, name, description, storageType,
+			companyId, groupIds, classNameIds, name, description, storageType,
 			andOperator, start, end, orderByComparator);
 	}
 
 	public int searchCount(
-			long companyId, long groupId, long[] classNameIds, String keywords)
+			long companyId, long[] groupIds, long[] classNameIds,
+			String keywords)
 		throws SystemException {
 
 		return ddmStructureFinder.countByKeywords(
-			companyId, groupId, classNameIds, keywords);
+			companyId, groupIds, classNameIds, keywords);
 	}
 
 	public int searchCount(
-			long companyId, long groupId, long[] classNameIds, String name,
+			long companyId, long[] groupIds, long[] classNameIds, String name,
 			String description, String storageType, boolean andOperator)
 		throws SystemException {
 
 		return ddmStructureFinder.countByC_G_C_N_D_S(
-			companyId, groupId, classNameIds, name, description, storageType,
+			companyId, groupIds, classNameIds, name, description, storageType,
 			andOperator);
 	}
 

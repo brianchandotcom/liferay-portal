@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 <%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
@@ -17,9 +18,15 @@
 <%
 StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSearchTerms();
 
+long[] groupIds = new long[] {scopeGroupId};
+
+if(showGlobalScope) {
+	groupIds = DLUtil.getGroupIds(themeDisplay);
+}
+
 if (searchTerms.isAdvancedSearch()){
-	results = DDMStructureLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, new long[] {searchTerms.getClassNameId()}, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMStructureLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, new long[] {searchTerms.getClassNameId()}, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), searchTerms.isAndOperator());
+	results = DDMStructureLocalServiceUtil.search(company.getCompanyId(), groupIds, new long[] {searchTerms.getClassNameId()}, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDMStructureLocalServiceUtil.searchCount(company.getCompanyId(), groupIds, new long[] {searchTerms.getClassNameId()}, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), searchTerms.isAndOperator());
 }
 else {
 	long[] classNameIds = null;
@@ -34,8 +41,8 @@ else {
 		storageTypes = new String[] {storageTypeValue};
 	}
 
-	results = DDMStructureLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, classNameIds, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMStructureLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, classNameIds, searchTerms.getKeywords());
+	results = DDMStructureLocalServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDMStructureLocalServiceUtil.searchCount(company.getCompanyId(), groupIds, classNameIds, searchTerms.getKeywords());
 }
 
 pageContext.setAttribute("results", results);

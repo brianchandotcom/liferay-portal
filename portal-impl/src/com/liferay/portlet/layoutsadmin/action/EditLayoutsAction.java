@@ -512,12 +512,9 @@ public class EditLayoutsAction extends PortletAction {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		LayoutRevisionLocalServiceUtil.addLayoutRevision(
+		LayoutRevisionLocalServiceUtil.updateLayoutRevision(
 			serviceContext.getUserId(),
-			incompleteLayoutRevision.getLayoutSetBranchId(), layoutBranchId,
-			incompleteLayoutRevision.getLayoutRevisionId(), false,
-			incompleteLayoutRevision.getPlid(),
-			incompleteLayoutRevision.isPrivateLayout(),
+			incompleteLayoutRevision.getLayoutRevisionId(), layoutBranchId,
 			incompleteLayoutRevision.getName(),
 			incompleteLayoutRevision.getTitle(),
 			incompleteLayoutRevision.getDescription(),

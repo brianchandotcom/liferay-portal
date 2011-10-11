@@ -70,6 +70,24 @@ create table DDLRecordSet (
 	scope INTEGER
 );
 
+create table DDLRecordVersion (
+	recordVersionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	DDMStorageId LONG,
+	recordSetId LONG,
+	recordId LONG,
+	version VARCHAR(75) null,
+	displayIndex INTEGER,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
+);
+
 create table DDMContent (
 	uuid_ VARCHAR(75) null,
 	contentId LONG not null primary key,
@@ -394,10 +412,20 @@ create table MDRRuleGroup (
 	description STRING null
 );
 
-alter table PollsVote add companyId LONG;
-alter table PollsVote add userName VARCHAR(75) null;
-alter table PollsVote add createDate DATE null;
-alter table PollsVote add modifiedDate DATE null;
+create table MDRRuleGroupInstance (
+	uuid_ VARCHAR(75) null,
+	ruleGroupInstanceId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	ruleGroupId LONG,
+	priority INTEGER
+);
 
 create table Repository (
 	repositoryId LONG not null primary key,

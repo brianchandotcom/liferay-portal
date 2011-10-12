@@ -67,6 +67,16 @@ body.portal-popup:after, body.portal-popup:before {
 	clear: both;
 }
 
+.aui-column-content {
+	zoom: 1;
+}
+
+.aui-column-content:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
 #content-wrapper, .lfr-ctrl-panel {
 	min-height: 100%;
 }
@@ -286,7 +296,7 @@ body.portal-popup:after, body.portal-popup:before {
 
 #minimize-panels a {
 	background: url(../images/custom/toggle_panels_bg.gif) 1px 0 no-repeat;
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid #FFF;
 }
 
 .panels-minimized #minimize-panels a {
@@ -294,7 +304,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .panel-page-menu .lfr-panel.lfr-extended {
-	background: #d3dbe4;
+	background: #D3DBE4;
 	border-width: 0;
 }
 
@@ -304,13 +314,13 @@ body.portal-popup:after, body.portal-popup:before {
 
 .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-content ul {
 	background: transparent url(../images/custom/shadow_bottom_bg.png) 0 100% repeat-x;
-	border-bottom: 1px solid #abb2b9;
+	border-bottom: 1px solid #ABB2B9;
 	padding: 5px 0;
 }
 
 .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar {
 	background: transparent;
-	border-top: 1px solid #f0f1f2;
+	border-top: 1px solid #F0F1F2;
 	margin-bottom: 0;
 	padding: 7px 6px 6px;
 }
@@ -324,7 +334,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .panel-page-menu .lfr-panel.lfr-collapsed .lfr-panel-titlebar {
-	background: #cad2dd;
+	background: #CAD2DD;
 	border-top: 1px solid transparent;
 }
 
@@ -337,7 +347,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .panel-page-menu .lfr-panel-titlebar {
-	border-bottom: 1px solid #898f95;
+	border-bottom: 1px solid #898F95;
 }
 
 .search-panel-active .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-content ul {
@@ -351,24 +361,24 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .search-panel-active .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar, .panels-minimized .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar {
-	background: #cad2dd;
+	background: #CAD2DD;
 	border: none;
 }
 
 .search-panel-active #panel-manage-my li a {
-	border-color: #76ad00;
+	border-color: #76AD00;
 }
 
 .search-panel-active #panel-manage-content li a {
-	border-color: #006fce;
+	border-color: #006FCE;
 }
 
 .search-panel-active #panel-manage-portal li a {
-	border-color: #4a37bb;
+	border-color: #4A37BB;
 }
 
 .search-panel-active #panel-manage-server li a {
-	border-color: #6e6e6e;
+	border-color: #6E6E6E;
 }
 
 .panel-page-menu .lfr-panel-titlebar .lfr-panel-title {
@@ -420,7 +430,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .panel-page-menu .lfr-panel-content ul li a {
-	color: #2d2d2d;
+	color: #2D2D2D;
 	display: block;
 	outline: 0;
 	padding: 5px 8px 5px 20px;
@@ -457,7 +467,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .panel-page-menu .lfr-panel-content ul li a:hover {
-	background-color: #ebf0f5;
+	background-color: #EBF0F5;
 	text-decoration: underline;
 }
 
@@ -559,7 +569,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 #controlPanelMenuAddContentPanelContainer a:focus {
-	background-color: #5487af;
+	background-color: #5487AF;
 }
 
 .search-panel-active #controlPanelMenuAddContentPanelContainer #panel-manage-my li a:focus, .search-panel-active #controlPanelMenuAddContentPanelContainer #panel-manage-my li.selected-portlet a {
@@ -770,7 +780,7 @@ input[type="text"], input[type="password"], select, textarea, .textarea, #breadc
 }
 
 #controlPanelMenuAddContentPanelContainer a:focus {
-	@include box-shadow(0 0 6px #3e9ae1);
+	@include box-shadow(0 0 6px #3E9AE1);
 }
 
 .search-panel-active #controlPanelMenuAddContentPanelContainer .lfr-panel.lfr-extended {
@@ -787,8 +797,8 @@ input[type="text"], input[type="password"], select, textarea, .textarea, #breadc
 }
 
 .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar {
-	@include filter-gradient(#d2dbe4, #bdc8d6);
-	@include background-image(linear-gradient(#d2dbe4, #bdc8d6));
+	@include filter-gradient(#D2DBE4, #BDC8D6);
+	@include background-image(linear-gradient(#D2DBE4, #BDC8D6));
 }
 
 .panel-page-menu .lfr-panel.lfr-collapsed .lfr-panel-titlebar, .panels-minimized .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar {
@@ -796,16 +806,6 @@ input[type="text"], input[type="password"], select, textarea, .textarea, #breadc
 }
 
 .panel-page-menu .lfr-panel-content ul li.selected-portlet a {
-	@include filter-gradient(#427ead, #154b75);
-	@include background-image(linear-gradient(#427ead, #154b75));
-}
-
-.aui-column-content {
-	zoom: 1;
-}
-
-.aui-column-content:after {
-	content: "";
-	display: block;
-	clear: both;
+	@include filter-gradient(#427EAD, #154B75);
+	@include background-image(linear-gradient(#427EAD, #154B75));
 }

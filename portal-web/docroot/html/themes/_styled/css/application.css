@@ -615,6 +615,10 @@
 	margin-left: 2em;
 }
 
+.taglib-page-iterator .search-pages .page-links {
+	padding: 0;
+}
+
 /* ---------- Application Column View ---------- */
 
 .lfr-app-column-view {

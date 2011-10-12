@@ -25,26 +25,22 @@
 			margin-left: 1em;
 		}
 
-		.category-actions {
-			display: inline-block;
-			float: none;
-			margin-left: 0.3em;
-			margin-right: 0;
-		}
-
-		span {
+		.aui-button, .category-actions {
 			display: block;
 			float: left;
+			margin-left: 0;
+			margin-right: 0.3em;
+		}
+
+		.category-actions {
+			margin-left: 0.3em;
+			margin-right: 0;
 		}
 	}
 
 	.categories-admin-container {
 		.categories-actions-toolbar {
 			margin-left: 1em;
-
-			.aui-button {
-				float: left;
-			}
 		}
 
 		.results-header {

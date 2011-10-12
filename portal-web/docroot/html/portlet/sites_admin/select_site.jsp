@@ -52,35 +52,44 @@ portletURL.setParameter("includeUserPersonalSite", StringUtil.valueOf(includeUse
 			<%
 			results.clear();
 
+			int additionalSites = 0;
+
+			if (includeCompany) {
+				if (searchContainer.getStart() == 0) {
+					results.add(company.getGroup());
+				}
+
+				additionalSites++;
+			}
+
+			if (includeUserPersonalSite) {
+				if (searchContainer.getStart() == 0) {
+					Group userPersonalSite = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
+
+					results.add(userPersonalSite);
+				}
+
+				additionalSites++;
+			}
+
 			if (filterManageableGroups) {
 				groupParams.put("usersGroups", user.getUserId());
 			}
 
 			groupParams.put("site", Boolean.TRUE);
 
-			List<Group> sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+			int end = searchContainer.getEnd() - additionalSites;
+			int start = searchContainer.getStart();
+
+			if (searchContainer.getStart() > additionalSites) {
+				start = searchContainer.getStart() - additionalSites;
+			}
+
+			List<Group> sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, start, end, searchContainer.getOrderByComparator());
 
 			results.addAll(sites);
 
-			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams);
-
-			if (includeCompany) {
-				if ((searchContainer.getEnd() > total) && (total + 1 > searchContainer.getStart())) {
-					results.add(0, company.getGroup());
-				}
-
-				total++;
-			}
-
-			if (includeUserPersonalSite) {
-				if (searchContainer.getEnd() > total) {
-					Group userPersonalSite = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
-
-					results.add(0, userPersonalSite);
-				}
-
-				total++;
-			}
+			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams) + additionalSites;
 
 			pageContext.setAttribute("results", results);
 			pageContext.setAttribute("total", total);

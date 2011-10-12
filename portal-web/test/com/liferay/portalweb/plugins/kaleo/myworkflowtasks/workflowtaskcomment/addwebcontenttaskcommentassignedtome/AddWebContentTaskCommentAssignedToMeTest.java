@@ -77,10 +77,6 @@ public class AddWebContentTaskCommentAssignedToMeTest extends BaseTestCase {
 
 		selenium.type("//textarea[@name='_153_postReplyBody0']",
 			RuntimeVariables.replace("My Workflow Tasks Workflow Task Comment"));
-		selenium.keyPress("//textarea[@name='_153_postReplyBody0']",
-			RuntimeVariables.replace("\\48"));
-		selenium.keyPress("//textarea[@name='_153_postReplyBody0']",
-			RuntimeVariables.replace("\\8"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 		assertEquals(RuntimeVariables.replace(

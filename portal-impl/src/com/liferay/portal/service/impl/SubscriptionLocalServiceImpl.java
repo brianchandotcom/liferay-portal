@@ -16,6 +16,8 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Subscription;
@@ -24,6 +26,10 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -92,6 +98,24 @@ public class SubscriptionLocalServiceImpl
 
 			// Social
 
+			if (className.equals(MBThread.class.getName())) {
+				MBThread thread = mbThreadLocalService.getMBThread(classPK);
+
+				JSONObject extraData = JSONFactoryUtil.createJSONObject();
+
+				extraData.put("threadId", classPK);
+
+				socialActivityLocalService.addActivity(
+					userId, groupId, MBMessage.class.getName(),
+					thread.getRootMessageId(),
+					SocialActivityConstants.TYPE_SUBSCRIBE, extraData.toString(), 0);
+			}
+			else {
+				socialActivityLocalService.addActivity(
+					userId, groupId, className, classPK,
+					SocialActivityConstants.TYPE_SUBSCRIBE, StringPool.BLANK, 0);
+			}
+
 			socialEquityLogLocalService.addEquityLogs(
 				userId, className, classPK, ActionKeys.SUBSCRIBE,
 				StringPool.BLANK);
@@ -131,13 +155,20 @@ public class SubscriptionLocalServiceImpl
 
 		subscriptionPersistence.remove(subscription);
 
-		// Social equity
+		// Social
 
-		if (assetEntryPersistence.countByC_C(
-				subscription.getClassNameId(), subscription.getClassPK()) > 0) {
+		AssetEntry assetEntry = assetEntryPersistence.fetchByC_C(
+			subscription.getClassNameId(), subscription.getClassPK());
+
+		if (assetEntry != null) {
 
 			String className = PortalUtil.getClassName(
 				subscription.getClassNameId());
+
+			socialActivityLocalService.addActivity(
+				subscription.getUserId(), assetEntry.getGroupId(), className,
+				subscription.getClassPK(),
+				SocialActivityConstants.TYPE_UNSUBSCRIBE, StringPool.BLANK, 0);
 
 			socialEquityLogLocalService.deactivateEquityLogs(
 				subscription.getUserId(), className, subscription.getClassPK(),

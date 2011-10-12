@@ -25,6 +25,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.NoSuchActivityException;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -98,6 +99,14 @@ public class SocialActivityLocalServiceImpl
 		throws PortalException, SystemException {
 
 		if (ImportExportThreadLocal.isImportInProcess()) {
+			return null;
+		}
+
+		if ((type == SocialActivityConstants.TYPE_VIEW) ||
+			(type == SocialActivityConstants.TYPE_SUBSCRIBE) ||
+			(type == SocialActivityConstants.TYPE_UNSUBSCRIBE) ||
+			(type == SocialActivityConstants.TYPE_ADD_VOTE)) {
+
 			return null;
 		}
 

@@ -631,10 +631,9 @@ public class EditUserAction extends PortletAction {
 			oldScreenName = StringPool.BLANK;
 		}
 
-		boolean deletePortrait = ParamUtil.getBoolean(
-			actionRequest, "deletePortrait");
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
-		if (deletePortrait) {
+		if (deleteLogo) {
 			UserServiceUtil.deletePortrait(user.getUserId());
 		}
 

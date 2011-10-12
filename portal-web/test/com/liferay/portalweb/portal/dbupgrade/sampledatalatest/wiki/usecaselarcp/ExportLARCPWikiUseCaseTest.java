@@ -44,8 +44,8 @@ public class ExportLARCPWikiUseCaseTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//ul[@class='category-portlets']/li[12]/a"));
-		selenium.clickAt("//ul[@class='category-portlets']/li[12]/a",
+			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Options"),
@@ -77,7 +77,7 @@ public class ExportLARCPWikiUseCaseTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Export"),
-			selenium.getText("//li[1]/span/span"));
+			selenium.getText("//div/ul/li[1]/span/a"));
 		selenium.type("//input[@id='_86_exportFileName']",
 			RuntimeVariables.replace("Wiki_Use_Case.CP.lar"));
 		assertFalse(selenium.isChecked(

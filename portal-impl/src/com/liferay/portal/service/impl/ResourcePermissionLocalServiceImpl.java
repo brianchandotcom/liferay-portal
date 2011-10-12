@@ -32,6 +32,7 @@ import com.liferay.portal.model.ResourcePermissionConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -988,8 +989,7 @@ public class ResourcePermissionLocalServiceImpl
 
 	protected void doUpdateResourcePermission(
 			long companyId, String name, int scope, String primKey,
-			long ownerId, long roleId, String[] actionIds, int operator,
-			boolean flush)
+			long ownerId, long roleId, String[] actionIds, int operator)
 		throws PortalException, SystemException {
 
 		ResourcePermission resourcePermission = null;
@@ -1054,11 +1054,9 @@ public class ResourcePermissionLocalServiceImpl
 
 		resourcePermissionPersistence.update(resourcePermission, false);
 
-		if (flush) {
-			PermissionCacheUtil.clearCache();
+		PermissionCacheUtil.clearCache();
 
-			SearchEngineUtil.updatePermissionFields(name, primKey);
-		}
+		SearchEngineUtil.updatePermissionFields(name, primKey);
 	}
 
 	protected void doUpdateResourcePermission(
@@ -1066,18 +1064,29 @@ public class ResourcePermissionLocalServiceImpl
 			long ownerId, Map<Long, String[]> roleIdsToActionIds, int operator)
 		throws PortalException, SystemException {
 
-		for (Map.Entry<Long, String[]> entry : roleIdsToActionIds.entrySet()) {
-			long roleId = entry.getKey();
-			String[] actionIds = entry.getValue();
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
 
-			doUpdateResourcePermission(
-				companyId, name, scope, primKey, ownerId, roleId, actionIds,
-				operator, false);
+		PermissionThreadLocal.setIndexEnabled(false);
+
+		try {
+			for (Map.Entry<Long, String[]> entry :
+					roleIdsToActionIds.entrySet()) {
+
+				long roleId = entry.getKey();
+				String[] actionIds = entry.getValue();
+
+				doUpdateResourcePermission(
+					companyId, name, scope, primKey, ownerId, roleId, actionIds,
+					operator);
+			}
 		}
+		finally {
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
 
-		PermissionCacheUtil.clearCache();
+			PermissionCacheUtil.clearCache();
 
-		SearchEngineUtil.updatePermissionFields(name, primKey);
+			SearchEngineUtil.updatePermissionFields(name, primKey);
+		}
 	}
 
 	/**
@@ -1120,7 +1129,7 @@ public class ResourcePermissionLocalServiceImpl
 		if (!dbType.equals(DB.TYPE_HYPERSONIC)) {
 			doUpdateResourcePermission(
 				companyId, name, scope, primKey, ownerId, roleId, actionIds,
-				operator, true);
+				operator);
 
 			return;
 		}
@@ -1150,7 +1159,7 @@ public class ResourcePermissionLocalServiceImpl
 		try {
 			doUpdateResourcePermission(
 				companyId, name, scope, primKey, ownerId, roleId, actionIds,
-				operator, true);
+				operator);
 		}
 		finally {
 			lock.unlock();

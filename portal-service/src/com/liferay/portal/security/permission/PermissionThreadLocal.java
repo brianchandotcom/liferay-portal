@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PermissionThreadLocal {
 
@@ -29,8 +30,16 @@ public class PermissionThreadLocal {
 		return _addResource.get().booleanValue();
 	}
 
+	public static boolean isFlushEnabled() {
+		return _flushEnabled.get().booleanValue();
+	}
+
 	public static void setAddResource(boolean addResource) {
 		_addResource.set(addResource);
+	}
+
+	public static void setIndexEnabled(boolean indexEnabled) {
+		_flushEnabled.set(indexEnabled);
 	}
 
 	public static void setPermissionChecker(
@@ -42,6 +51,9 @@ public class PermissionThreadLocal {
 	private static ThreadLocal<Boolean> _addResource =
 		new AutoResetThreadLocal<Boolean>(
 			PermissionThreadLocal.class + "._addResource", true);
+	private static ThreadLocal<Boolean> _flushEnabled =
+		new AutoResetThreadLocal<Boolean>(
+			PermissionThreadLocal.class + "._flushEnabled", true);
 	private static ThreadLocal<PermissionChecker> _permissionChecker =
 		new AutoResetThreadLocal<PermissionChecker>(
 			PermissionThreadLocal.class + "._permissionChecker");

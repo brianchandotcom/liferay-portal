@@ -46,7 +46,9 @@ public class PermissionCacheUtil {
 		PermissionCacheUtil.class.getName() + "_RESOURCE_BLOCK_IDS_BAG";
 
 	public static void clearCache() {
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ImportExportThreadLocal.isImportInProcess() ||
+			!PermissionThreadLocal.isFlushEnabled()) {
+
 			return;
 		}
 

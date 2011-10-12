@@ -421,6 +421,7 @@ create index IX_5B153FB2 on MBMessage (groupId);
 create index IX_1073AB9F on MBMessage (groupId, categoryId);
 create index IX_4257DB85 on MBMessage (groupId, categoryId, status);
 create index IX_B674AB58 on MBMessage (groupId, categoryId, threadId);
+create index IX_CBFDBF0A on MBMessage (groupId, categoryId, threadId, answer);
 create index IX_385E123E on MBMessage (groupId, categoryId, threadId, status);
 create index IX_ED39AC98 on MBMessage (groupId, status);
 create index IX_8EB8C5EC on MBMessage (groupId, userId);

@@ -303,6 +303,12 @@
 			<finder-column name="classPK" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_C_T_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="categoryId" />
+			<finder-column name="threadId" />
+			<finder-column name="answer" />
+		</finder>
 		<finder name="G_C_T_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" />

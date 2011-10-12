@@ -29,6 +29,7 @@
 		<!--<open-search-class>com.liferay.portal.search.PortalOpenSearchImpl</open-search-class>-->
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
+		<restore-current-view>false</restore-current-view>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<header-portlet-css>/html/portlet/search/css/main.jsp</header-portlet-css>

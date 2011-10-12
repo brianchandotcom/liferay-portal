@@ -103,7 +103,7 @@ public class ApproveTaskWebContentDetailsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/button[1]")) {
+				if (selenium.isVisible("//div[3]/span/span/button")) {
 					break;
 				}
 			}
@@ -113,7 +113,8 @@ public class ApproveTaskWebContentDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div/button[1]", RuntimeVariables.replace("OK"));
+		selenium.clickAt("//div[3]/span/span/button",
+			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {

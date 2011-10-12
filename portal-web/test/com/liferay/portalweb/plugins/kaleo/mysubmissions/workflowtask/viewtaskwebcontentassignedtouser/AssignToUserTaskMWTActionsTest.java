@@ -94,7 +94,8 @@ public class AssignToUserTaskMWTActionsTest extends BaseTestCase {
 
 		selenium.select("//select[@id='_153_assigneeUserId']",
 			RuntimeVariables.replace("label=userfn userln"));
-		selenium.clickAt("//div/button[1]", RuntimeVariables.replace("OK"));
+		selenium.clickAt("//div[3]/span/span/button",
+			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

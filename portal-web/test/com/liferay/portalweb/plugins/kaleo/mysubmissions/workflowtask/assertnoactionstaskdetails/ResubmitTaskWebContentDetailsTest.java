@@ -79,7 +79,7 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/button[1]")) {
+				if (selenium.isVisible("//div[3]/span/span/button")) {
 					break;
 				}
 			}
@@ -89,7 +89,8 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div/button[1]", RuntimeVariables.replace("OK"));
+		selenium.clickAt("//div[3]/span/span/button",
+			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
@@ -115,7 +116,7 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Portal Content Reviewer role."),
+				"Task initially assigned to the Site Owner role."),
 			selenium.getText(
 				"xPath=(//div[@class='task-activity task-type-1'])[4]/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),

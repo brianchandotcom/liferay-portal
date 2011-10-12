@@ -25,6 +25,10 @@ if (portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
 	editable = true;
 }
 
+if (!DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD)) {
+	editable = false;
+}
+
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 %>
 

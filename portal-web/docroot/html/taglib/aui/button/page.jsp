@@ -24,7 +24,7 @@ if (Validator.isNotNull(href)) {
 		onClick = "location.href = '" + escapedHref + "';";
 	}
 	else {
-		onClick = "location.href = '';";
+		onClick = "location.href = location.href.replace(location.hash, '');";
 	}
 }
 else if (onClick.startsWith(Http.HTTP_WITH_SLASH) || onClick.startsWith(Http.HTTPS_WITH_SLASH) || onClick.startsWith(StringPool.SLASH)) {

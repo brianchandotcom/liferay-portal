@@ -93,6 +93,7 @@ boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:i
 String lang = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:lang"));
 boolean toolTip = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:toolTip"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:cssClass"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:icon:data");
 String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:onClick"));
 
 if ((iconListIconCount != null) || (iconListSingleIcon != null)) {

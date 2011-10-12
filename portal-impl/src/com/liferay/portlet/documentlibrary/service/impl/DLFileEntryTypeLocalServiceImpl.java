@@ -73,7 +73,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		Date now = new Date();
 
-		validate(groupId, name, ddmStructureIds);
+		validate(fileEntryTypeId, groupId, name, ddmStructureIds);
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			fileEntryTypeId);
@@ -257,7 +257,9 @@ public class DLFileEntryTypeLocalServiceImpl
 				ddmStructureIds, dynamicStructureId);
 		}
 
-		validate(dlFileEntryType.getGroupId(), name, ddmStructureIds);
+		validate(
+			fileEntryTypeId, dlFileEntryType.getGroupId(), name,
+			ddmStructureIds);
 
 		dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(null));
 		dlFileEntryType.setName(name);
@@ -450,13 +452,16 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	protected void validate(
-			long groupId, String fileEntryTypeName, long[] ddmStructureIds)
+			long fileEntryTypeId, long groupId, String fileEntryTypeName,
+			long[] ddmStructureIds)
 		throws PortalException, SystemException {
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.fetchByG_N(
 			groupId, fileEntryTypeName);
 
-		if (dlFileEntryType != null) {
+		if ((dlFileEntryType != null) &&
+			(dlFileEntryType.getFileEntryTypeId() != fileEntryTypeId)) {
+
 			throw new DuplicateFileEntryTypeException(fileEntryTypeName);
 		}
 

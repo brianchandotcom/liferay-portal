@@ -24,14 +24,17 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.Layout</model-name>
 		<portlet-ref>
+			<portlet-name>125</portlet-name>
 			<portlet-name>134</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
 				<action-key>ADD_DISCUSSION</action-key>
+				<action-key>ADD_LAYOUT</action-key>
 				<action-key>CUSTOMIZE</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>DELETE_DISCUSSION</action-key>
+				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DISCUSSION</action-key>
 				<action-key>VIEW</action-key>
@@ -46,9 +49,11 @@
 			</guest-defaults>
 			<guest-unsupported>
 				<action-key>ADD_DISCUSSION</action-key>
+				<action-key>ADD_LAYOUT</action-key>
 				<action-key>CUSTOMIZE</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>DELETE_DISCUSSION</action-key>
+				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DISCUSSION</action-key>
 			</guest-unsupported>
@@ -57,6 +62,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.Team</model-name>
 		<portlet-ref>
+			<portlet-name>125</portlet-name>
 			<portlet-name>134</portlet-name>
 		</portlet-ref>
 		<permissions>

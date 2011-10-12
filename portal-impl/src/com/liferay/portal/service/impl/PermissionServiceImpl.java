@@ -31,6 +31,7 @@ import com.liferay.portal.security.permission.PermissionCheckerBag;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.base.PermissionServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
+import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -550,13 +551,9 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 				ActionKeys.PERMISSIONS);
 		}
 		else if (name.equals(Layout.class.getName())) {
-			long plid = GetterUtil.getLong(primKey);
-
-			Layout layout = layoutPersistence.findByPrimaryKey(plid);
-
-			GroupPermissionUtil.check(
-				permissionChecker, layout.getGroupId(),
-				ActionKeys.MANAGE_LAYOUTS);
+			LayoutPermissionUtil.check(
+				permissionChecker, GetterUtil.getLong(primKey),
+				ActionKeys.PERMISSIONS);
 		}
 		else if (name.equals(MBCategory.class.getName())) {
 			MBCategoryPermission.check(

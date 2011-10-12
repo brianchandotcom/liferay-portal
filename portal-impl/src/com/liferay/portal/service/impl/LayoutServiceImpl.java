@@ -34,7 +34,6 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutReference;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Plugin;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -117,8 +116,17 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			String friendlyURL, boolean locked, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (parentLayoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+			GroupPermissionUtil.check(
+				permissionChecker, groupId, ActionKeys.ADD_LAYOUT);
+		}
+		else {
+			LayoutPermissionUtil.check(
+				permissionChecker, groupId, privateLayout, parentLayoutId,
+				ActionKeys.ADD_LAYOUT);
+		}
 
 		return layoutLocalService.addLayout(
 			getUserId(), groupId, privateLayout, parentLayoutId, localeNamesMap,
@@ -264,7 +272,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.exportLayouts(
 			groupId, privateLayout, layoutIds, parameterMap, startDate,
@@ -294,7 +302,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.exportLayouts(
 			groupId, privateLayout, parameterMap, startDate, endDate);
@@ -325,7 +333,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.exportLayoutsAsFile(
 			groupId, privateLayout, layoutIds, parameterMap, startDate,
@@ -361,7 +369,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), layout.getGroupId(),
-			ActionKeys.MANAGE_LAYOUTS);
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return layoutLocalService.exportPortletInfo(
 			plid, groupId, portletId, parameterMap, startDate, endDate);
@@ -396,7 +404,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), layout.getGroupId(),
-			ActionKeys.MANAGE_LAYOUTS);
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return layoutLocalService.exportPortletInfoAsFile(
 			plid, groupId, portletId, parameterMap, startDate, endDate);
@@ -563,7 +571,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		layoutLocalService.importLayouts(
 			getUserId(), groupId, privateLayout, parameterMap, bytes);
@@ -590,15 +598,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<String, String[]> parameterMap, File file)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!GroupPermissionUtil.contains(
-				permissionChecker, groupId, ActionKeys.MANAGE_LAYOUTS) &&
-			!GroupPermissionUtil.contains(
-				permissionChecker, groupId, ActionKeys.PUBLISH_STAGING)) {
-
-			throw new PrincipalException();
-		}
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		layoutLocalService.importLayouts(
 			getUserId(), groupId, privateLayout, parameterMap, file);
@@ -626,7 +627,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		layoutLocalService.importLayouts(
 			getUserId(), groupId, privateLayout, parameterMap, is);
@@ -654,11 +655,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<String, String[]> parameterMap, File file)
 		throws PortalException, SystemException {
 
-		Layout layout = layoutLocalService.getLayout(plid);
-
 		GroupPermissionUtil.check(
-			getPermissionChecker(), layout.getGroupId(),
-			ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId,
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		layoutLocalService.importPortletInfo(
 			getUserId(), plid, groupId, portletId, parameterMap, file);
@@ -686,11 +685,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<String, String[]> parameterMap, InputStream is)
 		throws PortalException, SystemException {
 
-		Layout layout = layoutLocalService.getLayout(plid);
-
 		GroupPermissionUtil.check(
-			getPermissionChecker(), layout.getGroupId(),
-			ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId,
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		layoutLocalService.importPortletInfo(
 			getUserId(), plid, groupId, portletId, parameterMap, is);
@@ -733,15 +730,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			String description)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!GroupPermissionUtil.contains(
-				permissionChecker, targetGroupId, ActionKeys.MANAGE_STAGING) &&
-			!GroupPermissionUtil.contains(
-				permissionChecker, targetGroupId, ActionKeys.PUBLISH_STAGING)) {
-
-			throw new PrincipalException();
-		}
+		GroupPermissionUtil.check(
+			getPermissionChecker(), targetGroupId, ActionKeys.PUBLISH_STAGING);
 
 		String jobName = PortalUUIDUtil.generate();
 
@@ -809,16 +799,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Date schedulerEndDate, String description)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		Group group = groupLocalService.getGroup(sourceGroupId);
-
-		if (group.isStagingGroup()) {
-			group = group.getLiveGroup();
-		}
-
-		GroupPermissionUtil.contains(
-			permissionChecker, sourceGroupId, ActionKeys.PUBLISH_STAGING);
+		GroupPermissionUtil.check(
+			getPermissionChecker(), sourceGroupId, ActionKeys.PUBLISH_STAGING);
 
 		LayoutsRemotePublisherRequest publisherRequest =
 			new LayoutsRemotePublisherRequest(
@@ -828,10 +810,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		String jobName = PortalUUIDUtil.generate();
 
-		Trigger trigger =
-			new CronTrigger(
-				jobName, groupName, schedulerStartDate, schedulerEndDate,
-				cronText);
+		Trigger trigger = new CronTrigger(
+			jobName, groupName, schedulerStartDate, schedulerEndDate, cronText);
+
 		SchedulerEngineUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
 			DestinationNames.LAYOUTS_REMOTE_PUBLISHER, publisherRequest, 0);
@@ -859,7 +840,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		layoutLocalService.setLayouts(
 			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
@@ -882,15 +863,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			long groupId, String jobName, String groupName)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!GroupPermissionUtil.contains(
-				permissionChecker, groupId, ActionKeys.MANAGE_STAGING) &&
-			!GroupPermissionUtil.contains(
-				permissionChecker, groupId, ActionKeys.PUBLISH_STAGING)) {
-
-			throw new PrincipalException();
-		}
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.PUBLISH_STAGING);
 
 		SchedulerEngineUtil.delete(jobName, groupName, StorageType.PERSISTED);
 	}
@@ -912,16 +886,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			long groupId, String jobName, String groupName)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		Group group = groupLocalService.getGroup(groupId);
-
-		if (group.isStagingGroup()) {
-			group = group.getLiveGroup();
-		}
-
-		GroupPermissionUtil.contains(
-			permissionChecker, groupId, ActionKeys.PUBLISH_STAGING);
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.PUBLISH_STAGING);
 
 		SchedulerEngineUtil.delete(jobName, groupName, StorageType.PERSISTED);
 	}

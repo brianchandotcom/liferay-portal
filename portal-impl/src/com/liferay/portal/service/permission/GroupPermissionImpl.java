@@ -34,6 +34,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class GroupPermissionImpl implements GroupPermission {
 
@@ -57,17 +58,11 @@ public class GroupPermissionImpl implements GroupPermission {
 			group = group.getLiveGroup();
 		}
 
-		if (group.isOrganization()) {
-			long organizationId = group.getOrganizationId();
-
-			return OrganizationPermissionUtil.contains(
-				permissionChecker, organizationId, actionId);
-		}
-		else if (group.isUser()) {
+		if (group.isUser()) {
 
 			// An individual user would never reach this block because he would
 			// be an administrator of his own layouts. However, a user who
-			// manages a set of organizations may be modifying pages of a user
+			// manages a set of organisations may be modifying pages of a user
 			// he manages.
 
 			long userId = group.getClassPK();
@@ -106,9 +101,36 @@ public class GroupPermissionImpl implements GroupPermission {
 				}
 			}
 
-			return permissionChecker.hasPermission(
-				groupId, Group.class.getName(), groupId,
-				ActionKeys.MANAGE_LAYOUTS);
+			if (permissionChecker.hasPermission(
+					groupId, Group.class.getName(), groupId,
+					ActionKeys.MANAGE_LAYOUTS)) {
+
+				return true;
+			}
+		}
+		else if ((actionId.equals(ActionKeys.EXPORT_IMPORT_LAYOUTS) ||
+				  actionId.equals(ActionKeys.EXPORT_IMPORT_PORTLET_INFO)) &&
+				 permissionChecker.hasPermission(
+					 groupId, Group.class.getName(), groupId,
+					 ActionKeys.PUBLISH_STAGING)) {
+
+			return true;
+		}
+		else if (actionId.equals(ActionKeys.VIEW_STAGING) &&
+				 (permissionChecker.hasPermission(
+					 groupId, Group.class.getName(), groupId,
+					 ActionKeys.MANAGE_LAYOUTS) ||
+				  permissionChecker.hasPermission(
+					 groupId, Group.class.getName(), groupId,
+					 ActionKeys.MANAGE_STAGING) ||
+				  permissionChecker.hasPermission(
+					 groupId, Group.class.getName(), groupId,
+					 ActionKeys.PUBLISH_STAGING) ||
+				  permissionChecker.hasPermission(
+					 groupId, Group.class.getName(), groupId,
+					 ActionKeys.UPDATE))) {
+
+			return true;
 		}
 
 		// Group id must be set so that users can modify their personal pages

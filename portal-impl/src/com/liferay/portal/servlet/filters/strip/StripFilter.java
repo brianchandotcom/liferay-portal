@@ -372,27 +372,47 @@ public class StripFilter extends BasePortalFilter {
 
 		int endPos = 0;
 
-		for (int i = openTag.length; i < charBuffer.length(); i++) {
-			char c = charBuffer.charAt(i);
+		char c = charBuffer.charAt(openTag.length);
 
-			if (c == CharPool.GREATER_THAN) {
-				endPos = i + 1;
+		if (c == CharPool.SPACE) {
+			int startPos = openTag.length + 1;
 
-				break;
+			for (int i = startPos; i < charBuffer.length(); i++) {
+				c = charBuffer.charAt(i);
+
+				if (c == CharPool.GREATER_THAN) {
+					// script openTag complete
+					endPos = i + 1;
+
+					int length = i - startPos;
+
+					if ((length < _MARKER_TYPE_JAVASCRIPT.length()) ||
+						(KMPSearch.search(
+								charBuffer, startPos, length,
+								_MARKER_TYPE_JAVASCRIPT,
+								_MARKER_TYPE_JAVASCRIPT_NEXTS) == -1)) {
+						// script openTag with attribute, but not
+						// type="text/javascript". Skip Minifier.
+						return;
+					}
+
+					// Legal script openTag, without attribute or explicitly
+					// with type="text/javascript", start stripping.
+					break;
+				}
+				else if (c == CharPool.LESS_THAN) {
+					// Illegal openTag, found '<' before seeing a '>'.
+					return;
+				}
 			}
-			else if (c == CharPool.LESS_THAN) {
+
+			if (endPos == charBuffer.length()) {
+				// Illegal openTag, can not find '>'.
 				return;
 			}
 		}
-
-		if (endPos <= 0) {
-			return;
-		}
-
-		if (KMPSearch.search(
-				charBuffer, 0, endPos,
-				_MARKER_TYPE_JAVASCRIPT, _MARKER_TYPE_JAVASCRIPT_NEXTS) == -1) {
-
+		else if (c != CharPool.GREATER_THAN) {
+			// Illegal openTag, not followed by '>' or ' '.
 			return;
 		}
 

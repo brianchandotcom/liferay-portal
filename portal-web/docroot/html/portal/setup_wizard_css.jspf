@@ -25,11 +25,6 @@ body {
 	padding: 0 !important;
 }
 
-input.aui-button-input-submit {
-	color: #529214;
-	font-size: 1.2em;
-}
-
 #wrapper {
 	margin: auto;
 	max-width: 700px;
@@ -69,13 +64,8 @@ input.aui-button-input-submit {
 	padding-top: 2em;
 }
 
-#testMessages {
-	display: inline-block;;
+.connection-messages {
 	margin-top: 10px;
-}
-
-#testMessages .portlet-msg-success, #testMessages .portlet-msg-alert, #testMessages .portlet-msg-error {
-	display: inline;
 }
 
 .properties-text {
@@ -92,16 +82,12 @@ input.aui-button-input-submit {
 }
 
 .aui-legend {
-	background: #D4D4D4 url(<%= themeImagesPath %>/portlet/header_bg.png) repeat-x 0 0;
-	border: 1px solid;
-	border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
+	border-bottom: 1px solid #333;
 	line-height: 2;
 	overflow: hidden;
 	padding: 0;
 	position: static;
-	text-indent: 10px;
 	text-overflow: ellipsis;
-	text-shadow: 1px 1px #FFF;
 	white-space: nowrap;
 	width: 100%;
 }
@@ -163,21 +149,4 @@ input.aui-button-input-submit {
 
 .ie6 #wrapper {
 	width: 600px;
-}
-
-/* ---------- Extras ---------- */
-
-.aui-legend {
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-moz-box-shadow: 1px 1px 0 #FFF;
-	-webkit-box-shadow: 1px 1px 0 #FFF;
-	box-shadow: 1px 1px 0 #FFF;
-}
-
-.aui-field-input-text {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
 }

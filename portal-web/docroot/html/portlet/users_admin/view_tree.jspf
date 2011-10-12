@@ -279,7 +279,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 			boolean showUsers = false;
 
 			if (organization != null) {
-				usersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId);
+				usersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_APPROVED);
 
 				if (organizationsCount > 0) {
 					showOrganizations = true;

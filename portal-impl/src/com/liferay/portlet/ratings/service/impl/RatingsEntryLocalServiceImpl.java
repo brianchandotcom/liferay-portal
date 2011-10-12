@@ -21,11 +21,13 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.base.RatingsEntryLocalServiceBaseImpl;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -235,6 +237,16 @@ public class RatingsEntryLocalServiceImpl
 		}
 
 		// Social
+		try {
+			AssetEntry assetEntry = assetEntryLocalService.getEntry(
+				className, classPK);
+
+			socialActivityLocalService.addActivity(
+				userId, assetEntry.getGroupId(), className, classPK,
+				SocialActivityConstants.TYPE_ADD_VOTE, StringPool.BLANK, 0);
+		}
+		catch (Exception e) {
+		}
 
 		socialEquityLogLocalService.addEquityLogs(
 			userId, className, classPK, ActionKeys.ADD_VOTE, StringPool.BLANK);

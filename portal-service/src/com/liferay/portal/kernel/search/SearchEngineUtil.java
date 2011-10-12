@@ -185,6 +185,10 @@ public class SearchEngineUtil {
 
 		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
 
+		if (searchEngine == null) {
+			return;
+		}
+
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
 		SearchContext searchContext = new SearchContext();

@@ -61,6 +61,14 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
+			<then>
+				<delete dir="${app.server.glassfish.instance.dir}/applications/liferay-portal" failonerror="false"/>
+				<delete dir="${app.server.glassfish.instance.dir}/applications/tunnel-web" failonerror="false"/>
+			</then>
+		</if>
+
 		<delete failonerror="false">
 			<fileset
 				dir="${app.server.classes.portal.dir}"

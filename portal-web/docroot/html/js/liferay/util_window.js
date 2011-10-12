@@ -97,18 +97,23 @@ AUI().add(
 					}
 				);
 
-				dialog.iframe.after(
-					'load',
+				Liferay.after(
+					'popupLoaded',
 					function(event) {
-						var dialogIframeNode = event.currentTarget.node;
+						if (event.windowName == id) {
+							var dialogIframeNode = event.currentTarget.node;
 
-						Util.afterIframeLoaded(event);
+							event.dialog = dialog;
+							event.details[0].dialog = dialog;
 
-						var dialogUtil = dialogIframeNode.get('contentWindow.Liferay.Util');
+							Util.afterIframeLoaded(event);
 
-						dialogUtil.Window._opener = openingWindow;
+							var dialogUtil = event.win.Liferay.Util;
 
-						dialogUtil.Window._name = id;
+							dialogUtil.Window._opener = openingWindow;
+
+							dialogUtil.Window._name = id;
+						}
 					}
 				);
 

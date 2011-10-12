@@ -5,8 +5,6 @@ AUI().add(
 
 		var AArray = A.Array;
 
-		var	getClassName = A.ClassNameManager.getClassName;
-
 		var NAME = 'tagselector';
 
 		var CSS_INPUT_NODE = 'lfr-tag-selector-input';
@@ -16,6 +14,8 @@ AUI().add(
 		var CSS_POPUP = 'lfr-tag-selector-popup';
 
 		var CSS_TAGS_LIST = 'lfr-tags-selector-list';
+
+		var INVALID_CHARACTERS = '&\'@\\]}:,=>/<\n[{%|+#?"\r;/*~';
 
 		var TPL_CHECKED = ' checked="checked" ';
 
@@ -157,13 +157,7 @@ AUI().add(
 
 						instance._submitFormListener = A.Do.before(instance._onAddEntryClick, window, 'submitForm', instance);
 
-						A.on(
-							'key',
-							instance._onTagsSelectorCommaPress,
-							instance.get('boundingBox'),
-							'down:188',
-							instance
-						);
+						instance.get('boundingBox').on('keypress', instance._onKeyPress, instance);
 					},
 
 					_formatEntry: function(item) {
@@ -393,12 +387,21 @@ AUI().add(
 						instance[action](value);
 					},
 
-					_onTagsSelectorCommaPress: function(event) {
+					_onKeyPress: function(event) {
 						var instance = this;
 
-						instance._onAddEntryClick();
+						var charCode = event.charCode;
 
-						event.preventDefault();
+						if (charCode == '44') {
+							instance._onAddEntryClick();
+
+							event.preventDefault();
+						}
+						else {
+							if (!instance._validateKey(String.fromCharCode(charCode))) {
+								event.halt();
+							}
+						}
 					},
 
 					_renderIcons: function() {
@@ -632,6 +635,10 @@ AUI().add(
 
 						popup.liveSearch.get('nodes').refresh();
 						popup.liveSearch.refreshIndex();
+					},
+
+					_validateKey: function(data) {
+						return (INVALID_CHARACTERS.indexOf(data) == -1);
 					},
 
 					_buffer: []

@@ -696,11 +696,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		expandoValueLocalService.deleteValues(
 			MBMessage.class.getName(), message.getMessageId());
 
-		// Social
-
-		socialActivityLocalService.deleteActivities(
-			MBMessage.class.getName(), message.getMessageId());
-
 		// Ratings
 
 		ratingsStatsLocalService.deleteStats(

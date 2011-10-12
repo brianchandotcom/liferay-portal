@@ -333,29 +333,15 @@
 			if (!topWindow) {
 				var parentWindow = window.parent;
 
-				var parentThemeDisplay;
+				try {
+					if (parentWindow != window &&
+						typeof parentWindow.location.href != 'undefined' &&
+						!parentWindow.themeDisplay.isStatePopUp()) {
 
-				while (parentWindow != window) {
-					try {
-						if (typeof parentWindow.location.href == 'undefined') {
-							break;
-						}
-					}
-					catch (e) {
-						break;
-					}
-
-					parentThemeDisplay = parentWindow.themeDisplay;
-
-					if (!parentThemeDisplay) {
-						break;
-					}
-					else if (!parentThemeDisplay.isStatePopUp()) {
 						topWindow = parentWindow;
-
-						break;
 					}
 				}
+				catch (e) {}
 
 				if (!topWindow) {
 					topWindow = window;

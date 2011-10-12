@@ -178,6 +178,7 @@
 		<dtd publicId="-//Liferay//DTD Service Builder 6.0.0//EN" location="${definitions.dir}/liferay-service-builder_6_0_0.dtd" />
 		<dtd publicId="-//Liferay//DTD Service Builder 6.1.0//EN" location="${definitions.dir}/liferay-service-builder_6_1_0.dtd" />
 		<dtd publicId="-//Liferay//DTD SKIN 2.0.0//EN" location="${definitions.dir}/liferay-skin_2_0_0.dtd" />
+		<dtd publicId="-//Liferay//DTD Social 6.1.0//EN" location="${definitions.dir}/liferay-social_6_1_0.dtd" />
 		<dtd publicId="-//Liferay//DTD Theme Loader 4.3.0//EN" location="${definitions.dir}/liferay-theme-loader_4_3_0.dtd" />
 		<dtd publicId="-//Liferay//DTD Theme Loader 5.0.0//EN" location="${definitions.dir}/liferay-theme-loader_5_0_0.dtd" />
 		<dtd publicId="-//Liferay//DTD Theme Loader 5.1.0//EN" location="${definitions.dir}/liferay-theme-loader_5_1_0.dtd" />

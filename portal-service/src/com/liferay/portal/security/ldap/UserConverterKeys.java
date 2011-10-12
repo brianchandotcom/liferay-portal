@@ -35,6 +35,8 @@ public interface UserConverterKeys {
 
 	public static final String PASSWORD = "password";
 
+	public static final String PORTRAIT = "portrait";
+
 	public static final String SCREEN_NAME = "screenName";
 
 	public static final String UUID = "uuid";

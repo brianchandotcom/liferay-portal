@@ -208,6 +208,23 @@ public class BaseLDAPToPortalConverter implements LDAPToPortalConverter {
 		ldapUser.setUserGroupIds(userGroupIds);
 		ldapUser.setUserGroupRoles(userGroupRoles);
 
+		Object defaultPortrait = Boolean.FALSE;
+
+		Object portrait = LDAPUtil.getAttributeValueAsObject(
+			attributes, userMappings.getProperty(UserConverterKeys.PORTRAIT),
+			defaultPortrait);
+
+		if (defaultPortrait.equals(portrait)) {
+			ldapUser.setUpdatePortrait(false);
+		}
+		else {
+			ldapUser.setUpdatePortrait(true);
+
+			if (Validator.isNotNull(portrait)) {
+				ldapUser.setPortraitBytes((byte[])portrait);
+			}
+		}
+
 		return ldapUser;
 	}
 

@@ -215,6 +215,14 @@ public class LDAPUser {
 		return _updatePassword;
 	}
 
+	public byte[] getPortraitBytes() {
+		return _portraitBytes;
+	}
+
+	public boolean isUpdatePortrait() {
+		return _updatePortrait;
+	}
+
 	public void setAimSn(String aimSn) {
 		_contact.setAimSn(aimSn);
 	}
@@ -395,6 +403,14 @@ public class LDAPUser {
 		_contact.setYmSn(ymSn);
 	}
 
+	public void setPortraitBytes(byte[] portraitBytes) {
+		_portraitBytes = portraitBytes;
+	}
+
+	public void setUpdatePortrait(boolean updatePortrait) {
+		_updatePortrait = updatePortrait;
+	}
+
 	private boolean _autoPassword;
 	private boolean _autoScreenName;
 	private Contact _contact;
@@ -411,5 +427,7 @@ public class LDAPUser {
 	private Map<String, String> _userExpandoAttributes;
 	private long[] _userGroupIds;
 	private List<UserGroupRole> _userGroupRoles;
+	private byte[] _portraitBytes;
+	private boolean _updatePortrait;
 
 }

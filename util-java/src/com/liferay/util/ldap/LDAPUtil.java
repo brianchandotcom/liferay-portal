@@ -75,6 +75,48 @@ public class LDAPUtil {
 		}
 	}
 
+	public static Object getAttributeValueAsObject(
+			Attributes attributes, String id)
+		throws NamingException {
+
+		return getAttributeValueAsObject(attributes, id, null);
+	}
+
+	public static Object getAttributeValueAsObject(
+			Attributes attributes, Properties properties, String key)
+		throws NamingException {
+
+		String id = properties.getProperty(key);
+
+		return getAttributeValueAsObject(attributes, id);
+	}
+
+	public static Object getAttributeValueAsObject(
+			Attributes attributes, Properties properties, String key,
+			Object defaultValue)
+		throws NamingException {
+
+		String id = properties.getProperty(key);
+
+		return getAttributeValueAsObject(attributes, id, defaultValue);
+	}
+
+	public static Object getAttributeValueAsObject(
+			Attributes attributes, String id, Object defaultValue)
+		throws NamingException {
+
+		try {
+			Attribute attribute = attributes.get(id);
+
+			Object obj = attribute.get();
+
+			return obj;
+		}
+		catch (NullPointerException npe) {
+			return defaultValue;
+		}
+	}
+
 	public static Date parseDate(String date) throws Exception {
 		String format = "yyyyMMddHHmmss";
 

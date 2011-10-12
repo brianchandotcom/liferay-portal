@@ -858,7 +858,7 @@ AUI().add(
 							displayStyleButtonsContainer.setContent(displayStyleButtons);
 						}
 
-						var sortButton = instance.byId('sortButton');
+						var sortButton = instance.one('#sortButton', content);
 
 						if (sortButton) {
 							var sortButtonContainer = instance.byId('sortButtonContainer');

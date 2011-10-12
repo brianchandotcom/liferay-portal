@@ -18,17 +18,21 @@
 
 .portlet-asset-category-admin {
 	.categories-admin-actions {
-		clear: none;
-		float: left;
+		display: inline-block;
 		margin: 0;
 
 		.permissions-button {
 			margin-left: 1em;
 		}
 
+		.aui-button, .category-actions {
+			display: block;
+			float: left;
+			margin-left: 0;
+			margin-right: 0.3em;
+		}
+
 		.category-actions {
-			display: inline-block;
-			float: none;
 			margin-left: 0.3em;
 			margin-right: 0;
 		}

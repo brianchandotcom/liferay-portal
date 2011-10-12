@@ -153,11 +153,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		for (MBMessage message : messages) {
 
-			// Social
-
-			socialActivityLocalService.deleteActivities(
-				MBMessage.class.getName(), message.getMessageId());
-
 			// Ratings
 
 			ratingsStatsLocalService.deleteStats(

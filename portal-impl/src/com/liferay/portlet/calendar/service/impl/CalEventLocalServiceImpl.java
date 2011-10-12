@@ -393,11 +393,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		expandoValueLocalService.deleteValues(
 			CalEvent.class.getName(), event.getEventId());
 
-		// Social
-
-		socialActivityLocalService.deleteActivities(
-			CalEvent.class.getName(), event.getEventId());
-
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(CalEvent.class);

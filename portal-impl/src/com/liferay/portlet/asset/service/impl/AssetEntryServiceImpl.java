@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
@@ -98,11 +99,13 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		return assetEntryLocalService.getEntry(entryId);
 	}
 
-	public AssetEntry incrementViewCounter(String className, long classPK)
+	public void incrementViewCounter(String className, long classPK)
 		throws PortalException, SystemException {
 
-		return assetEntryLocalService.incrementViewCounter(
-			getGuestOrUserId(), className, classPK, 1);
+		User user = getGuestOrUser();
+
+		assetEntryLocalService.incrementViewCounter(
+			user.getUserId(), className, classPK, 1);
 	}
 
 	public AssetEntryDisplay[] searchEntryDisplays(

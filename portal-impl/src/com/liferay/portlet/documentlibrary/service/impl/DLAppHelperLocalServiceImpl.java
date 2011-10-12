@@ -146,10 +146,6 @@ public class DLAppHelperLocalServiceImpl
 		ratingsStatsLocalService.deleteStats(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
-		// Social
-
-		socialActivityLocalService.deleteActivities(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 	}
 
 	public void deleteFolder(Folder folder)

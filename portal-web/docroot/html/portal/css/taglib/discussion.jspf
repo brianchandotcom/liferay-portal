@@ -27,9 +27,17 @@
 .taglib-discussion .lfr-discussion {
 	border-bottom: 1px solid #DDD;
 	margin: 0 0 5px;
-	padding: 5px 0 35px 60px;
+	padding: 5px 0 5px 0;
 	position: relative;
 	width: auto;
+}
+
+.taglib-discussion .lfr-discussion:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
 }
 
 .taglib-discussion .lfr-discussion.last {
@@ -37,10 +45,13 @@
 }
 
 .taglib-discussion .lfr-discussion-details {
-	left: 5px;
-	position: absolute;
-	top: 0px;
+	margin-right: -65px;
 	width: 65px;
+}
+
+.taglib-discussion .lfr-discussion-details .taglib-user-display {
+	padding-bottom: 0;
+	padding-top: 0;
 }
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display .user-details .user-name, .taglib-discussion .lfr-discussion-details .taglib-user-display .user-profile-image {
@@ -66,21 +77,25 @@
 }
 
 .taglib-discussion .lfr-discussion-body {
-	clear: both;
-	float: none;
-	padding: 5px 0 5px;
+	width: 100%;
 }
 
-.taglib-discussion .lfr-discussion-body .lfr-discussion-posted-on {
+.taglib-discussion .lfr-discussion-body-content {
+	margin-left: 65px;
+	padding: 5px 0;
+}
+
+.taglib-discussion .lfr-discussion-posted-on {
+	clear: both;
 	color: #999;
 	float: right;
 	font-size: .9em;
-    padding-top: 1.5em;
+	padding-top: 0.5em;
 }
 
 .taglib-discussion .lfr-discussion-message {
-	margin: 0 1em 0 0.5em;
 	padding-bottom: 1em;
+	padding-left: 0.5em;
 }
 
 .taglib-discussion .taglib-ratings {
@@ -89,6 +104,7 @@
 }
 
 .taglib-discussion .lfr-discussion-actions {
+	float: right;
 	margin: 0;
 }
 
@@ -128,11 +144,14 @@
 	height: 0;
 }
 
+.taglib-discussion .lfr-discussion-form-container {
+	clear: both;
+}
+
 .taglib-discussion .lfr-discussion-form-container .lfr-discussion-form {
 	background: #DDD;
 	border-radius: 4px;
 	display: inline-block;
-	left: -55px;
 	padding: 5px 5px 5px 50px;
 	position: relative;
 }
@@ -158,4 +177,8 @@
 
 .taglib-discussion .lfr-discussion-form-container .lfr-discussion-form .aui-button-holder {
 	margin: 5px 0 0;
+}
+
+.ie6 .taglib-discussion .lfr-discussion, .ie7 .taglib-discussion .lfr-discussion {
+	zoom: 1;
 }

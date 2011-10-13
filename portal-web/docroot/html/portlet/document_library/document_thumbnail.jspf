@@ -16,7 +16,7 @@
 
 <%
 String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-String thumbnailStyle = "height: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT + "px; width: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH + "px;";
+String thumbnailStyle = "max-height: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT + "px; max-width: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH + "px;";
 
 Image largeImage = ImageLocalServiceUtil.getImage(fileEntry.getFileVersion().getLargeImageId());
 

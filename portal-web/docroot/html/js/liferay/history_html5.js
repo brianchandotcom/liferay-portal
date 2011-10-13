@@ -62,7 +62,11 @@ AUI().add(
 					var hash = uriData[1];
 					var query = uriData[0];
 
-					var queryMap = instance._parse(query);
+					var queryMap = {};
+
+					if (query) {
+						queryMap = instance._parse(query);
+					}
 
 					if (!state && hash) {
 						var hashMap = instance._parse(hash);

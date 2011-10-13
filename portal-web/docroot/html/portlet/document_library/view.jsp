@@ -201,6 +201,10 @@ if (folder != null) {
 
 	new Liferay.Portlet.DocumentLibrary(
 		{
+			defaultParams: {
+				p_p_id: <%= portletId %>,
+				p_p_lifecycle: 0
+			},
 			defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			displayViews: ['<%= StringUtil.merge(displayViews, "','") %>'],

@@ -50,6 +50,9 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			else if (methodName.equals("getPreferences")) {
 				return getPreferences(methodInvocation);
 			}
+			else if (methodName.equals("getStrictPreferences")) {
+				return getPreferences(methodInvocation);
+			}
 			else if (methodName.equals("updatePreferences")) {
 				return updatePreferences(methodInvocation);
 			}

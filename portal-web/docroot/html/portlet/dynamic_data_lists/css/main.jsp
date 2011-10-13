@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
-.aui-document-library-file-entry-cell-editor-hidden, .aui-fileupload-cell-editor-hidden {
+.aui-document-library-file-entry-cell-editor-hidden, .aui-fileupload-cell-editor-hidden, .aui-password-cell-editor-hidden {
 	display: none;
 }
 

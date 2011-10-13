@@ -654,6 +654,11 @@ AUI().add(
 					type: 'ddm-number'
 				},
 				{
+					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					label: Liferay.Language.get('password'),
+					type: 'ddm-password'
+				},
+				{
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-radio',
 					label: Liferay.Language.get('radio'),
 					type: 'radio'

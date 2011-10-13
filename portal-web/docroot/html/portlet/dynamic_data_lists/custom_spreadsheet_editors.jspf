@@ -235,6 +235,19 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 		}
 	);
 
+	var PasswordCellEditor = A.Component.create(
+		{
+			NAME: 'password-cell-editor',
+
+			EXTENDS: A.TextCellEditor,
+
+			prototype: {
+				ELEMENT_TEMPLATE: '<input autocomplete="off" type="password" />'
+			}
+		}
+	);
+
 	Liferay.SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
 	Liferay.SpreadSheet.TYPE_EDITOR['ddm-fileupload'] = FileUploadCellEditor;
+	Liferay.SpreadSheet.TYPE_EDITOR['ddm-password'] = PasswordCellEditor;
 </aui:script>

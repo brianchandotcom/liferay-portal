@@ -806,6 +806,21 @@ public class HttpImpl implements Http {
 		return addParameter(url, name, value);
 	}
 
+	public String updateRedirect(
+		String redirect, String oldPath, String newPath) {
+
+		if (Validator.isNotNull(redirect) && (oldPath != null)
+			&& !(oldPath.equals(newPath))) {
+
+			redirect = StringUtil.replace(redirect, oldPath, newPath);
+
+			redirect = StringUtil.replace(
+				redirect, encodeURL(oldPath), encodeURL(newPath));
+		}
+
+		return redirect;
+	}
+
 	public byte[] URLtoByteArray(Http.Options options) throws IOException {
 		return URLtoByteArray(
 			options.getLocation(), options.getMethod(), options.getHeaders(),

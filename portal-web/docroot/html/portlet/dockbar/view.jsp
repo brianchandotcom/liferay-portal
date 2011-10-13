@@ -124,6 +124,13 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 				<div class="aui-menu manage-content-menu aui-overlaycontext-hidden" id="<portlet:namespace />manageContentContainer">
 					<div class="aui-menu-content">
 						<ul>
+
+							<%
+							themeDisplay.getURLPageSettings().setParameter("closeRedirect", PortalUtil.getCurrentURL(request));
+
+							themeDisplay.getURLSiteSettings().setParameter("closeRedirect", PortalUtil.getCurrentURL(request));
+							%>
+
 							<c:if test="<%= themeDisplay.isShowPageSettingsIcon() %>">
 								<li class="first manage-page use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLPageSettings().toString() %>" label="page" title="manage-page" />

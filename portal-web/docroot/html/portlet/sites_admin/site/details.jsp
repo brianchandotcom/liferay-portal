@@ -57,7 +57,9 @@ Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 	<aui:input name="categories" type="assetCategories" />
 
-	<aui:input name="tags" type="assetTags" />
+	<c:if test="<%= PropsValues.SITES_TAGGING_ENABLED %>">
+		<aui:input name="tags" type="assetTags" />
+	</c:if>
 
 	<c:if test="<%= liveGroup != null %>">
 		<aui:field-wrapper label="site-id">

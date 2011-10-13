@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase {
-	public void testConfigurePage2PortletDocumentsPerPage1()
+public class ConfigurePage2PortletEntriesPerPage5Test extends BaseTestCase {
+	public void testConfigurePage2PortletEntriesPerPage5()
 		throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
 
@@ -67,10 +67,6 @@ public class ConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -103,7 +99,7 @@ public class ConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//label[@for='_86_fileEntriesPerPage']")) {
+				if (selenium.isVisible("//label[@for='entriesPerPage']")) {
 					break;
 				}
 			}
@@ -113,10 +109,10 @@ public class ConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Documents per Page"),
-			selenium.getText("//label[@for='_86_fileEntriesPerPage']"));
-		selenium.type("//input[@id='_86_fileEntriesPerPage']",
-			RuntimeVariables.replace("1"));
+		assertEquals(RuntimeVariables.replace("Maximum Entries to Display"),
+			selenium.getText("//label[@for='entriesPerPage']"));
+		selenium.select("//select[@id='_86_entriesPerPage']",
+			RuntimeVariables.replace("5"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -124,56 +120,7 @@ public class ConfigurePage2PortletDocumentsPerPage1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("1",
-			selenium.getValue("//input[@id='_86_fileEntriesPerPage']"));
-		selenium.open("/web/document-library-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=DL Page2 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=DL Page2 Name",
-			RuntimeVariables.replace("DL Page2 Name"));
-		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Documents and Media (DL Page2 Name)")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace(
-				"Documents and Media (DL Page2 Name)"),
-			selenium.getText("//span[@class='portlet-title-text']"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
-		assertFalse(selenium.isElementPresent(
-				"xPath=(//span[@class='document-title'])[2]"));
-		assertFalse(selenium.isTextPresent("DL Folder3 Name"));
+		assertEquals("5",
+			selenium.getSelectedLabel("//select[@id='_86_entriesPerPage']"));
 	}
 }

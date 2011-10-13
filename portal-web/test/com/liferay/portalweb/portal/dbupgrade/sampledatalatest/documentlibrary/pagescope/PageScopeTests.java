@@ -46,14 +46,17 @@ public class PageScopeTests extends BaseTests {
 		testSuite.addTestSuite(RatePage1DLFolder1Document1Test.class);
 		testSuite.addTestSuite(AddPage2DLFolder2Test.class);
 		testSuite.addTestSuite(AddPage2DLFolder3Test.class);
+		testSuite.addTestSuite(AddPage2DLFolder4Test.class);
+		testSuite.addTestSuite(AddPage2DLFolder5Test.class);
+		testSuite.addTestSuite(AddPage2DLFolder6Test.class);
+		testSuite.addTestSuite(AddPage2DLFolder7Test.class);
 		testSuite.addTestSuite(AddPage2DLFolder2Document2Test.class);
 		testSuite.addTestSuite(AddPage2DLFolder2Document3Test.class);
 		testSuite.addTestSuite(AddPage2DLFolder2Document2Comment1Test.class);
 		testSuite.addTestSuite(AddPage2DLFolder2Document2Comment2Test.class);
 		testSuite.addTestSuite(RatePage2DLFolder2Document2Test.class);
 		testSuite.addTestSuite(PermissionsPage2DLFolder1GuestViewOffTest.class);
-		testSuite.addTestSuite(
-			ConfigurePage2PortletDocumentsPerPage1Test.class);
+		testSuite.addTestSuite(ConfigurePage2PortletEntriesPerPage5Test.class);
 		testSuite.addTestSuite(ViewPage1DLFolder1Test.class);
 		testSuite.addTestSuite(ViewPage1DLFolder1Document1Test.class);
 		testSuite.addTestSuite(ViewPage1DLFolder1Document1Comment1Test.class);
@@ -61,6 +64,10 @@ public class PageScopeTests extends BaseTests {
 		testSuite.addTestSuite(ViewRatePage1DLFolder1Document1Test.class);
 		testSuite.addTestSuite(ViewPage2DLFolder2Test.class);
 		testSuite.addTestSuite(ViewPage2DLFolder3Test.class);
+		testSuite.addTestSuite(ViewPage2DLFolder4Test.class);
+		testSuite.addTestSuite(ViewPage2DLFolder5Test.class);
+		testSuite.addTestSuite(ViewPage2DLFolder6Test.class);
+		testSuite.addTestSuite(ViewPage2DLFolder7Test.class);
 		testSuite.addTestSuite(ViewPage2DLFolder2Document2Test.class);
 		testSuite.addTestSuite(ViewPage2DLFolder2Document3Test.class);
 		testSuite.addTestSuite(ViewPage2DLFolder2Document2Comment1Test.class);
@@ -70,9 +77,13 @@ public class PageScopeTests extends BaseTests {
 		testSuite.addTestSuite(Guest_ViewPage1Folder1Test.class);
 		testSuite.addTestSuite(Guest_ViewPage2Folder2Test.class);
 		testSuite.addTestSuite(Guest_ViewPage2Folder3Test.class);
+		testSuite.addTestSuite(Guest_ViewPage2Folder4Test.class);
+		testSuite.addTestSuite(Guest_ViewPage2Folder5Test.class);
+		testSuite.addTestSuite(Guest_ViewPage2Folder6Test.class);
+		testSuite.addTestSuite(Guest_ViewPage2Folder7Test.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(
-			ViewConfigurePage2PortletDocumentsPerPage1Test.class);
+			ViewConfigurePage2PortletEntriesPerPage5Test.class);
 
 		return testSuite;
 	}

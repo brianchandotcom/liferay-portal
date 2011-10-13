@@ -66,8 +66,9 @@ public class AddPage1DLFolder1Document1Comment2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
@@ -90,8 +91,9 @@ public class AddPage1DLFolder1Document1Comment2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder1 Document1 Title.doc"));
 
 		for (int second = 0;; second++) {

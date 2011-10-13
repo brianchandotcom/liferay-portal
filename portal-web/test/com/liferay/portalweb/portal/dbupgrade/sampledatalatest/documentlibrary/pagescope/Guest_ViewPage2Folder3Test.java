@@ -66,32 +66,12 @@ public class Guest_ViewPage2Folder3Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
-		selenium.clickAt("//a[contains(@class,'aui-paginator-next-link')]",
-			RuntimeVariables.replace("Next"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DL Folder3 Name")
-										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png']"));
+				"//img[@src='/html/themes/classic/images/file_system/large/folder_empty.png']"));
 		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DL Folder3 Name"));
 
 		for (int second = 0;; second++) {
@@ -102,7 +82,7 @@ public class Guest_ViewPage2Folder3Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("Up")
 										.equals(selenium.getText(
-								"xPath=(//a[@class='browse-folder'])[1]"))) {
+								"//a[@class='browse-folder']"))) {
 					break;
 				}
 			}
@@ -113,9 +93,9 @@ public class Guest_ViewPage2Folder3Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Up"),
-			selenium.getText("xPath=(//a[@class='browse-folder'])[1]"));
+			selenium.getText("//a[@class='browse-folder']"));
 		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
-			selenium.getText("xPath=(//a[@class='browse-folder'])[3]"));
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Documents Home"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
@@ -165,10 +145,11 @@ public class Guest_ViewPage2Folder3Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isVisible(
-				"xPath=(//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png'])[2]"));
+				"//img[@src='/html/themes/classic/images/file_system/large/folder_empty.png']"));
 		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
-			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
-		selenium.clickAt("xPath=(//span[@class='document-title'])[2]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DL Folder3 Name"));
 
 		for (int second = 0;; second++) {
@@ -179,7 +160,7 @@ public class Guest_ViewPage2Folder3Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("Up")
 										.equals(selenium.getText(
-								"xPath=(//a[@class='browse-folder'])[1]"))) {
+								"//a[@class='browse-folder']"))) {
 					break;
 				}
 			}
@@ -190,9 +171,9 @@ public class Guest_ViewPage2Folder3Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Up"),
-			selenium.getText("xPath=(//a[@class='browse-folder'])[1]"));
+			selenium.getText("//a[@class='browse-folder']"));
 		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
-			selenium.getText("xPath=(//a[@class='browse-folder'])[3]"));
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Documents Home"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),

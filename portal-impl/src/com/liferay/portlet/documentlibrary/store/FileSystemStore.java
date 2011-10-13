@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -43,6 +45,7 @@ import java.util.Arrays;
 public class FileSystemStore extends BaseStore {
 
 	public FileSystemStore() {
+		_repositoryDirCache = new ConcurrentHashMap<RepositoryDirKey, File>();
 		_rootDir = new File(_ROOT_DIR);
 
 		if (!_rootDir.exists()) {
@@ -454,13 +457,22 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	protected File getRepositoryDir(long companyId, long repositoryId) {
-		File companyDir = getCompanyDir(companyId);
+		RepositoryDirKey repositoryDirKey =
+			new RepositoryDirKey(companyId, repositoryId);
 
-		File repositoryDir = new File(
-			companyDir + StringPool.SLASH + repositoryId);
+		File repositoryDir = _repositoryDirCache.get(repositoryDirKey);
 
-		if (!repositoryDir.exists()) {
-			repositoryDir.mkdirs();
+		if (repositoryDir == null) {
+			File companyDir = getCompanyDir(companyId);
+
+			repositoryDir = new File(
+				companyDir + StringPool.SLASH + repositoryId);
+
+			if (!repositoryDir.exists()) {
+				repositoryDir.mkdirs();
+			}
+
+			_repositoryDirCache.put(repositoryDirKey, repositoryDir);
 		}
 
 		return repositoryDir;
@@ -469,6 +481,37 @@ public class FileSystemStore extends BaseStore {
 	private static final String _ROOT_DIR = PropsUtil.get(
 		PropsKeys.DL_STORE_FILE_SYSTEM_ROOT_DIR);
 
+	private Map<RepositoryDirKey, File> _repositoryDirCache;
 	private File _rootDir;
+
+	private class RepositoryDirKey {
+
+		public RepositoryDirKey(long companyId, long repositoryId) {
+			_companyId = companyId;
+			_repositoryId = repositoryId;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			RepositoryDirKey repositoryDirKey = (RepositoryDirKey)obj;
+
+			if ((_companyId == repositoryDirKey._companyId) &&
+				(_repositoryId == repositoryDirKey._repositoryId)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		@Override
+		public int hashCode() {
+			return (int)(_companyId * 11 + _repositoryId);
+		}
+
+		private long _companyId;
+		private long _repositoryId;
+
+	}
 
 }

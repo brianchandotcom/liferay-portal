@@ -135,10 +135,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Registering extension environment for " + servletContextName);
-		}
+		logRegistration(servletContextName);
 
 		if (ExtRegistry.isRegistered(servletContextName)) {
 			if (_log.isInfoEnabled()) {
@@ -217,6 +214,13 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			_log.info(
 				"Extension environment for " +
 					servletContextName + " will not be undeployed");
+		}
+	}
+
+	protected void logRegistration(String servletContextName) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Registering extension environment for " + servletContextName);
 		}
 	}
 

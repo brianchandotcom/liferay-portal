@@ -258,9 +258,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Registering portlets for " + servletContextName);
-		}
+		logRegistration(servletContextName);
 
 		List<Portlet> portlets = PortletLocalServiceUtil.initWAR(
 			servletContextName, servletContext, xmls, event.getPluginPackage());
@@ -593,6 +591,12 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				portletURLListenerInstance);
 
 			PortletURLListenerFactory.create(portletURLListener);
+		}
+	}
+
+	protected void logRegistration(String servletContextName) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Registering portlets for " + servletContextName);
 		}
 	}
 

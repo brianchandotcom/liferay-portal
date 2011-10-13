@@ -68,9 +68,7 @@ public class ThemeLoaderHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Registering theme loader for " + servletContextName);
-		}
+		logRegistration(servletContextName);
 
 		ThemeLoaderFactory.init(servletContextName, servletContext, xmls);
 	}
@@ -100,6 +98,12 @@ public class ThemeLoaderHotDeployListener extends BaseHotDeployListener {
 			_log.info(
 				"Theme loader for " + servletContextName +
 					" unregistered successfully");
+		}
+	}
+
+	protected void logRegistration(String servletContextName) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Registering theme loader for " + servletContextName);
 		}
 	}
 

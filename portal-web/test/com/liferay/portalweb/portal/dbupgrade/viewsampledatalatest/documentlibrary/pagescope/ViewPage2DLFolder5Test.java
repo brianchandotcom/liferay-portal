@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewPage2DLFolder2Test extends BaseTestCase {
-	public void testViewPage2DLFolder2() throws Exception {
+public class ViewPage2DLFolder5Test extends BaseTestCase {
+	public void testViewPage2DLFolder5() throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
@@ -64,7 +64,7 @@ public class ViewPage2DLFolder2Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
-		assertFalse(selenium.isTextPresent("DL Folder2 Name"));
+		assertFalse(selenium.isTextPresent("DL Folder5 Name"));
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
@@ -110,12 +110,12 @@ public class ViewPage2DLFolder2Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png']"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
+				"xPath=(//img[@src='/html/themes/classic/images/file_system/large/folder_empty.png'])[3]"));
+		assertEquals(RuntimeVariables.replace("DL Folder5 Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DL Folder2 Name"));
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]",
+			RuntimeVariables.replace("DL Folder5 Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -137,11 +137,11 @@ public class ViewPage2DLFolder2Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Up"),
 			selenium.getText("//a[@class='browse-folder']"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder5 Name"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Documents Home"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[1]/span/a"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder5 Name"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));
 		selenium.open("/web/document-library-page-scope-community/");
 
@@ -188,12 +188,12 @@ public class ViewPage2DLFolder2Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isVisible(
-				"//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png']"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
+				"xPath=(//img[@src='/html/themes/classic/images/file_system/large/folder_empty.png'])[2]"));
+		assertEquals(RuntimeVariables.replace("DL Folder5 Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DL Folder2 Name"));
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]",
+			RuntimeVariables.replace("DL Folder5 Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -215,11 +215,11 @@ public class ViewPage2DLFolder2Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Up"),
 			selenium.getText("//a[@class='browse-folder']"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder5 Name"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Documents Home"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[1]/span/a"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder5 Name"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));
 	}
 }

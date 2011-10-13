@@ -34,6 +34,8 @@ AUI().add(
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
+		var DOCUMENT_LIBRARY_GROUP = 'document-library';
+
 		var REFRESH_FOLDERS = 'refreshFolders';
 
 		var ROWS_PER_PAGE = 'rowsPerPage';
@@ -476,12 +478,18 @@ AUI().add(
 
 						dd.removeInvalid('a');
 
+						dd.set('groups', DOCUMENT_LIBRARY_GROUP);
+
 						dd.plug(
 							A.Plugin.DDProxy,
 							{
 								moveOnEnd: false
 							}
 						);
+
+						dd.plug(A.Plugin.DDConstrained, {
+							constrain2node: instance._documentLibraryContainer
+						});
 
 						instance._initDropTargets();
 
@@ -491,7 +499,15 @@ AUI().add(
 					_initDropTargets: function() {
 						var instance = this;
 
-						instance._documentLibraryContainer.all('[data-folder="true"]').plug(A.Plugin.Drop);
+						var items = instance._documentLibraryContainer.all('[data-folder="true"]');
+
+						items.each(
+							function(item, index, collection) {
+								item.plug(A.Plugin.Drop, {
+									groups: DOCUMENT_LIBRARY_GROUP
+								});
+							}
+						);
 					},
 
 					_initHover: function() {
@@ -1123,6 +1139,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-paginator', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-history-manager', 'liferay-list-view', 'liferay-portlet-base']
+		requires: ['aui-paginator', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'dd-constrain', 'liferay-history-manager', 'liferay-list-view', 'liferay-portlet-base']
 	}
 );

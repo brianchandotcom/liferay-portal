@@ -30,7 +30,7 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -45,11 +45,14 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 
 				boolean entry1Present = selenium.isElementPresent("//td[2]/a");
 
@@ -65,6 +68,7 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -82,6 +86,7 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -99,6 +104,7 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -116,6 +122,7 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -133,6 +140,7 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 6:
 			case 100:

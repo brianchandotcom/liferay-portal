@@ -25,7 +25,7 @@ public class AddIncorrectURLTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,21 @@ public class AddIncorrectURLTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("Edited Test Folder"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -65,11 +69,14 @@ public class AddIncorrectURLTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[3]/div/div[2]/ul/li[5]/a",
 			RuntimeVariables.replace("Add Bookmark"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_28_url']",
 			RuntimeVariables.replace("www.movies.com"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("(Required)"),

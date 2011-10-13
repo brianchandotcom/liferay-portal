@@ -25,7 +25,7 @@ public class RemoveApplyUserGroupTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -40,19 +40,22 @@ public class RemoveApplyUserGroupTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=User Groups",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//td[4]/span/ul/li/strong/a"));
 		selenium.clickAt("//td[4]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -68,28 +71,34 @@ public class RemoveApplyUserGroupTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Assign Members"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Available"),
 			selenium.getText("link=Available"));
 		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText("//input[@name='_127_keywords']"));
 		selenium.type("//input[@name='_127_keywords']",
 			RuntimeVariables.replace("selenium"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='_127_allRowIds']",
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Update Associations']",
 			RuntimeVariables.replace("Update Associations"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

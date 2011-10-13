@@ -25,7 +25,7 @@ public class User_JoinSitesPrivateTest extends BaseTestCase {
 		selenium.open("/user/selenium01/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,16 @@ public class User_JoinSitesPrivateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No sites were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.open("/user/selenium01/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -62,14 +64,18 @@ public class User_JoinSitesPrivateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Available Sites",
 			RuntimeVariables.replace("Available Sites"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_29_name']",
 			RuntimeVariables.replace("Test Private Community"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@value='Search'])[3]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No sites were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 	}

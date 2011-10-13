@@ -25,7 +25,7 @@ public class AddNullTitleTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -40,29 +40,36 @@ public class AddNullTitleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards",
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_162_editor']",
 			RuntimeVariables.replace("This is a Null Test Entry!"));
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_162_subject']",
 			RuntimeVariables.replace(""));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -78,6 +85,7 @@ public class AddNullTitleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("This field is required."),
 			selenium.getText("//label/div"));
 	}

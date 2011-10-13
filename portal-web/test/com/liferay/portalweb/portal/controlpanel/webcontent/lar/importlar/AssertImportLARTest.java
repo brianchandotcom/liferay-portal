@@ -25,7 +25,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -40,12 +40,15 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Test Web Content Article"),
 			selenium.getText("//td[3]/a"));
@@ -67,8 +70,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Structures",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("TEST"),
-			selenium.getText("//td[2]/a"));
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Web Content Structure"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace(
@@ -76,8 +78,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("link=Templates", RuntimeVariables.replace("Templates"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("TEST"),
-			selenium.getText("//td[2]/a"));
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Web Content Template"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace(

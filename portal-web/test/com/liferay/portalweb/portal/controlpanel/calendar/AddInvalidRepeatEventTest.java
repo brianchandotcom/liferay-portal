@@ -25,7 +25,7 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -40,19 +40,23 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_8_allDayCheckbox']",
 			RuntimeVariables.replace("All Day Event Checkbox"));
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -67,8 +71,10 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Invalid Repeat Test Event"));
+		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_8_startDateMonth']",
 			RuntimeVariables.replace("label=February"));
 		selenium.select("//select[@id='_8_startDateDay']",
@@ -79,7 +85,7 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 			RuntimeVariables.replace("Repeat Daily"));
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -94,8 +100,10 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_8_dailyInterval']",
 			RuntimeVariables.replace("1"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='_8_endDateType' and @value='2']",
 			RuntimeVariables.replace("End by"));
 		selenium.select("//select[@id='_8_endDateMonth']",
@@ -107,6 +115,7 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));

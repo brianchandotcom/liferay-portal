@@ -25,7 +25,7 @@ public class User_LeaveSitesTest extends BaseTestCase {
 		selenium.open("/user/selenium01/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -40,29 +40,34 @@ public class User_LeaveSitesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_29_name']",
 			RuntimeVariables.replace("Test Open Community"));
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Open Community"),
-			selenium.getText("//div[1]/table/tbody/tr[3]/td[1]"));
+			selenium.getText("//div[1]/div/table/tbody/tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("2"),
-			selenium.getText("//div[1]/table/tbody/tr[3]/td[2]"));
+			selenium.getText("//div[1]/div/table/tbody/tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Leave"),
-			selenium.getText("//div[1]/table/tbody/tr[3]/td[3]/span/a/span"));
-		selenium.clickAt("//div[1]/table/tbody/tr[3]/td[3]/span/a/span",
+			selenium.getText("//div[1]/div/table/tbody/tr[3]/td[3]/span/a/span"));
+		selenium.clickAt("//div[1]/div/table/tbody/tr[3]/td[3]/span/a/span",
 			RuntimeVariables.replace("Leave"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/user/selenium01/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -77,8 +82,10 @@ public class User_LeaveSitesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("No sites were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 	}

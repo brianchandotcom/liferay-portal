@@ -54,19 +54,19 @@
 	<td>Null Description Poll Test Choice B</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//label/div</td>
-	<td>This field is required.</td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
+	<td>Your request failed to complete.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//label/div</td>
-	<td>This field is required.</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
+	<td>Please enter a valid description.</td>
 </tr>
 
 </tbody></table>

@@ -30,7 +30,7 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -45,16 +45,21 @@ public class TearDownSitesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_134_name']",
 					RuntimeVariables.replace("Test"));
+				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 
 				boolean community1Present = selenium.isPartialText("//tr[3]/td[1]",
 						"Test");
@@ -71,7 +76,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -87,6 +92,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
@@ -95,6 +101,7 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -113,7 +120,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -129,6 +136,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
@@ -137,6 +145,7 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -155,7 +164,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -171,6 +180,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
@@ -179,6 +189,7 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -197,7 +208,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -213,6 +224,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
@@ -221,6 +233,7 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -239,7 +252,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -255,6 +268,7 @@ public class TearDownSitesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[@class='last']/a"));
@@ -263,6 +277,7 @@ public class TearDownSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 6:
 			case 100:

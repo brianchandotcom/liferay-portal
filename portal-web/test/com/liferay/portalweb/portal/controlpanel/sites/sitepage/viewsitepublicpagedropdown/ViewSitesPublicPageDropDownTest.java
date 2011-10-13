@@ -25,7 +25,7 @@ public class ViewSitesPublicPageDropDownTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -42,11 +42,13 @@ public class ViewSitesPublicPageDropDownTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Community Name"),
 			selenium.getText("//li[6]/a/span"));
 		selenium.clickAt("//li[6]/a/span",
 			RuntimeVariables.replace("Community Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Public Page"),
 			selenium.getText("//nav/ul/li/a/span"));
 		assertEquals(RuntimeVariables.replace("Public Page"),

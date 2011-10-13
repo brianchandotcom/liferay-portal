@@ -30,7 +30,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -45,12 +45,15 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Bookmarks",
 					RuntimeVariables.replace("Bookmarks"));
 				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
 
 				boolean bookmarksFolder1Present = selenium.isElementPresent(
 						"//td[4]/span/ul/li/strong/a");
@@ -65,7 +68,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -81,11 +84,13 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -102,7 +107,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -118,11 +123,13 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -139,7 +146,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -155,11 +162,13 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -176,7 +185,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -192,11 +201,13 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -213,7 +224,7 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 90) {
+					if (second >= 60) {
 						fail("timeout");
 					}
 
@@ -229,11 +240,13 @@ public class TearDownBookmarkFolderCPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.saveScreenShotAndSource();
 
 			case 6:
 			case 100:

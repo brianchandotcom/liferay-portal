@@ -25,7 +25,7 @@ public class AssertEntriesTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 90) {
+			if (second >= 60) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,18 @@ public class AssertEntriesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Entries",
 			RuntimeVariables.replace("My Entries"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("exact:http://www.digg.com"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("exact:http://www.liferay.com"),
@@ -55,6 +59,7 @@ public class AssertEntriesTest extends BaseTestCase {
 		selenium.clickAt("link=Recent Entries",
 			RuntimeVariables.replace("Recent Entries"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("exact:http://www.digg.com"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("exact:http://www.liferay.com"),

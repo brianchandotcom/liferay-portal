@@ -328,6 +328,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	protected boolean isPropertyC3PO(String key) {
 		if (key.equalsIgnoreCase("acquireIncrement") ||
+			key.equalsIgnoreCase("acquireRetryAttempts") ||
+			key.equalsIgnoreCase("acquireRetryDelay") ||
 			key.equalsIgnoreCase("connectionCustomizerClassName") ||
 			key.equalsIgnoreCase("idleConnectionTestPeriod") ||
 			key.equalsIgnoreCase("maxIdleTime") ||

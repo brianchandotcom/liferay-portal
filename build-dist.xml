@@ -263,7 +263,7 @@
 
 		<ant dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
 
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${lp.plugins.normal}</echo>
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${lp.plugins.includes.required}</echo>
 
 		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
 	</target>

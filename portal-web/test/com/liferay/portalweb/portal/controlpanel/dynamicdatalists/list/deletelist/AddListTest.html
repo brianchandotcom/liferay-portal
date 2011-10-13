@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddListTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddListTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Dynamic Data Lists</td>
+	<td>Dynamic Data Lists</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Add</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_167_name_en_US']</td>
+	<td>List Name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='_167_description_en_US']</td>
+	<td>List Description</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Select</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe</td>
+	<td>Data Definitions</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>Data Definitions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>Data Definition</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//name</td>
+	<td>Data Definition</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//name</td>
+	<td>Data Definition</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

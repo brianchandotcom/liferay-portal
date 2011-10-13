@@ -106,8 +106,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 		User user = getGuestOrUser();
 
-		AssetEntry assetEntry = assetEntryLocalService.incrementViewCounter(
+		assetEntryLocalService.incrementViewCounter(
 			user.getUserId(), className, classPK, 1);
+
+		AssetEntry assetEntry = assetEntryLocalService.getEntry(
+			className, classPK);
 
 		if (!user.isDefaultUser()) {
 			socialActivityLocalService.addActivity(

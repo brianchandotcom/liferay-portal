@@ -44,8 +44,8 @@ public class ImportExportCPLARPage2DLPageScopeTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Document Library",
-			RuntimeVariables.replace("Document Library"));
+		selenium.clickAt("link=Documents and Media",
+			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Scope: Default"),
 			selenium.getText("//div/span/ul/li/strong/a/span"));

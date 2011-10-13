@@ -1598,7 +1598,7 @@ public class ServicePreAction extends Action {
 
 			if (!curLayout.isHidden() &&
 				(LayoutPermissionUtil.contains(
-					permissionChecker, curLayout, ActionKeys.VIEW) ||
+					permissionChecker, curLayout, true, ActionKeys.VIEW) ||
 				 hasViewStagingPermission)) {
 
 				if (accessibleLayouts.isEmpty() && !hasUpdateLayoutPermission) {

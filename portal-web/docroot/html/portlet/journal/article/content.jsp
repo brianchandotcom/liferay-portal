@@ -350,7 +350,7 @@ if (Validator.isNotNull(content)) {
 						<c:when test="<%= Validator.isNull(toLanguageId) %>">
 							<label for="<portlet:namespace />defaultLanguageId"><liferay-ui:message key="web-content-default-language" /></label>:
 
-							<span class="nobr">
+							<span class="lfr-translation-manager-selector nobr">
 								<span class="article-default-language journal-article-default-translation" id="<portlet:namespace />textLanguageId">
 									<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/language/" + defaultLanguageId + ".png" %>' />
 
@@ -379,39 +379,41 @@ if (Validator.isNotNull(content)) {
 							</span>
 
 							<c:if test="<%= Validator.isNotNull(articleId) %>">
-								<liferay-ui:icon-menu
-									align="left"
-									cssClass="add-translations-menu"
-									direction="down"
-									icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
-									message='<%= LanguageUtil.get(pageContext, "add-translation") %>'
-									showArrow="<%= true %>"
-									showWhenSingleIcon="<%= true %>"
-								>
+								<span class="lfr-translation-manager-add-menu">
+									<liferay-ui:icon-menu
+										align="left"
+										cssClass="add-translations-menu"
+										direction="down"
+										icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
+										message='<%= LanguageUtil.get(pageContext, "add-translation") %>'
+										showArrow="<%= true %>"
+										showWhenSingleIcon="<%= true %>"
+									>
 
-									<%
-									Locale[] locales = LanguageUtil.getAvailableLocales();
+										<%
+										Locale[] locales = LanguageUtil.getAvailableLocales();
 
-									for (int i = 0; i < locales.length; i++) {
-										if (ArrayUtil.contains(article.getAvailableLocales(), LocaleUtil.toLanguageId(locales[i]))) {
-											continue;
+										for (int i = 0; i < locales.length; i++) {
+											if (ArrayUtil.contains(article.getAvailableLocales(), LocaleUtil.toLanguageId(locales[i]))) {
+												continue;
+											}
+
+											String taglibEditArticleURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", LocaleUtil.toLanguageId(locales[i]));
+											String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + LocaleUtil.toLanguageId(locales[i]) + "', title: '" + LanguageUtil.get(pageContext, "web-content-translation") + "', uri: '" + taglibEditArticleURL + "'});";
+										%>
+
+											<liferay-ui:icon
+												image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
+												message="<%= locales[i].getDisplayName(locale) %>"
+												url="<%= taglibEditURL %>"
+											/>
+
+										<%
 										}
+										%>
 
-										String taglibEditArticleURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", LocaleUtil.toLanguageId(locales[i]));
-										String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + LocaleUtil.toLanguageId(locales[i]) + "', title: '" + LanguageUtil.get(pageContext, "web-content-translation") + "', uri: '" + taglibEditArticleURL + "'});";
-									%>
-
-										<liferay-ui:icon
-											image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
-											message="<%= locales[i].getDisplayName(locale) %>"
-											url="<%= taglibEditURL %>"
-										/>
-
-									<%
-									}
-									%>
-
-								</liferay-ui:icon-menu>
+									</liferay-ui:icon-menu>
+								</span>
 							</c:if>
 						</c:when>
 						<c:otherwise>

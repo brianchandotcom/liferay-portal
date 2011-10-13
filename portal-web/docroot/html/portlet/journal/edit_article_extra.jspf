@@ -57,7 +57,7 @@
 		</div>
 
 		<div class="journal-component journal-component-documentlibrary" dataType="document_library">
-			<liferay-ui:message key="document-library" />
+			<liferay-ui:message key="documents-and-media" />
 		</div>
 	</div>
 

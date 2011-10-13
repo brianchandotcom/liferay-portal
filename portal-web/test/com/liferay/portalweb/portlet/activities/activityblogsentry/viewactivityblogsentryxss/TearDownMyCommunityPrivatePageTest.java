@@ -57,7 +57,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Public Pages")
+						if (RuntimeVariables.replace("Private Pages")
 												.equals(selenium.getText(
 										"//a[@class='layout-tree']"))) {
 							break;
@@ -69,10 +69,10 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				boolean welcomePresent = selenium.isElementPresent(
+				boolean homePresent = selenium.isElementPresent(
 						"//li/ul/li[1]/div/div[3]/a");
 
-				if (welcomePresent) {
+				if (homePresent) {
 					label = 2;
 
 					continue;
@@ -89,7 +89,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Welcome")
+						if (RuntimeVariables.replace("Home")
 												.equals(selenium.getText(
 										"//li/ul/li[1]/div/div[3]/a"))) {
 							break;
@@ -164,7 +164,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Welcome")
+						if (RuntimeVariables.replace("Home")
 												.equals(selenium.getText(
 										"//li/ul/li[1]/div/div[3]/a"))) {
 							break;
@@ -239,7 +239,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Welcome")
+						if (RuntimeVariables.replace("Home")
 												.equals(selenium.getText(
 										"//li/ul/li[1]/div/div[3]/a"))) {
 							break;
@@ -314,7 +314,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Welcome")
+						if (RuntimeVariables.replace("Home")
 												.equals(selenium.getText(
 										"//li/ul/li[1]/div/div[3]/a"))) {
 							break;
@@ -389,7 +389,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Welcome")
+						if (RuntimeVariables.replace("Home")
 												.equals(selenium.getText(
 										"//li/ul/li[1]/div/div[3]/a"))) {
 							break;

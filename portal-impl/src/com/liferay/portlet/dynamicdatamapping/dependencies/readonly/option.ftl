@@ -1,7 +1,7 @@
 <#include "../init.ftl">
 
-<#assign selected = (field.value == fieldValue)>
+<#assign selected = (fieldStructure.value == fieldValue)>
 
 <#if selected>
-	${field.label}
+	${fieldStructure.label}
 </#if>

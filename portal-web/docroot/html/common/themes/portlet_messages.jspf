@@ -77,7 +77,7 @@ else if (group.isStagingGroup()) {
 		<c:if test='<%= SessionMessages.contains(renderRequest, portletConfig.getPortletName() + ".doCloseRedirect") %>'>
 
 			<%
-			String taglibMessage = "class=\"aui-link-hide\" href=\"javascript:;\"";
+			String taglibMessage = "class=\"lfr-hide-dialog\" href=\"javascript:;\"";
 			%>
 
 			<liferay-ui:message arguments="<%= taglibMessage %>" key="the-page-will-be-refreshed-when-you-close-this-dialog.alternatively-you-can-just-hide-this-dialog-x" />

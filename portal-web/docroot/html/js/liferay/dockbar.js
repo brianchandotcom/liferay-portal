@@ -614,16 +614,30 @@ AUI().add(
 
 							manageContent.hide();
 
-							instance._openWindow(
-								{
-									dialog: {
-										align: Util.Window.ALIGN_CENTER,
-										modal: fullDialog,
-										width: (fullDialog ? "90%" : 960)
-									}
-								},
-								event.currentTarget
-							);
+							var width = 960;
+
+							if (fullDialog) {
+								width = '90%';
+							}
+
+							var dialog = Liferay.Util.getWindow('manageContentDialog');
+
+							if (!dialog) {
+								instance._openWindow(
+									{
+										dialog: {
+											align: Util.Window.ALIGN_CENTER,
+											modal: fullDialog,
+											width: width
+										},
+										id: 'manageContentDialog'
+									},
+									event.currentTarget
+								);
+							}
+							else {
+								dialog.show();
+							}
 						},
 						'.use-dialog a'
 					);

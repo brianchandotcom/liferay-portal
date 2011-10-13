@@ -1050,16 +1050,23 @@ if (themeDisplay.isStatePopUp()) {
 	if((doCloseRedirect = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doCloseRedirect")) != null) {
 %>
 
-		<aui:script position="inline" use="aui-base,aui-loading-mask">
+		<aui:script use="aui-base,aui-loading-mask">
 			var dialog = Liferay.Util.getWindow();
 
 			dialog.on(
 				'visibleChange',
 				function(event) {
 					if (!event.newVal && event.src !== 'hideLink') {
-						new A.LoadingMask({target: Liferay.Util.getTop().AUI().getBody()}).show();
+						var topWindow = Liferay.Util.getTop();
+						var topA = topWindow.AUI();
 
-						Liferay.Util.getTop().location.href = '<%= doCloseRedirect %>';
+						new topA.LoadingMask(
+							{
+								target: topA.getBody()
+							}
+						).show();
+
+						topWindow.location.href = '<%= doCloseRedirect %>';
 					}
 				}
 			);

@@ -85,7 +85,7 @@ public class ImportLARTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\blogs\\dependencies\\Blogs-Selenium.portlet.lar"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\blogs\\dependencies\\Selenium-Blogs.portlet.lar"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_DELETE_PORTLET_DATACheckbox']"));
 		selenium.clickAt("//input[@id='_86_DELETE_PORTLET_DATACheckbox']",

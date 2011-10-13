@@ -610,13 +610,16 @@ AUI().add(
 						function(event) {
 							event.preventDefault();
 
+							var fullDialog = event.currentTarget.ancestor('li').hasClass('full-dialog');
+
 							manageContent.hide();
 
 							instance._openWindow(
 								{
 									dialog: {
 										align: Util.Window.ALIGN_CENTER,
-										width: 960
+										modal: fullDialog,
+										width: (fullDialog ? "90%" : 960)
 									}
 								},
 								event.currentTarget

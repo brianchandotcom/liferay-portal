@@ -370,7 +370,7 @@ public class StripFilter extends BasePortalFilter {
 			CharBuffer charBuffer, Writer writer, char[] openTag)
 		throws IOException {
 
-		int endPos = 0;
+		int endPos = openTag.length + 1;
 
 		char c = charBuffer.charAt(openTag.length);
 

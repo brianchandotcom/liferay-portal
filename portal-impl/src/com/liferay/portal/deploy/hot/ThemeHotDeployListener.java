@@ -76,9 +76,7 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Registering themes for " + servletContextName);
-		}
+		logRegistration(servletContextName);
 
 		List<String> themeIds = ThemeLocalServiceUtil.init(
 			servletContextName, servletContext, null, true, xmls,
@@ -155,6 +153,12 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 					themeIds.size() + " themes for " + servletContextName +
 						" was unregistered");
 			}
+		}
+	}
+
+	protected void logRegistration(String servletContextName) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Registering themes for " + servletContextName);
 		}
 	}
 

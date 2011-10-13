@@ -177,7 +177,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		sb.append(StringPool.EQUAL);
 		sb.append(primaryKeyParameterValue);
 
-		return null;
+		return sb.toString();
 	}
 
 	private static final String[] _EMPTY_ARRAY = new String[0];

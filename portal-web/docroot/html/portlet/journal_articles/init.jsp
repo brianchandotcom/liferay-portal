@@ -16,7 +16,10 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
+<%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
+page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
+page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
+page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
 page import="com.liferay.portlet.journal.NoSuchStructureException" %><%@
 page import="com.liferay.portlet.journal.action.EditArticleAction" %><%@

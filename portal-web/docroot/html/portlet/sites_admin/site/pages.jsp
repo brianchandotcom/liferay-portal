@@ -177,7 +177,7 @@ if (group != null) {
 				}
 				%>
 
-				<aui:select helpMessage="changing-the-application-adapter-may-cause-this-site-to-appear-and-behave-differently" label="application-adapter" name="customJspServletContextName">
+				<aui:select helpMessage='<%= LanguageUtil.format(pageContext, "application-adapter-help", "http://www.liferay.com/community/wiki/-/wiki/Main/Application+Adapters") %>' label="application-adapter" name="customJspServletContextName">
 					<aui:option label="none" value="" />
 
 					<%

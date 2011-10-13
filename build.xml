@@ -595,7 +595,7 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 				<delete>
 					<fileset
 						dir="${app.server.lib.portal.dir}"
-						includes="osgi.core.jar,xalan.jar,xercesImpl.jar,xml-apis.jar"
+						includes="osgi.core.jar,xalan.jar,xercesImpl.jar,xml-apis.jar,equinox.jar"
 					/>
 				</delete>
 			</then>

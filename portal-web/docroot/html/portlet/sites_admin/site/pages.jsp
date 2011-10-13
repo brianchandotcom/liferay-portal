@@ -177,7 +177,7 @@ if (group != null) {
 				}
 				%>
 
-				<aui:select helpMessage="changing-the-application-adapter-may-cause-this-site-to-appear-and-behave-differently" label="application-adapter" name="customJspServletContextName">
+				<aui:select helpMessage="application-adapter-help" label="application-adapter" name="customJspServletContextName">
 					<aui:option label="none" value="" />
 
 					<%

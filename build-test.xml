@@ -236,7 +236,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="5" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -289,6 +289,11 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="control-panel-calendar" />
 			<param name="test.ant.script.suite" value="ControlPanelCalendarTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="control-panel-dynamic-data-lists" />
+			<param name="test.ant.script.suite" value="ControlPanelDynamicDataListsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

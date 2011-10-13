@@ -43,37 +43,14 @@ public class AddUserGroupTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users and Organizations"));
+		selenium.clickAt("link=User Groups",
+			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("User Group"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
-			RuntimeVariables.replace("User Group"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_125_name']",
+		selenium.type("//input[@id='_127_name']",
 			RuntimeVariables.replace("User Group Name"));
-		selenium.type("//textarea[@id='_125_description']",
+		selenium.type("//textarea[@id='_127_description']",
 			RuntimeVariables.replace("User Group Description"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -81,31 +58,6 @@ public class AddUserGroupTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("User Groups"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
-			RuntimeVariables.replace("User Groups"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("User Group Name"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("User Group Description"),

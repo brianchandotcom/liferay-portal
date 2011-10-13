@@ -14,6 +14,7 @@
 
 package com.liferay.portal.setup;
 
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -132,6 +134,7 @@ public class SetupWizardUtil {
 			PropertiesParamUtil.getProperties(request, _PROPERTIES_PREFIX);
 
 		_processAdminProperties(request, unicodeProperties);
+		_processDBProperties(request, unicodeProperties);
 		processPortalLanguage(request, response);
 
 		unicodeProperties.put(
@@ -213,6 +216,21 @@ public class SetupWizardUtil {
 
 		unicodeProperties.put(
 			PropsKeys.DEFAULT_ADMIN_SCREEN_NAME, defaultAdminScreenName);
+	}
+
+	private static void _processDBProperties(
+			HttpServletRequest request, UnicodeProperties unicodeProperties)
+		throws Exception {
+
+		boolean defaultDatabase = GetterUtil.getBoolean(
+			_getParameter(request, "defaultDatabase", "true"));
+
+		if (defaultDatabase) {
+			unicodeProperties.remove(PropsKeys.JDBC_DEFAULT_URL);
+			unicodeProperties.remove(PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME);
+			unicodeProperties.remove(PropsKeys.JDBC_DEFAULT_USERNAME);
+			unicodeProperties.remove(PropsKeys.JDBC_DEFAULT_PASSWORD);
+		}
 	}
 
 	public static void testDatabase(HttpServletRequest request)
@@ -298,10 +316,23 @@ public class SetupWizardUtil {
 		String defaultAdminEmailAddress = _getParameter(
 			request, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, "test@liferay.com");
 
-		User user = UserLocalServiceUtil.getUserByEmailAddress(
-			PortalUtil.getDefaultCompanyId(), defaultAdminEmailAddress);
+		User adminUser = null;
 
-		UserLocalServiceUtil.updatePasswordReset(user.getUserId(), true);
+		try {
+			adminUser = UserLocalServiceUtil.getUserByEmailAddress(
+				PortalUtil.getDefaultCompanyId(), defaultAdminEmailAddress);
+		}
+		catch (NoSuchUserException nsue) {
+			adminUser = UserLocalServiceUtil.getUserByEmailAddress(
+				PortalUtil.getDefaultCompanyId(), "test@liferay.com");
+
+			UserLocalServiceUtil.updateEmailAddress(
+				adminUser.getUserId(), StringPool.BLANK,
+				defaultAdminEmailAddress, defaultAdminEmailAddress);
+		}
+
+		UserLocalServiceUtil.updatePasswordReset(adminUser.getUserId(), true);
+
 
 		HttpSession session = request.getSession();
 

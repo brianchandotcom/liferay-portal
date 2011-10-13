@@ -53,7 +53,7 @@ boolean passwordUpdated = GetterUtil.getBoolean((Boolean)session.getAttribute(We
 				<c:when test="<%= !propertiesFileUpdated && !SetupWizardUtil.isSetupFinished(request) %>">
 
 					<%
-					boolean defaultDatabase = ParamUtil.getBoolean(request,"defaultDatabase", PropsValues.JDBC_DEFAULT_URL.contains("hypersonic"));
+					boolean defaultDatabase = ParamUtil.getBoolean(request,"defaultDatabase", PropsValues.JDBC_DEFAULT_URL.contains("hsqldb"));
 					%>
 
 					<aui:form action='<%= themeDisplay.getPathMain() + "/portal/setup_wizard" %>' method="post" onSubmit="event.preventDefault();" name="fm">

@@ -635,7 +635,7 @@
 
 	Liferay.provide(
 		Portlet,
-		'_loadCSSEditor',
+		'loadCSSEditor',
 		function(portletId) {
 			Liferay.PortletCSS.init(portletId);
 		},

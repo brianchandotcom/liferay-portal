@@ -436,10 +436,10 @@ AUI().add(
 			}
 		};
 
+		var buffer = [];
+
 		Menu.register = function(id) {
 			var instance = Menu._INSTANCE;
-
-			var node = A.one(id);
 
 			if (!instance) {
 				instance = new Menu();
@@ -447,31 +447,49 @@ AUI().add(
 				Menu._INSTANCE = instance;
 			}
 
-			node.on(
-				EVENT_CLICK,
-				function(event) {
-					var trigger = event.currentTarget;
+			buffer.push(id);
 
-					var activeTrigger = instance._activeTrigger;
-
-					if (activeTrigger && (activeTrigger != trigger)) {
-						activeTrigger.removeClass(CSS_STATE_ACTIVE);
-					}
-
-					if (!trigger.hasClass('disabled')) {
-						var menu = instance._getMenu(trigger);
-
-						instance._activeMenu = menu;
-						instance._activeTrigger = trigger;
-
-						instance._positionActiveMenu();
-
-						event.halt();
-					}
-				},
-				'.lfr-actions'
-			);
+			Menu._registerTask();
 		};
+
+		Menu._registerTask = A.debounce(
+			function() {
+				var instance = Menu._INSTANCE;
+
+				if (buffer.length) {
+					var list = buffer.join();
+
+					buffer.length = 0;
+
+					var nodes = A.all(list);
+
+					nodes.on(
+						EVENT_CLICK,
+						function(event) {
+							var trigger = event.currentTarget;
+
+							var activeTrigger = instance._activeTrigger;
+
+							if (activeTrigger && (activeTrigger != trigger)) {
+								activeTrigger.removeClass(CSS_STATE_ACTIVE);
+							}
+
+							if (!trigger.hasClass('disabled')) {
+								var menu = instance._getMenu(trigger);
+
+								instance._activeMenu = menu;
+								instance._activeTrigger = trigger;
+
+								instance._positionActiveMenu();
+
+								event.halt();
+							}
+						}
+					);
+				}
+			},
+			100
+		);
 
 		Menu._targetLink = function(event, action) {
 			var anchor = event.currentTarget.one(SELECTOR_ANCHOR);

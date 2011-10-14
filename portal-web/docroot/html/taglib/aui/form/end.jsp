@@ -41,7 +41,7 @@
 								body: <%= validatorTag.getBody() %>,
 								errorMessage: '<liferay-ui:message key="<%= validatorTag.getErrorMessage() %>" />',
 								fieldName: '<%= namespace + fieldName %>',
-								isCustom: <%= validatorTag.isCustom() %>,
+								custom: <%= validatorTag.isCustom() %>,
 								validatorName: '<%= validatorTag.getName() %>'
 							}
 

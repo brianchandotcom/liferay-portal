@@ -246,7 +246,13 @@ else if (dlFileEntryType != null) {
 			</aui:validator>
 		</aui:input>
 
-		<aui:input name="title" />
+		<aui:input name="title">
+			<aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">
+				function(val, fieldNode, ruleValue) {
+					return ((val != '') || A.one('#<portlet:namespace />file').val() != '');
+				}
+			</aui:validator>
+		</aui:input>
 
 		<c:if test='<%= ((folder == null) || folder.isSupportsMetadata()) %>'>
 			<aui:input name="description" />

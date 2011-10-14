@@ -53,7 +53,9 @@
 			<forward name="portal.layout" path="portal.layout" />
 		</action>
 
-		<action path="/portal/license" forward="portal.license" />
+		<action path="/portal/license" type="com.liferay.portal.action.UpdateLicenseAction">
+			<forward name="portal.license" path="portal.license" />
+		</action>
 
 		<action path="/portal/login" type="com.liferay.portal.action.LoginAction" />
 

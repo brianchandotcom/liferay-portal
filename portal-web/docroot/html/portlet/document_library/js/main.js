@@ -481,15 +481,21 @@ AUI().add(
 						dd.set('groups', DOCUMENT_LIBRARY_GROUP);
 
 						dd.plug(
-							A.Plugin.DDProxy,
-							{
-								moveOnEnd: false
-							}
+							[
+								{
+									cfg: {
+										moveOnEnd: false
+									},
+									fn: A.Plugin.DDProxy
+								},
+								{
+									cfg: {
+										constrain2node: instance._documentLibraryContainer
+									},
+									fn: A.Plugin.DDConstrained
+								}
+							]
 						);
-
-						dd.plug(A.Plugin.DDConstrained, {
-							constrain2node: instance._documentLibraryContainer
-						});
 
 						instance._initDropTargets();
 
@@ -501,11 +507,10 @@ AUI().add(
 
 						var items = instance._documentLibraryContainer.all('[data-folder="true"]');
 
-						items.each(
-							function(item, index, collection) {
-								item.plug(A.Plugin.Drop, {
-									groups: DOCUMENT_LIBRARY_GROUP
-								});
+						items.plug(
+							A.Plugin.Drop,
+							{
+								groups: DOCUMENT_LIBRARY_GROUP
 							}
 						);
 					},
@@ -659,7 +664,7 @@ AUI().add(
 						var dragNode = event.drag.get('node');
 						var dropTarget = event.drop.get('node');
 
-						dropTarget = dropTarget.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || dropTarget
+						dropTarget = dropTarget.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || dropTarget;
 
 						if (!dragNode.compareTo(dropTarget)) {
 							dropTarget.addClass(CSS_ACTIVE_AREA);

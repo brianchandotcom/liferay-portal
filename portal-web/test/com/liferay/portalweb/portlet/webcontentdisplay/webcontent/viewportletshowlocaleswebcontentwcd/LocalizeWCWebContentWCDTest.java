@@ -91,8 +91,8 @@ public class LocalizeWCWebContentWCDTest extends BaseTestCase {
 			selenium.getText("//body"));
 		selenium.selectFrame("relative=top");
 		assertEquals(RuntimeVariables.replace("Add Translation"),
-			selenium.getText("//span[2]/ul/li/strong/a/span"));
-		selenium.clickAt("//span[2]/ul/li/strong/a/span",
+			selenium.getText("//strong/a/span"));
+		selenium.clickAt("//strong/a/span",
 			RuntimeVariables.replace("Add Translation"));
 
 		for (int second = 0;; second++) {

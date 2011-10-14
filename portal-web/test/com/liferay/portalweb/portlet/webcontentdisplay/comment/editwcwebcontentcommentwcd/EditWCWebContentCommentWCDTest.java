@@ -56,7 +56,7 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[3]/div/div[2]/span/span/span/textarea")) {
+							"//div[4]/div/div[2]/span/span/span/textarea")) {
 					break;
 				}
 			}
@@ -66,7 +66,7 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//div[3]/div/div[2]/span/span/span/textarea",
+		selenium.type("//div[4]/div/div[2]/span/span/span/textarea",
 			RuntimeVariables.replace("WCD Web Content Comment Edit"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

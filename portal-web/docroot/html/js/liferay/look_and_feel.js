@@ -8,8 +8,7 @@ AUI().add(
 			init: function(portletId) {
 				var instance = this;
 
-				var curPortletBoundaryId = 'p_p_id_' + portletId + '_';
-				var obj = A.one('#' + curPortletBoundaryId);
+				var obj = A.one(portletId);
 
 				if (obj) {
 					instance._portletId = portletId;
@@ -19,13 +18,13 @@ AUI().add(
 
 					if (!instance._curPortlet) {
 						instance._curPortlet = obj;
-						instance._curPortletWrapperId = curPortletBoundaryId;
+						instance._curPortletWrapperId = portletId;
 					}
 					else {
 						instance._curPortletWrapperId = instance._curPortlet.attr('id');
 					}
 
-					instance._portletBoundaryId = curPortletBoundaryId;
+					instance._portletBoundaryId = portletId;
 					instance._newPanel = A.one('#portlet-set-properties');
 					instance._currentLanguage = themeDisplay.getLanguageId();
 

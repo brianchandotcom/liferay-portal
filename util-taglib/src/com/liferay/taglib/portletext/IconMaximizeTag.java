@@ -41,6 +41,7 @@ public class IconMaximizeTag extends IconTag {
 		setImage("../portlet/maximize");
 		setMessage("maximize");
 		setMethod("get");
+		setOnClick("submitForm(document.hrefFm, '" + portletDisplay.getURLMax() + "'); return false;");
 		setToolTip(false);
 		setUrl(portletDisplay.getURLMax());
 

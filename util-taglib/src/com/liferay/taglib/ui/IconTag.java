@@ -62,6 +62,10 @@ public class IconTag extends IncludeTag {
 		_method = method;
 	}
 
+	public void setOnClick(String onClick) {
+		_onClick = onClick;
+	}
+
 	public void setSrc(String src) {
 		_src = src;
 	}
@@ -92,6 +96,7 @@ public class IconTag extends IncludeTag {
 		_lang = null;
 		_message = null;
 		_method = null;
+		_onClick = null;
 		_src = null;
 		_srcHover = null;
 		_target = null;
@@ -134,6 +139,7 @@ public class IconTag extends IncludeTag {
 		request.setAttribute("liferay-ui:icon:lang", _lang);
 		request.setAttribute("liferay-ui:icon:message", _message);
 		request.setAttribute("liferay-ui:icon:method", _method);
+		request.setAttribute("liferay-ui:icon:onClick", _onClick);
 		request.setAttribute("liferay-ui:icon:src", _src);
 		request.setAttribute("liferay-ui:icon:srcHover", _srcHover);
 		request.setAttribute("liferay-ui:icon:target", _target);
@@ -154,6 +160,7 @@ public class IconTag extends IncludeTag {
 	private String _lang;
 	private String _message;
 	private String _method;
+	private String _onClick;
 	private String _src;
 	private String _srcHover;
 	private String _target = "_self";

@@ -40,7 +40,7 @@ AUI().add(
 			var id = config.id || A.guid();
 
 			if (config.cache === false) {
-				uri = Liferay.Util.addParams(A.guid() + '=' + (+new Date), uri);
+				uri = Liferay.Util.addParams(A.guid() + '=' + A.Lang.now(), uri);
 			}
 
 			var dialog = Window._map[id];
@@ -72,6 +72,9 @@ AUI().add(
 				A.mix(
 					dialogIframeConfig,
 					{
+						bindLoadHandler: function() {
+							Liferay.on('popupReady', A.bind(this.fire, this, 'load'));
+						},
 						id: id,
 						iframeId: id,
 						uri: uri
@@ -98,7 +101,7 @@ AUI().add(
 				);
 
 				Liferay.after(
-					'popupLoaded',
+					'popupReady',
 					function(event) {
 						if (event.windowName == id) {
 							var dialogIframeNode = event.currentTarget.node;

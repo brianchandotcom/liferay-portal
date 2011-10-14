@@ -22,7 +22,7 @@
 	<c:choose>
 		<c:when test="<%= themeDisplay.isStatePopUp() %>">
 			Liferay.Util.getTop().Liferay.fire(
-				'popupLoaded',
+				'popupReady',
 				{
 					doc: document,
 					win: window,

@@ -815,10 +815,6 @@
 		<put name="portlet_content" value="/portlet/login/create_anonymous_account.jsp" />
 	</definition>
 
-	<definition name="portlet.login.facebook_login" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/facebook_login.jsp" />
-	</definition>
-
 	<definition name="portlet.login.forgot_password" extends="portlet.login">
 		<put name="portlet_content" value="/portlet/login/forgot_password.jsp" />
 	</definition>

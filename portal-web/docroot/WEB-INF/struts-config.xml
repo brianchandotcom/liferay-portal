@@ -1023,10 +1023,6 @@
 			<forward name="portlet.login.create_anonymous_account" path="portlet.login.create_anonymous_account" />
 		</action>
 
-		<action path="/login/facebook_connect" type="com.liferay.portlet.login.action.FacebookConnectAction">
-			<forward name="portlet.login.facebook_login" path="portlet.login.facebook_login" />
-		</action>
-
 		<action path="/login/facebook_connect_oauth" type="com.liferay.portlet.login.action.FacebookConnectAction" />
 
 		<action path="/login/forgot_password" type="com.liferay.portlet.login.action.ForgotPasswordAction">

@@ -716,6 +716,10 @@
 
 		<move file="${lp.plugins.dir}/dist/liferay-plugins-sdk-${lp.version}.zip" tofile="dist/liferay-plugins-sdk-${lp.version}.zip" />
 
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">plugins.includes=${lp.plugins.includes.misc}</echo>
+
+		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
+
 		<antcall target="rename-dist-files" />
 
 		<if>

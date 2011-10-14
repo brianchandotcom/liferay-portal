@@ -299,6 +299,10 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
+		if (value.startsWith("0x")) {
+			return _getHexaValue(value.substring(2), defaultValue);
+		}
+
 		return _parseInt(_trim(value), defaultValue);
 	}
 
@@ -790,6 +794,15 @@ public class GetterUtil {
 
 	public static String getString(String value, String defaultValue) {
 		return get(value, defaultValue);
+	}
+
+	private static int _getHexaValue(String value, int defaultValue) {
+		try {
+			return Integer.valueOf(value, 16);
+		}
+		catch (Exception e) {
+			return defaultValue;
+		}
 	}
 
 	private static int _parseInt(String value, int defaultValue) {

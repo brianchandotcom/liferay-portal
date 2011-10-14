@@ -1381,6 +1381,8 @@ public interface PropsKeys {
 
 	public static final String NTLM_AUTH_ENABLED = "ntlm.auth.enabled";
 
+	public static final String NTLM_AUTH_NEGOTIATE_FLAGS = "ntlm.auth.negotiate.flags";
+
 	public static final String NTLM_DOMAIN = "ntlm.auth.domain";
 
 	public static final String NTLM_DOMAIN_CONTROLLER = "ntlm.auth.domain.controller";

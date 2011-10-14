@@ -20,6 +20,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
@@ -27,6 +28,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
 public class MBCategoryPermission {
 
@@ -36,6 +38,16 @@ public class MBCategoryPermission {
 		throws PortalException, SystemException {
 
 		if (!contains(permissionChecker, groupId, categoryId, actionId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, long categoryId,
+			String actionId)
+		throws PortalException, SystemException {
+
+		if (!contains(permissionChecker, categoryId, actionId)) {
 			throw new PrincipalException();
 		}
 	}
@@ -65,6 +77,22 @@ public class MBCategoryPermission {
 				categoryId);
 
 			return contains(permissionChecker, category, actionId);
+		}
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long categoryId,
+			String actionId)
+		throws PortalException, SystemException {
+
+		try {
+			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
+					categoryId);
+
+			return contains(permissionChecker, category, actionId);
+		}
+		catch (NoSuchCategoryException nsce) {
+			return false;
 		}
 	}
 

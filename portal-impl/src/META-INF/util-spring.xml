@@ -661,4 +661,8 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
+	<bean id="com.liferay.portal.security.permission.SubscriptionPermission" class="com.liferay.portal.security.permission.SubscriptionPermissionImpl" />
+	<bean id="com.liferay.portal.security.permission.SubscriptionPermissionUtil" class="com.liferay.portal.security.permission.SubscriptionPermissionUtil">
+		<property name="subscriptionPermission" ref="com.liferay.portal.security.permission.SubscriptionPermission" />
+	</bean>
 </beans>

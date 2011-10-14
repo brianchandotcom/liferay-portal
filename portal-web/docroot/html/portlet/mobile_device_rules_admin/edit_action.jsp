@@ -37,14 +37,14 @@ Collection<ActionHandler> actionHandlers = ActionHandlerManagerUtil.getActionHan
 
 <c:if test='<%= isAdd %>'>
 	<liferay-ui:header
-		title="add-action"
 		backURL="<%= redirect %>"
+		title="add-action"
 	/>
 </c:if>
 <c:if test='<%= !isAdd %>'>
 	<liferay-ui:header
-		title="edit-action"
 		backURL="<%= redirect %>"
+		title="edit-action"
 	/>
 </c:if>
 
@@ -68,35 +68,40 @@ Collection<ActionHandler> actionHandlers = ActionHandlerManagerUtil.getActionHan
 	<aui:fieldset>
 		<aui:input name="name" />
 		<aui:input name="description" />
-		<aui:select name="type" changesContext="<%= true %>" onChange='<%= renderResponse.getNamespace() + "changeType();" %>'>
-			<aui:option label="select-an-action-type" selected="<%= StringPool.BLANK.equals(type) %>" disabled="<%= true %>" />
+
+		<aui:select changesContext="<%= true %>" name="type" onChange='<%= renderResponse.getNamespace() + "changeType();" %>'>
+			<aui:option disabled="<%= true %>" label="select-an-action-type" selected="<%= StringPool.BLANK.equals(type) %>" />
+
 			<%
 			for (ActionHandler actionHandler : actionHandlers) {
-				boolean selected = actionHandler.getType().equals(type);
 	   		%>
-				<aui:option label="<%= actionHandler.getType() %>" selected="<%= selected %>" />
+
+				<aui:option label="<%= actionHandler.getType() %>" selected="<%= actionHandler.getType().equals(type) %>" />
+
 			<%
 			}
 			%>
+
 		</aui:select>
+
 		<div id="<%= renderResponse.getNamespace() %>typeSettings">
 			<c:if test="<%=Validator.isNotNull(editorJSP) %>">
-				<c:import url="<%=editorJSP%>" />
+				<c:import url="<%=editorJSP %>" />
 			</c:if>
 		</div>
 	</aui:fieldset>
 
 	<aui:button-row>
 		<aui:button type="submit" />
+
 		<aui:button href="<%= redirect %>" value="cancel" />
 	</aui:button-row>
 </aui:form>
 
-<portlet:resourceURL var="editorURL">
-	<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_action_editor" />
-</portlet:resourceURL>
-
 <aui:script>
+	<portlet:resourceURL var="editorURL">
+		<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_action_editor" />
+	</portlet:resourceURL>
 
 	Liferay.provide(
 		window,
@@ -104,62 +109,57 @@ Collection<ActionHandler> actionHandlers = ActionHandlerManagerUtil.getActionHan
 		function() {
 			var A = AUI();
 
-			var type = document.<portlet:namespace />fm.<portlet:namespace />type.value;
-
-			A.io(
+			A.io.request(
 				'<%= editorURL.toString() %>',
 				{
 					data: {
-						type: type,
+						type: document.<portlet:namespace />fm.<portlet:namespace />type.value,
 						<%= MDRPortletConstants.MDR_ACTION_ID %>: <%= actionId %>
 					},
-					method: AUI.defaults.io.method,
 					on: {
-						complete: <portlet:namespace />displayForm
+						complete: function(id, obj) {
+							var typeSettings = A.one('#<portlet:namespace />typeSettings');
+
+							if (typeSettings) {
+								typeSettings.html(this.get('responseData'));
+							}
+						}
 					}
 				}
-			)
+			);
 		},
-		['aui-base']
+		['aui-io']
 	);
 
-	function <portlet:namespace />displayForm(id, obj) {
-		document.getElementById('<portlet:namespace />typeSettings').innerHTML=obj.responseText;
-	}
-</aui:script>
+	<portlet:resourceURL var="layoutsURL">
+		<portlet:param name="struts_action" value="/mobile_device_rules_admin/view_group_layouts" />
+	</portlet:resourceURL>
 
-<portlet:resourceURL var="layoutsURL">
-	<portlet:param name="struts_action" value="/mobile_device_rules_admin/view_group_layouts" />
-</portlet:resourceURL>
-
-<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />changeDisplay',
 		function() {
 			var A = AUI();
 
-			var groupId = document.<portlet:namespace />fm.<portlet:namespace />groupId.value;
-			var layoutId = document.<portlet:namespace />fm.<portlet:namespace />originalLayoutId.value;
-
-			A.io(
+			A.io.request(
 				'<%= layoutsURL.toString() %>',
 				{
 					data: {
-						actionGroupId: groupId,
-						actionLayoutId: layoutId
+						actionGroupId: document.<portlet:namespace />fm.<portlet:namespace />groupId.value,
+						actionLayoutId: document.<portlet:namespace />fm.<portlet:namespace />originalLayoutId.value
 					},
-					method: AUI.defaults.io.method,
 					on: {
-						complete: <portlet:namespace />displayLayouts
+						complete: function(id, obj) {
+							var layouts = A.one('#<portlet:namespace />layouts');
+
+							if (layouts) {
+								layouts.html(this.get('responseData'));
+							}
+						}
 					}
 				}
-			)
+			);
 		},
-		['aui-base']
+		['aui-io']
 	);
-
-	function <portlet:namespace />displayLayouts(id, obj) {
-		document.getElementById('<portlet:namespace />layouts').innerHTML=obj.responseText;
-	};
 </aui:script>

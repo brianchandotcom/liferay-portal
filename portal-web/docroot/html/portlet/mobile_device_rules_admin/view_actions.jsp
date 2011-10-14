@@ -50,8 +50,10 @@ String title = LanguageUtil.format(pageContext, "actions-for-x", ruleGroup.getNa
 	</liferay-portlet:renderURL>
 
 	<div class="lfr-portlet-toolbar">
-		<span class="lfr-toolbar-button add-button">
-			<a href="<%= addURL %>"><liferay-ui:message key="add-action" /></a>
+		<span class="add-button lfr-toolbar-button">
+			<a href="<%= addURL %>">
+				<liferay-ui:message key="add-action" />
+			</a>
 		</span>
 	</div>
 </c:if>

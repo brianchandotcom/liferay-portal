@@ -46,30 +46,23 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 	<portlet:param name="<%= MDRPortletConstants.CLASS_PK %>" value="<%= String.valueOf(classPK) %>" />
 </liferay-portlet:renderURL>
 
-<aui:script use="aui-base">
-	var config = {
-		dialog: {
-			width: 820,
-			align: Liferay.Util.Window.ALIGN_CENTER,
+<aui:script>
+	function <portlet:namespace />processDialog(dialog) {
+		if (dialog) {
+			if (Liferay.Util.getTop() == window) {
+				dialog.plug(A.LoadingMask).render();
+			}
+			else {
+				dialog.close();
+			}
 		}
-	};
+	}
 
-	A.one('#<portlet:namespace />saveInstance').on('click', function() {
-		config.dialog.title = '<liferay-ui:message key="rule-groups" />';
+	function <portlet:namespace />saveRuleGroupsPriorities(dialog) {
+		<portlet:namespace />processDialog(dialog);
 
-		config.uri = '<%= selectRuleGroupURL %>';
-
-		Liferay.Util.openWindow(config);
-	});
-
-	A.one('#<portlet:namespace />managePriorities').on('click', function() {
-		config.dialog.title = '<liferay-ui:message key="rule-groups-priorities" />';
-		config.dialog.width = 460;
-
-		config.uri = '<%= managePrioritiesURL %>';
-
-		Liferay.Util.openWindow(config);
-	});
+		location.href = '<%= redirect %>';
+	}
 
 	Liferay.provide(
 		window,
@@ -77,16 +70,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 		function(ruleGroupId, ruleGroupName, dialog) {
 			var A = AUI();
 
-			if (dialog) {
-				if (Liferay.Util.getTop() === window) {
-					dialog.plug(
-						A.LoadingMask
-					).render();
-				}
-				else {
-					dialog.close();
-				}
-			}
+			<portlet:namespace />processDialog(dialog);
 
 			var serviceParameterTypes = [
 				'long',
@@ -115,26 +99,47 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 				}
 			);
 		},
-		[]
+		['aui-loading-mask']
 	);
+</aui:script>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveRuleGroupsPriorities',
-		function(dialog) {
-			if (dialog) {
-				if (Liferay.Util.getTop() === window) {
-					dialog.plug(
-						A.LoadingMask
-					).render();
-				}
-				else {
-					dialog.close();
-				}
+<aui:script use="aui-base">
+	var config = {
+		dialog: {
+			align: Liferay.Util.Window.ALIGN_CENTER,
+			width: 820
+		}
+	};
+
+	var saveInstance = A.one('#<portlet:namespace />saveInstance');
+
+	if (saveInstance) {
+		saveInstance.on(
+			'click',
+			function(event) {
+				config.dialog.title = '<liferay-ui:message key="rule-groups" />';
+
+				config.uri = '<%= selectRuleGroupURL %>';
+
+				Liferay.Util.openWindow(config);
 			}
+		);
+	}
 
-			location.href = '<%= redirect %>';
-		},
-		[]
-	);
+	var managePriorities = A.one('#<portlet:namespace />managePriorities');
+
+	if (managePriorities) {
+		managePriorities.on(
+			'click',
+			function(event) {
+				config.dialog.title = '<liferay-ui:message key="rule-groups-priorities" />';
+
+				config.dialog.width = 460;
+
+				config.uri = '<%= managePrioritiesURL %>';
+
+				Liferay.Util.openWindow(config);
+			}
+		);
+	}
 </aui:script>

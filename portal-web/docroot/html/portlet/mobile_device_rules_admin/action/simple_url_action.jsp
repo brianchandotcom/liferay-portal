@@ -24,4 +24,4 @@ if (url == null) {
 }
 %>
 
-<aui:input name="url" type="text" value='<%= url %>'/>
+<aui:input name="url" type="text" value="<%= url %>"/>

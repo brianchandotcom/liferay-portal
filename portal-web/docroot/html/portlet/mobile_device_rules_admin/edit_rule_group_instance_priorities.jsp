@@ -38,9 +38,11 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	title="manage-rule-groups-priorities"
 />
 
-<div class="portlet-msg-info"><liferay-ui:message key="to-manage-priorities,-drag-the-rule-group-to-the-desired-position" /></div>
+<div class="portlet-msg-info">
+	<liferay-ui:message key="to-manage-priorities,-drag-the-rule-group-to-the-desired-position" />
+</div>
 
-<div class="separator"></div>
+<div class="separator"><!-- --></div>
 
 <portlet:actionURL var="editRuleGroupInstancesURL">
 	<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule_group_instance" />
@@ -75,103 +77,113 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 
 	<aui:button-row>
 		<aui:button type="submit" />
+
 		<aui:button onClick="<%= saveCallback %>" value="close" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,dd-constrain,sortable">
-var container = A.one('#<portlet:namespace />ruleGroupInstancesPriorities');
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveRuleGroupInstancesPriorities',
+		function(){
+			var A = AUI();
 
-var updateCurrentPriority = function(event) {
-	var instance = this;
+			var nodes = A.all('#<portlet:namespace />ruleGroupInstancesPriorities .rule-group-instance');
 
-	var delegate = instance.delegate;
-	var nodes = container.all('.rule-group-instance');
-
-	var currentNode = delegate.get('currentNode');
-	var drag = event.drag;
-	var dragNode = drag.get('dragNode');
-
-	var priorityNode = dragNode.one('.rule-group-instance-priority-value');
-
-	priorityNode.html(nodes.indexOf(currentNode));
-};
-
-var sortable = new A.Sortable(
-	{
-		container: container,
-		handles: ['.rule-group-instance'],
-		nodes: '.rule-group-instance',
-		opacity: '.4',
-		on: {
-			moved: updateCurrentPriority
-		}
-	}
-);
-
-sortable.delegate.dd.after(
-	{
-		'drag:end': function(event) {
-			var drag = event.target;
-			var dragNode = drag.get('dragNode');
-
-			var nodes = container.all('.rule-group-instance');
+			var ruleGroupInstances = [];
 
 			nodes.each(
 				function(item, index, collection) {
-					var priorityNode = item.one('.rule-group-instance-priority-value');
-
-					priorityNode.html(index);
+					ruleGroupInstances.push(
+						{
+							priority: index,
+							ruleGroupInstanceId: item.getAttribute('data-rule-group-instance-id')
+						}
+					);
 				}
 			);
 
-			dragNode.removeClass('rule-group-instance-dragging');
+			var ruleGroupsInstancesJSON = A.one('#<portlet:namespace />ruleGroupsInstancesJSON');
+
+			if (ruleGroupsInstancesJSON) {
+				ruleGroupsInstancesJSON.val(A.JSON.stringify(ruleGroupInstances));
+			}
+
+			submitForm(document.<portlet:namespace />fm);
 		},
-		'drag:start': function(event) {
-			var drag = event.target;
-			var dragNode = drag.get('dragNode');
+		['json']
+	);
+</aui:script>
 
-			dragNode.addClass('rule-group-instance-dragging');
-		}
-	}
+<aui:script use="aui-base,dd-constrain,sortable">
+	var container = A.one('#<portlet:namespace />ruleGroupInstancesPriorities');
 
-);
+	if (container) {
+		var sortable = new A.Sortable(
+			{
+				container: container,
+				handles: ['.rule-group-instance'],
+				nodes: '.rule-group-instance',
+				opacity: '.4',
+				on: {
+					moved: function(event) {
+						var instance = this;
 
-sortable.delegate.dd.plug(
-	A.Plugin.DDConstrained,
-	{
-		constrain: container,
-		stickY: true
-	}
-);
+						var delegate = instance.delegate;
 
-Liferay.provide(
-	window,
-	'<portlet:namespace />saveRuleGroupInstancesPriorities',
-	function(){
-		var nodes = container.all('.rule-group-instance');
-		var ruleGroupInstances = [];
+						var nodes = container.all('.rule-group-instance');
 
-		nodes.each(
-			function(item, index, collection) {
-				ruleGroupInstances.push(
-					{
-						priority: index,
-						ruleGroupInstanceId: item.getAttribute('data-rule-group-instance-id')
+						var dragNode = event.drag.get('dragNode');
+
+						var priorityNode = dragNode.one('.rule-group-instance-priority-value');
+
+						if (priorityNode) {
+							var currentNode = delegate.get('currentNode');
+
+							priorityNode.html(nodes.indexOf(currentNode));
+						}
 					}
-				);
+				}
 			}
 		);
 
-		var ruleGroupsInstancesJSON = A.one('#<portlet:namespace />ruleGroupsInstancesJSON');
+		var sortableDD = sortable.delegate.dd;
 
-		if (ruleGroupsInstancesJSON) {
-			ruleGroupsInstancesJSON.val(A.JSON.stringify(ruleGroupInstances));
-		}
+		sortableDD.after(
+			{
+				'drag:end': function(event) {
+					var drag = event.target;
+					var dragNode = drag.get('dragNode');
 
-		submitForm(document.<portlet:namespace />fm);
-	},
-	['json']
-);
+					var nodes = container.all('.rule-group-instance');
 
+					nodes.each(
+						function(item, index, collection) {
+							var priorityNode = item.one('.rule-group-instance-priority-value');
+
+							priorityNode.html(index);
+						}
+					);
+
+					dragNode.removeClass('rule-group-instance-dragging');
+				},
+				'drag:start': function(event) {
+					var drag = event.target;
+					var dragNode = drag.get('dragNode');
+
+					dragNode.addClass('rule-group-instance-dragging');
+				}
+			}
+
+		);
+
+		sortableDD.plug(
+			A.Plugin.DDConstrained,
+			{
+				constrain: container,
+				stickY: true
+			}
+		);
+	}
 </aui:script>

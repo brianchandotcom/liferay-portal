@@ -44,33 +44,40 @@ while (layoutIterator.hasNext()) {
 }
 %>
 
-
 <aui:select label="page" name="layoutId">
-	<aui:option label="select-a-layout" value="0" selected="<%= actionLayoutId == 0%>" disabled="<%= true %>" />
+	<aui:option disabled="<%= true %>" label="select-a-layout" selected="<%= actionLayoutId == 0 %>" value="0" />
 
 	<c:if test="<%=!publicLayouts.isEmpty() %>">
-		<aui:option label="public-layouts" value="0" disabled="<%= true %>" />
+		<aui:option disabled="<%= true %>" label="public-layouts" value="0" />
+
 		<%
 			for (Layout publicLayout : publicLayouts) {
 		%>
-				<aui:option label="<%= publicLayout.getName(locale) %>" value="<%= publicLayout.getPlid() %>" selected="<%= publicLayout.getPlid() == actionLayoutId %>" />
+
+				<aui:option label="<%= publicLayout.getName(locale) %>" selected="<%= publicLayout.getPlid() == actionLayoutId %>" value="<%= publicLayout.getPlid() %>" />
+
 		<%
 			}
 		%>
+
 	</c:if>
 
 	<c:if test="<%=!privateLayouts.isEmpty() %>">
-		<aui:option label="private-layouts" value="0" disabled="<%= true %>" />
+		<aui:option disabled="<%= true %>" label="private-layouts" value="0" />
+
 		<%
 			for (Layout privateLayout : privateLayouts) {
 		%>
-				<aui:option label="<%= privateLayout.getName(locale) %>" value="<%= privateLayout.getPlid() %>" selected="<%= privateLayout.getPlid() == actionLayoutId %>" />
+
+				<aui:option label="<%= privateLayout.getName(locale) %>" selected="<%= privateLayout.getPlid() == actionLayoutId %>" value="<%= privateLayout.getPlid() %>" />
+
 		<%
 			}
 		%>
+
 	</c:if>
 
 	<c:if test="<%=publicLayouts.isEmpty() && privateLayouts.isEmpty() %>">
-		<aui:option label="no-available-layouts" value="0" disabled="<%= true %>" />
+		<aui:option disabled="<%= true %>" label="no-available-layouts" value="0" />
 	</c:if>
 </aui:select>

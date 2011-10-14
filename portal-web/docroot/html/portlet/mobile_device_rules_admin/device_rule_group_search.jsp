@@ -31,21 +31,23 @@ if (displayTerms.getGroupId() == 0) {
 %>
 
 <liferay-ui:search-toggle
-	id="toggle_id_device_rule_group_search"
-	displayTerms="<%= displayTerms %>"
 	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_device_rule_group_search"
 >
 
 	<aui:fieldset>
-		<aui:input name="<%= displayTerms.NAME %>" label="name" inlineField="<%=true%>" size="20" type="text" value="<%= displayTerms.getName() %>" />
+		<aui:input label="name" inlineField="<%= true %>" name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
+
 		<%
 		if (Validator.isNotNull(chooseCallback) && MDRPermissionUtil.contains(permissionChecker, globalGroupId, ActionKeys.VIEW)) {
 
 			Group curGroup = GroupLocalServiceUtil.getGroup(groupId);
 		%>
-			<aui:select name="<%= displayTerms.GROUP_ID %>" label="scope" inlineField="<%=true%>">
-				<aui:option label="global" value="<%= globalGroupId %>" selected="<%= displayTerms.getGroupId() == globalGroupId %>" />
-				<aui:option label="<%= curGroup.getName() %>" value="<%= groupId %>" selected="<%= displayTerms.getGroupId() == groupId %>" />
+			<aui:select name="<%= displayTerms.GROUP_ID %>" label="scope" inlineField="<%= true %>">
+				<aui:option label="global" selected="<%= displayTerms.getGroupId() == globalGroupId %>" value="<%= globalGroupId %>" />
+
+				<aui:option label="<%= curGroup.getName() %>" selected="<%= displayTerms.getGroupId() == groupId %>" value="<%= groupId %>" />
 			</aui:select>
 		<%
 		}

@@ -49,8 +49,7 @@ String redirect = (String)request.getAttribute("view.jsp-redirect");
 		<liferay-ui:icon image="permissions" url="<%= permissionsURL %>" />
 	</c:if>
 
-	<c:if
-		test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, ruleGroupInstance.getRuleGroupInstanceId(), ActionKeys.DELETE) %>">
+	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, ruleGroupInstance.getRuleGroupInstanceId(), ActionKeys.DELETE) %>">
 		<liferay-portlet:actionURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" var="deleteURL">
 			<portlet:param name="struts_action" value="/mobile_device_rules_admin/edit_rule_group_instance" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

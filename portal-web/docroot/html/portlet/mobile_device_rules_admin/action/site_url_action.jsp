@@ -41,25 +41,29 @@ else if (renderResponse != null) {
 %>
 
 <aui:select label="site" name="groupId" onChange='<%= namespace + "changeDisplay();" %>'>
-	<aui:option label="select-a-site" value="0" selected="<%= actionGroupId == 0%>" disabled="<%= true %>" />
+	<aui:option disabled="<%= true %>" label="select-a-site" selected="<%= actionGroupId == 0 %>" value="0" />
+
 	<%
 	int groupCount = 0;
+
 	for (Group selGroup : groups) {
 		if (!selGroup.isUser() && !selGroup.isControlPanel()) {
 			groupCount++;
 	%>
-		<aui:option label="<%= selGroup.getName() %>" value="<%= selGroup.getGroupId() %>" selected="<%= selGroup.getGroupId() == actionGroupId %>" />
+
+		<aui:option label="<%= selGroup.getName() %>" selected="<%= selGroup.getGroupId() == actionGroupId %>" value="<%= selGroup.getGroupId() %>" />
+
 	<%
 		}
 	}
 	%>
 
 	<c:if test="<%= groupCount == 0 %>">
-		<aui:option label="no-available-sites" value="0" disabled="<%= true %>" />
+		<aui:option disabled="<%= true %>" label="no-available-sites" value="0" />
 	</c:if>
 </aui:select>
 
-<aui:input name="originalLayoutId" value="<%=actionLayoutId%>" type="hidden" />
+<aui:input name="originalLayoutId" type="hidden" value="<%=actionLayoutId %>" />
 
 <div id="<%= namespace %>layouts">
 	<c:import url="/html/portlet/mobile_device_rules_admin/action/site_url_action_layouts.jsp" />

@@ -48,7 +48,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 	<div class="float-container lfr-current-theme">
 		<h3><liferay-ui:message key="current-theme" /></h3>
 
-		<div>
+		<div class="lfr-current-theme-body">
 			<img alt="<%= selTheme.getName() %>" class="theme-screenshot" onclick="document.getElementById('<portlet:namespace />SelTheme').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= selTheme.getImagesPath() %>/thumbnail.png" title="<%= selTheme.getName() %>" />
 
 			<div class="theme-details">
@@ -97,7 +97,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 								<div class="<%= cssClass %> theme-entry">
 									<img alt="" class="modify-link theme-thumbnail" onclick="document.getElementById('<portlet:namespace />ColorSchemeId<%= i %>').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= curColorScheme.getColorSchemeThumbnailPath() %>/thumbnail.png" title="<%= curColorScheme.getName() %>" />
 
-									<aui:input cssClass="theme-title" checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" id='<%= "ColorSchemeId" + i %>' label="<%= curColorScheme.getName() %>" name='colorSchemeId' type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
+									<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id='<%= "ColorSchemeId" + i %>' label="<%= curColorScheme.getName() %>" name='colorSchemeId' type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
 								</div>
 
 								<%

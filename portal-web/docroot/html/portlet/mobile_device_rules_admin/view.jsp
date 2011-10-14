@@ -54,10 +54,9 @@ if (renderRequest != null) {
 else {
 	ruleGroupSearch = new RuleGroupSearch(resourceRequest, portletURL);
 }
-
 %>
-<aui:form action="<%= portletURLString %>" method="post" name="fm">
 
+<aui:form action="<%= portletURLString %>" method="post" name="fm">
 	<liferay-ui:search-container searchContainer="<%= ruleGroupSearch %>">
 
 		<%
@@ -68,7 +67,9 @@ else {
 		<liferay-ui:search-form page="/html/portlet/mobile_device_rules_admin/device_rule_group_search.jsp" />
 
 		<liferay-ui:search-container-results>
+
 			<%@ include file="/html/portlet/mobile_device_rules_admin/device_rule_group_search_results.jspf" %>
+
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row

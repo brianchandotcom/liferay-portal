@@ -77,6 +77,7 @@ long ruleGroupId = BeanParamUtil.getLong(ruleGroup, request, "ruleGroupId");
 
 	<aui:button-row>
 		<aui:button type="submit" />
+
 		<aui:button href="<%= redirect %>" value="cancel" />
 	</aui:button-row>
 </aui:form>

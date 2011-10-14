@@ -114,14 +114,13 @@ request.setAttribute("view_rule_actions.jsp-portletURL", portletURL);
 
 			var typeNode = A.one('#<portlet:namespace /><%= MDRPortletConstants.TYPE %>');
 
-			A.io(
+			A.io.request(
 				'<%= editorURL.toString() %>',
 				{
 					data: {
 						<%= MDRPortletConstants.MDR_RULE_ID %>: <%= ruleId %>,
-						<%= MDRPortletConstants.TYPE %>: typeNode.val()
+						<%= MDRPortletConstants.TYPE %>: (typeNode && typeNode.val())
 					},
-					method: AUI.defaults.io.method,
 					on: {
 						complete: function <portlet:namespace />displayForm(id, obj) {
 							var typeSettingsNode = A.one('#<portlet:namespace />typeSettings');
@@ -132,8 +131,8 @@ request.setAttribute("view_rule_actions.jsp-portletURL", portletURL);
 						}
 					}
 				}
-			)
+			);
 		},
-		['aui-base']
+		['aui-io']
 	);
 </aui:script>

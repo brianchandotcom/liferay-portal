@@ -29,8 +29,10 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 	</liferay-portlet:renderURL>
 
 	<div class="lfr-portlet-toolbar">
-		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addURL %>"><liferay-ui:message key="add-rule-group" /></a>
+		<span class="add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %> lfr-toolbar-button ">
+			<a href="<%= addURL %>">
+				<liferay-ui:message key="add-rule-group" />
+			</a>
 		</span>
 	</div>
 </c:if>

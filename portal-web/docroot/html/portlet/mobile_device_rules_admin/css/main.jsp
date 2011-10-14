@@ -16,7 +16,6 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
-
 .lfr-theme-list {
 	h3 {
 		background: #D3DADD;
@@ -86,10 +85,6 @@
 	padding: 0.3em;
 	text-align: center;
 	text-decoration: none;
-
-	&:hover label, &:hover {
-
-	}
 
 	&:hover {
 		&, & label {
@@ -162,14 +157,6 @@
 		display: block;
 		margin: 3px 0;
 		padding: 10px;
-
-		-moz-border-radius: 4px;
-		-webkit-border-radius: 4px;
-		border-radius: 4px;
-
-		-moz-box-shadow: 1px 1px 2px #999;
-		-webkit-box-shadow: 1px 1px 2px #999;
-		box-shadow: 1px 1px 2px #999;
 
 		.rule-group-instance-handle {
 			float: left;

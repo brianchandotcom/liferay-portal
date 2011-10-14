@@ -130,7 +130,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("Download (0.5k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		assertEquals(RuntimeVariables.replace("ISO-8859-1"),
+		assertEquals(RuntimeVariables.replace("Content Encoding ISO-8859-1"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 		assertEquals(RuntimeVariables.replace("1.0"),
@@ -248,7 +248,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("Download (0.5k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		assertEquals(RuntimeVariables.replace("ISO-8859-1"),
+		assertEquals(RuntimeVariables.replace("Content Encoding ISO-8859-1"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 		assertEquals(RuntimeVariables.replace("1.0"),

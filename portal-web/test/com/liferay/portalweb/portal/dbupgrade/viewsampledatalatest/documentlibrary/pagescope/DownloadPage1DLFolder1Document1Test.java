@@ -90,6 +90,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions Arrow"));
 

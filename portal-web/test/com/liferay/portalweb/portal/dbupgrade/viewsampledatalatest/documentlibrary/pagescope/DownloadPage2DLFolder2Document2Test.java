@@ -92,6 +92,7 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions Arrow"));
 

@@ -25,7 +25,7 @@ public class AddOrganizationEmailAddressTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,35 +40,30 @@ public class AddOrganizationEmailAddressTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("Selenium"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Selenium"),
 			selenium.getText("//a[2]/strong"));
 		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("//div[3]/div/div[2]/ul/li[1]/a")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a")) {
 					break;
 				}
 			}
@@ -78,14 +73,15 @@ public class AddOrganizationEmailAddressTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[3]/div/div[2]/ul/li[1]/a",
-			RuntimeVariables.replace("Edit"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -101,12 +97,11 @@ public class AddOrganizationEmailAddressTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[@id='_125_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -122,10 +117,8 @@ public class AddOrganizationEmailAddressTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_emailAddressAddress0']",
 			RuntimeVariables.replace("Selenium@Selenium.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_125_emailAddressTypeId0']",
 			RuntimeVariables.replace("label=Email Address"));
 		selenium.clickAt("//input[@id='_125_emailAddressPrimary0']",
@@ -133,10 +126,9 @@ public class AddOrganizationEmailAddressTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -151,7 +143,6 @@ public class AddOrganizationEmailAddressTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -162,6 +153,5 @@ public class AddOrganizationEmailAddressTest extends BaseTestCase {
 				"//select[@id='_125_emailAddressTypeId0']"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_125_emailAddressPrimary0']"));
-		selenium.saveScreenShotAndSource();
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitionradio;
+package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitionpassword;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddDataDefinitionRadioTest extends BaseTestCase {
-	public void testAddDataDefinitionRadio() throws Exception {
+public class ViewDataDefinitionPasswordTest extends BaseTestCase {
+	public void testViewDataDefinitionPassword() throws Exception {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 
@@ -85,6 +85,7 @@ public class AddDataDefinitionRadioTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//iframe");
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -92,7 +93,8 @@ public class AddDataDefinitionRadioTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Add")) {
+				if (selenium.isVisible(
+							"//span[@title='Actions']/ul/li/strong/a/span")) {
 					break;
 				}
 			}
@@ -102,21 +104,39 @@ public class AddDataDefinitionRadioTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_166_name_en_US']",
-			RuntimeVariables.replace("Data Definition Radio"));
-		assertEquals(RuntimeVariables.replace("Radio"),
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Data Definition Password"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Password"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div/div/label"));
 		selenium.selectFrame("relative=top");
 	}
 }

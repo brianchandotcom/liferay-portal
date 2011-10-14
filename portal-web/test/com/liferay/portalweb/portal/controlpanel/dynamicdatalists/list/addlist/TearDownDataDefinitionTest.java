@@ -27,6 +27,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
@@ -131,6 +132,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				Thread.sleep(5000);
 
 				boolean actionsVisible2 = selenium.isElementPresent(
 						"//td/span/ul/li/strong/a");
@@ -172,6 +174,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				Thread.sleep(5000);
 
 				boolean actionsVisible3 = selenium.isElementPresent(
 						"//td/span/ul/li/strong/a");
@@ -210,6 +213,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -254,6 +258,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				Thread.sleep(5000);
 
 				boolean actionsVisible5 = selenium.isElementPresent(
 						"//td/span/ul/li/strong/a");

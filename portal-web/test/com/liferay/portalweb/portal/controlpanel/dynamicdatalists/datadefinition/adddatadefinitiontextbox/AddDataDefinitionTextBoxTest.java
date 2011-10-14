@@ -108,8 +108,8 @@ public class AddDataDefinitionTextBoxTest extends BaseTestCase {
 			RuntimeVariables.replace("Data Definition Text Box"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div",
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

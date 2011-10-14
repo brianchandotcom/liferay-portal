@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.editlist;
+package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitionpassword;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

@@ -141,25 +141,30 @@ public class AddDataDefinitionFieldFullTest extends BaseTestCase {
 				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[7]/div"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[7]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
-		assertEquals(RuntimeVariables.replace("Radio"),
+		assertEquals(RuntimeVariables.replace("Password"),
 			selenium.getText(
 				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
-		assertEquals(RuntimeVariables.replace("Select"),
+		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
 				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
-		assertEquals(RuntimeVariables.replace("Text"),
+		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
 				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
-		assertEquals(RuntimeVariables.replace("Text Box"),
+		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
 				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Text Box"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

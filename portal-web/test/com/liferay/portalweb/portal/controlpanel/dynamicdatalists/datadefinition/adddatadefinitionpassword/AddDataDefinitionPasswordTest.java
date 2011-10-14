@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.editdatadefinition;
+package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitionpassword;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddDataDefinitionTest extends BaseTestCase {
-	public void testAddDataDefinition() throws Exception {
+public class AddDataDefinitionPasswordTest extends BaseTestCase {
+	public void testAddDataDefinitionPassword() throws Exception {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 
@@ -105,30 +105,11 @@ public class AddDataDefinitionTest extends BaseTestCase {
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_166_name_en_US']",
-			RuntimeVariables.replace("Data Definition"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[2]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[3]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[6]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[7]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+			RuntimeVariables.replace("Data Definition Password"));
+		assertEquals(RuntimeVariables.replace("Password"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

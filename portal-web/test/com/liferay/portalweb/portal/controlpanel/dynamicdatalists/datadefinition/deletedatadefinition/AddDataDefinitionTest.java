@@ -128,6 +128,8 @@ public class AddDataDefinitionTest extends BaseTestCase {
 			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -225,7 +225,7 @@
 
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 	</entity>
-	<entity name="DLFileEntryType" human-name="document library file entry type" local-service="true" remote-service="true">
+	<entity name="DLFileEntryType" human-name="document library file entry type" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

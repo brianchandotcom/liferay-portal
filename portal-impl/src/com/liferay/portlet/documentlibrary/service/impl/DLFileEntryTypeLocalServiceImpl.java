@@ -78,6 +78,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			fileEntryTypeId);
 
+		dlFileEntryType.setUuid(serviceContext.getUuid());
 		dlFileEntryType.setGroupId(groupId);
 		dlFileEntryType.setCompanyId(user.getCompanyId());
 		dlFileEntryType.setUserId(user.getUserId());

@@ -41,7 +41,7 @@
 	}
 
 	.yui3-datatable-liner {
-		height: 17px;
+		min-height: 17px;
 		padding: 1px 10px;
 	}
 

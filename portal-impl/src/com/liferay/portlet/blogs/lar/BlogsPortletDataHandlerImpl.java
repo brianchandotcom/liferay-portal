@@ -110,6 +110,8 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element entriesElement = rootElement.addElement("entries");
 
+		Element dlFileEntryTypesElement = entriesElement.addElement(
+			"dl-file-entry-types");
 		Element dlFoldersElement = entriesElement.addElement("dl-folders");
 		Element dlFileEntriesElement = entriesElement.addElement(
 			"dl-file-entries");
@@ -122,9 +124,9 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		for (BlogsEntry entry : entries) {
 			exportEntry(
-				portletDataContext, entriesElement, dlFoldersElement,
-				dlFileEntriesElement,dlFileRanksElement, igFoldersElement,
-				igImagesElement, entry, false);
+				portletDataContext, entriesElement, dlFileEntryTypesElement,
+				dlFoldersElement, dlFileEntriesElement,dlFileRanksElement,
+				igFoldersElement, igImagesElement, entry, false);
 		}
 
 		return document.formattedString();
@@ -176,9 +178,10 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	protected void exportEntry(
 			PortletDataContext portletDataContext, Element entriesElement,
-			Element dlFoldersElement, Element dlFileEntriesElement,
-			Element dlFileRanksElement, Element igFoldersElement,
-			Element igImagesElement, BlogsEntry entry, boolean checkDateRange)
+			Element dlFileEntryTypesElement, Element dlFoldersElement,
+			Element dlFileEntriesElement, Element dlFileRanksElement,
+			Element igFoldersElement, Element igImagesElement, BlogsEntry entry,
+			boolean checkDateRange)
 		throws Exception {
 
 		if (!portletDataContext.isWithinDateRange(entry.getModifiedDate())) {
@@ -208,9 +211,9 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		String content = JournalPortletDataHandlerImpl.exportReferencedContent(
-			portletDataContext, dlFoldersElement, dlFileEntriesElement,
-			dlFileRanksElement, igFoldersElement, igImagesElement, entryElement,
-			entry.getContent(), checkDateRange);
+			portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
+			dlFileEntriesElement, dlFileRanksElement, igFoldersElement,
+			igImagesElement, entryElement, entry.getContent(), checkDateRange);
 
 		entry.setContent(content);
 

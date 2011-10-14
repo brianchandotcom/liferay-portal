@@ -150,19 +150,24 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 			Set<String> fieldNames = ddmStructure.getFieldNames();
 
-			Fields fields = new Fields();
+			Fields fields = (Fields)serviceContext.getAttribute(
+				Fields.class.getName() + ddmStructure.getStructureId());
 
-			for (String name : fieldNames) {
-				Field field = new Field();
+			if (fields == null) {
+				fields = new Fields();
 
-				field.setName(name);
+				for (String name : fieldNames) {
+					Field field = new Field();
 
-				String value = ParamUtil.getString(
-					serviceContext, namespace + name);
+					field.setName(name);
 
-				field.setValue(value);
+					String value = ParamUtil.getString(
+						serviceContext, namespace + name);
 
-				fields.put(field);
+					field.setValue(value);
+
+					fields.put(field);
+				}
 			}
 
 			fieldsMap.put(ddmStructure.getStructureKey(), fields);

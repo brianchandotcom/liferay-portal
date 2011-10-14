@@ -590,6 +590,8 @@ public class LayoutExporter {
 
 		articleElement.addAttribute("path", path);
 
+		Element dlFileEntryTypesElement = layoutElement.addElement(
+			"dl-file-entry-types");
 		Element dlFoldersElement = layoutElement.addElement("dl-folders");
 		Element dlFilesElement = layoutElement.addElement("dl-file-entries");
 		Element dlFileRanksElement = layoutElement.addElement("dl-file-ranks");
@@ -598,8 +600,9 @@ public class LayoutExporter {
 
 		JournalPortletDataHandlerImpl.exportArticle(
 			portletDataContext, layoutElement, layoutElement, layoutElement,
-			dlFoldersElement, dlFilesElement, dlFileRanksElement,
-			igFoldersElement, igImagesElement, article, false);
+			dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
+			dlFileRanksElement, igFoldersElement, igImagesElement, article,
+			false);
 	}
 
 	protected void exportLayout(

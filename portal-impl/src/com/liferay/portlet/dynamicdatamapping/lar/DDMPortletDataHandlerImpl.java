@@ -57,7 +57,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		return _ALWAYS_EXPORTABLE;
 	}
 
-	protected static void exportStructure(
+	public static void exportStructure(
 			PortletDataContext portletDataContext, Element structuresElement,
 			DDMStructure structure)
 		throws Exception {
@@ -121,7 +121,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		return sb.toString();
 	}
 
-	protected static void importStructure(
+	public static void importStructure(
 			PortletDataContext portletDataContext, Element structureElement)
 		throws Exception {
 
@@ -274,10 +274,10 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element structuresElement = rootElement.addElement("structures");
 
-		List<DDMStructure> structures = DDMStructureUtil.findByGroupId(
+		List<DDMStructure> ddmStructures = DDMStructureUtil.findByGroupId(
 			portletDataContext.getScopeGroupId());
 
-		for (DDMStructure structure : structures) {
+		for (DDMStructure structure : ddmStructures) {
 			if (portletDataContext.isWithinDateRange(
 					structure.getModifiedDate())) {
 

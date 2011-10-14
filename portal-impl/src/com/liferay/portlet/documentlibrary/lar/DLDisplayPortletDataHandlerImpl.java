@@ -92,6 +92,8 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element rootElement = document.addElement(
 			"documentlibrary-display-data");
 
+		Element fileEntryTypesElement = rootElement.addElement(
+			"file-entry-types");
 		Element foldersElement = rootElement.addElement("folders");
 		Element fileEntriesElement = rootElement.addElement("file-entries");
 		Element fileShortcutsElement = rootElement.addElement("file-shortcuts");
@@ -103,8 +105,9 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			for (Folder folder : folders) {
 				DLPortletDataHandlerImpl.exportFolder(
-					portletDataContext, foldersElement, fileEntriesElement,
-					fileShortcutsElement, fileRanksElement, folder, false);
+					portletDataContext, fileEntryTypesElement, foldersElement,
+					fileEntriesElement, fileShortcutsElement, fileRanksElement,
+					folder, false);
 			}
 		}
 		else {
@@ -114,8 +117,9 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 				"root-folder-id", String.valueOf(folder.getFolderId()));
 
 			DLPortletDataHandlerImpl.exportFolder(
-				portletDataContext, foldersElement, fileEntriesElement,
-				fileShortcutsElement, fileRanksElement, folder, true);
+				portletDataContext, fileEntryTypesElement, foldersElement,
+				fileEntriesElement, fileShortcutsElement, fileRanksElement,
+				folder, true);
 		}
 
 		return document.formattedString();
@@ -135,6 +139,17 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 		Document document = SAXReaderUtil.read(data);
 
 		Element rootElement = document.getRootElement();
+
+		Element fileEntryTypesElement = rootElement.element(
+			"file-entry-types");
+
+		List<Element> fileEntryTypeElements = fileEntryTypesElement.elements(
+			"file-entry-type");
+
+		for (Element fileEntryTypeElement : fileEntryTypeElements) {
+			DLPortletDataHandlerImpl.importFileEntryType(
+				portletDataContext, fileEntryTypeElement);
+		}
 
 		Element foldersElement = rootElement.element("folders");
 

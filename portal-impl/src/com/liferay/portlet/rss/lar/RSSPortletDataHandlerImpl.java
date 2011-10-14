@@ -180,6 +180,8 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 
 		Element rootElement = document.addElement("journal-content-data");
 
+		Element dlFileEntryTypesElement = rootElement.addElement(
+			"dl-file-entry-types");
 		Element dlFoldersElement = rootElement.addElement("dl-folders");
 		Element dlFilesElement = rootElement.addElement("dl-file-entries");
 		Element dlFileRanksElement = rootElement.addElement("dl-file-ranks");
@@ -203,8 +205,9 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 
 			JournalPortletDataHandlerImpl.exportArticle(
 				portletDataContext, rootElement, rootElement, rootElement,
-				dlFoldersElement, dlFilesElement, dlFileRanksElement,
-				igFoldersElement, igImagesElement, article, false);
+				dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
+				dlFileRanksElement, igFoldersElement, igImagesElement, article,
+				false);
 		}
 
 		return document.formattedString();

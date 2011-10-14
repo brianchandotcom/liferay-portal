@@ -45,6 +45,7 @@ public class Gmail_SubscribeWCPortletCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Site Name"));
 
 		for (int second = 0;; second++) {

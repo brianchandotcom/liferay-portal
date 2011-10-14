@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class PostNewMBCategoryThreadMessageTest extends BaseTestCase {
 	public void testPostNewMBCategoryThreadMessage() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -30,7 +30,7 @@ public class PostNewMBCategoryThreadMessageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Name")) {
+				if (selenium.isElementPresent("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -40,9 +40,6 @@ public class PostNewMBCategoryThreadMessageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
-		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
@@ -94,7 +91,23 @@ public class PostNewMBCategoryThreadMessageTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("//a[@id='_19_TabsBack']",
 			RuntimeVariables.replace("\u00ab Back to MB Category Name"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//td[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("MB Message Subject"),
 			selenium.getText("//td[1]/a"));

@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Gmail_TearDownEmailTest</title>
+<title>Gmail_ViewMBThreadMessageGmailMailingListTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Gmail_TearDownEmailTest</td></tr>
+<tr><td rowspan="1" colspan="3">Gmail_ViewMBThreadMessageGmailMailingListTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>selectWindow</td>
@@ -35,18 +35,18 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>10000</td>
+	<td>80000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('link=Sign out'))</td>
-	<td>SignedIn1</td>
+	<td>signedIn1</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${SignedIn1}</td>
-	<td>SignedOut1</td>
+	<td>!${signedIn1}</td>
+	<td>signedOut1</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>SignedOut1</td>
+	<td>signedOut1</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='Email']</td>
-	<td>liferay.qa.testing.trunk</td>
+	<td>liferay.qa.server.trunk</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -144,49 +144,89 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//input[@type='checkbox']</td>
-	<td>All</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@type='checkbox']</td>
-	<td>All</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>close</td>
+	<td>gmail</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]</td>
-	<td>Delete</td>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>openWindow</td>
+	<td>http://groups.google.com/</td>
+	<td>Google Groups</td>
+</tr>
+<tr>
+	<td>waitForPopUp</td>
+	<td>Google Groups</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>Google Groups</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>10000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]</td>
-	<td>Delete</td>
+	<td>//a[1]/font/b</td>
+	<td>liferay-mailinglist</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]</td>
-	<td>Delete</td>
+	<td>clickAtAndWait</td>
+	<td>//a[1]/font/b</td>
+	<td>liferay-mailinglist</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>15000</td>
-	<td></td>
+	<td>assertElementPresent</td>
+	<td>//span[1]/a</td>
+	<td>[MB Category Name] MB Message Subject</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[1]/a</td>
+	<td>[MB Category Name] MB Message Subject</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//table[@id='top']/tbody/tr[2]/td[1]/span/span/i</td>
+	<td>liferay.qa.server</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[1]/table/tbody/tr/td[2]/div[1]/div[2]/div</td>
+	<td>MB Message Body<br />--<br />Liferay Message Boards<br />http://localhost:8080/web/site-name/message-boards-test-page/-/message_boards/view_message/10508<br /><br />http://localhost</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/table/tbody/tr/td[2]/div[1]/div[1]/table/tbody/tr[2]/td[1]/span/span</td>
+	<td>Trunk Liferay QA</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//p</td>
+	<td>MB Message Email Reply</td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('link=Sign out'))</td>
-	<td>signedIn2</td>
+	<td>SignedIn2</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${signedIn2}</td>
-	<td>signedOut2</td>
+	<td>!${SignedIn2}</td>
+	<td>SignedOut2</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -200,7 +240,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>signedOut2</td>
+	<td>SignedOut2</td>
 	<td></td>
 </tr>
 <tr>

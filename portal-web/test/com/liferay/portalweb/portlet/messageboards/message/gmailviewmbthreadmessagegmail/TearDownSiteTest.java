@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.properties.mailintegration.webcontent.wcwebcontent.gmailviewwcwebcontentaddedemail;
+package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -68,10 +68,10 @@ public class TearDownSiteTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 
-				boolean Site1Present = selenium.isElementPresent(
+				boolean Sites1Present = selenium.isElementPresent(
 						"//tr[4]/td[1]/a");
 
-				if (!Site1Present) {
+				if (!Sites1Present) {
 					label = 3;
 
 					continue;
@@ -114,10 +114,10 @@ public class TearDownSiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-				boolean Site2Present = selenium.isElementPresent(
+				boolean Sites2Present = selenium.isElementPresent(
 						"//tr[4]/td[1]/a");
 
-				if (!Site2Present) {
+				if (!Sites2Present) {
 					label = 4;
 
 					continue;
@@ -160,10 +160,10 @@ public class TearDownSiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-				boolean Site3Present = selenium.isElementPresent(
+				boolean Sites3Present = selenium.isElementPresent(
 						"//tr[4]/td[1]/a");
 
-				if (!Site3Present) {
+				if (!Sites3Present) {
 					label = 5;
 
 					continue;
@@ -206,10 +206,10 @@ public class TearDownSiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-				boolean Site4Present = selenium.isElementPresent(
+				boolean Sites4Present = selenium.isElementPresent(
 						"//tr[4]/td[1]/a");
 
-				if (!Site4Present) {
+				if (!Sites4Present) {
 					label = 6;
 
 					continue;
@@ -252,10 +252,10 @@ public class TearDownSiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-				boolean site5Present = selenium.isElementPresent(
+				boolean sites5Present = selenium.isElementPresent(
 						"//tr[4]/td[1]/a");
 
-				if (!site5Present) {
+				if (!sites5Present) {
 					label = 7;
 
 					continue;

@@ -23,7 +23,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class PostNewMBCategoryThreadMessageSiteTest extends BaseTestCase {
 	public void testPostNewMBCategoryThreadMessageSite()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.selectWindow("null");
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("relative=top");
+		selenium.saveScreenShotAndSource();
+		selenium.open("/web/site-name");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +35,7 @@ public class PostNewMBCategoryThreadMessageSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Name")) {
+				if (selenium.isElementPresent("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -41,9 +45,6 @@ public class PostNewMBCategoryThreadMessageSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
-		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
@@ -95,7 +96,7 @@ public class PostNewMBCategoryThreadMessageSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -103,28 +104,7 @@ public class PostNewMBCategoryThreadMessageSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
+				if (selenium.isElementPresent("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -151,6 +131,8 @@ public class PostNewMBCategoryThreadMessageSiteTest extends BaseTestCase {
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//td[4]/a"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//td[5]/a"));
 		assertTrue(selenium.isPartialText("//td[6]/a", "Joe Bloggs"));
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Message Subject"));

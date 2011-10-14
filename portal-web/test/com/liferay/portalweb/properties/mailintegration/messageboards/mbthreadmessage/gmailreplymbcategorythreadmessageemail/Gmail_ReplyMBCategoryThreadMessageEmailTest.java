@@ -115,6 +115,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 60) {
@@ -174,7 +175,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div/table/tbody/tr/td[1]/div/span")) {
+									"//div[7]/div/table/tbody/tr/td[1]/div/span")) {
 							break;
 						}
 					}
@@ -185,7 +186,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				}
 
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div/table/tbody/tr/td[1]/div/span",
+				selenium.clickAt("//div[7]/div/table/tbody/tr/td[1]/div/span",
 					RuntimeVariables.replace("Reply"));
 				Thread.sleep(5000);
 				selenium.selectFrame("//iframe[@id='canvas_frame']");
@@ -198,8 +199,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					selenium.getText("//div[3]/div/div/div/div[1]/b"));
 				selenium.clickAt("//div[3]/div/div/div/div[1]/b",
 					RuntimeVariables.replace("Send"));
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 
 				boolean signedIn2 = selenium.isElementPresent("link=Sign out");
 
@@ -214,8 +214,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
 			case 5:
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 				selenium.close();
 				selenium.selectWindow("null");
 				selenium.saveScreenShotAndSource();

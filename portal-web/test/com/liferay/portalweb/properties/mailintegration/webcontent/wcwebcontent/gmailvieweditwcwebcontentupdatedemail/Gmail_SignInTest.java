@@ -22,6 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Gmail_SignInTest extends BaseTestCase {
 	public void testGmail_SignIn() throws Exception {
+		selenium.selectWindow("null");
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("relative=top");
+		selenium.saveScreenShotAndSource();
 		selenium.open("/web/guest/home/");
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));

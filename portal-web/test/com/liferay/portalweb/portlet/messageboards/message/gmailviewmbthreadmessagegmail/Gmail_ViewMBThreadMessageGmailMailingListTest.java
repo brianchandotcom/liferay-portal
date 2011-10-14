@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class GmailServer_TearDownEmailTest extends BaseTestCase {
-	public void testGmailServer_TearDownEmail() throws Exception {
+public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase {
+	public void testGmail_ViewMBThreadMessageGmailMailingList()
+		throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -36,11 +37,11 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
 				selenium.selectWindow("gmail");
 				selenium.saveScreenShotAndSource();
-				Thread.sleep(10000);
+				Thread.sleep(80000);
 
-				boolean SignedIn1 = selenium.isElementPresent("link=Sign out");
+				boolean signedIn1 = selenium.isElementPresent("link=Sign out");
 
-				if (!SignedIn1) {
+				if (!signedIn1) {
 					label = 2;
 
 					continue;
@@ -120,56 +121,45 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@type='checkbox']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.close();
+				selenium.selectWindow("null");
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@type='checkbox']",
-					RuntimeVariables.replace("All"));
-				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]"));
-				selenium.clickAt("//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]",
-					RuntimeVariables.replace("Delete"));
 				Thread.sleep(10000);
+				selenium.openWindow("http://groups.google.com/",
+					RuntimeVariables.replace("Google Groups"));
+				selenium.waitForPopUp("Google Groups",
+					RuntimeVariables.replace(""));
+				selenium.selectWindow("Google Groups");
+				selenium.saveScreenShotAndSource();
+				Thread.sleep(10000);
+				assertEquals(RuntimeVariables.replace("liferay-mailinglist"),
+					selenium.getText("//a[1]/font/b"));
+				selenium.clickAt("//a[1]/font/b",
+					RuntimeVariables.replace("liferay-mailinglist"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				assertTrue(selenium.isElementPresent("//span[1]/a"));
+				selenium.clickAt("//span[1]/a",
+					RuntimeVariables.replace(
+						"[MB Category Name] MB Message Subject"));
+				selenium.waitForPageToLoad("30000");
+				selenium.saveScreenShotAndSource();
+				assertTrue(selenium.isPartialText(
+						"//table[@id='top']/tbody/tr[2]/td[1]/span/span/i",
+						"liferay.qa.server"));
+				assertEquals(RuntimeVariables.replace(
+						"MB Message Body\n--\nLiferay Message Boards\nhttp://localhost:8080/web/site-name/message-boards-test-page/-/message_boards/view_message/10508\n\nhttp://localhost"),
+					selenium.getText(
+						"//div[1]/table/tbody/tr/td[2]/div[1]/div[2]/div"));
+				assertEquals(RuntimeVariables.replace("Trunk Liferay QA"),
+					selenium.getText(
+						"//div[2]/table/tbody/tr/td[2]/div[1]/div[1]/table/tbody/tr[2]/td[1]/span/span"));
+				assertEquals(RuntimeVariables.replace("MB Message Email Reply"),
+					selenium.getText("//p"));
 
-				boolean signedIn2 = selenium.isElementPresent("link=Sign out");
+				boolean SignedIn2 = selenium.isElementPresent("link=Sign out");
 
-				if (!signedIn2) {
+				if (!SignedIn2) {
 					label = 5;
 
 					continue;

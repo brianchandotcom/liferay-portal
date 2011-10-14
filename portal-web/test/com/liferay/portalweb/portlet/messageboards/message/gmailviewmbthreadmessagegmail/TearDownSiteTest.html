@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>TearDownSitesTest</title>
+<title>TearDownSiteTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">TearDownSitesTest</td></tr>
+<tr><td rowspan="1" colspan="3">TearDownSiteTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -25,13 +25,13 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isPartialText('//strong/a','Global'))</td>
-	<td>GlobalSitePresent</td>
+	<td>eval(selenium.isPartialText('//strong/a','Liferay'))</td>
+	<td>LiferaySitePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>${GlobalSitePresent}</td>
-	<td>GlobalSiteIsPresent</td>
+	<td>${LiferaySitePresent}</td>
+	<td>LiferaySiteIsPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -39,13 +39,8 @@
 	<td>Site Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Global</td>
-	<td>Global</td>
-</tr>
-<tr>
 	<td>label</td>
-	<td>GlobalSiteIsPresent</td>
+	<td>LiferaySiteIsPresent</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +50,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
+	<td>//tr[4]/td[1]/a</td>
 	<td>Sites1Present</td>
 </tr>
 <tr>
@@ -65,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -100,7 +95,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
+	<td>//tr[4]/td[1]/a</td>
 	<td>Sites2Present</td>
 </tr>
 <tr>
@@ -110,12 +105,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -145,7 +140,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
+	<td>//tr[4]/td[1]/a</td>
 	<td>Sites3Present</td>
 </tr>
 <tr>
@@ -155,12 +150,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -190,7 +185,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
+	<td>//tr[4]/td[1]/a</td>
 	<td>Sites4Present</td>
 </tr>
 <tr>
@@ -200,12 +195,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -235,7 +230,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
+	<td>//tr[4]/td[1]/a</td>
 	<td>sites5Present</td>
 </tr>
 <tr>
@@ -245,12 +240,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>

@@ -86,12 +86,12 @@ public class AddSitesTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Site Name"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Open"),
-			selenium.getText("//td[2]/a"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[3]"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[4]"));
+			selenium.getText("//tr[4]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//tr[4]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//tr[3]/td[5]"));
+			selenium.getText("//tr[4]/td[4]"));
 	}
 }

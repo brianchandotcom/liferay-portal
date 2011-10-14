@@ -17,6 +17,8 @@ AUI().add(
 
 		var INVALID_CHARACTERS = '&\'@\\]}:,=>/<\n[{%|+#?"\r;/*~';
 
+		var MAP_INVALID_CHARACTERS = {};
+
 		var TPL_CHECKED = ' checked="checked" ';
 
 		var TPL_INPUT = '<label title="{name}"><input type="checkbox" value="{name}" {checked} />{name}</label>';
@@ -28,6 +30,10 @@ AUI().add(
 		var TPL_URL_SUGGESTIONS = 'http://search.yahooapis.com/ContentAnalysisService/V1/termExtraction?appid=YahooDemo&output=json&context={context}';
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
+
+		for (var i = 0; i < INVALID_CHARACTERS.length; i++) {
+			MAP_INVALID_CHARACTERS[INVALID_CHARACTERS.charCodeAt(i)] = true;
+		}
 
 		/**
 		 * OPTIONS
@@ -390,17 +396,8 @@ AUI().add(
 					_onKeyPress: function(event) {
 						var instance = this;
 
-						var charCode = event.charCode;
-
-						if (charCode == '44') {
-							instance._onAddEntryClick();
-
-							event.preventDefault();
-						}
-						else {
-							if (!instance._validateKey(String.fromCharCode(charCode))) {
-								event.halt();
-							}
+						if (MAP_INVALID_CHARACTERS[event.charCode]) {
+							event.halt();
 						}
 					},
 
@@ -635,10 +632,6 @@ AUI().add(
 
 						popup.liveSearch.get('nodes').refresh();
 						popup.liveSearch.refreshIndex();
-					},
-
-					_validateKey: function(data) {
-						return (INVALID_CHARACTERS.indexOf(data) == -1);
 					},
 
 					_buffer: []

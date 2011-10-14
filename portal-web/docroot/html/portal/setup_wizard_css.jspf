@@ -27,7 +27,7 @@ body {
 
 #wrapper {
 	margin: auto;
-	max-width: 600px;
+	max-width: 700px;
 	min-width: 0;
 }
 
@@ -59,6 +59,15 @@ body {
 	width: 50%;
 }
 
+#footer {
+	clear: both;
+	padding-top: 2em;
+}
+
+.connection-messages {
+	margin-top: 10px;
+}
+
 .properties-text {
 	min-height: 200px;
 	width: 100%;
@@ -73,16 +82,12 @@ body {
 }
 
 .aui-legend {
-	background: #D4D4D4 url(<%= themeImagesPath %>/portlet/header_bg.png) repeat-x 0 0;
-	border: 1px solid;
-	border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
+	border-bottom: 1px solid #333;
 	line-height: 2;
 	overflow: hidden;
 	padding: 0;
 	position: static;
-	text-indent: 10px;
 	text-overflow: ellipsis;
-	text-shadow: 1px 1px #FFF;
 	white-space: nowrap;
 	width: 100%;
 }
@@ -111,6 +116,17 @@ body {
 	font-style: italic;
 }
 
+.aui-suffix {
+	color: #777;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.change-language {
+	display: inline-block;
+	vertical-align: bottom;
+}
+
 .database-options {
 	display: block;
 	margin-bottom: 1em;
@@ -133,21 +149,4 @@ body {
 
 .ie6 #wrapper {
 	width: 600px;
-}
-
-/* ---------- Extras ---------- */
-
-.aui-legend {
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-moz-box-shadow: 1px 1px 0 #FFF;
-	-webkit-box-shadow: 1px 1px 0 #FFF;
-	box-shadow: 1px 1px 0 #FFF;
-}
-
-.aui-field-input-text {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
 }

@@ -306,7 +306,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			defaultUser.setPassword("password");
 			defaultUser.setScreenName(String.valueOf(defaultUser.getUserId()));
 			defaultUser.setEmailAddress("default@" + company.getMx());
-			defaultUser.setLanguageId(LocaleUtil.getDefault().toString());
+
+			if (Validator.isNotNull(PropsValues.DEFAULT_LOCALE)) {
+				defaultUser.setLanguageId(PropsValues.DEFAULT_LOCALE);
+			}
+			else {
+				defaultUser.setLanguageId(LocaleUtil.getDefault().toString());
+			}
+
 			defaultUser.setTimeZoneId(TimeZoneUtil.getDefault().getID());
 			defaultUser.setGreeting(
 				LanguageUtil.format(

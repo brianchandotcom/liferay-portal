@@ -101,6 +101,8 @@ public interface Constants {
 
 	public static final String SUBSCRIBE_TO_COMMENTS = "subscribe_to_comments";
 
+	public static final String TEST = "test";
+
 	public static final String TRANSLATE = "translate";
 
 	public static final String UNLOCK = "unlock";

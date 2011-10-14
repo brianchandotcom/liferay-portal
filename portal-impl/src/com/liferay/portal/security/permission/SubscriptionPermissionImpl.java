@@ -32,17 +32,15 @@ import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
  */
 public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
-	public void check(User user, String className, long classPK,
-			String actionId)
+	public void check(User user, String className, long classPK)
 		throws PortalException, SystemException {
 
-		if (!contains(user, className, classPK, actionId)) {
+		if (!contains(user, className, classPK)) {
 			throw new PrincipalException();
 		}
 	}
 
-	public boolean contains(User user, String className, long classPK,
-			String actionId)
+	public boolean contains(User user, String className, long classPK)
 		throws PortalException, SystemException {
 
 		PermissionChecker permissionChecker =
@@ -72,33 +70,33 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 				"com.liferay.portlet.blogs.model.BlogsEntry")) {
 
 			return BlogsPermission.contains(
-					permissionChecker, classPK, actionId);
+					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(
 				"com.liferay.portlet.journal.model.JournalArticle")) {
 
 			return JournalPermission.contains(
-					permissionChecker, classPK, actionId);
+					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(
 				"com.liferay.portlet.messageboards.model.MBCategory")) {
 
 			return MBCategoryPermission.contains(
-					permissionChecker, classPK, actionId);
+					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(
 				"com.liferay.portlet.messageboards.model.MBThread")) {
 
 			return MBMessagePermission.contains(
-					permissionChecker, classPK, actionId);
+					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals("com.liferay.portlet.wiki.model.WikiNode")) {
 			return WikiNodePermission.contains(
-					permissionChecker, classPK, actionId);
+					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals("com.liferay.portlet.wiki.model.WikiPage")) {
 			return WikiPagePermission.contains(
-					permissionChecker, classPK, actionId);
+					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 		}
 
 		return true;

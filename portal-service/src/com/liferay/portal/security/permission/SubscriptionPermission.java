@@ -23,12 +23,10 @@ import com.liferay.portal.model.User;
  */
 public interface SubscriptionPermission {
 
-	public void check(User user, String className, long classPK,
-			String actionId)
+	public void check(User user, String className, long classPK)
 		throws PortalException, SystemException;
 
-	public boolean contains(User user, String className, long classPK,
-			String actionId)
+	public boolean contains(User user, String className, long classPK)
 		throws PortalException, SystemException;
 
 }

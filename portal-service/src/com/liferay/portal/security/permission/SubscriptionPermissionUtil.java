@@ -23,19 +23,16 @@ import com.liferay.portal.model.User;
  */
 public class SubscriptionPermissionUtil {
 
-	public static void check(User user, String className, long classPK,
-			String actionId)
+	public static void check(User user, String className, long classPK)
 		throws PortalException, SystemException {
 
-		getSubscriptionPermission().check(user, className, classPK, actionId);
+		getSubscriptionPermission().check(user, className, classPK);
 	}
 
-	public static boolean contains(User user, String className, long classPK,
-			String actionId)
+	public static boolean contains(User user, String className, long classPK)
 		throws PortalException, SystemException {
 
-		return getSubscriptionPermission().contains(
-				user, className, classPK, actionId);
+		return getSubscriptionPermission().contains(user, className, classPK);
 	}
 
 	public static SubscriptionPermission getSubscriptionPermission() {

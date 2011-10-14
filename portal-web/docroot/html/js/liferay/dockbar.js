@@ -632,7 +632,7 @@ AUI().add(
 					if (!manageCustomizationLink.hasClass('disabled')) {
 						instance._controls = dockBar.one('.layout-customizable-controls');
 
-						var columns = A.all('.portlet-column');
+						var columns = A.all('.portlet-column .portlet-dropzone:not(.portlet-dropzone-disabled)');
 
 						BODY.delegate('click', instance._onChangeCustomization, '.layout-customizable-checkbox', instance);
 

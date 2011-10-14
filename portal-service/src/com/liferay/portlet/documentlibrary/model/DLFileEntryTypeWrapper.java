@@ -55,6 +55,24 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 	}
 
 	/**
+	* Returns the uuid of this document library file entry type.
+	*
+	* @return the uuid of this document library file entry type
+	*/
+	public java.lang.String getUuid() {
+		return _dlFileEntryType.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this document library file entry type.
+	*
+	* @param uuid the uuid of this document library file entry type
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_dlFileEntryType.setUuid(uuid);
+	}
+
+	/**
 	* Returns the file entry type ID of this document library file entry type.
 	*
 	* @return the file entry type ID of this document library file entry type

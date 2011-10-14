@@ -63,6 +63,21 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this document library file entry type.
+	 *
+	 * @return the uuid of this document library file entry type
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this document library file entry type.
+	 *
+	 * @param uuid the uuid of this document library file entry type
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the file entry type ID of this document library file entry type.
 	 *
 	 * @return the file entry type ID of this document library file entry type

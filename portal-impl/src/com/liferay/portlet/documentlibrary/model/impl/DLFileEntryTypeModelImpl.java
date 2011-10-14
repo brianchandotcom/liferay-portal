@@ -63,6 +63,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	 */
 	public static final String TABLE_NAME = "DLFileEntryType";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "fileEntryTypeId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -73,7 +74,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntryType (fileEntryTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntryType (uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryType";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -89,6 +90,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 			true);
 	public static long GROUPID_COLUMN_BITMASK = 1L;
 	public static long NAME_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -99,6 +101,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	public static DLFileEntryType toModel(DLFileEntryTypeSoap soapModel) {
 		DLFileEntryType model = new DLFileEntryTypeImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setFileEntryTypeId(soapModel.getFileEntryTypeId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -181,6 +184,28 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	public String getModelClassName() {
 		return DLFileEntryType.class.getName();
+	}
+
+	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -343,6 +368,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	public Object clone() {
 		DLFileEntryTypeImpl dlFileEntryTypeImpl = new DLFileEntryTypeImpl();
 
+		dlFileEntryTypeImpl.setUuid(getUuid());
 		dlFileEntryTypeImpl.setFileEntryTypeId(getFileEntryTypeId());
 		dlFileEntryTypeImpl.setGroupId(getGroupId());
 		dlFileEntryTypeImpl.setCompanyId(getCompanyId());
@@ -406,6 +432,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	public void resetOriginalValues() {
 		DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl = this;
 
+		dlFileEntryTypeModelImpl._originalUuid = dlFileEntryTypeModelImpl._uuid;
+
 		dlFileEntryTypeModelImpl._originalGroupId = dlFileEntryTypeModelImpl._groupId;
 
 		dlFileEntryTypeModelImpl._setOriginalGroupId = false;
@@ -418,6 +446,14 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	@Override
 	public CacheModel<DLFileEntryType> toCacheModel() {
 		DLFileEntryTypeCacheModel dlFileEntryTypeCacheModel = new DLFileEntryTypeCacheModel();
+
+		dlFileEntryTypeCacheModel.uuid = getUuid();
+
+		String uuid = dlFileEntryTypeCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			dlFileEntryTypeCacheModel.uuid = null;
+		}
 
 		dlFileEntryTypeCacheModel.fileEntryTypeId = getFileEntryTypeId();
 
@@ -474,9 +510,11 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{fileEntryTypeId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", fileEntryTypeId=");
 		sb.append(getFileEntryTypeId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -500,12 +538,16 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileEntryType");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fileEntryTypeId</column-name><column-value><![CDATA[");
 		sb.append(getFileEntryTypeId());
@@ -552,6 +594,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	private static Class<?>[] _escapedModelProxyInterfaces = new Class[] {
 			DLFileEntryType.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _fileEntryTypeId;
 	private long _groupId;
 	private long _originalGroupId;

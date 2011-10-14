@@ -281,6 +281,20 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file entry type with the UUID in the group.
+	 *
+	 * @param uuid the UUID of document library file entry type
+	 * @param groupId the group id of the document library file entry type
+	 * @return the document library file entry type
+	 * @throws PortalException if a document library file entry type with the UUID in the group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException, SystemException {
+		return dlFileEntryTypePersistence.findByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the document library file entry types.
 	 *
 	 * <p>

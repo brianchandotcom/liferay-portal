@@ -31,6 +31,7 @@ public class DLFileEntryTypeSoap implements Serializable {
 	public static DLFileEntryTypeSoap toSoapModel(DLFileEntryType model) {
 		DLFileEntryTypeSoap soapModel = new DLFileEntryTypeSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setFileEntryTypeId(model.getFileEntryTypeId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -92,6 +93,14 @@ public class DLFileEntryTypeSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setFileEntryTypeId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getFileEntryTypeId() {
@@ -166,6 +175,7 @@ public class DLFileEntryTypeSoap implements Serializable {
 		_description = description;
 	}
 
+	private String _uuid;
 	private long _fileEntryTypeId;
 	private long _groupId;
 	private long _companyId;

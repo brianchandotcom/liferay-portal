@@ -1351,6 +1351,7 @@
 		<field name="fileVersionId" type="long" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryType">
+		<field name="uuid" type="String" />
 		<field name="fileEntryTypeId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

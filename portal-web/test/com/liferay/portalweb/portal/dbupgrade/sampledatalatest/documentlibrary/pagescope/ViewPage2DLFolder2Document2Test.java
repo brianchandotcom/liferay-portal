@@ -130,7 +130,8 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("Download (6.5k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		assertEquals(RuntimeVariables.replace("application/vnd.ms-excel"),
+		assertEquals(RuntimeVariables.replace(
+				"Content Type application/vnd.ms-excel"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 		assertEquals(RuntimeVariables.replace("1.0"),
@@ -248,7 +249,8 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("Download (6.5k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		assertEquals(RuntimeVariables.replace("application/vnd.ms-excel"),
+		assertEquals(RuntimeVariables.replace(
+				"Content Type application/vnd.ms-excel"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 		assertEquals(RuntimeVariables.replace("1.0"),

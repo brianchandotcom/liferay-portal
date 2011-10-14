@@ -128,7 +128,7 @@ public class ViewPage1DLFolder1Document1Test extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("Download (10.0k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		assertEquals(RuntimeVariables.replace("application/msword"),
+		assertEquals(RuntimeVariables.replace("Content Type application/msword"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 		assertEquals(RuntimeVariables.replace("1.0"),

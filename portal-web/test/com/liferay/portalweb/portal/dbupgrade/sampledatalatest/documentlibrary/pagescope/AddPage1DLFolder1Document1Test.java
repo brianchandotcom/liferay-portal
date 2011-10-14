@@ -76,8 +76,9 @@ public class AddPage1DLFolder1Document1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//span[@id='_20_breadcrumb']/ul/li[2]/span/a")) {
+				if (RuntimeVariables.replace("DL Folder1 Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a/span[2]"))) {
 					break;
 				}
 			}
@@ -88,7 +89,7 @@ public class AddPage1DLFolder1Document1Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",

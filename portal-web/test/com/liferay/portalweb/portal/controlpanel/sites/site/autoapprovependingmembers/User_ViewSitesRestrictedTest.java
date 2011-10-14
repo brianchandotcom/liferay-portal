@@ -25,7 +25,7 @@ public class User_ViewSitesRestrictedTest extends BaseTestCase {
 		selenium.open("/user/selenium01/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,22 +40,18 @@ public class User_ViewSitesRestrictedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_29_name']",
 			RuntimeVariables.replace("Test Restricted Community"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//form/span/span[2]/span/input",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Restricted Community"),
 			selenium.getText("//div[1]/div/table/tbody/tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("2"),
 			selenium.getText("//div[1]/div/table/tbody/tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Leave"),
-			selenium.getText("//div[1]/div/table/tbody/tr[3]/td[3]/span/a/span"));
+			selenium.getText("//span/a/span"));
 	}
 }

@@ -83,31 +83,6 @@ AUI().add(
 
 				A.getWin().on('resize', A.debounce(instance._positionActiveMenu, 200, instance));
 
-				A.getBody().delegate(
-					EVENT_CLICK,
-					function(event) {
-						var trigger = event.currentTarget;
-
-						var activeTrigger = instance._activeTrigger;
-
-						if (activeTrigger && (activeTrigger != trigger)) {
-							activeTrigger.removeClass(CSS_STATE_ACTIVE);
-						}
-
-						if (!trigger.hasClass('disabled')) {
-							var menu = instance._getMenu(trigger);
-
-							instance._activeMenu = menu;
-							instance._activeTrigger = trigger;
-
-							instance._positionActiveMenu();
-
-							event.halt();
-						}
-					},
-					'.lfr-actions'
-				);
-
 				A.getDoc().on(EVENT_CLICK, instance._closeActiveMenu, instance);
 			}
 		};
@@ -459,6 +434,43 @@ AUI().add(
 				node.delegate('mouseenter', A.rbind(Menu._targetLink, node, 'focus'), SELECTOR_LIST_ITEM);
 				node.delegate('mouseleave', A.rbind(Menu._targetLink, node, 'blur'), SELECTOR_LIST_ITEM);
 			}
+		};
+
+		Menu.register = function(id) {
+			var instance = Menu._INSTANCE;
+
+			var node = A.one(id);
+
+			if (!instance) {
+				instance = new Menu();
+
+				Menu._INSTANCE = instance;
+			}
+
+			node.on(
+				EVENT_CLICK,
+				function(event) {
+					var trigger = event.currentTarget;
+
+					var activeTrigger = instance._activeTrigger;
+
+					if (activeTrigger && (activeTrigger != trigger)) {
+						activeTrigger.removeClass(CSS_STATE_ACTIVE);
+					}
+
+					if (!trigger.hasClass('disabled')) {
+						var menu = instance._getMenu(trigger);
+
+						instance._activeMenu = menu;
+						instance._activeTrigger = trigger;
+
+						instance._positionActiveMenu();
+
+						event.halt();
+					}
+				},
+				'.lfr-actions'
+			);
 		};
 
 		Menu._targetLink = function(event, action) {

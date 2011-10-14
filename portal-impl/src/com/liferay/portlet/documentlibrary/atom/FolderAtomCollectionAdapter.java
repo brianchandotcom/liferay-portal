@@ -56,7 +56,7 @@ public class FolderAtomCollectionAdapter
 
 		String srcLink = AtomUtil.createCollectionLink(
 			atomRequestContext,
-			DLFileEntryAtomCollectionAdapter._COLLECTION_NAME) + "?folderId=" +
+			FileEntryAtomCollectionAdapter._COLLECTION_NAME) + "?folderId=" +
 				folder.getFolderId();
 
 		atomEntryContent.setSrcLink(srcLink);

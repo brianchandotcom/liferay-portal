@@ -41,6 +41,7 @@ public class IconConfigurationTag extends IconTag {
 		setImage("../portlet/configuration");
 		setMessage("configuration");
 		setMethod("get");
+		setOnClick("Liferay.Portlet.openConfiguration('#p_p_id_" + portletDisplay.getId() + "_', '" + portletDisplay.getId() + "', '" + portletDisplay.getURLConfiguration() + "', '" + portletDisplay.getNamespace() + "'); return false;");
 		setToolTip(false);
 		setUrl(portletDisplay.getURLConfiguration());
 

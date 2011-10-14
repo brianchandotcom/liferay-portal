@@ -91,6 +91,7 @@ try {
 										image="print"
 										label="<%= true %>"
 										message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"aui-helper-hidden-accessible", articleDisplay.getTitle()}) %>'
+										onClick='<%= "Liferay.Portlet.openConfiguration(\'#p_p_id_" + portletDisplay.getId() + "_\', \'" + portletDisplay.getId() + "\', \'" + portletDisplay.getURLConfiguration() + " \', \'" + portletDisplay.getNamespace() + "\'); return false;" %>'
 										url="javascript:print();"
 									/>
 								</div>

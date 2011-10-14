@@ -34,6 +34,8 @@ AUI().add(
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
+		var DOCUMENT_LIBRARY_GROUP = 'document-library';
+
 		var REFRESH_FOLDERS = 'refreshFolders';
 
 		var ROWS_PER_PAGE = 'rowsPerPage';
@@ -476,11 +478,23 @@ AUI().add(
 
 						dd.removeInvalid('a');
 
+						dd.set('groups', DOCUMENT_LIBRARY_GROUP);
+
 						dd.plug(
-							A.Plugin.DDProxy,
-							{
-								moveOnEnd: false
-							}
+							[
+								{
+									cfg: {
+										moveOnEnd: false
+									},
+									fn: A.Plugin.DDProxy
+								},
+								{
+									cfg: {
+										constrain2node: instance._documentLibraryContainer
+									},
+									fn: A.Plugin.DDConstrained
+								}
+							]
 						);
 
 						instance._initDropTargets();
@@ -491,7 +505,14 @@ AUI().add(
 					_initDropTargets: function() {
 						var instance = this;
 
-						instance._documentLibraryContainer.all('[data-folder="true"]').plug(A.Plugin.Drop);
+						var items = instance._documentLibraryContainer.all('[data-folder="true"]');
+
+						items.plug(
+							A.Plugin.Drop,
+							{
+								groups: DOCUMENT_LIBRARY_GROUP
+							}
+						);
 					},
 
 					_initHover: function() {
@@ -643,7 +664,7 @@ AUI().add(
 						var dragNode = event.drag.get('node');
 						var dropTarget = event.drop.get('node');
 
-						dropTarget = dropTarget.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || dropTarget
+						dropTarget = dropTarget.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || dropTarget;
 
 						if (!dragNode.compareTo(dropTarget)) {
 							dropTarget.addClass(CSS_ACTIVE_AREA);
@@ -1123,6 +1144,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-paginator', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-history-manager', 'liferay-list-view', 'liferay-portlet-base']
+		requires: ['aui-paginator', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'dd-constrain', 'liferay-history-manager', 'liferay-list-view', 'liferay-portlet-base']
 	}
 );

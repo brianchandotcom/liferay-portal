@@ -95,14 +95,11 @@ public class NetlogonConnection {
 		byte[] clientCredential = computeNetlogonCredential(
 			clientChallenge, sessionKey);
 
-		int negotiateFlags = Integer.valueOf(
-			PropsValues.NTLM_AUTH_NEGOTIATE_FLAGS, 16);
-
 		NetrServerAuthenticate3 netrServerAuthenticate3 =
 			new NetrServerAuthenticate3(
 				domainControllerName, ntlmServiceAccount.getAccountName(), 2,
 				ntlmServiceAccount.getComputerName(), clientCredential,
-				new byte[8], negotiateFlags);
+				new byte[8], PropsValues.NTLM_AUTH_NEGOTIATE_FLAGS);
 
 		dcerpcHandle.sendrecv(netrServerAuthenticate3);
 

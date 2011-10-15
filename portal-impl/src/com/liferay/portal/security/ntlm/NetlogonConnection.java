@@ -49,8 +49,9 @@ public class NetlogonConnection {
 				_negotiateFlags = Integer.valueOf(
 					negotiateFlags.substring(2), 16);
 			}
-
-			_negotiateFlags = 0x600FFFFF;
+			else {
+				_negotiateFlags = 0x600FFFFF;
+			}
 		}
 	}
 

@@ -1,6 +1,6 @@
 <#include "../init.ftl">
 
-<#assign width = field.width!25>
+<#assign width = fieldStructure.width!25>
 
 <#assign cssClass = cssClass +  " aui-w" + width>
 

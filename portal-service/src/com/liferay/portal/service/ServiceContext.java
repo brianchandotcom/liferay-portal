@@ -247,6 +247,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	public String getUserAgent() {
+		if (_headers == null) {
+			return null;
+		}
+
 		return _headers.get(HttpHeaders.USER_AGENT);
 	}
 

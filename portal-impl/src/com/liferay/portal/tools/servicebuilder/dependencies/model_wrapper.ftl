@@ -1,6 +1,7 @@
 package ${packagePath}.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -14,7 +15,7 @@ import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
  * @see       ${entity.name}
  * @generated
  */
-public class ${entity.name}Wrapper implements ${entity.name} {
+public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${entity.name}> {
 
 	public ${entity.name}Wrapper(${entity.name} ${entity.varName}) {
 		_${entity.varName} = ${entity.varName};
@@ -86,7 +87,14 @@ public class ${entity.name}Wrapper implements ${entity.name} {
 		</#if>
 	</#list>
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ${entity.name} getWrapped${entity.name}() {
+		return _${entity.varName};
+	}
+
+	public ${entity.name} getWrappedModel() {
 		return _${entity.varName};
 	}
 
